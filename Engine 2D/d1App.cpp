@@ -4,7 +4,6 @@
 #include "c2Defs.h"
 #include "c2Log.h"
 
-
 #include "d1Window.h"
 #include "d1Input.h"
 #include "d1Render.h"
@@ -57,12 +56,12 @@ d1App::d1App(int argc, char* args[]) : argc(argc), args(args)
 d1App::~d1App()
 {
 	// release modules
-	c2List_item<d1Module*>* item = modules.end;
+	std::list<d1Module*>::reverse_iterator item = modules.rbegin();
 
-	while(item != NULL)
+	while(item != modules.rend())
 	{
-		RELEASE(item->data);
-		item = item->prev;
+		RELEASE(*item);
+		item++;
 	}
 
 	modules.clear();
@@ -71,7 +70,7 @@ d1App::~d1App()
 void d1App::AddModule(d1Module* module)
 {
 	module->Init();
-	modules.add(module);
+	modules.push_back(module);
 }
 
 // Called before render is available
@@ -92,8 +91,8 @@ bool d1App::Awake()
 		// self-config
 		ret = true;
 		app_config = config.child("app");
-		title.create(app_config.child("title").child_value());
-		organization.create(app_config.child("organization").child_value());
+		title.assign(app_config.child("title").child_value());
+		organization.assign(app_config.child("organization").child_value());
 
 		int cap = app_config.attribute("framerate_cap").as_int(-1);
 
@@ -105,13 +104,12 @@ bool d1App::Awake()
 
 	if(ret == true)
 	{
-		c2List_item<d1Module*>* item;
-		item = modules.start;
+		std::list<d1Module*>::iterator item = modules.begin();
 
-		while(item != NULL && ret == true)
+		while(item != modules.end() && ret == true)
 		{
-			ret = item->data->Awake(config.child(item->data->name.GetString()));
-			item = item->next;
+			ret = (*item)->Awake(config.child((*item)->name.GetString()));
+			item++;
 		}
 	}
 
@@ -125,13 +123,12 @@ bool d1App::Start()
 {
 	PERF_START(ptimer);
 	bool ret = true;
-	c2List_item<d1Module*>* item;
-	item = modules.start;
+	std::list<d1Module*>::iterator item = modules.begin();
 
-	while(item != NULL && ret == true)
+	while(item != modules.end() && ret == true)
 	{
-		ret = item->data->Start();
-		item = item->next;
+		ret = (*item)->Start();
+		item++;
 	}
 	startup_time.Start();
 
@@ -230,19 +227,18 @@ void d1App::FinishUpdate()
 bool d1App::PreUpdate()
 {
 	bool ret = true;
-	c2List_item<d1Module*>* item;
-	item = modules.start;
+	std::list<d1Module*>::iterator item;
 	d1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = item->data;
+		pModule = (*item);
 
 		if(pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->PreUpdate();
+		ret = (*item)->PreUpdate();
 	}
 
 	return ret;
@@ -252,19 +248,19 @@ bool d1App::PreUpdate()
 bool d1App::DoUpdate()
 {
 	bool ret = true;
-	c2List_item<d1Module*>* item;
-	item = modules.start;
+	std::list<d1Module*>::iterator item;
+
 	d1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = item->data;
+		pModule = (*item);
 
 		if(pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->Update(dt);
+		ret = (*item)->Update(dt);
 	}
 
 	return ret;
@@ -274,18 +270,18 @@ bool d1App::DoUpdate()
 bool d1App::PostUpdate()
 {
 	bool ret = true;
-	c2List_item<d1Module*>* item;
+	std::list<d1Module*>::iterator item;
 	d1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = item->data;
+		pModule = (*item);
 
 		if(pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->PostUpdate();
+		ret = (*item)->PostUpdate();
 	}
 
 	return ret;
@@ -296,13 +292,12 @@ bool d1App::CleanUp()
 {
 	PERF_START(ptimer);
 	bool ret = true;
-	c2List_item<d1Module*>* item;
-	item = modules.end;
+	std::list<d1Module*>::reverse_iterator item = modules.rbegin();
 
-	while(item != NULL && ret == true)
+	while(item != modules.rend() && ret == true)
 	{
-		ret = item->data->CleanUp();
-		item = item->prev;
+		ret = (*item)->CleanUp();
+		item++;
 	}
 
 	PERF_PEEK(ptimer);
@@ -327,7 +322,7 @@ const char* d1App::GetArgv(int index) const
 // ---------------------------------------
 const char* d1App::GetTitle() const
 {
-	return title.GetString();
+	return title.c_str();
 }
 
 // ---------------------------------------
@@ -339,7 +334,7 @@ float d1App::GetDT() const
 // ---------------------------------------
 const char* d1App::GetOrganization() const
 {
-	return organization.GetString();
+	return organization.c_str();
 }
 
 // Load / Save
@@ -348,7 +343,9 @@ void d1App::LoadGame(const char* file)
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
 	want_to_load = true;
-	load_game.create("%s%s", fs->GetSaveDirectory(), file);
+	char dir[512];
+	sprintf_s(dir, "%s%s", fs->GetSaveDirectory(), file);
+	load_game.assign(dir);
 }
 
 // ---------------------------------------
@@ -358,11 +355,11 @@ void d1App::SaveGame(const char* file) const
 	// from the "GetSaveGames" list ... should we overwrite ?
 
 	want_to_save = true;
-	save_game.create(file);
+	save_game.assign(file);
 }
 
 // ---------------------------------------
-void d1App::GetSaveGames(c2List<c2SString>& list_to_fill) const
+void d1App::GetSaveGames(std::list<std::string>& list_to_fill) const
 {
 	// need to add functionality to file_system module for this to work
 }
@@ -372,7 +369,7 @@ bool d1App::LoadGameNow()
 	bool ret = false;
 
 	char* buffer;
-	uint size = fs->Load(load_game.GetString(), &buffer);
+	uint size = fs->Load(load_game.c_str(), &buffer);
 
 	if(size > 0)
 	{
@@ -384,30 +381,30 @@ bool d1App::LoadGameNow()
 
 		if(result != NULL)
 		{
-			LOG("Loading new Game State from %s...", load_game.GetString());
+			LOG("Loading new Game State from %s...", load_game.c_str());
 
 			root = data.child("game_state");
 
-			c2List_item<d1Module*>* item = modules.start;
+			std::list<d1Module*>::iterator item = modules.begin();
 			ret = true;
 
-			while(item != NULL && ret == true)
+			while(item != modules.end() && ret == true)
 			{
-				ret = item->data->Load(root.child(item->data->name.GetString()));
-				item = item->next;
+				ret = (*item)->Load(root.child((*item)->name.GetString()));
+				item++;
 			}
 
 			data.reset();
 			if(ret == true)
 				LOG("...finished loading");
 			else
-				LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+				LOG("...loading process interrupted with error on module %s", (*item != NULL) ? (*item)->name.GetString() : "unknown");
 		}
 		else
-			LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
+			LOG("Could not parse game state xml file %s. pugi error: %s", load_game.c_str(), result.description());
 	}
 	else
-		LOG("Could not load game state xml file %s", load_game.GetString());
+		LOG("Could not load game state xml file %s", load_game.c_str());
 
 	want_to_load = false;
 	return ret;
@@ -417,7 +414,7 @@ bool d1App::SavegameNow() const
 {
 	bool ret = true;
 
-	LOG("Saving Game State to %s...", save_game.GetString());
+	LOG("Saving Game State to %s...", save_game.c_str());
 
 	// xml object were we will store all data
 	pugi::xml_document data;
@@ -425,12 +422,12 @@ bool d1App::SavegameNow() const
 	
 	root = data.append_child("game_state");
 
-	c2List_item<d1Module*>* item = modules.start;
+	std::list<d1Module*>::const_iterator item = modules.begin();
 
-	while(item != NULL && ret == true)
+	while(item != modules.end() && ret == true)
 	{
-		ret = item->data->Save(root.append_child(item->data->name.GetString()));
-		item = item->next;
+		ret = (*item)->Save(root.append_child((*item)->name.GetString()));
+		item++;
 	}
 
 	if(ret == true)
@@ -439,11 +436,11 @@ bool d1App::SavegameNow() const
 		data.save(stream);
 
 		// we are done, so write data to disk
-		fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());
-		LOG("... finished saving", save_game.GetString());
+		fs->Save(save_game.c_str(), stream.str().c_str(), stream.str().length());
+		LOG("... finished saving", save_game.c_str());
 	}
 	else
-		LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+		LOG("Save process halted from an error in module %s", (*item != NULL) ? (*item)->name.GetString() : "unknown");
 
 	data.reset();
 	want_to_save = false;

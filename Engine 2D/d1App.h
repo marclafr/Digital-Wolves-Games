@@ -6,6 +6,7 @@
 #include "d1PerfTimer.h"
 #include "d1Timer.h"
 #include "PugiXml\src\pugixml.hpp"
+#include <list>
 
 // Modules
 class d1Window;
@@ -54,7 +55,7 @@ public:
 
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(c2List<c2SString>& list_to_fill) const;
+	void GetSaveGames(std::list<std::string>& list_to_fill) const;
 
 private:
 
@@ -97,17 +98,17 @@ public:
 
 private:
 
-	c2List<d1Module*>	modules;
+	std::list<d1Module*> modules;
 	int					argc;
 	char**				args;
 
-	c2SString			title;
-	c2SString			organization;
+	std::string			title;
+	std::string			organization;
 
 	mutable bool		want_to_save = false;
 	bool				want_to_load = false;
-	c2SString			load_game;
-	mutable c2SString	save_game;
+	std::string			load_game;
+	mutable std::string	save_game;
 
 	d1PerfTimer			ptimer;
 	uint64				frame_count = 0;
