@@ -19,7 +19,7 @@ bool j1PathFinding::CleanUp()
 {
 	LOG("Freeing pathfinding library");
 
-	last_path.Clear();
+	last_path.clear();
 	RELEASE_ARRAY(map);
 	return true;
 }
@@ -59,7 +59,7 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 }
 
 // To request all tiles involved in the last generated path
-const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
+const std::vector<iPoint>* j1PathFinding::GetLastPath() const
 {
 	return &last_path;
 }

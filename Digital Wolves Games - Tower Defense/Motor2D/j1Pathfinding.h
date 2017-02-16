@@ -4,8 +4,9 @@
 #include "j1Module.h"
 #include "p2Point.h"
 #include "p2DynArray.h"
+#include <vector>
 
-#define DEFAULT_PATH_LENGTH 50
+#define DEFAULT_PATH_LENGTH 0
 #define INVALID_WALK_CODE 255
 
 // --------------------------------------------------
@@ -33,7 +34,7 @@ public:
 	int CreatePath(const iPoint& origin, const iPoint& destination);
 
 	// To request all tiles involved in the last generated path
-	const p2DynArray<iPoint>* GetLastPath() const;
+	const std::vector<iPoint>* GetLastPath() const;
 
 	// Utility: return true if pos is inside the map boundaries
 	bool CheckBoundaries(const iPoint& pos) const;
@@ -52,7 +53,7 @@ private:
 	// all map walkability values [0..255]
 	uchar* map;
 	// we store the created path here
-	p2DynArray<iPoint> last_path;
+	std::vector<iPoint> last_path;
 };
 
 // forward declaration
