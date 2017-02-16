@@ -128,10 +128,17 @@ bool j1Scene::Update(float dt)
 
 	const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
 	
-	for(uint i = 0; i < path->size(); ++i)
+	if (path->size() != 0)
 	{
-		iPoint pos = App->map->MapToWorld(path[i].data()->x, path[i].data()->y);
-		App->render->Blit(debug_tex, pos.x, pos.y);
+		std::vector<iPoint>::const_iterator item = path->begin();
+
+		//for (uint i = 0; i < path->size() - 1; ++i)
+		while(item != path->end())
+		{
+			iPoint pos = App->map->MapToWorld(item->x, item->y);
+			App->render->Blit(debug_tex, pos.x, pos.y);
+			item++;
+		}
 	}
 
 	return true;
