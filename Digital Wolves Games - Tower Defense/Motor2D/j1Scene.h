@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "j1Animation.h"
 
 struct SDL_Texture;
 class GuiImage;
@@ -38,6 +39,7 @@ private:
 	SDL_Texture* debug_tex;
 	GuiImage* banner;
 	GuiText* text;
+	j1Animation test;
 };
 
 #endif // __j1SCENE_H__
