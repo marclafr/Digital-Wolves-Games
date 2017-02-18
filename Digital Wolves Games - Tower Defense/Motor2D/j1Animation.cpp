@@ -1,11 +1,57 @@
 #include "j1Animation.h"
+#include "j1Textures.h"
+#include "j1App.h"
+#include "j1FileSystem.h"
+#include "p2Log.h"
 
 j1Animation::j1Animation()
-{}
+{
+	name.create("animation");
+}
 
 // Destructor
 j1Animation::~j1Animation()
 {}
+
+bool j1Animation::Start()
+{
+	twohandedswordman_texture = App->tex->Load("animations/Twohandedswordman_data.png");
+
+	return true;
+}
+bool j1Animation::Awake(pugi::xml_node& config)
+{
+	bool ret = true;
+
+	std::string anim_folder = "animations/Twohandedswordman_data.xml";
+
+	//Load animations data from animations folder
+	char* buff = nullptr;
+	int size = App->fs->Load(anim_folder.c_str(), &buff);
+	pugi::xml_document anim_data;
+	pugi::xml_parse_result result = anim_data.load_buffer(buff, size);
+	RELEASE(buff);
+
+	if (result == NULL)
+	{
+		LOG("Error loading animations data: %s", result.description());
+		return false;
+	}
+
+	//Loading units
+	pugi::xml_node unit_node = anim_data.child("TextureAtlas").child("sprite");
+
+	std::string unit_enum;
+
+	while (unit_node != NULL)
+	{
+		unit_enum = unit_node.attribute("n").as_string();
+
+		unit_node = unit_node.next_sibling();
+	}
+
+	return ret;
+}
 
 void j1Animation::SetSpeed(float spd)
 {
@@ -49,7 +95,8 @@ void j1Animation::Reset()
 	loops = 0;
 }
 
-void j1Animation::Clean()
+bool j1Animation::CleanUp()
 {
 	frames.clear();
+	return true;
 }

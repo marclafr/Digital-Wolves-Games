@@ -46,17 +46,6 @@ bool j1Scene::Start()
 
 	// TODO 3: Create the image (rect {485, 829, 328, 103}) and the text "Hello World" as UI elements
 
-	/*TEST*/
-	test.PushBack({ 71, 16, 16, 16 });
-	test.PushBack({ 92, 16, 16, 16 });
-	test.PushBack({ 112, 16, 16, 16 });
-	test.PushBack({ 132, 16, 16, 16 });
-	test.PushBack({ 152, 16, 16, 16 });
-	test.PushBack({ 172, 16, 16, 16 });
-	test.SetSpeed(0.3f);
-	test.SetLoopState(false);
-	//--
-
 	return true;
 }
 
@@ -94,7 +83,7 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	// Gui ---
-	//App->render->Blit(TODO:TEXTURE TEST, 150, 150, &(test.GetCurrentFrame()));
+
 	// -------
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
