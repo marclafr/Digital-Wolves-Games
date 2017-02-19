@@ -16,6 +16,7 @@
 #include "j1Fonts.h"
 #include "j1Animation.h"
 #include "j1App.h"
+#include "j1Units.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -31,6 +32,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fs = new j1FileSystem();
 	map = new j1Map();
 	pathfinding = new j1PathFinding();
+	units = new j1Units();
 	font = new j1Fonts();
 	anim = new j1Animation();
 
@@ -43,6 +45,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(map);
 	AddModule(pathfinding);
+	AddModule(units);
 	AddModule(font);
 
 	AddModule(anim);
