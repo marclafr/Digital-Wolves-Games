@@ -6,7 +6,6 @@
 #include <vector>
 #include <list>
 #include "j1Units.h"
-#define MAX_FRAMES 100
 
 struct SDL_Texture;
 
@@ -62,8 +61,11 @@ public:
 
 	bool CleanUp();
 
+	Animation* GetAnimation(const UNITS_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction);
+	SDL_Texture* GetTexture(const UNITS_TYPE unit);
+
 private:
-	std::list<SDL_Texture*> textures;
+	std::list<SDL_Texture*> textures; //vector??
 	std::list<Animation*> animations;
 
 };

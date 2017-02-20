@@ -10,6 +10,7 @@
 #include "j1PathFinding.h"
 #include "j1Gui.h"
 #include "j1Scene.h"
+#include "j1Animation.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -149,6 +150,12 @@ bool j1Scene::Update(float dt)
 bool j1Scene::PostUpdate()
 {
 	bool ret = true;
+
+	//Animation test
+	Animation* anim = App->anim->GetAnimation(TWOHANDEDSWORDMAN, DIE, SOUTH);
+	SDL_Texture* tex = App->anim->GetTexture(TWOHANDEDSWORDMAN);
+	App->render->Blit(tex, 150, 150, &anim->GetCurrentFrame());
+	//--
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

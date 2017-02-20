@@ -92,6 +92,34 @@ bool j1Animation::CleanUp()
 	return true;
 }
 
+Animation* j1Animation::GetAnimation(const UNITS_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)
+{
+	std::list<Animation*>::iterator ret = animations.begin();
+	while (ret != animations.end())
+	{
+		if (ret._Ptr->_Myval->unit_type == unit && ret._Ptr->_Myval->action_type == action && ret._Ptr->_Myval->direction_type == direction)
+			return ret._Ptr->_Myval;
+
+		ret++;
+	}
+
+	return nullptr;
+}
+
+SDL_Texture * j1Animation::GetTexture(const UNITS_TYPE unit)
+{
+	//TODO: We need to get an idea in how to relate the name of the unit with the texture.
+	std::list<SDL_Texture*>::iterator ret = textures.begin();
+	while (ret != textures.end())
+	{
+		//if (ret._Ptr->_Myval->unit_type == unit)
+			return ret._Ptr->_Myval;
+
+		ret++;
+	}
+	return nullptr;
+}
+
 //--------------------------------------------------------------------------------------//
 
 Animation::Animation(std::string name): name(name)
@@ -146,7 +174,7 @@ void Animation::Reset()
 
 void Animation::SetUnit(const pugi::xml_node node)
 {
-	if (strcmp(node.name(), "twohandedswordman"))
+	if (strcmp(node.name(), "twohandedswordman") == 0)
 		unit_type = TWOHANDEDSWORDMAN;
 
 	else
@@ -158,19 +186,19 @@ void Animation::SetUnit(const pugi::xml_node node)
 
 void Animation::SetAction(const pugi::xml_node node)
 {
-	if (strcmp(node.name(), "attack"))
+	if (strcmp(node.name(), "attack") == 0)
 		action_type = ATTACK;
 
-	else if (strcmp(node.name(), "die"))
+	else if (strcmp(node.name(), "die") == 0)
 		action_type = DIE;
 
-	else if (strcmp(node.name(), "disappear"))	//IF PROBLEM CHECK DIsAppEAR SPELLING!!!!!
+	else if (strcmp(node.name(), "disappear") == 0)	//IF PROBLEM CHECK DIsAppEAR SPELLING!!!!!
 		action_type = DISAPPEAR;
 
-	else if (strcmp(node.name(), "idle"))
+	else if (strcmp(node.name(), "idle") == 0)
 		action_type = IDLE;
 
-	else if (strcmp(node.name(), "walk"))
+	else if (strcmp(node.name(), "walk") == 0)
 		action_type = WALK;
 
 	else
@@ -182,19 +210,19 @@ void Animation::SetAction(const pugi::xml_node node)
 
 void Animation::SetDirection(const pugi::xml_node node)
 {
-	if (strcmp(node.name(), "north"))
+	if (strcmp(node.name(), "north") == 0)
 		direction_type = NORTH;
 
-	else if (strcmp(node.name(), "south"))
+	else if (strcmp(node.name(), "south") == 0)
 		direction_type = SOUTH;
 
-	else if (strcmp(node.name(), "south_west"))
+	else if (strcmp(node.name(), "south_west") == 0)
 		direction_type = SOUTH_WEST;
 
-	else if (strcmp(node.name(), "west"))
+	else if (strcmp(node.name(), "west") == 0)
 		direction_type = WEST;
 
-	else if (strcmp(node.name(), "north_west"))
+	else if (strcmp(node.name(), "north_west") == 0)
 		direction_type = NORTH_WEST;
 
 	else
