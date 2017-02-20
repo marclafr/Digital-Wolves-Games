@@ -6,7 +6,7 @@
 
 j1Animation::j1Animation()
 {
-	name.create("animation");
+	name.assign("animation");
 }
 
 // Destructor
@@ -15,7 +15,7 @@ j1Animation::~j1Animation()
 
 bool j1Animation::Start()
 {
-	twohandedswordman_texture = App->tex->Load("animations/Twohandedswordman_data.png");
+	textures.push_back(App->tex->Load("animations/Twohandedswordman_data.png"));
 
 	return true;
 }
@@ -23,7 +23,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
 
-	std::string anim_folder = "animations/Twohandedswordman_data.xml";
+	std::string anim_folder = "animations/Twohandedswordman_data.xml";	//TODO: change name
 
 	//Load animations data from animations folder
 	char* buff = nullptr;
@@ -39,37 +39,86 @@ bool j1Animation::Awake(pugi::xml_node& config)
 	}
 
 	//Loading units
-	pugi::xml_node unit_node = anim_data.child("TextureAtlas").child("sprite");
-
-	std::string unit_enum;
+	pugi::xml_node unit_node = anim_data.child("Sprites").first_child();
 
 	while (unit_node != NULL)
 	{
-		unit_enum = unit_node.attribute("n").as_string();
+		pugi::xml_node action_node = unit_node.first_child();
+		while (action_node != NULL)
+		{
+			pugi::xml_node direction_node = action_node.first_child();
+			while (direction_node != NULL)
+			{
+				Animation* new_anim = new Animation(unit_node.name());
+				pugi::xml_node sprite_node = direction_node.first_child();
+				while (sprite_node != NULL)
+				{
+					new_anim->frames.push_back({ sprite_node.attribute("x").as_int(),sprite_node.attribute("y").as_int(), sprite_node.attribute("w").as_int(),sprite_node.attribute("h").as_int() });
+					new_anim->pivot_points.push_back({ sprite_node.attribute("pX").as_float(),sprite_node.attribute("pY").as_float() });
+					
+					sprite_node = sprite_node.next_sibling();
+				}
+				std::string anim_name = unit_node.name();
+				new_anim->name = anim_name + "_" + action_node.name() + "_" + direction_node.name();
+				new_anim->SetUnit(unit_node);
+				new_anim->SetAction(action_node);
+				new_anim->SetDirection(direction_node);
 
+				animations.push_back(new_anim);
+
+				direction_node = direction_node.next_sibling();
+			}
+			action_node = action_node.next_sibling();
+		}
 		unit_node = unit_node.next_sibling();
 	}
 
 	return ret;
 }
 
-void j1Animation::SetSpeed(float spd)
+
+bool j1Animation::CleanUp()
+{
+	std::list<Animation*>::iterator temp = animations.begin();
+	while (temp != animations.end())
+	{
+		temp._Ptr->_Myval->CleanUp();
+		delete temp._Ptr->_Myval;
+		temp++;
+	}
+
+	animations.clear();
+
+	return true;
+}
+
+//--------------------------------------------------------------------------------------//
+
+Animation::Animation(std::string name): name(name)
+{
+}
+
+// Destructor
+Animation::~Animation()
+{}
+
+void Animation::SetSpeed(float spd)
 {
 	speed = spd;
 }
 
-void j1Animation::SetLoopState(bool state)
+void Animation::SetLoopState(bool state)
 {
 	loop = state;
 }
 
 
-void j1Animation::PushBack(const SDL_Rect& rect)
+void Animation::PushBack(const SDL_Rect& rect)
 {
 	frames.push_back(rect);
 }
 
-SDL_Rect& j1Animation::GetCurrentFrame()
+SDL_Rect& Animation::GetCurrentFrame()
 {
 	current_frame += speed;
 	if (current_frame >= last_frame)
@@ -84,19 +133,82 @@ SDL_Rect& j1Animation::GetCurrentFrame()
 	return frames[(int)current_frame];
 }
 
-bool j1Animation::Finished() const
+bool Animation::Finished() const
 {
 	return loops > 0;
 }
 
-void j1Animation::Reset()
+void Animation::Reset()
 {
 	current_frame = 0.0f;
 	loops = 0;
 }
 
-bool j1Animation::CleanUp()
+void Animation::SetUnit(const pugi::xml_node node)
+{
+	if (strcmp(node.name(), "twohandedswordman"))
+		unit_type = TWOHANDEDSWORDMAN;
+
+	else
+	{
+		unit_type = NO_UNIT;
+		LOG("ERROR: XML Node UNIT TYPE does not match");
+	}
+}
+
+void Animation::SetAction(const pugi::xml_node node)
+{
+	if (strcmp(node.name(), "attack"))
+		action_type = ATTACK;
+
+	else if (strcmp(node.name(), "die"))
+		action_type = DIE;
+
+	else if (strcmp(node.name(), "disappear"))	//IF PROBLEM CHECK DIsAppEAR SPELLING!!!!!
+		action_type = DISAPPEAR;
+
+	else if (strcmp(node.name(), "idle"))
+		action_type = IDLE;
+
+	else if (strcmp(node.name(), "walk"))
+		action_type = WALK;
+
+	else
+	{
+		action_type = NO_ACTION;
+		LOG("ERROR: XML Node ACTION TYPE does not match");
+	}
+}
+
+void Animation::SetDirection(const pugi::xml_node node)
+{
+	if (strcmp(node.name(), "north"))
+		direction_type = NORTH;
+
+	else if (strcmp(node.name(), "south"))
+		direction_type = SOUTH;
+
+	else if (strcmp(node.name(), "south_west"))
+		direction_type = SOUTH_WEST;
+
+	else if (strcmp(node.name(), "west"))
+		direction_type = WEST;
+
+	else if (strcmp(node.name(), "north_west"))
+		direction_type = NORTH_WEST;
+
+	else
+	{
+		direction_type = NO_DIRECTION;
+		LOG("ERROR: XML Node DIRECTION TYPE does not match");
+	}
+
+}
+
+bool Animation::CleanUp()
 {
 	frames.clear();
+	pivot_points.clear();
+
 	return true;
 }

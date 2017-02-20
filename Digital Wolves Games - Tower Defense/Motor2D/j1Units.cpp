@@ -2,7 +2,7 @@
 #include "j1App.h"
 j1Units::j1Units() : j1Module()
 {
-	name.create("Units");
+	name.assign("Units");
 }
 
 j1Units::~j1Units() {}

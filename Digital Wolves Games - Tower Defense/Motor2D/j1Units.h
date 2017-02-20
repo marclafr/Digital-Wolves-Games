@@ -4,10 +4,39 @@
 #include "j1Module.h"
 #include "j1Textures.h"
 #include "p2Point.h"
-enum UNITS_TYPE{
+
+
+enum UNITS_TYPE
+{
+	NO_UNIT = 0,
 	VILLAGER,
-	TWOHANDED
+	TWOHANDEDSWORDMAN
 };
+
+
+enum ACTION_TYPE
+{
+	NO_ACTION = 0,
+	ATTACK,
+	DIE,
+	DISAPPEAR,
+	IDLE,
+	WALK
+};
+
+enum DIRECTION_TYPE
+{
+	NO_DIRECTION = 0,
+	NORTH,
+	NORTH_EAST,
+	EAST,
+	SOUTH_EAST,
+	SOUTH,
+	SOUTH_WEST,
+	WEST,
+	NORTH_WEST
+};
+//--
 
 class j1Units : public j1Module
 {

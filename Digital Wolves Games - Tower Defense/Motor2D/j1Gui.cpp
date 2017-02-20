@@ -9,7 +9,7 @@
 
 j1Gui::j1Gui() : j1Module()
 {
-	name.create("gui");
+	name.assign("gui");
 }
 
 // Destructor
