@@ -5,7 +5,7 @@
 #include "j1Module.h"
 #include <vector>
 #include <list>
-#include "j1Units.h"
+#include "j1EntityManager.h"
 #include "j1Timer.h"
 
 struct SDL_Texture;
