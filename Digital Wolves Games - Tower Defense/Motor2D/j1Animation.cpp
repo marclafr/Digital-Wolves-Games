@@ -15,7 +15,8 @@ j1Animation::~j1Animation()
 
 bool j1Animation::Start()
 {
-	textures.push_back(Textures(App->tex->Load("animations/Twohandedswordman_data.png"), TWOHANDEDSWORDMAN));
+	textures.push_back(Textures(App->tex->Load("animations/CavalryArcher.png"), CAVALRYARCHER));
+	textures.push_back(Textures(App->tex->Load("animations/Twohandedswordman.png"), TWOHANDEDSWORDMAN));
 
 	return true;
 }
@@ -189,6 +190,9 @@ void Animation::SetUnit(const pugi::xml_node node)
 {
 	if (strcmp(node.name(), "twohandedswordman") == 0)
 		unit_type = TWOHANDEDSWORDMAN;
+
+	else if (strcmp(node.name(), "cavalryarcher") == 0)
+		unit_type = CAVALRYARCHER;
 
 	else
 	{
