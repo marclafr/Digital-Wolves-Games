@@ -54,7 +54,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 				while (sprite_node != NULL)
 				{
 					new_anim->frames.push_back({ sprite_node.attribute("x").as_int(),sprite_node.attribute("y").as_int(), sprite_node.attribute("w").as_int(),sprite_node.attribute("h").as_int() });
-					new_anim->pivot_points.push_back({ sprite_node.attribute("pX").as_float(),sprite_node.attribute("pY").as_float() });
+					new_anim->pivot_points.push_back({ sprite_node.attribute("w").as_int()*sprite_node.attribute("pX").as_float(), sprite_node.attribute("w").as_int() * sprite_node.attribute("pY").as_float() });
 					
 					sprite_node = sprite_node.next_sibling();
 				}
@@ -148,6 +148,7 @@ void Animation::PushBack(const SDL_Rect& rect)
 
 SDL_Rect& Animation::GetCurrentFrame()
 {
+	/*
 	current_frame += speed;
 	if (current_frame >= last_frame)
 	{
@@ -159,6 +160,25 @@ SDL_Rect& Animation::GetCurrentFrame()
 		current_frame = last_frame - 1;
 	}
 	return frames[(int)current_frame];
+	*/
+
+	current_frame += anim_timer.Read() / speed;
+
+	if (current_frame > frames.size())
+	{
+		anim_timer.Start();
+		if (loop == true)
+			current_frame = 0;
+
+		loops++;
+	}	
+
+	return frames[(int)current_frame];
+}
+
+fPoint Animation::GetCurrentPoint()
+{
+	return pivot_points[(int)current_frame];
 }
 
 bool Animation::Finished() const

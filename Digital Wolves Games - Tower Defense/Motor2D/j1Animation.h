@@ -6,6 +6,7 @@
 #include <vector>
 #include <list>
 #include "j1Units.h"
+#include "j1Timer.h"
 
 struct SDL_Texture;
 
@@ -25,16 +26,18 @@ public:
 	std::vector<fPoint> pivot_points;
 
 	float current_frame;
-	int last_frame = 0;
+	//int last_frame = 0;
 	bool loop = true;
 	int loops = 0;
-	float speed = 1.0f;
+	float speed = 10000.0f;	//More speed equals slow down the animation
+	j1Timer	anim_timer;
 
 public:
 	void SetSpeed(float speed);
 	void SetLoopState(bool state);
 	void PushBack(const SDL_Rect& rect);
 	SDL_Rect& GetCurrentFrame();
+	fPoint GetCurrentPoint();
 
 	bool CleanUp();
 	bool Finished() const;
@@ -63,6 +66,7 @@ public:
 
 	Animation* GetAnimation(const UNITS_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction);
 	SDL_Texture* GetTexture(const UNITS_TYPE unit);
+	
 
 private:
 	std::list<SDL_Texture*> textures; //vector??

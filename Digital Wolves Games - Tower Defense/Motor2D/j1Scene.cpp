@@ -154,7 +154,13 @@ bool j1Scene::PostUpdate()
 	//Animation test
 	Animation* anim = App->anim->GetAnimation(TWOHANDEDSWORDMAN, DIE, SOUTH);
 	SDL_Texture* tex = App->anim->GetTexture(TWOHANDEDSWORDMAN);
-	App->render->Blit(tex, 150, 150, &anim->GetCurrentFrame());
+	fPoint* p = &anim->GetCurrentPoint();
+	App->render->Blit(tex, 150 - p->x, 150 - p->y, &anim->GetCurrentFrame());
+
+	Animation* anim2 = App->anim->GetAnimation(TWOHANDEDSWORDMAN, ATTACK, SOUTH);
+	SDL_Texture* tex2 = App->anim->GetTexture(TWOHANDEDSWORDMAN);
+	fPoint* p2 = &anim2->GetCurrentPoint();
+	App->render->Blit(tex2, 300 - p2->x, 150 - p2->y, &anim2->GetCurrentFrame());
 	//--
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
