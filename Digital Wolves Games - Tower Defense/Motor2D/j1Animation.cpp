@@ -55,7 +55,12 @@ bool j1Animation::Awake(pugi::xml_node& config)
 				while (sprite_node != NULL)
 				{
 					new_anim->frames.push_back({ sprite_node.attribute("x").as_int(),sprite_node.attribute("y").as_int(), sprite_node.attribute("w").as_int(),sprite_node.attribute("h").as_int() });
-					new_anim->pivot_points.push_back({ sprite_node.attribute("w").as_int()*sprite_node.attribute("pX").as_float(), sprite_node.attribute("w").as_int() * sprite_node.attribute("pY").as_float() });
+					
+					float pX = sprite_node.attribute("w").as_int()*sprite_node.attribute("pX").as_float();
+					float pY = sprite_node.attribute("h").as_int() * sprite_node.attribute("pY").as_float();
+					pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
+					pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
+					new_anim->pivot_points.push_back({ (int)pX, (int)pY }),
 					
 					sprite_node = sprite_node.next_sibling();
 				}
@@ -142,23 +147,9 @@ void Animation::SetLoopState(bool state)
 
 SDL_Rect& Animation::GetCurrentFrame()
 {
-	/*
-	current_frame += speed;
-	if (current_frame >= last_frame)
-	{
-		current_frame = (loop) ? 0.0f : last_frame - 1;
-		loops++;
-	}
-	else if (current_frame < 0)
-	{
-		current_frame = last_frame - 1;
-	}
-	return frames[(int)current_frame];
-	*/
+	current_frame = (float) floor(anim_timer.Read() / speed);
 
-	current_frame += anim_timer.Read() / speed;
-
-	if (current_frame > frames.size())
+	if (current_frame >= frames.size())
 	{
 		anim_timer.Start();
 		if (loop == true)
@@ -170,7 +161,7 @@ SDL_Rect& Animation::GetCurrentFrame()
 	return frames[(int)current_frame];
 }
 
-fPoint Animation::GetCurrentPoint()
+iPoint Animation::GetCurrentPoint()
 {
 	return pivot_points[(int)current_frame];
 }

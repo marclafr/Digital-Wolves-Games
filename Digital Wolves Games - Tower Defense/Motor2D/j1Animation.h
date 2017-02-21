@@ -33,20 +33,19 @@ public:
 	DIRECTION_TYPE direction_type;
 
 	std::vector<SDL_Rect> frames;
-	std::vector<fPoint> pivot_points;
+	std::vector<iPoint> pivot_points;
 
 	float current_frame;
-	//int last_frame = 0;
 	bool loop = true;
 	int loops = 0;
-	float speed = 5000.0f;	//More speed equals slow down the animation
+	float speed = 200.0f;	//More speed equals slow down the animation
 	j1Timer	anim_timer;
 
 public:
 	void SetSpeed(float speed);
 	void SetLoopState(bool state);
 	SDL_Rect& GetCurrentFrame();
-	fPoint GetCurrentPoint();
+	iPoint GetCurrentPoint();
 
 	bool Finished() const;
 	void Reset();
