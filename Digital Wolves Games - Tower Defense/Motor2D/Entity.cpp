@@ -1,5 +1,13 @@
 #include "Entity.h"
 
+Entity::Entity()
+{
+}
+
+Entity::~Entity()
+{
+}
+
 void Entity::Die()
 {
 	to_delete = true;

@@ -98,7 +98,7 @@ bool j1Animation::CleanUp()
 	return true;
 }
 
-Animation* j1Animation::GetAnimation(const UNITS_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction)
+Animation* j1Animation::GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction)
 {
 	std::list<Animation*>::iterator ret = animations.begin();
 	while (ret != animations.end())
@@ -112,7 +112,7 @@ Animation* j1Animation::GetAnimation(const UNITS_TYPE unit, const ACTION_TYPE ac
 	return nullptr;
 }
 
-SDL_Texture * j1Animation::GetTexture(const UNITS_TYPE unit)
+SDL_Texture * j1Animation::GetTexture(const UNIT_TYPE unit)
 {
 	std::vector<Textures>::iterator ret = textures.begin();
 	while (ret != textures.end())

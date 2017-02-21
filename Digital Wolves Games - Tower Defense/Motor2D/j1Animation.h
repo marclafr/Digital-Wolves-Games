@@ -5,7 +5,9 @@
 #include "j1Module.h"
 #include <vector>
 #include <list>
-#include "j1EntityManager.h"
+#include "Entity.h"
+#include "Units.h"
+#include "Buildings.h"
 #include "j1Timer.h"
 
 struct SDL_Texture;
@@ -13,10 +15,10 @@ struct SDL_Texture;
 struct Textures
 {
 public:
-	Textures(SDL_Texture* tex, UNITS_TYPE u) : texture(tex), unit(u) {}
+	Textures(SDL_Texture* tex, UNIT_TYPE u) : texture(tex), unit(u) {}
 	~Textures() {}
 	SDL_Texture* texture;
-	UNITS_TYPE unit;
+	UNIT_TYPE unit;
 };
 
 class Animation
@@ -28,9 +30,9 @@ public:
 	~Animation();
 
 	std::string name;
-	UNITS_TYPE unit_type;
+	UNIT_TYPE unit_type;
 	ACTION_TYPE action_type;
-	DIRECTION_TYPE direction_type;
+	DIRECTION direction_type;
 
 	std::vector<SDL_Rect> frames;
 	std::vector<iPoint> pivot_points;
@@ -74,8 +76,8 @@ public:
 
 	bool CleanUp();
 
-	Animation* GetAnimation(const UNITS_TYPE unit, const ACTION_TYPE action, const DIRECTION_TYPE direction);
-	SDL_Texture* GetTexture(const UNITS_TYPE unit);
+	Animation* GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction);
+	SDL_Texture* GetTexture(const UNIT_TYPE unit);
 	
 
 private:

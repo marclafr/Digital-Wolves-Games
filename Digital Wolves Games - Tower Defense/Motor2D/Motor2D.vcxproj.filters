@@ -49,7 +49,7 @@
     <ClCompile Include="j1Fonts.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Gui.cpp">
+    <ClCompile Include="j1UIManager.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
     <ClCompile Include="j1Animation.cpp">
@@ -135,7 +135,7 @@
     <ClInclude Include="j1Fonts.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="j1Gui.h">
+    <ClInclude Include="j1UIManager.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Animation.h">
