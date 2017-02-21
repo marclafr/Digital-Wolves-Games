@@ -15,6 +15,7 @@
 #include "j1Pathfinding.h"
 #include "j1Fonts.h"
 #include "j1Animation.h"
+#include "j1UIManager.h"
 #include "j1App.h"
 #include "j1EntityManager.h"
 
@@ -35,6 +36,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	units = new j1EntityManager();
 	font = new j1Fonts();
 	anim = new j1Animation();
+	uimanager = new j1UIManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -49,6 +51,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(font);
 
 	AddModule(anim);
+
+	AddModule(uimanager);
 
 	// scene last
 	AddModule(scene);

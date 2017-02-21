@@ -45,6 +45,9 @@ public:
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 
+	//Get width and height from texture
+	void GetDimensionsFromTexture(SDL_Texture* tex, int& w, int& h);
+
 public:
 
 	SDL_Renderer*	renderer;
