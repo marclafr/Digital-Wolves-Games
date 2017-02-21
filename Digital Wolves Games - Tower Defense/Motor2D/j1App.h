@@ -20,7 +20,7 @@ class j1Map;
 class j1PathFinding;
 class j1Fonts;
 class j1Animation;
-class j1Gui;
+class j1UIManager;
 class j1Units;
 
 class j1App
@@ -97,7 +97,7 @@ public:
 	j1PathFinding*		pathfinding = NULL;
 	j1Fonts*			font = NULL;
 	j1Animation*		anim = NULL;
-	j1Gui*				gui = NULL;
+	j1UIManager*		uimanager = NULL;
 	j1Units*            units = NULL;
 
 private:
