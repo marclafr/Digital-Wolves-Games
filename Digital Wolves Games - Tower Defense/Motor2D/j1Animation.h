@@ -10,9 +10,19 @@
 
 struct SDL_Texture;
 
+struct Textures
+{
+public:
+	Textures(SDL_Texture* tex, UNITS_TYPE u) : texture(tex), unit(u) {}
+	~Textures() {}
+	SDL_Texture* texture;
+	UNITS_TYPE unit;
+};
 
 class Animation
 {
+	friend class j1Animation;
+
 public:
 	Animation(std::string name);
 	~Animation();
@@ -29,25 +39,26 @@ public:
 	//int last_frame = 0;
 	bool loop = true;
 	int loops = 0;
-	float speed = 10000.0f;	//More speed equals slow down the animation
+	float speed = 5000.0f;	//More speed equals slow down the animation
 	j1Timer	anim_timer;
 
 public:
 	void SetSpeed(float speed);
 	void SetLoopState(bool state);
-	void PushBack(const SDL_Rect& rect);
 	SDL_Rect& GetCurrentFrame();
 	fPoint GetCurrentPoint();
 
-	bool CleanUp();
 	bool Finished() const;
 	void Reset();
 
+private:
+	bool CleanUp();
 	void SetUnit(const pugi::xml_node node);
 	void SetAction(const pugi::xml_node node);
 	void SetDirection(const pugi::xml_node node);
 };
 
+//------------------------------------------------------------------------//
 
 class j1Animation:public j1Module
 {
@@ -69,9 +80,8 @@ public:
 	
 
 private:
-	std::list<SDL_Texture*> textures; //vector??
+	std::vector<Textures> textures;
 	std::list<Animation*> animations;
-
 };
 
 #endif

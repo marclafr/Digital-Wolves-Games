@@ -15,7 +15,7 @@ j1Animation::~j1Animation()
 
 bool j1Animation::Start()
 {
-	textures.push_back(App->tex->Load("animations/Twohandedswordman_data.png"));
+	textures.push_back(Textures(App->tex->Load("animations/Twohandedswordman_data.png"), TWOHANDEDSWORDMAN));
 
 	return true;
 }
@@ -108,12 +108,11 @@ Animation* j1Animation::GetAnimation(const UNITS_TYPE unit, const ACTION_TYPE ac
 
 SDL_Texture * j1Animation::GetTexture(const UNITS_TYPE unit)
 {
-	//TODO: We need to get an idea in how to relate the name of the unit with the texture.
-	std::list<SDL_Texture*>::iterator ret = textures.begin();
+	std::vector<Textures>::iterator ret = textures.begin();
 	while (ret != textures.end())
 	{
-		//if (ret._Ptr->_Myval->unit_type == unit)
-			return ret._Ptr->_Myval;
+		if (ret._Ptr->unit == unit)
+			return ret._Ptr->texture;
 
 		ret++;
 	}
@@ -138,12 +137,6 @@ void Animation::SetSpeed(float spd)
 void Animation::SetLoopState(bool state)
 {
 	loop = state;
-}
-
-
-void Animation::PushBack(const SDL_Rect& rect)
-{
-	frames.push_back(rect);
 }
 
 SDL_Rect& Animation::GetCurrentFrame()
