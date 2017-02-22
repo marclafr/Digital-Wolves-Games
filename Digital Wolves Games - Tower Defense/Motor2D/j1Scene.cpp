@@ -202,46 +202,26 @@ bool j1Scene::PostUpdate()
 	bool ret = true;
 
 	//Animation test
-	Animation* anim = App->anim->GetAnimation(TWOHANDEDSWORDMAN, DIE, WEST);
-	SDL_Texture* tex = App->anim->GetTexture(TWOHANDEDSWORDMAN);
-	iPoint* p = &anim->GetCurrentPoint();
-	anim->SetSpeed(1000);
-	anim->SetLoopState(false);
-	App->render->Blit(tex, 150 - p->x, 150 - p->y, &anim->GetCurrentFrame());
 
-	Animation* anim2 = App->anim->GetAnimation(TWOHANDEDSWORDMAN, ATTACK, WEST);
-	SDL_Texture* tex2 = App->anim->GetTexture(TWOHANDEDSWORDMAN);
-	SDL_Rect rect = anim2->GetCurrentFrame();
-	iPoint* p2 = &anim2->GetCurrentPoint();
-	App->render->Blit(tex2, 300 - p2->x, 150 - p2->y, &rect);
+	App->anim->DrawAnimation(TWOHANDEDSWORDMAN, DIE, WEST, { 150,150 });
+
+	App->anim->DrawAnimation(TWOHANDEDSWORDMAN, WALK, WEST, { 300,150 });
+
+	App->anim->DrawAnimation(TWOHANDEDSWORDMAN, ATTACK, WEST, { 450,150 });
+
 
 	//Archer Cavalry
-	Animation* animC = App->anim->GetAnimation(CAVALRYARCHER, ATTACK, WEST);
-	SDL_Texture* texC = App->anim->GetTexture(CAVALRYARCHER);
-	iPoint* pC = &animC->GetCurrentPoint();
-	App->render->Blit(texC, 150 - pC->x, 450 - pC->y, &animC->GetCurrentFrame());
+	Animation* test = App->anim->DrawAnimation(CAVALRYARCHER, ATTACK, WEST, { 150, 450 });
+	test->SetSpeed(50);
 
-	Animation* animC2 = App->anim->GetAnimation(CAVALRYARCHER, DIE, WEST);
-	SDL_Texture* texC2 = App->anim->GetTexture(CAVALRYARCHER);
-	SDL_Rect rectC2 = animC2->GetCurrentFrame();
-	animC2->SetSpeed(500);
-	iPoint* pC2 = &animC2->GetCurrentPoint();
-	App->render->Blit(texC2, 300 - pC2->x, 450 - pC2->y, &rectC2);
+	App->anim->DrawAnimation(CAVALRYARCHER, DIE, WEST, { 300, 450 });
 
-	Animation* animC3 = App->anim->GetAnimation(CAVALRYARCHER, DISAPPEAR, WEST);
-	SDL_Texture* texC3 = App->anim->GetTexture(CAVALRYARCHER);
-	iPoint* pC3 = &animC3->GetCurrentPoint();
-	App->render->Blit(texC3, 450 - pC3->x, 450 - pC3->y, &animC3->GetCurrentFrame());
+	App->anim->DrawAnimation(CAVALRYARCHER, DISAPPEAR, WEST, { 450, 450 });
 
-	Animation* animC4 = App->anim->GetAnimation(CAVALRYARCHER, IDLE, WEST);
-	SDL_Texture* texC4 = App->anim->GetTexture(CAVALRYARCHER);
-	iPoint* pC4 = &animC4->GetCurrentPoint();
-	App->render->Blit(texC4, 600 - pC4->x, 450 - pC4->y, &animC4->GetCurrentFrame());
+	App->anim->DrawAnimation(CAVALRYARCHER, IDLE, WEST, { 600, 450 });
 
-	Animation* animC5 = App->anim->GetAnimation(CAVALRYARCHER, WALK, WEST);
-	SDL_Texture* texC5 = App->anim->GetTexture(CAVALRYARCHER);
-	iPoint* pC5 = &animC5->GetCurrentPoint();
-	App->render->Blit(texC5, 750 - pC5->x, 450 - pC5->y, &animC5->GetCurrentFrame());
+	App->anim->DrawAnimation(CAVALRYARCHER, WALK, WEST, { 750, 450 });
+
 	//--
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
