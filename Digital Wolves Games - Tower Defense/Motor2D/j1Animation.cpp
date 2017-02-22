@@ -129,29 +129,32 @@ SDL_Texture * j1Animation::GetTexture(const UNIT_TYPE unit)
 Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction, iPoint pos)
 {
 	Animation* anim = App->anim->GetAnimation(unit, action, direction);
-	SDL_Texture* tex = App->anim->GetTexture(unit);
-	SDL_Rect rect = anim->GetCurrentFrame();
-	iPoint* p = &anim->GetCurrentPivotPoint();
-
-	if (anim == NULL)
+	if (anim->Finished() == false)
 	{
-		LOG("ERROR: DrawAnimation: animation not found");
-		return NULL;
-	}
+		SDL_Texture* tex = App->anim->GetTexture(unit);
+		SDL_Rect rect = anim->GetCurrentFrame();
+		iPoint* p = &anim->GetCurrentPivotPoint();
 
-	if (tex == NULL)
-	{
-		LOG("ERROR: DrawAnimation: texture not found");
-		return NULL;
-	}
+		if (anim == NULL)
+		{
+			LOG("ERROR: DrawAnimation: animation not found");
+			return NULL;
+		}
 
-	if (p == NULL)
-	{
-		LOG("ERROR: DrawAnimation: pivot point not found");
-		return NULL;
-	}
+		if (tex == NULL)
+		{
+			LOG("ERROR: DrawAnimation: texture not found");
+			return NULL;
+		}
 
-	App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect);
+		if (p == NULL)
+		{
+			LOG("ERROR: DrawAnimation: pivot point not found");
+			return NULL;
+		}
+
+		App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect);
+	}
 	return anim;
 }
 
@@ -198,7 +201,7 @@ iPoint Animation::GetCurrentPivotPoint()
 
 bool Animation::Finished() const
 {
-	return loops > 0;
+	return loop == false && loops > 0;
 }
 
 void Animation::Reset()

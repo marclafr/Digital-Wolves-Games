@@ -216,7 +216,9 @@ bool j1Scene::PostUpdate()
 
 	App->anim->DrawAnimation(CAVALRYARCHER, DIE, WEST, { 300, 450 });
 
-	App->anim->DrawAnimation(CAVALRYARCHER, DISAPPEAR, WEST, { 450, 450 });
+	Animation* test2 = App->anim->DrawAnimation(CAVALRYARCHER, DISAPPEAR, WEST, { 450, 450 });
+	test2->SetSpeed(750);
+	test2->SetLoopState(false);
 
 	App->anim->DrawAnimation(CAVALRYARCHER, IDLE, WEST, { 600, 450 });
 
