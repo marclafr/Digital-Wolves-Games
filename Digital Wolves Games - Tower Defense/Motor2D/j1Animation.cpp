@@ -18,14 +18,15 @@ bool j1Animation::Start()
 {
 	textures.push_back(Textures(App->tex->Load("animations/CavalryArcher.png"), CAVALRYARCHER));
 	textures.push_back(Textures(App->tex->Load("animations/Twohandedswordman.png"), TWOHANDEDSWORDMAN));
-
+	textures.push_back(Textures(App->tex->Load("animations/SiegeRam.png"), SIEGERAM));
+	
 	return true;
 }
 bool j1Animation::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
 
-	std::string anim_folder = "animations/Twohandedswordman_data.xml";	//TODO: change name
+	std::string anim_folder = "animations/Units_data.xml";	//TODO: change name
 
 	//Load animations data from animations folder
 	char* buff = nullptr;
@@ -71,6 +72,12 @@ bool j1Animation::Awake(pugi::xml_node& config)
 				new_anim->SetAction(action_node);
 				new_anim->SetDirection(direction_node);
 
+				std::string action = action_node.name();
+				if (!action.compare("disappear"))
+				{
+					new_anim->speed = 10000.0f;
+					new_anim->loop = false;
+				}
 				animations.push_back(new_anim);
 
 				direction_node = direction_node.next_sibling();
@@ -244,6 +251,9 @@ void Animation::SetUnit(const pugi::xml_node node)
 
 	else if (strcmp(node.name(), "cavalryarcher") == 0)
 		unit_type = CAVALRYARCHER;
+
+	else if (strcmp(node.name(), "siegeram") == 0)
+		unit_type = SIEGERAM;
 
 	else
 	{

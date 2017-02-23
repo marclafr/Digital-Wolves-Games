@@ -209,6 +209,8 @@ bool j1Scene::PostUpdate()
 
 	App->anim->DrawAnimation(TWOHANDEDSWORDMAN, ATTACK, WEST, { 450,150 });
 
+	App->anim->DrawAnimation(TWOHANDEDSWORDMAN, DISAPPEAR, WEST, { 600,150 });
+
 
 	//Archer Cavalry
 	Animation* test = App->anim->DrawAnimation(CAVALRYARCHER, ATTACK, NORTH_EAST, { 150, 450 });
@@ -216,13 +218,26 @@ bool j1Scene::PostUpdate()
 
 	App->anim->DrawAnimation(CAVALRYARCHER, DIE, WEST, { 300, 450 });
 
-	Animation* test2 = App->anim->DrawAnimation(CAVALRYARCHER, DISAPPEAR, WEST, { 450, 450 });
-	test2->SetSpeed(750);
-	test2->SetLoopState(false);
+	App->anim->DrawAnimation(CAVALRYARCHER, DISAPPEAR, WEST, { 450, 450 });
 
 	App->anim->DrawAnimation(CAVALRYARCHER, IDLE, EAST, { 600, 450 });
 
 	App->anim->DrawAnimation(CAVALRYARCHER, WALK, SOUTH_EAST, { 750, 450 });
+
+
+	//Siege Ram
+
+	App->anim->DrawAnimation(SIEGERAM, WALK, NORTH_WEST, { 150, 600 });
+
+	App->anim->DrawAnimation(SIEGERAM, ATTACK, NORTH_WEST, { 300, 600 });
+
+	App->anim->DrawAnimation(SIEGERAM, DIE, NORTH_WEST, { 450, 600 });
+
+	App->anim->DrawAnimation(SIEGERAM, IDLE, NORTH_WEST, { 600, 600 });
+	App->anim->DrawAnimation(SIEGERAM, ATTACK, NORTH_WEST, { 600, 600 });
+
+	App->anim->DrawAnimation(SIEGERAM, DISAPPEAR, NORTH_WEST, { 750, 600 });
+
 
 	//--
 
