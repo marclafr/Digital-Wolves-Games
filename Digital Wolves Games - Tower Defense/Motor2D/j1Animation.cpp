@@ -126,8 +126,31 @@ SDL_Texture * j1Animation::GetTexture(const UNIT_TYPE unit)
 	return nullptr;
 }
 
-Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction, iPoint pos)
+Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos)
 {
+	bool flip = false;
+	//direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST
+	switch (direction)
+	{
+	case NORTH_EAST:
+		flip = true;
+		direction = NORTH_WEST;
+		break;
+
+	case EAST:
+		flip = true;
+		direction = WEST;
+		break;
+
+	case SOUTH_EAST:
+		flip = true;
+		direction = SOUTH_WEST;
+		break;
+
+	default:
+		break;
+	}
+	
 	Animation* anim = App->anim->GetAnimation(unit, action, direction);
 	if (anim->Finished() == false)
 	{
@@ -152,8 +175,12 @@ Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE ac
 			LOG("ERROR: DrawAnimation: pivot point not found");
 			return NULL;
 		}
+		if (flip == true)
+			App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect, SDL_FLIP_HORIZONTAL);
 
-		App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect);
+		else
+			App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect);
+
 	}
 	return anim;
 }

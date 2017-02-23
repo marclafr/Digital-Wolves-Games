@@ -78,7 +78,7 @@ public:
 
 	bool CleanUp();
 	
-	Animation* DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction, iPoint pos);
+	Animation* DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos);
 	
 private:
 	std::vector<Textures> textures;
