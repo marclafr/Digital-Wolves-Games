@@ -14,7 +14,7 @@ class Entity
 {
 private:
 	bool to_delete;
-	fPoint position;
+	iPoint position;
 	int h;
 	int w;
 	int damage;

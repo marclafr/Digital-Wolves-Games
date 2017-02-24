@@ -48,6 +48,10 @@ public:
 	virtual void Move();
 	virtual void AI();
 	virtual void Draw();
+
+	const DIRECTION GetDir() const;
+	const UNIT_TYPE GetUnitType() const;
+	const ACTION_TYPE GetActionType() const;
 };
 
 #endif
