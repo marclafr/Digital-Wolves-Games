@@ -154,6 +154,24 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
+	if (flip == SDL_FLIP_HORIZONTAL)
+	{
+		rect.x -= (rect.w - pivot_x);
+		rect.y -= pivot_y;
+	}
+
+	else if (flip == SDL_FLIP_VERTICAL)
+	{
+		rect.x -= pivot_x;
+		rect.y -= (rect.h - pivot_y);
+	}
+
+	else if (flip == SDL_FLIP_NONE)
+	{
+		rect.x -= pivot_x;
+		rect.y -= pivot_y;
+	}
+
 	rect.w *= scale;
 	rect.h *= scale;
 

@@ -73,6 +73,7 @@ bool j1Scene::Start()
 	*/
 
 	App->units->CreateUnit(TWOHANDEDSWORDMAN, iPoint(800, 200));
+	App->units->CreateUnit(CAVALRYARCHER, iPoint(900, 200));
 
 	return true;
 }
