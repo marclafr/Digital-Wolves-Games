@@ -3,11 +3,22 @@
 #include "j1Animation.h"
 #include "Units.h"
 
+Unit::Unit(UNIT_TYPE u_type, iPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
+{}
+
 void Unit::Update()
 {
 	AI();
 	Move();
 	Draw();
+}
+
+void Unit::Move()
+{
+}
+
+void Unit::AI()
+{
 }
 
 void Unit::Draw()
@@ -16,7 +27,7 @@ void Unit::Draw()
 	SDL_Rect rect;
 	iPoint pivot;
 
-	//App->anim->GetAnimationFrame(text, rect, pivot, this);
+	App->anim->GetAnimationFrame(text, rect, pivot, this);
 
 	if (direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST)
 		App->render->Blit(text, GetX() - pivot.x, GetY() - pivot.y, &rect, SDL_FLIP_HORIZONTAL);

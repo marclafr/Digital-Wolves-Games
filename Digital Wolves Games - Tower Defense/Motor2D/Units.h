@@ -44,6 +44,8 @@ private:
 
 public:
 
+	Unit(UNIT_TYPE u_type, iPoint pos);
+
 	void Update(); // defines order
 
 	virtual void Move();

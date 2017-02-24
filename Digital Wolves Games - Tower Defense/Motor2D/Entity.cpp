@@ -1,8 +1,7 @@
 #include "Entity.h"
 
-Entity::Entity()
-{
-}
+Entity::Entity(ENTITY_TYPE entity_type, iPoint pos): to_delete (false), entity_type(entity_type), position(pos)
+{}
 
 Entity::~Entity()
 {

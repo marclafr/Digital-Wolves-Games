@@ -20,9 +20,8 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	Entity* CreateEntity(ENTITY_TYPE);
-	Entity* CreateUnit(UNIT_TYPE);
-	Entity* CreatBuilding(BUILDING_TYPE);
+	Entity* CreateUnit(UNIT_TYPE u_type, iPoint pos);
+	Entity* CreatBuilding(BUILDING_TYPE b_type, iPoint pos);
 
 	void DeleteEntity(Entity* ptr); // will call other delete methods
 	void DeleteUnit(Entity* ptr);

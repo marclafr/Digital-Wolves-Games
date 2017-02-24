@@ -11,6 +11,7 @@
 #include "j1UIManager.h"
 #include "j1Scene.h"
 #include "j1Animation.h"
+#include "j1EntityManager.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -45,7 +46,7 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");
 
-	/* TEST UI 
+	/*TEST UI 
 	//Definition UIElements
 	uint width = 0;
 	uint height = 0;
@@ -69,7 +70,9 @@ bool j1Scene::Start()
 	select_test->AddOption("YOU'RE FAGGOT");
 	select_test->AddOption("LET ME SUICIDE");
 	select_test->AddOption("FUCK OFF");
-	/**/
+	*/
+
+	App->units->CreateUnit(TWOHANDEDSWORDMAN, iPoint(20, 20));
 
 	return true;
 }

@@ -9,12 +9,14 @@ enum BUILDING_TYPE
 	TURRET //PER TENIR ALGO
 };
 
-class Building
+class Building : public Entity 
 {
 private:
 	enum BUILDING_TYPE building_type;
 
 public:
+
+	Building(BUILDING_TYPE b_type, iPoint pos);
 
 	void Update(); // defines order
 

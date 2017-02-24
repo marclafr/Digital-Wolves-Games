@@ -15,13 +15,10 @@ class Entity
 private:
 	bool to_delete;
 	iPoint position;
-	int h;
-	int w;
-	int damage;
 	enum ENTITY_TYPE entity_type;
 
 public:
-	Entity();
+	Entity(ENTITY_TYPE entity_type, iPoint pos);
 	~Entity();
 
 	virtual void Update() = 0;

@@ -29,19 +29,18 @@ bool j1EntityManager::CleanUp() { // not done
 	return true;
 }
 
-Entity * j1EntityManager::CreateEntity(ENTITY_TYPE)
+Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, iPoint pos)
 {
-	return nullptr;
+	Entity* new_entity = (Entity*) new Unit(u_type, pos);
+	entity_list.push_back(new_entity);
+	return new_entity;
 }
 
-Entity * j1EntityManager::CreateUnit(UNIT_TYPE)
+Entity * j1EntityManager::CreatBuilding(BUILDING_TYPE b_type, iPoint pos)
 {
-	return nullptr;
-}
-
-Entity * j1EntityManager::CreatBuilding(BUILDING_TYPE)
-{
-	return nullptr;
+	Entity* new_entity = (Entity*) new Building(b_type, pos);
+	entity_list.push_back(new_entity);
+	return new_entity;
 }
 
 void j1EntityManager::DeleteEntity(Entity * ptr)
