@@ -13,15 +13,15 @@ void Unit::Update()
 void Unit::Draw()
 {
 	SDL_Texture* text = nullptr;
-	SDL_Rect* rect;
+	SDL_Rect rect;
 	iPoint pivot;
 
 	//App->anim->GetAnimationFrame(text, rect, pivot, this);
 
 	if (direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST)
-		App->render->Blit(text, GetX() - pivot.x, GetY() - pivot.y, rect, SDL_FLIP_HORIZONTAL);
+		App->render->Blit(text, GetX() - pivot.x, GetY() - pivot.y, &rect, SDL_FLIP_HORIZONTAL);
 	else
-		App->render->Blit(text, GetX() - pivot.x, GetY() - pivot.y, rect);
+		App->render->Blit(text, GetX() - pivot.x, GetY() - pivot.y, &rect);
 }
 
 const DIRECTION Unit::GetDir() const
