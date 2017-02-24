@@ -9,6 +9,7 @@
 #include "Units.h"
 #include "Buildings.h"
 #include "j1Timer.h"
+#include "Units.h"
 
 struct SDL_Texture;
 
@@ -29,6 +30,7 @@ public:
 	Animation(std::string name);
 	~Animation();
 
+private:
 	std::string name;
 	UNIT_TYPE unit_type;
 	ACTION_TYPE action_type;
@@ -40,15 +42,13 @@ public:
 	float current_frame;
 	bool loop = true;
 	int loops = 0;
-	float speed = 200.0f;	//More speed equals slow down the animation
+	float speed = 100.0f;	//More speed equals slow down the animation
 	j1Timer	anim_timer;
 
 public:
 	void SetSpeed(float speed);
 	void SetLoopState(bool state);
-	SDL_Rect& GetCurrentFrame();
-	iPoint GetCurrentPoint();
-
+	
 	bool Finished() const;
 	void Reset();
 
@@ -57,6 +57,9 @@ private:
 	void SetUnit(const pugi::xml_node node);
 	void SetAction(const pugi::xml_node node);
 	void SetDirection(const pugi::xml_node node);
+
+	SDL_Rect& GetCurrentFrame();
+	iPoint GetCurrentPivotPoint();
 };
 
 //------------------------------------------------------------------------//
@@ -75,14 +78,16 @@ public:
 	bool Start();
 
 	bool CleanUp();
-
-	Animation* GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction);
-	SDL_Texture* GetTexture(const UNIT_TYPE unit);
 	
+	Animation* DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos);
+	bool GetAnimationFrame(SDL_Texture& tex, SDL_Rect& frame, iPoint& pivot, const Unit& unit);
 
 private:
 	std::vector<Textures> textures;
 	std::list<Animation*> animations;
+
+	Animation* GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction);
+	SDL_Texture* GetTexture(const UNIT_TYPE unit);
 };
 
 #endif

@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1FileSystem.h"
 #include "p2Log.h"
+#include "j1Render.h"
 
 j1Animation::j1Animation()
 {
@@ -17,14 +18,15 @@ bool j1Animation::Start()
 {
 	textures.push_back(Textures(App->tex->Load("animations/CavalryArcher.png"), CAVALRYARCHER));
 	textures.push_back(Textures(App->tex->Load("animations/Twohandedswordman.png"), TWOHANDEDSWORDMAN));
-
+	textures.push_back(Textures(App->tex->Load("animations/SiegeRam.png"), SIEGERAM));
+	
 	return true;
 }
 bool j1Animation::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
 
-	std::string anim_folder = "animations/Twohandedswordman_data.xml";	//TODO: change name
+	std::string anim_folder = "animations/Units_data.xml";	//TODO: change name
 
 	//Load animations data from animations folder
 	char* buff = nullptr;
@@ -70,6 +72,12 @@ bool j1Animation::Awake(pugi::xml_node& config)
 				new_anim->SetAction(action_node);
 				new_anim->SetDirection(direction_node);
 
+				std::string action = action_node.name();
+				if (!action.compare("disappear"))
+				{
+					new_anim->speed = 10000.0f;
+					new_anim->loop = false;
+				}
 				animations.push_back(new_anim);
 
 				direction_node = direction_node.next_sibling();
@@ -125,6 +133,125 @@ SDL_Texture * j1Animation::GetTexture(const UNIT_TYPE unit)
 	return nullptr;
 }
 
+Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos)
+{
+	bool flip = false;
+	//direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST
+	switch (direction)
+	{
+	case NORTH_EAST:
+		flip = true;
+		direction = NORTH_WEST;
+		break;
+
+	case EAST:
+		flip = true;
+		direction = WEST;
+		break;
+
+	case SOUTH_EAST:
+		flip = true;
+		direction = SOUTH_WEST;
+		break;
+
+	default:
+		break;
+	}
+	
+	Animation* anim = App->anim->GetAnimation(unit, action, direction);
+	if (anim->Finished() == false)
+	{
+		SDL_Texture* tex = App->anim->GetTexture(unit);
+		SDL_Rect rect = anim->GetCurrentFrame();
+		iPoint* p = &anim->GetCurrentPivotPoint();
+
+		if (anim == NULL)
+		{
+			LOG("ERROR: DrawAnimation: animation not found");
+			return NULL;
+		}
+
+		if (tex == NULL)
+		{
+			LOG("ERROR: DrawAnimation: texture not found");
+			return NULL;
+		}
+
+		if (p == NULL)
+		{
+			LOG("ERROR: DrawAnimation: pivot point not found");
+			return NULL;
+		}
+		if (flip == true)
+			App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect, SDL_FLIP_HORIZONTAL);
+
+		else
+			App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect);
+
+	}
+	return anim;
+}
+
+bool j1Animation::GetAnimationFrame(SDL_Texture& tex, SDL_Rect& frame, iPoint& pivot, const Unit& unit)
+{
+	bool ret = true;
+	//direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST
+	/*switch (unit)
+	{
+	case NORTH_EAST:
+		flip = true;
+		direction = NORTH_WEST;
+		break;
+
+	case EAST:
+		flip = true;
+		direction = WEST;
+		break;
+
+	case SOUTH_EAST:
+		flip = true;
+		direction = SOUTH_WEST;
+		break;
+
+	default:
+		break;
+	}
+
+	Animation* anim = App->anim->GetAnimation(unit, action, direction);
+	if (anim->Finished() == false)
+	{
+		SDL_Texture* tex = App->anim->GetTexture(unit);
+		SDL_Rect rect = anim->GetCurrentFrame();
+		iPoint* p = &anim->GetCurrentPivotPoint();
+
+		if (anim == NULL)
+		{
+			LOG("ERROR: DrawAnimation: animation not found");
+			return NULL;
+		}
+
+		if (tex == NULL)
+		{
+			LOG("ERROR: DrawAnimation: texture not found");
+			return NULL;
+		}
+
+		if (p == NULL)
+		{
+			LOG("ERROR: DrawAnimation: pivot point not found");
+			return NULL;
+		}
+		if (flip == true)
+			App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect, SDL_FLIP_HORIZONTAL);
+
+		else
+			App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect);
+
+	}*/
+	return ret;
+}
+
+
 //--------------------------------------------------------------------------------------//
 
 Animation::Animation(std::string name): name(name)
@@ -156,19 +283,19 @@ SDL_Rect& Animation::GetCurrentFrame()
 			current_frame = 0;
 
 		loops++;
-	}	
+	}
 
 	return frames[(int)current_frame];
 }
 
-iPoint Animation::GetCurrentPoint()
+iPoint Animation::GetCurrentPivotPoint()
 {
 	return pivot_points[(int)current_frame];
 }
 
 bool Animation::Finished() const
 {
-	return loops > 0;
+	return loop == false && loops > 0;
 }
 
 void Animation::Reset()
@@ -184,6 +311,9 @@ void Animation::SetUnit(const pugi::xml_node node)
 
 	else if (strcmp(node.name(), "cavalryarcher") == 0)
 		unit_type = CAVALRYARCHER;
+
+	else if (strcmp(node.name(), "siegeram") == 0)
+		unit_type = SIEGERAM;
 
 	else
 	{
