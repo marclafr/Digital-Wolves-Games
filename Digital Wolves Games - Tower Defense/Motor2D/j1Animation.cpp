@@ -192,24 +192,23 @@ Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE ac
 	return anim;
 }
 
-bool j1Animation::GetAnimationFrame(SDL_Texture& tex, SDL_Rect& frame, iPoint& pivot, const Unit& unit)
+bool j1Animation::GetAnimationFrame(SDL_Texture* tex, SDL_Rect* frame, iPoint& pivot, const Unit* unit)
 {
-	bool ret = true;
+	bool ret = false;
 	//direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST
-	/*switch (unit)
+	DIRECTION direction = unit->GetDir();
+
+	switch (direction)
 	{
 	case NORTH_EAST:
-		flip = true;
 		direction = NORTH_WEST;
 		break;
 
 	case EAST:
-		flip = true;
 		direction = WEST;
 		break;
 
 	case SOUTH_EAST:
-		flip = true;
 		direction = SOUTH_WEST;
 		break;
 
@@ -217,38 +216,33 @@ bool j1Animation::GetAnimationFrame(SDL_Texture& tex, SDL_Rect& frame, iPoint& p
 		break;
 	}
 
-	Animation* anim = App->anim->GetAnimation(unit, action, direction);
+	Animation* anim = App->anim->GetAnimation(unit->GetUnitType(), unit->GetActionType(), direction);
 	if (anim->Finished() == false)
 	{
-		SDL_Texture* tex = App->anim->GetTexture(unit);
-		SDL_Rect rect = anim->GetCurrentFrame();
-		iPoint* p = &anim->GetCurrentPivotPoint();
+		tex = App->anim->GetTexture(unit->GetUnitType());
+		frame = &anim->GetCurrentFrame();
+		pivot = anim->GetCurrentPivotPoint();
 
 		if (anim == NULL)
 		{
-			LOG("ERROR: DrawAnimation: animation not found");
+			LOG("ERROR: GetAnimationFrame: animation not found");
 			return NULL;
 		}
 
 		if (tex == NULL)
 		{
-			LOG("ERROR: DrawAnimation: texture not found");
+			LOG("ERROR: GetAnimationFrame: texture not found");
 			return NULL;
 		}
 
-		if (p == NULL)
+		if (frame == NULL)
 		{
-			LOG("ERROR: DrawAnimation: pivot point not found");
+			LOG("ERROR: GetAnimationFrame: frame not found");
 			return NULL;
 		}
-		if (flip == true)
-			App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect, SDL_FLIP_HORIZONTAL);
 
-		else
-			App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect);
-
-	}*/
-	return ret;
+	}
+	return anim->Finished();
 }
 
 

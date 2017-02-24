@@ -201,9 +201,16 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
+	//Unit test
+
+
+
+	//--
+
+
 	//Animation test
 
-	App->anim->DrawAnimation(TWOHANDEDSWORDMAN, DIE, WEST, { 150,150 });
+	/*App->anim->DrawAnimation(TWOHANDEDSWORDMAN, DIE, WEST, { 150,150 });
 
 	App->anim->DrawAnimation(TWOHANDEDSWORDMAN, WALK, EAST, { 300,150 });
 
@@ -237,7 +244,7 @@ bool j1Scene::PostUpdate()
 	App->anim->DrawAnimation(SIEGERAM, ATTACK, NORTH_WEST, { 600, 600 });
 
 	App->anim->DrawAnimation(SIEGERAM, DISAPPEAR, NORTH_WEST, { 750, 600 });
-
+	*/
 
 	//--
 
