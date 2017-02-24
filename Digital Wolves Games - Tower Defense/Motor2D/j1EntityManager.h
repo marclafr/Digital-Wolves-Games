@@ -16,7 +16,7 @@ public:
 	~j1EntityManager();
 
 	bool Awake();
-	bool Update();
+	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
 

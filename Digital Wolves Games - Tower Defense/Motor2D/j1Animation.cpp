@@ -192,7 +192,7 @@ Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE ac
 	return anim;
 }
 
-bool j1Animation::GetAnimationFrame(SDL_Texture* tex, SDL_Rect* frame, iPoint& pivot, const Unit* unit)
+bool j1Animation::GetAnimationFrame( SDL_Rect& frame, iPoint& pivot, const Unit* unit)
 {
 	bool ret = false;
 	//direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST
@@ -219,8 +219,7 @@ bool j1Animation::GetAnimationFrame(SDL_Texture* tex, SDL_Rect* frame, iPoint& p
 	Animation* anim = App->anim->GetAnimation(unit->GetUnitType(), unit->GetActionType(), direction);
 	if (anim->Finished() == false)
 	{
-		tex = App->anim->GetTexture(unit->GetUnitType());
-		frame = &anim->GetCurrentFrame();
+		frame = anim->GetCurrentFrame();
 		pivot = anim->GetCurrentPivotPoint();
 
 		if (anim == NULL)
@@ -228,19 +227,6 @@ bool j1Animation::GetAnimationFrame(SDL_Texture* tex, SDL_Rect* frame, iPoint& p
 			LOG("ERROR: GetAnimationFrame: animation not found");
 			return NULL;
 		}
-
-		if (tex == NULL)
-		{
-			LOG("ERROR: GetAnimationFrame: texture not found");
-			return NULL;
-		}
-
-		if (frame == NULL)
-		{
-			LOG("ERROR: GetAnimationFrame: frame not found");
-			return NULL;
-		}
-
 	}
 	return anim->Finished();
 }

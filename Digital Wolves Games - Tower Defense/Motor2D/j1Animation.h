@@ -80,14 +80,14 @@ public:
 	bool CleanUp();
 	
 	Animation* DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos);
-	bool GetAnimationFrame(SDL_Texture* tex, SDL_Rect* frame, iPoint& pivot, const Unit* unit);
+	bool GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* unit);
+	SDL_Texture* GetTexture(const UNIT_TYPE unit);
 
 private:
 	std::vector<Textures> textures;
 	std::list<Animation*> animations;
 
 	Animation* GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction);
-	SDL_Texture* GetTexture(const UNIT_TYPE unit);
 };
 
 #endif

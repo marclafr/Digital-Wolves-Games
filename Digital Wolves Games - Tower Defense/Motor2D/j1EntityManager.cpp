@@ -66,7 +66,8 @@ void j1EntityManager::DeleteBuilding(Entity * ptr)
 }
 
 
-bool j1EntityManager::Update() {
+bool j1EntityManager::Update(float dt)
+{
 
 	for (std::list<Entity*>::iterator it = entity_list.begin(); it != entity_list.end(); ++it)
 	{

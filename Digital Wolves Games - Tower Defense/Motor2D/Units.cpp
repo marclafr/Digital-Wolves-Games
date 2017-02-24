@@ -23,11 +23,11 @@ void Unit::AI()
 
 void Unit::Draw()
 {
-	SDL_Texture* text = nullptr;
+	SDL_Texture* text = App->anim->GetTexture(unit_type);
 	SDL_Rect rect;
 	iPoint pivot;
 
-	App->anim->GetAnimationFrame(text, &rect, pivot, this);
+	App->anim->GetAnimationFrame(rect, pivot, this);
 
 	if (direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST)
 		App->render->Blit(text, GetX() - pivot.x, GetY() - pivot.y, &rect, SDL_FLIP_HORIZONTAL);
