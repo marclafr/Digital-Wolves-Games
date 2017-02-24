@@ -33,5 +33,8 @@ public:
 			   //Geters
 	bool ToDelete() const;
 	ENTITY_TYPE GetEntityType() const;
+
+	const int GetX() const;
+	const int GetY() const;
 };
 #endif

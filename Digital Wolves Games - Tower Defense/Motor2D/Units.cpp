@@ -1,4 +1,5 @@
 #include "j1App.h"
+#include "j1Render.h"
 #include "j1Animation.h"
 #include "Units.h"
 
@@ -17,8 +18,10 @@ void Unit::Draw()
 
 	//App->anim->GetAnimationFrame(text, rect, pivot, this);
 
-	if(direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST)
-	App->render
+	if (direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST)
+		App->render->Blit(text, GetX() - pivot.x, GetY() - pivot.y, rect, SDL_FLIP_HORIZONTAL);
+	else
+		App->render->Blit(text, GetX() - pivot.x, GetY() - pivot.y, rect);
 }
 
 const DIRECTION Unit::GetDir() const

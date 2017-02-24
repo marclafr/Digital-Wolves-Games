@@ -22,3 +22,13 @@ ENTITY_TYPE Entity::GetEntityType() const
 {
 	return entity_type;
 }
+
+const int Entity::GetX() const
+{
+	return position.x;
+}
+
+const int Entity::GetY() const
+{
+	return position.y;
+}
