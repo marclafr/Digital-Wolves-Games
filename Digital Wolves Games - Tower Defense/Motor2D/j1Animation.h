@@ -9,6 +9,7 @@
 #include "Units.h"
 #include "Buildings.h"
 #include "j1Timer.h"
+#include "Units.h"
 
 struct SDL_Texture;
 
@@ -79,7 +80,8 @@ public:
 	bool CleanUp();
 	
 	Animation* DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos);
-	
+	bool GetAnimationFrame(SDL_Texture& tex, SDL_Rect& frame, iPoint& pivot, const Unit& unit);
+
 private:
 	std::vector<Textures> textures;
 	std::list<Animation*> animations;
