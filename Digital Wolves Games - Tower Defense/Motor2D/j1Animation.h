@@ -59,7 +59,7 @@ private:
 	void SetDirection(const pugi::xml_node node);
 
 	SDL_Rect& GetCurrentFrame();
-	iPoint GetCurrentPivotPoint();
+	iPoint& GetCurrentPivotPoint();
 };
 
 //------------------------------------------------------------------------//

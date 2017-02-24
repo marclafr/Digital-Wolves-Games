@@ -58,11 +58,11 @@ bool j1Animation::Awake(pugi::xml_node& config)
 				{
 					new_anim->frames.push_back({ sprite_node.attribute("x").as_int(),sprite_node.attribute("y").as_int(), sprite_node.attribute("w").as_int(),sprite_node.attribute("h").as_int() });
 					
-					float pX = sprite_node.attribute("w").as_int()*sprite_node.attribute("pX").as_float();
+					float pX = sprite_node.attribute("w").as_int() * sprite_node.attribute("pX").as_float();
 					float pY = sprite_node.attribute("h").as_int() * sprite_node.attribute("pY").as_float();
 					pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
 					pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
-					new_anim->pivot_points.push_back({ (int)pX, (int)pY }),
+					new_anim->pivot_points.push_back({ (int)pX, (int)pY });
 					
 					sprite_node = sprite_node.next_sibling();
 				}
@@ -192,7 +192,7 @@ Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE ac
 	return anim;
 }
 
-bool j1Animation::GetAnimationFrame( SDL_Rect& frame, iPoint& pivot, const Unit* unit)
+bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* unit)
 {
 	bool ret = false;
 	//direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST
@@ -254,21 +254,31 @@ void Animation::SetLoopState(bool state)
 
 SDL_Rect& Animation::GetCurrentFrame()
 {
+	if (current_frame == -1)
+		return frames[0];
+	
 	current_frame = (float) floor(anim_timer.Read() / speed);
 
 	if (current_frame >= frames.size())
 	{
-		anim_timer.Start();
 		if (loop == true)
+		{
+			anim_timer.Start();
 			current_frame = 0;
-
-		loops++;
+			loops++;
+		}
+		else
+		{
+			current_frame = -1;
+			loops = 0;
+			return frames[0];
+		}
 	}
 
 	return frames[(int)current_frame];
 }
 
-iPoint Animation::GetCurrentPivotPoint()
+iPoint& Animation::GetCurrentPivotPoint()
 {
 	return pivot_points[(int)current_frame];
 }

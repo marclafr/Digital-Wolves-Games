@@ -72,7 +72,7 @@ bool j1Scene::Start()
 	select_test->AddOption("FUCK OFF");
 	*/
 
-	App->units->CreateUnit(TWOHANDEDSWORDMAN, iPoint(20, 20));
+	App->units->CreateUnit(TWOHANDEDSWORDMAN, iPoint(800, 200));
 
 	return true;
 }
