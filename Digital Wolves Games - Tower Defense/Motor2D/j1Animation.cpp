@@ -16,6 +16,7 @@ j1Animation::~j1Animation()
 
 bool j1Animation::Start()
 {
+	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 	textures.push_back(Textures(App->tex->Load("animations/CavalryArcher.png"), CAVALRYARCHER));
 	textures.push_back(Textures(App->tex->Load("animations/Twohandedswordman.png"), TWOHANDEDSWORDMAN));
 	textures.push_back(Textures(App->tex->Load("animations/SiegeRam.png"), SIEGERAM));
@@ -296,6 +297,7 @@ void Animation::Reset()
 
 void Animation::SetUnit(const pugi::xml_node node)
 {
+	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 	if (strcmp(node.name(), "twohandedswordman") == 0)
 		unit_type = TWOHANDEDSWORDMAN;
 

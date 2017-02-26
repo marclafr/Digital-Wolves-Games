@@ -28,9 +28,6 @@ public:
 	void DeleteBuilding(Entity* ptr);
 
 private:
-	iPoint Position;
-	int hp, attack;
-	float speed;
 
 	//Textura provisional para sprites por si no se cargan en animation
 	SDL_Texture* sprites;

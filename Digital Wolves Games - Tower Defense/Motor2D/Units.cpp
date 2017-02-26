@@ -4,10 +4,50 @@
 #include "j1Render.h"
 #include "j1Animation.h"
 #include "Units.h"
+#include "p2Log.h"
 
 
 Unit::Unit(UNIT_TYPE u_type, iPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
-{}
+{
+	switch (u_type)
+	{
+		//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
+	case TWOHANDEDSWORDMAN:
+		hp = 60;
+		attack = 12;
+		armor = 1;
+		speed = 0.9;
+		rate_of_fire = 2;
+		range = 1;
+		unit_class = INFANTRY;
+		break;
+
+	case CAVALRYARCHER:
+		hp = 50;
+		attack = 6;
+		armor = 1;
+		speed = 1.4;
+		rate_of_fire = 2;
+		range = 4;
+		unit_class = ARCHER;
+		break;
+
+	case SIEGERAM:
+		hp = 270;
+		attack = 4;
+		armor = -5;
+		speed = 0.6;
+		rate_of_fire = 5;
+		range = 1;
+		unit_class = SIEGE;
+		break;
+
+	default:
+		LOG("Error UNIT TYPE STATS NULL");
+		unit_class = NO_CLASS;
+		break;
+	}
+}
 
 void Unit::Update()
 {

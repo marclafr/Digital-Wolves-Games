@@ -12,6 +12,16 @@ enum UNIT_TYPE
 	SIEGERAM
 };
 
+enum UNIT_CLASS
+{
+	NO_CLASS = 0,
+	INFANTRY,
+	ARCHER,
+	CAVALRY,
+	SIEGE,
+	SUICIDAL
+};
+
 enum ACTION_TYPE
 {
 	NO_ACTION = 0,
@@ -41,6 +51,10 @@ private:
 	enum UNIT_TYPE unit_type;
 	enum ACTION_TYPE action_type;
 	enum DIRECTION direction;
+
+	int hp, attack, armor, range;
+	float speed, rate_of_fire;
+	UNIT_CLASS unit_class;
 
 public:
 
