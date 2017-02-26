@@ -82,12 +82,12 @@ public:
 	Animation* DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos);
 	bool GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* unit);
 	SDL_Texture* GetTexture(const UNIT_TYPE unit);
+	Animation* GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction);
 
 private:
 	std::vector<Textures> textures;
 	std::list<Animation*> animations;
 
-	Animation* GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction);
 };
 
 #endif

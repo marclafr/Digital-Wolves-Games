@@ -76,7 +76,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 				std::string action = action_node.name();
 				if (!action.compare("disappear"))
 				{
-					new_anim->speed = 10000.0f;
+					new_anim->speed = 1000.0f;
 					new_anim->loop = false;
 				}
 				animations.push_back(new_anim);
@@ -256,7 +256,7 @@ void Animation::SetLoopState(bool state)
 SDL_Rect& Animation::GetCurrentFrame()
 {
 	if (current_frame == -1)
-		return frames[0];
+		return SDL_Rect{ 0,0,0,0 };
 	
 	current_frame = (float) floor(anim_timer.Read() / speed);
 
@@ -272,7 +272,7 @@ SDL_Rect& Animation::GetCurrentFrame()
 		{
 			current_frame = -1;
 			loops = 0;
-			return frames[0];
+			return SDL_Rect{ 0,0,0,0 };
 		}
 	}
 
@@ -291,7 +291,8 @@ bool Animation::Finished() const
 
 void Animation::Reset()
 {
-	current_frame = 0.0f;
+	current_frame = 0;
+	anim_timer.Start();
 	loops = 0;
 }
 

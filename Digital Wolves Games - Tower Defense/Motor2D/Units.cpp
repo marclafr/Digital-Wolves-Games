@@ -63,19 +63,96 @@ void Unit::Move()
 void Unit::AI()
 {
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
 		action_type = ATTACK;
+		Animation* anim = nullptr;
+		if (direction == EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
+
+		else if (direction == NORTH_EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, NORTH_WEST);
+
+		else if (direction == SOUTH_EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, SOUTH_WEST);
+
+		else
+			anim = App->anim->GetAnimation(unit_type, action_type, direction);
+
+		anim->Reset();
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
 		action_type = IDLE;
+		Animation* anim = nullptr;
+		if (direction == EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
 
+		else if (direction == NORTH_EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, NORTH_WEST);
+
+		else if (direction == SOUTH_EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, SOUTH_WEST);
+
+		else
+			anim = App->anim->GetAnimation(unit_type, action_type, direction);
+
+		anim->Reset();
+	}
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
 		action_type = WALK;
+		Animation* anim = nullptr;
+		if (direction == EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
 
+		else if (direction == NORTH_EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, NORTH_WEST);
+
+		else if (direction == SOUTH_EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, SOUTH_WEST);
+
+		else
+			anim = App->anim->GetAnimation(unit_type, action_type, direction);
+
+		anim->Reset();
+	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	{
 		action_type = DISAPPEAR;
+		Animation* anim = nullptr;
+		if (direction == EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
+		
+		else if (direction == NORTH_EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, NORTH_WEST);
 
+		else if (direction == SOUTH_EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, SOUTH_WEST);
+
+		else
+			anim = App->anim->GetAnimation(unit_type, action_type, direction);
+
+		anim->Reset();
+	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
 		action_type = DIE;
+		Animation* anim = nullptr;
+		if (direction == EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
+
+		else if (direction == NORTH_EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, NORTH_WEST);
+
+		else if (direction == SOUTH_EAST)
+			anim = App->anim->GetAnimation(unit_type, action_type, SOUTH_WEST);
+
+		else
+			anim = App->anim->GetAnimation(unit_type, action_type, direction);
+
+		anim->Reset();
+	}
 
 }
 
