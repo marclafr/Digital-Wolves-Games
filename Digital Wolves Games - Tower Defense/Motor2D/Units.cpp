@@ -13,9 +13,9 @@ Unit::Unit(UNIT_TYPE u_type, iPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 	{
 		//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 	case TWOHANDEDSWORDMAN:
-		hp = 60;
+		SetHp(60);
 		attack = 12;
-		armor = 1;
+		SetArmor(1);
 		speed = 0.9;
 		rate_of_fire = 2;
 		range = 1;
@@ -23,9 +23,9 @@ Unit::Unit(UNIT_TYPE u_type, iPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		break;
 
 	case CAVALRYARCHER:
-		hp = 50;
+		SetHp(50);
 		attack = 6;
-		armor = 1;
+		SetArmor(1);
 		speed = 1.4;
 		rate_of_fire = 2;
 		range = 4;
@@ -33,9 +33,9 @@ Unit::Unit(UNIT_TYPE u_type, iPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		break;
 
 	case SIEGERAM:
-		hp = 270;
+		SetHp(270);
 		attack = 4;
-		armor = -5;
+		SetArmor(-5);
 		speed = 0.6;
 		rate_of_fire = 5;
 		range = 1;

@@ -36,3 +36,13 @@ const int Entity::GetY() const
 {
 	return position.y;
 }
+
+void Entity::SetArmor(int new_armor)
+{
+	armor = new_armor;
+}
+
+void Entity::SetHp(int new_hp)
+{
+	hp = new_hp;
+}

@@ -54,8 +54,10 @@ private:
 	enum ACTION_TYPE action_type;
 	enum DIRECTION direction;
 
-	int hp, attack, armor, range;
-	float speed, rate_of_fire;
+	int attack;
+	int range;
+	float speed;
+	float rate_of_fire;
 	UNIT_CLASS unit_class;
 	//p2List<iPoint> listt;
 

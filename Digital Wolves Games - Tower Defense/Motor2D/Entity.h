@@ -18,6 +18,8 @@ class Entity
 private:
 	bool to_delete;
 	iPoint position;
+	int hp;
+	int armor;
 	enum ENTITY_TYPE entity_type;
 	enum ENTITY_STATUS entity_status = SELECTEDD;
 public:
@@ -31,11 +33,18 @@ public:
 
 	void Die();//to_delete = true
 
-			   //Geters
+
+
+	//Geters
 	bool ToDelete() const;
 	ENTITY_TYPE GetEntityType() const;
 	ENTITY_STATUS GetEntityStatus();
 	const int GetX() const;
 	const int GetY() const;
+
+protected:
+	//Seters
+	void SetArmor(int new_armor);
+	void SetHp(int new_hp);
 };
 #endif
