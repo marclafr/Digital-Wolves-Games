@@ -22,6 +22,11 @@ ENTITY_TYPE Entity::GetEntityType() const
 	return entity_type;
 }
 
+ENTITY_STATUS Entity::GetEntityStatus() {
+
+	return entity_status;
+}
+
 const int Entity::GetX() const
 {
 	return position.x;

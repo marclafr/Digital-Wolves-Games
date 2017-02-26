@@ -12,6 +12,7 @@
 #include "j1Scene.h"
 #include "j1Animation.h"
 #include "j1EntityManager.h"
+#include "Units.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -72,8 +73,8 @@ bool j1Scene::Start()
 	select_test->AddOption("FUCK OFF");
 	*/
 
-	App->units->CreateUnit(TWOHANDEDSWORDMAN, iPoint(800, 200));
-	App->units->CreateUnit(CAVALRYARCHER, iPoint(900, 200));
+	App->units->CreateUnit(TWOHANDEDSWORDMAN, iPoint(200, 300));
+	App->units->CreateUnit(CAVALRYARCHER, iPoint(100, 400));
 
 	return true;
 }
@@ -100,6 +101,7 @@ bool j1Scene::PreUpdate()
 		}
 		else
 		{
+			App->units->GetUnitsPath(p);
 			origin = p;
 			origin_selected = true;
 		}

@@ -8,6 +8,7 @@
 #include "j1Textures.h"
 #include "j1Fonts.h"
 #include "j1Input.h"
+
 #include "j1UIManager.h"
 
 j1UIManager::j1UIManager() : j1Module()

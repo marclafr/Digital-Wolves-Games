@@ -29,13 +29,13 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	render = new j1Render();
 	tex = new j1Textures();
 	audio = new j1Audio();
-	scene = new j1Scene();
 	fs = new j1FileSystem();
-	map = new j1Map();
 	pathfinding = new j1PathFinding();
 	units = new j1EntityManager();
 	font = new j1Fonts();
 	anim = new j1Animation();
+	map = new j1Map();
+	scene = new j1Scene();
 	uimanager = new j1UIManager();
 
 	// Ordered for awake / Start / Update
@@ -45,18 +45,16 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(map);
 	AddModule(pathfinding);
-	AddModule(units);
 	AddModule(font);
-
+	AddModule(map);
 	AddModule(anim);
-
 	AddModule(uimanager);
+
 
 	// scene last
 	AddModule(scene);
-
+	AddModule(units);
 	// render last to swap buffer
 	AddModule(render);
 

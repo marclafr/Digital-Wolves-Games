@@ -26,7 +26,7 @@ public:
 	void DeleteEntity(Entity* ptr); // will call other delete methods
 	void DeleteUnit(Entity* ptr);
 	void DeleteBuilding(Entity* ptr);
-
+	void GetUnitsPath(iPoint destintation);
 private:
 
 	//Textura provisional para sprites por si no se cargan en animation

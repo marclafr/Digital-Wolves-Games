@@ -1,6 +1,6 @@
 #include "j1App.h"
 #include "j1EntityManager.h"
-
+#include "Units.h"
 j1EntityManager::j1EntityManager() : j1Module()
 {
 	name.assign("Units");
@@ -100,3 +100,13 @@ bool j1EntityManager::PostUpdate()
 	return true;
 }
 
+void j1EntityManager::GetUnitsPath(iPoint destination) {
+
+	std::list<Entity*>::iterator prove = entity_list.begin();
+
+	while (prove != entity_list.end())
+		if (prove._Ptr->_Myval->GetEntityStatus() == SELECTEDD)
+			prove++;
+
+
+}

@@ -5,7 +5,7 @@
 #include "j1Animation.h"
 #include "Units.h"
 #include "p2Log.h"
-
+#include "j1Pathfinding.h"
 
 Unit::Unit(UNIT_TYPE u_type, iPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
 {
@@ -76,6 +76,7 @@ void Unit::AI()
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		action_type = DIE;
+
 }
 
 void Unit::Draw()
@@ -105,4 +106,10 @@ const UNIT_TYPE Unit::GetUnitType() const
 const ACTION_TYPE Unit::GetActionType() const
 {
 	return action_type;
+}
+
+void Unit::GetPath(iPoint destination) {
+	iPoint p = App->render->ScreenToWorld(GetX(), GetY());
+	App->pathfinding->CreatePath(p, destination);
+
 }
