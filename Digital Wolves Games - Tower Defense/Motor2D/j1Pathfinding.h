@@ -33,7 +33,7 @@ public:
 	// Main function to request a path from A to B
 	int CreatePath(const iPoint& origin, const iPoint& destination);
 
-	int CreatePath(const iPoint& origin, const iPoint& destination, p2List<iPoint> lista);
+	int CreatePath(const iPoint& origin, const iPoint& destination, std::list<iPoint> lista);
 	// To request all tiles involved in the last generated path
 	const std::vector<iPoint>* GetLastPath() const;
 
@@ -53,6 +53,7 @@ private:
 	uint height;
 	// all map walkability values [0..255]
 	uchar* map;
+
 	// we store the created path here
 	std::vector<iPoint> last_path;
 };
@@ -72,15 +73,20 @@ struct PathNode
 
 	// Fills a list (PathList) of all valid adjacent pathnodes
 	uint FindWalkableAdjacents(PathList& list_to_fill) const;
+
 	// Calculates this tile score
-	int Score() const;
+	float Score() const;
 	// Calculate the F for a specific destination tile
 	int CalculateF(const iPoint& destination);
 
 	// -----------
-	int g;
+	float g;
 	int h;
 	iPoint pos;
+	bool operator ==(const PathNode& node)const;
+	bool operator !=(const PathNode& node)const;
+	bool on_close = false;
+	bool on_open = false;
 	const PathNode* parent; // needed to reconstruct the path in the end
 };
 
@@ -90,14 +96,14 @@ struct PathNode
 struct PathList
 {
 	// Looks for a node in this list and returns it's list node or NULL
-	p2List_item<PathNode>* Find(const iPoint& point) const;
+	std::list<PathNode>::iterator Find(const iPoint& point);
 
 	// Returns the Pathnode with lowest score in this list or NULL if empty
-	p2List_item<PathNode>* GetNodeLowestScore() const;
+	PathNode* GetNodeLowestScore() const;
 
 	// -----------
-	// The list itself, note they are not pointers!
-	p2List<PathNode> list;
+	// The list itself
+	std::list<PathNode> list;
 };
 
 
