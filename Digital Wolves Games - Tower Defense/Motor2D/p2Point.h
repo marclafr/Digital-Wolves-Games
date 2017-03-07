@@ -124,7 +124,10 @@ public:
 
 	TYPE DistanceManhattan(const p2Point& v) const
 	{
-		return abs(v.x - x) + abs(v.y - y);
+		int dx = abs(v.x - x);
+		int dy = abs(v.y - y);
+		int res =2*(dx + dy);
+		return res;
 	}
 };
 
