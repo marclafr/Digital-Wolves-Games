@@ -47,7 +47,9 @@ private:
 
 	bool right_click = false;
 	bool left_click = false;
-	/**/
+	*/
+
+	SDL_Rect select_rect;
 };
 
 #endif // __j1SCENE_H__

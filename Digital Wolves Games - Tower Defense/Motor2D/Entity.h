@@ -11,7 +11,8 @@ enum ENTITY_TYPE
 };
 enum ENTITY_STATUS
 {
-	SELECTEDD = 0
+	E_SELECTED = 0,
+	E_NON_SELECTED
 };
 class Entity
 {
@@ -21,7 +22,7 @@ private:
 	int hp;
 	int armor;
 	enum ENTITY_TYPE entity_type;
-	enum ENTITY_STATUS entity_status = SELECTEDD;
+	enum ENTITY_STATUS entity_status = E_SELECTED;
 public:
 	Entity(ENTITY_TYPE entity_type, iPoint pos);
 	~Entity();
@@ -39,6 +40,7 @@ public:
 	bool ToDelete() const;
 	ENTITY_TYPE GetEntityType() const;
 	ENTITY_STATUS GetEntityStatus();
+	void SetEntityStatus(ENTITY_STATUS status);
 	const int GetX() const;
 	const int GetY() const;
 

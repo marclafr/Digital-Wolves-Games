@@ -27,6 +27,11 @@ ENTITY_STATUS Entity::GetEntityStatus() {
 	return entity_status;
 }
 
+void Entity::SetEntityStatus(ENTITY_STATUS status)
+{
+	entity_status = status;
+}
+
 const int Entity::GetX() const
 {
 	return position.x;

@@ -7,6 +7,8 @@
 #include "Entity.h"
 #include "Units.h"
 #include "Buildings.h"
+#include "SDL/include/SDL_rect.h"
+
 
 class j1EntityManager : public j1Module
 {
@@ -22,6 +24,9 @@ public:
 
 	Entity* CreateUnit(UNIT_TYPE u_type, iPoint pos);
 	Entity* CreatBuilding(BUILDING_TYPE b_type, iPoint pos);
+
+	void SelectInQuad(const SDL_Rect& select_rect);
+	void UnselectEverything();
 
 	void DeleteEntity(Entity* ptr); // will call other delete methods
 	void DeleteUnit(Entity* ptr);

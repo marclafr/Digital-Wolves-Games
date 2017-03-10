@@ -79,6 +79,18 @@ std::list<PathNode>::iterator PathList::Find(const iPoint & point)
 	}
 }
 
+iPoint PathList::Findp(const iPoint & point)
+{
+	std::list<PathNode>::iterator item = list.begin();
+	while (item != list.end())
+	{
+		if (item->pos == point) {
+			return item->pos;
+		}
+		++item;
+	}
+}
+
 // PathList ------------------------------------------------------------------------
 // Returns the Pathnode with lowest score in this list or NULL if empty
 // ---------------------------------------------------------------------------------
@@ -302,6 +314,8 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 				}
 				last_path.push_back(close.list.begin()->pos);
 				std::reverse(last_path.begin(), last_path.end());
+				open.list.clear();
+				close.list.clear();
 				return ret = last_path.size();
 			}
 			else
@@ -309,11 +323,11 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 				PathList neightbords;
 				close.list.back().FindWalkableAdjacents(neightbords);
 				for (std::list<PathNode>::iterator item = neightbords.list.begin(); item != neightbords.list.end(); item++) {
-					if (item->on_close == true)
+					if (close.Findp(item->pos) == item->pos)
 					{
 						continue;
 					}
-					else if (item->on_open == true)
+					else if (open.Findp(item->pos) == item->pos)
 					{
 						PathNode temp;
 						temp = open.Find(item->pos)._Ptr->_Myval;
@@ -337,7 +351,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	return ret;
 }
 
-int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, std::list<iPoint> lista)
+int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, std::list<iPoint> list)
 {
 	int ret = -1;
 	if (IsWalkable(origin) && IsWalkable(destination))
@@ -362,30 +376,27 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, s
 				for (item--; item->parent != nullptr; item = close.Find(item->parent->pos))
 				{
 					last_path.push_back(item->pos);
-					lista.push_back(item->pos);
+					list.push_back(item->pos);
 				}
 
-				
-
-				
 				last_path.push_back(close.list.begin()->pos);
-				lista.push_back(close.list.begin()->pos);
+				list.push_back(close.list.begin()->pos);
 				std::reverse(last_path.begin(), last_path.end());
-				std::reverse(lista.begin(), lista.end());
+				std::reverse(list.begin(), list.end());
 				open.list.clear();
 				close.list.clear();
 				return ret = last_path.size();
 			}
 			else
 			{
-				PathList neightbords;
-				close.list.back().FindWalkableAdjacents(neightbords);
-				for (std::list<PathNode>::iterator item = neightbords.list.begin(); item != neightbords.list.end(); item++) {
-					if (item->on_close == true)
+				PathList neightbours;
+				close.list.back().FindWalkableAdjacents(neightbours);
+				for (std::list<PathNode>::iterator item = neightbours.list.begin(); item != neightbours.list.end(); item++) {
+					if (close.Findp(item->pos) == item->pos)
 					{
 						continue;
 					}
-					else if (item->on_open == true)
+					else if (open.Findp(item->pos) == item->pos)
 					{
 						PathNode temp;
 						temp = open.Find(item->pos)._Ptr->_Myval;
@@ -402,7 +413,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, s
 						open.list.push_back(item._Mynode()->_Myval);
 					}
 				}
-				neightbords.list.clear();
+				neightbours.list.clear();
 			}
 		}
 	}

@@ -73,8 +73,8 @@ bool j1Scene::Start()
 	select_test->AddOption("FUCK OFF");
 	*/
 
-	App->units->CreateUnit(TWOHANDEDSWORDMAN, iPoint(200, 300));
-	App->units->CreateUnit(CAVALRYARCHER, iPoint(100, 400));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, iPoint(20, 200));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(600, 400));
 
 	return true;
 }
@@ -101,7 +101,7 @@ bool j1Scene::PreUpdate()
 		}
 		else
 		{
-			App->units->GetUnitsPath(p);
+			App->entity_manager->GetUnitsPath(p);
 			origin = p;
 			origin_selected = true;
 		}
@@ -162,21 +162,8 @@ bool j1Scene::Update(float dt)
 
 	App->map->Draw();
 
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	
-	std::string title;
-	title = ("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.size(),
-		map_coordinates.x, map_coordinates.y);
-
-	//App->win->SetTitle(title.c_str());
-
 	// Debug pathfinding ------------------------------
-	//int x, y;
+	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
 	p = App->map->WorldToMap(p.x, p.y);
@@ -190,7 +177,6 @@ bool j1Scene::Update(float dt)
 	{
 		std::vector<iPoint>::const_iterator item = path->begin();
 
-		//for (uint i = 0; i < path->size() - 1; ++i)
 		while(item != path->end())
 		{
 			iPoint pos = App->map->MapToWorld(item->x, item->y);
@@ -198,6 +184,32 @@ bool j1Scene::Update(float dt)
 			item++;
 		}
 	}
+
+	//SELECTION
+	App->input->GetMousePosition(x, y);
+
+	if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+	{
+		App->entity_manager->UnselectEverything();
+
+		select_rect.x = x - App->render->camera.x;
+		select_rect.y = y - App->render->camera.y;
+		select_rect.w = select_rect.x;
+		select_rect.h = select_rect.y;
+	}
+
+	else if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+	{
+		select_rect.w = x - App->render->camera.x;
+		select_rect.h = y - App->render->camera.y;
+		App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
+	}
+
+	if (App->input->GetMouseButtonDown(1) == KEY_UP)
+	{
+		App->entity_manager->SelectInQuad(select_rect);
+	}
+	//--
 
 	return true;
 }
