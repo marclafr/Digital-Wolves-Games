@@ -372,6 +372,8 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, s
 				lista.push_back(close.list.begin()->pos);
 				std::reverse(last_path.begin(), last_path.end());
 				std::reverse(lista.begin(), lista.end());
+				open.list.clear();
+				close.list.clear();
 				return ret = last_path.size();
 			}
 			else
