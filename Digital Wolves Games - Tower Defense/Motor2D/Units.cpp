@@ -6,8 +6,9 @@
 #include "Units.h"
 #include "p2Log.h"
 #include "j1Pathfinding.h"
+#include "j1Map.h"
 
-Unit::Unit(UNIT_TYPE u_type, iPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
 {
 	switch (u_type)
 	{
@@ -58,6 +59,97 @@ void Unit::Update()
 
 void Unit::Move()
 {
+	if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == E_SELECTED)
+	{
+		App->input->GetMousePosition(destination.x, destination.y);
+		destination.x -= App->render->camera.x;
+		destination.y -= App->render->camera.y;
+
+		if (this->GetPath({ destination.x, destination.y }) != -1)
+		{
+			this->action_type = WALK;
+			this->moving = true;
+		}
+		else
+		{
+			this->moving = false;
+			this->action_type = IDLE;
+		}
+	}
+
+	if (this->moving == true)
+	{
+		iPoint dest_map = App->map->WorldToMap(destination.x, destination.y);
+		iPoint unit_map = App->map->WorldToMap(this->GetX(), this->GetY());
+
+		if (path_list.size() > 0 && unit_map == path_list.front())
+		{
+			path_list.pop_front();
+			iPoint nxt = path_list.front();
+			iPoint prv = App->map->WorldToMap(this->GetX(), this->GetY());
+
+			if (nxt.x > prv.x && nxt.y < prv.y)
+				this->direction = EAST;
+
+			else if (nxt.x > prv.x && nxt.y > prv.y)
+				this->direction = SOUTH;
+
+			else if (nxt.x > prv.x && nxt.y == prv.y)
+				this->direction = SOUTH_EAST;
+
+			else if (nxt.x == prv.x && nxt.y > prv.y)
+				this->direction = SOUTH_WEST;
+
+			else if (nxt.x < prv.x && nxt.y > prv.y)
+				this->direction = WEST;
+
+			else if (nxt.x < prv.x && nxt.y < prv.y)
+				this->direction = NORTH;
+
+			else if (nxt.x == prv.x && nxt.y < prv.y)
+				this->direction = NORTH_EAST;
+
+			else if (nxt.x < prv.x && nxt.y == prv.y)
+				this->direction = NORTH_WEST;
+		}
+
+		switch (this->direction)
+		{
+		case EAST:
+			this->SetPosition(this->GetX() + this->speed, this->GetY());
+			break;
+		case SOUTH:
+			this->SetPosition(this->GetX(), this->GetY() + this->speed / XY_TILES_RELATION);
+			break;
+		case SOUTH_EAST:
+			this->SetPosition(this->GetX() + this->speed, this->GetY() + this->speed / XY_TILES_RELATION);
+			break;
+		case SOUTH_WEST:
+			this->SetPosition(this->GetX() - this->speed, this->GetY() + this->speed / XY_TILES_RELATION);
+			break;
+		case WEST:
+			this->SetPosition(this->GetX() - this->speed, this->GetY());
+			break;
+		case NORTH:
+			this->SetPosition(this->GetX(), this->GetY() - this->speed / XY_TILES_RELATION);
+			break;
+		case NORTH_EAST:
+			this->SetPosition(this->GetX() + this->speed, this->GetY() - this->speed / XY_TILES_RELATION);
+			break;
+		case NORTH_WEST:
+			this->SetPosition(this->GetX() - this->speed, this->GetY() - this->speed / XY_TILES_RELATION);
+			break;
+		default:
+			break;
+		}
+
+		//If the unit reached the objective
+		if (unit_map == dest_map)
+		{
+			this->moving = false;
+			this->action_type = IDLE;
+		}
+	}
 }
 
 void Unit::AI()
@@ -185,8 +277,8 @@ const ACTION_TYPE Unit::GetActionType() const
 	return action_type;
 }
 
-void Unit::GetPath(iPoint destination) {
-	iPoint p = App->render->ScreenToWorld(GetX(), GetY());
-	App->pathfinding->CreatePath(p, destination);
-
+int Unit::GetPath(iPoint dest) {
+	iPoint ori = App->map->WorldToMap(GetX(), GetY());
+	iPoint destinat = App->map->WorldToMap(dest.x, dest.y);
+	return App->pathfinding->CreatePath(ori, destinat, path_list);
 }

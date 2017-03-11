@@ -351,7 +351,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	return ret;
 }
 
-int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, std::list<iPoint> list)
+int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, std::list<iPoint>& list)
 {
 	int ret = -1;
 	if (IsWalkable(origin) && IsWalkable(destination))

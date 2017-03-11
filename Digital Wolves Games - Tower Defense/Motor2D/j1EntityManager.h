@@ -22,8 +22,8 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	Entity* CreateUnit(UNIT_TYPE u_type, iPoint pos);
-	Entity* CreatBuilding(BUILDING_TYPE b_type, iPoint pos);
+	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos);
+	Entity* CreatBuilding(BUILDING_TYPE b_type, fPoint pos);
 
 	void SelectInQuad(const SDL_Rect& select_rect);
 	void UnselectEverything();

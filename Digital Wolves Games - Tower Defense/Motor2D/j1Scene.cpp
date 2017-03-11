@@ -73,8 +73,8 @@ bool j1Scene::Start()
 	select_test->AddOption("FUCK OFF");
 	*/
 
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, iPoint(20, 200));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(600, 400));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(20, 200));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(600, 400));
 
 	return true;
 }

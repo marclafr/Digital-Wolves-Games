@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(ENTITY_TYPE entity_type, iPoint pos): to_delete (false), entity_type(entity_type), position(pos)
+Entity::Entity(ENTITY_TYPE entity_type, fPoint pos): to_delete (false), entity_type(entity_type), position(pos)
 {}
 
 Entity::~Entity()
@@ -32,12 +32,18 @@ void Entity::SetEntityStatus(ENTITY_STATUS status)
 	entity_status = status;
 }
 
-const int Entity::GetX() const
+void Entity::SetPosition(float x, float y)
+{
+	position.x = x;
+	position.y = y;
+}
+
+const float Entity::GetX() const
 {
 	return position.x;
 }
 
-const int Entity::GetY() const
+const float Entity::GetY() const
 {
 	return position.y;
 }

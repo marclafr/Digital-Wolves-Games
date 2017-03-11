@@ -18,13 +18,13 @@ class Entity
 {
 private:
 	bool to_delete;
-	iPoint position;
+	fPoint position;
 	int hp;
 	int armor;
 	enum ENTITY_TYPE entity_type;
 	enum ENTITY_STATUS entity_status = E_SELECTED;
 public:
-	Entity(ENTITY_TYPE entity_type, iPoint pos);
+	Entity(ENTITY_TYPE entity_type, fPoint pos);
 	~Entity();
 
 	virtual void Update() = 0;
@@ -41,8 +41,9 @@ public:
 	ENTITY_TYPE GetEntityType() const;
 	ENTITY_STATUS GetEntityStatus();
 	void SetEntityStatus(ENTITY_STATUS status);
-	const int GetX() const;
-	const int GetY() const;
+	void SetPosition(float x, float y);
+	const float GetX() const;
+	const float GetY() const;
 
 protected:
 	//Seters

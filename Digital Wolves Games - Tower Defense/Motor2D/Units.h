@@ -2,7 +2,9 @@
 #define _UNITS
 
 #include "Entity.h"
-//#include "j1Pathfinding.h"
+
+#define XY_TILES_RELATION 2
+
 struct PathList;
 struct PathNode;
 enum UNIT_TYPE
@@ -58,12 +60,14 @@ private:
 	int range;
 	float speed;
 	float rate_of_fire;
+	iPoint destination;
+	bool moving = false;
 	UNIT_CLASS unit_class;
-	//p2List<iPoint> listt;
+	std::list<iPoint> path_list;
 
 public:
 
-	Unit(UNIT_TYPE u_type, iPoint pos);
+	Unit(UNIT_TYPE u_type, fPoint pos);
 
 	void Update(); // defines order
 
@@ -75,7 +79,7 @@ public:
 	const DIRECTION GetDir() const;
 	const UNIT_TYPE GetUnitType() const;
 	const ACTION_TYPE GetActionType() const;
-	void GetPath(iPoint destination);
+	int GetPath(iPoint dest);
 };
 
 #endif

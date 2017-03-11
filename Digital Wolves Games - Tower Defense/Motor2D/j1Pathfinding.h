@@ -33,7 +33,7 @@ public:
 	// Main function to request a path from A to B
 	int CreatePath(const iPoint& origin, const iPoint& destination);
 
-	int CreatePath(const iPoint& origin, const iPoint& destination, std::list<iPoint> lista);
+	int CreatePath(const iPoint& origin, const iPoint& destination, std::list<iPoint>& list);
 	// To request all tiles involved in the last generated path
 	const std::vector<iPoint>* GetLastPath() const;
 
