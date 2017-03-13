@@ -86,8 +86,8 @@ void j1Map::Draw()
 
 		if (layer->properties.Get("Nodraw") == true && (layer->properties.Get("Navigation") == true))
 		{
-			item++;
-			continue;
+			//item++;TODO: uncomment not to draw walkability map
+			//continue;
 		}
 		for (int y = 0; y < data.height; ++y)
 		{
@@ -101,7 +101,7 @@ void j1Map::Draw()
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
 
-					App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+					App->render->Blit(tileset->texture, pos.x - 32, pos.y - 32, &r);
 				}
 			}
 		}
@@ -177,7 +177,7 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	}
 	else if (data.type == MAPTYPE_ISOMETRIC)
 	{
-
+		y += 16;
 		float half_width = data.tile_width * 0.5f;
 		float half_height = data.tile_height * 0.5f;
 		ret.x = int((x / half_width + y / half_height) / 2);

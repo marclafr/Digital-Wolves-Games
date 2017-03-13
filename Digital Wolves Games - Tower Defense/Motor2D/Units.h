@@ -60,14 +60,19 @@ private:
 	int range;
 	float speed;
 	float rate_of_fire;
+	int unit_radius;
 	iPoint destination;
-	bool moving = false;
+	iPoint path_objective;
+	fPoint move_vector;
+	float angle;
+	bool GetNextTile();
 	UNIT_CLASS unit_class;
 	std::list<iPoint> path_list;
 
 public:
 
 	Unit(UNIT_TYPE u_type, fPoint pos);
+	bool moving = false;
 
 	void Update(); // defines order
 

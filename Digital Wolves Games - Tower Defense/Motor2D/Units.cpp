@@ -21,6 +21,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		rate_of_fire = 2;
 		range = 1;
 		unit_class = INFANTRY;
+		unit_radius = 6;
 		break;
 
 	case CAVALRYARCHER:
@@ -31,6 +32,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		rate_of_fire = 2;
 		range = 4;
 		unit_class = ARCHER;
+		unit_radius = 12;
 		break;
 
 	case SIEGERAM:
@@ -41,6 +43,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		rate_of_fire = 5;
 		range = 1;
 		unit_class = SIEGE;
+		unit_radius = 15;
 		break;
 
 	default:
@@ -61,12 +64,14 @@ void Unit::Move()
 {
 	if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == E_SELECTED)
 	{
+		this->path_list.clear();
 		App->input->GetMousePosition(destination.x, destination.y);
 		destination.x -= App->render->camera.x;
 		destination.y -= App->render->camera.y;
-
 		if (this->GetPath({ destination.x, destination.y }) != -1)
 		{
+			path_list.pop_front();
+			GetNextTile();
 			this->action_type = WALK;
 			this->moving = true;
 		}
@@ -77,77 +82,29 @@ void Unit::Move()
 		}
 	}
 
+	//Draw x y axis test
+	App->render->DrawLine(0, 0, 1000, 0, 255, 255, 255);
+	App->render->DrawLine(0, 0, 0, 1000, 255, 255, 255);
+
 	if (this->moving == true)
 	{
-		iPoint dest_map = App->map->WorldToMap(destination.x, destination.y);
-		iPoint unit_map = App->map->WorldToMap(this->GetX(), this->GetY());
 
-		if (path_list.size() > 0 && unit_map == path_list.front())
+
+		this->SetPosition(GetX() + move_vector.x*speed, GetY() + move_vector.y*speed);
+
+		iPoint unit_world;
+		unit_world.x = GetX();
+		unit_world.y = GetY();
+		if (path_objective.DistanceTo(unit_world) < 3)
 		{
-			path_list.pop_front();
-			iPoint nxt = path_list.front();
-			iPoint prv = App->map->WorldToMap(this->GetX(), this->GetY());
+			//center the unit to the tile
+			this->SetPosition(path_objective.x, path_objective.y);
+			if (!GetNextTile())
+			{
+				moving = false;
+				this->action_type = IDLE;
+			}
 
-			if (nxt.x > prv.x && nxt.y < prv.y)
-				this->direction = EAST;
-
-			else if (nxt.x > prv.x && nxt.y > prv.y)
-				this->direction = SOUTH;
-
-			else if (nxt.x > prv.x && nxt.y == prv.y)
-				this->direction = SOUTH_EAST;
-
-			else if (nxt.x == prv.x && nxt.y > prv.y)
-				this->direction = SOUTH_WEST;
-
-			else if (nxt.x < prv.x && nxt.y > prv.y)
-				this->direction = WEST;
-
-			else if (nxt.x < prv.x && nxt.y < prv.y)
-				this->direction = NORTH;
-
-			else if (nxt.x == prv.x && nxt.y < prv.y)
-				this->direction = NORTH_EAST;
-
-			else if (nxt.x < prv.x && nxt.y == prv.y)
-				this->direction = NORTH_WEST;
-		}
-
-		switch (this->direction)
-		{
-		case EAST:
-			this->SetPosition(this->GetX() + this->speed, this->GetY());
-			break;
-		case SOUTH:
-			this->SetPosition(this->GetX(), this->GetY() + this->speed / XY_TILES_RELATION);
-			break;
-		case SOUTH_EAST:
-			this->SetPosition(this->GetX() + this->speed, this->GetY() + this->speed / XY_TILES_RELATION);
-			break;
-		case SOUTH_WEST:
-			this->SetPosition(this->GetX() - this->speed, this->GetY() + this->speed / XY_TILES_RELATION);
-			break;
-		case WEST:
-			this->SetPosition(this->GetX() - this->speed, this->GetY());
-			break;
-		case NORTH:
-			this->SetPosition(this->GetX(), this->GetY() - this->speed / XY_TILES_RELATION);
-			break;
-		case NORTH_EAST:
-			this->SetPosition(this->GetX() + this->speed, this->GetY() - this->speed / XY_TILES_RELATION);
-			break;
-		case NORTH_WEST:
-			this->SetPosition(this->GetX() - this->speed, this->GetY() - this->speed / XY_TILES_RELATION);
-			break;
-		default:
-			break;
-		}
-
-		//If the unit reached the objective
-		if (unit_map == dest_map)
-		{
-			this->moving = false;
-			this->action_type = IDLE;
 		}
 	}
 }
@@ -260,6 +217,9 @@ void Unit::Draw()
 		App->render->Blit(tex, GetX(), GetY(), &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y);
 	else
 		App->render->Blit(tex, GetX() - pivot.x, GetY() - pivot.y, &rect);
+
+	if (this->GetEntityStatus() == E_SELECTED)
+		App->render->DrawCircle(this->GetX() + App->render->camera.x, this->GetY() + App->render->camera.y, this->unit_radius, 255, 255, 255);
 }
 
 const DIRECTION Unit::GetDir() const
@@ -281,4 +241,59 @@ int Unit::GetPath(iPoint dest) {
 	iPoint ori = App->map->WorldToMap(GetX(), GetY());
 	iPoint destinat = App->map->WorldToMap(dest.x, dest.y);
 	return App->pathfinding->CreatePath(ori, destinat, path_list);
+}
+
+bool Unit::GetNextTile()
+{
+	bool ret = true;
+
+	if (path_list.size() == 0)
+		return false;
+
+	path_objective = App->map->MapToWorld(path_list.front().x, path_list.front().y);
+	path_list.pop_front();
+
+	move_vector.x = (float)path_objective.x - GetX();
+	move_vector.y = (float)path_objective.y - GetY();
+	float modul = (sqrt(move_vector.x*move_vector.x + move_vector.y * move_vector.y));
+	move_vector.x = move_vector.x / modul;
+	move_vector.y = move_vector.y / modul;
+
+	iPoint direction_vec;
+	direction_vec.x = path_objective.x - GetX();
+	direction_vec.y = GetY() - path_objective.y;
+	angle = (float)57.29577951 * atan2(direction_vec.y, direction_vec.x);
+
+	if (angle < 0)
+		angle += 360;
+
+
+	if ((0 <= angle &&  angle <= 22.5) || (337.5 <= angle&& angle <= 360))
+		this->direction = EAST;
+
+	else if (22.5 <= angle &&  angle <= 67.5)
+		this->direction = NORTH_EAST;
+
+	else if (67.5 <= angle &&  angle <= 112.5)
+		this->direction = NORTH;
+
+	else if (112.5 <= angle &&  angle <= 157.5)
+		this->direction = NORTH_WEST;
+
+	else if (157.5 <= angle &&  angle <= 202.5)
+		this->direction = WEST;
+
+	else if (202.5 <= angle &&  angle <= 247.5)
+		this->direction = SOUTH_WEST;
+
+	else if (247.5 <= angle &&  angle <= 292.5)
+		this->direction = SOUTH;
+
+	else if (292.5 <= angle &&  angle <= 337.5)
+		this->direction = SOUTH_EAST;
+
+	else
+		this->direction = NO_DIRECTION;
+
+	return ret;
 }

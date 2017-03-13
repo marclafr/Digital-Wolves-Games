@@ -73,8 +73,12 @@ bool j1Scene::Start()
 	select_test->AddOption("FUCK OFF");
 	*/
 
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(20, 200));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(30, 170));
 	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(600, 400));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(630, 430));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(660, 460));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(690, 390));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(700, 360));
 
 	return true;
 }
@@ -169,7 +173,7 @@ bool j1Scene::Update(float dt)
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
 
-	App->render->Blit(debug_tex, p.x, p.y);
+	App->render->Blit(debug_tex, p.x - 32, p.y - 32);
 
 	const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
 	
@@ -180,7 +184,7 @@ bool j1Scene::Update(float dt)
 		while(item != path->end())
 		{
 			iPoint pos = App->map->MapToWorld(item->x, item->y);
-			App->render->Blit(debug_tex, pos.x, pos.y);
+			App->render->Blit(debug_tex, pos.x - 32, pos.y - 32);
 			item++;
 		}
 	}
