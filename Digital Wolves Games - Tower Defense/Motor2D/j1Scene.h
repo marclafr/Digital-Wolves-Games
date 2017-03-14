@@ -36,6 +36,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	//Enable Module with submodules
+	void EnableScene();
+
 private:
 	SDL_Texture* debug_tex;
 

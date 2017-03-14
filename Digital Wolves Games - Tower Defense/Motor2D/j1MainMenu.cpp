@@ -8,7 +8,6 @@
 #include "j1Window.h"
 #include "j1UIManager.h"
 #include "j1MainMenu.h"
-#include "j1EntityManager.h"
 #include "j1Scene.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
@@ -32,7 +31,13 @@ bool j1MainMenu::Awake()
 // Called before the first frame
 bool j1MainMenu::Start()
 {
-	
+	background = (UIImage*)App->uimanager->addUIComponent(UIComponent_TYPE::UIIMAGE);
+	background->Set({0,0, 1366, 768}, { 0,0, 1366, 768 });
+	background->interactive = false;
+
+	singleplayer = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
+	singleplayer->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
+
 	return true;
 }
 
@@ -57,10 +62,11 @@ bool j1MainMenu::PostUpdate()
 	bool ret = true;
 
 	//Change Scene MainMenu to Scene
-	if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+	if (singleplayer->clicked == true)
 	{
+		DisableAllUIElements();
 		active = false;
-		App->scene->active = true;
+		App->scene->EnableScene();
 	}
 
 	return ret;
@@ -73,3 +79,10 @@ bool j1MainMenu::CleanUp()
 
 	return true;
 }
+
+void j1MainMenu::DisableAllUIElements()
+{
+	background->draw = false;
+	singleplayer->draw = false;
+}
+

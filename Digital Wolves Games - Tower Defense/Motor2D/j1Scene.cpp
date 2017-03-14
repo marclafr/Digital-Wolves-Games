@@ -35,12 +35,6 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	//Starting modules
-	App->pathfinding->active = true;
-	App->anim->active = true;
-	App->map->active = true;
-	App->entity_manager->active = true;
-
 	if(App->map->Load("iso_walk.tmx") == true)
 	{
 		int w, h;
@@ -288,4 +282,13 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+void j1Scene::EnableScene()
+{
+	App->scene->active = true;
+	App->pathfinding->active = true;
+	App->anim->active = true;
+	App->map->active = true;
+	App->entity_manager->active = true;
 }

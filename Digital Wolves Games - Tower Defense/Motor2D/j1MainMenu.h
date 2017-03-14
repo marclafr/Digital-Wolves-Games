@@ -6,8 +6,7 @@
 struct SDL_Texture;
 class UILabel;
 class UIImage;
-class UICheckbutton;
-class UISelectOption;
+class UIButton;
 
 class j1MainMenu : public j1Module
 {
@@ -36,10 +35,14 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void DisableAllUIElements();
+
 private:
 	
+	UIImage* background;
 
-	SDL_Rect select_rect;
+	UIButton* singleplayer;
+
 };
 
 #endif // __j1MAINMENU_H__

@@ -57,7 +57,7 @@ bool j1UIManager::PreUpdate()
 
 		UIComponents* component = item._Ptr->_Myval;
 
-		if (component->draw)
+		if (component->draw && component->interactive)
 		{
 			if ((x_mouse > component->rect_position.x) && (x_mouse < component->rect_position.x + component->rect_position.w) && (y_mouse > component->rect_position.y) && (y_mouse < component->rect_position.y + component->rect_position.h))
 			{
@@ -100,6 +100,13 @@ bool j1UIManager::PreUpdate()
 								from_option_selected->selecting = false;
 							}
 						}
+
+						//Click of UIButton
+						if (component->type == UIComponent_TYPE::UIBUTTON)
+						{
+							UIButton* button = (UIButton*)component;
+							button->clicked = true;
+						}
 					}
 					else
 						component->stat = UIComponent_Stat::CLICKL_REPEAT;
@@ -110,6 +117,13 @@ bool j1UIManager::PreUpdate()
 						component->stat = UIComponent_Stat::CLICKL_UP;
 					else
 						component->stat = UIComponent_Stat::SELECTED;
+
+					//UIButton set click to false
+					if (component->type == UIComponent_TYPE::UIBUTTON)
+					{
+						UIButton* button = (UIButton*)component;
+						button->clicked = false;
+					}
 				}
 
 				if (App->input->GetMouseButtonDown(RIGHT_CLICK) == KEY_DOWN)

@@ -48,8 +48,9 @@ public:
 
 	bool draw = true;
 
-	UIComponents* from = nullptr;
+	bool interactive = true;
 
+	UIComponents* from = nullptr;
 public:
 	UIComponents(UIComponent_TYPE type) : type(type) {}
 
