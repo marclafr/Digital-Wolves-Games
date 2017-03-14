@@ -15,13 +15,16 @@ class j1Render;
 class j1Textures;
 class j1Audio;
 class j1FileSystem;
-class j1Scene;
 class j1Map;
 class j1PathFinding;
 class j1Fonts;
 class j1Animation;
 class j1UIManager;
 class j1EntityManager;
+
+	//Scenes
+class j1Scene;
+class j1MainMenu;
 
 class j1App
 {
@@ -91,7 +94,6 @@ public:
 	j1Render*			render = NULL;
 	j1Textures*			tex = NULL;
 	j1Audio*			audio = NULL;
-	j1Scene*			scene = NULL;
 	j1FileSystem*		fs = NULL;
 	j1Map*				map = NULL;
 	j1PathFinding*		pathfinding = NULL;
@@ -100,6 +102,9 @@ public:
 	j1UIManager*		uimanager = NULL;
 	j1EntityManager*    entity_manager = NULL;
 
+		//Scenes
+	j1Scene*			scene = NULL;
+	j1MainMenu*			main_menu = NULL;
 private:
 
 	std::list<j1Module*> modules;
