@@ -73,12 +73,12 @@ bool j1Scene::Start()
 	select_test->AddOption("FUCK OFF");
 	*/
 
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(30, 170));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(600, 400));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(630, 430));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(660, 460));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(690, 390));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(700, 360));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(30, 170));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(600, 400));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(630, 430));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(660, 460));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(690, 390));
+	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(700, 360));
 
 	return true;
 }
@@ -214,6 +214,8 @@ bool j1Scene::Update(float dt)
 		App->entity_manager->SelectInQuad(select_rect);
 	}
 	//--
+
+	App->render->BlitAllEntities();
 
 	return true;
 }

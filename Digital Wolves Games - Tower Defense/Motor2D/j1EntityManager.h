@@ -9,7 +9,6 @@
 #include "Buildings.h"
 #include "SDL/include/SDL_rect.h"
 
-
 class j1EntityManager : public j1Module
 {
 public:
@@ -22,8 +21,8 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos);
-	Entity* CreatBuilding(BUILDING_TYPE b_type, fPoint pos);
+	Entity* CreateUnit(UNIT_TYPE u_type, iPoint pos);
+	Entity* CreatBuilding(BUILDING_TYPE b_type, iPoint pos);
 
 	void SelectInQuad(const SDL_Rect& select_rect);
 	void UnselectEverything();

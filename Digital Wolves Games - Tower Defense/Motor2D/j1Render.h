@@ -4,7 +4,38 @@
 #include "SDL/include/SDL.h"
 #include "p2Point.h"
 #include "j1Module.h"
+#include <deque>
 
+
+
+class Sprite
+{
+private:
+	iPoint position;
+	SDL_Rect* section;
+	SDL_Texture* texture; 
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	int pivot_x = 0;
+	int pivot_y = 0;
+	float speed = 1.0f;
+	double angle = 0;
+
+public:
+	Sprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0);
+	Sprite();
+
+	void operator = (Sprite sprite);
+
+	iPoint GetPosition() const;
+	SDL_Texture* GetTexture() const;
+	const SDL_Rect* GetSection() const;
+	SDL_RendererFlip GetFlip() const;
+	int GetPivotX() const;
+	int GetPivotY() const;
+	float GetSpeed() const;
+	double GetAngle() const;
+
+};
 
 class j1Render : public j1Module
 {
@@ -43,6 +74,9 @@ public:
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 
+	void PushSprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0);
+	void BlitAllEntities();
+
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 
@@ -55,6 +89,10 @@ public:
 	SDL_Rect		camera;
 	SDL_Rect		viewport;
 	SDL_Color		background;
+
+private:
+	std::deque<Sprite> sprite_queue;
 };
+
 
 #endif // __j1RENDER_H__

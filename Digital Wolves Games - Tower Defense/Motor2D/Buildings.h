@@ -16,7 +16,7 @@ private:
 
 public:
 
-	Building(BUILDING_TYPE b_type, fPoint pos);
+	Building(BUILDING_TYPE b_type, iPoint pos);
 
 	void Update(); // defines order
 

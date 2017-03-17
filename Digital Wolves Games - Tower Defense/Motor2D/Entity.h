@@ -18,13 +18,13 @@ class Entity
 {
 private:
 	bool to_delete;
-	fPoint position;
+	iPoint position;
 	int hp;
 	int armor;
 	enum ENTITY_TYPE entity_type;
 	enum ENTITY_STATUS entity_status = E_SELECTED;
 public:
-	Entity(ENTITY_TYPE entity_type, fPoint pos);
+	Entity(ENTITY_TYPE entity_type, iPoint pos);
 	~Entity();
 
 	virtual void Update() = 0;

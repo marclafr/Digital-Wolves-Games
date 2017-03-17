@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Window.h"
 #include "j1Render.h"
+#include "j1Map.h"
 
 #define VSYNC true
 
@@ -274,4 +275,91 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	}
 
 	return ret;
+}
+
+void j1Render::PushSprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle)
+{
+	Sprite sprite(texture,x,y,section,flip,pivot_x,pivot_y,speed,angle);
+	
+	std::deque<Sprite>::iterator queue_pos = sprite_queue.begin();
+
+	for (int i = 0; i < sprite_queue.size(); i++)
+	{
+		if (y > sprite_queue[i].GetPosition().y)
+			queue_pos++;
+	}
+
+	sprite_queue.insert(queue_pos, sprite);
+}
+
+void j1Render::BlitAllEntities()
+{
+	Sprite sprite;
+
+	while(sprite_queue.empty() != true)
+	{	
+		sprite = sprite_queue.back();
+		Blit(sprite.GetTexture(), sprite.GetPosition().x, sprite.GetPosition().y, sprite.GetSection(), sprite.GetFlip(), sprite.GetPivotX(), sprite.GetPivotY(), sprite.GetSpeed(), sprite.GetAngle());
+		sprite_queue.pop_back();
+	}
+}
+
+Sprite::Sprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle): section(&SDL_Rect(*section)), position(iPoint(x,y)), flip(flip), pivot_x(pivot_x), pivot_y(pivot_y), speed(speed), angle(angle)
+{}
+
+Sprite::Sprite() : section(nullptr), position(iPoint(0,0)), flip(SDL_FLIP_NONE), pivot_x(0), pivot_y(0), speed(1.0f), angle(0)
+{
+}
+
+void Sprite::operator = (Sprite sprite)
+{
+	texture = sprite.texture;
+	position.x = sprite.position.x;
+	position.y = sprite.position.y;
+	section = sprite.section;
+	flip = sprite.flip;
+	pivot_x = sprite.pivot_x;
+	pivot_y = sprite.pivot_y;
+	speed = sprite.speed;
+	angle = sprite.angle;
+}
+
+iPoint Sprite::GetPosition() const
+{
+	return position;
+}
+
+SDL_Texture * Sprite::GetTexture() const
+{
+	return texture;
+}
+
+const SDL_Rect * Sprite::GetSection() const
+{
+	return section;
+}
+
+SDL_RendererFlip Sprite::GetFlip() const
+{
+	return flip;
+}
+
+int Sprite::GetPivotX() const
+{
+	return pivot_x;
+}
+
+int Sprite::GetPivotY() const
+{
+	return pivot_y;
+}
+
+float Sprite::GetSpeed() const
+{
+	return speed;
+}
+
+double Sprite::GetAngle() const
+{
+	return angle;
 }

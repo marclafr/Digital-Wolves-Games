@@ -8,7 +8,7 @@
 #include "j1Pathfinding.h"
 #include "j1Map.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
+Unit::Unit(UNIT_TYPE u_type, iPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
 {
 	switch (u_type)
 	{
@@ -214,7 +214,7 @@ void Unit::Draw()
 	App->anim->GetAnimationFrame(rect, pivot, this);
 
 	if (direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST)
-		App->render->Blit(tex, GetX(), GetY(), &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y);
+		App->render->Blit(tex, GetX(), GetY(), &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y); //Blit has to change to push sprites but it is bugged
 	else
 		App->render->Blit(tex, GetX() - pivot.x, GetY() - pivot.y, &rect);
 
