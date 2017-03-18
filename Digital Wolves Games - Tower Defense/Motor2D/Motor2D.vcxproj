@@ -80,7 +80,6 @@
     <ClCompile Include="j1Animation.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
-    <ClCompile Include="j1MainMenu.cpp" />
     <ClCompile Include="j1UIManager.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
@@ -105,7 +104,6 @@
     <ClInclude Include="j1Animation.h" />
     <ClInclude Include="j1FileSystem.h" />
     <ClInclude Include="j1Fonts.h" />
-    <ClInclude Include="j1MainMenu.h" />
     <ClInclude Include="j1UIManager.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />

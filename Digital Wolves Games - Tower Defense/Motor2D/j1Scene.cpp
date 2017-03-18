@@ -47,32 +47,30 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");
 
-	/*TEST UI 
-	//Definition UIElements
-	uint width = 0;
-	uint height = 0;
-	App->win->GetWindowSize(width, height);
+	//UIElements
+		//Top_HUD
+	top_hud = (UIImage*)App->uimanager->addUIComponent(UIComponent_TYPE::UIIMAGE);
+	top_hud->Set({0, 0, 1336, 23}, {0, 1011, 1366, 23});
+	top_hud->interactive = false;
 
+	objectives = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
+	objectives->Set({1252, 2, 36, 14}, {1252, 996, 36, 14});
 
-	banner = (UIImage*)App->uimanager->addUIComponent(UIComponent_TYPE::UIIMAGE);
-	banner->Set({ (int)width / 2, (int)height / 4, 328, 103 }, { 485, 829, 328, 103 });
+	tree_tech = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
+	tree_tech->Set({1288, 2, 35, 14}, {1289, 996, 35, 14});
 
-	text = (UILabel*)App->uimanager->addUIComponent(UIComponent_TYPE::UILABEL);
-	text->Set(width / 2, height / 4 - 120, "Hello World");
+	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
+	ingame_menu->Set({1323, 2, 36 , 15}, {1325, 996, 36, 14});
 
-	check_test = (UICheckbutton*)App->uimanager->addUIComponent(UIComponent_TYPE::UICHECKBUTTON);
-	check_test->Set({ 100, 100, 328, 103 }, { 485, 829, 328, 103 }, { 100, 100, 328, 103 });
-	check_test->title->Set(150, 75, "Test Chech Button");
+	//Down_HUD
+	down_hud = (UIImage*)App->uimanager->addUIComponent(UIComponent_TYPE::UIIMAGE);
+	down_hud->Set({0, 643, 1366, 125}, {0, 1036, 1366, 125});
+	down_hud->interactive = false;
 
-	select_test = (UISelectOption*)App->uimanager->addUIComponent(UIComponent_TYPE::UISELECTOPTION);
-	select_test->Set({ 100,500,100,50 }, { 485, 829, 100, 50 });
-	select_test->title->Set(100, 475, "Select Your Destiny");
-	select_test->AddOption("OMG");
-	select_test->AddOption("YOU'RE FAGGOT");
-	select_test->AddOption("LET ME SUICIDE");
-	select_test->AddOption("FUCK OFF");
-	*/
+	description = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
+	description->Set({1316, 653, 19, 17}, {1347, 1163, 19, 17});
 
+	//Entity Manager
 	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(30, 170));
 	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(600, 400));
 	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(630, 430));
@@ -117,34 +115,6 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	// UIManager ---
-	/* TEST
-	if (text->stat == UIComponent_Stat::SELECTED)
-	{
-		if (right_click == true)
-			text->ChangeText("Hello World - right click");
-		else if (left_click == true)
-			text->ChangeText("Hello World - left click");
-		else
-			text->ChangeText("It's hover");
-	}
-	else if (text->stat == UIComponent_Stat::UNSELECTED)
-	{
-		text->ChangeText("Hello World");
-		right_click = false;
-		left_click = false;
-	}
-	else if (text->stat == UIComponent_Stat::CLICKR_DOWN)
-	{
-		right_click = true;
-		left_click = false;
-	}
-	else if (text->stat == UIComponent_Stat::CLICKL_DOWN)
-	{
-		left_click = true;
-		right_click = false;
-	}
-	/**/
 	// -------
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
@@ -284,13 +254,4 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
-}
-
-void j1Scene::EnableScene()
-{
-	App->scene->active = true;
-	App->pathfinding->active = true;
-	App->anim->active = true;
-	App->map->active = true;
-	App->entity_manager->active = true;
 }
