@@ -229,6 +229,7 @@ public:
 
 	void CreatePanel();
 	void DeleteButtons();
+	bool isSelectionEmpty();
 
 	void Draw();
 

@@ -80,12 +80,12 @@ bool j1Scene::Start()
 	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UIComponent_TYPE::UIHUDPANELINFO);
 
 	//Entity Manager
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(30, 170));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(600, 400));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(630, 430));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(660, 460));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(690, 390));
-	App->entity_manager->CreateUnit(CAVALRYARCHER, fPoint(700, 360));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(30, 170));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 400));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(630, 430));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(660, 460));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(690, 390));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(700, 360));
 
 	return true;
 }
