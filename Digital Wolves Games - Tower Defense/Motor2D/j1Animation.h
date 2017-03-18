@@ -11,7 +11,7 @@
 #include "j1Timer.h"
 #include "Units.h"
 
-#define IDLE_ANIMATION_WAIT 5.0f
+#define IDLE_ANIMATION_WAIT 2.0f
 
 struct SDL_Texture;
 
@@ -46,6 +46,7 @@ private:
 	int loops = 0;
 	float speed = 100.0f;	//More speed equals slow down the animation
 	j1Timer	anim_timer;
+	j1Timer	idle_wait_timer;
 
 public:
 	void SetSpeed(float speed);

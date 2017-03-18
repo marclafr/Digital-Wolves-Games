@@ -269,10 +269,13 @@ SDL_Rect& Animation::GetCurrentFrame()
 	if (current_frame == -1)
 		return SDL_Rect{0,0,0,0};
 
-	if (anim_timer.ReadSec() <= IDLE_ANIMATION_WAIT && this->action_type == IDLE)
+	if (idle_wait_timer.ReadSec() <= IDLE_ANIMATION_WAIT && this->action_type == IDLE)
 	{
 		return frames[0];
 	}	
+
+	if (idle_wait_timer.ReadSec() >= 2.5f)
+		idle_wait_timer.Start();
 
 	current_frame = (float) floor(anim_timer.Read() / speed);
 	
