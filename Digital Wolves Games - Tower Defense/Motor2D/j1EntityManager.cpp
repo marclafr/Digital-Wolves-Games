@@ -1,6 +1,9 @@
 #include "j1App.h"
 #include "j1EntityManager.h"
 #include "Units.h"
+#include "j1UIManager.h"
+#include "j1Scene.h"
+
 j1EntityManager::j1EntityManager() : j1Module()
 {
 	name.assign("Units");
@@ -52,20 +55,25 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 		if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 		{
 			it._Ptr->_Myval->SetEntityStatus(E_SELECTED);
+			App->scene->panel_info->AddEntitySelection(it._Ptr->_Myval);
 		}
 		else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 		{
 			it._Ptr->_Myval->SetEntityStatus(E_SELECTED);
+			App->scene->panel_info->AddEntitySelection(it._Ptr->_Myval);
 		}
 		else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 		{
 			it._Ptr->_Myval->SetEntityStatus(E_SELECTED);
+			App->scene->panel_info->AddEntitySelection(it._Ptr->_Myval);
 		}
 		else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 		{
 			it._Ptr->_Myval->SetEntityStatus(E_SELECTED);
+			App->scene->panel_info->AddEntitySelection(it._Ptr->_Myval);
 		}
 	}
+	App->scene->panel_info->CreateButtons();
 }
 
 void j1EntityManager::UnselectEverything()
@@ -74,6 +82,7 @@ void j1EntityManager::UnselectEverything()
 	{
 		it._Ptr->_Myval->SetEntityStatus(E_NON_SELECTED);
 	}
+	App->scene->panel_info->DeleteButtons();
 }
 
 void j1EntityManager::DeleteEntity(Entity * ptr)

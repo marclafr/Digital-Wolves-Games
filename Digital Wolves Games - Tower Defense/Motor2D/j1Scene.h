@@ -7,6 +7,7 @@ struct SDL_Texture;
 class UILabel;
 class UIImage;
 class UIHUDPanelButtons;
+class UIHUDPanelInfo;
 
 class j1Scene : public j1Module
 {
@@ -51,6 +52,9 @@ private:
 	UIHUDPanelButtons* panel;
 
 	SDL_Rect select_rect;
+
+public:
+	UIHUDPanelInfo* panel_info;
 };
 
 #endif // __j1SCENE_H__

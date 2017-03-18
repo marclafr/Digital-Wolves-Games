@@ -77,6 +77,8 @@ bool j1Scene::Start()
 	panel->AddButton(1, 0, 748, 936);
 	panel->AddButton(4, 2, 904, 884);
 
+	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UIComponent_TYPE::UIHUDPANELINFO);
+
 	//Entity Manager
 	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(30, 170));
 	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(600, 400));

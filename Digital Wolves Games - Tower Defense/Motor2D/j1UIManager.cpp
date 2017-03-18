@@ -8,6 +8,8 @@
 #include "j1Textures.h"
 #include "j1Fonts.h"
 #include "j1Input.h"
+#include "Entity.h"
+#include "Units.h"
 
 #include "j1UIManager.h"
 
@@ -198,6 +200,11 @@ UIComponents* j1UIManager::addUIComponent(UIComponent_TYPE type)
 	{
 		components.push_back(ret = new UIHUDPanelButtons(UIComponent_TYPE::UIHUDPANELBUTTONS));
 	}
+	else if (type == UIComponent_TYPE::UIHUDPANELINFO)
+	{
+		components.push_back(ret = new UIHUDPanelInfo(UIComponent_TYPE::UIHUDPANELINFO));
+	}
+	
 	
 	return ret;
 }
@@ -277,6 +284,12 @@ void j1UIManager::drawAllComponents()
 					for(uint i = 1; i < uiselectoption->num_options + 1; i++)
 						App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera.x, (uiselectoption->rect_position.y - App->render->camera.y) + uiselectoption->rect_atlas.h * i, &uiselectoption->rect_atlas);
 				}
+			}
+			else if (*type == UIComponent_TYPE::UIHUDPANELINFO)
+			{
+				UIHUDPanelInfo* uihudpanelinfo = (UIHUDPanelInfo*)component;
+
+				uihudpanelinfo->Draw();
 			}
 		}
 		item++;
@@ -525,4 +538,101 @@ void UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atlas_y)
 	new_btn->btn->from = this;
 
 	panel.push_back(new_btn);
+}
+
+UIHUDPanelInfo::UIHUDPanelInfo(UIComponent_TYPE type) : UIComponents(type)
+{
+	interactive = false;
+}
+
+void UIHUDPanelInfo::AddEntitySelection(Entity* selected)
+{
+	selection.push_back(selected);
+}
+
+void UIHUDPanelInfo::CreateButtons()
+{
+	if (selection.empty() == false)
+	{
+		if (selection.size() > 1)
+		{
+			std::list<Entity*>::iterator item;
+			item = selection.begin();
+
+			int count = 0;
+			while (item != selection.end())
+			{
+				Unit* selected = (Unit*)item._Ptr->_Myval;
+
+				UIButton* new_btn = new UIButton(UIBUTTON);
+
+				new_btn->Set({220 + (29 * count++), 666, 29, 29}, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
+
+				entities_btn.push_back(new_btn);
+
+				item++;
+			}
+		}
+	}
+}
+
+void UIHUDPanelInfo::DeleteButtons()
+{
+	std::list<UIButton*>::iterator item;
+	item = entities_btn.begin();
+
+	while (item != entities_btn.end())
+	{
+		delete item._Ptr->_Myval;
+
+		item++;
+	}
+
+	entities_btn.clear();
+
+	selection.clear();
+}
+
+void UIHUDPanelInfo::Draw()
+{
+	std::list<UIButton*>::iterator item;
+	item = entities_btn.begin();
+
+	while (item != entities_btn.end())
+	{
+		UIButton* uibutton = item._Ptr->_Myval;
+
+		SDL_Rect mark_btn{ 999, 827, 29, 29 };
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &uibutton->rect_atlas);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x - 2 - App->render->camera.x, uibutton->rect_position.y - 2 - App->render->camera.y, &mark_btn);
+
+		item++;
+	}
+}
+
+SDL_Rect UIHUDPanelInfo::GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
+{
+	SDL_Rect ret;
+
+	switch (type)
+	{
+	case TWOHANDEDSWORDMAN:
+		ret = { 774, 962, 25, 25 };
+		break;
+
+	case CAVALRYARCHER:
+		ret = { 800, 962, 25, 25 };
+		break;
+
+	case SIEGERAM:
+		ret = { 748, 962, 25, 25 };
+		break;
+
+	default:
+		LOG("Error UNIT TYPE SDL_Rect NULL (UIManager)");
+		ret = { 0, 0, 0, 0 };
+		break;
+	}
+
+	return ret;
 }

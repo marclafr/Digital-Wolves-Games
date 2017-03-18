@@ -9,6 +9,9 @@ struct _TTF_Font;
 
 #define CURSOR_WIDTH 2
 
+class Entity;
+enum UNIT_TYPE;
+
 // TODO 1: Create your structure of classes
 
 enum UIComponent_Stat
@@ -34,7 +37,8 @@ enum UIComponent_TYPE
 	UIIMAGE,
 	UICHECKBUTTON,
 	UISELECTOPTION,
-	UIHUDPANELBUTTONS
+	UIHUDPANELBUTTONS,
+	UIHUDPANELINFO
 };
 
 class UIComponents
@@ -172,6 +176,29 @@ public:
 
 	//x - 0 to 4 | y - 0 to 2 | Max 15 buttons
 	void AddButton(uint x, uint y, uint atlas_x, uint atlas_y);
+};
+
+//------
+
+class UIHUDPanelInfo : public UIComponents
+{
+private:
+	std::list<Entity*> selection;
+
+	std::list<UIButton*>  entities_btn;
+
+public:
+	UIHUDPanelInfo(UIComponent_TYPE type);
+
+	void AddEntitySelection(Entity* selected);
+
+	void CreateButtons();
+	void DeleteButtons();
+
+	void Draw();
+
+	SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type);
+
 };
 
 // ---------------------------------------------------
