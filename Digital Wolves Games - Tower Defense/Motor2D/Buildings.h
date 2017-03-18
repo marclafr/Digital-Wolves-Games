@@ -1,7 +1,14 @@
 #ifndef _BUILDINGS
 #define _BUILDINGS
 
+#include "SDL/include/SDL_rect.h"
 #include "Entity.h"
+#include "j1Textures.h"
+#include "j1Module.h"
+#include "Entity.h"
+#include "Units.h"
+
+
 
 enum BUILDING_TYPE
 {
@@ -9,10 +16,15 @@ enum BUILDING_TYPE
 	TURRET //PER TENIR ALGO
 };
 
-class Building : public Entity 
+class Building : public Entity
 {
 private:
+
 	enum BUILDING_TYPE building_type;
+	int attack;
+	float rate_of_fire;
+	float range;
+	float build_time;
 
 public:
 
@@ -22,7 +34,6 @@ public:
 
 	virtual void AI();
 	virtual void Draw();
-
 };
 
 #endif
