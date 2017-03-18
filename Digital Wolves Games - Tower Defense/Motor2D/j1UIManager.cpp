@@ -194,6 +194,10 @@ UIComponents* j1UIManager::addUIComponent(UIComponent_TYPE type)
 	{
 		components.push_back(ret = new UISelectOption(UIComponent_TYPE::UISELECTOPTION));
 	}
+	else if (type == UIComponent_TYPE::UIHUDPANELBUTTONS)
+	{
+		components.push_back(ret = new UIHUDPanelButtons(UIComponent_TYPE::UIHUDPANELBUTTONS));
+	}
 	
 	return ret;
 }
@@ -223,7 +227,17 @@ void j1UIManager::drawAllComponents()
 			{
 				UIComponents* uibutton = component;
 
-				App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &uibutton->rect_atlas);
+				if (uibutton->from != nullptr)
+				{
+					if (uibutton->from->type == UIHUDPANELBUTTONS)
+					{
+						SDL_Rect mark_btn{ 969, 827, 29, 29 };
+						App->render->Blit(atlas, uibutton->rect_position.x - 2 - App->render->camera.x, uibutton->rect_position.y - 2 - App->render->camera.y, &mark_btn);
+						App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &uibutton->rect_atlas);
+					}
+				}
+				else
+					App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &uibutton->rect_atlas);
 			}
 			else if (*type == UIComponent_TYPE::UIIMAGE)
 			{
@@ -491,4 +505,24 @@ void UISelectOption::ChangeDrawAllOptions()
 
 		item++;
 	}
+}
+
+UIHUDPanelButtons::UIHUDPanelButtons(UIComponent_TYPE type) : UIComponents(type)
+{
+	interactive = false;
+}
+
+//x - 0 to 4 | y - 0 to 2 | Max 15 buttons
+void UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atlas_y)
+{
+	info_button* new_btn = new info_button;
+
+	new_btn->btn = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
+	new_btn->x = x;
+	new_btn->y = y;
+	new_btn->btn->Set({ 26 + (30 * (int)x), 666 + (30 * (int)y), 29, 29}, { (int)atlas_x, (int)atlas_y, 25, 25});
+
+	new_btn->btn->from = this;
+
+	panel.push_back(new_btn);
 }

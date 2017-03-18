@@ -70,6 +70,13 @@ bool j1Scene::Start()
 	description = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
 	description->Set({1316, 653, 19, 17}, {1347, 1163, 19, 17});
 
+	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UIComponent_TYPE::UIHUDPANELBUTTONS);
+	panel->AddButton(2, 1, 800, 884);
+	panel->AddButton(4, 1, 826, 884);
+	panel->AddButton(0, 0, 878, 910);
+	panel->AddButton(1, 0, 748, 936);
+	panel->AddButton(4, 2, 904, 884);
+
 	//Entity Manager
 	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(30, 170));
 	App->entity_manager->CreateUnit(CAVALRYARCHER, iPoint(600, 400));

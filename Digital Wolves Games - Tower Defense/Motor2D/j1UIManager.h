@@ -33,7 +33,8 @@ enum UIComponent_TYPE
 	UIINPUT,
 	UIIMAGE,
 	UICHECKBUTTON,
-	UISELECTOPTION
+	UISELECTOPTION,
+	UIHUDPANELBUTTONS
 };
 
 class UIComponents
@@ -151,6 +152,26 @@ public:
 	void ChangeCurrent(UILabel* change);
 
 	void ChangeDrawAllOptions();
+};
+//------
+
+class UIHUDPanelButtons : public UIComponents
+{
+public:
+	struct info_button
+	{
+		UIButton* btn;
+		uint x;
+		uint y;
+	};
+
+	std::list<info_button*> panel;
+
+public:
+	UIHUDPanelButtons(UIComponent_TYPE type);
+
+	//x - 0 to 4 | y - 0 to 2 | Max 15 buttons
+	void AddButton(uint x, uint y, uint atlas_x, uint atlas_y);
 };
 
 // ---------------------------------------------------

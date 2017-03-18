@@ -6,8 +6,7 @@
 struct SDL_Texture;
 class UILabel;
 class UIImage;
-class UICheckbutton;
-class UISelectOption;
+class UIHUDPanelButtons;
 
 class j1Scene : public j1Module
 {
@@ -49,7 +48,7 @@ private:
 
 	UIImage* down_hud;
 	UIButton* description;
-	
+	UIHUDPanelButtons* panel;
 
 	SDL_Rect select_rect;
 };
