@@ -48,6 +48,16 @@ const float Entity::GetY() const
 	return position.y;
 }
 
+const int Entity::GetHp() const
+{
+	return hp;
+}
+
+const int Entity::GetArmor() const
+{
+	return armor;
+}
+
 const SDL_Texture * Entity::GetTexture() const
 {
 	return texture;

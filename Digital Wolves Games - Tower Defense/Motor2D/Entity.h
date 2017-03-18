@@ -41,10 +41,14 @@ public:
 
 	//Geters
 	bool ToDelete() const;
-	ENTITY_TYPE GetEntityType() const;
-	ENTITY_STATUS GetEntityStatus();
+
 	void SetEntityStatus(ENTITY_STATUS status);
 	void SetPosition(float x, float y);
+
+	ENTITY_TYPE GetEntityType() const;
+	ENTITY_STATUS GetEntityStatus();
+	const int GetHp() const;
+	const int GetArmor() const;
 	const float GetX() const;
 	const float GetY() const;
 	const SDL_Texture* GetTexture() const;
