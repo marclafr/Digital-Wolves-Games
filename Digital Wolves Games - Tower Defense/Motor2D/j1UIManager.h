@@ -183,21 +183,58 @@ public:
 class UIHUDPanelInfo : public UIComponents
 {
 private:
+	enum PANEL_TYPE
+	{
+		ENTITIESSELECTED,
+		ENTITYINFO,
+		NONE
+	};
+
+	struct entity_info
+	{
+		UIImage* image = nullptr;
+
+		UILabel* name = nullptr;
+
+		UILabel* life = nullptr;
+		UILabel* damage = nullptr;
+		UILabel* armor = nullptr;
+		UILabel* range = nullptr;
+
+		~entity_info()
+		{
+			delete image;
+			delete name;
+			delete life;
+			delete damage;
+			delete armor;
+			delete range;
+		}
+
+	};
+
 	std::list<Entity*> selection;
 
 	std::list<UIButton*>  entities_btn;
+
+	entity_info* entity_selected;
+
+	PANEL_TYPE status = NONE;
 
 public:
 	UIHUDPanelInfo(UIComponent_TYPE type);
 
 	void AddEntitySelection(Entity* selected);
+	void DeleteSelection();
 
-	void CreateButtons();
+	void CreatePanel();
 	void DeleteButtons();
 
 	void Draw();
 
 	SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type);
+
+	const char* GetUnitName(const UNIT_TYPE type);
 
 };
 

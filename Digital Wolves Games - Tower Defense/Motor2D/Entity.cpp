@@ -48,6 +48,16 @@ const float Entity::GetY() const
 	return position.y;
 }
 
+const int Entity::GetHp() const
+{
+	return hp;
+}
+
+const int Entity::GetArmor() const
+{
+	return armor;
+}
+
 void Entity::SetArmor(int new_armor)
 {
 	armor = new_armor;

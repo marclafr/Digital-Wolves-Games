@@ -44,6 +44,8 @@ public:
 	void SetPosition(float x, float y);
 	const float GetX() const;
 	const float GetY() const;
+	const int GetHp() const;
+	const int GetArmor() const;
 
 protected:
 	//Seters

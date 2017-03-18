@@ -73,7 +73,7 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 			App->scene->panel_info->AddEntitySelection(it._Ptr->_Myval);
 		}
 	}
-	App->scene->panel_info->CreateButtons();
+	App->scene->panel_info->CreatePanel();
 }
 
 void j1EntityManager::UnselectEverything()
@@ -82,7 +82,7 @@ void j1EntityManager::UnselectEverything()
 	{
 		it._Ptr->_Myval->SetEntityStatus(E_NON_SELECTED);
 	}
-	App->scene->panel_info->DeleteButtons();
+	App->scene->panel_info->DeleteSelection();
 }
 
 void j1EntityManager::DeleteEntity(Entity * ptr)
