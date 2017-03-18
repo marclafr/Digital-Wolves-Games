@@ -59,6 +59,8 @@ public:
 public:
 	UIComponents(UIComponent_TYPE type) : type(type) {}
 
+	virtual ~UIComponents() {}
+
 	virtual void Set() {};
 };
 
@@ -67,11 +69,13 @@ class UILabel : public UIComponents
 {
 public:
 	std::string text;
-	SDL_Texture* text_img;
-	_TTF_Font*  font;
+	SDL_Texture* text_img = nullptr;
+	_TTF_Font*  font = nullptr;
 
 public:
 	UILabel(UIComponent_TYPE type) : UIComponents(type) {}
+
+	~UILabel();
 
 	void Set(int pos_x, int pos_y, const char* text, _TTF_Font*  font = nullptr);
 
@@ -174,6 +178,8 @@ public:
 public:
 	UIHUDPanelButtons(UIComponent_TYPE type);
 
+	~UIHUDPanelButtons();
+
 	//x - 0 to 4 | y - 0 to 2 | Max 15 buttons
 	void AddButton(uint x, uint y, uint atlas_x, uint atlas_y);
 };
@@ -223,6 +229,7 @@ private:
 
 public:
 	UIHUDPanelInfo(UIComponent_TYPE type);
+	~UIHUDPanelInfo();
 
 	void AddEntitySelection(Entity* selected);
 	void DeleteSelection();
@@ -236,7 +243,6 @@ public:
 	SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type);
 
 	const char* GetUnitName(const UNIT_TYPE type);
-
 };
 
 // ---------------------------------------------------

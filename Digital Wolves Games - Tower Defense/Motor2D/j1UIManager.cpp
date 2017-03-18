@@ -165,6 +165,19 @@ bool j1UIManager::CleanUp()
 {
 	LOG("Freeing GUI");
 
+	std::list<UIComponents*>::iterator item;
+	item = components.begin();
+
+	while (item != components.end())
+	{
+
+		delete item._Ptr->_Myval;
+		
+		item++;
+	}
+
+	components.clear();
+
 	return true;
 }
 
@@ -297,6 +310,13 @@ void j1UIManager::drawAllComponents()
 }
 
 // class uimanager ---------------------------------------------------
+
+UILabel::~UILabel()
+{
+
+	if (font != nullptr)
+		delete font;
+}
 
 void UILabel::Set(int pos_x, int pos_y, const char * text, _TTF_Font*  font)
 {
@@ -525,6 +545,21 @@ UIHUDPanelButtons::UIHUDPanelButtons(UIComponent_TYPE type) : UIComponents(type)
 	interactive = false;
 }
 
+UIHUDPanelButtons::~UIHUDPanelButtons()
+{
+
+	std::list<info_button*>::iterator item;
+	item = panel.begin();
+
+	while (item != panel.end())
+	{
+		delete	item._Ptr->_Myval;
+		item++;
+	}
+
+	panel.clear();
+}
+
 //x - 0 to 4 | y - 0 to 2 | Max 15 buttons
 void UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atlas_y)
 {
@@ -543,6 +578,33 @@ void UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atlas_y)
 UIHUDPanelInfo::UIHUDPanelInfo(UIComponent_TYPE type) : UIComponents(type)
 {
 	interactive = false;
+}
+
+UIHUDPanelInfo::~UIHUDPanelInfo()
+{
+	if (!selection.empty())
+	{
+		selection.clear();
+	}
+
+	if (status == ENTITIESSELECTED)
+	{
+		std::list<UIButton*>::iterator item;
+		item = entities_btn.begin();
+
+		while (item != entities_btn.end())
+		{
+			delete item._Ptr->_Myval;
+
+			item++;
+		}
+
+		entities_btn.clear();
+	}
+	else if (status == ENTITYINFO)
+	{
+		delete entity_selected;
+	}
 }
 
 void UIHUDPanelInfo::AddEntitySelection(Entity* selected)
