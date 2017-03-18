@@ -27,6 +27,7 @@ private:
 	int armor;
 	enum ENTITY_TYPE entity_type;
 	enum ENTITY_STATUS entity_status = E_NON_SELECTED;
+
 public:
 	Entity(ENTITY_TYPE entity_type, fPoint pos);
 	~Entity();

@@ -11,6 +11,8 @@
 #include "j1Timer.h"
 #include "Units.h"
 
+#define IDLE_ANIMATION_WAIT 5.0f
+
 struct SDL_Texture;
 
 struct Textures
@@ -48,6 +50,7 @@ private:
 public:
 	void SetSpeed(float speed);
 	void SetLoopState(bool state);
+	void RestartAnim();
 	
 	bool Finished() const;
 	void Reset();

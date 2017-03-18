@@ -218,6 +218,7 @@ bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* 
 	}
 
 	Animation* anim = App->anim->GetAnimation(unit->GetUnitType(), unit->GetActionType(), direction);
+
 	if (anim->Finished() == false)
 	{
 		frame = anim->GetCurrentFrame();
@@ -229,7 +230,12 @@ bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* 
 			return NULL;
 		}
 	}
-	return anim->Finished();
+	else
+	{
+		anim->RestartAnim();
+		return true;
+	}
+	return false;
 }
 
 
@@ -253,19 +259,29 @@ void Animation::SetLoopState(bool state)
 	loop = state;
 }
 
+void Animation::RestartAnim()
+{
+	current_frame = 0.0f;
+}
+
 SDL_Rect& Animation::GetCurrentFrame()
 {
 	if (current_frame == -1)
-		return SDL_Rect{ 0,0,0,0 };
-	
-	current_frame = (float) floor(anim_timer.Read() / speed);
+		return SDL_Rect{0,0,0,0};
 
+	if (anim_timer.ReadSec() <= IDLE_ANIMATION_WAIT && this->action_type == IDLE)
+	{
+		return frames[0];
+	}	
+
+	current_frame = (float) floor(anim_timer.Read() / speed);
+	
 	if (current_frame >= frames.size())
 	{
 		if (loop == true)
 		{
 			anim_timer.Start();
-			current_frame = 0;
+			current_frame = 0.0f;
 			loops++;
 		}
 		else
@@ -286,7 +302,12 @@ iPoint& Animation::GetCurrentPivotPoint()
 
 bool Animation::Finished() const
 {
-	return loop == false && loops > 0;
+	if (current_frame == frames.size() - 1)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 void Animation::Reset()

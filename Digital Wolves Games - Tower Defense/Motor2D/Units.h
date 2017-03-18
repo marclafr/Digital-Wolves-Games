@@ -2,8 +2,10 @@
 #define _UNITS
 
 #include "Entity.h"
+#include "j1Timer.h"
 
 #define XY_TILES_RELATION 2
+
 
 struct PathList;
 struct PathNode;
@@ -68,11 +70,11 @@ private:
 	bool GetNextTile();
 	UNIT_CLASS unit_class;
 	std::list<iPoint> path_list;
+	bool moving = false;
 
 public:
 
 	Unit(UNIT_TYPE u_type, fPoint pos);
-	bool moving = false;
 
 	void Update(); // defines order
 
