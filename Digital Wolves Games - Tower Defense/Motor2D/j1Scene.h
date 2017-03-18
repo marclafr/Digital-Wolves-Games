@@ -6,8 +6,8 @@
 struct SDL_Texture;
 class UILabel;
 class UIImage;
-class UICheckbutton;
-class UISelectOption;
+class UIHUDPanelButtons;
+class UIHUDPanelInfo;
 
 class j1Scene : public j1Module
 {
@@ -42,17 +42,19 @@ public:
 private:
 	SDL_Texture* debug_tex;
 
-	/* TEST UI
-	UIImage* banner;
-	UILabel* text;
-	UICheckbutton* check_test;
-	UISelectOption* select_test;
+	UIImage* top_hud;
+	UIButton* objectives;
+	UIButton* tree_tech;
+	UIButton* ingame_menu;
 
-	bool right_click = false;
-	bool left_click = false;
-	*/
+	UIImage* down_hud;
+	UIButton* description;
+	UIHUDPanelButtons* panel;
 
 	SDL_Rect select_rect;
+
+public:
+	UIHUDPanelInfo* panel_info;
 };
 
 #endif // __j1SCENE_H__

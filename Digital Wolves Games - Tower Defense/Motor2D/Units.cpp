@@ -236,6 +236,11 @@ const UNIT_TYPE Unit::GetUnitType() const
 	return unit_type;
 }
 
+const UNIT_CLASS Unit::GetUnitClass() const
+{
+	return unit_class;
+}
+
 const ACTION_TYPE Unit::GetActionType() const
 {
 	return action_type;
@@ -245,6 +250,16 @@ int Unit::GetPath(iPoint dest) {
 	iPoint ori = App->map->WorldToMap(GetX(), GetY());
 	iPoint destinat = App->map->WorldToMap(dest.x, dest.y);
 	return App->pathfinding->CreatePath(ori, destinat, path_list);
+}
+
+const int Unit::GetAttack() const
+{
+	return attack;
+}
+
+const int Unit::GetRange() const
+{
+	return range;
 }
 
 bool Unit::GetNextTile()

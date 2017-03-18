@@ -9,6 +9,9 @@ struct _TTF_Font;
 
 #define CURSOR_WIDTH 2
 
+class Entity;
+enum UNIT_TYPE;
+
 // TODO 1: Create your structure of classes
 
 enum UIComponent_Stat
@@ -33,7 +36,9 @@ enum UIComponent_TYPE
 	UIINPUT,
 	UIIMAGE,
 	UICHECKBUTTON,
-	UISELECTOPTION
+	UISELECTOPTION,
+	UIHUDPANELBUTTONS,
+	UIHUDPANELINFO
 };
 
 class UIComponents
@@ -151,6 +156,86 @@ public:
 	void ChangeCurrent(UILabel* change);
 
 	void ChangeDrawAllOptions();
+};
+//------
+
+class UIHUDPanelButtons : public UIComponents
+{
+public:
+	struct info_button
+	{
+		UIButton* btn;
+		uint x;
+		uint y;
+	};
+
+	std::list<info_button*> panel;
+
+public:
+	UIHUDPanelButtons(UIComponent_TYPE type);
+
+	//x - 0 to 4 | y - 0 to 2 | Max 15 buttons
+	void AddButton(uint x, uint y, uint atlas_x, uint atlas_y);
+};
+
+//------
+
+class UIHUDPanelInfo : public UIComponents
+{
+private:
+	enum PANEL_TYPE
+	{
+		ENTITIESSELECTED,
+		ENTITYINFO,
+		NONE
+	};
+
+	struct entity_info
+	{
+		UIImage* image = nullptr;
+
+		UILabel* name = nullptr;
+
+		UILabel* life = nullptr;
+		UILabel* damage = nullptr;
+		UILabel* armor = nullptr;
+		UILabel* range = nullptr;
+
+		~entity_info()
+		{
+			delete image;
+			delete name;
+			delete life;
+			delete damage;
+			delete armor;
+			delete range;
+		}
+
+	};
+
+	std::list<Entity*> selection;
+
+	std::list<UIButton*>  entities_btn;
+
+	entity_info* entity_selected;
+
+	PANEL_TYPE status = NONE;
+
+public:
+	UIHUDPanelInfo(UIComponent_TYPE type);
+
+	void AddEntitySelection(Entity* selected);
+	void DeleteSelection();
+
+	void CreatePanel();
+	void DeleteButtons();
+
+	void Draw();
+
+	SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type);
+
+	const char* GetUnitName(const UNIT_TYPE type);
+
 };
 
 // ---------------------------------------------------

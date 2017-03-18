@@ -24,7 +24,6 @@ class j1EntityManager;
 
 	//Scenes
 class j1Scene;
-class j1MainMenu;
 
 class j1App
 {
@@ -104,7 +103,7 @@ public:
 
 		//Scenes
 	j1Scene*			scene = NULL;
-	j1MainMenu*			main_menu = NULL;
+
 private:
 
 	std::list<j1Module*> modules;
