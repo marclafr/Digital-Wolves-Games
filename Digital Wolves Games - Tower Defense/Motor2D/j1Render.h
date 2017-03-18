@@ -23,8 +23,10 @@ private:
 public:
 	Sprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0);
 	Sprite();
+	Sprite(const Sprite &copy);
+	~Sprite();
 
-	void operator = (Sprite sprite);
+	void operator = (Sprite& sprite);
 
 	iPoint GetPosition() const;
 	SDL_Texture* GetTexture() const;

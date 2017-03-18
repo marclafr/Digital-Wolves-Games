@@ -213,10 +213,14 @@ void Unit::Draw()
 
 	App->anim->GetAnimationFrame(rect, pivot, this);
 
+	SetPivot(pivot.x, pivot.y);
+	SetRect(rect);
+	SetTexture(tex);
+
 	if (direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST)
-		App->render->Blit(tex, GetX(), GetY(), &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y); //Blit has to change to push sprites but it is bugged
+		App->render->PushSprite((SDL_Texture*)GetTexture(), GetX(), GetY(), &GetRect(), SDL_FLIP_HORIZONTAL, pivot.x, pivot.y); //Blit has to change to push sprites but it is bugged
 	else
-		App->render->Blit(tex, GetX() - pivot.x, GetY() - pivot.y, &rect);
+		App->render->PushSprite((SDL_Texture*)GetTexture(), GetX() - pivot.x, GetY() - pivot.y, &GetRect());
 
 	if (this->GetEntityStatus() == E_SELECTED)
 		App->render->DrawCircle(this->GetX() + App->render->camera.x, this->GetY() + App->render->camera.y, this->unit_radius, 255, 255, 255);

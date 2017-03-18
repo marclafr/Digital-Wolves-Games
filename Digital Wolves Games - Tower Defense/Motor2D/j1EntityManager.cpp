@@ -1,13 +1,13 @@
 #include "j1App.h"
 #include "j1EntityManager.h"
 #include "Units.h"
+
 j1EntityManager::j1EntityManager() : j1Module()
 {
 	name.assign("Units");
 }
 
 j1EntityManager::~j1EntityManager() {}
-
 
 bool j1EntityManager::Awake() { return true; }
 

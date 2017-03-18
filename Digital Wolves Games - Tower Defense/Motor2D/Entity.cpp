@@ -48,6 +48,21 @@ const float Entity::GetY() const
 	return position.y;
 }
 
+const SDL_Texture * Entity::GetTexture() const
+{
+	return texture;
+}
+
+const iPoint Entity::GetPivot() const
+{
+	return pivot;
+}
+
+const SDL_Rect Entity::GetRect() const
+{
+	return rect;
+}
+
 void Entity::SetArmor(int new_armor)
 {
 	armor = new_armor;
@@ -56,4 +71,20 @@ void Entity::SetArmor(int new_armor)
 void Entity::SetHp(int new_hp)
 {
 	hp = new_hp;
+}
+
+void Entity::SetTexture(SDL_Texture * text)
+{
+	texture = text;
+}
+
+void Entity::SetPivot(int x, int y)
+{
+	pivot.x = x;
+	pivot.y = y;
+}
+
+void Entity::SetRect(SDL_Rect rect)
+{
+	this->rect = rect;
 }

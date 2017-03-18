@@ -1,6 +1,7 @@
 #ifndef _ENTITY
 #define _ENTITY
 
+#include "SDL\include\SDL.h"
 #include "p2Point.h"
 
 enum ENTITY_TYPE
@@ -17,6 +18,9 @@ enum ENTITY_STATUS
 class Entity
 {
 private:
+	SDL_Texture* texture; //should later change to enum
+	SDL_Rect rect;
+	iPoint pivot;
 	bool to_delete;
 	iPoint position;
 	int hp;
@@ -35,7 +39,6 @@ public:
 	void Die();//to_delete = true
 
 
-
 	//Geters
 	bool ToDelete() const;
 	ENTITY_TYPE GetEntityType() const;
@@ -44,10 +47,16 @@ public:
 	void SetPosition(float x, float y);
 	const float GetX() const;
 	const float GetY() const;
+	const SDL_Texture* GetTexture() const;
+	const iPoint GetPivot() const;
+	const SDL_Rect GetRect() const;
 
 protected:
 	//Seters
 	void SetArmor(int new_armor);
 	void SetHp(int new_hp);
+	void SetTexture(SDL_Texture* text);
+	void SetPivot(int x, int y);
+	void SetRect(SDL_Rect rect);
 };
 #endif

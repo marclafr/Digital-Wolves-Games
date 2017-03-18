@@ -52,12 +52,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(anim);
 	AddModule(uimanager);
+	AddModule(entity_manager);
 
 	// scene last
 	AddModule(main_menu);
 	AddModule(scene);
 
-	AddModule(entity_manager);
 	// render last to swap buffer
 	AddModule(render);
 
