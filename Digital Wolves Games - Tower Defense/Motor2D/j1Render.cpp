@@ -291,8 +291,11 @@ void j1Render::PushSprite(SDL_Texture* texture, int x, int y, const SDL_Rect* se
 			break;
 	}
 
-	sprite_queue.push_back(sprite);
-	//sprite_queue.insert(queue_pos, sprite);	
+	//sprite_queue.push_back(sprite);
+	if (queue_pos == sprite_queue.begin())
+		sprite_queue.push_back(sprite);
+	else
+		sprite_queue.insert(queue_pos, sprite);	
 }
 
 void j1Render::BlitAllEntities()
