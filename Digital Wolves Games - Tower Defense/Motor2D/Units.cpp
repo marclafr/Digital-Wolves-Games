@@ -8,7 +8,7 @@
 #include "j1Pathfinding.h"
 #include "j1Map.h"
 
-Unit::Unit(UNIT_TYPE u_type, iPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
 {
 	switch (u_type)
 	{
@@ -82,23 +82,15 @@ void Unit::Move()
 		}
 	}
 
-	//Draw x y axis test
-	App->render->DrawLine(0, 0, 1000, 0, 255, 255, 255);
-	App->render->DrawLine(0, 0, 0, 1000, 255, 255, 255);
-
 	if (this->moving == true)
 	{
 
 
 		this->SetPosition(GetX() + move_vector.x*speed, GetY() + move_vector.y*speed);
 
-		iPoint unit_world;
-		unit_world.x = GetX();
-		unit_world.y = GetY();
-		if (path_objective.DistanceTo(unit_world) < 3)
+		if (path_objective.DistanceTo(iPoint(GetX(), GetY())) < 3)
 		{
 			//center the unit to the tile
-			this->SetPosition(path_objective.x, path_objective.y);
 			if (!GetNextTile())
 			{
 				moving = false;

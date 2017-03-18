@@ -71,7 +71,7 @@ private:
 
 public:
 
-	Unit(UNIT_TYPE u_type, iPoint pos);
+	Unit(UNIT_TYPE u_type, fPoint pos);
 	bool moving = false;
 
 	void Update(); // defines order

@@ -22,13 +22,13 @@ private:
 	SDL_Rect rect;
 	iPoint pivot;
 	bool to_delete;
-	iPoint position;
+	fPoint position;
 	int hp;
 	int armor;
 	enum ENTITY_TYPE entity_type;
-	enum ENTITY_STATUS entity_status = E_SELECTED;
+	enum ENTITY_STATUS entity_status = E_NON_SELECTED;
 public:
-	Entity(ENTITY_TYPE entity_type, iPoint pos);
+	Entity(ENTITY_TYPE entity_type, fPoint pos);
 	~Entity();
 
 	virtual void Update() = 0;

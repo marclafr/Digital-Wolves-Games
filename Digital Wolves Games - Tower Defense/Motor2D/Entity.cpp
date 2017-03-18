@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(ENTITY_TYPE entity_type, iPoint pos): to_delete (false), entity_type(entity_type), position(pos)
+Entity::Entity(ENTITY_TYPE entity_type, fPoint pos): to_delete (false), entity_type(entity_type), position(pos)
 {}
 
 Entity::~Entity()
