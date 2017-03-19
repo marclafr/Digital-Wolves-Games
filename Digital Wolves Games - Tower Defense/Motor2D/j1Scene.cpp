@@ -84,7 +84,7 @@ bool j1Scene::Start()
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(700, 400));
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400));
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 400));
-	App->entity_manager->CreatBuilding(TURRET, fPoint(600,300));
+	//App->entity_manager->CreatBuilding(TURRET, fPoint(600,300));
 
 
 	return true;

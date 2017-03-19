@@ -285,17 +285,13 @@ void j1Render::PushSprite(SDL_Texture* texture, int x, int y, const SDL_Rect* se
 
 	for (int i = 0; i < sprite_queue.size(); i++)
 	{
-		if (y > sprite_queue[i].GetPosition().y)
-			queue_pos++;
-		else
+		queue_pos++;
+		if (y < sprite_queue[i].GetPosition().y)
 			break;
 	}
 
 	//sprite_queue.push_back(sprite);
-	if (queue_pos == sprite_queue.begin())
-		sprite_queue.push_back(sprite);
-	else
-		sprite_queue.insert(queue_pos, sprite);	
+	sprite_queue.insert(queue_pos, sprite);	
 }
 
 void j1Render::BlitAllEntities()
@@ -306,63 +302,24 @@ void j1Render::BlitAllEntities()
 	sprite_queue.clear();
 }
 
-Sprite::Sprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle) : texture(texture), position(iPoint(x, y)), flip(flip), pivot_x(pivot_x), pivot_y(pivot_y), speed(speed), angle(angle)
-{
-	if (section != nullptr)
-	{
-		this->section = new SDL_Rect;
-		this->section->x = section->x;
-		this->section->y = section->y;
-		this->section->w = section->w;
-		this->section->h = section->h;
-	}
-}
+Sprite::Sprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle) : texture(texture), section(section), position(iPoint(x, y)), flip(flip), pivot_x(pivot_x), pivot_y(pivot_y), speed(speed), angle(angle)
+{}
 
 Sprite::Sprite() : section(nullptr), position(iPoint(0,0)), flip(SDL_FLIP_NONE), pivot_x(0), pivot_y(0), speed(1.0f), angle(0)
 {}
 
-Sprite::Sprite(const Sprite & copy) : texture(copy.texture), position(copy.position), flip(copy.flip), pivot_x(copy.pivot_x), pivot_y(copy.pivot_y), speed(copy.speed), angle(copy.angle)
-{
-	if (copy.section != nullptr)
-	{
-		this->section = new SDL_Rect;
-		this->section->x = copy.section->x;
-		this->section->y = copy.section->y;
-		this->section->w = copy.section->w;
-		this->section->h = copy.section->h;
-	}
-	else
-	{
-		this->section = nullptr;
-	}
-}
+Sprite::Sprite(const Sprite & copy) : texture(copy.texture), section(copy.section), position(copy.position), flip(copy.flip), pivot_x(copy.pivot_x), pivot_y(copy.pivot_y), speed(copy.speed), angle(copy.angle)
+{}
 
 Sprite::~Sprite()
-{
-	if (section != nullptr)
-	{
-		delete section;
-		section = nullptr;
-	}
-}
+{}
 
 void Sprite::operator = (Sprite &sprite)
 {
 	texture = sprite.texture;
 	position.x = sprite.position.x;
 	position.y = sprite.position.y;
-
-	if (sprite.section != nullptr)
-	{
-		if(this->section == nullptr)
-			this->section = new SDL_Rect;
-
-		this->section->x = section->x;
-		this->section->y = section->y;
-		this->section->w = section->w;
-		this->section->h = section->h;
-	}
-
+	section = sprite.section;
 	flip = sprite.flip;
 	pivot_x = sprite.pivot_x;
 	pivot_y = sprite.pivot_y;

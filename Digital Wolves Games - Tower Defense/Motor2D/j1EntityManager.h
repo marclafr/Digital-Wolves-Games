@@ -7,6 +7,7 @@
 #include "Entity.h"
 #include "Units.h"
 #include "Buildings.h"
+#include <vector>
 #include "SDL/include/SDL_rect.h"
 
 class j1EntityManager : public j1Module
@@ -37,7 +38,7 @@ private:
 	SDL_Texture* sprites;
 
 	//lista para "almacenar" unidades, puede ser cambiada a array etc.
-	std::list<Entity*> entity_list;
+	std::vector<Entity*> entity_array;
 };
 #endif //_j1EntityManager_
 

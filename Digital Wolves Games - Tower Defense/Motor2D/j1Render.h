@@ -12,7 +12,7 @@ class Sprite
 {
 private:
 	iPoint position;
-	SDL_Rect* section;
+	const SDL_Rect* section;
 	SDL_Texture* texture; 
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	int pivot_x = 0;
