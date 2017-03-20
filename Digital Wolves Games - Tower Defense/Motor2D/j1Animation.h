@@ -13,17 +13,6 @@
 
 #define IDLE_ANIMATION_WAIT 2.0f
 
-struct SDL_Texture;
-
-struct Textures
-{
-public:
-	Textures(SDL_Texture* tex, UNIT_TYPE u) : texture(tex), unit(u) {}
-	~Textures() {}
-	SDL_Texture* texture;
-	UNIT_TYPE unit;
-};
-
 class Animation
 {
 	friend class j1Animation;
@@ -62,8 +51,8 @@ private:
 	void SetAction(const pugi::xml_node node);
 	void SetDirection(const pugi::xml_node node);
 
-	SDL_Rect& GetCurrentFrame();
-	iPoint& GetCurrentPivotPoint();
+	SDL_Rect GetCurrentFrame();
+	iPoint GetCurrentPivotPoint();
 };
 
 //------------------------------------------------------------------------//
@@ -83,14 +72,13 @@ public:
 
 	bool CleanUp();
 	
-	Animation* DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos);
+	//Animation* DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos);
+
 	bool GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* unit);
-	SDL_Texture* GetTexture(const UNIT_TYPE unit);
-	Animation* GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction);
+	Animation* GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction) const;
 
 private:
-	std::vector<Textures> textures;
-	std::list<Animation*> animations;
+	std::vector<Animation*> animations;
 
 };
 

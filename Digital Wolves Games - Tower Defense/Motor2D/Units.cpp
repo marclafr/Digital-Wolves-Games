@@ -22,6 +22,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		range = 1;
 		unit_class = INFANTRY;
 		unit_radius = 6;
+		SetTextureID(T_TWOHANDEDSWORDMAN);
 		break;
 
 	case CAVALRYARCHER:
@@ -33,6 +34,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		range = 4;
 		unit_class = ARCHER;
 		unit_radius = 12;
+		SetTextureID(T_CAVALRYARCHER);
 		break;
 
 	case SIEGERAM:
@@ -44,6 +46,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		range = 1;
 		unit_class = SIEGE;
 		unit_radius = 15;
+		SetTextureID(T_SIEGERAM);
 		break;
 
 	default:
@@ -199,7 +202,6 @@ void Unit::AI()
 
 void Unit::Draw()
 {
-	SDL_Texture* tex = App->anim->GetTexture(unit_type);
 	SDL_Rect rect;
 	iPoint pivot;
 
@@ -207,13 +209,10 @@ void Unit::Draw()
 	
 	SetPivot(pivot.x, pivot.y);
 	SetRect(rect);
-	SetTexture(tex);
 
-	if (direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST)
-		App->render->PushSprite((SDL_Texture*)GetTexture(), GetX(), GetY(), &GetRect(), SDL_FLIP_HORIZONTAL, GetPivot().x, GetPivot().y); //Blit has to change to push sprites but it is bugged
-	else
-		App->render->PushSprite((SDL_Texture*)GetTexture(), GetX() - GetPivot().x, GetY() - GetPivot().y, &GetRect());
+	App->render->PushEntity(this);
 
+	//selected should change cus after sprite order implementation it gets printed before the acual unit sprite 
 	if (this->GetEntityStatus() == E_SELECTED)
 		App->render->DrawCircle(this->GetX() + App->render->camera.x, this->GetY() + App->render->camera.y, this->unit_radius, 255, 255, 255);
 }

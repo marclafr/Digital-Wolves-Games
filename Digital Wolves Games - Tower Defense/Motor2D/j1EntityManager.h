@@ -35,7 +35,7 @@ public:
 private:
 
 	//Textura provisional para sprites por si no se cargan en animation
-	SDL_Texture* sprites;
+	//SDL_Texture* sprites;
 
 	//lista para "almacenar" unidades, puede ser cambiada a array etc.
 	std::vector<Entity*> entity_array;

@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1FileSystem.h"
 #include "j1Textures.h"
+#include "Entity.h"
 
 #include "SDL_image/include/SDL_image.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
@@ -39,6 +40,13 @@ bool j1Textures::Awake(pugi::xml_node& config)
 bool j1Textures::Start()
 {
 	LOG("start textures");
+
+	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
+	App->tex->Load("animations/CavalryArcher.png", T_CAVALRYARCHER);
+	App->tex->Load("animations/Twohandedswordman.png", T_TWOHANDEDSWORDMAN);
+	App->tex->Load("animations/SiegeRam.png", T_SIEGERAM);
+	App->tex->Load("textures/Towers.png", T_TURRET);
+
 	bool ret = true;
 	return ret;
 }
@@ -47,11 +55,11 @@ bool j1Textures::Start()
 bool j1Textures::CleanUp()
 {
 	LOG("Freeing textures and Image library");
-	std::list<SDL_Texture*>::iterator item;
+	std::vector<Texture*>::iterator item;
 
 	for (item = textures.begin(); item != textures.end(); ++item)
 	{
-		SDL_DestroyTexture(*item);
+		delete (*item);
 	}
 
 	textures.clear();
@@ -60,7 +68,7 @@ bool j1Textures::CleanUp()
 }
 
 // Load new texture from file path
-SDL_Texture* const j1Textures::Load(const char* path)
+SDL_Texture* const j1Textures::Load(const char* path, TextureID id)
 {
 	SDL_Texture* texture = NULL;
 	SDL_Surface* surface = IMG_Load_RW(App->fs->Load(path), 1);
@@ -74,7 +82,7 @@ SDL_Texture* const j1Textures::Load(const char* path)
 		//ignores pink from images
 		SDL_SetColorKey(surface, 1, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
 
-		texture = LoadSurface(surface);
+		texture = LoadSurface(surface, id);
 		SDL_FreeSurface(surface);
 	}
 
@@ -82,15 +90,32 @@ SDL_Texture* const j1Textures::Load(const char* path)
 }
 
 // Unload texture
-bool j1Textures::UnLoad(SDL_Texture* texture)
+bool j1Textures::UnLoad(Texture* texture)
 {
-	std::list<SDL_Texture*>::iterator item;
-
-	for (item = textures.begin(); item != textures.end(); ++item)
+	for (int i = 0; i < textures.size(); i++)
 	{
-		if (texture == *item)
+		if (texture == textures[i])
 		{
-			SDL_DestroyTexture(*item);
+			delete (textures[i]);
+			std::vector<Texture*>::iterator item = textures.begin() + i;
+			textures.erase(item);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool j1Textures::UnLoad(TextureID id)
+{
+	std::vector<Texture*>::iterator item;
+
+	for (int i = 0; i < textures.size(); i++)
+	{
+		if (id == textures[i]->GetID())
+		{
+			delete (textures[i]);
+			std::vector<Texture*>::iterator item = textures.begin() + i;
 			textures.erase(item);
 			return true;
 		}
@@ -100,7 +125,7 @@ bool j1Textures::UnLoad(SDL_Texture* texture)
 }
 
 // Translate a surface into a texture
-SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface)
+SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface, TextureID id)
 {
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
 
@@ -110,7 +135,8 @@ SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface)
 	}
 	else
 	{
-		textures.push_back(texture);
+		Texture* ptr = new Texture(texture, id);
+		textures.push_back(ptr);
 	}
 
 	return texture;
@@ -120,4 +146,35 @@ SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface)
 void j1Textures::GetSize(const SDL_Texture* texture, uint& width, uint& height) const
 {
 	SDL_QueryTexture((SDL_Texture*)texture, NULL, NULL, (int*)&width, (int*)&height);
+}
+
+//-------------------------------------------------------------------------
+
+Texture::Texture(SDL_Texture * tex, TextureID id) : texture(tex), id(id)
+{}
+
+Texture::Texture(const Texture & copy): id(copy.id)
+{}
+
+Texture::~Texture()
+{
+	SDL_DestroyTexture(texture);
+}
+
+TextureID Texture::GetID() const
+{
+	return id;
+}
+
+SDL_Texture * Texture::GetTexture() const
+{
+	return texture;
+}
+
+SDL_Texture * j1Textures::GetTexture(const TextureID id) const
+{
+	for (int i = 0; i < textures.size(); i++)
+		if (textures[i]->GetID() == id)
+			return textures[i]->GetTexture();
+	return nullptr;
 }

@@ -16,11 +16,6 @@ j1Animation::~j1Animation()
 
 bool j1Animation::Start()
 {
-	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
-	textures.push_back(Textures(App->tex->Load("animations/CavalryArcher.png"), CAVALRYARCHER));
-	textures.push_back(Textures(App->tex->Load("animations/Twohandedswordman.png"), TWOHANDEDSWORDMAN));
-	textures.push_back(Textures(App->tex->Load("animations/SiegeRam.png"), SIEGERAM));
-	
 	return true;
 }
 bool j1Animation::Awake(pugi::xml_node& config)
@@ -94,12 +89,10 @@ bool j1Animation::Awake(pugi::xml_node& config)
 
 bool j1Animation::CleanUp()
 {
-	std::list<Animation*>::iterator temp = animations.begin();
-	while (temp != animations.end())
+	for(int i = 0; i < animations.size(); i++)
 	{
-		temp._Ptr->_Myval->CleanUp();
-		delete temp._Ptr->_Myval;
-		temp++;
+		animations[i]->CleanUp();
+		delete animations[i];
 	}
 
 	animations.clear();
@@ -107,56 +100,38 @@ bool j1Animation::CleanUp()
 	return true;
 }
 
-Animation* j1Animation::GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction)
+Animation* j1Animation::GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction) const
 {
-	std::list<Animation*>::iterator ret = animations.begin();
-	while (ret != animations.end())
-	{
-		if (ret._Ptr->_Myval->unit_type == unit && ret._Ptr->_Myval->action_type == action && ret._Ptr->_Myval->direction_type == direction)
-			return ret._Ptr->_Myval;
-
-		ret++;
-	}
-
+	for (int i = 0; i < animations.size(); i++)
+		if (animations[i]->unit_type == unit && animations[i]->action_type == action && animations[i]->direction_type == direction)
+			return animations[i];
 	return nullptr;
 }
 
-SDL_Texture * j1Animation::GetTexture(const UNIT_TYPE unit)
-{
-	std::vector<Textures>::iterator ret = textures.begin();
-	while (ret != textures.end())
-	{
-		if (ret._Ptr->unit == unit)
-			return ret._Ptr->texture;
-
-		ret++;
-	}
-	return nullptr;
-}
-
-Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos)
+/*Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos)
 {
 	bool flip = false;
+	
 	//direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST
 	switch (direction)
 	{
-	case NORTH_EAST:
-		flip = true;
-		direction = NORTH_WEST;
-		break;
+		case NORTH_EAST:
+			flip = true;
+			direction = NORTH_WEST;
+			break;
 
-	case EAST:
-		flip = true;
-		direction = WEST;
-		break;
+		case EAST:
+			flip = true;
+			direction = WEST;
+			break;
 
-	case SOUTH_EAST:
-		flip = true;
-		direction = SOUTH_WEST;
-		break;
+		case SOUTH_EAST:
+			flip = true;
+			direction = SOUTH_WEST;
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 	
 	Animation* anim = App->anim->GetAnimation(unit, action, direction);
@@ -191,7 +166,7 @@ Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE ac
 
 	}
 	return anim;
-}
+}*/
 
 bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* unit)
 {
@@ -242,8 +217,7 @@ bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* 
 //--------------------------------------------------------------------------------------//
 
 Animation::Animation(std::string name): name(name)
-{
-}
+{}
 
 // Destructor
 Animation::~Animation()
@@ -264,7 +238,7 @@ void Animation::RestartAnim()
 	current_frame = 0.0f;
 }
 
-SDL_Rect& Animation::GetCurrentFrame()
+SDL_Rect Animation::GetCurrentFrame()
 {
 	if (current_frame == -1)
 		return SDL_Rect{0,0,0,0};
@@ -298,7 +272,7 @@ SDL_Rect& Animation::GetCurrentFrame()
 	return frames[(int)current_frame];
 }
 
-iPoint& Animation::GetCurrentPivotPoint()
+iPoint Animation::GetCurrentPivotPoint()
 {
 	return pivot_points[(int)current_frame];
 }
@@ -315,7 +289,7 @@ bool Animation::Finished() const
 
 void Animation::Reset()
 {
-	current_frame = 0;
+	current_frame = 0.0f;
 	anim_timer.Start();
 	loops = 0;
 }

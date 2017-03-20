@@ -16,8 +16,8 @@ bool j1EntityManager::Awake() { return true; }
 
 bool j1EntityManager::CleanUp() { // not done
 
-	if(sprites != nullptr)
-	App->tex->UnLoad(sprites);
+	//if(sprites != nullptr)
+	//App->tex->UnLoad(sprites);
 
 	std::vector<Entity*>::iterator item = entity_array.begin();
 	for (int i = 0; i < entity_array.size(); i++)

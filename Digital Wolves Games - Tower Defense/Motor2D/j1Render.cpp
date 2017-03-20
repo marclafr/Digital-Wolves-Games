@@ -4,6 +4,8 @@
 #include "j1Window.h"
 #include "j1Render.h"
 #include "j1Map.h"
+#include "Entity.h"
+#include "j1Animation.h"
 
 #define VSYNC true
 
@@ -135,8 +137,19 @@ iPoint j1Render::ScreenToWorld(int x, int y) const
 	return ret;
 }
 
+iPoint j1Render::WorldToScreen(int x, int y) const
+{
+	iPoint ret;
+	int scale = App->win->GetScale();
+
+	ret.x = -(x + camera.x) * scale;
+	ret.y = -(y + camera.y) * scale;
+
+	return ret;
+}
+
 // Blit to screen
-bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle) const
+bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle, bool not_in_world) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -145,51 +158,57 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	rect.x = (int)(camera.x * speed) + x * scale;
 	rect.y = (int)(camera.y * speed) + y * scale;
 
-	if(section != NULL)
-	{
-		rect.w = section->w;
-		rect.h = section->h;
-	}
-	else
-	{
-		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
-	}
+	
+	iPoint position_in_camera = WorldToScreen(x, y);
 
-	if (flip == SDL_FLIP_HORIZONTAL)
+	if ((position_in_camera.x < App->map->data.tile_width && position_in_camera.x > -camera.w && position_in_camera.y < App->map->data.tile_height && position_in_camera.y > -camera.h) || not_in_world) // maybe should add a lil bit so that an unprinted tile line doesnt appear
 	{
-		rect.x -= (rect.w - pivot_x);
-		rect.y -= pivot_y;
-	}
+		if (section != NULL)
+		{
+			rect.w = section->w;
+			rect.h = section->h;
+		}
+		else
+		{
+			SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+		}
 
-	else if (flip == SDL_FLIP_VERTICAL)
-	{
-		rect.x -= pivot_x;
-		rect.y -= (rect.h - pivot_y);
-	}
+		if (flip == SDL_FLIP_HORIZONTAL)
+		{
+			rect.x -= (rect.w - pivot_x);
+			rect.y -= pivot_y;
+		}
 
-	else if (flip == SDL_FLIP_NONE)
-	{
-		rect.x -= pivot_x;
-		rect.y -= pivot_y;
-	}
+		else if (flip == SDL_FLIP_VERTICAL)
+		{
+			rect.x -= pivot_x;
+			rect.y -= (rect.h - pivot_y);
+		}
 
-	rect.w *= scale;
-	rect.h *= scale;
+		else if (flip == SDL_FLIP_NONE)
+		{
+			rect.x -= pivot_x;
+			rect.y -= pivot_y;
+		}
 
-	SDL_Point* p = NULL;
-	SDL_Point pivot;
+		rect.w *= scale;
+		rect.h *= scale;
 
-	if(pivot_x != INT_MAX && pivot_y != INT_MAX)
-	{
-		pivot.x = pivot_x;
-		pivot.y = pivot_y;
-		p = &pivot;
-	}
+		SDL_Point* p = NULL;
+		SDL_Point pivot;
 
-	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, (SDL_RendererFlip)flip) != 0)
-	{
-		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-		ret = false;
+		if (pivot_x != INT_MAX && pivot_y != INT_MAX)
+		{
+			pivot.x = pivot_x;
+			pivot.y = pivot_y;
+			p = &pivot;
+		}
+
+		if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, (SDL_RendererFlip)flip) != 0)
+		{
+			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			ret = false;
+		}
 	}
 
 	return ret;
@@ -277,92 +296,44 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	return ret;
 }
 
-void j1Render::PushSprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle)
+void j1Render::PushEntity(Entity* entity)
 {
-	Sprite sprite(texture,x,y,section,flip,pivot_x,pivot_y,speed,angle);
-	
-	std::deque<Sprite>::iterator queue_pos = sprite_queue.begin();
+	std::deque<Entity*>::iterator queue_pos = sprite_queue.begin();
+	int i = 0;
 
-	for (int i = 0; i < sprite_queue.size(); i++)
-	{
-		queue_pos++;
-		if (y < sprite_queue[i].GetPosition().y)
+	while (i < sprite_queue.size())
+	{		
+		if (entity->GetY() <= sprite_queue[i]->GetY())
 			break;
+		i++;
 	}
 
-	//sprite_queue.push_back(sprite);
-	sprite_queue.insert(queue_pos, sprite);	
+	sprite_queue.insert(queue_pos + i, entity);
 }
 
 void j1Render::BlitAllEntities()
 {
-	for(int i = 0; i < sprite_queue.size(); i++)
-		Blit(sprite_queue[i].GetTexture(), sprite_queue[i].GetPosition().x, sprite_queue[i].GetPosition().y, sprite_queue[i].GetSection(), sprite_queue[i].GetFlip(), sprite_queue[i].GetPivotX(), sprite_queue[i].GetPivotY(), sprite_queue[i].GetSpeed(), sprite_queue[i].GetAngle());
+	Entity* sp = nullptr;
+	Unit* u_sp = nullptr;
+
+	for (int i = 0; i < sprite_queue.size(); i++)
+	{
+		sp = sprite_queue[i];
+
+		if (sp->GetEntityType() == UNIT)
+		{
+			u_sp = (Unit*)sp;
+
+			if (u_sp->GetDir() == NORTH_EAST || u_sp->GetDir() == EAST || u_sp->GetDir() == SOUTH_EAST)
+				Blit(App->tex->GetTexture(sp->GetTextureID()), sp->GetX(), sp->GetY(), &sp->GetRect(), SDL_FLIP_HORIZONTAL, sp->GetPivot().x, sp->GetPivot().y);
+			else
+				Blit(App->tex->GetTexture(sp->GetTextureID()), sp->GetX() - sp->GetPivot().x, sp->GetY() - sp->GetPivot().y, &sp->GetRect());
+		}
+		else
+		{
+			Blit(App->tex->GetTexture(sp->GetTextureID()), sp->GetX(), sp->GetY(), &sp->GetRect(), SDL_FLIP_NONE, sp->GetPivot().x, sp->GetPivot().y);
+		}		
+	}
 
 	sprite_queue.clear();
-}
-
-Sprite::Sprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle) : texture(texture), section(section), position(iPoint(x, y)), flip(flip), pivot_x(pivot_x), pivot_y(pivot_y), speed(speed), angle(angle)
-{}
-
-Sprite::Sprite() : section(nullptr), position(iPoint(0,0)), flip(SDL_FLIP_NONE), pivot_x(0), pivot_y(0), speed(1.0f), angle(0)
-{}
-
-Sprite::Sprite(const Sprite & copy) : texture(copy.texture), section(copy.section), position(copy.position), flip(copy.flip), pivot_x(copy.pivot_x), pivot_y(copy.pivot_y), speed(copy.speed), angle(copy.angle)
-{}
-
-Sprite::~Sprite()
-{}
-
-void Sprite::operator = (Sprite &sprite)
-{
-	texture = sprite.texture;
-	position.x = sprite.position.x;
-	position.y = sprite.position.y;
-	section = sprite.section;
-	flip = sprite.flip;
-	pivot_x = sprite.pivot_x;
-	pivot_y = sprite.pivot_y;
-	speed = sprite.speed;
-	angle = sprite.angle;
-}
-
-iPoint Sprite::GetPosition() const
-{
-	return position;
-}
-
-SDL_Texture * Sprite::GetTexture() const
-{
-	return texture;
-}
-
-const SDL_Rect * Sprite::GetSection() const
-{
-	return section;
-}
-
-SDL_RendererFlip Sprite::GetFlip() const
-{
-	return flip;
-}
-
-int Sprite::GetPivotX() const
-{
-	return pivot_x;
-}
-
-int Sprite::GetPivotY() const
-{
-	return pivot_y;
-}
-
-float Sprite::GetSpeed() const
-{
-	return speed;
-}
-
-double Sprite::GetAngle() const
-{
-	return angle;
 }

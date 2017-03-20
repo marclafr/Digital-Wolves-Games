@@ -10,7 +10,6 @@
 
 Building::Building(BUILDING_TYPE b_type, fPoint pos) : Entity(BUILDING, pos), building_type(b_type)
 {
-	SetTexture(App->tex->Load("textures/Towers.png"));
 	SDL_Rect rect;
 	switch (b_type)
 	{
@@ -24,6 +23,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos) : Entity(BUILDING, pos), bu
 		rect = { 610,1,107,206 };
 		SetRect(rect);
 		SetPivot(0.504673, 0.902913);
+		SetTextureID(T_TURRET);
 		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
@@ -46,5 +46,5 @@ void Building::AI()
 
 void Building::Draw()
 {
-	App->render->PushSprite((SDL_Texture*)GetTexture(), GetX(), GetY(), &GetRect(), SDL_FLIP_NONE, GetPivot().x, GetPivot().y);
+	App->render->PushEntity(this);
 }

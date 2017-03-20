@@ -6,39 +6,7 @@
 #include "j1Module.h"
 #include <deque>
 
-
-
-class Sprite
-{
-private:
-	iPoint position;
-	const SDL_Rect* section;
-	SDL_Texture* texture; 
-	SDL_RendererFlip flip = SDL_FLIP_NONE;
-	int pivot_x = 0;
-	int pivot_y = 0;
-	float speed = 1.0f;
-	double angle = 0;
-
-public:
-	Sprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0);
-	Sprite();
-	Sprite(const Sprite &copy);
-	~Sprite();
-
-	void operator = (Sprite& sprite);
-
-	iPoint GetPosition() const;
-	SDL_Texture* GetTexture() const;
-	const SDL_Rect* GetSection() const;
-	SDL_RendererFlip GetFlip() const;
-	int GetPivotX() const;
-	int GetPivotY() const;
-	float GetSpeed() const;
-	double GetAngle() const;
-
-};
-
+class Entity;
 
 class j1Render : public j1Module
 {
@@ -70,14 +38,15 @@ public:
 	void SetViewPort(const SDL_Rect& rect);
 	void ResetViewPort();
 	iPoint ScreenToWorld(int x, int y) const;
+	iPoint WorldToScreen(int x, int y) const;
 
 	// Draw & Blit
-	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0) const;
+	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0, bool not_in_world = false) const;
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool use_camera = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 
-	void PushSprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0);
+	void PushEntity(Entity* entity);
 	void BlitAllEntities();
 
 	// Set background color
@@ -94,7 +63,7 @@ public:
 	SDL_Color		background;
 
 private:
-	std::deque<Sprite> sprite_queue;
+	std::deque<Entity*> sprite_queue;
 };
 
 

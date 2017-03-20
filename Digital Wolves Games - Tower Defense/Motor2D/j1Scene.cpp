@@ -45,7 +45,7 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	debug_tex = App->tex->Load("maps/path2.png");
+	debug_tex = App->tex->Load("maps/path2.png", T_MAP);
 
 	//UIElements
 		//Top_HUD
@@ -84,7 +84,7 @@ bool j1Scene::Start()
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(700, 400));
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400));
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 400));
-	//App->entity_manager->CreatBuilding(TURRET, fPoint(600,300));
+	App->entity_manager->CreatBuilding(TURRET, fPoint(600,300));
 
 
 	return true;

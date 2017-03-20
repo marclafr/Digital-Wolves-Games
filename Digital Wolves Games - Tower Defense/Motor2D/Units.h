@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "j1Timer.h"
+#include <list>
 
 #define XY_TILES_RELATION 2
 
@@ -69,7 +70,9 @@ private:
 	float angle;
 	bool GetNextTile();
 	UNIT_CLASS unit_class;
+
 	std::list<iPoint> path_list;
+
 	bool moving = false;
 
 public:

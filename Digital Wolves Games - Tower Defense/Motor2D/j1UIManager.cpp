@@ -36,7 +36,7 @@ bool j1UIManager::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1UIManager::Start()
 {
-	atlas = App->tex->Load(atlas_file_name.c_str());
+	atlas = App->tex->Load(atlas_file_name.c_str(), T_UI);
 
 	return true;
 }
@@ -252,50 +252,50 @@ void j1UIManager::drawAllComponents()
 					if (uibutton->from->type == UIHUDPANELBUTTONS)
 					{
 						SDL_Rect mark_btn{ 969, 827, 29, 29 };
-						App->render->Blit(atlas, uibutton->rect_position.x - 2 - App->render->camera.x, uibutton->rect_position.y - 2 - App->render->camera.y, &mark_btn);
-						App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &uibutton->rect_atlas);
+						App->render->Blit(atlas, uibutton->rect_position.x - 2 - App->render->camera.x, uibutton->rect_position.y - 2 - App->render->camera.y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+						App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &uibutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 					}
 				}
 				else
-					App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &uibutton->rect_atlas);
+					App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &uibutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			}
 			else if (*type == UIComponent_TYPE::UIIMAGE)
 			{
 				UIComponents* uiimage = component;
 
-				App->render->Blit(atlas, uiimage->rect_position.x - App->render->camera.x, uiimage->rect_position.y - App->render->camera.y, &uiimage->rect_atlas);
+				App->render->Blit(atlas, uiimage->rect_position.x - App->render->camera.x, uiimage->rect_position.y - App->render->camera.y, &uiimage->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			}
 			else if (*type == UIComponent_TYPE::UIINPUT)
 			{
 				UIComponents* uiinput = component;
 
-				App->render->Blit(atlas, uiinput->rect_position.x - App->render->camera.x, uiinput->rect_position.y - App->render->camera.y, &uiinput->rect_atlas);
+				App->render->Blit(atlas, uiinput->rect_position.x - App->render->camera.x, uiinput->rect_position.y - App->render->camera.y, &uiinput->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			}
 			else if (*type == UIComponent_TYPE::UILABEL)
 			{
 				UILabel* uilabel = (UILabel*)component;
 
-				App->render->Blit(uilabel->text_img, uilabel->rect_position.x - App->render->camera.x, uilabel->rect_position.y - App->render->camera.y);
+				App->render->Blit(uilabel->text_img, uilabel->rect_position.x - App->render->camera.x, uilabel->rect_position.y - App->render->camera.y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			}
 			else if (*type == UIComponent_TYPE::UICHECKBUTTON)
 			{
 				UICheckbutton* uicheckbutton = (UICheckbutton*)component;
 
 				if (uicheckbutton->clicked)
-					App->render->Blit(atlas, uicheckbutton->rect_position.x - App->render->camera.x, uicheckbutton->rect_position.y - App->render->camera.y, &uicheckbutton->rect_atlas_clicked);
+					App->render->Blit(atlas, uicheckbutton->rect_position.x - App->render->camera.x, uicheckbutton->rect_position.y - App->render->camera.y, &uicheckbutton->rect_atlas_clicked, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 				else
-					App->render->Blit(atlas, uicheckbutton->rect_position.x - App->render->camera.x, uicheckbutton->rect_position.y - App->render->camera.y, &uicheckbutton->rect_atlas);
+					App->render->Blit(atlas, uicheckbutton->rect_position.x - App->render->camera.x, uicheckbutton->rect_position.y - App->render->camera.y, &uicheckbutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			}
 			else if (*type == UIComponent_TYPE::UISELECTOPTION)
 			{
 				UISelectOption* uiselectoption = (UISelectOption*)component;
 
-				App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera.x, uiselectoption->rect_position.y - App->render->camera.y, &uiselectoption->rect_atlas);
+				App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera.x, uiselectoption->rect_position.y - App->render->camera.y, &uiselectoption->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 				if (uiselectoption->selecting)
 				{
 					for(uint i = 1; i < uiselectoption->num_options + 1; i++)
-						App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera.x, (uiselectoption->rect_position.y - App->render->camera.y) + uiselectoption->rect_atlas.h * i, &uiselectoption->rect_atlas);
+						App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera.x, (uiselectoption->rect_position.y - App->render->camera.y) + uiselectoption->rect_atlas.h * i, &uiselectoption->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 				}
 			}
 			else if (*type == UIComponent_TYPE::UIHUDPANELINFO)
@@ -323,7 +323,7 @@ void UILabel::Set(int pos_x, int pos_y, const char * text, _TTF_Font*  font)
 	rect_position.x = pos_x;
 	rect_position.y = pos_y;
 
-	text_img = App->font->Print(text, { 255,0,0,0 });
+	text_img = App->font->Print(text, T_AOE_UI_FONT, {255,0,0,0});
 
 	this->text.assign(text);
 
@@ -334,7 +334,7 @@ void UILabel::ChangeText(const char* text)
 {
 	if (this->text != text)
 	{
-		text_img = App->font->Print(text, { 255,0,0,0 });
+		text_img = App->font->Print(text, T_AOE_UI_FONT, { 255,0,0,0 });
 
 		App->render->GetDimensionsFromTexture(text_img, rect_position.w, rect_position.h);
 

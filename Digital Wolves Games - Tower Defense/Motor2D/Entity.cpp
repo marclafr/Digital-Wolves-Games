@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include "j1Textures.h"
 
 Entity::Entity(ENTITY_TYPE entity_type, fPoint pos): to_delete (false), entity_type(entity_type), position(pos)
 {}
@@ -58,11 +59,6 @@ const int Entity::GetArmor() const
 	return armor;
 }
 
-const SDL_Texture * Entity::GetTexture() const
-{
-	return texture;
-}
-
 const iPoint Entity::GetPivot() const
 {
 	return pivot;
@@ -71,6 +67,11 @@ const iPoint Entity::GetPivot() const
 const SDL_Rect Entity::GetRect() const
 {
 	return rect;
+}
+
+const TextureID Entity::GetTextureID() const
+{
+	return texture_id;
 }
 
 void Entity::SetArmor(int new_armor)
@@ -83,11 +84,6 @@ void Entity::SetHp(int new_hp)
 	hp = new_hp;
 }
 
-void Entity::SetTexture(SDL_Texture * text)
-{
-	texture = text;
-}
-
 void Entity::SetPivot(int x, int y)
 {
 	pivot.x = x;
@@ -97,4 +93,9 @@ void Entity::SetPivot(int x, int y)
 void Entity::SetRect(SDL_Rect rect)
 {
 	this->rect = rect;
+}
+
+void Entity::SetTextureID(TextureID id)
+{
+	texture_id = id;
 }
