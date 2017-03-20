@@ -35,18 +35,19 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	if(App->map->Load("iso_walk.tmx") == true)
+	if(App->map->Load("Prueba.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
-		if(App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
+		//if(App->map->CreateWalkabilityMap(w, h, &data))
+			//App->pathfinding->SetMap(w, h, data);
 
 		RELEASE_ARRAY(data);
 	}
 
+	
 	debug_tex = App->tex->Load("maps/path2.png");
-
+	
 	//UIElements
 		//Top_HUD
 	top_hud = (UIImage*)App->uimanager->addUIComponent(UIComponent_TYPE::UIIMAGE);
