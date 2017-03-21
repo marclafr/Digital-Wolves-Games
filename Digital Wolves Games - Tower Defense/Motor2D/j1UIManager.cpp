@@ -585,26 +585,29 @@ UIHUDPanelInfo::~UIHUDPanelInfo()
 	if (!selection.empty())
 	{
 		selection.clear();
-	}
 
-	if (status == ENTITIESSELECTED)
-	{
-		std::list<UIButton*>::iterator item;
-		item = entities_btn.begin();
-
-		while (item != entities_btn.end())
+		if (status == ENTITIESSELECTED)
 		{
-			delete item._Ptr->_Myval;
+			std::list<UIButton*>::iterator item;
+			item = entities_btn.begin();
 
-			item++;
+			while (item != entities_btn.end())
+			{
+				delete item._Ptr->_Myval;
+
+				item++;
+			}
+
+			entities_btn.clear();
 		}
+		else if (status == ENTITYINFO)
+		{
+			delete entity_selected;
+		}
+	}
 
-		entities_btn.clear();
-	}
-	else if (status == ENTITYINFO)
-	{
-		delete entity_selected;
-	}
+
+
 }
 
 void UIHUDPanelInfo::AddEntitySelection(Entity* selected)
