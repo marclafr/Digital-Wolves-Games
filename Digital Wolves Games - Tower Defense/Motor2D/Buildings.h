@@ -7,7 +7,7 @@
 #include "j1Module.h"
 #include "Entity.h"
 #include "Units.h"
-
+#include "j1PerfTimer.h"
 
 
 enum BUILDING_TYPE
@@ -25,7 +25,7 @@ private:
 	float rate_of_fire;
 	float range;
 	float build_time;
-
+	j1PerfTimer buildtimer;
 public:
 
 	Building(BUILDING_TYPE b_type, fPoint pos);

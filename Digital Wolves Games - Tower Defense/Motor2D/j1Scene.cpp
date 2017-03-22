@@ -80,10 +80,10 @@ bool j1Scene::Start()
 	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UIComponent_TYPE::UIHUDPANELINFO);
 
 	//Entity Manager
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 400));
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(700, 400));
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 300));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 350));
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 400));
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(550, 400));
 	App->entity_manager->CreatBuilding(TURRET, fPoint(600,300));
 
 
@@ -100,9 +100,16 @@ bool j1Scene::PreUpdate()
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
+	
 	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		App->entity_manager->CreatBuilding(TURRET, fPoint(p.x, p.y));
 
+	}
+	p = App->map->WorldToMap(p.x, p.y);
+	
+		
 	if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
 		if(origin_selected == true)
@@ -124,6 +131,7 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+
 	// -------
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
@@ -163,7 +171,7 @@ bool j1Scene::Update(float dt)
 		while(item != path->end())
 		{
 			iPoint pos = App->map->MapToWorld(item->x, item->y);
-			App->render->Blit(debug_tex, pos.x - 32, pos.y - 32);
+			//App->render->Blit(debug_tex, pos.x - 32, pos.y - 32);
 			item++;
 		}
 	}
