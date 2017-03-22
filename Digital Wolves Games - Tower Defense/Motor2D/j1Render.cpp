@@ -161,7 +161,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	
 	iPoint position_in_camera = WorldToScreen(x, y);
 
-	if ((position_in_camera.x < App->map->data.tile_width && position_in_camera.x > -camera.w && position_in_camera.y < App->map->data.tile_height && position_in_camera.y +60 > -camera.h) || not_in_world) // maybe should add a lil bit so that an unprinted tile line doesnt appear
+	if ((position_in_camera.x < App->map->data.tile_width && position_in_camera.x > -camera.w && position_in_camera.y < App->map->data.tile_height && position_in_camera.y > -(camera.h + TOWER_HEIGHT)) || not_in_world) // IF NOT FOR TOWER HEIGHT TOWERS WOULD NOT PRINT UNTIL THEIR LOWEST PART IS INSIDE THE CAMERA
 	{
 		if (section != NULL)
 		{
