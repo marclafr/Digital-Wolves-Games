@@ -7,6 +7,7 @@
 #include "j1Window.h"
 #include "j1Input.h"
 #include "j1Render.h"
+#include "Camera.h"
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1FileSystem.h"
@@ -221,7 +222,7 @@ void j1App::FinishUpdate()
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
 	static char title[256];
 	sprintf_s(title, 256, "Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d,         Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
 		App->map->data.width, App->map->data.height,

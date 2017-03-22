@@ -6,10 +6,11 @@
 #include "j1Map.h"
 #include "Entity.h"
 #include "j1Animation.h"
+#include "Camera.h"
 
 #define VSYNC true
 
-j1Render::j1Render() : j1Module()
+j1Render::j1Render() : j1Module(), camera(nullptr)
 {
 	name.assign("renderer");
 	background.r = 0;
@@ -45,10 +46,7 @@ bool j1Render::Awake(pugi::xml_node& config)
 	}
 	else
 	{
-		camera.w = App->win->screen_surface->w;
-		camera.h = App->win->screen_surface->h;
-		camera.x = 0;
-		camera.y = 0;
+		camera = new Camera(SDL_Rect{0, 0, App->win->screen_surface->w, App->win->screen_surface->h});
 	}
 
 	return ret;
@@ -80,6 +78,8 @@ bool j1Render::PostUpdate()
 // Called before quitting
 bool j1Render::CleanUp()
 {
+	delete camera; 
+
 	LOG("Destroying SDL render");
 	SDL_DestroyRenderer(renderer);
 	return true;
@@ -88,9 +88,7 @@ bool j1Render::CleanUp()
 // Load Game State
 bool j1Render::Load(pugi::xml_node& data)
 {
-	camera.x = data.child("camera").attribute("x").as_int();
-	camera.y = data.child("camera").attribute("y").as_int();
-
+	camera->SetPosition(iPoint(data.child("camera").attribute("x").as_int(), data.child("camera").attribute("y").as_int()));
 	return true;
 }
 
@@ -99,8 +97,8 @@ bool j1Render::Save(pugi::xml_node& data) const
 {
 	pugi::xml_node cam = data.append_child("camera");
 
-	cam.append_attribute("x") = camera.x;
-	cam.append_attribute("y") = camera.y;
+	cam.append_attribute("x") = camera->GetPosition().x;
+	cam.append_attribute("y") = camera->GetPosition().y;
 
 	return true;
 }
@@ -131,8 +129,8 @@ iPoint j1Render::ScreenToWorld(int x, int y) const
 	iPoint ret;
 	int scale = App->win->GetScale();
 
-	ret.x = (x - camera.x / scale);
-	ret.y = (y - camera.y / scale);
+	ret.x = (x - camera->GetPosition().x / scale);
+	ret.y = (y - camera->GetPosition().y / scale);
 
 	return ret;
 }
@@ -142,8 +140,8 @@ iPoint j1Render::WorldToScreen(int x, int y) const
 	iPoint ret;
 	int scale = App->win->GetScale();
 
-	ret.x = -(x + camera.x) * scale;
-	ret.y = -(y + camera.y) * scale;
+	ret.x = -(x + camera->GetPosition().x) * scale;
+	ret.y = -(y + camera->GetPosition().y) * scale;
 
 	return ret;
 }
@@ -155,13 +153,13 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	rect.x = (int)(camera->GetPosition().x * speed) + x * scale;
+	rect.y = (int)(camera->GetPosition().y * speed) + y * scale;
 
 	
 	iPoint position_in_camera = WorldToScreen(x, y);
 
-	if ((position_in_camera.x < App->map->data.tile_width && position_in_camera.x > -camera.w && position_in_camera.y < App->map->data.tile_height && position_in_camera.y > -(camera.h + TOWER_HEIGHT)) || not_in_world) // IF NOT FOR TOWER HEIGHT TOWERS WOULD NOT PRINT UNTIL THEIR LOWEST PART IS INSIDE THE CAMERA
+	if ((position_in_camera.x < App->map->data.tile_width && position_in_camera.x > -camera->GetWidth() && position_in_camera.y < App->map->data.tile_height && position_in_camera.y > -(camera->GetHeight() + TOWER_HEIGHT)) || not_in_world) // IF NOT FOR TOWER HEIGHT TOWERS WOULD NOT PRINT UNTIL THEIR LOWEST PART IS INSIDE THE CAMERA
 	{
 		if (section != NULL)
 		{
@@ -225,8 +223,8 @@ bool j1Render::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a
 	SDL_Rect rec(rect);
 	if(use_camera)
 	{
-		rec.x = (int)(camera.x + rect.x * scale);
-		rec.y = (int)(camera.y + rect.y * scale);
+		rec.x = (int)(camera->GetPosition().x + rect.x * scale);
+		rec.y = (int)(camera->GetPosition().y + rect.y * scale);
 		rec.w *= scale;
 		rec.h *= scale;
 	}
@@ -253,7 +251,7 @@ bool j1Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 
 	int result = -1;
 
 	if(use_camera)
-		result = SDL_RenderDrawLine(renderer, camera.x + x1 * scale, camera.y + y1 * scale, camera.x + x2 * scale, camera.y + y2 * scale);
+		result = SDL_RenderDrawLine(renderer, camera->GetPosition().x + x1 * scale, camera->GetPosition().y + y1 * scale, camera->GetPosition().x + x2 * scale, camera->GetPosition().y + y2 * scale);
 	else
 		result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
 

@@ -9,6 +9,7 @@
 #define TOWER_HEIGHT 60
 
 class Entity;
+class Camera;
 
 class j1Render : public j1Module
 {
@@ -60,7 +61,7 @@ public:
 public:
 
 	SDL_Renderer*	renderer;
-	SDL_Rect		camera;
+	Camera*			camera;
 	SDL_Rect		viewport;
 	SDL_Color		background;
 

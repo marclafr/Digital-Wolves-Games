@@ -2,6 +2,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
+#include "Camera.h"
 #include "j1Animation.h"
 #include "Units.h"
 #include "p2Log.h"
@@ -69,8 +70,8 @@ void Unit::Move()
 	{
 		this->path_list.clear();
 		App->input->GetMousePosition(destination.x, destination.y);
-		destination.x -= App->render->camera.x;
-		destination.y -= App->render->camera.y;
+		destination.x -= App->render->camera->GetPosition().x;
+		destination.y -= App->render->camera->GetPosition().y;
 		if (this->GetPath({ destination.x, destination.y }) != -1)
 		{
 			path_list.pop_front();
@@ -214,7 +215,7 @@ void Unit::Draw()
 
 	//selected should change cus after sprite order implementation it gets printed before the acual unit sprite 
 	if (this->GetEntityStatus() == E_SELECTED)
-		App->render->DrawCircle(this->GetX() + App->render->camera.x, this->GetY() + App->render->camera.y, this->unit_radius, 255, 255, 255);
+		App->render->DrawCircle(this->GetX() + App->render->camera->GetPosition().x, this->GetY() + App->render->camera->GetPosition().y, this->unit_radius, 255, 255, 255);
 }
 
 const DIRECTION Unit::GetDir() const

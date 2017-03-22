@@ -10,6 +10,7 @@
 #include "j1Input.h"
 #include "Entity.h"
 #include "Units.h"
+#include "Camera.h"
 
 #include "j1UIManager.h"
 
@@ -252,50 +253,50 @@ void j1UIManager::drawAllComponents()
 					if (uibutton->from->type == UIHUDPANELBUTTONS)
 					{
 						SDL_Rect mark_btn{ 969, 827, 29, 29 };
-						App->render->Blit(atlas, uibutton->rect_position.x - 2 - App->render->camera.x, uibutton->rect_position.y - 2 - App->render->camera.y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-						App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &uibutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+						App->render->Blit(atlas, uibutton->rect_position.x - 2 - App->render->camera->GetPosition().x, uibutton->rect_position.y - 2 - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+						App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y - App->render->camera->GetPosition().y, &uibutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 					}
 				}
 				else
-					App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &uibutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+					App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y - App->render->camera->GetPosition().y, &uibutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			}
 			else if (*type == UIComponent_TYPE::UIIMAGE)
 			{
 				UIComponents* uiimage = component;
 
-				App->render->Blit(atlas, uiimage->rect_position.x - App->render->camera.x, uiimage->rect_position.y - App->render->camera.y, &uiimage->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+				App->render->Blit(atlas, uiimage->rect_position.x - App->render->camera->GetPosition().x, uiimage->rect_position.y - App->render->camera->GetPosition().y, &uiimage->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			}
 			else if (*type == UIComponent_TYPE::UIINPUT)
 			{
 				UIComponents* uiinput = component;
 
-				App->render->Blit(atlas, uiinput->rect_position.x - App->render->camera.x, uiinput->rect_position.y - App->render->camera.y, &uiinput->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+				App->render->Blit(atlas, uiinput->rect_position.x - App->render->camera->GetPosition().x, uiinput->rect_position.y - App->render->camera->GetPosition().y, &uiinput->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			}
 			else if (*type == UIComponent_TYPE::UILABEL)
 			{
 				UILabel* uilabel = (UILabel*)component;
 
-				App->render->Blit(uilabel->text_img, uilabel->rect_position.x - App->render->camera.x, uilabel->rect_position.y - App->render->camera.y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+				App->render->Blit(uilabel->text_img, uilabel->rect_position.x - App->render->camera->GetPosition().x, uilabel->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			}
 			else if (*type == UIComponent_TYPE::UICHECKBUTTON)
 			{
 				UICheckbutton* uicheckbutton = (UICheckbutton*)component;
 
 				if (uicheckbutton->clicked)
-					App->render->Blit(atlas, uicheckbutton->rect_position.x - App->render->camera.x, uicheckbutton->rect_position.y - App->render->camera.y, &uicheckbutton->rect_atlas_clicked, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+					App->render->Blit(atlas, uicheckbutton->rect_position.x - App->render->camera->GetPosition().x, uicheckbutton->rect_position.y - App->render->camera->GetPosition().y, &uicheckbutton->rect_atlas_clicked, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 				else
-					App->render->Blit(atlas, uicheckbutton->rect_position.x - App->render->camera.x, uicheckbutton->rect_position.y - App->render->camera.y, &uicheckbutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+					App->render->Blit(atlas, uicheckbutton->rect_position.x - App->render->camera->GetPosition().x, uicheckbutton->rect_position.y - App->render->camera->GetPosition().y, &uicheckbutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			}
 			else if (*type == UIComponent_TYPE::UISELECTOPTION)
 			{
 				UISelectOption* uiselectoption = (UISelectOption*)component;
 
-				App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera.x, uiselectoption->rect_position.y - App->render->camera.y, &uiselectoption->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+				App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera->GetPosition().x, uiselectoption->rect_position.y - App->render->camera->GetPosition().y, &uiselectoption->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 				if (uiselectoption->selecting)
 				{
 					for(uint i = 1; i < uiselectoption->num_options + 1; i++)
-						App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera.x, (uiselectoption->rect_position.y - App->render->camera.y) + uiselectoption->rect_atlas.h * i, &uiselectoption->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+						App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera->GetPosition().x, (uiselectoption->rect_position.y - App->render->camera->GetPosition().y) + uiselectoption->rect_atlas.h * i, &uiselectoption->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 				}
 			}
 			else if (*type == UIComponent_TYPE::UIHUDPANELINFO)
@@ -732,8 +733,8 @@ void UIHUDPanelInfo::Draw()
 				UIButton* uibutton = item._Ptr->_Myval;
 
 				SDL_Rect mark_btn{ 999, 827, 29, 29 };
-				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x + 2 - App->render->camera.x, uibutton->rect_position.y + 2 - App->render->camera.y, &uibutton->rect_atlas);
-				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x - App->render->camera.x, uibutton->rect_position.y - App->render->camera.y, &mark_btn);
+				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x + 2 - App->render->camera->GetPosition().x, uibutton->rect_position.y + 2 - App->render->camera->GetPosition().y, &uibutton->rect_atlas);
+				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y - App->render->camera->GetPosition().y, &mark_btn);
 
 				item++;
 			}
@@ -743,31 +744,31 @@ void UIHUDPanelInfo::Draw()
 			UIImage* entity_image = entity_selected->image;
 
 			SDL_Rect mark_btn{ 1029, 827, 29, 33 };
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera.x, entity_image->rect_position.y + 2 - App->render->camera.y, &entity_image->rect_atlas);
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera.x, entity_image->rect_position.y - App->render->camera.y, &mark_btn);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn);
 
 			UILabel* entity_label = entity_selected->name;
-			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera.x, entity_label->rect_position.y - App->render->camera.y);
+			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y);
 
 			entity_label = entity_selected->life;
-			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera.x, entity_label->rect_position.y - App->render->camera.y);
+			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y);
 
 			SDL_Rect mark_attack{ 956, 858, 38, 22 };
 			entity_label = entity_selected->damage;
-			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera.x, entity_label->rect_position.y - App->render->camera.y);
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 230 - App->render->camera.x, 703 - App->render->camera.y, &mark_attack);
+			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 230 - App->render->camera->GetPosition().x, 703 - App->render->camera->GetPosition().y, &mark_attack);
 
 			SDL_Rect mark_armor{ 956, 902, 37, 19 };
 			entity_label = entity_selected->armor;
-			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera.x, entity_label->rect_position.y - App->render->camera.y);
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 230 - App->render->camera.x, 725 - App->render->camera.y, &mark_armor);
+			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 230 - App->render->camera->GetPosition().x, 725 - App->render->camera->GetPosition().y, &mark_armor);
 
 			entity_label = entity_selected->range;
 			if (entity_label != nullptr)
 			{
 				SDL_Rect mark_range{ 956, 881, 35, 20 };
-				App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera.x, entity_label->rect_position.y - App->render->camera.y);
-				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 231 - App->render->camera.x, 744 - App->render->camera.y, &mark_range);
+				App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y);
+				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 231 - App->render->camera->GetPosition().x, 744 - App->render->camera->GetPosition().y, &mark_range);
 			}
 		}
 	}
