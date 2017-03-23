@@ -9,6 +9,7 @@
 
 
 
+
 Building::Building(BUILDING_TYPE b_type, fPoint pos) : Entity(BUILDING, pos), building_type(b_type)
 {
 	SDL_Rect rect;
@@ -16,7 +17,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos) : Entity(BUILDING, pos), bu
 	{
 	case TURRET:
 		SetHp(1000);
-		attack = 12;
+		SetAttack(12);
 		SetArmor(1);
 		rate_of_fire = 1;
 		range = 8;
@@ -36,12 +37,45 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos) : Entity(BUILDING, pos), bu
 
 void Building::Update()
 {
-	//AI();
+	AI();
 	Draw();
 }
 
 void Building::AI()
 {
+	if (Target == nullptr) 
+	{
+		std::vector<Entity*> EntityVector = App->entity_manager->GetEntityVector();
+		std::vector<Entity*>::iterator item = EntityVector.begin();
+		for (; item != EntityVector.end(); item++) 
+		{
+			if ((*item)->GetEntityType() == UNIT)
+			{
+				if ((*item)->GetX() >= (GetX() - 120) && (*item)->GetX() < (GetX() + 120) && (*item)->GetY() >= (GetY() - 120) && (*item)->GetY() < (GetY() + 120))
+				{
+					Target = *item;
+				}
+			}
+		}
+	}
+	else if (Target->GetHp() <= 0) {
+		Target = nullptr;
+	}
+	else if (Target != nullptr && Target->GetHp() > 0)
+	{
+		if (Target->GetX() >= (GetX() - 120) && Target->GetX() < (GetX() + 120) && Target->GetY() >= (GetY() - 120) && Target->GetY() < (GetY() + 120))
+		{
+			Attack(Target);
+			AttackTimer.Start();
+		}
+		else
+		{
+
+			Target = nullptr;
+		}
+
+	}
+	
 	//std::list<Entity>::iterator ptarget = App->entity_manager->
 }
 

@@ -32,6 +32,7 @@ public:
 	void DeleteUnit(Entity* ptr);
 	void DeleteBuilding(Entity* ptr);
 	void GetUnitsPath(iPoint destintation);
+	std::vector<Entity*> GetEntityVector();
 private:
 
 	//Textura provisional para sprites por si no se cargan en animation

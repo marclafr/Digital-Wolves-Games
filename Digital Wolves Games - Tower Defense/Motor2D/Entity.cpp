@@ -99,3 +99,12 @@ void Entity::SetTextureID(TextureID id)
 {
 	texture_id = id;
 }
+
+void Entity::SetAttack(int new_attack)
+{
+	attack = new_attack;
+}
+void Entity::Attack(Entity* entity)
+{
+	entity->SetHp(entity->hp - this->attack);
+}
