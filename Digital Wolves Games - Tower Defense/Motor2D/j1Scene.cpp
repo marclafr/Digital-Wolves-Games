@@ -152,6 +152,9 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera->MoveRight(floor(200.0f * dt));
 
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
+		App->render->camera->Move(iPoint(300,300), 50);
+
 	App->map->Draw();
 
 	// Debug pathfinding ------------------------------

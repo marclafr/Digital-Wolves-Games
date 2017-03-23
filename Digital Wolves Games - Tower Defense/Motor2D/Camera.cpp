@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera(Camera & copy) : moving(false)
+Camera::Camera(Camera & copy) : moving(false), destination(iPoint(0,0)), speed(0), x_movement(0), y_movement(0)
 {
 	view_port.x = copy.view_port.x;
 	view_port.y = copy.view_port.y;
@@ -8,7 +8,7 @@ Camera::Camera(Camera & copy) : moving(false)
 	view_port.h = copy.view_port.h;
 }
 
-Camera::Camera(SDL_Rect & rect) : moving (false)
+Camera::Camera(SDL_Rect & rect) : moving (false), destination(iPoint(0, 0)), speed(0), x_movement(0), y_movement(0)
 {
 	view_port.x = rect.x;
 	view_port.y = rect.y;
@@ -45,8 +45,10 @@ const int Camera::GetHeight() const
 
 void Camera::Move(iPoint destination, int speed)
 {
-	destination = this->destination;
-	speed = this->speed;
+	moving = true;
+
+	this->destination = destination;
+	this->speed = speed;
 
 	y_movement = abs(destination.y - view_port.y);
 	x_movement = abs(destination.x - view_port.x);
@@ -80,32 +82,44 @@ void Camera::UpdateCamera()
 
 		if (destination.x > view_port.x)
 		{
-			if ((speed * (x_movement / total_movement)) > (destination.x - view_port.x))
+			if ((speed * (float(x_movement) / float(total_movement))) > (destination.x - view_port.x))
+			{
 				view_port.x = destination.x;
+				moving = false;
+			}
 			else
-			view_port.x += speed * (x_movement / total_movement);
+			view_port.x += speed * (float (x_movement) / float (total_movement));
 		}
 		else
 		{
-			if ((speed * (x_movement / total_movement)) > abs(destination.x - view_port.x))
+			if ((speed * (float(x_movement) / float(total_movement))) > abs(destination.x - view_port.x))
+			{
 				view_port.x = destination.x;
+				moving = false;
+			}
 			else
-				view_port.x -= speed * (x_movement / total_movement);
+				view_port.x -= speed * (float(x_movement) / float(total_movement));
 		}
 
 		if (destination.y > view_port.y)
 		{
-			if ((speed * (y_movement / total_movement)) > (destination.y - view_port.y))
+			if ((speed * (float(y_movement) / float (total_movement))) > (destination.y - view_port.y))
+			{
 				view_port.y = destination.y;
+				moving = false;
+			}
 			else
-				view_port.y += speed * (y_movement / total_movement);
+				view_port.y += speed * (float(y_movement) / float(total_movement));
 		}
 		else
 		{
-			if ((speed * (y_movement / total_movement)) > abs(destination.y - view_port.y))
+			if ((speed * (float(y_movement) / float(total_movement))) > abs(destination.y - view_port.y))
+			{
 				view_port.y = destination.y;
+				moving = false;
+			}
 			else
-				view_port.y -= speed * (x_movement / total_movement);
+				view_port.y -= speed * (float(x_movement) / float(total_movement));
 		}
 	}
 }
