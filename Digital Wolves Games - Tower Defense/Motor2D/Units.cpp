@@ -59,6 +59,31 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 
 void Unit::Update()
 {
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		if (GetEntityStatus() == E_SELECTED)
+		{
+			this->action_type = DIE;
+			DIRECTION temp_dir = direction;
+			switch (temp_dir)
+			{
+			case NORTH_EAST:
+				temp_dir = NORTH_WEST;
+				break;
+
+			case EAST:
+				temp_dir = WEST;
+				break;
+
+			case SOUTH_EAST:
+				temp_dir = SOUTH_WEST;
+				break;
+			}
+			Animation* anim = App->anim->GetAnimation(GetUnitType(), action_type, temp_dir);
+			anim->Reset();
+			this->ToDelete();
+		}
+	}
 	AI();
 	Move();
 	Draw();

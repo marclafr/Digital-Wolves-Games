@@ -74,6 +74,10 @@ bool j1Animation::Awake(pugi::xml_node& config)
 					new_anim->speed = 1000.0f;
 					new_anim->loop = false;
 				}
+				if (!action.compare("die"))
+				{
+					new_anim->loop = false;
+				}
 				animations.push_back(new_anim);
 
 				direction_node = direction_node.next_sibling();
@@ -108,66 +112,6 @@ Animation* j1Animation::GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE act
 	return nullptr;
 }
 
-/*Animation* j1Animation::DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos)
-{
-	bool flip = false;
-	
-	//direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST
-	switch (direction)
-	{
-		case NORTH_EAST:
-			flip = true;
-			direction = NORTH_WEST;
-			break;
-
-		case EAST:
-			flip = true;
-			direction = WEST;
-			break;
-
-		case SOUTH_EAST:
-			flip = true;
-			direction = SOUTH_WEST;
-			break;
-
-		default:
-			break;
-	}
-	
-	Animation* anim = App->anim->GetAnimation(unit, action, direction);
-	if (anim->Finished() == false)
-	{
-		SDL_Texture* tex = App->anim->GetTexture(unit);
-		SDL_Rect rect = anim->GetCurrentFrame();
-		iPoint* p = &anim->GetCurrentPivotPoint();
-
-		if (anim == NULL)
-		{
-			LOG("ERROR: DrawAnimation: animation not found");
-			return NULL;
-		}
-
-		if (tex == NULL)
-		{
-			LOG("ERROR: DrawAnimation: texture not found");
-			return NULL;
-		}
-
-		if (p == NULL)
-		{
-			LOG("ERROR: DrawAnimation: pivot point not found");
-			return NULL;
-		}
-		if (flip == true)
-			App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect, SDL_FLIP_HORIZONTAL);
-
-		else
-			App->render->Blit(tex, pos.x - p->x, pos.y - p->y, &rect);
-
-	}
-	return anim;
-}*/
-
 bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* unit)
 {
 	bool ret = false;
@@ -194,6 +138,7 @@ bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* 
 
 	Animation* anim = App->anim->GetAnimation(unit->GetUnitType(), unit->GetActionType(), direction);
 
+
 	if (anim->Finished() == false)
 	{
 		frame = anim->GetCurrentFrame();
@@ -207,6 +152,7 @@ bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* 
 	}
 	else
 	{
+		anim->anim_timer.Start();
 		anim->RestartAnim();
 		return true;
 	}
@@ -253,7 +199,7 @@ SDL_Rect Animation::GetCurrentFrame()
 
 	current_frame = (float) floor(anim_timer.Read() / speed);
 	
-	if (current_frame >= frames.size())
+	if (Finished())
 	{
 		if (loop == true)
 		{
@@ -279,7 +225,7 @@ iPoint Animation::GetCurrentPivotPoint()
 
 bool Animation::Finished() const
 {
-	if (current_frame == frames.size() - 1)
+	if (current_frame >= frames.size() - 1)
 	{
 		return true;
 	}
