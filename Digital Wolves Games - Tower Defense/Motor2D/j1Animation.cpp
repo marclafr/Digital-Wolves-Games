@@ -230,6 +230,9 @@ bool Animation::Finished() const
 		return true;
 	}
 
+	if (loop == false && current_frame == -1)
+		return true;
+
 	return false;
 }
 
