@@ -153,7 +153,19 @@ bool j1Scene::Update(float dt)
 		App->render->camera->MoveRight(floor(200.0f * dt));
 
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
-		App->render->camera->Move(iPoint(300,300), 50);
+		App->render->camera->Move(iPoint(300,300), 10);
+
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+		App->render->camera->ZoomIn();
+
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+		App->render->camera->ZoomOut();
+
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT)
+		App->render->camera->FadeToBlack(2,2,2);
+
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT)
+		App->win->SetScale(2);
 
 	App->map->Draw();
 

@@ -6,8 +6,6 @@
 #include "j1Module.h"
 #include <deque>
 
-#define TOWER_HEIGHT 60
-
 class Entity;
 class Camera;
 

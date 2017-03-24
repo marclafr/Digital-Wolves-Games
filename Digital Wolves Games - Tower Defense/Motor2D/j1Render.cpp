@@ -141,8 +141,8 @@ iPoint j1Render::WorldToScreen(int x, int y) const
 	iPoint ret;
 	int scale = App->win->GetScale();
 
-	ret.x = -(x + camera->GetPosition().x) * scale;
-	ret.y = -(y + camera->GetPosition().y) * scale;
+	ret.x = (x + camera->GetPosition().x / scale);
+	ret.y = (y + camera->GetPosition().y / scale);
 
 	return ret;
 }
@@ -157,10 +157,9 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	rect.x = (int)(camera->GetPosition().x * speed) + x * scale;
 	rect.y = (int)(camera->GetPosition().y * speed) + y * scale;
 
-	
-	iPoint position_in_camera = WorldToScreen(x, y);
+	iPoint screen_position = App->render->WorldToScreen(x,y);
 
-	if ((position_in_camera.x < App->map->data.tile_width && position_in_camera.x > -camera->GetWidth() && position_in_camera.y < App->map->data.tile_height && position_in_camera.y > -(camera->GetHeight() + TOWER_HEIGHT)) || not_in_world) // IF NOT FOR TOWER HEIGHT TOWERS WOULD NOT PRINT UNTIL THEIR LOWEST PART IS INSIDE THE CAMERA
+	if (App->render->camera->InsideRenderTarget(screen_position.x, screen_position.y) || not_in_world)
 	{
 		if (section != NULL)
 		{
@@ -201,6 +200,12 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 			pivot.x = pivot_x;
 			pivot.y = pivot_y;
 			p = &pivot;
+		}
+
+		if (not_in_world == false)
+		{
+			rect = App->render->camera->GetZoomedRect(SDL_Rect{ screen_position.x,screen_position.y,rect.w,rect.h });
+			SDL_SetTextureAlphaMod(texture, App->render->camera->GetOpacity());
 		}
 
 		if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, (SDL_RendererFlip)flip) != 0)

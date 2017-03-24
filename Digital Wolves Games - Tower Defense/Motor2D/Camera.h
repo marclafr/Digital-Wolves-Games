@@ -1,9 +1,11 @@
 #ifndef _CAMERA
 #define _CAMERA
 
-
 #include "SDL\include\SDL.h"
 #include "p2Point.h"
+
+#define TOWER_HEIGHT 60
+#define FPS 60
 
 class Camera
 {
@@ -14,6 +16,12 @@ private:
 	int speed;
 	int x_movement;
 	int y_movement;
+	float zoom;
+	int opacity;
+	int frames_to_black;
+	int frames_in_black;
+	int frames_to_light;
+	int opacity_delta;
 
 public:
 	Camera(Camera& copy);
@@ -25,6 +33,11 @@ public:
 	const iPoint GetPosition() const;
 	const int GetWidth() const;
 	const int GetHeight() const;
+	const SDL_Rect GetVP() const;
+	const iPoint GetCenter() const;
+	const float GetOpacity() const;
+	
+	bool InsideRenderTarget(int x, int y);
 
 	void Move(iPoint destination, int speed);
 	void MoveUp(float amount);
@@ -32,6 +45,14 @@ public:
 	void MoveDown(float amount);
 	void MoveRight(float amount);
 
+	void SetZoom(float percentage); //%
+
+	void ZoomIn(float percentage = 1);//percentage per frame
+	void ZoomOut(float percentage = 1);
+
+	SDL_Rect GetZoomedRect(const SDL_Rect &rect) const;
+
+	void FadeToBlack(int secs_to_black, int wait, int secs_to_light);// secs at 60fps
 
 	void UpdateCamera();
 };
