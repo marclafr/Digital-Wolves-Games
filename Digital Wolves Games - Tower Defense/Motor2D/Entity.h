@@ -28,6 +28,7 @@ private:
 	fPoint position;
 	int hp;
 	int armor;
+	int attack;
 	enum ENTITY_TYPE entity_type;
 	enum ENTITY_STATUS entity_status = E_NON_SELECTED;
 	enum TextureID texture_id;
@@ -59,11 +60,14 @@ public:
 	const iPoint GetPivot() const;
 	const SDL_Rect GetRect() const;
 	const TextureID GetTextureID() const;
+	void Attack(Entity*);
+	void Attacked();
 
 protected:
 	//Seters
 	void SetArmor(int new_armor);
 	void SetHp(int new_hp);
+	void SetAttack(int new_attack);
 	void SetPivot(int x, int y);
 	void SetRect(SDL_Rect rect);
 	void SetTextureID(TextureID id);

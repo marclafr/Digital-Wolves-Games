@@ -153,3 +153,8 @@ void j1EntityManager::GetUnitsPath(iPoint destination)
 			prove++;
 
 }
+
+std::vector<Entity*> j1EntityManager::GetEntityVector()
+{
+	return entity_array;
+}

@@ -8,7 +8,7 @@
 #include "Entity.h"
 #include "Units.h"
 #include "j1PerfTimer.h"
-
+#include <vector>
 
 enum BUILDING_TYPE
 {
@@ -21,11 +21,12 @@ class Building : public Entity
 private:
 
 	enum BUILDING_TYPE building_type;
-	int attack;
 	float rate_of_fire;
 	float range;
 	float build_time;
 	j1PerfTimer buildtimer;
+	j1PerfTimer AttackTimer;
+	Entity* Target = nullptr;
 public:
 
 	Building(BUILDING_TYPE b_type, fPoint pos);
