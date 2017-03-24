@@ -5,7 +5,8 @@
 
 struct SDL_Texture;
 class UILabel;
-class UIImage;
+class UIComponents;
+class UIButton;
 class UIHUDPanelButtons;
 class UIHUDPanelInfo;
 
@@ -42,12 +43,12 @@ public:
 private:
 	SDL_Texture* debug_tex;
 
-	UIImage* top_hud;
+	UIComponents* top_hud;
 	UIButton* objectives;
 	UIButton* tree_tech;
 	UIButton* ingame_menu;
 
-	UIImage* down_hud;
+	UIComponents* down_hud;
 	UIButton* description;
 	UIHUDPanelButtons* panel;
 

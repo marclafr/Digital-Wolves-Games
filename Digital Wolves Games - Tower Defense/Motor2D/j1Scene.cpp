@@ -9,11 +9,15 @@
 #include "j1Window.h"
 #include "j1Map.h"
 #include "j1PathFinding.h"
-#include "j1UIManager.h"
 #include "j1Scene.h"
 #include "j1Animation.h"
 #include "j1EntityManager.h"
 #include "Units.h"
+
+#include "UIButton.h"
+#include "UILabel.h"
+#include "UIHUDPanelButtons.h"
+#include "j1UIManager.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -50,35 +54,35 @@ bool j1Scene::Start()
 
 	//UIElements
 		//Top_HUD
-	top_hud = (UIImage*)App->uimanager->addUIComponent(UIComponent_TYPE::UIIMAGE);
+	top_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	top_hud->Set({0, 0, 1336, 23}, {0, 1011, 1366, 23});
-	top_hud->interactive = false;
+	top_hud->SetInteractive(false);
 
-	objectives = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
+	objectives = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	objectives->Set({1252, 2, 36, 14}, {1252, 996, 36, 14});
 
-	tree_tech = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
+	tree_tech = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	tree_tech->Set({1288, 2, 35, 14}, {1289, 996, 35, 14});
 
-	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
+	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	ingame_menu->Set({1323, 2, 36 , 15}, {1325, 996, 36, 14});
 
 	//Down_HUD
-	down_hud = (UIImage*)App->uimanager->addUIComponent(UIComponent_TYPE::UIIMAGE);
+	down_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	down_hud->Set({0, 643, 1366, 125}, {0, 1036, 1366, 125});
-	down_hud->interactive = false;
+	down_hud->SetInteractive(false);
 
-	description = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
+	description = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	description->Set({1316, 653, 19, 17}, {1347, 1163, 19, 17});
 
-	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UIComponent_TYPE::UIHUDPANELBUTTONS);
+	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
 	panel->AddButton(2, 1, 800, 884);
 	panel->AddButton(4, 1, 826, 884);
 	panel->AddButton(0, 0, 878, 910);
 	panel->AddButton(1, 0, 748, 936);
 	panel->AddButton(4, 2, 904, 884);
 
-	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UIComponent_TYPE::UIHUDPANELINFO);
+	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
 
 	//Entity Manager
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 300));

@@ -1,18 +1,24 @@
 #define RIGHT_CLICK 3
 #define LEFT_CLICK 1
 
+#include "j1UIManager.h"
+
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
-#include "j1Fonts.h"
 #include "j1Input.h"
-#include "Entity.h"
-#include "Units.h"
+#include "j1FileSystem.h"
 #include "Camera.h"
 
-#include "j1UIManager.h"
+#include "UIComponents.h"
+#include "UIButton.h"
+#include "UILabel.h"
+#include "UICheckbutton.h"
+#include "UISelectOption.h"
+#include "UIHUDPanelButtons.h"
+#include "UIHUDPanelInfo.h"
 
 j1UIManager::j1UIManager() : j1Module()
 {
@@ -57,23 +63,22 @@ bool j1UIManager::PreUpdate()
 
 	while (item != components.end())
 	{
-
 		UIComponents* component = item._Ptr->_Myval;
 
-		if (component->draw && component->interactive)
+		if (component->GetDraw() && component->GetInteractive())
 		{
 			if ((x_mouse > component->rect_position.x) && (x_mouse < component->rect_position.x + component->rect_position.w) && (y_mouse > component->rect_position.y) && (y_mouse < component->rect_position.y + component->rect_position.h))
 			{
-				component->stat = UIComponent_Stat::SELECTED;
+				component->stat = UICOMPONENT_STAT::SELECTED;
 
 				if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_DOWN)
 				{
-					if (component->stat == UIComponent_Stat::SELECTED)
+					if (component->stat == UICOMPONENT_STAT::SELECTED)
 					{
-						component->stat = UIComponent_Stat::CLICKL_DOWN;
+						component->stat = UICOMPONENT_STAT::CLICKL_DOWN;
 
 						//Check or uncheck for UICheckbutton
-						if (component->type == UIComponent_TYPE::UICHECKBUTTON)
+						if (component->type == UICOMPONENT_TYPE::UICHECKBUTTON)
 						{
 							UICheckbutton* button_checked = (UICheckbutton*)component;
 							if (button_checked->clicked)
@@ -83,7 +88,7 @@ bool j1UIManager::PreUpdate()
 						}
 
 						//Expand options from UISelectOption
-						if (component->type == UIComponent_TYPE::UISELECTOPTION)
+						if (component->type == UICOMPONENT_TYPE::UISELECTOPTION)
 						{
 							UISelectOption* select_option = (UISelectOption*)component;
 							select_option->selecting = true;
@@ -91,9 +96,9 @@ bool j1UIManager::PreUpdate()
 						}
 
 						//Selecting option from UISelectOption
-						if (component->type == UIComponent_TYPE::UILABEL && (component->from != nullptr && component->from->type == UIComponent_TYPE::UISELECTOPTION))
+						if (component->type == UICOMPONENT_TYPE::UILABEL && (component->GetFrom() != nullptr && component->GetFrom()->type == UICOMPONENT_TYPE::UISELECTOPTION))
 						{
-							UISelectOption* from_option_selected = (UISelectOption*)component->from;
+							UISelectOption* from_option_selected = (UISelectOption*)component->GetFrom();
 							UILabel* option_selected = (UILabel*)component;
 
 							if (option_selected != from_option_selected->current)
@@ -105,24 +110,24 @@ bool j1UIManager::PreUpdate()
 						}
 
 						//Click of UIButton
-						if (component->type == UIComponent_TYPE::UIBUTTON)
+						if (component->type == UICOMPONENT_TYPE::UIBUTTON)
 						{
 							UIButton* button = (UIButton*)component;
 							button->clicked = true;
 						}
 					}
 					else
-						component->stat = UIComponent_Stat::CLICKL_REPEAT;
+						component->stat = UICOMPONENT_STAT::CLICKL_REPEAT;
 				}
 				else if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_UP)
 				{
-					if (component->stat == UIComponent_Stat::CLICKL_REPEAT || component->stat == UIComponent_Stat::CLICKL_DOWN)
-						component->stat = UIComponent_Stat::CLICKL_UP;
+					if (component->stat == UICOMPONENT_STAT::CLICKL_REPEAT || component->stat == UICOMPONENT_STAT::CLICKL_DOWN)
+						component->stat = UICOMPONENT_STAT::CLICKL_UP;
 					else
-						component->stat = UIComponent_Stat::SELECTED;
+						component->stat = UICOMPONENT_STAT::SELECTED;
 
 					//UIButton set click to false
-					if (component->type == UIComponent_TYPE::UIBUTTON)
+					if (component->type == UICOMPONENT_TYPE::UIBUTTON)
 					{
 						UIButton* button = (UIButton*)component;
 						button->clicked = false;
@@ -131,21 +136,21 @@ bool j1UIManager::PreUpdate()
 
 				if (App->input->GetMouseButtonDown(RIGHT_CLICK) == KEY_DOWN)
 				{
-					if (component->stat == UIComponent_Stat::SELECTED)
-						component->stat = UIComponent_Stat::CLICKR_DOWN;
+					if (component->stat == UICOMPONENT_STAT::SELECTED)
+						component->stat = UICOMPONENT_STAT::CLICKR_DOWN;
 					else
-						component->stat = UIComponent_Stat::CLICKR_REPEAT;
+						component->stat = UICOMPONENT_STAT::CLICKR_REPEAT;
 				}
 				else if (App->input->GetMouseButtonDown(RIGHT_CLICK) == KEY_UP)
 				{
-					if (component->stat == UIComponent_Stat::CLICKR_REPEAT || component->stat == UIComponent_Stat::CLICKR_DOWN)
-						component->stat = UIComponent_Stat::CLICKR_UP;
+					if (component->stat == UICOMPONENT_STAT::CLICKR_REPEAT || component->stat == UICOMPONENT_STAT::CLICKR_DOWN)
+						component->stat = UICOMPONENT_STAT::CLICKR_UP;
 					else
-						component->stat = UIComponent_Stat::SELECTED;
+						component->stat = UICOMPONENT_STAT::SELECTED;
 				}
 			}
 			else
-				component->stat = UIComponent_Stat::UNSELECTED;
+				component->stat = UICOMPONENT_STAT::UNSELECTED;
 		}
 		item++;
 	}
@@ -156,7 +161,16 @@ bool j1UIManager::PreUpdate()
 // Called after all Updates
 bool j1UIManager::PostUpdate()
 {
-	drawAllComponents();
+	std::list<UIComponents*>::iterator item;
+	item = components.begin();
+
+	while (item != components.end())
+	{
+		if(item._Ptr->_Myval->GetDraw())
+			item._Ptr->_Myval->Draw();
+
+		item++;
+	}
 	
 	return true;
 }
@@ -171,7 +185,6 @@ bool j1UIManager::CleanUp()
 
 	while (item != components.end())
 	{
-
 		delete item._Ptr->_Myval;
 		
 		item++;
@@ -182,43 +195,34 @@ bool j1UIManager::CleanUp()
 	return true;
 }
 
-UIComponents* j1UIManager::addUIComponent(UIComponent_TYPE type)
+UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 {
 	UIComponents* ret = nullptr;
-	
-	if (type == UIComponent_TYPE::UIBUTTON)
+
+	switch (type)
 	{
-		components.push_back(ret = new UIButton(UIComponent_TYPE::UIBUTTON));
+	case UILABEL:
+		components.push_back(ret = (UIComponents*)new UILabel(UICOMPONENT_TYPE::UILABEL));
+		break;
+	case UIBUTTON:
+		components.push_back(ret = (UIComponents*)new UIButton(UICOMPONENT_TYPE::UIBUTTON));
+		break;
+	case UICHECKBUTTON:
+		components.push_back(ret = (UIComponents*)new UICheckbutton(UICOMPONENT_TYPE::UICHECKBUTTON));
+		break;
+	case UISELECTOPTION:
+		components.push_back(ret = (UIComponents*)new UISelectOption(UICOMPONENT_TYPE::UISELECTOPTION));
+		break;
+	case UIHUDPANELBUTTONS:
+		components.push_back(ret = (UIComponents*)new UIHUDPanelButtons(UICOMPONENT_TYPE::UIHUDPANELBUTTONS));
+		break;
+	case UIHUDPANELINFO:
+		components.push_back(ret = (UIComponents*)new UIHUDPanelInfo(UICOMPONENT_TYPE::UIHUDPANELINFO));
+		break;
+	default:
+		components.push_back(ret = new UIComponents(type));
+		break;
 	}
-	else if (type == UIComponent_TYPE::UIIMAGE)
-	{
-		components.push_back(ret = new UIComponents(UIComponent_TYPE::UIIMAGE));
-	}
-	else if(type == UIComponent_TYPE::UIINPUT)
-	{
-		components.push_back(ret = new UIInput(UIComponent_TYPE::UIINPUT));
-	}
-	else if (type == UIComponent_TYPE::UILABEL)
-	{
-		components.push_back(ret = new UILabel(UIComponent_TYPE::UILABEL));
-	}
-	else if(type == UIComponent_TYPE::UICHECKBUTTON)
-	{
-		components.push_back(ret = new UICheckbutton(UIComponent_TYPE::UICHECKBUTTON));
-	}
-	else if (type == UIComponent_TYPE::UISELECTOPTION)
-	{
-		components.push_back(ret = new UISelectOption(UIComponent_TYPE::UISELECTOPTION));
-	}
-	else if (type == UIComponent_TYPE::UIHUDPANELBUTTONS)
-	{
-		components.push_back(ret = new UIHUDPanelButtons(UIComponent_TYPE::UIHUDPANELBUTTONS));
-	}
-	else if (type == UIComponent_TYPE::UIHUDPANELINFO)
-	{
-		components.push_back(ret = new UIHUDPanelInfo(UIComponent_TYPE::UIHUDPANELINFO));
-	}
-	
 	
 	return ret;
 }
@@ -227,603 +231,4 @@ UIComponents* j1UIManager::addUIComponent(UIComponent_TYPE type)
 const SDL_Texture* j1UIManager::GetAtlas() const
 {
 	return atlas;
-}
-
-void j1UIManager::drawAllComponents()
-{
-	std::list<UIComponents*>::iterator item;
-	item = components.begin();
-
-	UIComponent_TYPE* type = nullptr;
-
-	while (item != components.end())
-	{
-		UIComponents* component = item._Ptr->_Myval;
-		
-		if (component->draw)
-		{
-			type = &component->type;
-
-			if (*type == UIComponent_TYPE::UIBUTTON)
-			{
-				UIComponents* uibutton = component;
-
-				if (uibutton->from != nullptr)
-				{
-					if (uibutton->from->type == UIHUDPANELBUTTONS)
-					{
-						SDL_Rect mark_btn{ 969, 827, 29, 29 };
-						App->render->Blit(atlas, uibutton->rect_position.x - 2 - App->render->camera->GetPosition().x, uibutton->rect_position.y - 2 - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-						App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y - App->render->camera->GetPosition().y, &uibutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-					}
-				}
-				else
-					App->render->Blit(atlas, uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y - App->render->camera->GetPosition().y, &uibutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-			}
-			else if (*type == UIComponent_TYPE::UIIMAGE)
-			{
-				UIComponents* uiimage = component;
-
-				App->render->Blit(atlas, uiimage->rect_position.x - App->render->camera->GetPosition().x, uiimage->rect_position.y - App->render->camera->GetPosition().y, &uiimage->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-			}
-			else if (*type == UIComponent_TYPE::UIINPUT)
-			{
-				UIComponents* uiinput = component;
-
-				App->render->Blit(atlas, uiinput->rect_position.x - App->render->camera->GetPosition().x, uiinput->rect_position.y - App->render->camera->GetPosition().y, &uiinput->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-			}
-			else if (*type == UIComponent_TYPE::UILABEL)
-			{
-				UILabel* uilabel = (UILabel*)component;
-
-				App->render->Blit(uilabel->text_img, uilabel->rect_position.x - App->render->camera->GetPosition().x, uilabel->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-			}
-			else if (*type == UIComponent_TYPE::UICHECKBUTTON)
-			{
-				UICheckbutton* uicheckbutton = (UICheckbutton*)component;
-
-				if (uicheckbutton->clicked)
-					App->render->Blit(atlas, uicheckbutton->rect_position.x - App->render->camera->GetPosition().x, uicheckbutton->rect_position.y - App->render->camera->GetPosition().y, &uicheckbutton->rect_atlas_clicked, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-				else
-					App->render->Blit(atlas, uicheckbutton->rect_position.x - App->render->camera->GetPosition().x, uicheckbutton->rect_position.y - App->render->camera->GetPosition().y, &uicheckbutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-			}
-			else if (*type == UIComponent_TYPE::UISELECTOPTION)
-			{
-				UISelectOption* uiselectoption = (UISelectOption*)component;
-
-				App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera->GetPosition().x, uiselectoption->rect_position.y - App->render->camera->GetPosition().y, &uiselectoption->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-
-				if (uiselectoption->selecting)
-				{
-					for(uint i = 1; i < uiselectoption->num_options + 1; i++)
-						App->render->Blit(atlas, uiselectoption->rect_position.x - App->render->camera->GetPosition().x, (uiselectoption->rect_position.y - App->render->camera->GetPosition().y) + uiselectoption->rect_atlas.h * i, &uiselectoption->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-				}
-			}
-			else if (*type == UIComponent_TYPE::UIHUDPANELINFO)
-			{
-				UIHUDPanelInfo* uihudpanelinfo = (UIHUDPanelInfo*)component;
-
-				uihudpanelinfo->Draw();
-			}
-		}
-		item++;
-	}
-}
-
-// class uimanager ---------------------------------------------------
-
-UILabel::~UILabel()
-{
-
-	if (font != nullptr)
-		delete font;
-}
-
-void UILabel::Set(int pos_x, int pos_y, const char * text, _TTF_Font*  font)
-{
-	rect_position.x = pos_x;
-	rect_position.y = pos_y;
-
-	text_img = App->font->Print(text, T_AOE_UI_FONT, {255,0,0,0});
-
-	this->text.assign(text);
-
-	App->render->GetDimensionsFromTexture(text_img, rect_position.w, rect_position.h);
-}
-
-void UILabel::ChangeText(const char* text)
-{
-	if (this->text != text)
-	{
-		text_img = App->font->Print(text, T_AOE_UI_FONT, { 255,0,0,0 });
-
-		App->render->GetDimensionsFromTexture(text_img, rect_position.w, rect_position.h);
-
-		this->text.erase();
-		this->text.assign(text);
-	}
-}
-
-UIButton::UIButton(UIComponent_TYPE type) : UIComponents(type)
-{
-	title = (UILabel*)App->uimanager->addUIComponent(UIComponent_TYPE::UILABEL);
-}
-
-void UIButton::Set(int pos_x, int pos_y, int pos_w, int pos_h, uint atlas_x, uint atlas_y, uint atlas_w, uint atlas_h)
-{
-	rect_position.x = pos_x;
-	rect_position.y = pos_y;
-	rect_position.w = pos_w;
-	rect_position.h = pos_h;
-
-	rect_atlas.x = atlas_x;
-	rect_atlas.y = atlas_y;
-	rect_atlas.w = atlas_w;
-	rect_atlas.h = atlas_h;
-}
-
-void UIButton::Set(const SDL_Rect & position, const SDL_Rect & atlas)
-{
-	rect_position = position;
-	rect_atlas = atlas;
-}
-
-UICheckbutton::UICheckbutton(UIComponent_TYPE type) : UIButton(type) 
-{
-
-}
-
-void UICheckbutton::Set(int pos_x, int pos_y, int pos_w, int pos_h, uint atlas_x, uint atlas_y, uint atlas_w, uint atlas_h, uint atlas_clicked_x, uint atlas_clicked_y, uint atlas_clicked_w, uint atlas_clicked_h)
-{
-	rect_position.x = pos_x;
-	rect_position.y = pos_y;
-	rect_position.w = pos_w;
-	rect_position.h = pos_h;
-
-	rect_atlas.x = atlas_x;
-	rect_atlas.y = atlas_y;
-	rect_atlas.w = atlas_w;
-	rect_atlas.h = atlas_h;
-
-	rect_atlas_clicked.x = atlas_clicked_x;
-	rect_atlas_clicked.y = atlas_clicked_y;
-	rect_atlas_clicked.w = atlas_clicked_w;
-	rect_atlas_clicked.h = atlas_clicked_h;
-}
-
-void UICheckbutton::Set(const SDL_Rect & position, const SDL_Rect & atlas, const SDL_Rect & atlas_clicked)
-{
-	rect_position = position;
-	rect_atlas = atlas;
-	rect_atlas_clicked = atlas_clicked;
-}
-
-UIInput::UIInput(UIComponent_TYPE type) : UIComponents(type)
-{
-	title = (UILabel*)App->uimanager->addUIComponent(UIComponent_TYPE::UILABEL);
-}
-
-void UIInput::Set(int pos_x, int pos_y, int pos_w, int pos_h, uint atlas_x, uint atlas_y, uint atlas_w, uint atlas_h)
-{
-	rect_position.x = pos_x;
-	rect_position.y = pos_y;
-	rect_position.w = pos_w;
-	rect_position.h = pos_h;
-
-	rect_atlas.x = atlas_x;
-	rect_atlas.y = atlas_y;
-	rect_atlas.w = atlas_w;
-	rect_atlas.h = atlas_h;
-}
-
-void UIInput::Set(const SDL_Rect & position, const SDL_Rect & atlas)
-{
-	rect_position = position;
-	rect_atlas = atlas;
-}
-
-UIImage::UIImage(UIComponent_TYPE type) : UIComponents(type)
-{
-
-}
-
-void UIImage::Set(int pos_x, int pos_y, int pos_w, int pos_h, uint atlas_x, uint atlas_y, uint atlas_w, uint atlas_h)
-{
-	rect_position.x = pos_x;
-	rect_position.y = pos_y;
-	rect_position.w = pos_w;
-	rect_position.h = pos_h;
-
-	rect_atlas.x = atlas_x;
-	rect_atlas.y = atlas_y;
-	rect_atlas.w = atlas_w;
-	rect_atlas.h = atlas_h;
-}
-
-void UIImage::Set(const SDL_Rect & position, const SDL_Rect & atlas)
-{
-	rect_position = position;
-	rect_atlas = atlas;
-}
-
-UISelectOption::UISelectOption(UIComponent_TYPE type) : UIComponents(type)
-{
-	title = (UILabel*)App->uimanager->addUIComponent(UIComponent_TYPE::UILABEL);
-}
-
-void UISelectOption::Set(int pos_x, int pos_y, int pos_w, int pos_h, uint atlas_x, uint atlas_y, uint atlas_w, uint atlas_h)
-{
-	rect_position.x = pos_x;
-	rect_position.y = pos_y;
-	rect_position.w = pos_w;
-	rect_position.h = pos_h;
-
-	rect_atlas.x = atlas_x;
-	rect_atlas.y = atlas_y;
-	rect_atlas.w = atlas_w;
-	rect_atlas.h = atlas_h;
-}
-
-void UISelectOption::Set(const SDL_Rect & position, const SDL_Rect & atlas)
-{
-	rect_position = position;
-	rect_atlas = atlas;
-}
-
-void UISelectOption::AddOption(const char * text)
-{
-	UILabel* newoption = (UILabel*)App->uimanager->addUIComponent(UIComponent_TYPE::UILABEL);
-
-	num_options++;
-
-	newoption->Set(rect_position.x + 2 , (rect_position.y + (rect_position.h/4)) + (num_options*rect_position.h), text);
-
-	newoption->draw = false;
-
-	newoption->from = this;
-
-	if (current == nullptr)
-		ChangeCurrent(newoption);
-	else
-		options.push_back(newoption);
-}
-
-const char * UISelectOption::CheckSelected()
-{
-	return current->text.c_str();
-}
-
-void UISelectOption::ChangeCurrent(UILabel * change)
-{
-	if (current == nullptr)
-	{
-		current = change;
-		current->rect_position.x = rect_position.x;
-		current->rect_position.y = rect_position.y;
-		current->draw = true;
-	}
-	else
-	{
-		std::list<UILabel*>::iterator item = options.begin();
-
-		while (item._Ptr->_Myval != change)
-		{
-			item++;
-		}
-
-		options.erase(item);
-		
-
-		SWAP<int>(current->rect_position.x, change->rect_position.x);
-		SWAP<int>(current->rect_position.y, change->rect_position.y);
-
-		options.push_back(current);
-
-
-		current = change;
-		current->draw = true;
-	}
-}
-
-void UISelectOption::ChangeDrawAllOptions()
-{
-	std::list<UILabel*>::iterator item;
-	item = options.begin();
-
-	while(item != options.end())
-	{
-		if (item._Ptr->_Myval->draw)
-			item._Ptr->_Myval->draw = false;
-		else
-			item._Ptr->_Myval->draw = true;
-
-		item++;
-	}
-}
-
-UIHUDPanelButtons::UIHUDPanelButtons(UIComponent_TYPE type) : UIComponents(type)
-{
-	interactive = false;
-}
-
-UIHUDPanelButtons::~UIHUDPanelButtons()
-{
-
-	std::list<info_button*>::iterator item;
-	item = panel.begin();
-
-	while (item != panel.end())
-	{
-		delete	item._Ptr->_Myval;
-		item++;
-	}
-
-	panel.clear();
-}
-
-//x - 0 to 4 | y - 0 to 2 | Max 15 buttons
-void UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atlas_y)
-{
-	info_button* new_btn = new info_button;
-
-	new_btn->btn = (UIButton*)App->uimanager->addUIComponent(UIComponent_TYPE::UIBUTTON);
-	new_btn->x = x;
-	new_btn->y = y;
-	new_btn->btn->Set({ 26 + (30 * (int)x), 666 + (30 * (int)y), 29, 29}, { (int)atlas_x, (int)atlas_y, 25, 25});
-
-	new_btn->btn->from = this;
-
-	panel.push_back(new_btn);
-}
-
-UIHUDPanelInfo::UIHUDPanelInfo(UIComponent_TYPE type) : UIComponents(type)
-{
-	interactive = false;
-}
-
-UIHUDPanelInfo::~UIHUDPanelInfo()
-{
-	if (!selection.empty())
-	{
-		selection.clear();
-
-		if (status == ENTITIESSELECTED)
-		{
-			std::list<UIButton*>::iterator item;
-			item = entities_btn.begin();
-
-			while (item != entities_btn.end())
-			{
-				delete item._Ptr->_Myval;
-
-				item++;
-			}
-
-			entities_btn.clear();
-		}
-		else if (status == ENTITYINFO)
-		{
-			delete entity_selected;
-		}
-	}
-
-
-
-}
-
-void UIHUDPanelInfo::AddEntitySelection(Entity* selected)
-{
-	selection.push_back(selected);
-}
-
-void UIHUDPanelInfo::DeleteSelection()
-{
-	selection.clear();
-
-	DeleteButtons();
-}
-
-void UIHUDPanelInfo::CreatePanel()
-{
-	if (selection.empty() == false)
-	{
-		if (selection.size() > 1)
-		{
-			status = ENTITIESSELECTED;
-
-			std::list<Entity*>::iterator item;
-			item = selection.begin();
-
-			int count = 0;
-			while (item != selection.end())
-			{
-				Unit* selected = (Unit*)item._Ptr->_Myval;
-
-				UIButton* new_btn = new UIButton(UIBUTTON);
-
-				new_btn->Set({ 220 + (29 * count++), 666, 29, 29 }, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
-
-				entities_btn.push_back(new_btn);
-
-				item++;
-			}
-		}
-		else
-		{
-			status = ENTITYINFO;
-
-			entity_selected = new entity_info();
-
-			std::list<Entity*>::iterator item;
-			item = selection.begin();
-			Unit* selected = (Unit*)item._Ptr->_Myval;
-
-			entity_selected->image = new UIImage(UIIMAGE);
-			
-			entity_selected->image->Set({ 231, 667, 29, 33 }, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
-
-			entity_selected->image->interactive = false;
-
-			entity_selected->name = new UILabel(UILABEL);
-			entity_selected->name->Set(231, 653, GetUnitName(selected->GetUnitType()));
-
-			std::string stats = std::to_string(selected->GetHp());
-			entity_selected->life = new UILabel(UILABEL);
-			entity_selected->life->Set(262, 690, stats.c_str());
-
-			stats = std::to_string(selected->GetAttack());
-			entity_selected->damage = new UILabel(UILABEL);
-			entity_selected->damage->Set(272, 705, stats.c_str());
-
-			stats = std::to_string(selected->GetArmor());
-			entity_selected->armor = new UILabel(UILABEL);
-			entity_selected->armor->Set(272, 722, stats.c_str());
-
-			if (selected->GetUnitClass() == UNIT_CLASS::ARCHER)
-			{
-				stats = std::to_string(selected->GetRange());
-				entity_selected->range = new UILabel(UILABEL);
-				entity_selected->range->Set(272, 745, stats.c_str());
-			}
-		}
-	}
-	else
-		status = NONE;
-}
-
-void UIHUDPanelInfo::DeleteButtons()
-{
-	if (status == ENTITIESSELECTED)
-	{
-		std::list<UIButton*>::iterator item;
-		item = entities_btn.begin();
-
-		while (item != entities_btn.end())
-		{
-			delete item._Ptr->_Myval;
-
-			item++;
-		}
-
-		entities_btn.clear();
-	}
-	else if (status == ENTITYINFO)
-	{
-		delete entity_selected;
-	}
-
-}
-
-bool UIHUDPanelInfo::isSelectionEmpty()
-{
-	return selection.empty();
-}
-
-void UIHUDPanelInfo::Draw()
-{
-	if (!isSelectionEmpty())
-	{
-		if (status == ENTITIESSELECTED)
-		{
-			std::list<UIButton*>::iterator item;
-			item = entities_btn.begin();
-
-			while (item != entities_btn.end())
-			{
-				UIButton* uibutton = item._Ptr->_Myval;
-
-				SDL_Rect mark_btn{ 999, 827, 29, 29 };
-				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x + 2 - App->render->camera->GetPosition().x, uibutton->rect_position.y + 2 - App->render->camera->GetPosition().y, &uibutton->rect_atlas);
-				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y - App->render->camera->GetPosition().y, &mark_btn);
-
-				item++;
-			}
-		}
-		else if (status == ENTITYINFO)
-		{
-			UIImage* entity_image = entity_selected->image;
-
-			SDL_Rect mark_btn{ 1029, 827, 29, 33 };
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas);
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn);
-
-			UILabel* entity_label = entity_selected->name;
-			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y);
-
-			entity_label = entity_selected->life;
-			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y);
-
-			SDL_Rect mark_attack{ 956, 858, 38, 22 };
-			entity_label = entity_selected->damage;
-			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y);
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 230 - App->render->camera->GetPosition().x, 703 - App->render->camera->GetPosition().y, &mark_attack);
-
-			SDL_Rect mark_armor{ 956, 902, 37, 19 };
-			entity_label = entity_selected->armor;
-			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y);
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 230 - App->render->camera->GetPosition().x, 725 - App->render->camera->GetPosition().y, &mark_armor);
-
-			entity_label = entity_selected->range;
-			if (entity_label != nullptr)
-			{
-				SDL_Rect mark_range{ 956, 881, 35, 20 };
-				App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y);
-				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 231 - App->render->camera->GetPosition().x, 744 - App->render->camera->GetPosition().y, &mark_range);
-			}
-		}
-	}
-}
-
-SDL_Rect UIHUDPanelInfo::GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
-{
-	SDL_Rect ret;
-
-	switch (type)
-	{
-	case TWOHANDEDSWORDMAN:
-		ret = { 774, 962, 25, 25 };
-		break;
-
-	case CAVALRYARCHER:
-		ret = { 800, 962, 25, 25 };
-		break;
-
-	case SIEGERAM:
-		ret = { 748, 962, 25, 25 };
-		break;
-
-	default:
-		LOG("Error UNIT TYPE SDL_Rect NULL (UIManager)");
-		ret = { 0, 0, 0, 0 };
-		break;
-	}
-
-	return ret;
-}
-
-const char * UIHUDPanelInfo::GetUnitName(const UNIT_TYPE type)
-{
-	char* ret;
-
-	switch (type)
-	{
-	case TWOHANDEDSWORDMAN:
-		ret = "Two Handed Sword Man";
-		break;
-
-	case CAVALRYARCHER:
-		ret = "Cavalry Archer";
-		break;
-
-	case SIEGERAM:
-		ret = "Siege Ram";
-		break;
-
-	default:
-		LOG("Error UNIT TYPE NAME NULL (UIManager)");
-		ret = "Error";
-		break;
-	}
-
-	return ret;
 }

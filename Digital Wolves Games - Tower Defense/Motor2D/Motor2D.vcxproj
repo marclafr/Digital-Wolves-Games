@@ -97,6 +97,13 @@
     <ClCompile Include="j1Textures.cpp" />
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
+    <ClCompile Include="UIButton.cpp" />
+    <ClCompile Include="UICheckbutton.cpp" />
+    <ClCompile Include="UIComponents.cpp" />
+    <ClCompile Include="UIHUDPanelButtons.cpp" />
+    <ClCompile Include="UIHUDPanelInfo.cpp" />
+    <ClCompile Include="UILabel.cpp" />
+    <ClCompile Include="UISelectOption.cpp" />
     <ClCompile Include="Units.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -128,6 +135,13 @@
     <ClInclude Include="p2SString.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
+    <ClInclude Include="UIButton.h" />
+    <ClInclude Include="UICheckbutton.h" />
+    <ClInclude Include="UIComponents.h" />
+    <ClInclude Include="UIHUDPanelButtons.h" />
+    <ClInclude Include="UIHUDPanelInfo.h" />
+    <ClInclude Include="UILabel.h" />
+    <ClInclude Include="UISelectOption.h" />
     <ClInclude Include="Units.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

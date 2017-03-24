@@ -67,7 +67,30 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Awsome_Game\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="UILabel.cpp">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UICheckbutton.cpp">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UISelectOption.cpp">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDPanelButtons.cpp">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDPanelInfo.cpp">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponents.cpp">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -157,6 +180,27 @@
     <ClInclude Include="Camera.h">
       <Filter>Awsome_Game\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="UILabel.h">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UICheckbutton.h">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UISelectOption.h">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDPanelButtons.h">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDPanelInfo.h">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponents.h">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
@@ -179,6 +223,9 @@
     </Filter>
     <Filter Include="Awsome_Game\Entities">
       <UniqueIdentifier>{d115a52a-3ab8-46bb-98e5-e070caf52475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\UIComponents">
+      <UniqueIdentifier>{6d1ada9c-c865-4b67-8806-67d059fb87d9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

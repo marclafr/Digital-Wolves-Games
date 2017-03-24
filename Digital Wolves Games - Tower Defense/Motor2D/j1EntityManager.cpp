@@ -2,6 +2,7 @@
 #include "j1EntityManager.h"
 #include "Units.h"
 #include "j1UIManager.h"
+#include "UIHUDPanelInfo.h"
 #include "j1Scene.h"
 
 j1EntityManager::j1EntityManager() : j1Module()
