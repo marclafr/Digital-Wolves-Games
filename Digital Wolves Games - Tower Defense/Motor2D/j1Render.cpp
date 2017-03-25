@@ -201,10 +201,11 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 			pivot.y = pivot_y;
 			p = &pivot;
 		}
-
+	
 		if (not_in_world == false)
 		{
-			rect = App->render->camera->GetZoomedRect(SDL_Rect{ screen_position.x,screen_position.y,rect.w,rect.h });
+			rect = App->render->camera->GetZoomedRect(SDL_Rect{ rect.x,rect.y,rect.w,rect.h });
+			//rect = App->render->camera->GetZoomedRect(SDL_Rect{ screen_position.x,screen_position.y,rect.w,rect.h });
 			SDL_SetTextureAlphaMod(texture, App->render->camera->GetOpacity());
 		}
 
