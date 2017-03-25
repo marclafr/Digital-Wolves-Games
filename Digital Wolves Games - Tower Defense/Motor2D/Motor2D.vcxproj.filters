@@ -91,6 +91,9 @@
     <ClCompile Include="UIButton.cpp">
       <Filter>Awsome_Game\UIComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -200,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="UIComponents.h">
       <Filter>Awsome_Game\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Awsome_Game\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

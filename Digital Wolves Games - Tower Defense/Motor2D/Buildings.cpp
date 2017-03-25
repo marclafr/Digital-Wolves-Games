@@ -24,7 +24,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos) : Entity(BUILDING, pos), bu
 		build_time = 7;
 		rect = {610,1,107,206};
 		SetRect(rect);
-		SetPivot(0.504673, 0.902913);
+		SetPivot(0.53125 * 96, 0.59375 * 64);
 		SetTextureID(T_TURRET);
 		break;
 	default:
@@ -51,7 +51,7 @@ void Building::AI()
 		{
 			if ((*item)->GetEntityType() == UNIT)
 			{
-				if ((*item)->GetX() >= (GetX() - 120) && (*item)->GetX() < (GetX() + 120) && (*item)->GetY() >= (GetY() - 120) && (*item)->GetY() < (GetY() + 120))
+				if ((*item)->GetX() >= (GetX() - 120) && (*item)->GetX() < (GetX() + 120) && (*item)->GetY() >= (GetY() - 120) && (*item)->GetY() < (GetY() + 120) && (*item)->GetHp() > 0)
 				{
 					Target = *item;
 				}
