@@ -120,6 +120,8 @@ public:
 
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
+	fPoint MapToWorldf(int x2, int y) const;
+	fPoint WorldToMapf(int x2, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);
 
 private:

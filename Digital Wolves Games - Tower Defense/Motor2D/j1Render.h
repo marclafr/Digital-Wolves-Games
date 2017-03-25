@@ -39,6 +39,7 @@ public:
 	void SetViewPort(const SDL_Rect& rect);
 	void ResetViewPort();
 	iPoint ScreenToWorld(int x, int y) const;
+	fPoint ScreenToWorldf(int x, int y) const;
 	iPoint WorldToScreen(int x, int y) const;
 
 	// Draw & Blit

@@ -136,6 +136,16 @@ iPoint j1Render::ScreenToWorld(int x, int y) const
 	return ret;
 }
 
+fPoint j1Render::ScreenToWorldf(int x, int y) const
+{
+	fPoint ret;
+	int scale = App->win->GetScale();
+
+	ret.x = float(x - camera->GetPosition().x / scale);
+	ret.y = float(y - camera->GetPosition().y / scale);
+
+	return ret;
+}
 iPoint j1Render::WorldToScreen(int x, int y) const
 {
 	iPoint ret;

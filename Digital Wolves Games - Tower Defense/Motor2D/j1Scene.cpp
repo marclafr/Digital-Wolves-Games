@@ -176,11 +176,11 @@ bool j1Scene::Update(float dt)
 	// Debug pathfinding ------------------------------
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
+	fPoint p = App->render->ScreenToWorldf(x, y);
+	p = App->map->WorldToMapf(p.x, p.y);
+	p = App->map->MapToWorldf(p.x, p.y);
 
-	App->render->Blit(debug_tex, p.x - 32, p.y - 32);
+	App->render->Blit(debug_tex, p.x - 44, p.y - 31);
 
 	const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
 	
