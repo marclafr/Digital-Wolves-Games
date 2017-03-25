@@ -245,9 +245,6 @@ void Unit::Draw()
 
 	App->render->PushEntity(this);
 
-	//selected should change cus after sprite order implementation it gets printed before the acual unit sprite 
-	if (this->GetEntityStatus() == E_SELECTED)
-		App->render->DrawCircle(this->GetX() + App->render->camera->GetPosition().x, this->GetY() + App->render->camera->GetPosition().y, this->unit_radius, 255, 255, 255);
 }
 
 const DIRECTION Unit::GetDir() const
@@ -268,6 +265,11 @@ const UNIT_CLASS Unit::GetUnitClass() const
 const ACTION_TYPE Unit::GetActionType() const
 {
 	return action_type;
+}
+
+const int Unit::GetUnitRadius() const
+{
+	return unit_radius;
 }
 
 int Unit::GetPath(iPoint dest) {

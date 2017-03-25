@@ -90,6 +90,7 @@ public:
 	const UNIT_TYPE GetUnitType() const;
 	const UNIT_CLASS GetUnitClass() const;
 	const ACTION_TYPE GetActionType() const;
+	const int GetUnitRadius() const;
 	int GetPath(iPoint dest);
 	const int GetAttack() const;
 	const int GetRange() const;
