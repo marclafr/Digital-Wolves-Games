@@ -32,13 +32,27 @@ void UISelectOption::Set(const SDL_Rect & position, const SDL_Rect & atlas)
 
 void UISelectOption::Draw()
 {
-	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x,rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x,rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
 
 	if (selecting)
 	{
 		for (uint i = 1; i < num_options + 1; i++)
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, (rect_position.y - App->render->camera->GetPosition().y) + rect_atlas.h * i, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, (rect_position.y - App->render->camera->GetPosition().y) + rect_atlas.h * i, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
 	}
+}
+
+bool UISelectOption::Update()
+{
+	switch (GetStat())
+	{
+	//Expand options from UISelectOption
+	case CLICKL_DOWN:
+		selecting = true;
+		ChangeDrawAllOptions();
+		break;
+	}
+
+	return true;
 }
 
 void UISelectOption::AddOption(const char * text)

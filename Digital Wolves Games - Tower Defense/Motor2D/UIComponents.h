@@ -61,8 +61,11 @@ public:
 
 	virtual void Draw();
 
+	virtual bool Update();
+
 	const bool GetDraw() const;
 	const bool GetInteractive() const;
+	const UICOMPONENT_STAT GetStat() const;
 	const UIComponents* GetFrom()const;
 	const UIComponents* GetThisComponent() const;
 	void SetDraw(bool draw);

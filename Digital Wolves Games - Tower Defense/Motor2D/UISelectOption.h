@@ -25,6 +25,8 @@ public:
 
 	void Draw();
 
+	bool Update();
+
 	void AddOption(const char* text);
 	const char* CheckSelected();
 	void ChangeCurrent(UILabel* change);

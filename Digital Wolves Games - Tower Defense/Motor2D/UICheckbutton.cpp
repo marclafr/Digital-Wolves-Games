@@ -34,8 +34,24 @@ void UICheckbutton::Set(const SDL_Rect & position, const SDL_Rect & atlas, const
 void UICheckbutton::Draw()
 {
 	if (clicked)
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas_clicked, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas_clicked, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
 	else
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
 
+}
+
+bool UICheckbutton::Update()
+{
+	switch (GetStat())
+	{
+	//Check or uncheck for UICheckbutton
+	case CLICKL_DOWN:
+		if (clicked)
+			clicked = false;
+		else
+			clicked = true;
+		break;
+	}
+
+	return true;
 }

@@ -21,6 +21,8 @@ public:
 
 	void Draw();
 
+	bool Update();
+
 	void ChangeText(const char* text);
 };
 

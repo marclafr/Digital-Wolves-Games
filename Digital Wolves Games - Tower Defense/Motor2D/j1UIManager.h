@@ -31,6 +31,9 @@ public:
 	// Called before all Updates
 	bool PreUpdate();
 
+	// Called during all Updates
+	bool Update();
+
 	// Called after all Updates
 	bool PostUpdate();
 

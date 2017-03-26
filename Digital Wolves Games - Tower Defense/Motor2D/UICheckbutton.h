@@ -16,6 +16,7 @@ public:
 	void Set(const SDL_Rect& position, const SDL_Rect& atlas, const SDL_Rect & atlas_clicked);
 
 	void Draw();
+	bool Update();
 };
 
 #endif // __UICHECKBUTTION_H__

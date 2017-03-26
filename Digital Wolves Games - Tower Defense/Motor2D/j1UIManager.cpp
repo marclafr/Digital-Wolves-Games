@@ -76,45 +76,6 @@ bool j1UIManager::PreUpdate()
 					if (component->stat == UICOMPONENT_STAT::SELECTED)
 					{
 						component->stat = UICOMPONENT_STAT::CLICKL_DOWN;
-
-						//Check or uncheck for UICheckbutton
-						if (component->type == UICOMPONENT_TYPE::UICHECKBUTTON)
-						{
-							UICheckbutton* button_checked = (UICheckbutton*)component;
-							if (button_checked->clicked)
-								button_checked->clicked = false;
-							else
-								button_checked->clicked = true;
-						}
-
-						//Expand options from UISelectOption
-						if (component->type == UICOMPONENT_TYPE::UISELECTOPTION)
-						{
-							UISelectOption* select_option = (UISelectOption*)component;
-							select_option->selecting = true;
-							select_option->ChangeDrawAllOptions();
-						}
-
-						//Selecting option from UISelectOption
-						if (component->type == UICOMPONENT_TYPE::UILABEL && (component->GetFrom() != nullptr && component->GetFrom()->type == UICOMPONENT_TYPE::UISELECTOPTION))
-						{
-							UISelectOption* from_option_selected = (UISelectOption*)component->GetFrom();
-							UILabel* option_selected = (UILabel*)component;
-
-							if (option_selected != from_option_selected->current)
-							{
-								from_option_selected->ChangeCurrent(option_selected);
-								from_option_selected->ChangeDrawAllOptions();
-								from_option_selected->selecting = false;
-							}
-						}
-
-						//Click of UIButton
-						if (component->type == UICOMPONENT_TYPE::UIBUTTON)
-						{
-							UIButton* button = (UIButton*)component;
-							button->clicked = true;
-						}
 					}
 					else
 						component->stat = UICOMPONENT_STAT::CLICKL_REPEAT;
@@ -125,13 +86,6 @@ bool j1UIManager::PreUpdate()
 						component->stat = UICOMPONENT_STAT::CLICKL_UP;
 					else
 						component->stat = UICOMPONENT_STAT::SELECTED;
-
-					//UIButton set click to false
-					if (component->type == UICOMPONENT_TYPE::UIBUTTON)
-					{
-						UIButton* button = (UIButton*)component;
-						button->clicked = false;
-					}
 				}
 
 				if (App->input->GetMouseButtonDown(RIGHT_CLICK) == KEY_DOWN)
@@ -155,6 +109,23 @@ bool j1UIManager::PreUpdate()
 		item++;
 	}
 	return true;
+}
+
+bool j1UIManager::Update()
+{
+	bool ret = false;
+
+	std::list<UIComponents*>::iterator item;
+	item = components.begin();
+
+	while (item != components.end())
+	{
+		ret = item._Ptr->_Myval->Update();
+
+		item++;
+	}
+
+	return ret;
 }
 
 

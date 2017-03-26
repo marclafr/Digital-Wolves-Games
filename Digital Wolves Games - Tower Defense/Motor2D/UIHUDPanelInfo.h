@@ -58,6 +58,8 @@ public:
 
 	void Draw();
 
+	bool Update();
+
 	SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type);
 
 	const char* GetUnitName(const UNIT_TYPE type);

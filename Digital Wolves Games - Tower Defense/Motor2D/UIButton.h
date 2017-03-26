@@ -17,6 +17,8 @@ public:
 	void Set(const SDL_Rect& position, const SDL_Rect& atlas);
 
 	void Draw();
+
+	bool Update();
 };
 
 #endif // __UIBUTTON_H__
