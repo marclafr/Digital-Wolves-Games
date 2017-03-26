@@ -47,7 +47,7 @@ public:
 
 	void SetZoom(float percentage); //%
 
-	void ZoomIn(float percentage = 1);//percentage per frame
+	void ZoomIn(float percentage = 1); //percentage per frame
 	void ZoomOut(float percentage = 1);
 
 	SDL_Rect GetZoomedRect(const SDL_Rect &rect) const;

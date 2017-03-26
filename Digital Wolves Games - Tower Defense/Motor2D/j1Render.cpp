@@ -183,20 +183,20 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 
 		if (flip == SDL_FLIP_HORIZONTAL)
 		{
-			rect.x -= (rect.w - pivot_x);
-			rect.y -= pivot_y;
+			screen_position.x -= (rect.w - pivot_x);
+			screen_position.y -= pivot_y;
 		}
 
 		else if (flip == SDL_FLIP_VERTICAL)
 		{
-			rect.x -= pivot_x;
-			rect.y -= (rect.h - pivot_y);
+			screen_position.x -= pivot_x;
+			screen_position.y -= (rect.h - pivot_y);
 		}
 
 		else if (flip == SDL_FLIP_NONE)
 		{
-			rect.x -= pivot_x;
-			rect.y -= pivot_y;
+			screen_position.x -= pivot_x;
+			screen_position.y -= pivot_y;
 		}
 
 		rect.w *= scale;
@@ -214,8 +214,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	
 		if (not_in_world == false)
 		{
-			rect = App->render->camera->GetZoomedRect(SDL_Rect{ rect.x,rect.y,rect.w,rect.h });
-			//rect = App->render->camera->GetZoomedRect(SDL_Rect{ screen_position.x,screen_position.y,rect.w,rect.h });
+			rect = App->render->camera->GetZoomedRect(SDL_Rect{ screen_position.x,screen_position.y,rect.w,rect.h });
 			SDL_SetTextureAlphaMod(texture, App->render->camera->GetOpacity());
 		}
 
