@@ -74,7 +74,7 @@ public:
 	
 	//Animation* DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos);
 
-	bool GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* unit);
+	bool GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, Unit* unit);
 	Animation* GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction) const;
 
 private:

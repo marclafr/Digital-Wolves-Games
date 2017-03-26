@@ -7,9 +7,10 @@
 
 #define XY_TILES_RELATION 2
 
-
+class Animation;
 struct PathList;
 struct PathNode;
+
 enum UNIT_TYPE
 {
 	NO_UNIT = 0,
@@ -74,10 +75,10 @@ private:
 	std::list<iPoint> path_list;
 
 	bool moving = false;
-
 public:
 
 	Unit(UNIT_TYPE u_type, fPoint pos);
+	Animation* anim;
 
 	void Update(); // defines order
 

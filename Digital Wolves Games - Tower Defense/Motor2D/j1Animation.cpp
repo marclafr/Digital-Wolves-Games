@@ -112,7 +112,7 @@ Animation* j1Animation::GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE act
 	return nullptr;
 }
 
-bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* unit)
+bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, Unit* unit)
 {
 	bool ret = false;
 	//direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST
@@ -136,15 +136,15 @@ bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* 
 		break;
 	}
 
-	Animation* anim = App->anim->GetAnimation(unit->GetUnitType(), unit->GetActionType(), direction);
+	unit->anim = App->anim->GetAnimation(unit->GetUnitType(), unit->GetActionType(), direction);
 
 
-	if (anim->Finished() == false)
+	if (unit->anim->Finished() == false)
 	{
-		frame = anim->GetCurrentFrame();
-		pivot = anim->GetCurrentPivotPoint();
+		frame = unit->anim->GetCurrentFrame();
+		pivot = unit->anim->GetCurrentPivotPoint();
 
-		if (anim == NULL)
+		if (unit->anim == NULL)
 		{
 			LOG("ERROR: GetAnimationFrame: animation not found");
 			return NULL;
@@ -152,8 +152,8 @@ bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, const Unit* 
 	}
 	else
 	{
-		anim->anim_timer.Start();
-		anim->RestartAnim();
+		unit->anim->anim_timer.Start();
+		unit->anim->RestartAnim();
 		return true;
 	}
 	return false;

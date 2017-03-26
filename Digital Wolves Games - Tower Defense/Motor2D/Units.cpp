@@ -55,6 +55,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		unit_class = NO_CLASS;
 		break;
 	}
+
+	anim = App->anim->GetAnimation(unit_type, action_type, direction);
 }
 
 void Unit::Update()
@@ -74,21 +76,28 @@ void Unit::Update()
 		temp_dir = SOUTH_WEST;
 		break;
 	}
-	Animation* anim = App->anim->GetAnimation(unit_type, action_type, temp_dir);
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
-		if (GetEntityStatus() == E_SELECTED)
-		{
-			this->action_type = DIE;
 
-			anim->Reset();
-		}
+	anim = App->anim->GetAnimation(unit_type, action_type, temp_dir);
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED)
+	{
+		action_type = DIE;
+		anim = App->anim->GetAnimation(unit_type, action_type, temp_dir);
+		//TODO: Reset works incorrectly: 
+		// It resets the animation, as we have a pointer, it resets the animation of
+		// the rest of the units.
+		anim->Reset();
 	}
 
 	if (anim->Finished() == true && action_type == DIE)
 	{
 		action_type = DISAPPEAR;
+		anim = App->anim->GetAnimation(unit_type, action_type, temp_dir);
 		anim->Reset();
+	}
+
+	if (anim->Finished() == true && action_type == DISAPPEAR)
+	{
+		this->Die();
 	}
 
 	AI();
@@ -142,7 +151,6 @@ void Unit::AI()
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
 		action_type = ATTACK;
-		Animation* anim = nullptr;
 		if (direction == EAST)
 			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
 
@@ -161,7 +169,6 @@ void Unit::AI()
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 	{
 		action_type = IDLE;
-		Animation* anim = nullptr;
 		if (direction == EAST)
 			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
 
@@ -179,7 +186,6 @@ void Unit::AI()
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
 		action_type = WALK;
-		Animation* anim = nullptr;
 		if (direction == EAST)
 			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
 
@@ -197,7 +203,6 @@ void Unit::AI()
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
 		action_type = DISAPPEAR;
-		Animation* anim = nullptr;
 		if (direction == EAST)
 			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
 		
@@ -215,7 +220,6 @@ void Unit::AI()
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
 		action_type = DIE;
-		Animation* anim = nullptr;
 		if (direction == EAST)
 			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
 
