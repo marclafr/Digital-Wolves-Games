@@ -5,8 +5,7 @@ Entity::Entity(ENTITY_TYPE entity_type, fPoint pos): to_delete (false), entity_t
 {}
 
 Entity::~Entity()
-{
-}
+{}
 
 void Entity::Die()
 {

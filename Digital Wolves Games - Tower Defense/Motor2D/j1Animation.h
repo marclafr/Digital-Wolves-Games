@@ -12,14 +12,17 @@
 #include "Units.h"
 
 #define IDLE_ANIMATION_WAIT 2.0f
+#define START_SPEED 100.0f
 
-class Animation
+class Unit;
+
+class AnimationType
 {
 	friend class j1Animation;
 
 public:
-	Animation(std::string name);
-	~Animation();
+	AnimationType(std::string name);
+	~AnimationType();
 
 private:
 	std::string name;
@@ -30,29 +33,56 @@ private:
 	std::vector<SDL_Rect> frames;
 	std::vector<iPoint> pivot_points;
 
-	float current_frame;
+	float speed = 100.0f; //More speed equals slow down the animation
 	bool loop = true;
-	int loops = 0;
-	float speed = 100.0f;	//More speed equals slow down the animation
-	j1Timer	anim_timer;
-	j1Timer	idle_wait_timer;
 
 public:
 	void SetSpeed(float speed);
 	void SetLoopState(bool state);
-	void RestartAnim();
-	
-	bool Finished() const;
-	void Reset();
+
+	const int GetNumFrames() const;
+	const float GetSpeed() const;
+	const bool GetLoopState() const;
+	const SDL_Rect GetFrame(int frame_num) const;
+	const iPoint GetPivot(int frame_num) const;
+	const ACTION_TYPE GetActionType() const;
+	const UNIT_TYPE GetUnitType() const;
+	const DIRECTION GetDirection() const;
 
 private:
 	bool CleanUp();
 	void SetUnit(const pugi::xml_node node);
 	void SetAction(const pugi::xml_node node);
 	void SetDirection(const pugi::xml_node node);
+};
 
-	SDL_Rect GetCurrentFrame();
-	iPoint GetCurrentPivotPoint();
+class Animation
+{
+private:
+	AnimationType* anim_type;
+	float current_frame;
+	j1Timer	anim_timer;
+	j1Timer	idle_wait_timer;
+	float speed; //More speed equals slow down the animation
+	bool loop;
+	bool wait_started;
+	bool finished;
+
+public:
+	Animation();
+	Animation(AnimationType* type); //remember
+	Animation(const Animation& copy);
+	~Animation();
+
+	void ChangeAnimation(AnimationType* type);
+
+	const Animation operator = (const Animation& anim);
+
+	bool Update(SDL_Rect& rect, iPoint& pivot_point);
+
+	bool Finished();
+	void Reset();
+
 };
 
 //------------------------------------------------------------------------//
@@ -71,14 +101,11 @@ public:
 	bool Start();
 
 	bool CleanUp();
-	
-	//Animation* DrawAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, DIRECTION direction, iPoint pos);
 
-	bool GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, Unit* unit);
-	Animation* GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction) const;
+	AnimationType* GetAnimationType(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction) const;
 
 private:
-	std::vector<Animation*> animations;
+	std::vector<AnimationType*> animation_types;
 
 };
 

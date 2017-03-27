@@ -48,7 +48,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 			pugi::xml_node direction_node = action_node.first_child();
 			while (direction_node != NULL)
 			{
-				Animation* new_anim = new Animation(unit_node.name());
+				AnimationType* new_anim = new AnimationType(unit_node.name());
 				pugi::xml_node sprite_node = direction_node.first_child();
 				while (sprite_node != NULL)
 				{
@@ -78,7 +78,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 				{
 					new_anim->loop = false;
 				}
-				animations.push_back(new_anim);
+				animation_types.push_back(new_anim);
 
 				direction_node = direction_node.next_sibling();
 			}
@@ -93,146 +93,190 @@ bool j1Animation::Awake(pugi::xml_node& config)
 
 bool j1Animation::CleanUp()
 {
-	for(int i = 0; i < animations.size(); i++)
+	for(int i = 0; i < animation_types.size(); i++)
 	{
-		animations[i]->CleanUp();
-		delete animations[i];
+		animation_types[i]->CleanUp();
+		delete animation_types[i];
 	}
 
-	animations.clear();
+	animation_types.clear();
 
 	return true;
 }
 
-Animation* j1Animation::GetAnimation(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction) const
+AnimationType* j1Animation::GetAnimationType(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction) const
 {
-	for (int i = 0; i < animations.size(); i++)
-		if (animations[i]->unit_type == unit && animations[i]->action_type == action && animations[i]->direction_type == direction)
-			return animations[i];
+	DIRECTION dir = direction;
+
+	switch (dir)
+	{
+		case NORTH_EAST:
+			dir = NORTH_WEST;
+			break;
+
+		case EAST:
+			dir = WEST;
+			break;
+
+		case SOUTH_EAST:
+			dir = SOUTH_WEST;
+			break;
+
+		default:
+			break;
+	}
+
+	for (int i = 0; i < animation_types.size(); i++)
+		if (animation_types[i]->unit_type == unit && animation_types[i]->action_type == action && animation_types[i]->direction_type == dir)
+			return animation_types[i];
 	return nullptr;
 }
 
-bool j1Animation::GetAnimationFrame(SDL_Rect& frame, iPoint& pivot, Unit* unit)
-{
-	bool ret = false;
-	//direction == NORTH_EAST || direction == EAST || direction == SOUTH_EAST
-	DIRECTION direction = unit->GetDir();
-
-	switch (direction)
-	{
-	case NORTH_EAST:
-		direction = NORTH_WEST;
-		break;
-
-	case EAST:
-		direction = WEST;
-		break;
-
-	case SOUTH_EAST:
-		direction = SOUTH_WEST;
-		break;
-
-	default:
-		break;
-	}
-
-	unit->anim = App->anim->GetAnimation(unit->GetUnitType(), unit->GetActionType(), direction);
-
-
-	if (unit->anim->Finished() == false)
-	{
-		frame = unit->anim->GetCurrentFrame();
-		pivot = unit->anim->GetCurrentPivotPoint();
-
-		if (unit->anim == NULL)
-		{
-			LOG("ERROR: GetAnimationFrame: animation not found");
-			return NULL;
-		}
-	}
-	else
-	{
-		unit->anim->anim_timer.Start();
-		unit->anim->RestartAnim();
-		return true;
-	}
-	return false;
-}
-
-
 //--------------------------------------------------------------------------------------//
 
-Animation::Animation(std::string name): name(name)
+AnimationType::AnimationType(std::string name): name(name)
 {}
 
 // Destructor
-Animation::~Animation()
+AnimationType::~AnimationType()
 {}
 
-void Animation::SetSpeed(float spd)
+void AnimationType::SetSpeed(float spd)
 {
 	speed = spd;
 }
 
-void Animation::SetLoopState(bool state)
+void AnimationType::SetLoopState(bool state)
 {
 	loop = state;
 }
 
-void Animation::RestartAnim()
-{
-	current_frame = 0.0f;
+const int AnimationType::GetNumFrames() const
+{	
+	return (frames.size() - 1);
 }
 
-SDL_Rect Animation::GetCurrentFrame()
+const float AnimationType::GetSpeed() const
 {
-	if (current_frame == -1)
-		return SDL_Rect{0,0,0,0};
+	return speed;
+}
 
-	if (idle_wait_timer.ReadSec() <= IDLE_ANIMATION_WAIT && this->action_type == IDLE)
+const bool AnimationType::GetLoopState() const
+{
+	return loop;
+}
+
+const SDL_Rect AnimationType::GetFrame(int frame_num) const
+{
+	return frames[frame_num];
+}
+
+const iPoint AnimationType::GetPivot(int frame_num) const
+{
+	return pivot_points[frame_num];
+}
+
+const ACTION_TYPE AnimationType::GetActionType() const
+{
+	return action_type;
+}
+
+const UNIT_TYPE AnimationType::GetUnitType() const
+{
+	return unit_type;
+}
+
+const DIRECTION AnimationType::GetDirection() const
+{
+	return direction_type;
+}
+
+Animation::Animation(): anim_type(nullptr), current_frame(0.0f), anim_timer(j1Timer()), idle_wait_timer(j1Timer()), speed(START_SPEED), loop(true), wait_started(false), finished(false)
+{}
+
+Animation::Animation(AnimationType * type): anim_type(type), wait_started(false)
+{
+	loop = type->GetLoopState();
+	speed = type->GetSpeed();
+	anim_timer.Start();
+}
+
+Animation::Animation(const Animation & copy) : anim_type(copy.anim_type), current_frame(copy.current_frame), speed(copy.speed), loop(copy.loop), wait_started(copy.wait_started), finished(copy.finished)
+{
+	anim_timer.SetTicks(copy.anim_timer.Read());
+	idle_wait_timer.SetTicks(copy.idle_wait_timer.Read());
+}
+
+Animation::~Animation()
+{}
+
+void Animation::ChangeAnimation(AnimationType * type)
+{
+	anim_type = type;
+	loop = type->GetLoopState();
+	speed = type->GetSpeed();
+	Reset();
+}
+
+const Animation Animation::operator = (const Animation & anim)
+{
+	anim_type = anim.anim_type;
+	current_frame = anim.current_frame;
+	anim_timer.SetTicks(anim.anim_timer.Read());
+	idle_wait_timer.SetTicks(anim.idle_wait_timer.Read());
+	wait_started = anim.wait_started;
+	speed = anim.speed;
+	loop = anim.loop;
+	finished = anim.finished;
+
+	return *this;
+}
+
+bool Animation::Update(SDL_Rect & rect, iPoint & pivot_point)
+{
+	rect = anim_type->GetFrame(current_frame);
+	pivot_point = anim_type->GetPivot(current_frame);
+
+	if (wait_started == false)
+		current_frame = (float)floor(anim_timer.Read() / speed);
+
+	if (finished == true && loop == true)
 	{
-		return frames[0];
-	}	
+		Reset();
+	}
 
-	if (idle_wait_timer.ReadSec() >= 2.5f)
-		idle_wait_timer.Start();
+	return Finished();
+}
 
-	current_frame = (float) floor(anim_timer.Read() / speed);
-	
-	if (Finished())
+bool Animation::Finished()
+{
+	if (current_frame >= anim_type->GetNumFrames())
 	{
-		if (loop == true)
+		if (anim_type->GetActionType() == IDLE)
 		{
-			anim_timer.Start();
-			current_frame = 0.0f;
-			loops++;
+			if (wait_started == false)
+			{
+				wait_started = true;
+				idle_wait_timer.Start();
+			}
+
+			if (idle_wait_timer.ReadSec() >= IDLE_ANIMATION_WAIT)
+			{
+				finished = true;
+				wait_started = false;
+				return true;
+			}
+		}
+		else if (anim_type->GetActionType() == DIE)
+		{
+			ChangeAnimation(App->anim->GetAnimationType(anim_type->GetUnitType(), DISAPPEAR, anim_type->GetDirection()));
 		}
 		else
 		{
-			current_frame = -1;
-			loops = 0;
-			return SDL_Rect{ 0,0,0,0 };
+			finished = true;
+			return true;
 		}
 	}
-
-	return frames[(int)current_frame];
-}
-
-iPoint Animation::GetCurrentPivotPoint()
-{
-	return pivot_points[(int)current_frame];
-}
-
-bool Animation::Finished() const
-{
-	if (current_frame >= frames.size() - 1)
-	{
-		return true;
-	}
-
-	if (loop == false && current_frame == -1)
-		return true;
-
 	return false;
 }
 
@@ -240,10 +284,11 @@ void Animation::Reset()
 {
 	current_frame = 0.0f;
 	anim_timer.Start();
-	loops = 0;
+	finished = false;
+	wait_started = false;
 }
 
-void Animation::SetUnit(const pugi::xml_node node)
+void AnimationType::SetUnit(const pugi::xml_node node)
 {
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 	if (strcmp(node.name(), "twohandedswordman") == 0)
@@ -262,7 +307,7 @@ void Animation::SetUnit(const pugi::xml_node node)
 	}
 }
 
-void Animation::SetAction(const pugi::xml_node node)
+void AnimationType::SetAction(const pugi::xml_node node)
 {
 	if (strcmp(node.name(), "attack") == 0)
 		action_type = ATTACK;
@@ -286,7 +331,7 @@ void Animation::SetAction(const pugi::xml_node node)
 	}
 }
 
-void Animation::SetDirection(const pugi::xml_node node)
+void AnimationType::SetDirection(const pugi::xml_node node)
 {
 	if (strcmp(node.name(), "north") == 0)
 		direction_type = NORTH;
@@ -311,7 +356,7 @@ void Animation::SetDirection(const pugi::xml_node node)
 
 }
 
-bool Animation::CleanUp()
+bool AnimationType::CleanUp()
 {
 	frames.clear();
 	pivot_points.clear();

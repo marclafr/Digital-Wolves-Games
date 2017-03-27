@@ -73,7 +73,8 @@ private:
 	UNIT_CLASS unit_class;
 	const int GetRandNum(int num);
 	int rand_num;
-
+	Animation* animation;
+	bool changed;
 
 	std::list<iPoint> path_list;
 
@@ -81,13 +82,14 @@ private:
 public:
 
 	Unit(UNIT_TYPE u_type, fPoint pos);
-	Animation* anim;
-
+	~Unit();
+	
 	void Update(); // defines order
 
-	virtual void Move();
-	virtual void AI();
-	virtual void Draw();
+	void Move();
+	void AI();
+	void Draw();
+	void Die();
 	
 
 	const DIRECTION GetDir() const;

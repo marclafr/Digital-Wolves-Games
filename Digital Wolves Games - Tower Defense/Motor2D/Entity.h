@@ -42,7 +42,7 @@ public:
 	virtual void Draw() = 0;
 
 
-	void Die();//to_delete = true
+	virtual void Die();//to_delete = true
 
 
 	//Geters

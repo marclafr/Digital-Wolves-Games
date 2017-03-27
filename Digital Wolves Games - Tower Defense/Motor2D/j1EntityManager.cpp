@@ -92,7 +92,7 @@ void j1EntityManager::DeleteEntity(Entity * ptr)
 	switch (ptr->GetEntityType())
 	{
 		case UNIT:
-			DeleteUnit(ptr);
+			DeleteUnit((Unit*)ptr);
 			break;
 
 		case BUILDING:
@@ -101,8 +101,9 @@ void j1EntityManager::DeleteEntity(Entity * ptr)
 	}
 }
 
-void j1EntityManager::DeleteUnit(Entity * ptr)
+void j1EntityManager::DeleteUnit(Unit * ptr)
 {
+	//take out of queue and delete TODO
 }
 
 void j1EntityManager::DeleteBuilding(Entity * ptr)

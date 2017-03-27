@@ -90,10 +90,10 @@ bool j1Scene::Start()
 
 	//Entity Manager
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 300));
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 350));
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 400));
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(550, 400));
-	App->entity_manager->CreatBuilding(TURRET, fPoint(600,300));
+	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 350));
+	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 400));
+	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(550, 400));
+	//App->entity_manager->CreatBuilding(TURRET, fPoint(600,300));
 
 
 	return true;
@@ -239,51 +239,6 @@ bool j1Scene::PostUpdate()
 	bool ret = true;
 
 	//Unit test
-
-
-
-	//--
-
-
-	//Animation test
-
-	/*App->anim->DrawAnimation(TWOHANDEDSWORDMAN, DIE, WEST, { 150,150 });
-
-	App->anim->DrawAnimation(TWOHANDEDSWORDMAN, WALK, EAST, { 300,150 });
-
-	App->anim->DrawAnimation(TWOHANDEDSWORDMAN, ATTACK, WEST, { 450,150 });
-
-	App->anim->DrawAnimation(TWOHANDEDSWORDMAN, DISAPPEAR, WEST, { 600,150 });
-
-
-	//Archer Cavalry
-	Animation* test = App->anim->DrawAnimation(CAVALRYARCHER, ATTACK, NORTH_EAST, { 150, 450 });
-	test->SetSpeed(50);
-
-	App->anim->DrawAnimation(CAVALRYARCHER, DIE, WEST, { 300, 450 });
-
-	App->anim->DrawAnimation(CAVALRYARCHER, DISAPPEAR, WEST, { 450, 450 });
-
-	App->anim->DrawAnimation(CAVALRYARCHER, IDLE, EAST, { 600, 450 });
-
-	App->anim->DrawAnimation(CAVALRYARCHER, WALK, SOUTH_EAST, { 750, 450 });
-
-
-	//Siege Ram
-
-	App->anim->DrawAnimation(SIEGERAM, WALK, NORTH_WEST, { 150, 600 });
-
-	App->anim->DrawAnimation(SIEGERAM, ATTACK, NORTH_WEST, { 300, 600 });
-
-	App->anim->DrawAnimation(SIEGERAM, DIE, NORTH_WEST, { 450, 600 });
-
-	App->anim->DrawAnimation(SIEGERAM, IDLE, NORTH_WEST, { 600, 600 });
-	App->anim->DrawAnimation(SIEGERAM, ATTACK, NORTH_WEST, { 600, 600 });
-
-	App->anim->DrawAnimation(SIEGERAM, DISAPPEAR, NORTH_WEST, { 750, 600 });
-	*/
-
-	//--
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

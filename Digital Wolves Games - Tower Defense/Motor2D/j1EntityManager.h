@@ -29,7 +29,7 @@ public:
 	void UnselectEverything();
 
 	void DeleteEntity(Entity* ptr); // will call other delete methods
-	void DeleteUnit(Entity* ptr);
+	void DeleteUnit(Unit* ptr);
 	void DeleteBuilding(Entity* ptr);
 	void GetUnitsPath(iPoint destintation);
 	std::vector<Entity*> GetEntityVector();

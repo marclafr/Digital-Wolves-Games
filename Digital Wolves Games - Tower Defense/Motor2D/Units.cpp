@@ -7,10 +7,11 @@
 #include "Units.h"
 #include "p2Log.h"
 #include "j1Pathfinding.h"
+#include "j1EntityManager.h"
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false)
 {
 	switch (u_type)
 	{
@@ -63,44 +64,45 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		break;
 	}
 
-	anim = App->anim->GetAnimation(unit_type, action_type, direction);
+	animation = new Animation(App->anim->GetAnimationType(unit_type, action_type, direction));
+}
+
+Unit::~Unit()
+{
+	if (animation != nullptr)
+		delete animation;
 }
 
 void Unit::Update()
 {
-	DIRECTION temp_dir = direction;
-	switch (temp_dir)
+	if (changed == true)
 	{
-	case NORTH_EAST:
-		temp_dir = NORTH_WEST;
-		break;
-
-	case EAST:
-		temp_dir = WEST;
-		break;
-
-	case SOUTH_EAST:
-		temp_dir = SOUTH_WEST;
-		break;
+		animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
+		changed = false;
 	}
 
-	anim = App->anim->GetAnimation(unit_type, action_type, temp_dir);
+	AI();
+	Move();
+	Draw();
+
+	//THIS DOES NOT BELONG HERE
+	//TODO
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED)
 	{
-		
-		if (GetRandNum(5)==1)
+
+		if (GetRandNum(5) == 1)
 		{
 			App->audio->PlayFx(fx_twohanded_die01);
 		}
-		else if(GetRandNum(5)==2)
+		else if (GetRandNum(5) == 2)
 		{
 			App->audio->PlayFx(fx_twohanded_die02);
 		}
-		else if (GetRandNum(5)==3)
+		else if (GetRandNum(5) == 3)
 		{
 			App->audio->PlayFx(fx_twohanded_die03);
 		}
-		else if (GetRandNum(5)==4)
+		else if (GetRandNum(5) == 4)
 		{
 			App->audio->PlayFx(fx_twohanded_die04);
 		}
@@ -108,32 +110,10 @@ void Unit::Update()
 		{
 			App->audio->PlayFx(fx_twohanded_die05);
 		}
-		
 
 		action_type = DIE;
-		anim = App->anim->GetAnimation(unit_type, action_type, temp_dir);
-		//TODO: Reset works incorrectly: 
-		// It resets the animation, as we have a pointer, it resets the animation of
-		// the rest of the units.
-		anim->Reset();
+		animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
 	}
-
-	if (anim->Finished() == true && action_type == DIE)
-	{
-		
-		action_type = DISAPPEAR;
-		anim = App->anim->GetAnimation(unit_type, action_type, temp_dir);
-		anim->Reset();
-	}
-
-	if (anim->Finished() == true && action_type == DISAPPEAR)
-	{
-		this->Die();
-	}
-
-	AI();
-	Move();
-	Draw();
 }
 
 void Unit::Move()
@@ -141,27 +121,29 @@ void Unit::Move()
 	if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == E_SELECTED)
 	{
 		this->path_list.clear();
+
 		App->input->GetMousePosition(destination.x, destination.y);
 		destination.x -= App->render->camera->GetPosition().x;
 		destination.y -= App->render->camera->GetPosition().y;
+
 		if (this->GetPath({ destination.x, destination.y }) != -1)
 		{
 			path_list.pop_front();
 			GetNextTile();
 			this->action_type = WALK;
+			changed = true;
 			this->moving = true;
 		}
 		else
 		{
 			this->moving = false;
 			this->action_type = IDLE;
+			changed = true;
 		}
 	}
 
 	if (this->moving == true)
 	{
-
-
 		this->SetPosition(GetX() + move_vector.x*speed, GetY() + move_vector.y*speed);
 
 		if (path_objective.DistanceTo(iPoint(GetX(), GetY())) < 3)
@@ -171,8 +153,8 @@ void Unit::Move()
 			{
 				moving = false;
 				this->action_type = IDLE;
+				changed = true;
 			}
-
 		}
 	}
 }
@@ -182,90 +164,35 @@ void Unit::AI()
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
 		action_type = ATTACK;
-		if (direction == EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
-
-		else if (direction == NORTH_EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, NORTH_WEST);
-
-		else if (direction == SOUTH_EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, SOUTH_WEST);
-
-		else
-			anim = App->anim->GetAnimation(unit_type, action_type, direction);
-
-		anim->Reset();
+		changed = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 	{
 		action_type = IDLE;
-		if (direction == EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
-
-		else if (direction == NORTH_EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, NORTH_WEST);
-
-		else if (direction == SOUTH_EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, SOUTH_WEST);
-
-		else
-			anim = App->anim->GetAnimation(unit_type, action_type, direction);
-
-		anim->Reset();
+		changed = true;
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
 		action_type = WALK;
-		if (direction == EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
-
-		else if (direction == NORTH_EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, NORTH_WEST);
-
-		else if (direction == SOUTH_EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, SOUTH_WEST);
-
-		else
-			anim = App->anim->GetAnimation(unit_type, action_type, direction);
-
-		anim->Reset();
+		changed = true;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-	{
-		action_type = DISAPPEAR;
-		if (direction == EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
-		
-		else if (direction == NORTH_EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, NORTH_WEST);
 
-		else if (direction == SOUTH_EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, SOUTH_WEST);
-
-		else
-			anim = App->anim->GetAnimation(unit_type, action_type, direction);
-
-		anim->Reset();
-	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
 		action_type = DIE;
-		if (direction == EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, WEST);
-
-		else if (direction == NORTH_EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, NORTH_WEST);
-
-		else if (direction == SOUTH_EAST)
-			anim = App->anim->GetAnimation(unit_type, action_type, SOUTH_WEST);
-
-		else
-			anim = App->anim->GetAnimation(unit_type, action_type, direction);
-
-		anim->Reset();
+		changed = true;
 	}
 
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	{
+		SetHp(0);
+	}
+
+	if (GetHp() == 0)
+		Die();
 }
 
 void Unit::Draw()
@@ -273,13 +200,26 @@ void Unit::Draw()
 	SDL_Rect rect;
 	iPoint pivot;
 
-	App->anim->GetAnimationFrame(rect, pivot, this);
+	animation->Update(rect, pivot);
 	
 	SetPivot(pivot.x, pivot.y);
 	SetRect(rect);
 
 	App->render->PushEntity(this);
 
+}
+
+void Unit::Die()
+{
+	if (changed == false && action_type != DIE && action_type != DISAPPEAR)
+	{
+		action_type = DIE;
+		changed = true;
+	}
+
+	//if (animation->Finished())
+		//TODO
+		//App->entity_manager->DeleteUnit(this);
 }
 
 const DIRECTION Unit::GetDir() const
@@ -349,28 +289,52 @@ bool Unit::GetNextTile()
 
 
 	if ((0 <= angle &&  angle <= 22.5) || (337.5 <= angle&& angle <= 360))
+	{
 		this->direction = EAST;
+		changed = true;
+	}
 
 	else if (22.5 <= angle &&  angle <= 67.5)
+	{
 		this->direction = NORTH_EAST;
+		changed = true;
+	}
 
 	else if (67.5 <= angle &&  angle <= 112.5)
+	{
 		this->direction = NORTH;
+		changed = true;
+	}
 
 	else if (112.5 <= angle &&  angle <= 157.5)
+	{
 		this->direction = NORTH_WEST;
+		changed = true;
+	}
 
 	else if (157.5 <= angle &&  angle <= 202.5)
+	{
 		this->direction = WEST;
+		changed = true;
+	}
 
 	else if (202.5 <= angle &&  angle <= 247.5)
+	{
 		this->direction = SOUTH_WEST;
+		changed = true;
+	}
 
 	else if (247.5 <= angle &&  angle <= 292.5)
+	{
 		this->direction = SOUTH;
+		changed = true;
+	}
 
 	else if (292.5 <= angle &&  angle <= 337.5)
+	{
 		this->direction = SOUTH_EAST;
+		changed = true;
+	}
 
 	else
 		this->direction = NO_DIRECTION;
