@@ -35,6 +35,9 @@ public:
 
 	virtual void AI();
 	virtual void Draw();
+
+	const BUILDING_TYPE GetBuildingType() const;
+	const int GetRange() const;
 };
 
 #endif

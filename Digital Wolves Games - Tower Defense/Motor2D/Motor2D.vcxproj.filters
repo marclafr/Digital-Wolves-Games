@@ -207,6 +207,9 @@
     <ClInclude Include="Resources.h">
       <Filter>Awsome_Game\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="UIGetEntitiesInfo.h">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">

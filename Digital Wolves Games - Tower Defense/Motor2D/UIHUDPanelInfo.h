@@ -32,12 +32,17 @@ private:
 		UILabel* armor = nullptr;
 		UILabel* range = nullptr;
 
-		Entity* entity_selected = nullptr;
+		Entity* pointer_entity = nullptr;
 
 		~entity_info();
+
+		void PrepareUnitInfo();
+		void PrepareBuildingInfo();
 	};
 
+	std::list<Entity*> selection_tmp;
 	std::list<Entity*> selection;
+	bool unit_selection = false;
 
 	std::list<UIButton*>  entities_btn;
 
@@ -50,19 +55,21 @@ public:
 	~UIHUDPanelInfo();
 
 	void AddEntitySelection(Entity* selected);
+	void DefineSelection();
 	void DeleteSelection();
 
 	void CreatePanel();
 	void DeleteButtons();
+	bool isSelectionTempEmpty();
 	bool isSelectionEmpty();
 
+
 	void Draw();
-
+	void DrawButtonsEntitiesSelected();
+	void DrawUnitSelected();
+	void DrawBuildingSelected();
+	
 	bool Update();
-
-	SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type);
-
-	const char* GetUnitName(const UNIT_TYPE type);
 };
 
 #endif // __UIHUDPANELINFO_H__

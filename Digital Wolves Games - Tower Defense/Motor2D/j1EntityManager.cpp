@@ -73,8 +73,8 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 			App->scene->panel_info->AddEntitySelection(entity_array[i]);
 		}
 	}
-	if(!App->scene->panel_info->isSelectionEmpty())
-		App->scene->panel_info->CreatePanel();
+	if(!App->scene->panel_info->isSelectionTempEmpty())
+		App->scene->panel_info->DefineSelection();
 }
 
 void j1EntityManager::UnselectEverything()

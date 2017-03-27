@@ -108,3 +108,13 @@ void Building::Draw()
 	}
 	App->render->PushEntity(this);
 }
+
+const BUILDING_TYPE Building::GetBuildingType() const
+{
+	return building_type;
+}
+
+const int Building::GetRange() const
+{
+	return range;
+}
