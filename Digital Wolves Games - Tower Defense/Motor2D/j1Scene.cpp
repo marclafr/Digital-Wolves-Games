@@ -40,6 +40,10 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+
+	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg");
+
+
 	if(App->map->Load("Prueba.tmx") == true)
 	{
 		int w, h;
