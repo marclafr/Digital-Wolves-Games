@@ -19,6 +19,7 @@
 #include "j1EntityManager.h"
 #include "j1Scene.h"
 #include "j1App.h"
+#include "j1SceneManager.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -38,6 +39,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new j1Map();
 	uimanager = new j1UIManager();
 	scene = new j1Scene();
+	scene_manager = new j1SceneManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -55,6 +57,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// scene last
 	AddModule(scene);
+
+	AddModule(scene_manager);
 
 	// render last to swap buffer
 	AddModule(render);

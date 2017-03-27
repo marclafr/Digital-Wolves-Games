@@ -21,6 +21,7 @@ class j1Fonts;
 class j1Animation;
 class j1UIManager;
 class j1EntityManager;
+class j1SceneManager;
 
 	//Scenes
 class j1Scene;
@@ -100,6 +101,7 @@ public:
 	j1Animation*		anim = NULL;
 	j1UIManager*		uimanager = NULL;
 	j1EntityManager*    entity_manager = NULL;
+	j1SceneManager*		scene_manager = NULL;
 
 		//Scenes
 	j1Scene*			scene = NULL;

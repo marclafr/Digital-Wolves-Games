@@ -4,11 +4,15 @@
 #include "UIComponents.h"
 #include "UILabel.h"
 
+struct info_button;
+
 class UIButton : public UIComponents
 {
 public:
 	bool clicked = false;
 	UILabel* title;
+
+	info_button* from_if_HUDPB;
 
 public:
 	UIButton(UICOMPONENT_TYPE type);

@@ -4,6 +4,8 @@
 #include "j1UIManager.h"
 #include "Camera.h"
 
+#include "UIHUDPanelButtons.h"
+
 UIButton::UIButton(UICOMPONENT_TYPE type) : UIComponents(type) {}
 
 void UIButton::Set(int pos_x, int pos_y, int pos_w, int pos_h, uint atlas_x, uint atlas_y, uint atlas_w, uint atlas_h)
@@ -50,6 +52,12 @@ bool UIButton::Update()
 	//Click of UIButton
 	case CLICKL_DOWN:
 		clicked = true;
+
+		if (from_if_HUDPB != nullptr)
+		{
+			UIHUDPanelButtons* temp = (UIHUDPanelButtons*)GetFrom();
+			temp->if_active = from_if_HUDPB;
+		}
 		break;
 
 	//UIButton set click to false
