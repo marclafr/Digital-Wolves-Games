@@ -301,14 +301,21 @@ bool UIHUDPanelInfo::Update()
 		case ENTITIESSELECTED:
 			break;
 		case ENTITYINFO:
+			UpdateHP();
 			break;
 		case NONE:
 			break;
 		}
 	}
 
-
 	return true;
+}
+
+void UIHUDPanelInfo::UpdateHP()
+{
+	std::string hp = std::to_string(entity_selected->pointer_entity->GetHp());
+	if (!entity_selected->life->text.compare(hp))
+		entity_selected->life->ChangeText(hp.c_str());
 }
 
 UIHUDPanelInfo::entity_info::~entity_info()

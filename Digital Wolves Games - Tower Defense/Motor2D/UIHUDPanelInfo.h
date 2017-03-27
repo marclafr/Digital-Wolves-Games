@@ -63,13 +63,14 @@ public:
 	bool isSelectionTempEmpty();
 	bool isSelectionEmpty();
 
-
 	void Draw();
 	void DrawButtonsEntitiesSelected();
 	void DrawUnitSelected();
 	void DrawBuildingSelected();
 	
 	bool Update();
+
+	void UpdateHP();
 };
 
 #endif // __UIHUDPANELINFO_H__
