@@ -5,6 +5,8 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1EntityManager.h"
+#include "j1Render.h"
+#include "j1Map.h"
 #include "j1UIManager.h"
 
 #include "SDL\include\SDL_rect.h"
@@ -63,29 +65,28 @@ info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atl
 
 void UIHUDPanelButtons::CreateEntity()
 {
-	int x;
-	int y;
-
-	App->input->GetMousePosition(x, y);
-
 	if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_DOWN)
 	{
+		int x;
+		int y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+
+		iPoint r = App->map->WorldToMap(p.x, p.y);
+		iPoint s = App->map->MapToWorld(r.x, r.y);
 
 		switch (if_active->e_type)
 		{
 			case ENTITY_TYPE::UNIT:
-			App->entity_manager->CreateUnit(if_active->u_type, fPoint((float)x, (float)y));
+			App->entity_manager->CreateUnit(if_active->u_type, fPoint(s.x, s.y - 9));
 			break;
 
 			case ENTITY_TYPE::BUILDING:
-			App->entity_manager->CreatBuilding(if_active->b_type, fPoint((float)x, (float)y));
+				App->entity_manager->CreatBuilding(if_active->b_type, fPoint(s.x, s.y - 9));
 			break;
 		}
 		if_active = nullptr;
 	}
-		
-
-
 }
 
 void info_button::SetUnit(UNIT_TYPE type)
