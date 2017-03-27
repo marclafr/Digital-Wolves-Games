@@ -30,7 +30,7 @@ void UILabel::Set(int pos_x, int pos_y, const char * text, _TTF_Font*  font)
 
 void UILabel::Draw()
 {
-	App->render->Blit(text_img, rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+	App->render->Blit(text_img, rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 }
 
 bool UILabel::Update()
