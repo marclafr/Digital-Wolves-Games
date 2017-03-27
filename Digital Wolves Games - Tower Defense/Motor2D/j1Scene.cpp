@@ -113,7 +113,9 @@ bool j1Scene::PreUpdate()
 	iPoint p = App->render->ScreenToWorld(x, y);
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		App->entity_manager->CreatBuilding(TURRET, fPoint(p.x, p.y));
+		iPoint r = App->map->WorldToMap(p.x, p.y);
+		iPoint s = App->map->MapToWorld(r.x, r.y);
+		App->entity_manager->CreatBuilding(TURRET, fPoint(s.x, s.y - 9));
 
 	}
 	p = App->map->WorldToMap(p.x, p.y);
