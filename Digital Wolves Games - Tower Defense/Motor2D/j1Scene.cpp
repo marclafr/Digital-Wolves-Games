@@ -80,9 +80,11 @@ bool j1Scene::Start()
 	description->Set({1316, 653, 19, 17}, {1347, 1163, 19, 17});
 
 	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
+	info_button* panel_btns = nullptr;
 	panel->AddButton(2, 1, 800, 884);
 	panel->AddButton(4, 1, 826, 884);
-	panel->AddButton(0, 0, 878, 910);
+	panel_btns = panel->AddButton(0, 0, 878, 910);
+	panel_btns->SetBuilding(TURRET);
 	panel->AddButton(1, 0, 748, 936);
 	panel->AddButton(4, 2, 904, 884);
 

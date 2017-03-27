@@ -52,7 +52,8 @@ bool j1UIManager::Start()
 
 bool j1UIManager::PreUpdate()
 {
-	
+	bool ret = false;
+
 	int x_mouse = 0;
 	int y_mouse = 0;
 
@@ -108,14 +109,7 @@ bool j1UIManager::PreUpdate()
 		}
 		item++;
 	}
-	return true;
-}
 
-bool j1UIManager::Update()
-{
-	bool ret = false;
-
-	std::list<UIComponents*>::iterator item;
 	item = components.begin();
 
 	while (item != components.end())
