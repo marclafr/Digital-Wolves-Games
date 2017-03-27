@@ -71,6 +71,9 @@ private:
 	float angle;
 	bool GetNextTile();
 	UNIT_CLASS unit_class;
+	const int GetRandNum(int num);
+	int rand_num;
+
 
 	std::list<iPoint> path_list;
 
@@ -95,6 +98,14 @@ public:
 	int GetPath(iPoint dest);
 	const int GetAttack() const;
 	const int GetRange() const;
+
+	//FX
+	unsigned int fx_twohanded_die01;
+	unsigned int fx_twohanded_die02;
+	unsigned int fx_twohanded_die03;
+	unsigned int fx_twohanded_die04;
+	unsigned int fx_twohanded_die05;
+	
 };
 
 #endif

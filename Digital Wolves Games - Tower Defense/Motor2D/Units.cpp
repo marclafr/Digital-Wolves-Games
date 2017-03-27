@@ -8,6 +8,7 @@
 #include "p2Log.h"
 #include "j1Pathfinding.h"
 #include "j1Map.h"
+#include "j1Audio.h"
 
 Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE)
 {
@@ -24,6 +25,12 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), 
 		unit_class = INFANTRY;
 		unit_radius = 6;
 		SetTextureID(T_TWOHANDEDSWORDMAN);
+		fx_twohanded_die01 = App->audio->LoadFx("audio/fx/Male_Death01.wav");
+		fx_twohanded_die02 = App->audio->LoadFx("audio/fx/Male_Death02.wav");
+		fx_twohanded_die03 = App->audio->LoadFx("audio/fx/Male_Death03.wav");
+		fx_twohanded_die04 = App->audio->LoadFx("audio/fx/Male_Death04.wav");
+		fx_twohanded_die05 = App->audio->LoadFx("audio/fx/Male_Death05.wav");
+
 		break;
 
 	case CAVALRYARCHER:
@@ -80,6 +87,29 @@ void Unit::Update()
 	anim = App->anim->GetAnimation(unit_type, action_type, temp_dir);
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED)
 	{
+		
+		if (GetRandNum(5)==1)
+		{
+			App->audio->PlayFx(fx_twohanded_die01);
+		}
+		else if(GetRandNum(5)==2)
+		{
+			App->audio->PlayFx(fx_twohanded_die02);
+		}
+		else if (GetRandNum(5)==3)
+		{
+			App->audio->PlayFx(fx_twohanded_die03);
+		}
+		else if (GetRandNum(5)==4)
+		{
+			App->audio->PlayFx(fx_twohanded_die04);
+		}
+		else if (GetRandNum(5) == 5)
+		{
+			App->audio->PlayFx(fx_twohanded_die05);
+		}
+		
+
 		action_type = DIE;
 		anim = App->anim->GetAnimation(unit_type, action_type, temp_dir);
 		//TODO: Reset works incorrectly: 
@@ -90,6 +120,7 @@ void Unit::Update()
 
 	if (anim->Finished() == true && action_type == DIE)
 	{
+		
 		action_type = DISAPPEAR;
 		anim = App->anim->GetAnimation(unit_type, action_type, temp_dir);
 		anim->Reset();
@@ -345,4 +376,12 @@ bool Unit::GetNextTile()
 		this->direction = NO_DIRECTION;
 
 	return ret;
+}
+
+
+const int Unit::GetRandNum(int num)
+{
+	rand_num = rand() % num;
+	rand_num++;
+	return rand_num;
 }
