@@ -8,6 +8,7 @@
 
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
+enum Side;
 struct info_button;
 
 class UIHUDDescription : public UIComponents
@@ -23,6 +24,8 @@ public:
 	UNIT_TYPE unit_desc;
 
 	BUILDING_TYPE build_desc;
+
+	Side side_desc;
 
 	info_button* selected = nullptr;
 

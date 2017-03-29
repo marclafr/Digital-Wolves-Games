@@ -19,6 +19,7 @@
 #include "UIHUDPanelButtons.h"
 #include "UIHUDDescription.h"
 #include "UICheckbutton.h"
+#include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -79,16 +80,17 @@ bool j1Scene::Start()
 	down_hud->SetInteractive(false);
 
 	btn_description = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UICHECKBUTTON);
+	btn_description->clicked = true;
 	btn_description->Set({1316, 653, 19, 17}, {1347, 1163, 19, 17}, { 1347, 1163, 19, 17 });
 
 	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
 	info_button* panel_btns = nullptr;
-	panel->AddButton(2, 1, 800, 884);
-	panel->AddButton(4, 1, 826, 884);
 	panel_btns = panel->AddButton(0, 0, 878, 910);
 	panel_btns->SetBuilding(TURRET);
-	panel->AddButton(1, 0, 748, 936);
-	panel->AddButton(4, 2, 904, 884);
+	panel_btns = panel->AddButton(2, 0, 774, 962);
+	panel_btns->SetUnit(TWOHANDEDSWORDMAN, ALLY);
+	panel_btns = panel->AddButton(2, 1, 774, 962);
+	panel_btns->SetUnit(TWOHANDEDSWORDMAN, ENEMY);
 
 	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
 

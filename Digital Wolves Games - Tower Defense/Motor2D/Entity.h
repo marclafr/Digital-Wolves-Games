@@ -16,7 +16,8 @@ enum ENTITY_TYPE
 enum Side
 {
 	ALLY,
-	ENEMY
+	ENEMY,
+	NO_SIDE
 };
 
 enum ENTITY_STATUS

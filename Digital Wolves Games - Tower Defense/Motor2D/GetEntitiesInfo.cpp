@@ -92,6 +92,27 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	return ret;
 }
 
+const char* GetSideName(const Side type)
+{
+	char* ret;
+
+	switch (type)
+	{
+	case ALLY:
+		ret = "Ally";
+		break;
+	case ENEMY:
+		ret = "Enemy";
+		break;
+	default:
+		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
+		ret = "Error";
+		break;
+	}
+
+	return ret;
+}
+
 const uint GetBuildingPercentage(const Entity * build)
 {
 	Building* building = (Building*)build;
