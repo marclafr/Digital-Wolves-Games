@@ -64,6 +64,9 @@ void UIHUDPanelInfo::DefineSelection()
 	else
 		selection = selection_tmp;
 
+	if (selection.size() > 25)
+		selection.resize(25);
+
 	selection_tmp.clear();
 
 	CreatePanel();
@@ -422,7 +425,6 @@ void UIHUDPanelInfo::entity_info::PrepareBuildingInfo()
 		range = new UILabel(UICOMPONENT_TYPE::UILABEL);
 		range->Set(272, 710, stats.c_str());
 	}
-
 }
 
 void UIHUDPanelInfo::entity_info::PrepareBuildingConstruction()
