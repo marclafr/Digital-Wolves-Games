@@ -77,7 +77,7 @@ void Building::AI()
 		}
 		if (AttackTimer.ReadMs() > 900)
 		{
-			if (Target != nullptr && Target->GetHp() > 0)
+			if (Target != nullptr && Target->GetSide() != ALLY && Target->GetHp() > 0)
 			{
 				if (Target->GetX() >= (GetX() - 120) && Target->GetX() < (GetX() + 120) && Target->GetY() >= (GetY() - 120) && Target->GetY() < (GetY() + 120))
 				{

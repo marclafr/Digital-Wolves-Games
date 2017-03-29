@@ -7,6 +7,7 @@
 enum ENTITY_TYPE;
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
+enum Side;
 
 struct info_button
 {
@@ -20,7 +21,9 @@ struct info_button
 
 	UNIT_TYPE u_type;
 
-	void SetUnit(UNIT_TYPE type);
+	Side s_type;
+
+	void SetUnit(UNIT_TYPE type, Side side);
 	void SetBuilding(BUILDING_TYPE type);
 };
 

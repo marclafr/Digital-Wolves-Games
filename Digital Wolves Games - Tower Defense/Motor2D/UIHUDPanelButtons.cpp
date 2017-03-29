@@ -7,6 +7,7 @@
 #include "j1EntityManager.h"
 #include "j1Render.h"
 #include "j1Map.h"
+#include "j1Pathfinding.h"
 #include "j1UIManager.h"
 
 #include "SDL\include\SDL_rect.h"
@@ -77,22 +78,25 @@ void UIHUDPanelButtons::CreateEntity()
 
 		switch (if_active->e_type)
 		{
-			case ENTITY_TYPE::UNIT:
-			App->entity_manager->CreateUnit(if_active->u_type, fPoint(s.x, s.y - 9), ALLY);
+		case ENTITY_TYPE::UNIT:
+				if (App->pathfinding->IsWalkable(r) == true)
+					App->entity_manager->CreateUnit(if_active->u_type, fPoint(s.x, s.y - 9), if_active->s_type);
 			break;
 
 			case ENTITY_TYPE::BUILDING:
-				App->entity_manager->CreatBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
+				if (App->pathfinding->IsWalkable(r) == true)
+					App->entity_manager->CreatBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
 			break;
 		}
 		if_active = nullptr;
 	}
 }
 
-void info_button::SetUnit(UNIT_TYPE type)
+void info_button::SetUnit(UNIT_TYPE type, Side side)
 {
 	u_type = type;
 	e_type = ENTITY_TYPE::UNIT;
+	s_type = side;
 }
 
 void info_button::SetBuilding(BUILDING_TYPE type)

@@ -64,11 +64,13 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 		{
 		case UNIT:
 			unit_desc = if_btn->u_type;
+			side_desc = if_btn->s_type;
 			SetLabelUnit();
 			break;
 
 		case BUILDING:
 			build_desc = if_btn->b_type;
+			side_desc = if_btn->s_type;
 			SetLabelBuilding();
 			break;
 		}
@@ -79,14 +81,20 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 
 void UIHUDDescription::SetLabelUnit()
 {
-	description->ChangeText(GetUnitName(unit_desc));
+	std::string tmp(GetUnitName(unit_desc));
+	tmp += ": ";
+	tmp += GetSideName(side_desc);
+	description->ChangeText(tmp.c_str());
 	background->SetDraw(true);
 	description->SetDraw(true);
 }
 
 void UIHUDDescription::SetLabelBuilding()
 {
-	description->ChangeText(GetBuildingName(build_desc));
+	std::string tmp(GetBuildingName(build_desc));
+	tmp += ": ";
+	tmp += GetSideName(side_desc);
+	description->ChangeText(tmp.c_str());
 	background->SetDraw(true);
 	description->SetDraw(true);
 }
@@ -95,6 +103,7 @@ void UIHUDDescription::Clear()
 {
 	unit_desc = UNIT_TYPE::NO_UNIT;
 	build_desc = BUILDING_TYPE::NO_BUILDING;
+	side_desc = Side::NO_SIDE;
 	background->SetDraw(false);
 	description->SetDraw(false);
 	selected = nullptr;
