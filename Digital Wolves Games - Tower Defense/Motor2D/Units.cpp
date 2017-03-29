@@ -179,7 +179,7 @@ void Unit::AI()
 		if (animation->Finished())
 			attacking->Damaged(attack);
 
-		if (attacking == nullptr)
+		if (attacking->GetHp() <= 0)
 		{
 			fighting = false;
 
@@ -253,9 +253,9 @@ void Unit::Die()
 		changed = true;
 	}
 
-	//if (animation->Finished())
+	if (animation->Finished())
 		//TODO
-		//App->entity_manager->DeleteUnit(this);
+		App->entity_manager->DeleteUnit(this);
 }
 
 const DIRECTION Unit::GetDir() const
@@ -297,6 +297,11 @@ const int Unit::GetAttack() const
 const int Unit::GetRange() const
 {
 	return range;
+}
+
+const bool Unit::IsMoving() const
+{
+	return moving;
 }
 
 void Unit::LookAt(iPoint pos)

@@ -105,6 +105,10 @@ void j1EntityManager::DeleteEntity(Entity * ptr)
 void j1EntityManager::DeleteUnit(Unit * ptr)
 {
 	//take out of queue and delete TODO
+	//TODO
+	/*for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end(); i++)
+		if (*i == ptr)
+			entity_array.erase(i);*/
 }
 
 void j1EntityManager::DeleteBuilding(Entity * ptr)

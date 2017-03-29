@@ -17,6 +17,8 @@
 #include "UIButton.h"
 #include "UILabel.h"
 #include "UIHUDPanelButtons.h"
+#include "UIHUDDescription.h"
+#include "UICheckbutton.h"
 #include "j1UIManager.h"
 
 j1Scene::j1Scene() : j1Module()
@@ -76,8 +78,8 @@ bool j1Scene::Start()
 	down_hud->Set({0, 643, 1366, 125}, {0, 1036, 1366, 125});
 	down_hud->SetInteractive(false);
 
-	description = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	description->Set({1316, 653, 19, 17}, {1347, 1163, 19, 17});
+	btn_description = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UICHECKBUTTON);
+	btn_description->Set({1316, 653, 19, 17}, {1347, 1163, 19, 17}, { 1347, 1163, 19, 17 });
 
 	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
 	info_button* panel_btns = nullptr;
@@ -89,6 +91,9 @@ bool j1Scene::Start()
 	panel->AddButton(4, 2, 904, 884);
 
 	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
+
+	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
+	hud_description->SetEnableButton(btn_description);
 
 	//Entity Manager
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 300), ENEMY);

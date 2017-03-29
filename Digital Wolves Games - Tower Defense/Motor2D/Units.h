@@ -102,11 +102,13 @@ public:
 	int GetPath(iPoint dest);
 	const int GetAttack() const;
 	const int GetRange() const;
-	const int GetPriority() const;
 	const bool IsMoving() const;
+
+	const int GetPriority() const;
 	void PopFirstPath();
 	void SetAction(const ACTION_TYPE action);
 	void SetIsMoving(bool mov);
+
 	//TODO:this should be private?
 	bool GetNextTile();
 

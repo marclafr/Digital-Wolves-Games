@@ -1,8 +1,8 @@
-#include "j1Collision.h"
 #include "j1App.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "j1Map.h"
+#include "j1Collision.h"
 
 j1Collision::j1Collision()
 {
@@ -39,12 +39,12 @@ bool j1Collision::Update(float dt)
 						{
 							//Collision detected
 							Unit* unit_2 = (Unit*)unit2[j];
-							if (unit_1->GetPriority() >= unit_2->GetPriority() && unit_1->IsMoving() == false)
+							//TODO
+							/*if (unit_1->GetPriority() >= unit_2->GetPriority() && unit_1->IsMoving() == false)
 							{
 								SplitUnits((Unit*)unit1[i]);
-							}
+							}*/
 						}
-						//--
 					}
 				}
 			}
@@ -146,9 +146,10 @@ iPoint j1Collision::FindClosestWalkable(Unit* unit)
 
 void j1Collision::SplitUnits(Unit * unit1)
 {
-	unit1->GetPath(FindClosestWalkable(unit1));
+	//TODO
+	/*unit1->GetPath(FindClosestWalkable(unit1));
 	unit1->PopFirstPath();
 	unit1->GetNextTile();
 	unit1->SetAction(WALK);
-	unit1->SetIsMoving(true);
+	unit1->SetIsMoving(true);*/
 }
