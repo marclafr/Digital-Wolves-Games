@@ -4,6 +4,7 @@
 #include "j1UIManager.h"
 #include "UIHUDPanelInfo.h"
 #include "j1Scene.h"
+#include "j1Map.h"
 
 j1EntityManager::j1EntityManager() : j1Module()
 {
@@ -159,4 +160,21 @@ void j1EntityManager::GetUnitsPath(iPoint destination)
 std::vector<Entity*> j1EntityManager::GetEntityVector()
 {
 	return entity_array;
+}
+
+bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
+{
+	for (int i = 0; i < entity_array.size(); i++)
+	{
+		if (entity_array[i]->GetEntityType() == UNIT)
+		{
+			if (entity_array[i] != unit)
+			{
+				if (tile == App->map->WorldToMap(entity_array[i]->GetX(), entity_array[i]->GetY()))
+					return true;
+			}
+		}
+	}
+
+	return false;
 }

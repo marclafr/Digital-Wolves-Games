@@ -33,6 +33,9 @@ public:
 	void DeleteBuilding(Entity* ptr);
 	void GetUnitsPath(iPoint destintation);
 	std::vector<Entity*> GetEntityVector();
+
+	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;
+
 private:
 
 	//Textura provisional para sprites por si no se cargan en animation

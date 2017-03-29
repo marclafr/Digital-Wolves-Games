@@ -80,6 +80,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GetEntitiesInfo.cpp" />
     <ClCompile Include="j1Animation.cpp" />
+    <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
     <ClCompile Include="j1SceneManager.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="j1Animation.h" />
+    <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1FileSystem.h" />
     <ClInclude Include="j1Fonts.h" />
     <ClInclude Include="j1SceneManager.h" />

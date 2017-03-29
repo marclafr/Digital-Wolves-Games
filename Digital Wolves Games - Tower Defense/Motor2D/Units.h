@@ -69,7 +69,6 @@ private:
 	iPoint path_objective;
 	fPoint move_vector;
 	float angle;
-	bool GetNextTile();
 	UNIT_CLASS unit_class;
 	const int GetRandNum(int num);
 	int rand_num;
@@ -77,8 +76,9 @@ private:
 	bool changed;
 
 	std::list<iPoint> path_list;
-
 	bool moving = false;
+
+	int priority = 0;
 public:
 
 	Unit(UNIT_TYPE u_type, fPoint pos);
@@ -100,6 +100,14 @@ public:
 	int GetPath(iPoint dest);
 	const int GetAttack() const;
 	const int GetRange() const;
+	const int GetPriority() const;
+	const bool IsMoving() const;
+	void PopFirstPath();
+	void SetAction(const ACTION_TYPE action);
+	void SetIsMoving(bool mov);
+	//TODO:this should be private?
+	bool GetNextTile();
+
 
 	//FX
 	unsigned int fx_twohanded_die01;

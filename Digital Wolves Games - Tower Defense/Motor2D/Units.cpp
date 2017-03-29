@@ -11,7 +11,7 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), priority(1)
 {
 	switch (u_type)
 	{
@@ -261,6 +261,31 @@ const int Unit::GetAttack() const
 const int Unit::GetRange() const
 {
 	return range;
+}
+
+const int Unit::GetPriority() const
+{
+	return priority;
+}
+
+const bool Unit::IsMoving() const
+{
+	return moving;
+}
+
+void Unit::PopFirstPath()
+{
+	path_list.pop_front();
+}
+
+void Unit::SetAction(const ACTION_TYPE action)
+{
+	action_type = action;
+}
+
+void Unit::SetIsMoving(bool mov)
+{
+	moving = mov;
 }
 
 bool Unit::GetNextTile()
