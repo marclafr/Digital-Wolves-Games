@@ -91,3 +91,57 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 
 	return ret;
 }
+
+const uint GetBuildingPercentage(const Entity * build)
+{
+	Building* building = (Building*)build;
+
+	double actual_build_time = building->GetBuildTime();
+
+	double time_build = GetBuildTotalTime(building->GetBuildingType());
+
+	if (actual_build_time > time_build)
+		return 100;
+
+	return actual_build_time*100/time_build;
+}
+
+const double GetBuildTotalTime(const BUILDING_TYPE type)
+{
+	double ret;
+
+	switch (type)
+	{
+	case TURRET:
+		ret = TURRET_BUILD;
+		break;
+
+	default:
+		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
+		ret = 0;
+		break;
+	}
+
+	return ret;
+}
+
+const bool isBuilded(const Entity * build)
+{
+	Building* building = (Building*)build;
+
+	double actual_build_time = building->GetBuildTime();
+
+	double time_build = building->GetBuildingType();
+
+	if (actual_build_time > time_build)
+		return true;
+
+	return false;
+}
+
+SDL_Rect GetAtlasBarBuilding(const uint percentage)
+{
+	SDL_Rect test = { 0,0,0,0 };
+
+	return test;
+}

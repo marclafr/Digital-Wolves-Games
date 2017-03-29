@@ -39,6 +39,7 @@ public:
 
 	const BUILDING_TYPE GetBuildingType() const;
 	const int GetRange() const;
+	const double GetBuildTime() const;
 };
 
 #endif

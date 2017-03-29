@@ -287,6 +287,36 @@ void UIHUDPanelInfo::DrawBuildingSelected()
 		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 231 - App->render->camera->GetPosition().x, 711 - App->render->camera->GetPosition().y, &mark_range, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 	}
+
+	if (entity_selected->build)
+	{
+		uint percentage = GetBuildingPercentage(entity_selected->pointer_entity);
+		if (percentage < 100)
+		{
+			entity_selected->UpdateBuildingPercentageStr();
+			entity_label = entity_selected->building_percentage;
+			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+			entity_label = entity_selected->name;
+			App->render->Blit(entity_label->text_img, 400 - App->render->camera->GetPosition().x, 716 - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+			//Icon
+			SDL_Rect mark_icon{ 339, 1162, 40, 40 };
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 356 - App->render->camera->GetPosition().x, 701 - App->render->camera->GetPosition().y, &mark_icon, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+			//Progress bar
+			SDL_Rect mark_clear_bar{ 330, 1203, 100, 12 };
+			SDL_Rect mark_last_bar{ 403, 1216, 1, 12 };
+			SDL_Rect mark_full_bar{ 298, 1216, 2 + (int)percentage, 12 };
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 400 - App->render->camera->GetPosition().x, 729 - App->render->camera->GetPosition().y, &mark_clear_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 399 - App->render->camera->GetPosition().x, 729 - App->render->camera->GetPosition().y, &mark_full_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			if (percentage < 98)
+				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 401 + (int)percentage - App->render->camera->GetPosition().x, 729 - App->render->camera->GetPosition().y, &mark_last_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		}
+		else
+			entity_selected->build = false;
+			
+	}
 }
 
 bool UIHUDPanelInfo::Update()
@@ -299,6 +329,13 @@ bool UIHUDPanelInfo::Update()
 			break;
 		case ENTITYINFO:
 			UpdateHP();
+
+			if (entity_selected->pointer_entity->GetEntityType() == BUILDING)
+				if (entity_selected->build == false && isBuilded(entity_selected->pointer_entity))
+				{
+					entity_selected->build = true;
+					entity_selected->PrepareBuildingConstruction();
+				}
 			break;
 		case NONE:
 			break;
@@ -323,6 +360,12 @@ UIHUDPanelInfo::entity_info::~entity_info()
 	delete damage;
 	delete armor;
 	delete range;
+
+	if (build)
+	{
+		delete building_percentage;
+		build = false;
+	}
 }
 
 void UIHUDPanelInfo::entity_info::PrepareUnitInfo()
@@ -380,4 +423,25 @@ void UIHUDPanelInfo::entity_info::PrepareBuildingInfo()
 		range->Set(272, 710, stats.c_str());
 	}
 
+}
+
+void UIHUDPanelInfo::entity_info::PrepareBuildingConstruction()
+{
+	building_percentage = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	uint percentage = GetBuildingPercentage(pointer_entity);
+	std::string str_percentage("Constructing - ");
+	str_percentage += std::to_string(percentage);
+	str_percentage += "%";
+	building_percentage->Set(400,703, str_percentage.c_str());
+	building_percentage->SetInteractive(false);
+}
+
+void UIHUDPanelInfo::entity_info::UpdateBuildingPercentageStr()
+{
+	uint percentage = GetBuildingPercentage(pointer_entity);
+	std::string str_percentage("Constructing - ");
+	str_percentage += std::to_string(percentage);
+	str_percentage += "%";
+
+	building_percentage->ChangeText(str_percentage.c_str());
 }

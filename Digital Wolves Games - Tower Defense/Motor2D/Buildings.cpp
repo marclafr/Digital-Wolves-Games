@@ -133,3 +133,8 @@ const int Building::GetRange() const
 {
 	return range;
 }
+
+const double Building::GetBuildTime() const
+{
+	return buildtimer.ReadMs();
+}
