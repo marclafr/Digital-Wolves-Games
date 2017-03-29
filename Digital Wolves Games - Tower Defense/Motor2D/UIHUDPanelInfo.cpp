@@ -311,7 +311,7 @@ bool UIHUDPanelInfo::Update()
 void UIHUDPanelInfo::UpdateHP()
 {
 	std::string hp = std::to_string(entity_selected->pointer_entity->GetHp());
-	if (!entity_selected->life->text.compare(hp))
+	if (entity_selected->life->text.compare(hp))
 		entity_selected->life->ChangeText(hp.c_str());
 }
 
