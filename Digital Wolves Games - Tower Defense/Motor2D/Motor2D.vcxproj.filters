@@ -97,6 +97,9 @@
     <ClCompile Include="j1SceneManager.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="GetEntitiesInfo.cpp">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">

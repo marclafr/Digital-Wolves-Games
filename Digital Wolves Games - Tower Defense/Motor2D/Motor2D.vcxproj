@@ -78,6 +78,7 @@
     <ClCompile Include="Buildings.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GetEntitiesInfo.cpp" />
     <ClCompile Include="j1Animation.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />

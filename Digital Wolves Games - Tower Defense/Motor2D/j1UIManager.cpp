@@ -83,10 +83,8 @@ bool j1UIManager::PreUpdate()
 				}
 				else if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_UP)
 				{
-					if (component->stat == UICOMPONENT_STAT::CLICKL_REPEAT || component->stat == UICOMPONENT_STAT::CLICKL_DOWN)
+					if (component->stat == UICOMPONENT_STAT::SELECTED)
 						component->stat = UICOMPONENT_STAT::CLICKL_UP;
-					else
-						component->stat = UICOMPONENT_STAT::SELECTED;
 				}
 
 				if (App->input->GetMouseButtonDown(RIGHT_CLICK) == KEY_DOWN)
@@ -98,10 +96,8 @@ bool j1UIManager::PreUpdate()
 				}
 				else if (App->input->GetMouseButtonDown(RIGHT_CLICK) == KEY_UP)
 				{
-					if (component->stat == UICOMPONENT_STAT::CLICKR_REPEAT || component->stat == UICOMPONENT_STAT::CLICKR_DOWN)
+					if (component->stat = UICOMPONENT_STAT::SELECTED)
 						component->stat = UICOMPONENT_STAT::CLICKR_UP;
-					else
-						component->stat = UICOMPONENT_STAT::SELECTED;
 				}
 			}
 			else
