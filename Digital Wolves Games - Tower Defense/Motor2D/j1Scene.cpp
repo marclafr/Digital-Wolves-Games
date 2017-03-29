@@ -123,8 +123,9 @@ bool j1Scene::PreUpdate()
 	{
 		iPoint r = App->map->WorldToMap(p.x, p.y);
 		iPoint s = App->map->MapToWorld(r.x, r.y);
-		App->entity_manager->CreatBuilding(TURRET, fPoint(s.x, s.y - 9));
-
+		if (App->pathfinding->IsWalkable(r) == true) {
+			App->entity_manager->CreatBuilding(TURRET, fPoint(s.x, s.y - 9));
+		}
 	}
 	p = App->map->WorldToMap(p.x, p.y);
 	

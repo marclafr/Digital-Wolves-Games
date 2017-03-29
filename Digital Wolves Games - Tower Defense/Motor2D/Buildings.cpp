@@ -4,8 +4,9 @@
 #include "j1Render.h"
 #include "j1Animation.h"
 #include "p2Log.h"
+#include "j1Map.h"
 #include "j1EntityManager.h"
-
+#include "j1Pathfinding.h"
 
 
 
@@ -33,6 +34,12 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos) : Entity(BUILDING, pos), bu
 		break;
 	}
 	buildtimer.Start();
+	iPoint p = App->map->WorldToMap(pos.x, pos.y);
+
+	if (App->pathfinding->IsWalkable(p) == true)
+	{
+		App->pathfinding->MakeNoWalkable(p);
+	}
 }
 
 void Building::Update()
@@ -42,7 +49,7 @@ void Building::Update()
 }
 
 void Building::AI()
-{
+{/*
 	if (Target == nullptr) 
 	{
 		std::vector<Entity*> EntityVector = App->entity_manager->GetEntityVector();
@@ -76,7 +83,7 @@ void Building::AI()
 
 	}
 	
-	//std::list<Entity>::iterator ptarget = App->entity_manager->
+	//std::list<Entity>::iterator ptarget = App->entity_manager->*/
 }
 
 void Building::Draw()
