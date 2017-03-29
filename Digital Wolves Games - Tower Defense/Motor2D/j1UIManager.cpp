@@ -19,6 +19,7 @@
 #include "UISelectOption.h"
 #include "UIHUDPanelButtons.h"
 #include "UIHUDPanelInfo.h"
+#include "UIHUDDescription.h"
 
 j1UIManager::j1UIManager() : j1Module()
 {
@@ -83,10 +84,8 @@ bool j1UIManager::PreUpdate()
 				}
 				else if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_UP)
 				{
-					if (component->stat == UICOMPONENT_STAT::CLICKL_REPEAT || component->stat == UICOMPONENT_STAT::CLICKL_DOWN)
+					if (component->stat == UICOMPONENT_STAT::SELECTED)
 						component->stat = UICOMPONENT_STAT::CLICKL_UP;
-					else
-						component->stat = UICOMPONENT_STAT::SELECTED;
 				}
 
 				if (App->input->GetMouseButtonDown(RIGHT_CLICK) == KEY_DOWN)
@@ -98,10 +97,8 @@ bool j1UIManager::PreUpdate()
 				}
 				else if (App->input->GetMouseButtonDown(RIGHT_CLICK) == KEY_UP)
 				{
-					if (component->stat == UICOMPONENT_STAT::CLICKR_REPEAT || component->stat == UICOMPONENT_STAT::CLICKR_DOWN)
+					if (component->stat = UICOMPONENT_STAT::SELECTED)
 						component->stat = UICOMPONENT_STAT::CLICKR_UP;
-					else
-						component->stat = UICOMPONENT_STAT::SELECTED;
 				}
 			}
 			else
@@ -183,6 +180,9 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 		break;
 	case UIHUDPANELINFO:
 		components.push_back(ret = (UIComponents*)new UIHUDPanelInfo(UICOMPONENT_TYPE::UIHUDPANELINFO));
+		break;
+	case UIHUDDESCRIPTION:
+		components.push_back(ret = (UIComponents*)new UIHUDDescription(UICOMPONENT_TYPE::UIHUDDESCRIPTION));
 		break;
 	default:
 		components.push_back(ret = new UIComponents(type));

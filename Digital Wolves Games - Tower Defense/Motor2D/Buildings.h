@@ -27,6 +27,7 @@ private:
 	j1PerfTimer buildtimer;
 	j1PerfTimer AttackTimer;
 	Entity* Target = nullptr;
+	bool totallybuilded = false;
 public:
 
 	Building(BUILDING_TYPE b_type, fPoint pos, Side side);
@@ -38,6 +39,7 @@ public:
 
 	const BUILDING_TYPE GetBuildingType() const;
 	const int GetRange() const;
+	const double GetBuildTime() const;
 };
 
 #endif

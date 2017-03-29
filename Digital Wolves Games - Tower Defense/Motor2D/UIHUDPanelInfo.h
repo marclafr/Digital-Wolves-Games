@@ -34,10 +34,15 @@ private:
 
 		Entity* pointer_entity = nullptr;
 
+		bool build = false;
+		UILabel* building_percentage = nullptr;
+
 		~entity_info();
 
 		void PrepareUnitInfo();
 		void PrepareBuildingInfo();
+		void PrepareBuildingConstruction();
+		void UpdateBuildingPercentageStr();
 	};
 
 	std::list<Entity*> selection_tmp;

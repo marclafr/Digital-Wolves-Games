@@ -70,7 +70,6 @@ private:
 	iPoint path_objective;
 	fPoint move_vector;
 	float angle;
-	bool GetNextTile();
 	UNIT_CLASS unit_class;
 	const int GetRandNum(int num);
 	int rand_num;
@@ -80,8 +79,9 @@ private:
 	Entity* attacking;
 
 	std::list<iPoint> path_list;
-
 	bool moving = false;
+
+	int priority = 0;
 public:
 
 	Unit(UNIT_TYPE u_type, fPoint pos, Side side);
@@ -102,6 +102,14 @@ public:
 	int GetPath(iPoint dest);
 	const int GetAttack() const;
 	const int GetRange() const;
+	const int GetPriority() const;
+	const bool IsMoving() const;
+	void PopFirstPath();
+	void SetAction(const ACTION_TYPE action);
+	void SetIsMoving(bool mov);
+	//TODO:this should be private?
+	bool GetNextTile();
+
 
 	void LookAt(iPoint pos);
 	bool GoTo(iPoint destination);

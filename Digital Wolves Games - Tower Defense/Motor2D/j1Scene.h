@@ -7,8 +7,10 @@ struct SDL_Texture;
 class UILabel;
 class UIComponents;
 class UIButton;
+class UICheckbutton;
 class UIHUDPanelButtons;
 class UIHUDPanelInfo;
+class UIHUDDescription;
 
 class j1Scene : public j1Module
 {
@@ -49,13 +51,14 @@ private:
 	UIButton* ingame_menu;
 
 	UIComponents* down_hud;
-	UIButton* description;
+	UICheckbutton* btn_description;
 	UIHUDPanelButtons* panel;
 
 	SDL_Rect select_rect;
 
 public:
 	UIHUDPanelInfo* panel_info;
+	UIHUDDescription* hud_description;
 };
 
 #endif // __j1SCENE_H__

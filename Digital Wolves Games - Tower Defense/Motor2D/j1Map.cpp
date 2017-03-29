@@ -86,8 +86,8 @@ void j1Map::Draw()
 
 	if (layer->properties.Get("Nodraw") == true && (layer->properties.Get("Navigation") == true))
 		{
-		    item++;//TODO: uncomment not to draw walkability map
-			continue;
+		    //item++;//TODO: uncomment not to draw walkability map
+			//continue;
 		}
 		for (int y = 0; y < data.height; ++y)
 		{

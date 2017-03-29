@@ -4,8 +4,9 @@
 #include "j1Render.h"
 #include "j1Animation.h"
 #include "p2Log.h"
+#include "j1Map.h"
 #include "j1EntityManager.h"
-
+#include "j1Pathfinding.h"
 
 
 
@@ -34,11 +35,20 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(BUILDIN
 		break;
 	}
 	buildtimer.Start();
+	iPoint p = App->map->WorldToMap(pos.x, pos.y);
+
+	if (App->pathfinding->IsWalkable(p) == true)
+	{
+		App->pathfinding->MakeNoWalkable(p);
+	}
 }
 
 void Building::Update()
 {
-	AI();
+	if (totallybuilded == true) 
+	{
+		AI();
+	}
 	Draw();
 }
 
@@ -55,28 +65,32 @@ void Building::AI()
 				if ((*item)->GetX() >= (GetX() - 120) && (*item)->GetX() < (GetX() + 120) && (*item)->GetY() >= (GetY() - 120) && (*item)->GetY() < (GetY() + 120) && (*item)->GetHp() > 0)
 				{
 					Target = *item;
+					AttackTimer.Start();
 				}
 			}
 		}
 	}
-	else if (Target->GetHp() <= 0) {
-		Target = nullptr;
-	}
-	else if (Target != nullptr && Target->GetHp() > 0)
-	{
-		if (Target->GetX() >= (GetX() - 120) && Target->GetX() < (GetX() + 120) && Target->GetY() >= (GetY() - 120) && Target->GetY() < (GetY() + 120))
+	else {
+		if (Target->GetHp() <= 0)
 		{
-			Attack(Target);
-			AttackTimer.Start();
-		}
-		else
-		{
-
 			Target = nullptr;
 		}
-
+		if (AttackTimer.ReadMs() > 900)
+		{
+			if (Target != nullptr && Target->GetHp() > 0)
+			{
+				if (Target->GetX() >= (GetX() - 120) && Target->GetX() < (GetX() + 120) && Target->GetY() >= (GetY() - 120) && Target->GetY() < (GetY() + 120))
+				{
+					Attack(Target);
+					AttackTimer.Start();
+				}
+				else
+				{
+					Target = nullptr;
+				}
+			}
+		}
 	}
-	
 	//std::list<Entity>::iterator ptarget = App->entity_manager->
 }
 
@@ -106,6 +120,7 @@ void Building::Draw()
 		SDL_Rect rect = { 610,1,107,206 };
 		SetRect(rect);
 		SetPivot(0.504673*107, 0.902913*206);
+		totallybuilded = true;
 	}
 	App->render->PushEntity(this);
 }
@@ -118,4 +133,9 @@ const BUILDING_TYPE Building::GetBuildingType() const
 const int Building::GetRange() const
 {
 	return range;
+}
+
+const double Building::GetBuildTime() const
+{
+	return buildtimer.ReadMs();
 }
