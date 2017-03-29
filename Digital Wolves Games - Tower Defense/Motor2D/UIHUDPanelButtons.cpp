@@ -78,11 +78,11 @@ void UIHUDPanelButtons::CreateEntity()
 		switch (if_active->e_type)
 		{
 			case ENTITY_TYPE::UNIT:
-			App->entity_manager->CreateUnit(if_active->u_type, fPoint(s.x, s.y - 9));
+			App->entity_manager->CreateUnit(if_active->u_type, fPoint(s.x, s.y - 9), ALLY);
 			break;
 
 			case ENTITY_TYPE::BUILDING:
-				App->entity_manager->CreatBuilding(if_active->b_type, fPoint(s.x, s.y - 9));
+				App->entity_manager->CreatBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
 			break;
 		}
 		if_active = nullptr;

@@ -29,7 +29,7 @@ private:
 	Entity* Target = nullptr;
 public:
 
-	Building(BUILDING_TYPE b_type, fPoint pos);
+	Building(BUILDING_TYPE b_type, fPoint pos, Side side);
 
 	void Update(); // defines order
 

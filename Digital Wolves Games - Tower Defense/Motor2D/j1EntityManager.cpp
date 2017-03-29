@@ -32,16 +32,16 @@ bool j1EntityManager::CleanUp() { // not done
 	return true;
 }
 
-Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos)
+Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)
 {
-	Entity* new_entity = (Entity*) new Unit(u_type, pos);
+	Entity* new_entity = (Entity*) new Unit(u_type, pos, side);
 	entity_array.push_back(new_entity);
 	return new_entity;
 }
 
-Entity * j1EntityManager::CreatBuilding(BUILDING_TYPE b_type, fPoint pos)
+Entity * j1EntityManager::CreatBuilding(BUILDING_TYPE b_type, fPoint pos, Side side)
 {
-	Entity* new_entity = (Entity*) new Building(b_type, pos);
+	Entity* new_entity = (Entity*) new Building(b_type, pos, side);
 	entity_array.push_back(new_entity);
 	return new_entity;
 }
@@ -154,6 +154,16 @@ void j1EntityManager::GetUnitsPath(iPoint destination)
 		//if (prove._Ptr->_Myval->GetEntityStatus() == E_SELECTED)
 			prove++;
 
+}
+
+Entity * j1EntityManager::CheckForEnemies(iPoint position, int range, Side side)
+{
+	for  (int i = 0; i < entity_array.size(); i++)
+	{
+		if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range && entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range && side != entity_array[i]->GetSide())
+			return entity_array[i];
+	}
+	return nullptr;
 }
 
 std::vector<Entity*> j1EntityManager::GetEntityVector()

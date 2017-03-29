@@ -11,18 +11,26 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos): Entity(UNIT, pos), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), fighting(false), attacking(nullptr)
 {
+	if (GetSide() == ENEMY)
+	{
+		this->action_type = WALK;
+		GoTo(TOWN_HALL);
+		moving = true;
+		changed = true;
+	}
+		
 	switch (u_type)
 	{
-		//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
+	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 	case TWOHANDEDSWORDMAN:
 		SetHp(60);
 		attack = 12;
 		SetArmor(1);
 		speed = 0.9;
 		rate_of_fire = 2;
-		range = 1;
+		range = 30;
 		unit_class = INFANTRY;
 		unit_radius = 6;
 		SetTextureID(T_TWOHANDEDSWORDMAN);
@@ -126,15 +134,7 @@ void Unit::Move()
 		destination.x -= App->render->camera->GetPosition().x;
 		destination.y -= App->render->camera->GetPosition().y;
 
-		if (this->GetPath({ destination.x, destination.y }) != -1)
-		{
-			path_list.pop_front();
-			GetNextTile();
-			this->action_type = WALK;
-			changed = true;
-			this->moving = true;
-		}
-		else
+		if(GoTo(destination) == false)
 		{
 			this->moving = false;
 			this->action_type = IDLE;
@@ -161,6 +161,43 @@ void Unit::Move()
 
 void Unit::AI()
 {
+	if (fighting == false)
+	{
+		attacking = App->entity_manager->CheckForEnemies(iPoint(GetX(), GetY()), GetRange(), GetSide());
+
+		if (attacking != nullptr)
+		{
+			fighting = true;
+			moving = false;
+			this->action_type = ATTACK;
+			changed = true;
+		}
+	}
+
+	if (fighting)
+	{
+		if (animation->Finished())
+			attacking->Damaged(attack);
+
+		if (attacking == nullptr)
+		{
+			fighting = false;
+
+			if (GetSide() == ENEMY)
+			{
+				this->action_type = WALK;
+				GoTo(TOWN_HALL);
+				moving = true;
+				changed = true;
+			}
+			else
+			{
+				this->action_type = IDLE;
+				changed = true;
+			}
+		}
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
 		action_type = ATTACK;
@@ -185,13 +222,12 @@ void Unit::AI()
 		changed = true;
 	}
 
-
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
 		SetHp(0);
 	}
 
-	if (GetHp() == 0)
+	if (GetHp() <= 0)
 		Die();
 }
 
@@ -261,6 +297,25 @@ const int Unit::GetAttack() const
 const int Unit::GetRange() const
 {
 	return range;
+}
+
+void Unit::LookAt(iPoint pos)
+{
+
+}
+
+bool Unit::GoTo( iPoint destination)
+{
+	if (this->GetPath({ destination.x, destination.y }) != -1)
+	{
+		path_list.pop_front();
+		GetNextTile();
+		this->action_type = WALK;
+		changed = true;
+		this->moving = true;
+		return true;
+	}
+	return false;
 }
 
 bool Unit::GetNextTile()

@@ -6,6 +6,7 @@
 #include <list>
 
 #define XY_TILES_RELATION 2
+#define TOWN_HALL iPoint(20,20) //TODO final townhall destination;
 
 class Animation;
 struct PathList;
@@ -75,13 +76,15 @@ private:
 	int rand_num;
 	Animation* animation;
 	bool changed;
+	bool fighting;
+	Entity* attacking;
 
 	std::list<iPoint> path_list;
 
 	bool moving = false;
 public:
 
-	Unit(UNIT_TYPE u_type, fPoint pos);
+	Unit(UNIT_TYPE u_type, fPoint pos, Side side);
 	~Unit();
 	
 	void Update(); // defines order
@@ -89,8 +92,7 @@ public:
 	void Move();
 	void AI();
 	void Draw();
-	void Die();
-	
+	void Die();	
 
 	const DIRECTION GetDir() const;
 	const UNIT_TYPE GetUnitType() const;
@@ -101,6 +103,9 @@ public:
 	const int GetAttack() const;
 	const int GetRange() const;
 
+	void LookAt(iPoint pos);
+	bool GoTo(iPoint destination);
+	
 	//FX
 	unsigned int fx_twohanded_die01;
 	unsigned int fx_twohanded_die02;

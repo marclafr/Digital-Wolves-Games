@@ -10,12 +10,13 @@
 
 
 
-Building::Building(BUILDING_TYPE b_type, fPoint pos) : Entity(BUILDING, pos), building_type(b_type)
+Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(BUILDING, pos, side), building_type(b_type)
 {
 	SDL_Rect rect;
 	switch (b_type)
 	{
 	case TURRET:
+		SetSide(side);
 		SetHp(1000);
 		SetAttack(12);
 		SetArmor(1);

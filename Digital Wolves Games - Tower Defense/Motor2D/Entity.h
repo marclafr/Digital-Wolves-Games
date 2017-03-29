@@ -13,6 +13,12 @@ enum ENTITY_TYPE
 	UNIT
 };
 
+enum Side
+{
+	ALLY,
+	ENEMY
+};
+
 enum ENTITY_STATUS
 {
 	E_SELECTED = 0,
@@ -32,9 +38,10 @@ private:
 	enum ENTITY_TYPE entity_type;
 	enum ENTITY_STATUS entity_status = E_NON_SELECTED;
 	enum TextureID texture_id;
+	enum Side side;
 
 public:
-	Entity(ENTITY_TYPE entity_type, fPoint pos);
+	Entity(ENTITY_TYPE entity_type, fPoint pos, Side side);
 	~Entity();
 
 	virtual void Update() = 0;
@@ -60,8 +67,9 @@ public:
 	const iPoint GetPivot() const;
 	const SDL_Rect GetRect() const;
 	const TextureID GetTextureID() const;
+	const Side GetSide() const;
 	void Attack(Entity*);
-	void Attacked();
+	void Damaged(int dmg);
 
 protected:
 	//Seters
@@ -71,5 +79,6 @@ protected:
 	void SetPivot(int x, int y);
 	void SetRect(SDL_Rect rect);
 	void SetTextureID(TextureID id);
+	void SetSide(Side side);
 };
 #endif

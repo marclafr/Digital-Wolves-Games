@@ -1,7 +1,7 @@
 #include "Entity.h"
 #include "j1Textures.h"
 
-Entity::Entity(ENTITY_TYPE entity_type, fPoint pos): to_delete (false), entity_type(entity_type), position(pos)
+Entity::Entity(ENTITY_TYPE entity_type, fPoint pos, Side side): to_delete (false), entity_type(entity_type), position(pos), side(side)
 {}
 
 Entity::~Entity()
@@ -73,6 +73,11 @@ const TextureID Entity::GetTextureID() const
 	return texture_id;
 }
 
+const Side Entity::GetSide() const
+{
+	return side;
+}
+
 void Entity::SetArmor(int new_armor)
 {
 	armor = new_armor;
@@ -99,6 +104,11 @@ void Entity::SetTextureID(TextureID id)
 	texture_id = id;
 }
 
+void Entity::SetSide(Side side)
+{
+	this->side = side;
+}
+
 void Entity::SetAttack(int new_attack)
 {
 	attack = new_attack;
@@ -106,4 +116,9 @@ void Entity::SetAttack(int new_attack)
 void Entity::Attack(Entity* entity)
 {
 	entity->SetHp(entity->hp - this->attack);
+}
+
+void Entity::Damaged(int dmg)
+{
+	hp -= (dmg - armor);
 }

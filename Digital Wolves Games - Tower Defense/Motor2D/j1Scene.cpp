@@ -91,12 +91,10 @@ bool j1Scene::Start()
 	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
 
 	//Entity Manager
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 300));
-	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 350));
-	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 400));
-	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(550, 400));
-	//App->entity_manager->CreatBuilding(TURRET, fPoint(600,300));
-
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 300), ENEMY);
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 400), ENEMY);
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400), ALLY);
+	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 300), ALLY);
 
 	return true;
 }
@@ -117,7 +115,7 @@ bool j1Scene::PreUpdate()
 	{
 		iPoint r = App->map->WorldToMap(p.x, p.y);
 		iPoint s = App->map->MapToWorld(r.x, r.y);
-		App->entity_manager->CreatBuilding(TURRET, fPoint(s.x, s.y - 9));
+		App->entity_manager->CreatBuilding(TURRET, fPoint(s.x, s.y - 9), ALLY);
 
 	}
 	p = App->map->WorldToMap(p.x, p.y);

@@ -22,8 +22,8 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos);
-	Entity* CreatBuilding(BUILDING_TYPE b_type, fPoint pos);
+	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side);
+	Entity* CreatBuilding(BUILDING_TYPE b_type, fPoint pos, Side side);
 
 	void SelectInQuad(const SDL_Rect& select_rect);
 	void UnselectEverything();
@@ -32,6 +32,9 @@ public:
 	void DeleteUnit(Unit* ptr);
 	void DeleteBuilding(Entity* ptr);
 	void GetUnitsPath(iPoint destintation);
+
+	Entity* CheckForEnemies(iPoint position, int range, Side side);
+
 	std::vector<Entity*> GetEntityVector();
 private:
 
