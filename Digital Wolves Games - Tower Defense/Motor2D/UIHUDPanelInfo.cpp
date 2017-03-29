@@ -12,9 +12,6 @@
 #include "UIButton.h"
 #include "UILabel.h"
 
-#include "Units.h"
-#include "Buildings.h"
-
 #include "UIGetEntitiesInfo.h"
 
 UIHUDPanelInfo::UIHUDPanelInfo(UICOMPONENT_TYPE type) : UIComponents(type)

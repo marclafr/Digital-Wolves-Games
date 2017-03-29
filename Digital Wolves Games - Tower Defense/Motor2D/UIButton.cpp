@@ -3,8 +3,10 @@
 #include "j1Render.h"
 #include "j1UIManager.h"
 #include "Camera.h"
+#include "j1Scene.h"
 
 #include "UIHUDPanelButtons.h"
+#include "UIHUDDescription.h"
 
 UIButton::UIButton(UICOMPONENT_TYPE type) : UIComponents(type) {}
 
@@ -63,6 +65,11 @@ bool UIButton::Update()
 	//UIButton set click to false
 	case CLICKL_UP:
 		clicked = false;
+		break;
+
+	case SELECTED:
+		if (from_if_HUDPB != nullptr)
+			App->scene->hud_description->SetDescription(from_if_HUDPB);
 		break;
 	}
 

@@ -19,6 +19,7 @@
 #include "UISelectOption.h"
 #include "UIHUDPanelButtons.h"
 #include "UIHUDPanelInfo.h"
+#include "UIHUDDescription.h"
 
 j1UIManager::j1UIManager() : j1Module()
 {
@@ -179,6 +180,9 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 		break;
 	case UIHUDPANELINFO:
 		components.push_back(ret = (UIComponents*)new UIHUDPanelInfo(UICOMPONENT_TYPE::UIHUDPANELINFO));
+		break;
+	case UIHUDDESCRIPTION:
+		components.push_back(ret = (UIComponents*)new UIHUDDescription(UICOMPONENT_TYPE::UIHUDDESCRIPTION));
 		break;
 	default:
 		components.push_back(ret = new UIComponents(type));
