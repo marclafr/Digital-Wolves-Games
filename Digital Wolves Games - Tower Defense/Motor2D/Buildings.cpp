@@ -44,12 +44,15 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos) : Entity(BUILDING, pos), bu
 
 void Building::Update()
 {
-	AI();
+	if (totallybuilded == true) 
+	{
+		AI();
+	}
 	Draw();
 }
 
 void Building::AI()
-{/*
+{
 	if (Target == nullptr) 
 	{
 		std::vector<Entity*> EntityVector = App->entity_manager->GetEntityVector();
@@ -61,29 +64,33 @@ void Building::AI()
 				if ((*item)->GetX() >= (GetX() - 120) && (*item)->GetX() < (GetX() + 120) && (*item)->GetY() >= (GetY() - 120) && (*item)->GetY() < (GetY() + 120) && (*item)->GetHp() > 0)
 				{
 					Target = *item;
+					AttackTimer.Start();
 				}
 			}
 		}
 	}
-	else if (Target->GetHp() <= 0) {
-		Target = nullptr;
-	}
-	else if (Target != nullptr && Target->GetHp() > 0)
-	{
-		if (Target->GetX() >= (GetX() - 120) && Target->GetX() < (GetX() + 120) && Target->GetY() >= (GetY() - 120) && Target->GetY() < (GetY() + 120))
+	else {
+		if (Target->GetHp() <= 0)
 		{
-			Attack(Target);
-			AttackTimer.Start();
-		}
-		else
-		{
-
 			Target = nullptr;
 		}
-
+		if (AttackTimer.ReadMs() > 900)
+		{
+			if (Target != nullptr && Target->GetHp() > 0)
+			{
+				if (Target->GetX() >= (GetX() - 120) && Target->GetX() < (GetX() + 120) && Target->GetY() >= (GetY() - 120) && Target->GetY() < (GetY() + 120))
+				{
+					Attack(Target);
+					AttackTimer.Start();
+				}
+				else
+				{
+					Target = nullptr;
+				}
+			}
+		}
 	}
-	
-	//std::list<Entity>::iterator ptarget = App->entity_manager->*/
+	//std::list<Entity>::iterator ptarget = App->entity_manager->
 }
 
 void Building::Draw()
@@ -112,6 +119,7 @@ void Building::Draw()
 		SDL_Rect rect = { 610,1,107,206 };
 		SetRect(rect);
 		SetPivot(0.504673*107, 0.902913*206);
+		totallybuilded = true;
 	}
 	App->render->PushEntity(this);
 }
