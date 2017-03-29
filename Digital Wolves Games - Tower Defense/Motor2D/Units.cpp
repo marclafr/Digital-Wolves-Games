@@ -11,7 +11,7 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), fighting(false), attacking(nullptr)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), fighting(false), attacking(nullptr), dead(false)
 {
 	if (GetSide() == ENEMY)
 	{
@@ -83,7 +83,7 @@ Unit::~Unit()
 
 void Unit::Update()
 {
-	if (this->GetHp() >= 0)
+	if (!dead)
 	{
 		if (changed == true)
 		{
@@ -259,7 +259,8 @@ void Unit::Die()
 
 	if (animation->Finished())
 		//TODO
-		App->entity_manager->DeleteUnit(this);
+		dead = true;
+		//App->entity_manager->DeleteUnit(this);
 }
 
 const DIRECTION Unit::GetDir() const

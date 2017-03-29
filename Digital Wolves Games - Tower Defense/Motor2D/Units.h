@@ -76,6 +76,7 @@ private:
 	Animation* animation;
 	bool changed;
 	bool fighting;
+	bool dead;
 	Entity* attacking;
 
 	std::list<iPoint> path_list;
