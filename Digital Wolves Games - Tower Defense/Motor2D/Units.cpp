@@ -83,44 +83,47 @@ Unit::~Unit()
 
 void Unit::Update()
 {
-	if (changed == true)
+	if (this->GetHp() >= 0)
 	{
-		animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
-		changed = false;
-	}
-
-	AI();
-	Move();
-	Draw();
-
-	//THIS DOES NOT BELONG HERE
-	//TODO
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED)
-	{
-
-		if (GetRandNum(5) == 1)
+		if (changed == true)
 		{
-			App->audio->PlayFx(fx_twohanded_die01);
-		}
-		else if (GetRandNum(5) == 2)
-		{
-			App->audio->PlayFx(fx_twohanded_die02);
-		}
-		else if (GetRandNum(5) == 3)
-		{
-			App->audio->PlayFx(fx_twohanded_die03);
-		}
-		else if (GetRandNum(5) == 4)
-		{
-			App->audio->PlayFx(fx_twohanded_die04);
-		}
-		else if (GetRandNum(5) == 5)
-		{
-			App->audio->PlayFx(fx_twohanded_die05);
+			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
+			changed = false;
 		}
 
-		action_type = DIE;
-		animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
+		AI();
+		Move();
+		Draw();
+
+		//THIS DOES NOT BELONG HERE
+		//TODO
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED)
+		{
+
+			if (GetRandNum(5) == 1)
+			{
+				App->audio->PlayFx(fx_twohanded_die01);
+			}
+			else if (GetRandNum(5) == 2)
+			{
+				App->audio->PlayFx(fx_twohanded_die02);
+			}
+			else if (GetRandNum(5) == 3)
+			{
+				App->audio->PlayFx(fx_twohanded_die03);
+			}
+			else if (GetRandNum(5) == 4)
+			{
+				App->audio->PlayFx(fx_twohanded_die04);
+			}
+			else if (GetRandNum(5) == 5)
+			{
+				App->audio->PlayFx(fx_twohanded_die05);
+			}
+
+			action_type = DIE;
+			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
+		}
 	}
 }
 
@@ -170,6 +173,7 @@ void Unit::AI()
 			fighting = true;
 			moving = false;
 			this->action_type = ATTACK;
+			this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
 			changed = true;
 		}
 	}
