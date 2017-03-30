@@ -46,6 +46,9 @@ private:
 
 	//lista para "almacenar" unidades, puede ser cambiada a array etc.
 	std::vector<Entity*> entity_array;
+
+	//TODO:Must change this
+	int priority = 0;
 };
 #endif //_j1EntityManager_
 

@@ -35,8 +35,9 @@ bool j1EntityManager::CleanUp() { // not done
 
 Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)
 {
-	Entity* new_entity = (Entity*) new Unit(u_type, pos, side);
+	Entity* new_entity = (Entity*) new Unit(u_type, pos, side, priority);
 	entity_array.push_back(new_entity);
+	priority++;
 	return new_entity;
 }
 
@@ -51,27 +52,30 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 {
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		int unit_x = entity_array[i]->GetX();
-		int unit_y = entity_array[i]->GetY();
-		if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
+		if (entity_array[i]->GetSide() == ALLY)
 		{
-			entity_array[i]->SetEntityStatus(E_SELECTED);
-			App->scene->panel_info->AddEntitySelection(entity_array[i]);
-		}
-		else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
-		{
-			entity_array[i]->SetEntityStatus(E_SELECTED);
-			App->scene->panel_info->AddEntitySelection(entity_array[i]);
-		}
-		else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
-		{
-			entity_array[i]->SetEntityStatus(E_SELECTED);
-			App->scene->panel_info->AddEntitySelection(entity_array[i]);
-		}
-		else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
-		{
-			entity_array[i]->SetEntityStatus(E_SELECTED);
-			App->scene->panel_info->AddEntitySelection(entity_array[i]);
+			int unit_x = entity_array[i]->GetX();
+			int unit_y = entity_array[i]->GetY();
+			if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
+			{
+				entity_array[i]->SetEntityStatus(E_SELECTED);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+			}
+			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
+			{
+				entity_array[i]->SetEntityStatus(E_SELECTED);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+			}
+			else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
+			{
+				entity_array[i]->SetEntityStatus(E_SELECTED);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+			}
+			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
+			{
+				entity_array[i]->SetEntityStatus(E_SELECTED);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+			}
 		}
 	}
 	if(!App->scene->panel_info->isSelectionTempEmpty())
@@ -165,7 +169,9 @@ Entity * j1EntityManager::CheckForEnemies(iPoint position, int range, Side side)
 {
 	for  (int i = 0; i < entity_array.size(); i++)
 	{
-		if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range && entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range && side != entity_array[i]->GetSide())
+		if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range &&
+			entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range && 
+			side != entity_array[i]->GetSide())
 			return entity_array[i];
 	}
 	return nullptr;

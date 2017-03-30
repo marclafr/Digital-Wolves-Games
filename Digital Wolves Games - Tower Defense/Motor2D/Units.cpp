@@ -11,7 +11,7 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), fighting(false), attacking(nullptr), dead(false)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), fighting(false), attacking(nullptr), dead(false), priority(priority)
 {
 	if (GetSide() == ENEMY)
 	{
@@ -39,6 +39,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side): Entity(UNIT, pos, side), un
 		fx_twohanded_die03 = App->audio->LoadFx("audio/fx/Male_Death03.wav");
 		fx_twohanded_die04 = App->audio->LoadFx("audio/fx/Male_Death04.wav");
 		fx_twohanded_die05 = App->audio->LoadFx("audio/fx/Male_Death05.wav");
+		priority = 3;
 
 		break;
 
@@ -52,6 +53,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side): Entity(UNIT, pos, side), un
 		unit_class = ARCHER;
 		unit_radius = 12;
 		SetTextureID(T_CAVALRYARCHER);
+		priority = 2;
 		break;
 
 	case SIEGERAM:
@@ -64,6 +66,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side): Entity(UNIT, pos, side), un
 		unit_class = SIEGE;
 		unit_radius = 15;
 		SetTextureID(T_SIEGERAM);
+		priority = 1;
 		break;
 
 	default:
@@ -94,33 +97,10 @@ void Unit::Update()
 		AI();
 		Move();
 		Draw();
-
-		//THIS DOES NOT BELONG HERE
-		//TODO
+		
 		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED)
 		{
-
-			if (GetRandNum(5) == 1)
-			{
-				App->audio->PlayFx(fx_twohanded_die01);
-			}
-			else if (GetRandNum(5) == 2)
-			{
-				App->audio->PlayFx(fx_twohanded_die02);
-			}
-			else if (GetRandNum(5) == 3)
-			{
-				App->audio->PlayFx(fx_twohanded_die03);
-			}
-			else if (GetRandNum(5) == 4)
-			{
-				App->audio->PlayFx(fx_twohanded_die04);
-			}
-			else if (GetRandNum(5) == 5)
-			{
-				App->audio->PlayFx(fx_twohanded_die05);
-			}
-
+			SetHp(0);
 			action_type = DIE;
 			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
 		}
@@ -251,10 +231,34 @@ void Unit::Draw()
 
 void Unit::Die()
 {
+	moving = false;
 	if (changed == false && action_type != DIE && action_type != DISAPPEAR)
 	{
 		action_type = DIE;
 		changed = true;
+
+		//THIS DOES NOT BELONG HERE
+		//TODO
+		if (GetRandNum(5) == 1)
+		{
+			App->audio->PlayFx(fx_twohanded_die01);
+		}
+		else if (GetRandNum(5) == 2)
+		{
+			App->audio->PlayFx(fx_twohanded_die02);
+		}
+		else if (GetRandNum(5) == 3)
+		{
+			App->audio->PlayFx(fx_twohanded_die03);
+		}
+		else if (GetRandNum(5) == 4)
+		{
+			App->audio->PlayFx(fx_twohanded_die04);
+		}
+		else if (GetRandNum(5) == 5)
+		{
+			App->audio->PlayFx(fx_twohanded_die05);
+		}
 	}
 
 	if (animation->Finished())
@@ -307,6 +311,26 @@ const int Unit::GetRange() const
 const bool Unit::IsMoving() const
 {
 	return moving;
+}
+
+const int Unit::GetPriority() const
+{
+	return priority;
+}
+
+void Unit::PopFirstPath()
+{
+	path_list.pop_front();
+}
+
+void Unit::SetAction(const ACTION_TYPE action)
+{
+	action_type = action;
+}
+
+void Unit::SetIsMoving(bool mov)
+{
+	moving = mov;
 }
 
 void Unit::LookAt(iPoint pos)

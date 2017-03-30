@@ -98,9 +98,9 @@ bool j1Scene::Start()
 	hud_description->SetEnableButton(btn_description);
 
 	//Entity Manager
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 300), ENEMY);
+	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 300), ENEMY);
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 400), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400), ALLY);
+	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400), ALLY);
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 300), ALLY);
 
 	return true;

@@ -82,10 +82,11 @@ private:
 	std::list<iPoint> path_list;
 	bool moving = false;
 
-	int priority = 0;
+	int priority;
+
 public:
 
-	Unit(UNIT_TYPE u_type, fPoint pos, Side side);
+	Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority);
 	~Unit();
 	
 	void Update(); // defines order
