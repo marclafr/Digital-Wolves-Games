@@ -72,6 +72,11 @@ const double Resources::GetBuildTime() const
 	return buildtimer.ReadMs();
 }
 
+int Resources::GetResource()
+{
+	return resource;
+}
+
 /*
 Resources::Resources() {
 	wood = 2000;

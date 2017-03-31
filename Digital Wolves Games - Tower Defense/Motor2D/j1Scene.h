@@ -11,6 +11,7 @@ class UICheckbutton;
 class UIHUDPanelButtons;
 class UIHUDPanelInfo;
 class UIHUDDescription;
+class UIHUDResources;
 
 class j1Scene : public j1Module
 {
@@ -49,6 +50,7 @@ private:
 	UIButton* objectives;
 	UIButton* tree_tech;
 	UIButton* ingame_menu;
+	UIHUDResources* resources_panel;
 
 	UIComponents* down_hud;
 	UICheckbutton* btn_description;

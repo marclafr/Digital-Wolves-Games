@@ -22,7 +22,7 @@ enum RESOURCE_TYPE
 class Resources : public Entity
 {
 private:
-	int resource;
+	int resource = 0;
 	enum RESOURCE_TYPE resource_type;
 	float collect_time;
 	float build_time;
@@ -41,6 +41,9 @@ public:
 	const RESOURCE_TYPE GetResourceType() const;
 	const int GetRange() const;
 	const double GetBuildTime() const;
+
+	int GetResource();
+
 	int GetWood();
 	int GetFood();
 	int GetGold();

@@ -67,28 +67,10 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Awsome_Game\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="UILabel.cpp">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="UICheckbutton.cpp">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="UISelectOption.cpp">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="UIHUDPanelButtons.cpp">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="UIHUDPanelInfo.cpp">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Awsome_Game\Tools</Filter>
     </ClCompile>
     <ClCompile Include="UIComponents.cpp">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="UIButton.cpp">
       <Filter>Awsome_Game\UIComponents</Filter>
     </ClCompile>
     <ClCompile Include="Resources.cpp">
@@ -97,14 +79,35 @@
     <ClCompile Include="j1SceneManager.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="UIHUDDescription.cpp">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClCompile>
-    <ClCompile Include="GetEntitiesInfo.cpp">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClCompile>
     <ClCompile Include="j1Collision.cpp">
       <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDDescription.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDPanelButtons.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDPanelInfo.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDResources.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="GetEntitiesInfo.cpp">
+      <Filter>Awsome_Game\UIComponents\GetInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UICheckbutton.cpp">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UILabel.cpp">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UISelectOption.cpp">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -195,41 +198,44 @@
     <ClInclude Include="Camera.h">
       <Filter>Awsome_Game\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="UILabel.h">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="UIButton.h">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="UICheckbutton.h">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="UISelectOption.h">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="UIHUDPanelButtons.h">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="UIHUDPanelInfo.h">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClInclude>
     <ClInclude Include="UIComponents.h">
       <Filter>Awsome_Game\UIComponents</Filter>
     </ClInclude>
     <ClInclude Include="Resources.h">
       <Filter>Awsome_Game\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="UIGetEntitiesInfo.h">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClInclude>
     <ClInclude Include="j1SceneManager.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="UIHUDDescription.h">
-      <Filter>Awsome_Game\UIComponents</Filter>
-    </ClInclude>
     <ClInclude Include="j1Collision.h">
       <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDDescription.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDPanelButtons.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDPanelInfo.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDResources.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="UIGetEntitiesInfo.h">
+      <Filter>Awsome_Game\UIComponents\GetInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UICheckbutton.h">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UILabel.h">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UISelectOption.h">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +262,15 @@
     </Filter>
     <Filter Include="Awsome_Game\UIComponents">
       <UniqueIdentifier>{6d1ada9c-c865-4b67-8806-67d059fb87d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\UIComponents\HUD">
+      <UniqueIdentifier>{c5854047-f795-4224-bafc-c2cee4ec71b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\UIComponents\Components">
+      <UniqueIdentifier>{415db45d-c97a-4034-bbaa-e0764d7de3a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\UIComponents\GetInfo">
+      <UniqueIdentifier>{1e8d9cd4-3e8d-4f18-9f90-7062b7cb007f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

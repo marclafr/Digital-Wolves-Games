@@ -18,6 +18,7 @@
 #include "UILabel.h"
 #include "UIHUDPanelButtons.h"
 #include "UIHUDDescription.h"
+#include "UIHUDResources.h"
 #include "UICheckbutton.h"
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
@@ -97,12 +98,14 @@ bool j1Scene::Start()
 	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
 	hud_description->SetEnableButton(btn_description);
 
+	resources_panel = (UIHUDResources*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDRESOURCES);
+
 	//Entity Manager
 	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 300), ENEMY);
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 400), ENEMY);
 	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400), ALLY);
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 300), ALLY);
-	App->entity_manager->CreateResource(STONE, fPoint(150,300));
+	resources_panel->AddResource( (Resources*)App->entity_manager->CreateResource(STONE, fPoint(150,300)) );
 	return true;
 }
 
