@@ -47,7 +47,7 @@ bool j1Scene::Start()
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg");
 
 
-	if(App->map->Load("Prueba.tmx") == true)
+	if(App->map->Load("Map.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -185,8 +185,10 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT)
 		App->win->SetScale(2);
-
+	j1PerfTimer timer;
+	PERF_START(timer);
 	App->map->Draw();
+	PERF_PEEK(timer);
 
 	// Debug pathfinding ------------------------------
 	int x, y;
