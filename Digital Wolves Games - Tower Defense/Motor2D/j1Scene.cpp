@@ -102,7 +102,7 @@ bool j1Scene::Start()
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 400), ENEMY);
 	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400), ALLY);
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 300), ALLY);
-	App->entity_manager->CreateResources(STONE, fPoint(150,300));
+	App->entity_manager->CreateResource(STONE, fPoint(150,300));
 	return true;
 }
 
@@ -124,7 +124,7 @@ bool j1Scene::PreUpdate()
 		iPoint s = App->map->MapToWorld(r.x, r.y);
 
 		if(App->pathfinding->IsWalkable(r) == true)
-			App->entity_manager->CreatBuilding(TURRET, fPoint(s.x, s.y - 9), ALLY);
+			App->entity_manager->CreateBuilding(TURRET, fPoint(s.x, s.y - 9), ALLY);
 
 	}
 	p = App->map->WorldToMap(p.x, p.y);

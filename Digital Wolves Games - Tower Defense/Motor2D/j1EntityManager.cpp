@@ -41,9 +41,16 @@ Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)
 	return new_entity;
 }
 
-Entity * j1EntityManager::CreatBuilding(BUILDING_TYPE b_type, fPoint pos, Side side)
+Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side)
 {
 	Entity* new_entity = (Entity*) new Building(b_type, pos, side);
+	entity_array.push_back(new_entity);
+	return new_entity;
+}
+
+Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos)
+{
+	Entity* new_entity = (Entity*) new Resources(r_type, pos);
 	entity_array.push_back(new_entity);
 	return new_entity;
 }

@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "Entity.h"
 #include "Units.h"
+#include "Resources.h"
 #include "Buildings.h"
 #include <vector>
 #include "SDL/include/SDL_rect.h"
@@ -23,8 +24,8 @@ public:
 	bool CleanUp();
 
 	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side);
-	Entity* CreatBuilding(BUILDING_TYPE b_type, fPoint pos, Side side);
-
+	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side);
+	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos);
 	void SelectInQuad(const SDL_Rect& select_rect);
 	void UnselectEverything();
 

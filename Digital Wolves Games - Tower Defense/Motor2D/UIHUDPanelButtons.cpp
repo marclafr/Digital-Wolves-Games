@@ -85,7 +85,7 @@ void UIHUDPanelButtons::CreateEntity()
 
 			case ENTITY_TYPE::BUILDING:
 				if (App->pathfinding->IsWalkable(r) == true)
-					App->entity_manager->CreatBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
+					App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
 			break;
 		}
 		if_active = nullptr;
