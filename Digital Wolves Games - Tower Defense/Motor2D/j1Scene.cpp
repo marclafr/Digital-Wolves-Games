@@ -102,7 +102,7 @@ bool j1Scene::Start()
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 400), ENEMY);
 	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400), ALLY);
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 300), ALLY);
-
+	App->entity_manager->CreateResources(STONE, fPoint(150,300));
 	return true;
 }
 
@@ -185,10 +185,9 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT)
 		App->win->SetScale(2);
-	j1PerfTimer timer;
-	PERF_START(timer);
+
 	App->map->Draw();
-	PERF_PEEK(timer);
+	
 
 	// Debug pathfinding ------------------------------
 	int x, y;

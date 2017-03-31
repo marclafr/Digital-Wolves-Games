@@ -10,7 +10,8 @@ enum ENTITY_TYPE
 {
 	NO_ENTITY = 0,
 	BUILDING,
-	UNIT
+	UNIT,
+	RESOURCE
 };
 
 enum Side
@@ -43,6 +44,7 @@ private:
 
 public:
 	Entity(ENTITY_TYPE entity_type, fPoint pos, Side side);
+
 	~Entity();
 
 	virtual void Update() = 0;

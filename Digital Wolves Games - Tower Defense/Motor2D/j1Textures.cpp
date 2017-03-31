@@ -46,6 +46,7 @@ bool j1Textures::Start()
 	App->tex->Load("animations/Twohandedswordman.png", T_TWOHANDEDSWORDMAN);
 	App->tex->Load("animations/SiegeRam.png", T_SIEGERAM);
 	App->tex->Load("textures/Towers.png", T_TURRET);
+	App->tex->Load("textures/Resouce.png", T_RESOURCE);
 
 	bool ret = true;
 	return ret;

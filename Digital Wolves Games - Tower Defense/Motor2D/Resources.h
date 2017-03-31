@@ -1,19 +1,46 @@
 #ifndef _RESOURCES
 #define _RESOURCES
 
-#include "SDL\include\SDL.h"
+#include "SDL/include/SDL_rect.h"
+#include "Entity.h"
+#include "j1Textures.h"
+#include "j1Module.h"
+#include "Entity.h"
+#include "Units.h"
+#include "j1PerfTimer.h"
+#include <vector>
 
-class Resources 
+enum RESOURCE_TYPE
+{
+	NO_RESOURCE,
+	WOOD,
+	STONE,
+	GOLD,
+	FOOD,
+};
+
+class Resources : public Entity
 {
 private:
-	int wood = 0;
-	int food = 0;
-	int gold = 0;
-	int stone = 0;
+	int resource;
+	enum RESOURCE_TYPE resource_type;
+	float collect_time;
+	float build_time;
+	j1PerfTimer buildtimer;
+	j1PerfTimer CollectTimer;
+	bool totallybuilded = false;
 public:
-	Resources();
-	~Resources();
 
+	Resources(RESOURCE_TYPE b_type, fPoint pos);
+
+	void Update(); // defines order
+
+	virtual void AI();
+	virtual void Draw();
+
+	const RESOURCE_TYPE GetResourceType() const;
+	const int GetRange() const;
+	const double GetBuildTime() const;
 	int GetWood();
 	int GetFood();
 	int GetGold();
@@ -30,7 +57,5 @@ public:
 	void UseStone(int used);
 };
 
-
-
-#endif //_RESOURCES_
+#endif
 
