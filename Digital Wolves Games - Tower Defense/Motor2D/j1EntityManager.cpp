@@ -52,7 +52,7 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 {
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		if (entity_array[i]->GetSide() == ALLY)
+		//TODO: Unselect for only ally selection if (entity_array[i]->GetSide() == ALLY)
 		{
 			int unit_x = entity_array[i]->GetX();
 			int unit_y = entity_array[i]->GetY();
@@ -165,7 +165,7 @@ void j1EntityManager::GetUnitsPath(iPoint destination)
 
 }
 
-Entity * j1EntityManager::CheckForEnemies(iPoint position, int range, Side side)
+Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
 {
 	for  (int i = 0; i < entity_array.size(); i++)
 	{
@@ -175,6 +175,18 @@ Entity * j1EntityManager::CheckForEnemies(iPoint position, int range, Side side)
 			return entity_array[i];
 	}
 	return nullptr;
+}
+
+iPoint j1EntityManager::CheckForObjective(iPoint position, int vision_range, Side side)
+{
+	for (int i = 0; i < entity_array.size(); i++)
+	{
+		if (entity_array[i]->GetX() <= position.x + vision_range && entity_array[i]->GetX() >= position.x - vision_range &&
+			entity_array[i]->GetY() <= position.y + vision_range && entity_array[i]->GetY() >= position.y - vision_range &&
+			side != entity_array[i]->GetSide())
+			return iPoint(entity_array[i]->GetX(), entity_array[i]->GetY());
+	}
+	return iPoint(-1, -1);
 }
 
 std::vector<Entity*> j1EntityManager::GetEntityVector()

@@ -63,6 +63,7 @@ private:
 
 	int attack;
 	int range;
+	int vision_range;
 	float speed;
 	float rate_of_fire;
 	int unit_radius;
@@ -76,6 +77,7 @@ private:
 	Animation* animation;
 	bool changed;
 	bool fighting;
+	bool enemy_found;
 	bool dead;
 	Entity* attacking;
 
@@ -104,6 +106,7 @@ public:
 	int GetPath(iPoint dest);
 	const int GetAttack() const;
 	const int GetRange() const;
+	const int GetVisionRange() const;
 	const bool IsMoving() const;
 
 	const int GetPriority() const;

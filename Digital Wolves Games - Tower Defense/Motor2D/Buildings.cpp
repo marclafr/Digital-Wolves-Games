@@ -22,7 +22,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(BUILDIN
 		SetAttack(12);
 		SetArmor(1);
 		rate_of_fire = 1;
-		range = 8;
+		range = 120;
 		build_time = 7;
 		rect = {610,1,107,206};
 		SetRect(rect);
@@ -62,7 +62,8 @@ void Building::AI()
 		{
 			if ((*item)->GetEntityType() == UNIT)
 			{
-				if ((*item)->GetX() >= (GetX() - 120) && (*item)->GetX() < (GetX() + 120) && (*item)->GetY() >= (GetY() - 120) && (*item)->GetY() < (GetY() + 120) && (*item)->GetHp() > 0)
+				//TODO:Use a function from entity instead
+				if ((*item)->GetX() >= (GetX() - GetRange()) && (*item)->GetX() < (GetX() + GetRange()) && (*item)->GetY() >= (GetY() - GetRange()) && (*item)->GetY() < (GetY() + GetRange()) && (*item)->GetHp() > 0)
 				{
 					Target = *item;
 					AttackTimer.Start();
@@ -79,7 +80,7 @@ void Building::AI()
 		{
 			if (Target != nullptr && Target->GetSide() != ALLY && Target->GetHp() > 0)
 			{
-				if (Target->GetX() >= (GetX() - 120) && Target->GetX() < (GetX() + 120) && Target->GetY() >= (GetY() - 120) && Target->GetY() < (GetY() + 120))
+				if (Target->GetX() >= (GetX() - GetRange()) && Target->GetX() < (GetX() + GetRange()) && Target->GetY() >= (GetY() - GetRange()) && Target->GetY() < (GetY() + GetRange()))
 				{
 					Attack(Target);
 					AttackTimer.Start();

@@ -11,7 +11,7 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), fighting(false), attacking(nullptr), dead(false), priority(priority)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), fighting(false), attacking(nullptr), dead(false), enemy_found(false), priority(priority)
 {
 	if (GetSide() == ENEMY)
 	{
@@ -31,6 +31,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 		speed = 0.9;
 		rate_of_fire = 2;
 		range = 30;
+		vision_range = 200;
 		unit_class = INFANTRY;
 		unit_radius = 6;
 		SetTextureID(T_TWOHANDEDSWORDMAN);
@@ -50,6 +51,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 		speed = 1.4;
 		rate_of_fire = 2;
 		range = 4;
+		vision_range = 250;
 		unit_class = ARCHER;
 		unit_radius = 12;
 		SetTextureID(T_CAVALRYARCHER);
@@ -63,6 +65,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 		speed = 0.6;
 		rate_of_fire = 5;
 		range = 1;
+		vision_range = 100;
 		unit_class = SIEGE;
 		unit_radius = 15;
 		SetTextureID(T_SIEGERAM);
@@ -146,7 +149,7 @@ void Unit::AI()
 {
 	if (fighting == false)
 	{
-		attacking = App->entity_manager->CheckForEnemies(iPoint(GetX(), GetY()), GetRange(), GetSide());
+		attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), GetRange(), GetSide());
 
 		if (attacking != nullptr)
 		{
@@ -155,6 +158,16 @@ void Unit::AI()
 			this->action_type = ATTACK;
 			this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
 			changed = true;
+		}
+
+		else
+		{
+			if (dead == false)
+			{
+				iPoint new_obj = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), GetVisionRange(), GetSide());
+				if (new_obj.x != -1)
+					GoTo(new_obj); moving = true;
+			}
 		}
 	}
 
@@ -292,7 +305,8 @@ const int Unit::GetUnitRadius() const
 	return unit_radius;
 }
 
-int Unit::GetPath(iPoint dest) {
+int Unit::GetPath(iPoint dest)
+{
 	iPoint ori = App->map->WorldToMap(GetX(), GetY());
 	iPoint destinat = App->map->WorldToMap(dest.x, dest.y);
 	return App->pathfinding->CreatePath(ori, destinat, path_list);
@@ -306,6 +320,11 @@ const int Unit::GetAttack() const
 const int Unit::GetRange() const
 {
 	return range;
+}
+
+const int Unit::GetVisionRange() const
+{
+	return vision_range;
 }
 
 const bool Unit::IsMoving() const
@@ -340,6 +359,7 @@ void Unit::LookAt(iPoint pos)
 
 bool Unit::GoTo( iPoint destination)
 {
+	path_list.clear();
 	if (this->GetPath({ destination.x, destination.y }) != -1)
 	{
 		path_list.pop_front();

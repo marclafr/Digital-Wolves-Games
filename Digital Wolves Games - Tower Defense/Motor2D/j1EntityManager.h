@@ -33,8 +33,8 @@ public:
 	void DeleteBuilding(Entity* ptr);
 	void GetUnitsPath(iPoint destintation);
 
-	Entity* CheckForEnemies(iPoint position, int range, Side side);
-
+	Entity* CheckForCombat(iPoint position, int range, Side side);
+	iPoint CheckForObjective(iPoint position, int vision_range, Side side);
 	std::vector<Entity*> GetEntityVector();
 
 	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;

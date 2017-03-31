@@ -97,10 +97,9 @@ void j1Map::Draw()
 				if (tile_id > 0)
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
-
+					
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y);
-
 					App->render->Blit(tileset->texture, pos.x - 48, pos.y - 31, &r);
 				}
 			}
@@ -203,6 +202,7 @@ iPoint j1Map::WorldToMap(int x, int y) const
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	int relative_id = id - firstgid;
+
 	SDL_Rect rect;
 	rect.w = tile_width;
 	rect.h = tile_height;
