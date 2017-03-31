@@ -30,8 +30,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 bool j1Map::CreateWalkabilityMap(int& width, int & height, uchar** buffer) {
 
 	bool ret = false;
-
-
 	std::list<MapLayer*>::iterator item;
 	for (item = data.layers.begin(); item._Ptr->_Myval != NULL; item++)
 	{
@@ -54,8 +52,6 @@ bool j1Map::CreateWalkabilityMap(int& width, int & height, uchar** buffer) {
 
 				if (tileset != NULL)
 				{
-					//if (tile_id == 29)map[i] = 0;
-					//else map[i] = 1;
 					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
 				}
 			}
@@ -72,6 +68,7 @@ bool j1Map::CreateWalkabilityMap(int& width, int & height, uchar** buffer) {
 	return ret;
 
 }
+
 void j1Map::Draw()
 {
 	if (map_loaded == false)
@@ -84,9 +81,9 @@ void j1Map::Draw()
 	{
 		MapLayer* layer = item._Ptr->_Myval;
 
-	if (layer->properties.Get("Nodraw") == true && (layer->properties.Get("Navigation") == true))
+		if (layer->properties.Get("Nodraw") == true && (layer->properties.Get("Navigation") == true))
 		{
-		    //item++;//TODO: uncomment not to draw walkability map
+			//item++; //TODO:Uncomment for no printing
 			//continue;
 		}
 		for (int y = 0; y < data.height; ++y)
@@ -97,14 +94,15 @@ void j1Map::Draw()
 				if (tile_id > 0)
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
-					
+
 					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorld(x, y);
+					iPoint pos = MapToWorldPrintMap(x, y);
+
+					//TODO: numbers don't match tile relation with the rest
 					App->render->Blit(tileset->texture, pos.x - 48, pos.y - 31, &r);
 				}
 			}
 		}
-
 		item++;
 	}
 }
@@ -142,17 +140,11 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	return set;
 }
 
-
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
 
-	if (data.type == MAPTYPE_ORTHOGONAL)
-	{
-		ret.x = x * data.tile_width;
-		ret.y = y * data.tile_height;
-	}
-	else if (data.type == MAPTYPE_ISOMETRIC)
+	if (data.type == MAPTYPE_ISOMETRIC)
 	{
 		ret.x = (x - y) * (int)(data.tile_width * 0.5f) - data.tile_width * 0.5f;
 		ret.y = (x + y) * (int)(data.tile_height * 0.5f) + (x + y);
@@ -165,18 +157,31 @@ iPoint j1Map::MapToWorld(int x, int y) const
 
 	return ret;
 }
+
+iPoint j1Map::MapToWorldPrintMap(int x, int y) const
+{
+	iPoint ret;
+
+	if (data.type == MAPTYPE_ISOMETRIC)
+	{
+		ret.x = (x - y) * (int)(data.tile_width * 0.5f);
+		ret.y = (x + y) * (int)(data.tile_height * 0.5f);
+	}
+	else
+	{
+		LOG("Unknown map type");
+		ret.x = x; ret.y = y;
+	}
+
+	return ret;
+}
+
 iPoint j1Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(x + data.tile_width * 0.5f, y);
 
-	if (data.type == MAPTYPE_ORTHOGONAL)
+	if (data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.x = ret.x / data.tile_width;
-		ret.y = y / data.tile_height;
-	}
-	else if (data.type == MAPTYPE_ISOMETRIC)
-	{
-
 		float half_width = data.tile_width * 0.5f;
 		float half_height = (data.tile_height + 1) * 0.5f;
 
@@ -190,19 +195,18 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		else if (ret.x >= 25)ret.x = 25;
 		if (ret.y <= 0)ret.y = 0;
 		else if (ret.y >= 25)ret.y = 25;
-
 	}
 	else
 	{
 		LOG("Unknown map type");
 	}
+
 	return ret;
 }
 
 SDL_Rect TileSet::GetTileRect(int id) const
 {
 	int relative_id = id - firstgid;
-
 	SDL_Rect rect;
 	rect.w = tile_width;
 	rect.h = tile_height;

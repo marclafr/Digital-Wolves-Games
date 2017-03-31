@@ -120,9 +120,9 @@ public:
 
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
-	fPoint MapToWorldf(int x2, int y) const;
-	fPoint WorldToMapf(int x2, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);
+	iPoint MapToWorldPrintMap(int x, int y) const;
+	TileSet* GetTilesetFromTileId(int id) const;
 
 private:
 
@@ -132,10 +132,8 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
-	TileSet* GetTilesetFromTileId(int id) const;
-
+	//CHANGE
 public:
-
 	MapData data;
 
 private:
