@@ -51,6 +51,7 @@ private:
 	UIButton* tree_tech;
 	UIButton* ingame_menu;
 	UIHUDResources* resources_panel;
+	UILabel* title_game_name;
 
 	UIComponents* down_hud;
 	UICheckbutton* btn_description;

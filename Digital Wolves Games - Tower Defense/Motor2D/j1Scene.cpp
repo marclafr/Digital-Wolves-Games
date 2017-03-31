@@ -75,7 +75,13 @@ bool j1Scene::Start()
 	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	ingame_menu->Set({1323, 2, 36 , 15}, {1325, 996, 36, 14});
 
-	//Down_HUD
+	resources_panel = (UIHUDResources*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDRESOURCES);
+
+	title_game_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_game_name->Set(685, 3, "AoE 2: Defenders");
+	title_game_name->SetInteractive(false);
+
+		//Down_HUD
 	down_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	down_hud->Set({0, 643, 1366, 125}, {0, 1036, 1366, 125});
 	down_hud->SetInteractive(false);
@@ -97,8 +103,6 @@ bool j1Scene::Start()
 
 	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
 	hud_description->SetEnableButton(btn_description);
-
-	resources_panel = (UIHUDResources*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDRESOURCES);
 
 	//Entity Manager
 	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 300), ENEMY);
