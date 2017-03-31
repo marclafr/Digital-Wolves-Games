@@ -7,6 +7,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include <math.h>
+#include "Camera.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -98,8 +99,14 @@ void j1Map::Draw()
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorldPrintMap(x, y);
 
-					//TODO: numbers don't match tile relation with the rest
-					App->render->Blit(tileset->texture, pos.x - 48, pos.y - 31, &r);
+					//TODO: this should be temporary until we find out what happens, also,TODO solve InsideRenderTarget: after moving the camera doesnt work.
+					//if (App->render->camera->InsideRenderTarget(pos.x, pos.y))
+					{
+						if (tileset->name.compare("Extras") != 0)
+							App->render->Blit(tileset->texture, pos.x - 48 - (data.tile_width * 0.5f), pos.y - 31 + (x + y), &r);
+						else
+							App->render->Blit(tileset->texture, pos.x - 48, pos.y - 31, &r);
+					}
 				}
 			}
 		}
