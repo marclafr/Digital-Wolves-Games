@@ -47,7 +47,61 @@ const char* GetUnitName(const UNIT_TYPE type)
 
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
-		ret = "Error";
+		ret = "Error Unit";
+		break;
+	}
+
+	return ret;
+}
+
+SDL_Rect GetResourceIconPositionFromAtlas(const RESOURCE_TYPE type)
+{
+	SDL_Rect ret;
+
+	switch (type)
+	{
+	case WOOD:
+		ret = { 0, 0, 0, 0 };
+		break;
+	case STONE:
+		ret = { 0, 0, 0, 0 };
+		break;
+	case FOOD:
+		ret = { 0, 0, 0, 0 };
+		break;
+	case GOLD:
+		ret = { 0, 0, 0, 0 };
+		break;
+	default:
+		//LOG("Error Resource TYPE SDL_Rect NULL (UIManager)");
+		ret = { 0, 0, 0, 0 };
+		break;
+	}
+
+	return ret;
+}
+
+const char * GetResourceName(const RESOURCE_TYPE type)
+{
+	const char* ret;
+
+	switch (type)
+	{
+	case WOOD:
+		ret = "Sawmill";
+		break;
+	case STONE:
+		ret = "Quarry";
+		break;
+	case FOOD:
+		ret = "Mill";
+		break;
+	case GOLD:
+		ret = "Quarry";
+		break;
+	default:
+		//LOG("Error Resource TYPE SDL_Rect NULL (UIManager)");
+		ret = "Error Resource";
 		break;
 	}
 
@@ -85,7 +139,7 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
-		ret = "Error";
+		ret = "Error Building";
 		break;
 	}
 
@@ -106,7 +160,7 @@ const char* GetSideName(const Side type)
 		break;
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
-		ret = "Error";
+		ret = "Error Side";
 		break;
 	}
 

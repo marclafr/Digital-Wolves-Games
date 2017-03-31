@@ -43,6 +43,7 @@ private:
 		void PrepareBuildingInfo();
 		void PrepareBuildingConstruction();
 		void UpdateBuildingPercentageStr();
+		void PrepareResourceInfo();
 	};
 
 	std::list<Entity*> selection_tmp;
@@ -72,6 +73,7 @@ public:
 	void DrawButtonsEntitiesSelected();
 	void DrawUnitSelected();
 	void DrawBuildingSelected();
+	void DrawResourceSelected();
 	
 	bool Update();
 
