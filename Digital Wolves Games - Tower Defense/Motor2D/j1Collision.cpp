@@ -150,5 +150,5 @@ void j1Collision::SplitUnits(Unit * unit1)
 	unit1->PopFirstPath();
 	unit1->GetNextTile();
 	unit1->SetAction(WALK);
-	unit1->SetIsMoving(true);
+	unit1->SetIsMoving();
 }

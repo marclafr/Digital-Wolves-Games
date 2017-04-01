@@ -11,13 +11,13 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), fighting(false), attacking(nullptr), dead(false), enemy_found(false), priority(priority)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), attacking(nullptr), priority(priority), state(VIGILANT)
 {
 	if (GetSide() == ENEMY)
 	{
 		this->action_type = WALK;
 		GoTo(TOWN_HALL);
-		moving = true;
+		state = MOVING;
 		changed = true;
 	}
 		
@@ -89,7 +89,7 @@ Unit::~Unit()
 
 void Unit::Update()
 {
-	if (!dead)
+	if (state != DEAD)
 	{
 		if (changed == true)
 		{
@@ -122,13 +122,13 @@ void Unit::Move()
 
 		if(GoTo(destination) == false)
 		{
-			this->moving = false;
+			state = VIGILANT;
 			this->action_type = IDLE;
 			changed = true;
 		}
 	}
 
-	if (this->moving == true)
+	if (state == MOVING)
 	{
 		this->SetPosition(GetX() + move_vector.x*speed, GetY() + move_vector.y*speed);
 
@@ -137,7 +137,7 @@ void Unit::Move()
 			//center the unit to the tile
 			if (!GetNextTile())
 			{
-				moving = false;
+				state = VIGILANT;
 				this->action_type = IDLE;
 				changed = true;
 			}
@@ -147,25 +147,25 @@ void Unit::Move()
 
 void Unit::AI()
 {
-	if (!dead)
+	if (state != DEAD)
 	{
 		if (GetHp() <= 0)
 			Die();
 
-		if (fighting == false)
+		if (state != FIGHTING)
 		{
 			attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), GetRange(), GetSide());
 
 			if (attacking != nullptr)
 			{
-				fighting = true;
-				moving = false;
+				state = FIGHTING;
 				this->action_type = ATTACK;
 				this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
 				changed = true;
 			}
 
-			/*TODO: Uncomment for check for enemies
+			/*
+			//TODO: Uncomment for check for enemies
 			else
 			{
 				iPoint new_obj = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), GetVisionRange(), GetSide());
@@ -177,20 +177,20 @@ void Unit::AI()
 			}*/
 		}
 
-		if (fighting)
+		if (state == FIGHTING)
 		{
 			if (animation->Finished())
 				attacking->Damaged(attack);
 
 			if (attacking->GetHp() <= 0)
 			{
-				fighting = false;
+				state = VIGILANT;
 
 				if (GetSide() == ENEMY)
 				{
 					this->action_type = WALK;
 					GoTo(TOWN_HALL);
-					moving = true;
+					state = MOVING;
 					changed = true;
 				}
 				else
@@ -248,7 +248,7 @@ void Unit::Draw()
 
 void Unit::Die()
 {
-	moving = false;
+	state = DEAD;
 	if (changed == false && action_type != DIE && action_type != DISAPPEAR)
 	{
 		action_type = DIE;
@@ -278,10 +278,9 @@ void Unit::Die()
 		}
 	}
 
-	if (animation->Finished() && dead == false)
+	if (animation->Finished())
 	{
-		dead = true;
-		App->entity_manager->DeleteUnit(this);
+		//TODO: App->entity_manager->DeleteUnit(this);
 	}
 }
 
@@ -334,7 +333,9 @@ const int Unit::GetVisionRange() const
 
 const bool Unit::IsMoving() const
 {
-	return moving;
+	if (state == MOVING)
+		return true;
+	return false;
 }
 
 const int Unit::GetPriority() const
@@ -352,9 +353,9 @@ void Unit::SetAction(const ACTION_TYPE action)
 	action_type = action;
 }
 
-void Unit::SetIsMoving(bool mov)
+void Unit::SetIsMoving()
 {
-	moving = mov;
+	state = MOVING;
 }
 
 void Unit::LookAt(iPoint pos)
@@ -369,9 +370,9 @@ bool Unit::GoTo( iPoint destination)
 	{
 		path_list.pop_front();
 		GetNextTile();
-		this->action_type = WALK;
+		action_type = WALK;
 		changed = true;
-		this->moving = true;
+		state = MOVING;
 		return true;
 	}
 	return false;

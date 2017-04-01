@@ -54,6 +54,16 @@ enum DIRECTION
 	NORTH_WEST
 };
 
+enum UNIT_STATE
+{
+	NONE = 0,
+	FIGHTING,
+	MOVING_TO_FIGHT,
+	VIGILANT,
+	MOVING,
+	DEAD
+};
+
 class Unit : public Entity
 {
 private:
@@ -76,13 +86,10 @@ private:
 	int rand_num;
 	Animation* animation;
 	bool changed;
-	bool fighting;
-	bool enemy_found;
-	bool dead;
 	Entity* attacking;
+	UNIT_STATE state;
 
 	std::list<iPoint> path_list;
-	bool moving = false;
 
 	int priority;
 
@@ -112,7 +119,7 @@ public:
 	const int GetPriority() const;
 	void PopFirstPath();
 	void SetAction(const ACTION_TYPE action);
-	void SetIsMoving(bool mov);
+	void SetIsMoving();
 
 	//TODO:this should be private?
 	bool GetNextTile();
