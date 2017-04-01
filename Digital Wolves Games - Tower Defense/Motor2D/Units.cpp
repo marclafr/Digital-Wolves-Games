@@ -147,85 +147,89 @@ void Unit::Move()
 
 void Unit::AI()
 {
-	if (fighting == false)
+	if (!dead)
 	{
-		attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), GetRange(), GetSide());
+		if (GetHp() <= 0)
+			Die();
 
-		if (attacking != nullptr)
+		if (fighting == false)
 		{
-			fighting = true;
-			moving = false;
-			this->action_type = ATTACK;
-			this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
-			changed = true;
-		}
+			attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), GetRange(), GetSide());
 
-		else
-		{
-			if (dead == false)
+			if (attacking != nullptr)
+			{
+				fighting = true;
+				moving = false;
+				this->action_type = ATTACK;
+				this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
+				changed = true;
+			}
+
+			/*TODO: Uncomment for check for enemies
+			else
 			{
 				iPoint new_obj = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), GetVisionRange(), GetSide());
 				if (new_obj.x != -1)
-					GoTo(new_obj); moving = true;
-			}
+				{
+					GoTo(new_obj);
+					moving = true;
+				}
+			}*/
 		}
-	}
 
-	if (fighting)
-	{
-		if (animation->Finished())
-			attacking->Damaged(attack);
-
-		if (attacking->GetHp() <= 0)
+		if (fighting)
 		{
-			fighting = false;
+			if (animation->Finished())
+				attacking->Damaged(attack);
 
-			if (GetSide() == ENEMY)
+			if (attacking->GetHp() <= 0)
 			{
-				this->action_type = WALK;
-				GoTo(TOWN_HALL);
-				moving = true;
-				changed = true;
-			}
-			else
-			{
-				this->action_type = IDLE;
-				changed = true;
+				fighting = false;
+
+				if (GetSide() == ENEMY)
+				{
+					this->action_type = WALK;
+					GoTo(TOWN_HALL);
+					moving = true;
+					changed = true;
+				}
+				else
+				{
+					this->action_type = IDLE;
+					changed = true;
+				}
 			}
 		}
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-	{
-		action_type = ATTACK;
-		changed = true;
-	}
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+		{
+			action_type = ATTACK;
+			changed = true;
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-	{
-		action_type = IDLE;
-		changed = true;
-	}
+		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		{
+			action_type = IDLE;
+			changed = true;
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-	{
-		action_type = WALK;
-		changed = true;
-	}
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+		{
+			action_type = WALK;
+			changed = true;
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-	{
-		action_type = DIE;
-		changed = true;
-	}
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		{
+			action_type = DIE;
+			changed = true;
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-	{
-		SetHp(0);
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+		{
+			SetHp(0);
+		}
 	}
-
-	if (GetHp() <= 0)
-		Die();
 }
 
 void Unit::Draw()
@@ -274,10 +278,11 @@ void Unit::Die()
 		}
 	}
 
-	if (animation->Finished())
-		//TODO
+	if (animation->Finished() && dead == false)
+	{
 		dead = true;
-		//App->entity_manager->DeleteUnit(this);
+		App->entity_manager->DeleteUnit(this);
+	}
 }
 
 const DIRECTION Unit::GetDir() const

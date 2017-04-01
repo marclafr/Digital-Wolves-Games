@@ -106,9 +106,9 @@ bool j1Scene::Start()
 
 	//Entity Manager
 	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 300), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 400), ENEMY);
+	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 400), ENEMY);
 	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 300), ALLY);
+	//App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 300), ALLY);
 	resources_panel->AddResource( (Resources*)App->entity_manager->CreateResource(STONE, fPoint(150,300)) );
 	return true;
 }
