@@ -128,7 +128,7 @@ void Unit::Move()
 		}
 	}
 
-	if (state == MOVING)
+	if (state == MOVING || state == MOVING_TO_FIGHT)
 	{
 		this->SetPosition(GetX() + move_vector.x*speed, GetY() + move_vector.y*speed);
 
@@ -147,12 +147,23 @@ void Unit::Move()
 
 void Unit::AI()
 {
+
+	if (GetHp() <= 0)
+		Die();
+
 	if (state != DEAD)
 	{
-		if (GetHp() <= 0)
-			Die();
+		if (state == VIGILANT || state == MOVING || state == MOVING_TO_FIGHT)
+		{
+			iPoint new_obj = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), GetVisionRange(), GetSide());
+			if (new_obj.x != -1)
+			{
+				GoTo(new_obj);
+				state = MOVING_TO_FIGHT;
+			}
+		}
 
-		if (state != FIGHTING)
+		if (state == MOVING_TO_FIGHT)
 		{
 			attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), GetRange(), GetSide());
 
@@ -163,18 +174,6 @@ void Unit::AI()
 				this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
 				changed = true;
 			}
-
-			/*
-			//TODO: Uncomment for check for enemies
-			else
-			{
-				iPoint new_obj = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), GetVisionRange(), GetSide());
-				if (new_obj.x != -1)
-				{
-					GoTo(new_obj);
-					moving = true;
-				}
-			}*/
 		}
 
 		if (state == FIGHTING)
@@ -333,7 +332,7 @@ const int Unit::GetVisionRange() const
 
 const bool Unit::IsMoving() const
 {
-	if (state == MOVING)
+	if (state == MOVING || state == MOVING_TO_FIGHT)
 		return true;
 	return false;
 }
