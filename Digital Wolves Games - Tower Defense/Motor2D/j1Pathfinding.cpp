@@ -42,7 +42,12 @@ void j1PathFinding::SetMap(uint width, uint height, uchar* data)
 
 	memcpy(map, data, width*height);
 }
+void j1PathFinding::SetConstructibleMap(uint width, uint height, uchar* data)
+{
+	constructible_map = new uchar[width*height];
+	memcpy(constructible_map, data, width*height);
 
+}
 // Utility: return true if pos is inside the map boundaries
 bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 {
@@ -56,6 +61,11 @@ bool j1PathFinding::IsWalkable(const iPoint& pos) const
 	uchar t = GetTileAt(pos);
 	return t != INVALID_WALK_CODE && t > 0;
 }
+bool j1PathFinding::IsConstructible(const iPoint& pos) const
+{
+	uchar t = GetTileAtConstructible(pos);
+	return t != INVALID_WALK_CODE && t > 1;
+}
 
 void j1PathFinding::MakeNoWalkable(const iPoint& pos)
 {
@@ -67,6 +77,14 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
 		return map[(pos.y*width) + pos.x];
+
+	return INVALID_WALK_CODE;
+}
+
+uchar j1PathFinding::GetTileAtConstructible(const iPoint& pos) const
+{
+	if (CheckBoundaries(pos))
+		return constructible_map[(pos.y*width) + pos.x];
 
 	return INVALID_WALK_CODE;
 }

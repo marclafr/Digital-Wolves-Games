@@ -45,11 +45,17 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(BUILDIN
 
 void Building::Update()
 {
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED) {
+		this->SetHp(0);
+	}
 	if (totallybuilded == true) 
 	{
 		AI();
 	}
 	Draw();
+	if (GetHp() < 0) {
+		this->Die();
+	}
 }
 
 void Building::AI()

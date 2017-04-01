@@ -19,7 +19,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(RESOURCE, pos, A
 	{
 	case STONE:
 		SetSide(ALLY);
-		SetHp(1000);
+		SetHp(10);
 		SetArmor(1);
 		collect_time = 10;
 		build_time = 7;

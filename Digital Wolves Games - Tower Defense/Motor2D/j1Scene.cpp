@@ -54,7 +54,8 @@ bool j1Scene::Start()
 		uchar* data = NULL;
 		if(App->map->CreateWalkabilityMap(w, h, &data))
 			App->pathfinding->SetMap(w, h, data);
-
+		if (App->map->CreateConstructibleMap(w, h, &data))
+			App->pathfinding->SetConstructibleMap(w, h, data);
 		RELEASE_ARRAY(data);
 	}
 
@@ -130,9 +131,8 @@ bool j1Scene::PreUpdate()
 		iPoint r = App->map->WorldToMap(p.x, p.y);
 		iPoint s = App->map->MapToWorld(r.x, r.y);
 
-		if(App->pathfinding->IsWalkable(r) == true)
+		if(App->pathfinding->IsConstructible(r) == true)
 			App->entity_manager->CreateBuilding(TURRET, fPoint(s.x, s.y - 9), ALLY);
-
 	}
 	p = App->map->WorldToMap(p.x, p.y);
 	

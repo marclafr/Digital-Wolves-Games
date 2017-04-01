@@ -32,6 +32,7 @@ public:
 
 	// Sets up the walkability map
 	void SetMap(uint width, uint height, uchar* data);
+	void SetConstructibleMap(uint width, uint height, uchar* data);
 
 	
 	int CreatePath(const iPoint & origin, const iPoint & destination, std::list<iPoint>& list);
@@ -45,9 +46,11 @@ public:
 
 	// Utility: returns true is the tile is walkable
 	bool IsWalkable(const iPoint& pos) const;
+	bool IsConstructible(const iPoint& pos) const;
 	void MakeNoWalkable(const iPoint& pos);
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
+	uchar GetTileAtConstructible(const iPoint& pos) const;
 
 	PathNode* GetPathNode(int x, int y);
 private:
@@ -59,6 +62,7 @@ private:
 	uchar* map;
 	//TODO1 create a node map
 	PathNode* node_map;
+	uchar* constructible_map;
 	// we store the created path here
 	std::vector<iPoint> last_path;
 };
