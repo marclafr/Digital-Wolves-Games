@@ -141,7 +141,7 @@ uint PathNode::FindWalkableAdjacents(std::list<PathNode*>* list_to_fill) const
 	}
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell) && cell.x != 25)
+	if (App->pathfinding->IsWalkable(cell))
 	{
 		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
 		if (node->pos != cell) {

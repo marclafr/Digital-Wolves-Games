@@ -106,13 +106,13 @@ void Building::Draw()
 	}
 	else if (buildtimer.ReadMs() > 3000 && buildtimer.ReadMs() <= 6000) 
 	{
-		SDL_Rect rect = { 244,539,100,73};
+		SDL_Rect rect = { 376,539,100,73};
 		SetRect(rect);
 		SetPivot(0.55*100, 0.643836*73);
 	}
 	else if (buildtimer.ReadMs() > 6000 && buildtimer.ReadMs() <= 9000)
 	{
-		SDL_Rect rect = { 346,539,100,73 };
+		SDL_Rect rect = { 478,539,100,73 };
 		SetRect(rect);
 		SetPivot(0.55 * 100, 0.643836 * 73);
 	}

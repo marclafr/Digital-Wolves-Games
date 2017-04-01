@@ -28,6 +28,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(RESOURCE, pos, A
 		SetPivot(0.491228*171 ,0.653465*101);
 		SetTextureID(T_RESOURCE);
 		totallybuilded = true;
+		CollectTimer.Start();
 		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
@@ -45,6 +46,10 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(RESOURCE, pos, A
 
 void Resources::Update()
 {
+	if (GetHp() <= 0) 
+	{
+		this->Die();
+	}
 	if (totallybuilded == true)
 	{
 		AI();
@@ -54,7 +59,10 @@ void Resources::Update()
 
 void Resources::AI()
 {
-	
+	if (CollectTimer.ReadMs() >= collect_time * 1000) {
+		AddResource(100);
+		CollectTimer.Start();
+	}
 }
 
 void Resources::Draw()
@@ -77,6 +85,10 @@ int Resources::GetResource()
 	return resource;
 }
 
+void Resources::AddResource(int add) 
+{
+	resource += add;
+}
 /*
 Resources::Resources() {
 	wood = 2000;

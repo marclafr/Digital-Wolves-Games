@@ -39,25 +39,10 @@ public:
 	virtual void Draw();
 
 	const RESOURCE_TYPE GetResourceType() const;
-	const int GetRange() const;
 	const double GetBuildTime() const;
-
+	void AddResource(int add);
+	void UseResource(int use);
 	int GetResource();
-
-	int GetWood();
-	int GetFood();
-	int GetGold();
-	int GetStone();
-
-	void AddWood(int adding);
-	void AddFood(int adding);
-	void AddGold(int adding);
-	void AddStone(int adding);
-
-	void UseWood(int used);
-	void UseFood(int used);
-	void UseGold(int used);
-	void UseStone(int used);
 };
 
 #endif
