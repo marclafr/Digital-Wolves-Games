@@ -267,10 +267,6 @@ bool Animation::Finished()
 				return true;
 			}
 		}
-		else if (anim_type->GetActionType() == DIE)
-		{
-			ChangeAnimation(App->anim->GetAnimationType(anim_type->GetUnitType(), DISAPPEAR, anim_type->GetDirection()));
-		}
 		else
 		{
 			finished = true;

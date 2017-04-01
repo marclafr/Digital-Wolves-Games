@@ -89,24 +89,30 @@ Unit::~Unit()
 
 void Unit::Update()
 {
+	if (changed == true)
+	{
+		animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
+		changed = false;
+	}
+
 	if (state != DEAD)
 	{
-		if (changed == true)
-		{
-			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
-			changed = false;
-		}
-
 		AI();
 		Move();
 		Draw();
-		
+
 		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED)
 		{
 			SetHp(0);
 			action_type = DIE;
 			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
 		}
+	}
+
+	else
+	{
+		Draw();
+		Die();
 	}
 }
 
@@ -149,11 +155,11 @@ void Unit::AI()
 {
 
 	if (GetHp() <= 0)
-		Die();
+		state = DEAD;
 
 	if (state != DEAD)
 	{
-		if (state == VIGILANT || state == MOVING || state == MOVING_TO_FIGHT)
+		if (state == VIGILANT || state == MOVING || state == MOVING_TO_FIGHT && animation->Finished())
 		{
 			iPoint new_obj = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), GetVisionRange(), GetSide());
 			if (new_obj.x != -1)
@@ -247,7 +253,18 @@ void Unit::Draw()
 
 void Unit::Die()
 {
-	state = DEAD;
+	
+	if (animation->Finished() && action_type == DIE)
+	{
+		action_type = DISAPPEAR;
+		changed = true;
+	}
+
+	else if (animation->Finished() && action_type == DISAPPEAR)
+	{
+		App->entity_manager->DeleteUnit(this);
+	}
+	
 	if (changed == false && action_type != DIE && action_type != DISAPPEAR)
 	{
 		action_type = DIE;
@@ -275,11 +292,6 @@ void Unit::Die()
 		{
 			App->audio->PlayFx(fx_twohanded_die05);
 		}
-	}
-
-	if (animation->Finished())
-	{
-		//TODO: App->entity_manager->DeleteUnit(this);
 	}
 }
 
