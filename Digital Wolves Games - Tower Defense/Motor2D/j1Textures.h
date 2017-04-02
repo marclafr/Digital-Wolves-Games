@@ -67,6 +67,10 @@ public:
 	void GetSize(const SDL_Texture* texture, uint& width, uint& height) const;
 	SDL_Texture* GetTexture(const TextureID id) const;
 
+	//Quick Solution for Labels on UIHUDPanelInfo
+	bool UnloadLabel(SDL_Texture* texture);
+	SDL_Texture* const j1Textures::LoadSurfaceLabel(SDL_Surface* surface);
+
 private:
 
 	std::vector<Texture*> textures;

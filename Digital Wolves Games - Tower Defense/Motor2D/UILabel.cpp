@@ -14,6 +14,8 @@ UILabel::~UILabel()
 {
 	if (font != nullptr)
 		delete font;
+
+	App->tex->UnloadLabel(text_img);
 }
 
 void UILabel::Set(int pos_x, int pos_y, const char * text, _TTF_Font*  font)
@@ -60,6 +62,8 @@ void UILabel::ChangeText(const char* text)
 {
 	if (this->text != text)
 	{
+		App->tex->UnloadLabel(text_img);
+
 		text_img = App->font->Print(text, T_AOE_UI_FONT, { 255,0,0,0 });
 
 		App->render->GetDimensionsFromTexture(text_img, rect_position.w, rect_position.h);

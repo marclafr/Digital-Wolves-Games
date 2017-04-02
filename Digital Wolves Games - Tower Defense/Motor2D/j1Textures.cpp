@@ -179,3 +179,23 @@ SDL_Texture * j1Textures::GetTexture(const TextureID id) const
 			return textures[i]->GetTexture();
 	return nullptr;
 }
+
+//Quick fix for labels on HUDUIPanelInfo
+bool j1Textures::UnloadLabel(SDL_Texture * texture)
+{
+	SDL_DestroyTexture(texture);
+	texture = nullptr;
+	return true;
+}
+
+SDL_Texture * const j1Textures::LoadSurfaceLabel(SDL_Surface * surface)
+{
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
+
+	if (texture == NULL)
+	{
+		LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
+	}
+
+	return texture;
+}
