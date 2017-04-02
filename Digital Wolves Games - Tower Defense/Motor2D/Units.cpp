@@ -104,8 +104,6 @@ void Unit::Update()
 		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED)
 		{
 			SetHp(0);
-			action_type = DIE;
-			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
 		}
 	}
 
@@ -253,7 +251,7 @@ void Unit::Draw()
 
 void Unit::Die()
 {
-	
+
 	if (animation->Finished() && action_type == DIE)
 	{
 		action_type = DISAPPEAR;
@@ -262,7 +260,7 @@ void Unit::Die()
 
 	else if (animation->Finished() && action_type == DISAPPEAR)
 	{
-		App->entity_manager->DeleteUnit(this);
+		this->SetToDelete();
 	}
 	
 	if (changed == false && action_type != DIE && action_type != DISAPPEAR)
@@ -313,6 +311,11 @@ const UNIT_CLASS Unit::GetUnitClass() const
 const ACTION_TYPE Unit::GetActionType() const
 {
 	return action_type;
+}
+
+const UNIT_STATE Unit::GetUnitState() const
+{
+	return state;
 }
 
 const int Unit::GetUnitRadius() const

@@ -40,9 +40,11 @@ bool j1Collision::Update(float dt)
 							//Collision detected
 							Unit* unit_2 = (Unit*)unit2[j];
 							//TODO
-							if (unit_1->GetPriority() > unit_2->GetPriority() && unit_1->IsMoving() == false)
+							if (unit_1->GetPriority() > unit_2->GetPriority() && unit_1->GetUnitState() == VIGILANT && unit_2->GetUnitState() == VIGILANT)
+								//&& unit_1->GetUnitState() != FIGHTING && unit_1->GetUnitState() != MOVING_TO_FIGHT
+								//&& unit_2->GetUnitState() != FIGHTING && unit_2->GetUnitState() != MOVING_TO_FIGHT)
 							{
-								SplitUnits((Unit*)unit1[i]);
+								//SplitUnits((Unit*)unit1[i]);
 							}
 						}
 					}

@@ -83,5 +83,6 @@ protected:
 	void SetRect(SDL_Rect rect);
 	void SetTextureID(TextureID id);
 	void SetSide(Side side);
+	void SetToDelete();
 };
 #endif

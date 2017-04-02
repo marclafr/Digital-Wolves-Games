@@ -99,7 +99,7 @@ void j1EntityManager::UnselectEverything()
 		App->scene->panel_info->DeleteSelection();
 }
 
-void j1EntityManager::DeleteEntity(Entity * ptr)
+void j1EntityManager::DeleteEntity(Entity* ptr)
 {
 	switch (ptr->GetEntityType())
 	{
@@ -113,11 +113,13 @@ void j1EntityManager::DeleteEntity(Entity * ptr)
 	}
 }
 
-void j1EntityManager::DeleteUnit(Unit * ptr)
+void j1EntityManager::DeleteUnit(Unit* ptr)
 {
-	//take out of queue and delete TODO
 	for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end(); i++)
 	{
+		if (entity_array.size() == 0)
+			break;
+
 		if (*i == ptr)
 		{
 			entity_array.erase(i);
@@ -126,7 +128,7 @@ void j1EntityManager::DeleteUnit(Unit * ptr)
 	}
 }
 
-void j1EntityManager::DeleteBuilding(Entity * ptr)
+void j1EntityManager::DeleteBuilding(Entity* ptr)
 {
 }
 
@@ -159,7 +161,6 @@ bool j1EntityManager::PostUpdate()
 		if (entity_array[i]->ToDelete() == true)
 		{
 			DeleteEntity(entity_array[i]);
-			entity_array.erase(entity_array.begin() + i);
 		}
 	}
 	return true;
