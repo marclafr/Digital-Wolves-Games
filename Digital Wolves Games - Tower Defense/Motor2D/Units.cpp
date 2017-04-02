@@ -31,7 +31,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 		speed = 0.9;
 		rate_of_fire = 2;
 		range = 30;
-		vision_range = 200;
+		vision_range = 300;
 		unit_class = INFANTRY;
 		unit_radius = 6;
 		SetTextureID(T_TWOHANDEDSWORDMAN);
@@ -50,8 +50,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 		SetArmor(1);
 		speed = 1.4;
 		rate_of_fire = 2;
-		range = 4;
-		vision_range = 250;
+		range = 300;
+		vision_range = 350;
 		unit_class = ARCHER;
 		unit_radius = 12;
 		SetTextureID(T_CAVALRYARCHER);
@@ -64,7 +64,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 		SetArmor(-5);
 		speed = 0.6;
 		rate_of_fire = 5;
-		range = 1;
+		range = 30;
 		vision_range = 100;
 		unit_class = SIEGE;
 		unit_radius = 15;
