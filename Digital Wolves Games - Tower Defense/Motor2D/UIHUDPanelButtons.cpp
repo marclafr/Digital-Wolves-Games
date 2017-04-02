@@ -9,7 +9,7 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 #include "j1UIManager.h"
-#include "j1Scene.h"
+
 #include "SDL\include\SDL_rect.h"
 
 #include "UIButton.h"
@@ -66,10 +66,8 @@ info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atl
 
 void UIHUDPanelButtons::CreateEntity()
 {
-	if (App->scene->placing_tower == false) App->scene->placing_tower = true;
 	if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_DOWN)
 	{
-		
 		int x;
 		int y;
 		App->input->GetMousePosition(x, y);
@@ -86,13 +84,8 @@ void UIHUDPanelButtons::CreateEntity()
 			break;
 
 			case ENTITY_TYPE::BUILDING:
-				if (App->scene->placing_tower == true) {
-					if (App->pathfinding->IsConstructible(r) == true) 
-					{
-						App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
-						App->scene->placing_tower = false;
-					}
-				}
+				if (App->pathfinding->IsConstructible(r) == true)
+					App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
 			break;
 		}
 		if_active = nullptr;

@@ -207,7 +207,6 @@ bool j1Scene::Update(float dt)
 	}
 	if (placing_tower == true)
 	{
-	
 		if (App->pathfinding->IsConstructible(r) == false)
 		{
 			SDL_Rect rect;
@@ -224,10 +223,6 @@ bool j1Scene::Update(float dt)
 				App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ALLY);
 				placing_tower = false;
 			}
-		}
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-		{
-			placing_tower = false;
 		}
 		
 	}
