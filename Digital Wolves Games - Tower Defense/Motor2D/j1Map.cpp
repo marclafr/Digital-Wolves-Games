@@ -144,7 +144,7 @@ void j1Map::Draw()
 					//if (App->render->camera->InsideRenderTarget(pos.x, pos.y))
 						if (tileset->name.compare("Extras") != 0)
 							App->render->Blit(tileset->texture, pos.x - 48 - (data.tile_width * 0.5f), pos.y - 31 + (x + y), &r);
-						else		App->render->Blit(tileset->texture, pos.x - 48 -tileset->tile_width, pos.y - 31 + tileset->tile_height, &r);
+						else		App->render->Blit(tileset->texture, pos.x - 48 - tileset->tile_width/2, pos.y - 31 + tileset->tile_height, &r);
 				}
 			}
 		}
