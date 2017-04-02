@@ -121,6 +121,7 @@ void j1EntityManager::DeleteUnit(Unit* ptr)
 		{
 			entity_array.erase(i);
 			delete ptr;
+			return;
 		}
 		else
 			i++;
@@ -129,6 +130,17 @@ void j1EntityManager::DeleteUnit(Unit* ptr)
 
 void j1EntityManager::DeleteBuilding(Entity* ptr)
 {
+	for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end();)
+	{
+		if (*i == ptr)
+		{
+			entity_array.erase(i);
+			delete ptr;
+			return;
+		}
+		else
+			i++;
+	}
 }
 
 

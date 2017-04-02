@@ -45,7 +45,8 @@ public:
 
 private:
 	SDL_Texture* debug_tex;
-
+	SDL_Texture* tower_tex;
+	bool placing_tower = false;
 	UIComponents* top_hud;
 	UIButton* objectives;
 	UIButton* tree_tech;

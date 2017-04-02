@@ -60,7 +60,7 @@ bool j1Scene::Start()
 	}
 
 	debug_tex = App->tex->Load("maps/path2.png", T_MAP);
-
+	tower_tex = App->tex->Load("textures/Towers.png", T_TURRET);
 	//UIElements
 		//Top_HUD
 	top_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
@@ -126,14 +126,7 @@ bool j1Scene::PreUpdate()
 	App->input->GetMousePosition(x, y);
 	
 	iPoint p = App->render->ScreenToWorld(x, y);
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-	{
-		iPoint r = App->map->WorldToMap(p.x, p.y);
-		iPoint s = App->map->MapToWorld(r.x, r.y);
-
-		if(App->pathfinding->IsConstructible(r) == true)
-			App->entity_manager->CreateBuilding(TURRET, fPoint(s.x, s.y - 9), ALLY);
-	}
+	
 	p = App->map->WorldToMap(p.x, p.y);
 	
 		
@@ -200,10 +193,41 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
+	iPoint r = App->map->WorldToMap(p.x, p.y);
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
 
 	App->render->Blit(debug_tex, p.x - 44, p.y - 31);
+
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		if (placing_tower == false) placing_tower = true;
+		else placing_tower = false;
+
+	}
+	if (placing_tower == true)
+	{
+		if (App->pathfinding->IsConstructible(r) == false)
+		{
+			SDL_Rect rect;
+			rect = { 1,284,107,206 };
+			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+		}
+		else 
+		{
+			SDL_Rect rect;
+			rect = { 610,1,107,206 };
+			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ALLY);
+				placing_tower = false;
+			}
+		}
+		
+	}
+
+
 
 	const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
 	
