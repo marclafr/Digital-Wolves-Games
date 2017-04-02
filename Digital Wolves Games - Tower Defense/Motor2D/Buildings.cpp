@@ -26,7 +26,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(BUILDIN
 		build_time = 7;
 		rect = {610,1,107,206};
 		SetRect(rect);
-		SetPivot(0.53125 * 96, 0.59375 * 64);
+		SetPivot(0.504673 * 107, 0.902913 * 206);
 		SetTextureID(T_TURRET);
 		break;
 	default:

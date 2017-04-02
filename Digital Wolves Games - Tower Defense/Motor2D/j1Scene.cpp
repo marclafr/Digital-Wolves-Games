@@ -224,6 +224,10 @@ bool j1Scene::Update(float dt)
 				placing_tower = false;
 			}
 		}
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		{
+			placing_tower = false;
+		}
 		
 	}
 
