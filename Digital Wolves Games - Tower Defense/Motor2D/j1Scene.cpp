@@ -73,8 +73,8 @@ bool j1Scene::Start()
 	tree_tech = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	tree_tech->Set({1288, 2, 35, 14}, {1289, 996, 35, 14});
 
-	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	ingame_menu->Set({1323, 2, 36 , 15}, {1325, 996, 36, 14});
+	//ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	//ingame_menu->Set({1323, 2, 36 , 15}, {1325, 996, 36, 14});
 
 	resources_panel = (UIHUDResources*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDRESOURCES);
 
