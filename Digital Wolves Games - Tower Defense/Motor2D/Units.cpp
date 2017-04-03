@@ -168,7 +168,7 @@ void Unit::AI()
 					GoTo(new_obj);
 					App->pathfinding->MakeNoWalkable(App->map->WorldToMap(new_obj.x, new_obj.y));
 				}
-
+				
 				else
 					GoTo(new_obj);
 

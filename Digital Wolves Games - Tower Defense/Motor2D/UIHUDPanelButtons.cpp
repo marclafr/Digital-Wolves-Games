@@ -11,6 +11,7 @@
 #include "j1UIManager.h"
 #include "j1Scene.h"
 #include "SDL\include\SDL_rect.h"
+#include "j1Collision.h"
 
 #include "UIButton.h"
 
@@ -96,8 +97,11 @@ void UIHUDPanelButtons::CreateEntity()
 				if (App->scene->placing_tower == true) {
 					if (App->pathfinding->IsConstructible(r) == true)
 					{
-						App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
-						App->scene->placing_tower = false;
+						if (App->collision->AbleToBuild(iPoint(s.x, s.y - 9)))
+						{
+							App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
+							App->scene->placing_tower = false;
+						}
 					}
 				}
 			break;

@@ -43,6 +43,20 @@ bool j1Collision::Update(float dt)
 	return ret;
 }
 
+bool j1Collision::AbleToBuild(iPoint pos)
+{
+	std::vector<Entity*> entities = App->entity_manager->GetEntityVector();
+	for (int i = 0; i < entities.size(); i++)
+	{
+		iPoint tile = App->map->WorldToMap(entities[i]->GetX(), entities[i]->GetY());
+		if (tile == App->map->WorldToMap(pos.x, pos.y))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 bool j1Collision::DoUnitsIntersect(Unit* unit1, Unit* unit2)
 {
 	float distance_x = unit1->GetX() - unit2->GetX();
