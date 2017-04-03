@@ -6,7 +6,7 @@
 #include <list>
 
 #define XY_TILES_RELATION 2
-#define TOWN_HALL iPoint(20,20) //TODO final townhall destination;
+#define TOWN_HALL iPoint(-768,696) //TODO final townhall destination;
 
 class Animation;
 struct PathList;

@@ -48,7 +48,7 @@ bool j1Scene::Start()
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg");
 
 
-	if(App->map->Load("Map.tmx") == true)
+	if(App->map->Load("NewMap.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -183,6 +183,10 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	
+	/*int a = 7;
+	int b = 22;
+	iPoint aa = App->map->MapToWorld(a, b);
+	LOG("%i, %i", aa.x, aa.y);*/
 	// Camera Movement
 
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN )
@@ -257,7 +261,7 @@ bool j1Scene::Update(float dt)
 			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ALLY);
+				App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ENEMY);
 				placing_tower = false;
 			}
 		}
