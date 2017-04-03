@@ -8,6 +8,7 @@
 #include "Units.h"
 #include "Resources.h"
 #include "Buildings.h"
+#include "Wall.h"
 #include <vector>
 #include "SDL/include/SDL_rect.h"
 
@@ -26,12 +27,14 @@ public:
 	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side);
 	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side);
 	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos);
+	Entity* CreateWall(WALL_TYPE r_type, fPoint pos);
 	void SelectInQuad(const SDL_Rect& select_rect);
 	void UnselectEverything();
 
 	void DeleteEntity(Entity* ptr); // will call other delete methods
 	void DeleteUnit(Unit* ptr);
 	void DeleteBuilding(Entity* ptr);
+	void DeleteResource(Entity* ptr);
 	void GetUnitsPath(iPoint destintation);
 
 	Entity* CheckForCombat(iPoint position, int range, Side side);

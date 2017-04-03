@@ -11,7 +11,8 @@ enum ENTITY_TYPE
 	NO_ENTITY = 0,
 	BUILDING,
 	UNIT,
-	RESOURCE
+	RESOURCE,
+	WALL
 };
 
 enum Side

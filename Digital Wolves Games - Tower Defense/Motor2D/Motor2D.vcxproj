@@ -111,6 +111,7 @@
     <ClCompile Include="UILabel.cpp" />
     <ClCompile Include="UISelectOption.cpp" />
     <ClCompile Include="Units.cpp" />
+    <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buildings.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="UILabel.h" />
     <ClInclude Include="UISelectOption.h" />
     <ClInclude Include="Units.h" />
+    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
