@@ -162,11 +162,11 @@ void Unit::AI()
 			iPoint new_obj = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), GetVisionRange(), GetSide());
 			if (new_obj.x != -1)
 			{
-				if (!App->pathfinding->IsWalkable(new_obj))
+				if (!App->pathfinding->IsWalkable(App->map->WorldToMap(new_obj.x, new_obj.y)))
 				{
 					App->pathfinding->MakeWalkable(App->map->WorldToMap(new_obj.x, new_obj.y));
 					GoTo(new_obj);
-					App->pathfinding->MakeNoWalkable(new_obj);
+					App->pathfinding->MakeNoWalkable(App->map->WorldToMap(new_obj.x, new_obj.y));
 				}
 
 				else
@@ -405,7 +405,7 @@ bool Unit::GetNextTile()
 {
 	bool ret = true;
 
-	if (path_list.size() == 0)
+	if (path_list.size() <= 0)
 		return false;
 
 	path_objective = App->map->MapToWorld(path_list.front().x, path_list.front().y);
