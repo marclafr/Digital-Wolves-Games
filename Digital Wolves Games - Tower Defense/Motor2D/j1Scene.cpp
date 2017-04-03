@@ -12,6 +12,7 @@
 #include "j1Scene.h"
 #include "j1Animation.h"
 #include "j1EntityManager.h"
+#include "j1Collision.h"
 #include "Units.h"
 
 #include "UIButton.h"
@@ -261,8 +262,11 @@ bool j1Scene::Update(float dt)
 			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ENEMY);
-				placing_tower = false;
+				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+				{
+					App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ALLY);
+					placing_tower = false;
+				}
 			}
 		}
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
