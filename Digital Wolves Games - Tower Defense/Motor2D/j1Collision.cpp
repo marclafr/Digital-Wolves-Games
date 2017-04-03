@@ -21,34 +21,21 @@ bool j1Collision::Update(float dt)
 		{
 			iPoint pos = App->map->WorldToMap(unit1[i]->GetX(), unit1[i]->GetY());
 			Unit* unit_1 = (Unit*)unit1[i];
-			//this shouldn't happen, but if any case:
-			if (!App->pathfinding->IsWalkable(pos) && unit_1[i].IsMoving() == false)
+			//Check colisions between units
+			std::vector<Entity*> unit2 = App->entity_manager->GetEntityVector();
+			for (int j = 0; j < unit2.size(); j++)
 			{
-				iPoint tile = FindClosestWalkable((Unit*)unit1[i]);
-				unit1[i]->SetPosition(tile.x, tile.y);
-			}
-			else
-			{
-				//Check colisions between units
-				std::vector<Entity*> unit2 = App->entity_manager->GetEntityVector();
-				for (int j = 0; j < unit2.size(); j++)
+				if (unit1[i] != unit2[j])
 				{
-					if (unit1[i] != unit2[j])
+					if (DoUnitsIntersect((Unit*)unit1[i], (Unit*)unit2[j]) == true)
 					{
-						if (DoUnitsIntersect((Unit*)unit1[i], (Unit*)unit2[j]) == true)
-						{
-							//Collision detected
-							Unit* unit_2 = (Unit*)unit2[j];
-							//TODO
-							if (unit_1->GetPriority() > unit_2->GetPriority() && unit_1->GetUnitState() == VIGILANT && unit_2->GetUnitState() == VIGILANT)
-								//&& unit_1->GetUnitState() != FIGHTING && unit_1->GetUnitState() != MOVING_TO_FIGHT
-								//&& unit_2->GetUnitState() != FIGHTING && unit_2->GetUnitState() != MOVING_TO_FIGHT)
-							{
-								//SplitUnits((Unit*)unit1[i]);
-							}
-						}
+						//Collision detected
+						Unit* unit_2 = (Unit*)unit2[j];
+						if (unit_1->GetPriority() > unit_2->GetPriority() && unit_1->GetUnitState() == VIGILANT && unit_2->GetUnitState() == VIGILANT)
+							SplitUnits((Unit*)unit1[i]);
 					}
 				}
+
 			}
 		}
 	}

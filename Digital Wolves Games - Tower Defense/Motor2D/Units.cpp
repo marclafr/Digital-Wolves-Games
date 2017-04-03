@@ -53,7 +53,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 		range = 300;
 		vision_range = 350;
 		unit_class = ARCHER;
-		unit_radius = 12;
+		unit_radius = 8;
 		SetTextureID(T_CAVALRYARCHER);
 		priority = 2;
 		break;
