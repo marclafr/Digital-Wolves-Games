@@ -48,7 +48,8 @@ public:
 	bool IsWalkable(const iPoint& pos) const;
 	bool IsConstructible(const iPoint& pos) const;
 	void MakeNoWalkable(const iPoint& pos);
-	// Utility: return the walkability value of a tile
+	void MakeWalkable(const iPoint& pos);
+		// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
 	uchar GetTileAtConstructible(const iPoint& pos) const;
 

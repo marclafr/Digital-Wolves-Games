@@ -104,7 +104,7 @@ bool j1Scene::Start()
 
 	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
 	hud_description->SetEnableButton(btn_description);
-
+	/*
 	//Entity Manager
 	//ALLIES
 	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(100, 105), ALLY);
@@ -139,7 +139,7 @@ bool j1Scene::Start()
 
 	//RESOURCES
 	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(STONE, fPoint(450, 850)));
-
+	*/
 	return true;
 }
 
@@ -234,6 +234,12 @@ bool j1Scene::Update(float dt)
 		else placing_tower = false;
 
 	}
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(p.x, p.y), ALLY);
+
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+		App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(p.x, p.y), ENEMY);
+
 	if (placing_tower == true)
 	{
 		if (App->pathfinding->IsConstructible(r) == false)

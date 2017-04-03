@@ -162,7 +162,16 @@ void Unit::AI()
 			iPoint new_obj = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), GetVisionRange(), GetSide());
 			if (new_obj.x != -1)
 			{
-				GoTo(new_obj);
+				if (!App->pathfinding->IsWalkable(new_obj))
+				{
+					App->pathfinding->MakeWalkable(App->map->WorldToMap(new_obj.x, new_obj.y));
+					GoTo(new_obj);
+					App->pathfinding->MakeNoWalkable(new_obj);
+				}
+
+				else
+					GoTo(new_obj);
+
 				state = MOVING_TO_FIGHT;
 			}
 		}

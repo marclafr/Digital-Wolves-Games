@@ -72,6 +72,11 @@ void j1PathFinding::MakeNoWalkable(const iPoint& pos)
 	map[pos.y*width + pos.x] = INVALID_WALK_CODE;
 }
 
+void j1PathFinding::MakeWalkable(const iPoint& pos)
+{
+	map[pos.y*width + pos.x] = 34;
+}
+
 // Utility: return the walkability value of a tile
 uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 {
