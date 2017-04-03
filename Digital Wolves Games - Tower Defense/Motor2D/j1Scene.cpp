@@ -180,24 +180,27 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	
+	// Camera Movement
 
-	// -------
-	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN )
 		App->LoadGame("save_game.xml");
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
-
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT ||  y < (App->render->camera->GetHeight() / 30))
 		App->render->camera->MoveUp(floor(200.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || y > ((App->render->camera->GetHeight() / 30)*29.8f))
 		App->render->camera->MoveDown(floor(200.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || x < (App->render->camera->GetWidth() / 50))
 		App->render->camera->MoveLeft(floor(200.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || x > ((App->render->camera->GetWidth() / 50)*49.8f))
 		App->render->camera->MoveRight(floor(200.0f * dt));
 
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
@@ -219,8 +222,7 @@ bool j1Scene::Update(float dt)
 	
 
 	// Debug pathfinding ------------------------------
-	int x, y;
-	App->input->GetMousePosition(x, y);
+
 	iPoint p = App->render->ScreenToWorld(x, y);
 	iPoint r = App->map->WorldToMap(p.x, p.y);
 	p = App->map->WorldToMap(p.x, p.y);
@@ -312,6 +314,9 @@ bool j1Scene::Update(float dt)
 
 	return true;
 }
+
+
+
 
 // Called each loop iteration
 bool j1Scene::PostUpdate()
