@@ -112,6 +112,9 @@
     <ClCompile Include="j1MainMenu.cpp">
       <Filter>Awsome_Game\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="j1SceneManager.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -242,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="j1MainMenu.h">
       <Filter>Awsome_Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneManager.h">
+      <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

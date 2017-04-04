@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1EntityManager.h"
 #include "j1MainMenu.h"
+#include "j1SceneManager.h"
 
 #include "UIButton.h"
 #include "UILabel.h"
@@ -97,8 +98,8 @@ bool j1MainMenu::Update(float dt)
 	if (single_player->GetStat() == UNSELECTED) {
 		single_player->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
 	}
-	if (single_player->GetStat() == CLICKL_DOWN) {
-		//canviar de escena
+	if (single_player->GetStat() == CLICKL_UP) {
+		App->scene_manager->ChangeScene(App->scene, this);
 	}
 
 	if (exit->GetStat() == SELECTED) {
@@ -118,7 +119,7 @@ bool j1MainMenu::PostUpdate()
 
 	//Unit test
 
-	if (exit->GetStat() == CLICKL_DOWN)
+	if (exit->GetStat() == CLICKL_UP)
 		ret = false;
 
 	return ret;
@@ -128,6 +129,19 @@ bool j1MainMenu::PostUpdate()
 bool j1MainMenu::CleanUp()
 {
 	LOG("Freeing  MainMenu");
+	
+	background->SetDraw(false);
+
+	single_player->SetDraw(false);
+	title_single_player->SetDraw(false);
+
+	tutorial->SetDraw(false);
+	history->SetDraw(false);
+	trophies->SetDraw(false);
+	options->SetDraw(false);
+
+	exit->SetDraw(false);
+	title_exit->SetDraw(false);
 
 	return true;
 }
