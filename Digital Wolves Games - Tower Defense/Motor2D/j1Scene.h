@@ -46,6 +46,8 @@ public:
 
 	//Enable Module with submodules
 	void EnableScene();
+	bool CanBuildTower();
+	void BuildTower();
 	bool placing_tower = false;
 	bool placing_wall = false;
 	bool game_scene = true;

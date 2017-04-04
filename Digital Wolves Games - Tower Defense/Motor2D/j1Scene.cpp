@@ -245,9 +245,7 @@ bool j1Scene::Update(float dt)
 
 	App->render->Blit(debug_tex, p.x - 44, p.y - 31);
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && 
-		resource_wood->CanUseResource(BASIC_TOWER_WOOD_COST) == true && 
-		resource_stone->CanUseResource(BASIC_TOWER_STONE_COST) == true)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
 		if (placing_tower == false) placing_tower = true;
 		else placing_tower = false;
@@ -313,28 +311,30 @@ bool j1Scene::Update(float dt)
 	App->render->BlitAllEntities();
 	if (placing_tower == true)
 	{
-		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
+		if (CanBuildTower())
 		{
-			SDL_Rect rect;
-			rect = { 1,284,107,206 };
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
-		}
-		else
-		{
-			SDL_Rect rect;
-			rect = { 610,1,107,206 };
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
 			{
-				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+				SDL_Rect rect;
+				rect = { 1,284,107,206 };
+				App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			}
+			else
+			{
+				SDL_Rect rect;
+				rect = { 610,1,107,206 };
+				App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 				{
-					resource_wood->UseResource(BASIC_TOWER_WOOD_COST);
-					resource_stone->UseResource(BASIC_TOWER_STONE_COST);
-					if (App->pathfinding->IsConstructible_neutral(r) == true)
-						App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), NEUTRAL);
-					else if (App->pathfinding->IsConstructible_ally(r) == true)
-						App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ALLY);
-					placing_tower = false;
+					if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+					{
+						BuildTower();
+						if (App->pathfinding->IsConstructible_neutral(r) == true)
+							App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), NEUTRAL);
+						else if (App->pathfinding->IsConstructible_ally(r) == true)
+							App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ALLY);
+						placing_tower = false;
+					}
 				}
 			}
 		}
@@ -342,7 +342,6 @@ bool j1Scene::Update(float dt)
 		{
 			placing_tower = false;
 		}
-
 	}
 
 	if (placing_wall == true) {
@@ -394,4 +393,15 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+bool j1Scene::CanBuildTower()
+{
+	return resource_wood->CanUseResource(BASIC_TOWER_WOOD_COST) && resource_stone->CanUseResource(BASIC_TOWER_STONE_COST);
+}
+
+void j1Scene::BuildTower()
+{
+	resource_wood->UseResource(BASIC_TOWER_WOOD_COST);
+	resource_stone->UseResource(BASIC_TOWER_STONE_COST);
 }
