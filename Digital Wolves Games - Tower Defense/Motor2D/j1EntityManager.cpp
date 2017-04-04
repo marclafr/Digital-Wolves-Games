@@ -236,7 +236,8 @@ Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
 	{
 		if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range &&
 			entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range &&
-			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0)
+			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0
+			&& (entity_array[i]->GetEntityType() == E_UNIT || entity_array[i]->GetEntityType() == E_BUILDING))
 			return entity_array[i];
 	}
 	return nullptr;
@@ -249,7 +250,8 @@ Entity* j1EntityManager::CheckForObjective(iPoint position, int vision_range, Si
 	{
 		if (entity_array[i]->GetX() <= position.x + vision_range && entity_array[i]->GetX() >= position.x - vision_range &&
 			entity_array[i]->GetY() <= position.y + vision_range && entity_array[i]->GetY() >= position.y - vision_range &&
-			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0 && entity_array[i]->GetSide() != S_NEUTRAL)
+			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0 && entity_array[i]->GetSide() != S_NEUTRAL
+			&& entity_array[i]->GetEntityType() == E_UNIT)
 		{
 			if(ret == nullptr)
 				ret = entity_array[i];
