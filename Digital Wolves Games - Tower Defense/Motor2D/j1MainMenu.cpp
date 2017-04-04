@@ -134,6 +134,7 @@ bool j1MainMenu::CleanUp()
 
 	single_player->SetDraw(false);
 	title_single_player->SetDraw(false);
+	single_player->SetInteractive(false);
 
 	tutorial->SetDraw(false);
 	history->SetDraw(false);
@@ -142,6 +143,7 @@ bool j1MainMenu::CleanUp()
 
 	exit->SetDraw(false);
 	title_exit->SetDraw(false);
+	exit->SetInteractive(false);
 
 	return true;
 }

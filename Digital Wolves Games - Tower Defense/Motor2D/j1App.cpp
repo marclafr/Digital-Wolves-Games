@@ -59,12 +59,14 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collision);
 	AddModule(uimanager);
 	AddModule(entity_manager);
-	AddModule(scene_manager);
+
 
 	// scene last
 	
 	AddModule(scene);
 	AddModule(main_menu);
+	
+	AddModule(scene_manager);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -89,7 +91,12 @@ j1App::~j1App()
 
 void j1App::AddModule(j1Module* module)
 {
-	module->Init();
+	if (module->name == "scene") {
+		"do nothing";
+	}
+	else {
+		module->Init();
+	}	
 	modules.push_back(module);
 }
 
