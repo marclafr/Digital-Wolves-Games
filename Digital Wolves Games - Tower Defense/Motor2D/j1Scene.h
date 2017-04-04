@@ -3,6 +3,8 @@
 
 #include "j1Module.h"
 
+#define BASIC_TOWER_COST 100
+
 struct SDL_Texture;
 class UILabel;
 class UIComponents;
@@ -12,6 +14,7 @@ class UIHUDPanelButtons;
 class UIHUDPanelInfo;
 class UIHUDDescription;
 class UIHUDResources;
+class Resources;
 
 class j1Scene : public j1Module
 {
@@ -61,6 +64,8 @@ private:
 	UIHUDPanelButtons* panel;
 
 	SDL_Rect select_rect;
+
+	Resources* resource_wood;
 
 public:
 	UIHUDPanelInfo* panel_info;

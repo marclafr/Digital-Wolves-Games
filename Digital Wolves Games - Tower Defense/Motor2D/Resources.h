@@ -41,7 +41,8 @@ public:
 	const RESOURCE_TYPE GetResourceType() const;
 	const double GetBuildTime() const;
 	void AddResource(int add);
-	void UseResource(int use);
+	bool CanUseResource(int cost);
+	bool UseResource(int cost);
 	int GetResource();
 };
 

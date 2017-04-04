@@ -103,6 +103,21 @@ void Resources::AddResource(int add)
 {
 	resource += add;
 }
+bool Resources::CanUseResource(int cost)
+{
+	if (resource >= cost)
+		return true;
+	return false;
+}
+bool Resources::UseResource(int cost)
+{
+	if (resource >= cost)
+	{
+		resource -= cost;
+		return true;
+	}
+	return false;
+}
 /*
 Resources::Resources() {
 	wood = 2000;

@@ -14,6 +14,7 @@
 #include "j1EntityManager.h"
 #include "j1Collision.h"
 #include "Units.h"
+#include "Resources.h"
 
 #include "UIButton.h"
 #include "UILabel.h"
@@ -145,7 +146,8 @@ bool j1Scene::Start()
 	//RESOURCES
 	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(STONE, fPoint(450, 850)));
 	*/
-	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(WOOD, fPoint(50, 50)));
+	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(50, 50));
+	resources_panel->AddResource(resource_wood);
 
 	return true;
 }
@@ -241,7 +243,7 @@ bool j1Scene::Update(float dt)
 
 	App->render->Blit(debug_tex, p.x - 44, p.y - 31);
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && resource_wood->CanUseResource(BASIC_TOWER_COST) == true)
 	{
 		if (placing_tower == false) placing_tower = true;
 		else placing_tower = false;
@@ -322,6 +324,7 @@ bool j1Scene::Update(float dt)
 			{
 				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
 				{
+					resource_wood->UseResource(BASIC_TOWER_COST);
 					if (App->pathfinding->IsConstructible_neutral(r) == true)
 						App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), NEUTRAL);
 					else if (App->pathfinding->IsConstructible_ally(r) == true)
