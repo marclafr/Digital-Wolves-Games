@@ -50,6 +50,5 @@ private:
 
 	SDL_Texture* atlas;
 	std::string atlas_file_name;
-
 };
 #endif // __j1GUIMANAGER_H__

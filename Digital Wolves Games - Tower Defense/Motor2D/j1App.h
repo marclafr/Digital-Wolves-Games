@@ -124,7 +124,7 @@ private:
 
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
-	j1Timer				startup_time;
+	j1PerfTimer				startup_time;
 	j1Timer				frame_time;
 	j1Timer				last_sec_frame_time;
 	uint32				last_sec_frame_count = 0;

@@ -13,6 +13,8 @@ public:
 
 	bool Update(float dt);
 
+	bool AbleToBuild(iPoint pos);
+
 private:
 
 	bool DoUnitsIntersect(Unit* unit1, Unit* unit2);

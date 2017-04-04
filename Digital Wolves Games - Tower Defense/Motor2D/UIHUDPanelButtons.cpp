@@ -9,8 +9,9 @@
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 #include "j1UIManager.h"
-
+#include "j1Scene.h"
 #include "SDL\include\SDL_rect.h"
+#include "j1Collision.h"
 
 #include "UIButton.h"
 
@@ -66,6 +67,15 @@ info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atl
 
 void UIHUDPanelButtons::CreateEntity()
 {
+	if (if_active->e_type == BUILDING) {
+		if (App->scene->placing_tower == false)
+			App->scene->placing_tower = true;
+	}
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
+		App->scene->placing_tower = false;
+		if_active = nullptr;
+		return;
+	}
 	if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_DOWN)
 	{
 		int x;
@@ -78,14 +88,31 @@ void UIHUDPanelButtons::CreateEntity()
 
 		switch (if_active->e_type)
 		{
-		case ENTITY_TYPE::E_UNIT:
+		case ENTITY_TYPE::UNIT:
 				if (App->pathfinding->IsWalkable(r) == true)
 					App->entity_manager->CreateUnit(if_active->u_type, fPoint(s.x, s.y - 9), if_active->s_type);
 			break;
 
-			case ENTITY_TYPE::E_BUILDING:
-				if (App->pathfinding->IsWalkable(r) == true)
-					App->entity_manager->CreatBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_ALLY);
+			case ENTITY_TYPE::BUILDING:
+				if (App->scene->placing_tower == true) {
+						if (App->collision->AbleToBuild(iPoint(s.x, s.y - 9)))
+						{
+							if (App->scene->CanBuildTower())
+							{
+								App->scene->BuildTower();
+								if (App->pathfinding->IsConstructible_ally(r) == true)
+								{
+									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
+									App->scene->placing_tower = false;
+								}
+								if (App->pathfinding->IsConstructible_neutral(r) == true)
+								{
+									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), NEUTRAL);
+									App->scene->placing_tower = false;
+								}
+							}
+					}
+				}
 			break;
 		}
 		if_active = nullptr;
@@ -95,13 +122,13 @@ void UIHUDPanelButtons::CreateEntity()
 void info_button::SetUnit(UNIT_TYPE type, Side side)
 {
 	u_type = type;
-	e_type = ENTITY_TYPE::E_UNIT;
+	e_type = ENTITY_TYPE::UNIT;
 	s_type = side;
 }
 
 void info_button::SetBuilding(BUILDING_TYPE type)
 {
 	b_type = type;
-	e_type = ENTITY_TYPE::E_BUILDING;
+	e_type = ENTITY_TYPE::BUILDING;
 }
 

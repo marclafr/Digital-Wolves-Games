@@ -109,6 +109,11 @@ void Entity::SetSide(Side side)
 	this->side = side;
 }
 
+void Entity::SetToDelete()
+{
+	to_delete = true;
+}
+
 void Entity::SetAttack(int new_attack)
 {
 	attack = new_attack;

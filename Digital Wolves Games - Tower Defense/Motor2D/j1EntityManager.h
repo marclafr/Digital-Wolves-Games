@@ -6,7 +6,9 @@
 #include "p2Point.h"
 #include "Entity.h"
 #include "Units.h"
+#include "Resources.h"
 #include "Buildings.h"
+#include "Wall.h"
 #include <vector>
 #include "SDL/include/SDL_rect.h"
 
@@ -23,18 +25,21 @@ public:
 	bool CleanUp();
 
 	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side);
-	Entity* CreatBuilding(BUILDING_TYPE b_type, fPoint pos, Side side);
-
+	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side);
+	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos);
+	Entity* CreateWall(WALL_TYPE r_type, fPoint pos);
 	void SelectInQuad(const SDL_Rect& select_rect);
 	void UnselectEverything();
 
 	void DeleteEntity(Entity* ptr); // will call other delete methods
 	void DeleteUnit(Unit* ptr);
 	void DeleteBuilding(Entity* ptr);
+	void DeleteResource(Entity* ptr);
+	void DeleteWall(Entity* ptr);
 	void GetUnitsPath(iPoint destintation);
 
-	Entity* CheckForEnemies(iPoint position, int range, Side side);
-
+	Entity* CheckForCombat(iPoint position, int range, Side side);
+	iPoint CheckForObjective(iPoint position, int vision_range, Side side);
 	std::vector<Entity*> GetEntityVector();
 
 	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;
@@ -46,6 +51,9 @@ private:
 
 	//lista para "almacenar" unidades, puede ser cambiada a array etc.
 	std::vector<Entity*> entity_array;
+
+	//TODO:Must change this
+	int priority = 0;
 };
 #endif //_j1EntityManager_
 

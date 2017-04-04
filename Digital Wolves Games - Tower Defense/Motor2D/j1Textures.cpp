@@ -46,6 +46,8 @@ bool j1Textures::Start()
 	App->tex->Load("animations/Twohandedswordman.png", T_TWOHANDEDSWORDMAN);
 	App->tex->Load("animations/SiegeRam.png", T_SIEGERAM);
 	App->tex->Load("textures/Towers.png", T_TURRET);
+	App->tex->Load("animations/StoneWall.png", T_WALL);
+	App->tex->Load("textures/Resouce.png", T_RESOURCE);
 
 	bool ret = true;
 	return ret;
@@ -177,4 +179,24 @@ SDL_Texture * j1Textures::GetTexture(const TextureID id) const
 		if (textures[i]->GetID() == id)
 			return textures[i]->GetTexture();
 	return nullptr;
+}
+
+//Quick fix for labels on HUDUIPanelInfo
+bool j1Textures::UnloadLabel(SDL_Texture * texture)
+{
+	SDL_DestroyTexture(texture);
+	texture = nullptr;
+	return true;
+}
+
+SDL_Texture * const j1Textures::LoadSurfaceLabel(SDL_Surface * surface)
+{
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
+
+	if (texture == NULL)
+	{
+		LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
+	}
+
+	return texture;
 }

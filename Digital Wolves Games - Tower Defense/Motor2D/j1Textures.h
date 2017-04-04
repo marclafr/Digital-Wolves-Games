@@ -15,6 +15,8 @@ enum TextureID
 	T_TILESET,
 	T_AOE_UI_FONT,
 	T_TURRET,
+	T_WALL,
+	T_RESOURCE,
 	T_VILLAGER,
 	T_TWOHANDEDSWORDMAN,
 	T_CAVALRYARCHER,
@@ -65,6 +67,10 @@ public:
 
 	void GetSize(const SDL_Texture* texture, uint& width, uint& height) const;
 	SDL_Texture* GetTexture(const TextureID id) const;
+
+	//Quick Solution for Labels on UIHUDPanelInfo
+	bool UnloadLabel(SDL_Texture* texture);
+	SDL_Texture* const j1Textures::LoadSurfaceLabel(SDL_Surface* surface);
 
 private:
 

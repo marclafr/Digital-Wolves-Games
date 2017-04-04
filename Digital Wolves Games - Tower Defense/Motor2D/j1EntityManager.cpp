@@ -35,43 +35,61 @@ bool j1EntityManager::CleanUp() { // not done
 
 Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)
 {
-	Entity* new_entity = (Entity*) new Unit(u_type, pos, side);
+	Entity* new_entity = (Entity*) new Unit(u_type, pos, side, priority);
 	entity_array.push_back(new_entity);
+	priority++;
 	return new_entity;
 }
 
-Entity * j1EntityManager::CreatBuilding(BUILDING_TYPE b_type, fPoint pos, Side side)
+Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side)
 {
 	Entity* new_entity = (Entity*) new Building(b_type, pos, side);
 	entity_array.push_back(new_entity);
 	return new_entity;
 }
 
+Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos)
+{
+	Entity* new_entity = (Entity*) new Resources(r_type, pos);
+	entity_array.push_back(new_entity);
+	return new_entity;
+}
+Entity * j1EntityManager::CreateWall(WALL_TYPE w_type, fPoint pos)
+{
+	Entity* new_entity = (Entity*) new Wall(w_type, pos);
+	entity_array.push_back(new_entity);
+	return new_entity;
+}
+
+
 void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 {
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		int unit_x = entity_array[i]->GetX();
-		int unit_y = entity_array[i]->GetY();
-		if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
+		//TODO: Unselect for only ally selection if (entity_array[i]->GetSide() == ALLY)
 		{
-			entity_array[i]->SetEntityStatus(ST_SELECTED);
-			App->scene->panel_info->AddEntitySelection(entity_array[i]);
-		}
-		else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
-		{
-			entity_array[i]->SetEntityStatus(ST_SELECTED);
-			App->scene->panel_info->AddEntitySelection(entity_array[i]);
-		}
-		else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
-		{
-			entity_array[i]->SetEntityStatus(ST_SELECTED);
-			App->scene->panel_info->AddEntitySelection(entity_array[i]);
-		}
-		else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
-		{
-			entity_array[i]->SetEntityStatus(ST_SELECTED);
-			App->scene->panel_info->AddEntitySelection(entity_array[i]);
+			int unit_x = entity_array[i]->GetX();
+			int unit_y = entity_array[i]->GetY();
+			if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
+			{
+				entity_array[i]->SetEntityStatus(E_SELECTED);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+			}
+			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
+			{
+				entity_array[i]->SetEntityStatus(E_SELECTED);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+			}
+			else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
+			{
+				entity_array[i]->SetEntityStatus(E_SELECTED);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+			}
+			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
+			{
+				entity_array[i]->SetEntityStatus(E_SELECTED);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+			}
 		}
 	}
 	if(!App->scene->panel_info->isSelectionTempEmpty())
@@ -82,38 +100,90 @@ void j1EntityManager::UnselectEverything()
 {
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		entity_array[i]->SetEntityStatus(ST_NON_SELECTED);
+		entity_array[i]->SetEntityStatus(E_NON_SELECTED);
 	}
 	if (!App->scene->panel_info->isSelectionEmpty())
 		App->scene->panel_info->DeleteSelection();
 }
 
-void j1EntityManager::DeleteEntity(Entity * ptr)
+void j1EntityManager::DeleteEntity(Entity* ptr)
 {
 	switch (ptr->GetEntityType())
 	{
-		case E_UNIT:
+		case UNIT:
 			DeleteUnit((Unit*)ptr);
 			break;
-
-		case E_BUILDING:
+		case BUILDING:
 			DeleteBuilding(ptr);
+			break;
+		case RESOURCE:
+			DeleteResource(ptr);
+			break;
+		case WALL:
+			DeleteWall(ptr);
 			break;
 	}
 }
 
-void j1EntityManager::DeleteUnit(Unit * ptr)
+void j1EntityManager::DeleteUnit(Unit* ptr)
 {
-	//take out of queue and delete TODO
-	//TODO
-	/*for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end(); i++)
+	for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end();)
+	{
 		if (*i == ptr)
-			entity_array.erase(i);*/
+		{
+			entity_array.erase(i);
+			delete ptr;
+			return;
+		}
+		else
+			i++;
+	}
 }
 
-void j1EntityManager::DeleteBuilding(Entity * ptr)
+void j1EntityManager::DeleteBuilding(Entity* ptr)
 {
+	for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end();)
+	{
+		if (*i == ptr)
+		{
+			entity_array.erase(i);
+			delete ptr;
+			return;
+		}
+		else
+			i++;
+	}
 }
+
+void j1EntityManager::DeleteResource(Entity* ptr)
+{
+	for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end();)
+	{
+		if (*i == ptr)
+		{
+			entity_array.erase(i);
+			delete ptr;
+			return;
+		}
+		else
+			i++;
+	}
+}
+void j1EntityManager::DeleteWall(Entity* ptr)
+{
+	for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end();)
+	{
+		if (*i == ptr)
+		{
+			entity_array.erase(i);
+			delete ptr;
+			return;
+		}
+		else
+			i++;
+	}
+}
+
 
 
 bool j1EntityManager::Update(float dt)
@@ -144,7 +214,6 @@ bool j1EntityManager::PostUpdate()
 		if (entity_array[i]->ToDelete() == true)
 		{
 			DeleteEntity(entity_array[i]);
-			entity_array.erase(entity_array.begin() + i);
 		}
 	}
 	return true;
@@ -161,14 +230,28 @@ void j1EntityManager::GetUnitsPath(iPoint destination)
 
 }
 
-Entity * j1EntityManager::CheckForEnemies(iPoint position, int range, Side side)
+Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
 {
 	for  (int i = 0; i < entity_array.size(); i++)
 	{
-		if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range && entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range && side != entity_array[i]->GetSide())
+		if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range &&
+			entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range &&
+			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0)
 			return entity_array[i];
 	}
 	return nullptr;
+}
+
+iPoint j1EntityManager::CheckForObjective(iPoint position, int vision_range, Side side)
+{
+	for (int i = 0; i < entity_array.size(); i++)
+	{
+		if (entity_array[i]->GetX() <= position.x + vision_range && entity_array[i]->GetX() >= position.x - vision_range &&
+			entity_array[i]->GetY() <= position.y + vision_range && entity_array[i]->GetY() >= position.y - vision_range &&
+			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0 && entity_array[i]->GetSide() != NEUTRAL)
+			return iPoint(entity_array[i]->GetX(), entity_array[i]->GetY());
+	}
+	return iPoint(-1, -1);
 }
 
 std::vector<Entity*> j1EntityManager::GetEntityVector()
@@ -180,7 +263,7 @@ bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
 {
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		if (entity_array[i]->GetEntityType() == E_UNIT)
+		if (entity_array[i]->GetEntityType() == UNIT)
 		{
 			if (entity_array[i] != unit)
 			{

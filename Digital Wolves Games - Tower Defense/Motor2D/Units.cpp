@@ -11,27 +11,28 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side): Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action_type(A_IDLE), changed(false), fighting(false), attacking(nullptr), dead(false)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), attacking(nullptr), priority(priority), state(VIGILANT)
 {
-	if (GetSide() == S_ENEMY)
+	if (GetSide() == ENEMY)
 	{
-		this->action_type = A_WALK;
+		this->action_type = WALK;
 		GoTo(TOWN_HALL);
-		moving = true;
+		state = MOVING;
 		changed = true;
 	}
 		
 	switch (u_type)
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
-	case U_TWOHANDEDSWORDMAN:
+	case TWOHANDEDSWORDMAN:
 		SetHp(60);
 		attack = 12;
 		SetArmor(1);
 		speed = 0.9;
 		rate_of_fire = 2;
 		range = 30;
-		unit_class = C_INFANTRY;
+		vision_range = 300;
+		unit_class = INFANTRY;
 		unit_radius = 6;
 		SetTextureID(T_TWOHANDEDSWORDMAN);
 		fx_twohanded_die01 = App->audio->LoadFx("audio/fx/Male_Death01.wav");
@@ -39,36 +40,41 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side): Entity(E_UNIT, pos, side), 
 		fx_twohanded_die03 = App->audio->LoadFx("audio/fx/Male_Death03.wav");
 		fx_twohanded_die04 = App->audio->LoadFx("audio/fx/Male_Death04.wav");
 		fx_twohanded_die05 = App->audio->LoadFx("audio/fx/Male_Death05.wav");
+		priority = 3;
 
 		break;
 
-	case U_CAVALRYARCHER:
+	case CAVALRYARCHER:
 		SetHp(50);
 		attack = 6;
 		SetArmor(1);
 		speed = 1.4;
 		rate_of_fire = 2;
-		range = 4;
-		unit_class = C_ARCHER;
-		unit_radius = 12;
+		range = 300;
+		vision_range = 350;
+		unit_class = ARCHER;
+		unit_radius = 8;
 		SetTextureID(T_CAVALRYARCHER);
+		priority = 2;
 		break;
 
-	case U_SIEGERAM:
+	case SIEGERAM:
 		SetHp(270);
 		attack = 4;
 		SetArmor(-5);
 		speed = 0.6;
 		rate_of_fire = 5;
-		range = 1;
-		unit_class = C_SIEGE;
+		range = 30;
+		vision_range = 100;
+		unit_class = SIEGE;
 		unit_radius = 15;
 		SetTextureID(T_SIEGERAM);
+		priority = 1;
 		break;
 
 	default:
 		LOG("Error UNIT TYPE STATS NULL");
-		unit_class = C_NO_CLASS;
+		unit_class = NO_CLASS;
 		break;
 	}
 
@@ -83,53 +89,34 @@ Unit::~Unit()
 
 void Unit::Update()
 {
-	if (!dead)
+	if (changed == true)
 	{
-		if (changed == true)
-		{
-			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
-			changed = false;
-		}
+		animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
+		changed = false;
+	}
 
+	if (state != DEAD)
+	{
 		AI();
 		Move();
 		Draw();
 
-		//THIS DOES NOT BELONG HERE
-		//TODO
-		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == ST_SELECTED)
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED)
 		{
-
-			if (GetRandNum(5) == 1)
-			{
-				App->audio->PlayFx(fx_twohanded_die01);
-			}
-			else if (GetRandNum(5) == 2)
-			{
-				App->audio->PlayFx(fx_twohanded_die02);
-			}
-			else if (GetRandNum(5) == 3)
-			{
-				App->audio->PlayFx(fx_twohanded_die03);
-			}
-			else if (GetRandNum(5) == 4)
-			{
-				App->audio->PlayFx(fx_twohanded_die04);
-			}
-			else if (GetRandNum(5) == 5)
-			{
-				App->audio->PlayFx(fx_twohanded_die05);
-			}
-
-			action_type = A_DIE;
-			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action_type, direction));
+			SetHp(0);
 		}
+	}
+
+	else
+	{
+		Draw();
+		Die();
 	}
 }
 
 void Unit::Move()
 {
-	if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED)
+	if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == E_SELECTED)
 	{
 		this->path_list.clear();
 
@@ -139,13 +126,13 @@ void Unit::Move()
 
 		if(GoTo(destination) == false)
 		{
-			this->moving = false;
-			this->action_type = A_IDLE;
+			state = VIGILANT;
+			this->action_type = IDLE;
 			changed = true;
 		}
 	}
 
-	if (this->moving == true)
+	if (state == MOVING || state == MOVING_TO_FIGHT)
 	{
 		this->SetPosition(GetX() + move_vector.x*speed, GetY() + move_vector.y*speed);
 
@@ -154,8 +141,8 @@ void Unit::Move()
 			//center the unit to the tile
 			if (!GetNextTile())
 			{
-				moving = false;
-				this->action_type = A_IDLE;
+				state = VIGILANT;
+				this->action_type = IDLE;
 				changed = true;
 			}
 		}
@@ -164,75 +151,97 @@ void Unit::Move()
 
 void Unit::AI()
 {
-	if (fighting == false)
-	{
-		attacking = App->entity_manager->CheckForEnemies(iPoint(GetX(), GetY()), GetRange(), GetSide());
-
-		if (attacking != nullptr)
-		{
-			fighting = true;
-			moving = false;
-			this->action_type = A_ATTACK;
-			this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
-			changed = true;
-		}
-	}
-
-	if (fighting)
-	{
-		if (animation->Finished())
-			attacking->Damaged(attack);
-
-		if (attacking->GetHp() <= 0)
-		{
-			fighting = false;
-
-			if (GetSide() == S_ENEMY)
-			{
-				this->action_type = A_WALK;
-				GoTo(TOWN_HALL);
-				moving = true;
-				changed = true;
-			}
-			else
-			{
-				this->action_type = A_IDLE;
-				changed = true;
-			}
-		}
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-	{
-		action_type = A_ATTACK;
-		changed = true;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-	{
-		action_type = A_IDLE;
-		changed = true;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-	{
-		action_type = A_WALK;
-		changed = true;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-	{
-		action_type = A_DIE;
-		changed = true;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-	{
-		SetHp(0);
-	}
 
 	if (GetHp() <= 0)
-		Die();
+		state = DEAD;
+
+	if (state != DEAD)
+	{
+		if (state == VIGILANT || state == MOVING || state == MOVING_TO_FIGHT && animation->Finished())
+		{
+			iPoint new_obj = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), GetVisionRange(), GetSide());
+			if (new_obj.x != -1)
+			{
+				if (!App->pathfinding->IsWalkable(App->map->WorldToMap(new_obj.x, new_obj.y)))
+				{
+					App->pathfinding->MakeWalkable(App->map->WorldToMap(new_obj.x, new_obj.y));
+					GoTo(new_obj);
+					App->pathfinding->MakeNoWalkable(App->map->WorldToMap(new_obj.x, new_obj.y));
+				}
+				
+				else
+					GoTo(new_obj);
+
+				state = MOVING_TO_FIGHT;
+			}
+		}
+
+		if (state == MOVING_TO_FIGHT)
+		{
+			attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), GetRange(), GetSide());
+
+			if (attacking != nullptr)
+			{
+				state = FIGHTING;
+				this->action_type = ATTACK;
+				this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
+				changed = true;
+			}
+		}
+
+		if (state == FIGHTING)
+		{
+			if (animation->Finished())
+				attacking->Damaged(attack);
+
+			if (attacking->GetHp() <= 0)
+			{
+				state = VIGILANT;
+
+				if (GetSide() == ENEMY)
+				{
+					this->action_type = WALK;
+					GoTo(TOWN_HALL);
+					state = MOVING;
+					changed = true;
+				}
+				else
+				{
+					this->action_type = IDLE;
+					changed = true;
+				}
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+		{
+			action_type = ATTACK;
+			changed = true;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		{
+			action_type = IDLE;
+			changed = true;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+		{
+			action_type = WALK;
+			changed = true;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		{
+			action_type = DIE;
+			changed = true;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+		{
+			SetHp(0);
+		}
+	}
 }
 
 void Unit::Draw()
@@ -251,16 +260,46 @@ void Unit::Draw()
 
 void Unit::Die()
 {
-	if (changed == false && action_type != A_DIE && action_type != A_DISAPPEAR)
+
+	if (animation->Finished() && action_type == DIE)
 	{
-		action_type = A_DIE;
+		action_type = DISAPPEAR;
 		changed = true;
 	}
 
-	if (animation->Finished())
+	else if (animation->Finished() && action_type == DISAPPEAR)
+	{
+		this->SetToDelete();
+	}
+	
+	if (changed == false && action_type != DIE && action_type != DISAPPEAR)
+	{
+		action_type = DIE;
+		changed = true;
+
+		//THIS DOES NOT BELONG HERE
 		//TODO
-		dead = true;
-		//App->entity_manager->DeleteUnit(this);
+		if (GetRandNum(5) == 1)
+		{
+			App->audio->PlayFx(fx_twohanded_die01);
+		}
+		else if (GetRandNum(5) == 2)
+		{
+			App->audio->PlayFx(fx_twohanded_die02);
+		}
+		else if (GetRandNum(5) == 3)
+		{
+			App->audio->PlayFx(fx_twohanded_die03);
+		}
+		else if (GetRandNum(5) == 4)
+		{
+			App->audio->PlayFx(fx_twohanded_die04);
+		}
+		else if (GetRandNum(5) == 5)
+		{
+			App->audio->PlayFx(fx_twohanded_die05);
+		}
+	}
 }
 
 const DIRECTION Unit::GetDir() const
@@ -283,12 +322,18 @@ const ACTION_TYPE Unit::GetActionType() const
 	return action_type;
 }
 
+const UNIT_STATE Unit::GetUnitState() const
+{
+	return state;
+}
+
 const int Unit::GetUnitRadius() const
 {
 	return unit_radius;
 }
 
-int Unit::GetPath(iPoint dest) {
+int Unit::GetPath(iPoint dest)
+{
 	iPoint ori = App->map->WorldToMap(GetX(), GetY());
 	iPoint destinat = App->map->WorldToMap(dest.x, dest.y);
 	return App->pathfinding->CreatePath(ori, destinat, path_list);
@@ -304,9 +349,36 @@ const int Unit::GetRange() const
 	return range;
 }
 
+const int Unit::GetVisionRange() const
+{
+	return vision_range;
+}
+
 const bool Unit::IsMoving() const
 {
-	return moving;
+	if (state == MOVING || state == MOVING_TO_FIGHT)
+		return true;
+	return false;
+}
+
+const int Unit::GetPriority() const
+{
+	return priority;
+}
+
+void Unit::PopFirstPath()
+{
+	path_list.pop_front();
+}
+
+void Unit::SetAction(const ACTION_TYPE action)
+{
+	action_type = action;
+}
+
+void Unit::SetIsMoving()
+{
+	state = MOVING;
 }
 
 void Unit::LookAt(iPoint pos)
@@ -316,13 +388,14 @@ void Unit::LookAt(iPoint pos)
 
 bool Unit::GoTo( iPoint destination)
 {
+	path_list.clear();
 	if (this->GetPath({ destination.x, destination.y }) != -1)
 	{
 		path_list.pop_front();
 		GetNextTile();
-		this->action_type = A_WALK;
+		action_type = WALK;
 		changed = true;
-		this->moving = true;
+		state = MOVING;
 		return true;
 	}
 	return false;
@@ -332,7 +405,7 @@ bool Unit::GetNextTile()
 {
 	bool ret = true;
 
-	if (path_list.size() == 0)
+	if (path_list.size() <= 0)
 		return false;
 
 	path_objective = App->map->MapToWorld(path_list.front().x, path_list.front().y);
@@ -355,57 +428,58 @@ bool Unit::GetNextTile()
 
 	if ((0 <= angle &&  angle <= 22.5) || (337.5 <= angle&& angle <= 360))
 	{
-		this->direction = D_EAST;
+		this->direction = EAST;
 		changed = true;
 	}
 
 	else if (22.5 <= angle &&  angle <= 67.5)
 	{
-		this->direction = D_NORTH_EAST;
+		this->direction = NORTH_EAST;
 		changed = true;
 	}
 
 	else if (67.5 <= angle &&  angle <= 112.5)
 	{
-		this->direction = D_NORTH;
+		this->direction = NORTH;
 		changed = true;
 	}
 
 	else if (112.5 <= angle &&  angle <= 157.5)
 	{
-		this->direction = D_NORTH_WEST;
+		this->direction = NORTH_WEST;
 		changed = true;
 	}
 
 	else if (157.5 <= angle &&  angle <= 202.5)
 	{
-		this->direction = D_WEST;
+		this->direction = WEST;
 		changed = true;
 	}
 
 	else if (202.5 <= angle &&  angle <= 247.5)
 	{
-		this->direction = D_SOUTH_WEST;
+		this->direction = SOUTH_WEST;
 		changed = true;
 	}
 
 	else if (247.5 <= angle &&  angle <= 292.5)
 	{
-		this->direction = D_SOUTH;
+		this->direction = SOUTH;
 		changed = true;
 	}
 
 	else if (292.5 <= angle &&  angle <= 337.5)
 	{
-		this->direction = D_SOUTH_EAST;
+		this->direction = SOUTH_EAST;
 		changed = true;
 	}
 
 	else
-		this->direction = D_NO_DIRECTION;
+		this->direction = NO_DIRECTION;
 
 	return ret;
 }
+
 
 const int Unit::GetRandNum(int num)
 {

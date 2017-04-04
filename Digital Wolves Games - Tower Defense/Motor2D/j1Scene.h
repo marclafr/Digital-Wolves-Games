@@ -3,6 +3,9 @@
 
 #include "j1Module.h"
 
+#define BASIC_TOWER_WOOD_COST 75
+#define BASIC_TOWER_STONE_COST 25
+
 struct SDL_Texture;
 class UILabel;
 class UIComponents;
@@ -11,6 +14,8 @@ class UICheckbutton;
 class UIHUDPanelButtons;
 class UIHUDPanelInfo;
 class UIHUDDescription;
+class UIHUDResources;
+class Resources;
 
 class j1Scene : public j1Module
 {
@@ -41,20 +46,30 @@ public:
 
 	//Enable Module with submodules
 	void EnableScene();
-
+	bool CanBuildTower();
+	void BuildTower();
+	bool placing_tower = false;
+	bool placing_wall = false;
+	bool game_scene = true;
 private:
 	SDL_Texture* debug_tex;
-
+	SDL_Texture* tower_tex;
+	SDL_Texture* wall_tex;
 	UIComponents* top_hud;
 	UIButton* objectives;
 	UIButton* tree_tech;
 	UIButton* ingame_menu;
+	UIHUDResources* resources_panel;
+	UILabel* title_game_name;
 
 	UIComponents* down_hud;
 	UICheckbutton* btn_description;
 	UIHUDPanelButtons* panel;
 
 	SDL_Rect select_rect;
+
+	Resources* resource_wood;
+	Resources* resource_stone;
 
 public:
 	UIHUDPanelInfo* panel_info;

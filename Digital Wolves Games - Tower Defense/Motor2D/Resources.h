@@ -1,36 +1,51 @@
 #ifndef _RESOURCES
 #define _RESOURCES
 
-#include "SDL\include\SDL.h"
+#include "SDL/include/SDL_rect.h"
+#include "Entity.h"
+#include "j1Textures.h"
+#include "j1Module.h"
+#include "Entity.h"
+#include "Units.h"
+#include "j1PerfTimer.h"
+#include <vector>
 
-class Resources 
+enum RESOURCE_TYPE
 {
-private:
-	int wood = 0;
-	int food = 0;
-	int gold = 0;
-	int stone = 0;
-public:
-	Resources();
-	~Resources();
-
-	int GetWood();
-	int GetFood();
-	int GetGold();
-	int GetStone();
-
-	void AddWood(int adding);
-	void AddFood(int adding);
-	void AddGold(int adding);
-	void AddStone(int adding);
-
-	void UseWood(int used);
-	void UseFood(int used);
-	void UseGold(int used);
-	void UseStone(int used);
+	NO_RESOURCE,
+	WOOD,
+	STONE,
+	GOLD,
+	FOOD,
 };
 
+class Resources : public Entity
+{
+private:
+	int resource = 0;
+	int amount_collected;
+	enum RESOURCE_TYPE resource_type;
+	float collect_time;
+	float build_time;
+	j1PerfTimer buildtimer;
+	j1PerfTimer CollectTimer;
+	bool totallybuilded = false;
+public:
 
+	Resources(RESOURCE_TYPE b_type, fPoint pos);
 
-#endif //_RESOURCES_
+	void Update(); // defines order
+
+	virtual void AI();
+	virtual void Draw();
+
+	const RESOURCE_TYPE GetResourceType() const;
+	const double GetBuildTime() const;
+	void AddResource(int add);
+	bool CanUseResource(int cost);
+	bool UseResource(int cost);
+	int GetResource();
+};
+
+#endif
 

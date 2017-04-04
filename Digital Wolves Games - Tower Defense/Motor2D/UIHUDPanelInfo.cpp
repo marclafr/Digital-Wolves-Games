@@ -142,6 +142,9 @@ void UIHUDPanelInfo::CreatePanel()
 			case E_BUILDING:
 				entity_selected->PrepareBuildingInfo();
 				break;
+			case RESOURCE:
+				entity_selected->PrepareResourceInfo();
+				break;
 			}
 		}
 	}
@@ -211,6 +214,10 @@ void UIHUDPanelInfo::Draw()
 
 			case E_BUILDING:
 				DrawBuildingSelected();
+				break;
+
+			case RESOURCE:
+				DrawResourceSelected();
 				break;
 			}
 			break;
@@ -320,6 +327,21 @@ void UIHUDPanelInfo::DrawBuildingSelected()
 			entity_selected->build = false;
 			
 	}
+}
+
+void UIHUDPanelInfo::DrawResourceSelected()
+{
+	UIComponents* entity_image = entity_selected->image;
+
+	SDL_Rect mark_btn{ 1029, 827, 29, 33 };
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+	UILabel* entity_label = entity_selected->name;
+	App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+	entity_label = entity_selected->life;
+	App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 }
 
 bool UIHUDPanelInfo::Update()
@@ -446,4 +468,22 @@ void UIHUDPanelInfo::entity_info::UpdateBuildingPercentageStr()
 	str_percentage += "%";
 
 	building_percentage->ChangeText(str_percentage.c_str());
+}
+
+void UIHUDPanelInfo::entity_info::PrepareResourceInfo()
+{
+	Resources* selected = (Resources*)this->pointer_entity;
+
+	RESOURCE_TYPE r_type_selected = selected->GetResourceType();
+
+	image = new UIComponents(UICOMPONENT_TYPE::UIIMAGE);
+	image->Set({ 231, 667, 29, 33 }, GetResourceIconPositionFromAtlas(r_type_selected));
+	image->SetInteractive(false);
+
+	name = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	name->Set(231, 653, GetResourceName(r_type_selected));
+
+	std::string stats = std::to_string(selected->GetHp());
+	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	life->Set(262, 690, stats.c_str());
 }

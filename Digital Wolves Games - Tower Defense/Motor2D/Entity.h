@@ -8,22 +8,25 @@ enum TextureID;
 
 enum ENTITY_TYPE
 {
-	E_NO_ENTITY = 0,
-	E_BUILDING,
-	E_UNIT
+	NO_ENTITY = 0,
+	BUILDING,
+	UNIT,
+	RESOURCE,
+	WALL
 };
 
 enum Side
 {
-	S_ALLY,
-	S_ENEMY,
-	S_NO_SIDE
+	ALLY,
+	ENEMY,
+	NEUTRAL,
+	NO_SIDE
 };
 
 enum ENTITY_STATUS
 {
-	ST_SELECTED = 0,
-	ST_NON_SELECTED
+	E_SELECTED = 0,
+	E_NON_SELECTED
 };
 
 class Entity
@@ -37,12 +40,13 @@ private:
 	int armor;
 	int attack;
 	enum ENTITY_TYPE entity_type;
-	enum ENTITY_STATUS entity_status = ST_NON_SELECTED;
+	enum ENTITY_STATUS entity_status = E_NON_SELECTED;
 	enum TextureID texture_id;
 	enum Side side;
 
 public:
 	Entity(ENTITY_TYPE entity_type, fPoint pos, Side side);
+
 	~Entity();
 
 	virtual void Update() = 0;
@@ -81,5 +85,6 @@ protected:
 	void SetRect(SDL_Rect rect);
 	void SetTextureID(TextureID id);
 	void SetSide(Side side);
+	void SetToDelete();
 };
 #endif

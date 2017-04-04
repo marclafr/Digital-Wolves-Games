@@ -7,6 +7,7 @@
 #include "j1Textures.h"
 #include "j1Map.h"
 #include <math.h>
+#include "Camera.h"
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
@@ -30,8 +31,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 bool j1Map::CreateWalkabilityMap(int& width, int & height, uchar** buffer) {
 
 	bool ret = false;
-
-
 	std::list<MapLayer*>::iterator item;
 	for (item = data.layers.begin(); item._Ptr->_Myval != NULL; item++)
 	{
@@ -54,9 +53,88 @@ bool j1Map::CreateWalkabilityMap(int& width, int & height, uchar** buffer) {
 
 				if (tileset != NULL)
 				{
-					//if (tile_id == 29)map[i] = 0;
-					//else map[i] = 1;
 					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+
+	return ret;
+
+}
+bool j1Map::CreateConstructibleMap1(int& width, int & height, uchar** buffer) {
+
+	bool ret = false;
+	std::list<MapLayer*>::iterator item;
+	for (item = data.layers.begin(); item._Ptr->_Myval != NULL; item++)
+	{
+		MapLayer* layer = item._Ptr->_Myval;
+
+		if (layer->name.compare("ConstructibleAlly") != 0)
+			continue;
+		uchar* map = new uchar[layer->width*layer->height];
+		memset(map, 1, layer->width*layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y*layer->width) + x;
+
+				int tile_id = layer->Get(x, y);
+				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+
+ 				if (tileset != NULL)
+				{
+					map[i] = (tile_id - tileset->firstgid) > 0 ? 10 : 1;
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+
+	return ret;
+
+}
+bool j1Map::CreateConstructibleMap2(int& width, int & height, uchar** buffer) {
+
+	bool ret = false;
+	std::list<MapLayer*>::iterator item;
+	for (item = data.layers.begin(); item._Ptr->_Myval != NULL; item++)
+	{
+		MapLayer* layer = item._Ptr->_Myval;
+
+		if (layer->name.compare("ConstructibleNeutral") != 0)
+			continue;
+		
+		uchar* map = new uchar[layer->width*layer->height];
+		memset(map, 1, layer->width*layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y*layer->width) + x;
+
+				int tile_id = layer->Get(x, y);
+				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+
+				if (tileset != NULL)
+				{
+					map[i] = (tile_id - tileset->firstgid) > 0 ? 10 : 1;
 				}
 			}
 		}
@@ -84,10 +162,10 @@ void j1Map::Draw()
 	{
 		MapLayer* layer = item._Ptr->_Myval;
 
-	if (layer->properties.Get("Nodraw") == true && (layer->properties.Get("Navigation") == true))
+		if (layer->properties.Get("Nodraw") == true)
 		{
-		    //item++;//TODO: uncomment not to draw walkability map
-			//continue;
+			item++; //TODO:Uncomment for no printing
+			continue;
 		}
 		for (int y = 0; y < data.height; ++y)
 		{
@@ -99,13 +177,16 @@ void j1Map::Draw()
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
 
 					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorld(x, y);
+					iPoint pos = MapToWorldPrintMap(x, y);
 
-					App->render->Blit(tileset->texture, pos.x - 48, pos.y - 31, &r);
+					//TODO: this should be temporary until we find out what happens, also,TODO solve InsideRenderTarget: after moving the camera doesnt work.
+					//if (App->render->camera->InsideRenderTarget(pos.x, pos.y))
+						if (tileset->name.compare("Extras") != 0)
+							App->render->Blit(tileset->texture, pos.x - 48 - (data.tile_width * 0.5f), pos.y - 31 + (x + y), &r);
+						else		App->render->Blit(tileset->texture, pos.x - 48 - tileset->tile_width/2, pos.y - 31 + tileset->tile_height, &r);
 				}
 			}
 		}
-
 		item++;
 	}
 }
@@ -143,17 +224,11 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	return set;
 }
 
-
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
 
-	if (data.type == MAPTYPE_ORTHOGONAL)
-	{
-		ret.x = x * data.tile_width;
-		ret.y = y * data.tile_height;
-	}
-	else if (data.type == MAPTYPE_ISOMETRIC)
+	if (data.type == MAPTYPE_ISOMETRIC)
 	{
 		ret.x = (x - y) * (int)(data.tile_width * 0.5f) - data.tile_width * 0.5f;
 		ret.y = (x + y) * (int)(data.tile_height * 0.5f) + (x + y);
@@ -166,18 +241,31 @@ iPoint j1Map::MapToWorld(int x, int y) const
 
 	return ret;
 }
+
+iPoint j1Map::MapToWorldPrintMap(int x, int y) const
+{
+	iPoint ret;
+
+	if (data.type == MAPTYPE_ISOMETRIC)
+	{
+		ret.x = (x - y) * (int)(data.tile_width * 0.5f);
+		ret.y = (x + y) * (int)(data.tile_height * 0.5f);
+	}
+	else
+	{
+		LOG("Unknown map type");
+		ret.x = x; ret.y = y;
+	}
+
+	return ret;
+}
+
 iPoint j1Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(x + data.tile_width * 0.5f, y);
 
-	if (data.type == MAPTYPE_ORTHOGONAL)
+	if (data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.x = ret.x / data.tile_width;
-		ret.y = y / data.tile_height;
-	}
-	else if (data.type == MAPTYPE_ISOMETRIC)
-	{
-
 		float half_width = data.tile_width * 0.5f;
 		float half_height = (data.tile_height + 1) * 0.5f;
 
@@ -188,15 +276,15 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		ret.y = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
 
 		if (ret.x <= 0)ret.x = 0;
-		else if (ret.x >= 25)ret.x = 25;
+		else if (ret.x >= 120)ret.x = 120;
 		if (ret.y <= 0)ret.y = 0;
-		else if (ret.y >= 25)ret.y = 25;
-
+		else if (ret.y >= 120)ret.y = 120;
 	}
 	else
 	{
 		LOG("Unknown map type");
 	}
+
 	return ret;
 }
 

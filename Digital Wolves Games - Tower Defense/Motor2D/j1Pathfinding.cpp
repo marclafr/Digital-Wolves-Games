@@ -37,12 +37,20 @@ void j1PathFinding::SetMap(uint width, uint height, uchar* data)
 	map = new uchar[width*height];
 	//TODO1
 	//create a node_map
-	RELEASE_ARRAY(node_map);
+	//RELEASE_ARRAY(node_map);
 	node_map = new PathNode[width*height];
 
 	memcpy(map, data, width*height);
 }
+void j1PathFinding::SetConstructibleMaps(uint width, uint height, uchar* data, uchar* data2)
+{
+	constructible_map_ally = new uchar[width*height];
+	memcpy(constructible_map_ally, data, width*height);
 
+	constructible_map_neutral = new uchar[width*height];
+	memcpy(constructible_map_neutral, data2, width*height);
+
+}
 // Utility: return true if pos is inside the map boundaries
 bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 {
@@ -56,10 +64,43 @@ bool j1PathFinding::IsWalkable(const iPoint& pos) const
 	uchar t = GetTileAt(pos);
 	return t != INVALID_WALK_CODE && t > 0;
 }
+bool j1PathFinding::IsConstructible_ally(const iPoint& pos) const
+{
+	uchar t = GetTileAtConstructible_ally(pos);
+	return t != INVALID_WALK_CODE && t > 1;
+}
+bool j1PathFinding::IsConstructible_neutral(const iPoint& pos) const
+{
+	uchar t = GetTileAtConstructible_neutral(pos);
+	return t != INVALID_WALK_CODE && t > 1;
+}
+void j1PathFinding::MakeNoConstruible_ally(const iPoint& pos)
+{
+	constructible_map_ally[pos.y*width + pos.x] = INVALID_WALK_CODE;
+}
+
+void j1PathFinding::MakeNoConstruible_neutral(const iPoint& pos)
+{
+	constructible_map_neutral[pos.y*width + pos.x] = INVALID_WALK_CODE;
+}
+
+void j1PathFinding::MakeConstruible_neutral(const iPoint& pos)
+{
+	constructible_map_neutral[pos.y*width + pos.x] = 10;
+}
+void j1PathFinding::MakeConstruible_ally(const iPoint& pos)
+{
+	constructible_map_ally[pos.y*width + pos.x] = 10;
+}
 
 void j1PathFinding::MakeNoWalkable(const iPoint& pos)
 {
 	map[pos.y*width + pos.x] = INVALID_WALK_CODE;
+}
+
+void j1PathFinding::MakeWalkable(const iPoint& pos)
+{
+	map[pos.y*width + pos.x] = 34;
 }
 
 // Utility: return the walkability value of a tile
@@ -67,6 +108,21 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
 		return map[(pos.y*width) + pos.x];
+
+	return INVALID_WALK_CODE;
+}
+
+uchar j1PathFinding::GetTileAtConstructible_ally(const iPoint& pos) const
+{
+	if (CheckBoundaries(pos))
+		return constructible_map_ally[(pos.y*width) + pos.x];
+
+	return INVALID_WALK_CODE;
+}
+uchar j1PathFinding::GetTileAtConstructible_neutral(const iPoint& pos) const
+{
+	if (CheckBoundaries(pos))
+		return constructible_map_neutral[(pos.y*width) + pos.x];
 
 	return INVALID_WALK_CODE;
 }
@@ -141,7 +197,7 @@ uint PathNode::FindWalkableAdjacents(std::list<PathNode*>* list_to_fill) const
 	}
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell) && cell.x != 25)
+	if (App->pathfinding->IsWalkable(cell))
 	{
 		PathNode* node = App->pathfinding->GetPathNode(cell.x, cell.y);
 		if (node->pos != cell) {

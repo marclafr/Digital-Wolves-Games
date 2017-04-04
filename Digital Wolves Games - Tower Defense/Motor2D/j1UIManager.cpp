@@ -20,6 +20,7 @@
 #include "UIHUDPanelButtons.h"
 #include "UIHUDPanelInfo.h"
 #include "UIHUDDescription.h"
+#include "UIHUDResources.h"
 
 j1UIManager::j1UIManager() : j1Module()
 {
@@ -183,6 +184,9 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 		break;
 	case UIHUDDESCRIPTION:
 		components.push_back(ret = (UIComponents*)new UIHUDDescription(UICOMPONENT_TYPE::UIHUDDESCRIPTION));
+		break;
+	case UIHUDRESOURCES:
+		components.push_back(ret = (UIComponents*)new UIHUDResources(UICOMPONENT_TYPE::UIHUDRESOURCES));
 		break;
 	default:
 		components.push_back(ret = new UIComponents(type));
