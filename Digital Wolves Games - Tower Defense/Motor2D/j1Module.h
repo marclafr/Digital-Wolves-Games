@@ -22,7 +22,13 @@ public:
 
 	void Init()
 	{
-		active = true;
+	//	if (this->name == "scene") {
+	//		active = false;
+	//	}
+	//	else {
+			active = true;
+	//	}
+		
 	}
 
 	// Called before render is available

@@ -51,6 +51,9 @@ public:
 	bool placing_tower = false;
 	bool placing_wall = false;
 	bool game_scene = true;
+
+	bool win=false;
+	bool lose=false;
 private:
 	SDL_Texture* debug_tex;
 	SDL_Texture* tower_tex;

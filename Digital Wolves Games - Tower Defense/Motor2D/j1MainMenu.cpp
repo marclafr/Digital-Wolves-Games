@@ -68,7 +68,7 @@ bool j1MainMenu::Start()
 	trophies->SetInteractive(false);
 
 	options = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	options->Set({ 300, 448, 125, 122 }, { 288, 862, 125, 122 });
+	options->Set({ 300, 448, 125, 122 }, { 288, 862, 125, 123 });
 	options->SetInteractive(false);
 	
 	exit = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
@@ -76,7 +76,17 @@ bool j1MainMenu::Start()
 	exit->SetInteractive(true);
 
 	title_exit = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_exit->Set(260, 710, "Exit");
+	title_exit->Set(265, 708, "Exit");
+
+	if (App->scene->win == true) {
+		title_win = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+		title_win->Set(900, 690, "You Win");
+	}
+
+	if (App->scene->lose == true) {
+		title_lose = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+		title_lose->Set(900, 690, "You Lose");
+	}
 
 	return true;
 }
@@ -100,6 +110,8 @@ bool j1MainMenu::Update(float dt)
 	}
 	if (single_player->GetStat() == CLICKL_UP) {
 		App->scene_manager->ChangeScene(App->scene, this);
+		App->scene->win = false;
+		App->scene->lose = false;
 	}
 
 	if (exit->GetStat() == SELECTED) {
@@ -134,6 +146,7 @@ bool j1MainMenu::CleanUp()
 
 	single_player->SetDraw(false);
 	title_single_player->SetDraw(false);
+	single_player->SetInteractive(false);
 
 	tutorial->SetDraw(false);
 	history->SetDraw(false);
@@ -142,6 +155,7 @@ bool j1MainMenu::CleanUp()
 
 	exit->SetDraw(false);
 	title_exit->SetDraw(false);
+	exit->SetInteractive(false);
 
 	return true;
 }

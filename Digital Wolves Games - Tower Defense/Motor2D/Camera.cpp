@@ -146,7 +146,7 @@ SDL_Rect Camera::GetZoomedRect(const SDL_Rect &starting_rect) const
 	return rect;
 }
 
-void Camera::FadeToBlack(int secs_to_black, int wait, int secs_to_light)
+void Camera::FadeToBlack(float secs_to_black, int wait, int secs_to_light)
 {
 	frames_to_black = secs_to_black * FPS;
 	frames_in_black = wait * FPS;

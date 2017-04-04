@@ -26,11 +26,14 @@ public:
 
 	bool ChangeScene(j1Module* scene_on , j1Module* scene_off);
 
+
 private:
 	SDL_Rect screen;
 
 	j1Module* new_scene = nullptr;
 	j1Module* old_scene = nullptr;
+
+
 };
 
 #endif // __j1SCENEMANAGER_H__
