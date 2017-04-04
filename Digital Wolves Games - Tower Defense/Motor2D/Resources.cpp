@@ -23,9 +23,23 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(RESOURCE, pos, A
 		SetArmor(1);
 		collect_time = 10;
 		build_time = 7;
-		rect = { 1,146,171,101};
+		rect = { 1,146,171,101 };
 		SetRect(rect);
-		SetPivot(0.491228*171 ,0.653465*101);
+		SetPivot(0.491228 * 171, 0.653465 * 101);
+		SetTextureID(T_RESOURCE);
+		totallybuilded = true;
+		CollectTimer.Start();
+		break;
+
+	case WOOD:
+		SetSide(ALLY);
+		SetHp(10);
+		SetArmor(1);
+		collect_time = 10;
+		build_time = 7;
+		rect = { 242,0,156,138 };
+		SetRect(rect);
+		SetPivot(0.491228 * 171, 0.653465 * 101);
 		SetTextureID(T_RESOURCE);
 		totallybuilded = true;
 		CollectTimer.Start();

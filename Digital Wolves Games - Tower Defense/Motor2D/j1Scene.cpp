@@ -145,6 +145,8 @@ bool j1Scene::Start()
 	//RESOURCES
 	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(STONE, fPoint(450, 850)));
 	*/
+	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(WOOD, fPoint(50, 50)));
+
 	return true;
 }
 
