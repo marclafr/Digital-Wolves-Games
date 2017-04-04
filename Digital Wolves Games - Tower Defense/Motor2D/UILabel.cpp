@@ -64,7 +64,7 @@ void UILabel::ChangeText(const char* text)
 	{
 		App->tex->UnloadLabel(text_img);
 
-		text_img = App->font->Print(text, T_AOE_UI_FONT, { 255,0,0,0 });
+		text_img = App->font->Print(text, T_AOE_UI_FONT, { 255,255,255,0 });
 
 		App->render->GetDimensionsFromTexture(text_img, rect_position.w, rect_position.h);
 
