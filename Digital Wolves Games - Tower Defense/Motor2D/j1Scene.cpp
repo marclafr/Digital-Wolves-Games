@@ -78,8 +78,8 @@ bool j1Scene::Start()
 	tree_tech = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	tree_tech->Set({1288, 2, 35, 14}, {1289, 996, 35, 14});
 
-	//ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	//ingame_menu->Set({1323, 2, 36 , 15}, {1325, 996, 36, 14});
+	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	ingame_menu->Set({1323, 2, 36 , 15}, {1325, 996, 36, 14});
 
 	resources_panel = (UIHUDResources*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDRESOURCES);
 
@@ -187,7 +187,7 @@ bool j1Scene::Update(float dt)
 {
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	
+	iPoint res = App->render->ScreenToWorld(x, y);
 	/*int a = 7;
 	int b = 22;
 	iPoint aa = App->map->MapToWorld(a, b);
@@ -200,16 +200,16 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 	
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT ||  y < (App->render->camera->GetHeight() / 30))
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT ||  ((y < (App->render->camera->GetHeight() / 30) && res.y > -30)))
 		App->render->camera->MoveUp(floor(200.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || y > ((App->render->camera->GetHeight() / 30)*29.8f))
+	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || ((y > 580 && y< 642) && res.y < 2317))
 		App->render->camera->MoveDown(floor(200.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || x < (App->render->camera->GetWidth() / 50))
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || (x < (App->render->camera->GetWidth() / 50 + 30) && res.x > -2400))
 		App->render->camera->MoveLeft(floor(200.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || x > ((App->render->camera->GetWidth() / 50)*49.8f))
+	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || (x > (((App->render->camera->GetWidth() / 50)*48.8f)) && res.x < 2349))
 		App->render->camera->MoveRight(floor(200.0f * dt));
 
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)

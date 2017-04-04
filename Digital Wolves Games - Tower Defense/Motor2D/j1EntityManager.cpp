@@ -113,12 +113,14 @@ void j1EntityManager::DeleteEntity(Entity* ptr)
 		case UNIT:
 			DeleteUnit((Unit*)ptr);
 			break;
-
 		case BUILDING:
 			DeleteBuilding(ptr);
 			break;
 		case RESOURCE:
 			DeleteResource(ptr);
+			break;
+		case WALL:
+			DeleteWall(ptr);
 			break;
 	}
 }
@@ -167,6 +169,21 @@ void j1EntityManager::DeleteResource(Entity* ptr)
 			i++;
 	}
 }
+void j1EntityManager::DeleteWall(Entity* ptr)
+{
+	for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end();)
+	{
+		if (*i == ptr)
+		{
+			entity_array.erase(i);
+			delete ptr;
+			return;
+		}
+		else
+			i++;
+	}
+}
+
 
 
 bool j1EntityManager::Update(float dt)

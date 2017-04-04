@@ -35,6 +35,7 @@ public:
 	void DeleteUnit(Unit* ptr);
 	void DeleteBuilding(Entity* ptr);
 	void DeleteResource(Entity* ptr);
+	void DeleteWall(Entity* ptr);
 	void GetUnitsPath(iPoint destintation);
 
 	Entity* CheckForCombat(iPoint position, int range, Side side);

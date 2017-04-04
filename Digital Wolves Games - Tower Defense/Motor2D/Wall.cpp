@@ -52,6 +52,9 @@ void Wall::Update()
 	}
 	Draw();
 	if (GetHp() < 0) {
+		iPoint p = App->map->WorldToMap(GetX(), GetY());
+		App->pathfinding->MakeNoWalkable(p);
+		App->pathfinding->MakeNoConstruible_ally(p);
 		this->Die();
 	}
 }
