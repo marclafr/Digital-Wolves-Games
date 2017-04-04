@@ -73,22 +73,22 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 			if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 			{
 				entity_array[i]->SetEntityStatus(ST_SELECTED);
-				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+				if(entity_array[i]->GetEntityType() != ENTITY_TYPE:: E_WALL) App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 			{
 				entity_array[i]->SetEntityStatus(ST_SELECTED);
-				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+				if(entity_array[i]->GetEntityType() != ENTITY_TYPE::E_WALL) App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 			{
 				entity_array[i]->SetEntityStatus(ST_SELECTED);
-				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+				if (entity_array[i]->GetEntityType() != ENTITY_TYPE::E_WALL) App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 			{
 				entity_array[i]->SetEntityStatus(ST_SELECTED);
-				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+				if (entity_array[i]->GetEntityType() != ENTITY_TYPE::E_WALL) App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 		}
 	}
