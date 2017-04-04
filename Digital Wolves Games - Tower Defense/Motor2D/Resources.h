@@ -23,6 +23,7 @@ class Resources : public Entity
 {
 private:
 	int resource = 0;
+	int amount_collected;
 	enum RESOURCE_TYPE resource_type;
 	float collect_time;
 	float build_time;

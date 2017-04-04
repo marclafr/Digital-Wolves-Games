@@ -3,7 +3,8 @@
 
 #include "j1Module.h"
 
-#define BASIC_TOWER_COST 100
+#define BASIC_TOWER_WOOD_COST 75
+#define BASIC_TOWER_STONE_COST 25
 
 struct SDL_Texture;
 class UILabel;
@@ -66,6 +67,7 @@ private:
 	SDL_Rect select_rect;
 
 	Resources* resource_wood;
+	Resources* resource_stone;
 
 public:
 	UIHUDPanelInfo* panel_info;

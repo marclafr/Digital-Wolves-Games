@@ -21,7 +21,8 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(RESOURCE, pos, A
 		SetSide(ALLY);
 		SetHp(10);
 		SetArmor(1);
-		collect_time = 10;
+		collect_time = 12;
+		amount_collected = 50;
 		build_time = 7;
 		rect = { 1,146,171,101 };
 		SetRect(rect);
@@ -36,6 +37,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(RESOURCE, pos, A
 		SetHp(10);
 		SetArmor(1);
 		collect_time = 10;
+		amount_collected = 100;
 		build_time = 7;
 		rect = { 242,0,156,138 };
 		SetRect(rect);
@@ -73,8 +75,9 @@ void Resources::Update()
 
 void Resources::AI()
 {
-	if (CollectTimer.ReadMs() >= collect_time * 1000) {
-		AddResource(100);
+	if (CollectTimer.ReadMs() >= collect_time * 1000)
+	{
+		AddResource(amount_collected);
 		CollectTimer.Start();
 	}
 }
