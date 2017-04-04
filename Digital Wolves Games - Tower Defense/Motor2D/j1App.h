@@ -27,6 +27,18 @@ class j1Collision;
 	//Scenes
 class j1Scene;
 
+
+struct DebugFeatures
+{
+public:
+	DebugFeatures() : debug_mode(false), print_walkability_map(false) {}
+	~DebugFeatures(){}
+
+public:
+	bool debug_mode;
+	bool print_walkability_map;
+};
+
 class j1App
 {
 public:
@@ -108,6 +120,8 @@ public:
 		//Scenes
 	j1Scene*			scene = NULL;
 
+	DebugFeatures		debug_features;
+
 private:
 
 	std::list<j1Module*> modules;
@@ -133,6 +147,6 @@ private:
 	int					capped_ms = -1;
 };
 
-extern j1App* App; // No student is asking me about that ... odd :-S
+extern j1App* App;
 
 #endif

@@ -131,6 +131,21 @@ bool j1Input::PreUpdate()
 	return true;
 }
 
+bool j1Input::Update(float dt)
+{
+	//TODO: DEBUG FEATURES
+	if (GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		App->debug_features.debug_mode = !App->debug_features.debug_mode;
+
+	if (App->debug_features.debug_mode == true)
+	{
+		if (GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+			App->debug_features.print_walkability_map = !App->debug_features.print_walkability_map;
+	}
+	//
+	return true;
+}
+
 // Called before quitting
 bool j1Input::CleanUp()
 {

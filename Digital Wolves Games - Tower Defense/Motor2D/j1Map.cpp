@@ -164,8 +164,11 @@ void j1Map::Draw()
 
 		if (layer->properties.Get("Nodraw") == true)
 		{
-			item++; //TODO:Uncomment for no printing
-			continue;
+			if (App->debug_features.debug_mode == false || App->debug_features.print_walkability_map == false)
+			{
+				item++;
+				continue;
+			}
 		}
 		for (int y = 0; y < data.height; ++y)
 		{

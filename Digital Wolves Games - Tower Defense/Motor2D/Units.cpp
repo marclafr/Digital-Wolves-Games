@@ -231,12 +231,6 @@ void Unit::AI()
 			changed = true;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		{
-			action_type = A_DIE;
-			changed = true;
-		}
-
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 		{
 			SetHp(0);
