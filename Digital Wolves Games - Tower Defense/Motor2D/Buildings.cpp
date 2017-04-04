@@ -40,6 +40,18 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetPivot(0.505263 * 95, 0.578947 * 57);
 		SetTextureID(T_WALL);
 		break;
+	case B_TOWNHALL:
+		SetSide(side);
+		SetHp(1500);
+		SetAttack(0);
+		rate_of_fire = 0;
+		range = 0;
+		rect = { 83,218,240,215 };
+		SetRect(rect);
+		SetPivot(0.5*240,0.725581*215);
+		SetTextureID(T_WALL);
+		totallybuilded = true;
+		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
 		building_type = B_NO_BUILDING;

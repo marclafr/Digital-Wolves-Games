@@ -17,13 +17,13 @@ public:
 
 	~UILabel();
 
-	void Set(int pos_x, int pos_y, const char* text, _TTF_Font*  font = nullptr);
+	void Set(int pos_x, int pos_y, const char* text, SDL_Color color = { 255,255,255,0 }, _TTF_Font*  font = nullptr);
 
 	void Draw();
 
 	bool Update();
 
-	void ChangeText(const char* text);
+	void ChangeText(const char* text, SDL_Color color = { 255,255,255,0 });
 };
 
 #endif // __UILABEL_H__

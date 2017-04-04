@@ -22,6 +22,7 @@
 UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
+	SetDraw(false);
 }
 
 UIHUDPanelButtons::~UIHUDPanelButtons()

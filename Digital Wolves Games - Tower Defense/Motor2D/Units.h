@@ -75,6 +75,7 @@ private:
 	int rand_num;
 	Animation* animation;
 	bool changed;
+	Entity* target;
 	Entity* attacking;
 
 	std::list<iPoint> path_list;
@@ -113,6 +114,7 @@ public:
 
 	void LookAt(iPoint pos);
 	bool GoTo(iPoint destination);
+	bool ChangeDirection(iPoint destination);
 	void PlayDeathSound() const;
 
 	//FX

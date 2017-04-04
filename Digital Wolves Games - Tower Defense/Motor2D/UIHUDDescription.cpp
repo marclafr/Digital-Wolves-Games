@@ -26,7 +26,7 @@
 UIHUDDescription::UIHUDDescription(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
-
+	SetDraw(false);
 
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	background->Set({ X_BACKGROUND, Y_BACKGROUND, WATLAS_BACKGROUND, HATLAS_BACKGROUND }, { XATLAS_BACKGROUND, YATLAS_BACKGROUND, WATLAS_BACKGROUND, HATLAS_BACKGROUND });

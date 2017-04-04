@@ -39,7 +39,7 @@ public:
 	void GetUnitsPath(iPoint destintation);
 
 	Entity* CheckForCombat(iPoint position, int range, Side side);
-	iPoint CheckForObjective(iPoint position, int vision_range, Side side);
+	Entity* CheckForObjective(iPoint position, int vision_range, Side side);
 	std::vector<Entity*> GetEntityVector();
 
 	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;

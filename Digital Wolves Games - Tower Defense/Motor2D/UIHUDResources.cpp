@@ -18,6 +18,8 @@
 
 UIHUDResources::UIHUDResources(UICOMPONENT_TYPE type) : UIComponents(type) 
 {
+	SetDraw(false);
+
 	stone = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	stone->Set(185, Y_LABEL, "0");
 	stone->SetInteractive(false);

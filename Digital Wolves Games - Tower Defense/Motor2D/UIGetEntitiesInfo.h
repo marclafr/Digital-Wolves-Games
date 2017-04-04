@@ -24,4 +24,6 @@ const bool isBuilded(const Entity* build);
 SDL_Rect GetAtlasBarBuilding(const uint percentage);
 
 const char* GetSideName(const Side type);
+
+int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp);
 #endif
