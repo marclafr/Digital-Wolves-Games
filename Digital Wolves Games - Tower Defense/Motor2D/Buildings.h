@@ -13,7 +13,8 @@
 enum BUILDING_TYPE
 {
 	B_NO_BUILDING = 0,
-	B_TURRET //PER TENIR ALGO
+	B_TURRET,
+	B_STONE_WALL//PER TENIR ALGO
 };
 
 class Building : public Entity
@@ -29,14 +30,14 @@ private:
 	Entity* Target = nullptr;
 	bool totallybuilded = false;
 public:
-
+	iPoint arrowpos;
 	Building(BUILDING_TYPE b_type, fPoint pos, Side side);
 
 	void Update(); // defines order
-
+	void UpdateArrow(iPoint &arrow, iPoint Target);
 	virtual void AI();
 	virtual void Draw();
-
+	bool attacking = false;
 	const BUILDING_TYPE GetBuildingType() const;
 	const int GetRange() const;
 	const double GetBuildTime() const;

@@ -27,7 +27,11 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	return ret;
 }
+bool j1Map::Update(float dt) {
 
+	Draw();
+	return true;
+}
 bool j1Map::CreateWalkabilityMap(int& width, int & height, uchar** buffer) {
 
 	bool ret = false;

@@ -22,12 +22,23 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetAttack(12);
 		SetArmor(1);
 		rate_of_fire = 1;
-		range = 120;
+		range = 300;
 		build_time = 7;
-		rect = {610,1,107,206};
+		rect = { 610,1,107,206 };
 		SetRect(rect);
 		SetPivot(0.504673 * 107, 0.902913 * 206);
 		SetTextureID(T_TURRET);
+		break;
+	case B_STONE_WALL:
+		SetSide(side);
+		SetHp(1000);
+		SetAttack(0);
+		rate_of_fire = 0;
+		range = 0;
+		rect = { 365,435,95,57 };
+		SetRect(rect);
+		SetPivot(0.505263 * 95, 0.578947 * 57);
+		SetTextureID(T_WALL);
 		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
@@ -51,11 +62,32 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 
 void Building::Update()
 {
-	if (totallybuilded == true) 
+
+	if (totallybuilded == true && GetBuildingType() == B_TURRET)
 	{
 		AI();
 	}
 	Draw();
+
+	if (Target != nullptr) {
+		if (Target->GetHp() <= 0) {
+			attacking = false;
+			Target = nullptr;
+		}
+	}
+	if (attacking == true) {
+		iPoint targetpos;
+		targetpos.x = Target->GetX();
+		targetpos.y = Target->GetY() - 35;
+		UpdateArrow(arrowpos, targetpos);
+		if (arrowpos.x > targetpos.x - 3 && arrowpos.x < targetpos.x + 3 && arrowpos.y < targetpos.y + 3 && arrowpos.y > targetpos.y- 3) {
+			attacking = false;
+			Target->Damaged(12);
+		}
+		SDL_Rect rect = { 20,16,18,10 };
+		iPoint pivots(0.5 * 18, 0.5 * 10);
+		App->render->Blit(App->tex->GetTexture(T_TURRET), arrowpos.x, arrowpos.y, &rect, SDL_FLIP_NONE, pivots.x, pivots.y);
+	}
 	if (GetHp() < 0) {
 		iPoint p = App->map->WorldToMap(GetX(), GetY());
 		if (GetSide() == S_NEUTRAL) {
@@ -71,11 +103,12 @@ void Building::Update()
 
 void Building::AI()
 {
-	if (Target == nullptr) 
+	if (Target == nullptr)
 	{
+		attacking = false;
 		std::vector<Entity*> EntityVector = App->entity_manager->GetEntityVector();
 		std::vector<Entity*>::iterator item = EntityVector.begin();
-		for (; item != EntityVector.end(); item++) 
+		for (; item != EntityVector.end(); item++)
 		{
 			if ((*item)->GetEntityType() == E_UNIT)
 			{
@@ -92,15 +125,17 @@ void Building::AI()
 		if (Target->GetHp() <= 0)
 		{
 			Target = nullptr;
+			attacking = false;
 		}
-		if (AttackTimer.ReadMs() > 900)
+		else
 		{
-			if (Target != nullptr && Target->GetSide() != S_ALLY && Target->GetHp() > 0)
+			if (Target != nullptr && Target->GetSide() != S_ALLY && Target->GetHp() > 0 && attacking == false)
 			{
 				if (Target->GetX() >= (GetX() - GetRange()) && Target->GetX() < (GetX() + GetRange()) && Target->GetY() >= (GetY() - GetRange()) && Target->GetY() < (GetY() + GetRange()))
 				{
-					Attack(Target);
-					AttackTimer.Start();
+					arrowpos.x = GetX();
+					arrowpos.y = GetY() - 100;
+					attacking = true;
 				}
 				else
 				{
@@ -117,27 +152,66 @@ void Building::Draw()
 	if (totallybuilded != true) {
 		if (buildtimer.ReadMs() <= 3000)
 		{
-			SDL_Rect rect = { 394,1,96,64 };
-			SetRect(rect);
-			SetPivot(0.53125 * 96, 0.59375 * 64);
+			if (GetBuildingType() == B_TURRET) {
+				SDL_Rect rect = { 394,1,96,64 };
+				SetRect(rect);
+				SetPivot(0.53125 * 96, 0.59375 * 64);
+			}
+			else
+			{
+				SDL_Rect rect = { 365,435,95,57 };
+				SetRect(rect);
+				SetPivot(0.505263 * 95, 0.578947 * 57);
+			}
 		}
 		else if (buildtimer.ReadMs() > 3000 && buildtimer.ReadMs() <= 6000)
 		{
-			SDL_Rect rect = { 376,539,100,73 };
-			SetRect(rect);
-			SetPivot(0.55 * 100, 0.643836 * 73);
+			if (GetBuildingType() == B_TURRET) {
+				SDL_Rect rect = { 376,539,100,73 };
+				SetRect(rect);
+				SetPivot(0.55 * 100, 0.643836 * 73);
+			}
+			else
+			{
+				SDL_Rect rect = { 462,435,94,99 };
+				SetRect(rect);
+				SetPivot(0.5 * 94, 0.757576 * 99);
+			}
 		}
 		else if (buildtimer.ReadMs() > 6000 && buildtimer.ReadMs() <= 9000)
 		{
-			SDL_Rect rect = { 478,539,100,73 };
-			SetRect(rect);
-			SetPivot(0.55 * 100, 0.643836 * 73);
+			if (GetBuildingType() == B_TURRET) {
+				SDL_Rect rect = { 478,539,100,73 };
+				SetRect(rect);
+				SetPivot(0.55 * 100, 0.643836 * 73);
+			}
+			else
+			{
+				SDL_Rect rect = { 558,435,94,147 };
+				SetRect(rect);
+				SetPivot(0.5 * 94, 0.829932 * 147);
+			}
+		}
+		else if (buildtimer.ReadMs() > 9000 && buildtimer.ReadMs() <= 11000)
+		{
+			if (GetBuildingType() == B_TURRET) {
+				SDL_Rect rect = { 610,1,107,206 };
+				SetRect(rect);
+				SetPivot(0.504673 * 107, 0.902913 * 206);
+				totallybuilded = true;
+			}
+			else
+			{
+				SDL_Rect rect = { 1,584,100,147 };
+				SetRect(rect);
+				SetPivot(0.5 * 100, 0.829932 * 147);
+			}
 		}
 		else
 		{
-			SDL_Rect rect = { 610,1,107,206 };
+			SDL_Rect rect = { 325,218,99,178 };
 			SetRect(rect);
-			SetPivot(0.504673 * 107, 0.902913 * 206);
+			SetPivot(0.494949 * 99, 178 * 0.865169);
 			totallybuilded = true;
 		}
 	}
@@ -157,4 +231,39 @@ const int Building::GetRange() const
 const double Building::GetBuildTime() const
 {
 	return buildtimer.ReadMs();
+}
+void Building::UpdateArrow(iPoint &arrowpos, iPoint targetpos)
+{
+	if (arrowpos.x < targetpos.x && arrowpos.y < targetpos.y) {
+
+		arrowpos.x += 2;
+		arrowpos.y += 2;
+	}
+	if (arrowpos.x < targetpos.x && arrowpos.y > targetpos.y) {
+
+		arrowpos.x += 2;
+		arrowpos.y -= 2;
+	}
+	if (arrowpos.x > targetpos.x && arrowpos.y > targetpos.y) {
+
+		arrowpos.x -= 2;
+		arrowpos.y -= 2;
+	}
+	if (arrowpos.x > targetpos.x && arrowpos.y < targetpos.y) {
+
+		arrowpos.x -= 2;
+		arrowpos.y += 2;
+	}
+	if (arrowpos.x > targetpos.x && arrowpos.y == targetpos.y) {
+		arrowpos.x -= 2;
+	}
+	if (arrowpos.x < targetpos.x && arrowpos.y == targetpos.y) {
+		arrowpos.x += 2;
+	}
+	if (arrowpos.x == targetpos.x && arrowpos.y < targetpos.y) {
+		arrowpos.y += 2;
+	}
+	if (arrowpos.x == targetpos.x && arrowpos.y > targetpos.y) {
+		arrowpos.y -= 2;
+	}
 }

@@ -233,7 +233,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_REPEAT)
 		App->win->SetScale(2);
 
-	App->map->Draw();
+	//App->map->Draw();
 	
 
 	// Debug pathfinding ------------------------------

@@ -111,7 +111,7 @@ public:
 
 	// Called each loop iteration
 	void Draw();
-
+	bool Update(float dt);
 	// Called before quitting
 	bool CleanUp();
 

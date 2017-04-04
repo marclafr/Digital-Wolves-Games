@@ -22,7 +22,7 @@ enum RESOURCE_TYPE
 class Resources : public Entity
 {
 private:
-	int resource = 0;
+	int resource = 1000;
 	int amount_collected;
 	enum RESOURCE_TYPE resource_type;
 	float collect_time;
