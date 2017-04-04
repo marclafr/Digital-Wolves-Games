@@ -63,7 +63,9 @@ bool j1Scene::Start()
 	}
 
 	debug_tex = App->tex->Load("maps/path2.png", T_MAP);
-	tower_tex = App->tex->Load("textures/Towers.png", T_TURRET);
+	tower_tex = App->tex->GetTexture(T_TURRET);
+	wall_tex = App->tex->GetTexture(T_WALL);
+	//wall_tex = 
 	//UIElements
 		//Top_HUD
 	top_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
@@ -241,6 +243,14 @@ bool j1Scene::Update(float dt)
 	{
 		if (placing_tower == false) placing_tower = true;
 		else placing_tower = false;
+		if (placing_wall == true) placing_wall = false;
+
+	}
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	{
+		if (placing_wall == false) placing_wall = true;
+		else placing_wall = false;
+		if (placing_tower == true) placing_tower = false;
 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -325,6 +335,30 @@ bool j1Scene::Update(float dt)
 
 	}
 
+	if (placing_wall == true) {
+		if (App->pathfinding->IsConstructible_ally(r) == false)
+		{
+		}
+		else if (App->pathfinding->IsConstructible_ally(r) == true) {
+			SDL_Rect rect;
+			rect = { 325,218,99,178};
+			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949*99, 178*0.865169);
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+				{
+					if (App->pathfinding->IsConstructible_ally(r) == true)
+						App->entity_manager->CreateWall(STONE_WALL, fPoint(p.x, p.y - 9));
+					placing_wall = false;
+				}
+			}
+		}
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		{
+			placing_wall = false;
+		}
+	}
 	return true;
 }
 

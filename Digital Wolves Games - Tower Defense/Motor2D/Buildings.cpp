@@ -114,31 +114,32 @@ void Building::AI()
 
 void Building::Draw()
 {
-	
-	if (buildtimer.ReadMs() <= 3000)
-	{
-		SDL_Rect rect = { 394,1,96,64 };
-		SetRect(rect);
-		SetPivot(0.53125 * 96, 0.59375 * 64);
-	}
-	else if (buildtimer.ReadMs() > 3000 && buildtimer.ReadMs() <= 6000) 
-	{
-		SDL_Rect rect = { 376,539,100,73};
-		SetRect(rect);
-		SetPivot(0.55*100, 0.643836*73);
-	}
-	else if (buildtimer.ReadMs() > 6000 && buildtimer.ReadMs() <= 9000)
-	{
-		SDL_Rect rect = { 478,539,100,73 };
-		SetRect(rect);
-		SetPivot(0.55 * 100, 0.643836 * 73);
-	}
-	else 
-	{
-		SDL_Rect rect = { 610,1,107,206 };
-		SetRect(rect);
-		SetPivot(0.504673*107, 0.902913*206);
-		totallybuilded = true;
+	if (totallybuilded != true) {
+		if (buildtimer.ReadMs() <= 3000)
+		{
+			SDL_Rect rect = { 394,1,96,64 };
+			SetRect(rect);
+			SetPivot(0.53125 * 96, 0.59375 * 64);
+		}
+		else if (buildtimer.ReadMs() > 3000 && buildtimer.ReadMs() <= 6000)
+		{
+			SDL_Rect rect = { 376,539,100,73 };
+			SetRect(rect);
+			SetPivot(0.55 * 100, 0.643836 * 73);
+		}
+		else if (buildtimer.ReadMs() > 6000 && buildtimer.ReadMs() <= 9000)
+		{
+			SDL_Rect rect = { 478,539,100,73 };
+			SetRect(rect);
+			SetPivot(0.55 * 100, 0.643836 * 73);
+		}
+		else
+		{
+			SDL_Rect rect = { 610,1,107,206 };
+			SetRect(rect);
+			SetPivot(0.504673 * 107, 0.902913 * 206);
+			totallybuilded = true;
+		}
 	}
 	App->render->PushEntity(this);
 }

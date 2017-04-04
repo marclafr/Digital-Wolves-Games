@@ -43,11 +43,12 @@ public:
 	//Enable Module with submodules
 	void EnableScene();
 	bool placing_tower = false;
+	bool placing_wall = false;
 	bool game_scene = true;
 private:
 	SDL_Texture* debug_tex;
 	SDL_Texture* tower_tex;
-
+	SDL_Texture* wall_tex;
 	UIComponents* top_hud;
 	UIButton* objectives;
 	UIButton* tree_tech;

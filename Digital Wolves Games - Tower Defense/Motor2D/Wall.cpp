@@ -15,13 +15,13 @@ Wall::Wall(WALL_TYPE w_type, fPoint pos) : Entity(WALL, pos, ALLY), wall_type(w_
 	{
 	case STONE_WALL:
 		SetSide(ALLY);
-		SetHp(500);
+		SetHp(350);
 		SetArmor(1);
 		build_time = 7;
-		rect = { 610,1,107,206 };
+		rect = { 365,435,95,57 };
 		SetRect(rect);
-		SetPivot(0.504673 * 107, 0.902913 * 206);
-		SetTextureID(T_TURRET);
+		SetPivot(0.505263*95, 0.578947*57);
+		SetTextureID(T_WALL);
 		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
@@ -34,6 +34,10 @@ Wall::Wall(WALL_TYPE w_type, fPoint pos) : Entity(WALL, pos, ALLY), wall_type(w_
 	if (App->pathfinding->IsWalkable(p) == true)
 	{
 		App->pathfinding->MakeNoWalkable(p);
+	}
+	if(GetSide() == ALLY)
+	{
+		App->pathfinding->MakeNoConstruible_ally(p);
 	}
 }
 
@@ -59,31 +63,38 @@ void Wall::AI()
 
 void Wall::Draw()
 {
+	if (totallybuilded != true) {
+		if (buildtimer.ReadMs() <= 3000)
+		{
+			SDL_Rect rect = { 365,435,95,57 };
+			SetRect(rect);
+			SetPivot(0.505263 * 95, 0.578947 * 57);
+		}
+		else if (buildtimer.ReadMs() > 3000 && buildtimer.ReadMs() <= 6000)
+		{
+			SDL_Rect rect = { 462,435,94,99 };
+			SetRect(rect);
+			SetPivot(0.5 * 94, 0.757576 * 99);
+		}
+		else if (buildtimer.ReadMs() > 6000 && buildtimer.ReadMs() <= 9000)
+		{
+			SDL_Rect rect = { 558,435,94,147 };
+			SetRect(rect);
+			SetPivot(0.5 * 94, 0.829932 * 147);
+		}
+		else if (buildtimer.ReadMs() > 9000 && buildtimer.ReadMs() <= 11000)
+		{
+			SDL_Rect rect = { 1,584,100,147 };
+			SetRect(rect);
+			SetPivot(0.5 * 100, 0.829932 * 147);
 
-	if (buildtimer.ReadMs() <= 3000)
-	{
-		SDL_Rect rect = { 394,1,96,64 };
-		SetRect(rect);
-		SetPivot(0.53125 * 96, 0.59375 * 64);
-	}
-	else if (buildtimer.ReadMs() > 3000 && buildtimer.ReadMs() <= 6000)
-	{
-		SDL_Rect rect = { 376,539,100,73 };
-		SetRect(rect);
-		SetPivot(0.55 * 100, 0.643836 * 73);
-	}
-	else if (buildtimer.ReadMs() > 6000 && buildtimer.ReadMs() <= 9000)
-	{
-		SDL_Rect rect = { 478,539,100,73 };
-		SetRect(rect);
-		SetPivot(0.55 * 100, 0.643836 * 73);
-	}
-	else
-	{
-		SDL_Rect rect = { 610,1,107,206 };
-		SetRect(rect);
-		SetPivot(0.504673 * 107, 0.902913 * 206);
-		totallybuilded = true;
+		}
+		else {
+			SDL_Rect rect = { 325,218,99,178 };
+			SetRect(rect);
+			SetPivot(0.494949 * 99, 178 * 0.865169);
+			totallybuilded = true;
+		}
 	}
 	App->render->PushEntity(this);
 }
