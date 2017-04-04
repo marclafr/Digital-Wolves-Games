@@ -15,6 +15,8 @@
 #include "j1Collision.h"
 #include "Units.h"
 #include "Resources.h"
+#include "j1SceneManager.h"
+#include "j1MainMenu.h"
 
 #include "UIButton.h"
 #include "UILabel.h"
@@ -235,6 +237,18 @@ bool j1Scene::Update(float dt)
 
 	//App->map->Draw();
 	
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT) {
+		win = true;
+		App->scene_manager->ChangeScene(App->main_menu, this);
+		
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT) {
+		lose = true;
+		App->scene_manager->ChangeScene(App->main_menu, this);
+	}
+
+		
 
 	// Debug pathfinding ------------------------------
 
@@ -391,6 +405,8 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	App->entity_manager->CleanUp();
 
 	return true;
 }

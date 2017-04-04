@@ -60,6 +60,10 @@ private:
 	UIButton* exit;
 	UILabel* title_exit;
 
+	
+	UILabel* title_win;
+	UILabel* title_lose;
+
 
 public:
 

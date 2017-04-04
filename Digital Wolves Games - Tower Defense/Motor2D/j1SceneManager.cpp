@@ -52,7 +52,7 @@ bool j1SceneManager::ChangeScene(j1Module* scene_on, j1Module* scene_off)
 	old_scene = scene_off;
 	new_scene = scene_on;
 
-	App->render->camera->FadeToBlack(0.05, 2, 1);
+	//App->render->camera->FadeToBlack(0.05, 2, 1);
 
 
 	old_scene->Disable();
