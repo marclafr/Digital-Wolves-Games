@@ -247,6 +247,14 @@ void UIHUDPanelInfo::DrawButtonsEntitiesSelected()
 
 void UIHUDPanelInfo::DrawUnitSelected()
 {
+	Unit* unit_life_bar = (Unit*)entity_selected->pointer_entity;
+
+	//Bar life unit
+	SDL_Rect mark_life_bar_red{ 1059, 832, 32, 4 };
+	SDL_Rect mark_life_bar_green{ 1059, 827, ReturnValueBarHPUnit(unit_life_bar->GetUnitType(), unit_life_bar->GetHp()), 4 };
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), unit_life_bar->GetX(), unit_life_bar->GetY() - 40, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), unit_life_bar->GetX(), unit_life_bar->GetY() - 40, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+
 	UIComponents* entity_image = entity_selected->image;
 
 	SDL_Rect mark_btn{ 1029, 827, 29, 33 };

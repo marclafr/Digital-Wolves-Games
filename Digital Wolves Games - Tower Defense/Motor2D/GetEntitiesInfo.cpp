@@ -1,3 +1,7 @@
+#define TWOHANDEDSWORDMAN_HP 60
+#define CAVALRYARCHER_HP 50
+#define SIEGERAM_HP 270
+
 #include "UIGetEntitiesInfo.h"
 
 SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
@@ -161,6 +165,32 @@ const char* GetSideName(const Side type)
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
 		ret = "Error Side";
+		break;
+	}
+
+	return ret;
+}
+
+int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp)
+{
+	int ret = 0;
+	switch (type)
+	{
+	case U_TWOHANDEDSWORDMAN:
+		ret = hp * 32/ TWOHANDEDSWORDMAN_HP;
+		break;
+
+	case U_CAVALRYARCHER:
+		ret = hp * 32 / CAVALRYARCHER_HP;
+		break;
+
+	case U_SIEGERAM:
+		ret = hp * 32 / SIEGERAM_HP;
+		break;
+
+	default:
+		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
+		ret = 0;
 		break;
 	}
 

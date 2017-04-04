@@ -112,6 +112,7 @@ bool j1Scene::Start()
 
 	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
 	hud_description->SetEnableButton(btn_description);
+	
 	/*
 	//Entity Manager
 	//ALLIES
@@ -143,11 +144,12 @@ bool j1Scene::Start()
 	App->entity_manager->CreateBuilding(TURRET, fPoint(-144, 40), ENEMY);
 	App->entity_manager->CreateBuilding(TURRET, fPoint(45, 40), ENEMY);
 	App->entity_manager->CreateBuilding(TURRET, fPoint(145, 85), ENEMY);
-
+	
 
 	//RESOURCES
 	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(STONE, fPoint(450, 850)));
 	*/
+	App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-900, 720), S_ALLY);
 	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(-75, 50));
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(75, 50));
@@ -186,7 +188,6 @@ bool j1Scene::PreUpdate()
 			origin_selected = true;
 		}
 	}
-
 	return true;
 }
 

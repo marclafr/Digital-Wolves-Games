@@ -64,8 +64,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// scene last
 	
 	AddModule(scene);
+	scene->active = false;
 	AddModule(main_menu);
-	
 	AddModule(scene_manager);
 
 	// render last to swap buffer
@@ -92,7 +92,6 @@ j1App::~j1App()
 void j1App::AddModule(j1Module* module)
 {
 	if (module->name == "scene") {
-		"do nothing";
 	}
 	else {
 		module->Init();
@@ -154,6 +153,7 @@ bool j1App::Start()
 
 	while (item != modules.end() && ret == true)
 	{
+		if(item._Ptr->_Myval->active == true)
 		ret = (*item)->Start();
 		item++;
 	}
