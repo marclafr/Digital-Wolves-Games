@@ -362,6 +362,9 @@ bool j1Scene::Update(float dt)
 	if (placing_wall == true) {
 		if (App->pathfinding->IsConstructible_ally(r) == false)
 		{
+			SDL_Rect rect;
+			rect = { 591,583,691,583 };
+			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
 		}
 		else if (App->pathfinding->IsConstructible_ally(r) == true) {
 			SDL_Rect rect;
