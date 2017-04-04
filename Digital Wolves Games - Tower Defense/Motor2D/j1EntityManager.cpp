@@ -14,8 +14,6 @@ j1EntityManager::j1EntityManager() : j1Module()
 j1EntityManager::~j1EntityManager() {}
 
 
-bool j1EntityManager::Awake() { return true; }
-
 bool j1EntityManager::CleanUp() { // not done
 
 	//if(sprites != nullptr)

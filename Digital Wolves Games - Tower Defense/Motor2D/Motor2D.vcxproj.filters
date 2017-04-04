@@ -115,6 +115,9 @@
     <ClCompile Include="j1SceneManager.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1WaveManager.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -247,6 +250,9 @@
       <Filter>Awsome_Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="j1SceneManager.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1WaveManager.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
   </ItemGroup>

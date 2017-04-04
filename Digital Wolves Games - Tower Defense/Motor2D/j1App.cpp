@@ -22,6 +22,7 @@
 #include "j1App.h"
 #include "j1Collision.h"
 #include "j1SceneManager.h"
+#include "j1WaveManager.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -44,6 +45,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	collision = new j1Collision();
 	scene_manager = new j1SceneManager();
+	wave_manager = new j1WaveManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -59,7 +61,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collision);
 	AddModule(uimanager);
 	AddModule(entity_manager);
-
+	AddModule(wave_manager);
 
 	// scene last
 	
