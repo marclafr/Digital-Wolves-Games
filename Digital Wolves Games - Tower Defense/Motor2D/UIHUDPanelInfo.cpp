@@ -41,7 +41,7 @@ void UIHUDPanelInfo::DefineSelection()
 
 	while (item != selection_tmp.end())
 	{
-		if (item._Ptr->_Myval->GetEntityType() == UNIT)
+		if (item._Ptr->_Myval->GetEntityType() == E_UNIT)
 		{
 			unit_selection = true;
 			break;
@@ -55,7 +55,7 @@ void UIHUDPanelInfo::DefineSelection()
 
 		while (item != selection_tmp.end())
 		{
-			if (item._Ptr->_Myval->GetEntityType() == UNIT)
+			if (item._Ptr->_Myval->GetEntityType() == E_UNIT)
 				selection.push_back(item._Ptr->_Myval);
 
 			item++;
@@ -136,10 +136,10 @@ void UIHUDPanelInfo::CreatePanel()
 
 			switch (entity_selected->pointer_entity->GetEntityType())
 			{
-			case UNIT:
+			case E_UNIT:
 				entity_selected->PrepareUnitInfo();
 				break;
-			case BUILDING:
+			case E_BUILDING:
 				entity_selected->PrepareBuildingInfo();
 				break;
 			}
@@ -205,11 +205,11 @@ void UIHUDPanelInfo::Draw()
 		case ENTITYINFO:
 			switch (entity_selected->pointer_entity->GetEntityType())
 			{
-			case UNIT:
+			case E_UNIT:
 				DrawUnitSelected();
 				break;
 
-			case BUILDING:
+			case E_BUILDING:
 				DrawBuildingSelected();
 				break;
 			}
@@ -333,7 +333,7 @@ bool UIHUDPanelInfo::Update()
 		case ENTITYINFO:
 			UpdateHP();
 
-			if (entity_selected->pointer_entity->GetEntityType() == BUILDING)
+			if (entity_selected->pointer_entity->GetEntityType() == E_BUILDING)
 				if (entity_selected->build == false && isBuilded(entity_selected->pointer_entity))
 				{
 					entity_selected->build = true;
@@ -394,7 +394,7 @@ void UIHUDPanelInfo::entity_info::PrepareUnitInfo()
 	armor = new UILabel(UICOMPONENT_TYPE::UILABEL);
 	armor->Set(272, 722, stats.c_str());
 
-	if (selected->GetUnitClass() == UNIT_CLASS::ARCHER)
+	if (selected->GetUnitClass() == UNIT_CLASS::C_ARCHER)
 	{
 		stats = std::to_string(selected->GetRange());
 		range = new UILabel(UICOMPONENT_TYPE::UILABEL);

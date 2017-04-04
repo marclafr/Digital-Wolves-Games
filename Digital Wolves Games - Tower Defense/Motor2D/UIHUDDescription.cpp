@@ -36,8 +36,8 @@ UIHUDDescription::UIHUDDescription(UICOMPONENT_TYPE type) : UIComponents(type)
 	description->Set(X_LABEL, Y_LABEL, "init");
 	description->SetDraw(false);
 
-	unit_desc = UNIT_TYPE::NO_UNIT;
-	build_desc = BUILDING_TYPE::NO_BUILDING;
+	unit_desc = UNIT_TYPE::U_NO_UNIT;
+	build_desc = BUILDING_TYPE::B_NO_BUILDING;
 }
 
 void UIHUDDescription::SetEnableButton(UICheckbutton* btn)
@@ -62,13 +62,13 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 	{
 		switch (if_btn->e_type)
 		{
-		case UNIT:
+		case E_UNIT:
 			unit_desc = if_btn->u_type;
 			side_desc = if_btn->s_type;
 			SetLabelUnit();
 			break;
 
-		case BUILDING:
+		case E_BUILDING:
 			build_desc = if_btn->b_type;
 			side_desc = if_btn->s_type;
 			SetLabelBuilding();
@@ -101,9 +101,9 @@ void UIHUDDescription::SetLabelBuilding()
 
 void UIHUDDescription::Clear()
 {
-	unit_desc = UNIT_TYPE::NO_UNIT;
-	build_desc = BUILDING_TYPE::NO_BUILDING;
-	side_desc = Side::NO_SIDE;
+	unit_desc = UNIT_TYPE::U_NO_UNIT;
+	build_desc = BUILDING_TYPE::B_NO_BUILDING;
+	side_desc = Side::S_NO_SIDE;
 	background->SetDraw(false);
 	description->SetDraw(false);
 	selected = nullptr;

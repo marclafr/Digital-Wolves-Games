@@ -55,22 +55,22 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 		int unit_y = entity_array[i]->GetY();
 		if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 		{
-			entity_array[i]->SetEntityStatus(E_SELECTED);
+			entity_array[i]->SetEntityStatus(ST_SELECTED);
 			App->scene->panel_info->AddEntitySelection(entity_array[i]);
 		}
 		else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 		{
-			entity_array[i]->SetEntityStatus(E_SELECTED);
+			entity_array[i]->SetEntityStatus(ST_SELECTED);
 			App->scene->panel_info->AddEntitySelection(entity_array[i]);
 		}
 		else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 		{
-			entity_array[i]->SetEntityStatus(E_SELECTED);
+			entity_array[i]->SetEntityStatus(ST_SELECTED);
 			App->scene->panel_info->AddEntitySelection(entity_array[i]);
 		}
 		else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 		{
-			entity_array[i]->SetEntityStatus(E_SELECTED);
+			entity_array[i]->SetEntityStatus(ST_SELECTED);
 			App->scene->panel_info->AddEntitySelection(entity_array[i]);
 		}
 	}
@@ -82,7 +82,7 @@ void j1EntityManager::UnselectEverything()
 {
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		entity_array[i]->SetEntityStatus(E_NON_SELECTED);
+		entity_array[i]->SetEntityStatus(ST_NON_SELECTED);
 	}
 	if (!App->scene->panel_info->isSelectionEmpty())
 		App->scene->panel_info->DeleteSelection();
@@ -92,11 +92,11 @@ void j1EntityManager::DeleteEntity(Entity * ptr)
 {
 	switch (ptr->GetEntityType())
 	{
-		case UNIT:
+		case E_UNIT:
 			DeleteUnit((Unit*)ptr);
 			break;
 
-		case BUILDING:
+		case E_BUILDING:
 			DeleteBuilding(ptr);
 			break;
 	}
@@ -180,7 +180,7 @@ bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
 {
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		if (entity_array[i]->GetEntityType() == UNIT)
+		if (entity_array[i]->GetEntityType() == E_UNIT)
 		{
 			if (entity_array[i] != unit)
 			{

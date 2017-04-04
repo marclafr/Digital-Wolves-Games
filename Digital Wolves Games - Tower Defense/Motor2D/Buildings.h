@@ -12,8 +12,8 @@
 
 enum BUILDING_TYPE
 {
-	NO_BUILDING = 0,
-	TURRET //PER TENIR ALGO
+	B_NO_BUILDING = 0,
+	B_TURRET //PER TENIR ALGO
 };
 
 class Building : public Entity

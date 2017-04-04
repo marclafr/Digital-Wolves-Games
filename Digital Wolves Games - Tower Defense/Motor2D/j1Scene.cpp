@@ -86,11 +86,11 @@ bool j1Scene::Start()
 	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
 	info_button* panel_btns = nullptr;
 	panel_btns = panel->AddButton(0, 0, 878, 910);
-	panel_btns->SetBuilding(TURRET);
+	panel_btns->SetBuilding(B_TURRET);
 	panel_btns = panel->AddButton(2, 0, 774, 962);
-	panel_btns->SetUnit(TWOHANDEDSWORDMAN, ALLY);
+	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
 	panel_btns = panel->AddButton(2, 1, 774, 962);
-	panel_btns->SetUnit(TWOHANDEDSWORDMAN, ENEMY);
+	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ENEMY);
 
 	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
 
@@ -98,10 +98,10 @@ bool j1Scene::Start()
 	hud_description->SetEnableButton(btn_description);
 
 	//Entity Manager
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 300), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(600, 400), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 400), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(400, 300), ALLY);
+	App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(600, 300), S_ENEMY);
+	App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(600, 400), S_ENEMY);
+	App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(400, 400), S_ALLY);
+	App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(400, 300), S_ALLY);
 
 	return true;
 }
@@ -124,7 +124,7 @@ bool j1Scene::PreUpdate()
 		iPoint s = App->map->MapToWorld(r.x, r.y);
 
 		if(App->pathfinding->IsWalkable(r) == true)
-			App->entity_manager->CreatBuilding(TURRET, fPoint(s.x, s.y - 9), ALLY);
+			App->entity_manager->CreatBuilding(B_TURRET, fPoint(s.x, s.y - 9), S_ALLY);
 
 	}
 	p = App->map->WorldToMap(p.x, p.y);

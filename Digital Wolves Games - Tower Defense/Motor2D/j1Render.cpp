@@ -334,18 +334,18 @@ void j1Render::BlitAllEntities()
 	{
 		sp = sprite_queue[i];
 
-		if (sp->GetEntityType() == UNIT)
+		if (sp->GetEntityType() == E_UNIT)
 		{
 			u_sp = (Unit*)sp;
 
-			if (u_sp->GetDir() == NORTH_EAST || u_sp->GetDir() == EAST || u_sp->GetDir() == SOUTH_EAST)
+			if (u_sp->GetDir() == D_NORTH_EAST || u_sp->GetDir() == D_EAST || u_sp->GetDir() == D_SOUTH_EAST)
 				Blit(App->tex->GetTexture(sp->GetTextureID()), sp->GetX(), sp->GetY(), &sp->GetRect(), SDL_FLIP_HORIZONTAL, sp->GetPivot().x, sp->GetPivot().y);
 			else
 				Blit(App->tex->GetTexture(sp->GetTextureID()), sp->GetX() - sp->GetPivot().x, sp->GetY() - sp->GetPivot().y, &sp->GetRect());
 
 			//selected should change cus after sprite order implementation it gets printed before the acual unit sprite 
 			
-			if (u_sp->GetEntityStatus() == E_SELECTED)
+			if (u_sp->GetEntityStatus() == ST_SELECTED)
 				App->render->DrawCircle(u_sp->GetX() + camera->GetPosition().x, u_sp->GetY() + camera->GetPosition().y, u_sp->GetUnitRadius(), 255, 255, 255);
 
 		}

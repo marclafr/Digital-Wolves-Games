@@ -6,15 +6,15 @@ SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
 
 	switch (type)
 	{
-	case TWOHANDEDSWORDMAN:
+	case U_TWOHANDEDSWORDMAN:
 		ret = { 774, 962, 25, 25 };
 		break;
 
-	case CAVALRYARCHER:
+	case U_CAVALRYARCHER:
 		ret = { 800, 962, 25, 25 };
 		break;
 
-	case SIEGERAM:
+	case U_SIEGERAM:
 		ret = { 748, 962, 25, 25 };
 		break;
 
@@ -33,15 +33,15 @@ const char* GetUnitName(const UNIT_TYPE type)
 
 	switch (type)
 	{
-	case TWOHANDEDSWORDMAN:
+	case U_TWOHANDEDSWORDMAN:
 		ret = "Two Handed Sword Man";
 		break;
 
-	case CAVALRYARCHER:
+	case U_CAVALRYARCHER:
 		ret = "Cavalry Archer";
 		break;
 
-	case SIEGERAM:
+	case U_SIEGERAM:
 		ret = "Siege Ram";
 		break;
 
@@ -60,7 +60,7 @@ SDL_Rect GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
 
 	switch (type)
 	{
-	case TURRET:
+	case B_TURRET:
 		ret = { 878, 910, 25, 25 };
 		break;
 
@@ -79,7 +79,7 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 
 	switch (type)
 	{
-	case TURRET:
+	case B_TURRET:
 		ret = "Turret";
 		break;
 
@@ -98,10 +98,10 @@ const char* GetSideName(const Side type)
 
 	switch (type)
 	{
-	case ALLY:
+	case S_ALLY:
 		ret = "Ally";
 		break;
-	case ENEMY:
+	case S_ENEMY:
 		ret = "Enemy";
 		break;
 	default:
@@ -133,7 +133,7 @@ const double GetBuildTotalTime(const BUILDING_TYPE type)
 
 	switch (type)
 	{
-	case TURRET:
+	case B_TURRET:
 		ret = TURRET_BUILD;
 		break;
 

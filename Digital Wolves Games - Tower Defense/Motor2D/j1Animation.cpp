@@ -110,16 +110,16 @@ AnimationType* j1Animation::GetAnimationType(const UNIT_TYPE unit, const ACTION_
 
 	switch (dir)
 	{
-		case NORTH_EAST:
-			dir = NORTH_WEST;
+		case D_NORTH_EAST:
+			dir = D_NORTH_WEST;
 			break;
 
-		case EAST:
-			dir = WEST;
+		case D_EAST:
+			dir = D_WEST;
 			break;
 
-		case SOUTH_EAST:
-			dir = SOUTH_WEST;
+		case D_SOUTH_EAST:
+			dir = D_SOUTH_WEST;
 			break;
 
 		default:
@@ -252,7 +252,7 @@ bool Animation::Finished()
 {
 	if (current_frame >= anim_type->GetNumFrames())
 	{
-		if (anim_type->GetActionType() == IDLE)
+		if (anim_type->GetActionType() == A_IDLE)
 		{
 			if (wait_started == false)
 			{
@@ -267,9 +267,9 @@ bool Animation::Finished()
 				return true;
 			}
 		}
-		else if (anim_type->GetActionType() == DIE)
+		else if (anim_type->GetActionType() == A_DIE)
 		{
-			ChangeAnimation(App->anim->GetAnimationType(anim_type->GetUnitType(), DISAPPEAR, anim_type->GetDirection()));
+			ChangeAnimation(App->anim->GetAnimationType(anim_type->GetUnitType(), A_DISAPPEAR, anim_type->GetDirection()));
 		}
 		else
 		{
@@ -292,17 +292,17 @@ void AnimationType::SetUnit(const pugi::xml_node node)
 {
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 	if (strcmp(node.name(), "twohandedswordman") == 0)
-		unit_type = TWOHANDEDSWORDMAN;
+		unit_type = U_TWOHANDEDSWORDMAN;
 
 	else if (strcmp(node.name(), "cavalryarcher") == 0)
-		unit_type = CAVALRYARCHER;
+		unit_type = U_CAVALRYARCHER;
 
 	else if (strcmp(node.name(), "siegeram") == 0)
-		unit_type = SIEGERAM;
+		unit_type = U_SIEGERAM;
 
 	else
 	{
-		unit_type = NO_UNIT;
+		unit_type = U_NO_UNIT;
 		LOG("ERROR: XML Node UNIT TYPE does not match");
 	}
 }
@@ -310,23 +310,23 @@ void AnimationType::SetUnit(const pugi::xml_node node)
 void AnimationType::SetAction(const pugi::xml_node node)
 {
 	if (strcmp(node.name(), "attack") == 0)
-		action_type = ATTACK;
+		action_type = A_ATTACK;
 
 	else if (strcmp(node.name(), "die") == 0)
-		action_type = DIE;
+		action_type = A_DIE;
 
 	else if (strcmp(node.name(), "disappear") == 0)	//IF PROBLEM CHECK DIsAppEAR SPELLING!!!!!
-		action_type = DISAPPEAR;
+		action_type = A_DISAPPEAR;
 
 	else if (strcmp(node.name(), "idle") == 0)
-		action_type = IDLE;
+		action_type = A_IDLE;
 
 	else if (strcmp(node.name(), "walk") == 0)
-		action_type = WALK;
+		action_type = A_WALK;
 
 	else
 	{
-		action_type = NO_ACTION;
+		action_type = A_NO_ACTION;
 		LOG("ERROR: XML Node ACTION TYPE does not match");
 	}
 }
@@ -334,23 +334,23 @@ void AnimationType::SetAction(const pugi::xml_node node)
 void AnimationType::SetDirection(const pugi::xml_node node)
 {
 	if (strcmp(node.name(), "north") == 0)
-		direction_type = NORTH;
+		direction_type = D_NORTH;
 
 	else if (strcmp(node.name(), "south") == 0)
-		direction_type = SOUTH;
+		direction_type = D_SOUTH;
 
 	else if (strcmp(node.name(), "south_west") == 0)
-		direction_type = SOUTH_WEST;
+		direction_type = D_SOUTH_WEST;
 
 	else if (strcmp(node.name(), "west") == 0)
-		direction_type = WEST;
+		direction_type = D_WEST;
 
 	else if (strcmp(node.name(), "north_west") == 0)
-		direction_type = NORTH_WEST;
+		direction_type = D_NORTH_WEST;
 
 	else
 	{
-		direction_type = NO_DIRECTION;
+		direction_type = D_NO_DIRECTION;
 		LOG("ERROR: XML Node DIRECTION TYPE does not match");
 	}
 

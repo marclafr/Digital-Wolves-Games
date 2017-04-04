@@ -17,7 +17,7 @@ bool j1Collision::Update(float dt)
 	std::vector<Entity*> unit1 = App->entity_manager->GetEntityVector();
 	for (int i = 0; i < unit1.size(); i++)
 	{
-		if (unit1[i]->GetEntityType() == UNIT)
+		if (unit1[i]->GetEntityType() == E_UNIT)
 		{
 			iPoint pos = App->map->WorldToMap(unit1[i]->GetX(), unit1[i]->GetY());
 			Unit* unit_1 = (Unit*)unit1[i];

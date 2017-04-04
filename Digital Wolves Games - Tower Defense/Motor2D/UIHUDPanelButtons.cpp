@@ -78,14 +78,14 @@ void UIHUDPanelButtons::CreateEntity()
 
 		switch (if_active->e_type)
 		{
-		case ENTITY_TYPE::UNIT:
+		case ENTITY_TYPE::E_UNIT:
 				if (App->pathfinding->IsWalkable(r) == true)
 					App->entity_manager->CreateUnit(if_active->u_type, fPoint(s.x, s.y - 9), if_active->s_type);
 			break;
 
-			case ENTITY_TYPE::BUILDING:
+			case ENTITY_TYPE::E_BUILDING:
 				if (App->pathfinding->IsWalkable(r) == true)
-					App->entity_manager->CreatBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
+					App->entity_manager->CreatBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_ALLY);
 			break;
 		}
 		if_active = nullptr;
@@ -95,13 +95,13 @@ void UIHUDPanelButtons::CreateEntity()
 void info_button::SetUnit(UNIT_TYPE type, Side side)
 {
 	u_type = type;
-	e_type = ENTITY_TYPE::UNIT;
+	e_type = ENTITY_TYPE::E_UNIT;
 	s_type = side;
 }
 
 void info_button::SetBuilding(BUILDING_TYPE type)
 {
 	b_type = type;
-	e_type = ENTITY_TYPE::BUILDING;
+	e_type = ENTITY_TYPE::E_BUILDING;
 }
 

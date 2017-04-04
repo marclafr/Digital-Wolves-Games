@@ -11,12 +11,12 @@
 
 
 
-Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(BUILDING, pos, side), building_type(b_type)
+Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILDING, pos, side), building_type(b_type)
 {
 	SDL_Rect rect;
 	switch (b_type)
 	{
-	case TURRET:
+	case B_TURRET:
 		SetSide(side);
 		SetHp(1000);
 		SetAttack(12);
@@ -31,7 +31,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(BUILDIN
 		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
-		building_type = NO_BUILDING;
+		building_type = B_NO_BUILDING;
 		break;
 	}
 	buildtimer.Start();
@@ -60,7 +60,7 @@ void Building::AI()
 		std::vector<Entity*>::iterator item = EntityVector.begin();
 		for (; item != EntityVector.end(); item++) 
 		{
-			if ((*item)->GetEntityType() == UNIT)
+			if ((*item)->GetEntityType() == E_UNIT)
 			{
 				if ((*item)->GetX() >= (GetX() - 120) && (*item)->GetX() < (GetX() + 120) && (*item)->GetY() >= (GetY() - 120) && (*item)->GetY() < (GetY() + 120) && (*item)->GetHp() > 0)
 				{
@@ -77,7 +77,7 @@ void Building::AI()
 		}
 		if (AttackTimer.ReadMs() > 900)
 		{
-			if (Target != nullptr && Target->GetSide() != ALLY && Target->GetHp() > 0)
+			if (Target != nullptr && Target->GetSide() != S_ALLY && Target->GetHp() > 0)
 			{
 				if (Target->GetX() >= (GetX() - 120) && Target->GetX() < (GetX() + 120) && Target->GetY() >= (GetY() - 120) && Target->GetY() < (GetY() + 120))
 				{
