@@ -21,10 +21,10 @@ class j1Fonts;
 class j1Animation;
 class j1UIManager;
 class j1EntityManager;
-class j1SceneManager;
 class j1Collision;
 
 	//Scenes
+class j1MainMenu;
 class j1Scene;
 
 
@@ -114,10 +114,10 @@ public:
 	j1Animation*		anim = NULL;
 	j1UIManager*		uimanager = NULL;
 	j1EntityManager*    entity_manager = NULL;
-	j1SceneManager*		scene_manager = NULL;
 	j1Collision*		collision = NULL;
 
 		//Scenes
+	j1MainMenu*			main_menu = NULL;
 	j1Scene*			scene = NULL;
 
 	DebugFeatures		debug_features;

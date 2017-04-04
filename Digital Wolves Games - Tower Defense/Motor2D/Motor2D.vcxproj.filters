@@ -76,9 +76,6 @@
     <ClCompile Include="Resources.cpp">
       <Filter>Awsome_Game\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="j1SceneManager.cpp">
-      <Filter>Awsome_Game\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Collision.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
@@ -111,6 +108,9 @@
     </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Awsome_Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1MainMenu.cpp">
+      <Filter>Awsome_Game\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,9 +207,6 @@
     <ClInclude Include="Resources.h">
       <Filter>Awsome_Game\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="j1SceneManager.h">
-      <Filter>Awsome_Game\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Collision.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
@@ -242,6 +239,9 @@
     </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Awsome_Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1MainMenu.h">
+      <Filter>Awsome_Game\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
