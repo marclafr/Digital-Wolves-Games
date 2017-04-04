@@ -1,3 +1,5 @@
+#define BLACK {0,0,0,0}
+
 #include "UIHUDPanelInfo.h"
 
 #include "p2Log.h"
@@ -374,7 +376,7 @@ void UIHUDPanelInfo::UpdateHP()
 {
 	std::string hp = std::to_string(entity_selected->pointer_entity->GetHp());
 	if (entity_selected->life->text.compare(hp))
-		entity_selected->life->ChangeText(hp.c_str());
+		entity_selected->life->ChangeText(hp.c_str(), BLACK);
 }
 
 UIHUDPanelInfo::entity_info::~entity_info()
@@ -402,25 +404,25 @@ void UIHUDPanelInfo::entity_info::PrepareUnitInfo()
 	image->SetInteractive(false);
 
 	name = new UILabel(UICOMPONENT_TYPE::UILABEL);
-	name->Set(231, 653, GetUnitName(selected->GetUnitType()));
+	name->Set(231, 653, GetUnitName(selected->GetUnitType()), BLACK);
 
 	std::string stats = std::to_string(selected->GetHp());
 	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
-	life->Set(262, 690, stats.c_str());
+	life->Set(262, 690, stats.c_str(), BLACK);
 
 	stats = std::to_string(selected->GetAttack());
 	damage = new UILabel(UICOMPONENT_TYPE::UILABEL);
-	damage->Set(272, 705, stats.c_str());
+	damage->Set(272, 705, stats.c_str(), BLACK);
 
 	stats = std::to_string(selected->GetArmor());
 	armor = new UILabel(UICOMPONENT_TYPE::UILABEL);
-	armor->Set(272, 722, stats.c_str());
+	armor->Set(272, 722, stats.c_str(), BLACK);
 
 	if (selected->GetUnitClass() == UNIT_CLASS::C_ARCHER)
 	{
 		stats = std::to_string(selected->GetRange());
 		range = new UILabel(UICOMPONENT_TYPE::UILABEL);
-		range->Set(272, 745, stats.c_str());
+		range->Set(272, 745, stats.c_str(), BLACK);
 	}
 }
 
@@ -435,17 +437,17 @@ void UIHUDPanelInfo::entity_info::PrepareBuildingInfo()
 	image->SetInteractive(false);
 
 	name = new UILabel(UICOMPONENT_TYPE::UILABEL);
-	name->Set(231, 653, GetBuildingName(b_type_selected));
+	name->Set(231, 653, GetBuildingName(b_type_selected), BLACK);
 
 	std::string stats = std::to_string(selected->GetHp());
 	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
-	life->Set(262, 690, stats.c_str());
+	life->Set(262, 690, stats.c_str(), BLACK);
 
 	if (selected->GetBuildingType() == b_type_selected)
 	{
 		stats = std::to_string(selected->GetRange());
 		range = new UILabel(UICOMPONENT_TYPE::UILABEL);
-		range->Set(272, 710, stats.c_str());
+		range->Set(272, 710, stats.c_str(), BLACK);
 	}
 }
 
@@ -456,7 +458,7 @@ void UIHUDPanelInfo::entity_info::PrepareBuildingConstruction()
 	std::string str_percentage("Constructing - ");
 	str_percentage += std::to_string(percentage);
 	str_percentage += "%";
-	building_percentage->Set(400,703, str_percentage.c_str());
+	building_percentage->Set(400,703, str_percentage.c_str(), BLACK);
 	building_percentage->SetInteractive(false);
 }
 
@@ -467,7 +469,7 @@ void UIHUDPanelInfo::entity_info::UpdateBuildingPercentageStr()
 	str_percentage += std::to_string(percentage);
 	str_percentage += "%";
 
-	building_percentage->ChangeText(str_percentage.c_str());
+	building_percentage->ChangeText(str_percentage.c_str(), BLACK);
 }
 
 void UIHUDPanelInfo::entity_info::PrepareResourceInfo()
@@ -481,9 +483,9 @@ void UIHUDPanelInfo::entity_info::PrepareResourceInfo()
 	image->SetInteractive(false);
 
 	name = new UILabel(UICOMPONENT_TYPE::UILABEL);
-	name->Set(231, 653, GetResourceName(r_type_selected));
+	name->Set(231, 653, GetResourceName(r_type_selected), BLACK);
 
 	std::string stats = std::to_string(selected->GetHp());
 	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
-	life->Set(262, 690, stats.c_str());
+	life->Set(262, 690, stats.c_str(), BLACK);
 }
