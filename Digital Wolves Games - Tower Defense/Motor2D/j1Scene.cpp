@@ -207,16 +207,16 @@ bool j1Scene::Update(float dt)
 		App->SaveGame("save_game.xml");
 	
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT ||  ((y < (App->render->camera->GetHeight() / 30) && res.y > -30)))
-		App->render->camera->MoveUp(floor(200.0f * dt));
+		App->render->camera->MoveUp(floor(450.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || ((y > 580 && y< 642) && res.y < 2317))
-		App->render->camera->MoveDown(floor(200.0f * dt));
+	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || ((y > 750) && res.y < 2317))
+		App->render->camera->MoveDown(floor(450.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || (x < (App->render->camera->GetWidth() / 50 + 30) && res.x > -2400))
-		App->render->camera->MoveLeft(floor(200.0f * dt));
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || (x < (App->render->camera->GetWidth() / 70 ) && res.x > -2400))
+		App->render->camera->MoveLeft(floor(450.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || (x > (((App->render->camera->GetWidth() / 50)*48.8f)) && res.x < 2349))
-		App->render->camera->MoveRight(floor(200.0f * dt));
+	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || (x > (((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349))
+		App->render->camera->MoveRight(floor(450.0f * dt));
 
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
 		App->render->camera->Move(iPoint(300,300), 10);
