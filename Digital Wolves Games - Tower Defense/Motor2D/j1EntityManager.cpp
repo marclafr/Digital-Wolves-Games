@@ -242,16 +242,27 @@ Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
 	return nullptr;
 }
 
-iPoint j1EntityManager::CheckForObjective(iPoint position, int vision_range, Side side)
+Entity* j1EntityManager::CheckForObjective(iPoint position, int vision_range, Side side)
 {
+	Entity* ret = nullptr;
 	for (int i = 0; i < entity_array.size(); i++)
 	{
 		if (entity_array[i]->GetX() <= position.x + vision_range && entity_array[i]->GetX() >= position.x - vision_range &&
 			entity_array[i]->GetY() <= position.y + vision_range && entity_array[i]->GetY() >= position.y - vision_range &&
 			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0 && entity_array[i]->GetSide() != S_NEUTRAL)
-			return iPoint(entity_array[i]->GetX(), entity_array[i]->GetY());
+		{
+			if(ret == nullptr)
+				ret = entity_array[i];
+			else
+			{
+				if (position.DistanceTo(iPoint(ret->GetX(), ret->GetY())) > position.DistanceTo(iPoint(entity_array[i]->GetX(),entity_array[i]->GetY())))
+				{
+					ret = entity_array[i];
+				}
+			}
+		}			
 	}
-	return iPoint(-1, -1);
+	return ret;
 }
 
 std::vector<Entity*> j1EntityManager::GetEntityVector()

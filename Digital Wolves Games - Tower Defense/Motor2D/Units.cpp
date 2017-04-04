@@ -11,15 +11,9 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), attacking(nullptr), priority(priority)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), attacking(nullptr), target (nullptr), priority(priority)
 {
-	if (GetSide() == S_ENEMY)
-	{
-		this->action = A_WALK;
-		GoTo(TOWN_HALL);
-		changed = true;
-	}
-		
+	
 	switch (u_type)
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
@@ -132,23 +126,35 @@ void Unit::AI()
 			break;
 		}
 
-		attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), range, GetSide());
-		if (attacking != nullptr)
-		{
-			this->action = A_ATTACK;
-			this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
-			changed = true;
-		}
-
-		else if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED)
+		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED)
 		{
 			iPoint objective;
 			App->input->GetMousePosition(objective.x, objective.y);
 			objective.x -= App->render->camera->GetPosition().x;
 			objective.y -= App->render->camera->GetPosition().y;
 
-			GoTo(objective) != false;
+			GoTo(objective);
+			break;
 		}
+
+		if (GetSide() == S_ENEMY)
+			GoTo(TOWN_HALL);
+
+		attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), range, GetSide());
+		if (attacking != nullptr)
+		{
+			this->action = A_ATTACK;
+			this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
+			changed = true;
+			break;
+		}
+
+		target = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide());
+		if (target != nullptr)
+		{
+			GoTo(iPoint(target->GetX(), target->GetY()));
+		}
+		
 		break;
 
 	case A_WALK:
@@ -167,12 +173,22 @@ void Unit::AI()
 			this->action = A_ATTACK;
 			this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
 			changed = true;
+			break;
 		}
 
 		if (Move() == false)
 		{
 			this->action = A_IDLE;
 			changed = true;
+		}
+		
+		if (target != App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide()))
+		{
+			target = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide());	
+		}
+		if (target != nullptr && animation->Finished())
+		{
+			ChangeDirection(iPoint(target->GetX(), target->GetY()));
 		}
 
 		break;
@@ -315,68 +331,9 @@ void Unit::SetAction(const ACTION action)
 
 void Unit::LookAt(iPoint pos)
 {
-
-}
-
-bool Unit::GoTo( iPoint destination)
-{
-	path_list.clear();
-	if (this->GetPath({ destination.x, destination.y }) != -1)
-	{
-		path_list.pop_front();
-		GetNextTile();
-		this->action = A_WALK;
-		changed = true;
-		this->destination.x = destination.x;
-		this->destination.y = destination.y;
-		return true;
-	}
-	return false;
-}
-
-void Unit::PlayDeathSound() const
-{
-	int rand_num = rand() % 5;
-
-	switch (rand_num)
-	{
-		case 0:
-			App->audio->PlayFx(fx_twohanded_die01);
-			break;
-		case 1:
-			App->audio->PlayFx(fx_twohanded_die02);
-			break;
-		case 2:
-			App->audio->PlayFx(fx_twohanded_die03);
-			break;
-		case 3:
-			App->audio->PlayFx(fx_twohanded_die04);
-			break;
-		case 4:
-			App->audio->PlayFx(fx_twohanded_die05);
-			break;
-	}
-}
-
-bool Unit::GetNextTile()
-{
-	bool ret = true;
-
-	if (path_list.size() <= 0)
-		return false;
-
-	path_objective = App->map->MapToWorld(path_list.front().x, path_list.front().y);
-	path_list.pop_front();
-
-	move_vector.x = (float)path_objective.x - GetX();
-	move_vector.y = (float)path_objective.y - GetY();
-	float modul = (sqrt(move_vector.x*move_vector.x + move_vector.y * move_vector.y));
-	move_vector.x = move_vector.x / modul;
-	move_vector.y = move_vector.y / modul;
-
 	iPoint direction_vec;
-	direction_vec.x = path_objective.x - GetX();
-	direction_vec.y = GetY() - path_objective.y;
+	direction_vec.x = pos.x - GetX();
+	direction_vec.y = GetY() - pos.y;
 	angle = (float)57.29577951 * atan2(direction_vec.y, direction_vec.x);
 
 	if (angle < 0)
@@ -433,6 +390,79 @@ bool Unit::GetNextTile()
 
 	else
 		this->direction = D_NO_DIRECTION;
+}
+
+bool Unit::GoTo( iPoint destination)
+{
+	path_list.clear();
+	if (this->GetPath({ destination.x, destination.y }) != -1)
+	{
+		path_list.pop_front();
+		GetNextTile();
+		this->action = A_WALK;
+		changed = true;
+		this->destination.x = destination.x;
+		this->destination.y = destination.y;
+		return true;
+	}
+	return false;
+}
+
+bool Unit::ChangeDirection(iPoint destination)
+{
+	path_list.clear();
+	if (this->GetPath({ destination.x, destination.y }) != -1)
+	{
+		path_list.pop_front();
+		GetNextTile();
+		this->destination.x = destination.x;
+		this->destination.y = destination.y;
+		return true;
+	}
+	return false;
+}
+
+void Unit::PlayDeathSound() const
+{
+	int rand_num = rand() % 5;
+
+	switch (rand_num)
+	{
+		case 0:
+			App->audio->PlayFx(fx_twohanded_die01);
+			break;
+		case 1:
+			App->audio->PlayFx(fx_twohanded_die02);
+			break;
+		case 2:
+			App->audio->PlayFx(fx_twohanded_die03);
+			break;
+		case 3:
+			App->audio->PlayFx(fx_twohanded_die04);
+			break;
+		case 4:
+			App->audio->PlayFx(fx_twohanded_die05);
+			break;
+	}
+}
+
+bool Unit::GetNextTile()
+{
+	bool ret = true;
+
+	if (path_list.size() <= 0)
+		return false;
+
+	path_objective = App->map->MapToWorld(path_list.front().x, path_list.front().y);
+	path_list.pop_front();
+
+	move_vector.x = (float)path_objective.x - GetX();
+	move_vector.y = (float)path_objective.y - GetY();
+	float modul = (sqrt(move_vector.x*move_vector.x + move_vector.y * move_vector.y));
+	move_vector.x = move_vector.x / modul;
+	move_vector.y = move_vector.y / modul;
+
+	LookAt(path_objective);
 
 	return ret;
 }
