@@ -31,7 +31,7 @@ bool j1Collision::Update(float dt)
 					{
 						//Collision detected
 						Unit* unit_2 = (Unit*)unit2[j];
-						if (unit_1->GetPriority() > unit_2->GetPriority() && unit_1->GetUnitState() == VIGILANT && unit_2->GetUnitState() == VIGILANT)
+						if (unit_1->GetPriority() > unit_2->GetPriority() && unit_1->GetAction() == A_IDLE && unit_2->GetAction() == A_IDLE)
 							SplitUnits((Unit*)unit1[i]);
 					}
 				}
@@ -149,9 +149,5 @@ iPoint j1Collision::FindClosestWalkable(Unit* unit)
 
 void j1Collision::SplitUnits(Unit * unit1)
 {
-	unit1->GetPath(FindClosestWalkable(unit1));
-	unit1->PopFirstPath();
-	unit1->GetNextTile();
-	unit1->SetAction(A_WALK);
-	unit1->SetIsMoving();
+	unit1->GoTo(FindClosestWalkable(unit1));
 }

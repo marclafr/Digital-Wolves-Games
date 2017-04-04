@@ -31,7 +31,7 @@ enum UNIT_CLASS
 	C_SUICIDAL
 };
 
-enum ACTION_TYPE
+enum ACTION
 {
 	A_NO_ACTION = 0,
 	A_ATTACK,
@@ -54,21 +54,11 @@ enum DIRECTION
 	D_NORTH_WEST
 };
 
-enum UNIT_STATE
-{
-	NONE = 0,
-	FIGHTING,
-	MOVING_TO_FIGHT,
-	VIGILANT,
-	MOVING,
-	DEAD
-};
-
 class Unit : public Entity
 {
 private:
 	enum UNIT_TYPE unit_type;
-	enum ACTION_TYPE action_type;
+	enum ACTION action;
 	enum DIRECTION direction;
 
 	int attack;
@@ -82,12 +72,10 @@ private:
 	fPoint move_vector;
 	float angle;
 	UNIT_CLASS unit_class;
-	const int GetRandNum(int num);
 	int rand_num;
 	Animation* animation;
 	bool changed;
 	Entity* attacking;
-	UNIT_STATE state;
 
 	std::list<iPoint> path_list;
 
@@ -100,16 +88,14 @@ public:
 	
 	void Update(); // defines order
 
-	void Move();
+	bool Move();
 	void AI();
 	void Draw();
-	void Die();	
 
 	const DIRECTION GetDir() const;
 	const UNIT_TYPE GetUnitType() const;
 	const UNIT_CLASS GetUnitClass() const;
-	const ACTION_TYPE GetActionType() const;
-	const UNIT_STATE GetUnitState() const;
+	const ACTION GetAction() const;
 	const int GetUnitRadius() const;
 	int GetPath(iPoint dest);
 	const int GetAttack() const;
@@ -119,8 +105,7 @@ public:
 
 	const int GetPriority() const;
 	void PopFirstPath();
-	void SetAction(const ACTION_TYPE action);
-	void SetIsMoving();
+	void SetAction(const ACTION action);
 
 	//TODO:this should be private?
 	bool GetNextTile();
@@ -128,7 +113,8 @@ public:
 
 	void LookAt(iPoint pos);
 	bool GoTo(iPoint destination);
-	
+	void PlayDeathSound() const;
+
 	//FX
 	unsigned int fx_twohanded_die01;
 	unsigned int fx_twohanded_die02;

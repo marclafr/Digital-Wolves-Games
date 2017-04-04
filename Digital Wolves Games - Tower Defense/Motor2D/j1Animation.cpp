@@ -46,10 +46,12 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		while (action_node != NULL)
 		{
 			pugi::xml_node direction_node = action_node.first_child();
+
 			while (direction_node != NULL)
 			{
 				AnimationType* new_anim = new AnimationType(unit_node.name());
 				pugi::xml_node sprite_node = direction_node.first_child();
+
 				while (sprite_node != NULL)
 				{
 					new_anim->frames.push_back({ sprite_node.attribute("x").as_int(),sprite_node.attribute("y").as_int(), sprite_node.attribute("w").as_int(),sprite_node.attribute("h").as_int() });
@@ -62,6 +64,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 					
 					sprite_node = sprite_node.next_sibling();
 				}
+
 				std::string anim_name = unit_node.name();
 				new_anim->name = anim_name + "_" + action_node.name() + "_" + direction_node.name();
 				new_anim->SetUnit(unit_node);
@@ -69,17 +72,19 @@ bool j1Animation::Awake(pugi::xml_node& config)
 				new_anim->SetDirection(direction_node);
 
 				std::string action = action_node.name();
+
 				if (!action.compare("disappear"))
 				{
 					new_anim->speed = 1000.0f;
 					new_anim->loop = false;
 				}
+
 				if (!action.compare("die"))
 				{
 					new_anim->loop = false;
 				}
-				animation_types.push_back(new_anim);
 
+				animation_types.push_back(new_anim);
 				direction_node = direction_node.next_sibling();
 			}
 			action_node = action_node.next_sibling();
@@ -104,7 +109,7 @@ bool j1Animation::CleanUp()
 	return true;
 }
 
-AnimationType* j1Animation::GetAnimationType(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction) const
+AnimationType* j1Animation::GetAnimationType(const UNIT_TYPE unit, const ACTION action, const DIRECTION direction) const
 {
 	DIRECTION dir = direction;
 
@@ -127,7 +132,7 @@ AnimationType* j1Animation::GetAnimationType(const UNIT_TYPE unit, const ACTION_
 	}
 
 	for (int i = 0; i < animation_types.size(); i++)
-		if (animation_types[i]->unit_type == unit && animation_types[i]->action_type == action && animation_types[i]->direction_type == dir)
+		if (animation_types[i]->unit_type == unit && animation_types[i]->action == action && animation_types[i]->direction_type == dir)
 			return animation_types[i];
 	return nullptr;
 }
@@ -176,9 +181,9 @@ const iPoint AnimationType::GetPivot(int frame_num) const
 	return pivot_points[frame_num];
 }
 
-const ACTION_TYPE AnimationType::GetActionType() const
+const ACTION AnimationType::GetActionType() const
 {
-	return action_type;
+	return action;
 }
 
 const UNIT_TYPE AnimationType::GetUnitType() const
@@ -306,23 +311,23 @@ void AnimationType::SetUnit(const pugi::xml_node node)
 void AnimationType::SetAction(const pugi::xml_node node)
 {
 	if (strcmp(node.name(), "attack") == 0)
-		action_type = A_ATTACK;
+		action = A_ATTACK;
 
 	else if (strcmp(node.name(), "die") == 0)
-		action_type = A_DIE;
+		action = A_DIE;
 
 	else if (strcmp(node.name(), "disappear") == 0)	//IF PROBLEM CHECK DIsAppEAR SPELLING!!!!!
-		action_type = A_DISAPPEAR;
+		action = A_DISAPPEAR;
 
 	else if (strcmp(node.name(), "idle") == 0)
-		action_type = A_IDLE;
+		action = A_IDLE;
 
 	else if (strcmp(node.name(), "walk") == 0)
-		action_type = A_WALK;
+		action = A_WALK;
 
 	else
 	{
-		action_type = A_NO_ACTION;
+		action = A_NO_ACTION;
 		LOG("ERROR: XML Node ACTION TYPE does not match");
 	}
 }

@@ -27,7 +27,7 @@ public:
 private:
 	std::string name;
 	UNIT_TYPE unit_type;
-	ACTION_TYPE action_type;
+	ACTION action;
 	DIRECTION direction_type;
 
 	std::vector<SDL_Rect> frames;
@@ -45,7 +45,7 @@ public:
 	const bool GetLoopState() const;
 	const SDL_Rect GetFrame(int frame_num) const;
 	const iPoint GetPivot(int frame_num) const;
-	const ACTION_TYPE GetActionType() const;
+	const ACTION GetActionType() const;
 	const UNIT_TYPE GetUnitType() const;
 	const DIRECTION GetDirection() const;
 
@@ -102,7 +102,7 @@ public:
 
 	bool CleanUp();
 
-	AnimationType* GetAnimationType(const UNIT_TYPE unit, const ACTION_TYPE action, const DIRECTION direction) const;
+	AnimationType* GetAnimationType(const UNIT_TYPE unit, const ACTION action, const DIRECTION direction) const;
 
 private:
 	std::vector<AnimationType*> animation_types;
