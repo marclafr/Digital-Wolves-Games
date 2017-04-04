@@ -69,7 +69,7 @@ bool j1Map::CreateWalkabilityMap(int& width, int & height, uchar** buffer) {
 	return ret;
 
 }
-bool j1Map::CreateConstructibleMap(int& width, int & height, uchar** buffer) {
+bool j1Map::CreateConstructibleMap1(int& width, int & height, uchar** buffer) {
 
 	bool ret = false;
 	std::list<MapLayer*>::iterator item;
@@ -77,9 +77,8 @@ bool j1Map::CreateConstructibleMap(int& width, int & height, uchar** buffer) {
 	{
 		MapLayer* layer = item._Ptr->_Myval;
 
-		if (layer->properties.Get("Constructible") == false)
+		if (layer->name.compare("ConstructibleAlly") != 0)
 			continue;
-
 		uchar* map = new uchar[layer->width*layer->height];
 		memset(map, 1, layer->width*layer->height);
 
@@ -110,7 +109,47 @@ bool j1Map::CreateConstructibleMap(int& width, int & height, uchar** buffer) {
 	return ret;
 
 }
+bool j1Map::CreateConstructibleMap2(int& width, int & height, uchar** buffer) {
 
+	bool ret = false;
+	std::list<MapLayer*>::iterator item;
+	for (item = data.layers.begin(); item._Ptr->_Myval != NULL; item++)
+	{
+		MapLayer* layer = item._Ptr->_Myval;
+
+		if (layer->name.compare("ConstructibleNeutral") != 0)
+			continue;
+		
+		uchar* map = new uchar[layer->width*layer->height];
+		memset(map, 1, layer->width*layer->height);
+
+		for (int y = 0; y < data.height; ++y)
+		{
+			for (int x = 0; x < data.width; ++x)
+			{
+				int i = (y*layer->width) + x;
+
+				int tile_id = layer->Get(x, y);
+				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
+
+				if (tileset != NULL)
+				{
+					map[i] = (tile_id - tileset->firstgid) > 0 ? 10 : 1;
+				}
+			}
+		}
+
+		*buffer = map;
+		width = data.width;
+		height = data.height;
+		ret = true;
+
+		break;
+	}
+
+	return ret;
+
+}
 void j1Map::Draw()
 {
 	if (map_loaded == false)
@@ -125,8 +164,8 @@ void j1Map::Draw()
 
 		if (layer->properties.Get("Nodraw") == true)
 		{
-			item++; //TODO:Uncomment for no printing
-			continue;
+			//item++; //TODO:Uncomment for no printing
+			//continue;
 		}
 		for (int y = 0; y < data.height; ++y)
 		{

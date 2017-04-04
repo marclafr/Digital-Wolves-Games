@@ -19,6 +19,7 @@ enum Side
 {
 	ALLY,
 	ENEMY,
+	NEUTRAL,
 	NO_SIDE
 };
 

@@ -53,10 +53,12 @@ bool j1Scene::Start()
 	{
 		int w, h;
 		uchar* data = NULL;
+		uchar* data2 = NULL;
 		if(App->map->CreateWalkabilityMap(w, h, &data))
 			App->pathfinding->SetMap(w, h, data);
-		if (App->map->CreateConstructibleMap(w, h, &data))
-			App->pathfinding->SetConstructibleMap(w, h, data);
+		if (App->map->CreateConstructibleMap1(w, h, &data) && App->map->CreateConstructibleMap2(w,h,&data2))
+			App->pathfinding->SetConstructibleMaps(w, h, data, data2);
+		RELEASE_ARRAY(data2);
 		RELEASE_ARRAY(data);
 	}
 
@@ -247,35 +249,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 		App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(p.x, p.y), ENEMY);
 
-	if (placing_tower == true)
-	{
-		if (App->pathfinding->IsConstructible(r) == false)
-		{
-			SDL_Rect rect;
-			rect = { 1,284,107,206 };
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
-		}
-		else 
-		{
-			SDL_Rect rect;
-			rect = { 610,1,107,206 };
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-			{
-				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
-				{
-					App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ALLY);
-					placing_tower = false;
-				}
-			}
-		}
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-		{
-			placing_tower = false;
-		}
-		
-	}
-
+	
 
 
 	const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
@@ -319,6 +293,37 @@ bool j1Scene::Update(float dt)
 	//--
 
 	App->render->BlitAllEntities();
+	if (placing_tower == true)
+	{
+		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
+		{
+			SDL_Rect rect;
+			rect = { 1,284,107,206 };
+			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+		}
+		else
+		{
+			SDL_Rect rect;
+			rect = { 610,1,107,206 };
+			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+				{
+					if (App->pathfinding->IsConstructible_neutral(r) == true)
+						App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), NEUTRAL);
+					else if (App->pathfinding->IsConstructible_ally(r) == true)
+						App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ALLY);
+					placing_tower = false;
+				}
+			}
+		}
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		{
+			placing_tower = false;
+		}
+
+	}
 
 	return true;
 }

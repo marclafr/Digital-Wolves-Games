@@ -231,7 +231,7 @@ iPoint j1EntityManager::CheckForObjective(iPoint position, int vision_range, Sid
 	{
 		if (entity_array[i]->GetX() <= position.x + vision_range && entity_array[i]->GetX() >= position.x - vision_range &&
 			entity_array[i]->GetY() <= position.y + vision_range && entity_array[i]->GetY() >= position.y - vision_range &&
-			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0)
+			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0 && entity_array[i]->GetSide() != NEUTRAL)
 			return iPoint(entity_array[i]->GetX(), entity_array[i]->GetY());
 	}
 	return iPoint(-1, -1);

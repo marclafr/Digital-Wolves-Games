@@ -42,10 +42,13 @@ void j1PathFinding::SetMap(uint width, uint height, uchar* data)
 
 	memcpy(map, data, width*height);
 }
-void j1PathFinding::SetConstructibleMap(uint width, uint height, uchar* data)
+void j1PathFinding::SetConstructibleMaps(uint width, uint height, uchar* data, uchar* data2)
 {
-	constructible_map = new uchar[width*height];
-	memcpy(constructible_map, data, width*height);
+	constructible_map_ally = new uchar[width*height];
+	memcpy(constructible_map_ally, data, width*height);
+
+	constructible_map_neutral = new uchar[width*height];
+	memcpy(constructible_map_neutral, data2, width*height);
 
 }
 // Utility: return true if pos is inside the map boundaries
@@ -61,10 +64,33 @@ bool j1PathFinding::IsWalkable(const iPoint& pos) const
 	uchar t = GetTileAt(pos);
 	return t != INVALID_WALK_CODE && t > 0;
 }
-bool j1PathFinding::IsConstructible(const iPoint& pos) const
+bool j1PathFinding::IsConstructible_ally(const iPoint& pos) const
 {
-	uchar t = GetTileAtConstructible(pos);
+	uchar t = GetTileAtConstructible_ally(pos);
 	return t != INVALID_WALK_CODE && t > 1;
+}
+bool j1PathFinding::IsConstructible_neutral(const iPoint& pos) const
+{
+	uchar t = GetTileAtConstructible_neutral(pos);
+	return t != INVALID_WALK_CODE && t > 1;
+}
+void j1PathFinding::MakeNoConstruible_ally(const iPoint& pos)
+{
+	constructible_map_ally[pos.y*width + pos.x] = INVALID_WALK_CODE;
+}
+
+void j1PathFinding::MakeNoConstruible_neutral(const iPoint& pos)
+{
+	constructible_map_neutral[pos.y*width + pos.x] = INVALID_WALK_CODE;
+}
+
+void j1PathFinding::MakeConstruible_neutral(const iPoint& pos)
+{
+	constructible_map_neutral[pos.y*width + pos.x] = 10;
+}
+void j1PathFinding::MakeConstruible_ally(const iPoint& pos)
+{
+	constructible_map_ally[pos.y*width + pos.x] = 10;
 }
 
 void j1PathFinding::MakeNoWalkable(const iPoint& pos)
@@ -86,10 +112,17 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 	return INVALID_WALK_CODE;
 }
 
-uchar j1PathFinding::GetTileAtConstructible(const iPoint& pos) const
+uchar j1PathFinding::GetTileAtConstructible_ally(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
-		return constructible_map[(pos.y*width) + pos.x];
+		return constructible_map_ally[(pos.y*width) + pos.x];
+
+	return INVALID_WALK_CODE;
+}
+uchar j1PathFinding::GetTileAtConstructible_neutral(const iPoint& pos) const
+{
+	if (CheckBoundaries(pos))
+		return constructible_map_neutral[(pos.y*width) + pos.x];
 
 	return INVALID_WALK_CODE;
 }

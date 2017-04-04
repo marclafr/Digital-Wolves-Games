@@ -121,7 +121,8 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);
-	bool CreateConstructibleMap(int& width, int & height, uchar** buffer);
+	bool CreateConstructibleMap1(int& width, int & height, uchar** buffer);
+	bool CreateConstructibleMap2(int& width, int & height, uchar** buffer);
 	iPoint MapToWorldPrintMap(int x, int y) const;
 	TileSet* GetTilesetFromTileId(int id) const;
 

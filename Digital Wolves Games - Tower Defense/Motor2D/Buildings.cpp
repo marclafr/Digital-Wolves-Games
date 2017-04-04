@@ -41,19 +41,30 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(BUILDIN
 	{
 		App->pathfinding->MakeNoWalkable(p);
 	}
+	if (side == NEUTRAL) {
+		App->pathfinding->MakeNoConstruible_neutral(p);
+	}
+	if (side == ALLY) {
+		App->pathfinding->MakeNoConstruible_ally(p);
+	}
 }
 
 void Building::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED) {
-		this->SetHp(0);
-	}
 	if (totallybuilded == true) 
 	{
 		AI();
 	}
 	Draw();
 	if (GetHp() < 0) {
+		iPoint p = App->map->WorldToMap(GetX(), GetY());
+		if (GetSide() == NEUTRAL) {
+			App->pathfinding->MakeConstruible_neutral(p);
+		}
+		if (GetSide() == ALLY) {
+			App->pathfinding->MakeConstruible_ally(p);
+		}
+		App->pathfinding->MakeWalkable(p);
 		this->Die();
 	}
 }
