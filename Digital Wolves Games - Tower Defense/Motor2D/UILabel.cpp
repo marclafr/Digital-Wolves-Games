@@ -23,7 +23,7 @@ void UILabel::Set(int pos_x, int pos_y, const char * text, _TTF_Font*  font)
 	rect_position.x = pos_x;
 	rect_position.y = pos_y;
 
-	text_img = App->font->Print(text, T_AOE_UI_FONT, { 255,0,0,0 });
+	text_img = App->font->Print(text, T_AOE_UI_FONT, { 255,255,255,0 });
 
 	this->text.assign(text);
 

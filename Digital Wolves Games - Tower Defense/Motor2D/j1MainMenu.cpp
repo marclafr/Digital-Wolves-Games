@@ -76,7 +76,7 @@ bool j1MainMenu::Start()
 	exit->SetInteractive(true);
 
 	title_exit = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_exit->Set(260, 710, "Exit");
+	title_exit->Set(265, 708, "Exit");
 
 	return true;
 }

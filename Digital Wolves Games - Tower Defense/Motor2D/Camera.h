@@ -52,7 +52,7 @@ public:
 
 	SDL_Rect GetZoomedRect(const SDL_Rect &rect) const;
 
-	void FadeToBlack(int secs_to_black, int wait, int secs_to_light);// secs at 60fps
+	void FadeToBlack(float secs_to_black, int wait, int secs_to_light);// secs at 60fps
 
 	void UpdateCamera();
 };
