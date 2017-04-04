@@ -112,6 +112,7 @@ bool j1Scene::Start()
 
 	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
 	hud_description->SetEnableButton(btn_description);
+	
 	/*
 	//Entity Manager
 	//ALLIES
