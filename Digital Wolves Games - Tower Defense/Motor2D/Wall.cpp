@@ -8,13 +8,13 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 
-Wall::Wall(WALL_TYPE w_type, fPoint pos) : Entity(WALL, pos, ALLY), wall_type(w_type)
+Wall::Wall(WALL_TYPE w_type, fPoint pos) : Entity(E_WALL, pos, S_ALLY), wall_type(w_type)
 {
 	SDL_Rect rect;
 	switch (w_type)
 	{
 	case STONE_WALL:
-		SetSide(ALLY);
+		SetSide(S_ALLY);
 		SetHp(350);
 		SetArmor(1);
 		build_time = 7;
@@ -35,7 +35,7 @@ Wall::Wall(WALL_TYPE w_type, fPoint pos) : Entity(WALL, pos, ALLY), wall_type(w_
 	{
 		App->pathfinding->MakeNoWalkable(p);
 	}
-	if(GetSide() == ALLY)
+	if(GetSide() == S_ALLY)
 	{
 		App->pathfinding->MakeNoConstruible_ally(p);
 	}
@@ -43,7 +43,7 @@ Wall::Wall(WALL_TYPE w_type, fPoint pos) : Entity(WALL, pos, ALLY), wall_type(w_
 
 void Wall::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED) {
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == ST_SELECTED) {
 		this->SetHp(0);
 	}
 	if (totallybuilded == true)

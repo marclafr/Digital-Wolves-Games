@@ -8,25 +8,25 @@ enum TextureID;
 
 enum ENTITY_TYPE
 {
-	NO_ENTITY = 0,
-	BUILDING,
-	UNIT,
-	RESOURCE,
-	WALL
+	E_NO_ENTITY = 0,
+	E_BUILDING,
+	E_UNIT,
+	E_RESOURCE,
+	E_WALL
 };
 
 enum Side
 {
-	ALLY,
-	ENEMY,
-	NEUTRAL,
-	NO_SIDE
+	S_ALLY,
+	S_ENEMY,
+	S_NEUTRAL,
+	S_NO_SIDE
 };
 
 enum ENTITY_STATUS
 {
-	E_SELECTED = 0,
-	E_NON_SELECTED
+	ST_SELECTED = 0,
+	ST_NON_SELECTED
 };
 
 class Entity
@@ -40,7 +40,7 @@ private:
 	int armor;
 	int attack;
 	enum ENTITY_TYPE entity_type;
-	enum ENTITY_STATUS entity_status = E_NON_SELECTED;
+	enum ENTITY_STATUS entity_status = ST_NON_SELECTED;
 	enum TextureID texture_id;
 	enum Side side;
 

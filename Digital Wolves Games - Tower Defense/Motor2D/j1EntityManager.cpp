@@ -72,22 +72,22 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 			int unit_y = entity_array[i]->GetY();
 			if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 			{
-				entity_array[i]->SetEntityStatus(E_SELECTED);
+				entity_array[i]->SetEntityStatus(ST_SELECTED);
 				App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 			{
-				entity_array[i]->SetEntityStatus(E_SELECTED);
+				entity_array[i]->SetEntityStatus(ST_SELECTED);
 				App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 			{
-				entity_array[i]->SetEntityStatus(E_SELECTED);
+				entity_array[i]->SetEntityStatus(ST_SELECTED);
 				App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 			{
-				entity_array[i]->SetEntityStatus(E_SELECTED);
+				entity_array[i]->SetEntityStatus(ST_SELECTED);
 				App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 		}
@@ -100,7 +100,7 @@ void j1EntityManager::UnselectEverything()
 {
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		entity_array[i]->SetEntityStatus(E_NON_SELECTED);
+		entity_array[i]->SetEntityStatus(ST_NON_SELECTED);
 	}
 	if (!App->scene->panel_info->isSelectionEmpty())
 		App->scene->panel_info->DeleteSelection();
@@ -110,16 +110,16 @@ void j1EntityManager::DeleteEntity(Entity* ptr)
 {
 	switch (ptr->GetEntityType())
 	{
-		case UNIT:
+		case E_UNIT:
 			DeleteUnit((Unit*)ptr);
 			break;
-		case BUILDING:
+		case E_BUILDING:
 			DeleteBuilding(ptr);
 			break;
-		case RESOURCE:
+		case E_RESOURCE:
 			DeleteResource(ptr);
 			break;
-		case WALL:
+		case E_WALL:
 			DeleteWall(ptr);
 			break;
 	}
@@ -248,7 +248,7 @@ iPoint j1EntityManager::CheckForObjective(iPoint position, int vision_range, Sid
 	{
 		if (entity_array[i]->GetX() <= position.x + vision_range && entity_array[i]->GetX() >= position.x - vision_range &&
 			entity_array[i]->GetY() <= position.y + vision_range && entity_array[i]->GetY() >= position.y - vision_range &&
-			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0 && entity_array[i]->GetSide() != NEUTRAL)
+			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0 && entity_array[i]->GetSide() != S_NEUTRAL)
 			return iPoint(entity_array[i]->GetX(), entity_array[i]->GetY());
 	}
 	return iPoint(-1, -1);
@@ -263,7 +263,7 @@ bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
 {
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		if (entity_array[i]->GetEntityType() == UNIT)
+		if (entity_array[i]->GetEntityType() == E_UNIT)
 		{
 			if (entity_array[i] != unit)
 			{

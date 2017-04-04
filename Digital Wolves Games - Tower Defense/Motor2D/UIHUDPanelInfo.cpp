@@ -142,7 +142,7 @@ void UIHUDPanelInfo::CreatePanel()
 			case E_BUILDING:
 				entity_selected->PrepareBuildingInfo();
 				break;
-			case RESOURCE:
+			case E_RESOURCE:
 				entity_selected->PrepareResourceInfo();
 				break;
 			}
@@ -216,7 +216,7 @@ void UIHUDPanelInfo::Draw()
 				DrawBuildingSelected();
 				break;
 
-			case RESOURCE:
+			case E_RESOURCE:
 				DrawResourceSelected();
 				break;
 			}

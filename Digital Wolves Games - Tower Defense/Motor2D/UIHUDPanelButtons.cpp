@@ -67,7 +67,7 @@ info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atl
 
 void UIHUDPanelButtons::CreateEntity()
 {
-	if (if_active->e_type == BUILDING) {
+	if (if_active->e_type == E_BUILDING) {
 		if (App->scene->placing_tower == false)
 			App->scene->placing_tower = true;
 	}
@@ -88,12 +88,12 @@ void UIHUDPanelButtons::CreateEntity()
 
 		switch (if_active->e_type)
 		{
-		case ENTITY_TYPE::UNIT:
+		case ENTITY_TYPE::E_UNIT:
 				if (App->pathfinding->IsWalkable(r) == true)
 					App->entity_manager->CreateUnit(if_active->u_type, fPoint(s.x, s.y - 9), if_active->s_type);
 			break;
 
-			case ENTITY_TYPE::BUILDING:
+			case ENTITY_TYPE::E_BUILDING:
 				if (App->scene->placing_tower == true) {
 						if (App->collision->AbleToBuild(iPoint(s.x, s.y - 9)))
 						{
@@ -102,12 +102,12 @@ void UIHUDPanelButtons::CreateEntity()
 								App->scene->BuildTower();
 								if (App->pathfinding->IsConstructible_ally(r) == true)
 								{
-									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), ALLY);
+									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_ALLY);
 									App->scene->placing_tower = false;
 								}
 								if (App->pathfinding->IsConstructible_neutral(r) == true)
 								{
-									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), NEUTRAL);
+									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_NEUTRAL);
 									App->scene->placing_tower = false;
 								}
 							}
@@ -122,13 +122,13 @@ void UIHUDPanelButtons::CreateEntity()
 void info_button::SetUnit(UNIT_TYPE type, Side side)
 {
 	u_type = type;
-	e_type = ENTITY_TYPE::UNIT;
+	e_type = ENTITY_TYPE::E_UNIT;
 	s_type = side;
 }
 
 void info_button::SetBuilding(BUILDING_TYPE type)
 {
 	b_type = type;
-	e_type = ENTITY_TYPE::BUILDING;
+	e_type = ENTITY_TYPE::E_BUILDING;
 }
 

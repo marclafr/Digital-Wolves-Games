@@ -11,11 +11,11 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, pos, side), unit_type(u_type), direction(EAST), action_type(IDLE), changed(false), attacking(nullptr), priority(priority), state(VIGILANT)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action_type(A_IDLE), changed(false), attacking(nullptr), priority(priority), state(VIGILANT)
 {
-	if (GetSide() == ENEMY)
+	if (GetSide() == S_ENEMY)
 	{
-		this->action_type = WALK;
+		this->action_type = A_WALK;
 		GoTo(TOWN_HALL);
 		state = MOVING;
 		changed = true;
@@ -24,7 +24,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 	switch (u_type)
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
-	case TWOHANDEDSWORDMAN:
+	case U_TWOHANDEDSWORDMAN:
 		SetHp(60);
 		attack = 12;
 		SetArmor(1);
@@ -32,7 +32,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 		rate_of_fire = 2;
 		range = 30;
 		vision_range = 300;
-		unit_class = INFANTRY;
+		unit_class = C_INFANTRY;
 		unit_radius = 6;
 		SetTextureID(T_TWOHANDEDSWORDMAN);
 		fx_twohanded_die01 = App->audio->LoadFx("audio/fx/Male_Death01.wav");
@@ -44,7 +44,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 
 		break;
 
-	case CAVALRYARCHER:
+	case U_CAVALRYARCHER:
 		SetHp(50);
 		attack = 6;
 		SetArmor(1);
@@ -52,13 +52,13 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 		rate_of_fire = 2;
 		range = 300;
 		vision_range = 350;
-		unit_class = ARCHER;
+		unit_class = C_ARCHER;
 		unit_radius = 8;
 		SetTextureID(T_CAVALRYARCHER);
 		priority = 2;
 		break;
 
-	case SIEGERAM:
+	case U_SIEGERAM:
 		SetHp(270);
 		attack = 4;
 		SetArmor(-5);
@@ -66,7 +66,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 		rate_of_fire = 5;
 		range = 30;
 		vision_range = 100;
-		unit_class = SIEGE;
+		unit_class = C_SIEGE;
 		unit_radius = 15;
 		SetTextureID(T_SIEGERAM);
 		priority = 1;
@@ -74,7 +74,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(UNIT, 
 
 	default:
 		LOG("Error UNIT TYPE STATS NULL");
-		unit_class = NO_CLASS;
+		unit_class = C_NO_CLASS;
 		break;
 	}
 
@@ -101,7 +101,7 @@ void Unit::Update()
 		Move();
 		Draw();
 
-		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == E_SELECTED)
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == ST_SELECTED)
 		{
 			SetHp(0);
 		}
@@ -116,7 +116,7 @@ void Unit::Update()
 
 void Unit::Move()
 {
-	if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == E_SELECTED)
+	if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED)
 	{
 		this->path_list.clear();
 
@@ -127,7 +127,7 @@ void Unit::Move()
 		if(GoTo(destination) == false)
 		{
 			state = VIGILANT;
-			this->action_type = IDLE;
+			this->action_type = A_IDLE;
 			changed = true;
 		}
 	}
@@ -142,7 +142,7 @@ void Unit::Move()
 			if (!GetNextTile())
 			{
 				state = VIGILANT;
-				this->action_type = IDLE;
+				this->action_type = A_IDLE;
 				changed = true;
 			}
 		}
@@ -183,7 +183,7 @@ void Unit::AI()
 			if (attacking != nullptr)
 			{
 				state = FIGHTING;
-				this->action_type = ATTACK;
+				this->action_type = A_ATTACK;
 				this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
 				changed = true;
 			}
@@ -198,16 +198,16 @@ void Unit::AI()
 			{
 				state = VIGILANT;
 
-				if (GetSide() == ENEMY)
+				if (GetSide() == S_ENEMY)
 				{
-					this->action_type = WALK;
+					this->action_type = A_WALK;
 					GoTo(TOWN_HALL);
 					state = MOVING;
 					changed = true;
 				}
 				else
 				{
-					this->action_type = IDLE;
+					this->action_type = A_IDLE;
 					changed = true;
 				}
 			}
@@ -215,25 +215,25 @@ void Unit::AI()
 
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 		{
-			action_type = ATTACK;
+			action_type = A_ATTACK;
 			changed = true;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 		{
-			action_type = IDLE;
+			action_type = A_IDLE;
 			changed = true;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 		{
-			action_type = WALK;
+			action_type = A_WALK;
 			changed = true;
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		{
-			action_type = DIE;
+			action_type = A_DIE;
 			changed = true;
 		}
 
@@ -261,20 +261,20 @@ void Unit::Draw()
 void Unit::Die()
 {
 
-	if (animation->Finished() && action_type == DIE)
+	if (animation->Finished() && action_type == A_DIE)
 	{
-		action_type = DISAPPEAR;
+		action_type = A_DISAPPEAR;
 		changed = true;
 	}
 
-	else if (animation->Finished() && action_type == DISAPPEAR)
+	else if (animation->Finished() && action_type == A_DISAPPEAR)
 	{
 		this->SetToDelete();
 	}
 	
-	if (changed == false && action_type != DIE && action_type != DISAPPEAR)
+	if (changed == false && action_type != A_DIE && action_type != A_DISAPPEAR)
 	{
-		action_type = DIE;
+		action_type = A_DIE;
 		changed = true;
 
 		//THIS DOES NOT BELONG HERE
@@ -393,7 +393,7 @@ bool Unit::GoTo( iPoint destination)
 	{
 		path_list.pop_front();
 		GetNextTile();
-		action_type = WALK;
+		action_type = A_WALK;
 		changed = true;
 		state = MOVING;
 		return true;
@@ -428,54 +428,54 @@ bool Unit::GetNextTile()
 
 	if ((0 <= angle &&  angle <= 22.5) || (337.5 <= angle&& angle <= 360))
 	{
-		this->direction = EAST;
+		this->direction = D_EAST;
 		changed = true;
 	}
 
 	else if (22.5 <= angle &&  angle <= 67.5)
 	{
-		this->direction = NORTH_EAST;
+		this->direction = D_NORTH_EAST;
 		changed = true;
 	}
 
 	else if (67.5 <= angle &&  angle <= 112.5)
 	{
-		this->direction = NORTH;
+		this->direction = D_NORTH;
 		changed = true;
 	}
 
 	else if (112.5 <= angle &&  angle <= 157.5)
 	{
-		this->direction = NORTH_WEST;
+		this->direction = D_NORTH_WEST;
 		changed = true;
 	}
 
 	else if (157.5 <= angle &&  angle <= 202.5)
 	{
-		this->direction = WEST;
+		this->direction = D_WEST;
 		changed = true;
 	}
 
 	else if (202.5 <= angle &&  angle <= 247.5)
 	{
-		this->direction = SOUTH_WEST;
+		this->direction = D_SOUTH_WEST;
 		changed = true;
 	}
 
 	else if (247.5 <= angle &&  angle <= 292.5)
 	{
-		this->direction = SOUTH;
+		this->direction = D_SOUTH;
 		changed = true;
 	}
 
 	else if (292.5 <= angle &&  angle <= 337.5)
 	{
-		this->direction = SOUTH_EAST;
+		this->direction = D_SOUTH_EAST;
 		changed = true;
 	}
 
 	else
-		this->direction = NO_DIRECTION;
+		this->direction = D_NO_DIRECTION;
 
 	return ret;
 }

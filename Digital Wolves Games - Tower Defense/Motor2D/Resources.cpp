@@ -12,13 +12,13 @@
 
 
 
-Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(RESOURCE, pos, ALLY), resource_type(r_type)
+Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos, S_ALLY), resource_type(r_type)
 {
 	SDL_Rect rect;
 	switch (r_type)
 	{
 	case STONE:
-		SetSide(ALLY);
+		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
 		collect_time = 12;
@@ -33,7 +33,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(RESOURCE, pos, A
 		break;
 
 	case WOOD:
-		SetSide(ALLY);
+		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
 		collect_time = 10;

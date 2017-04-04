@@ -41,10 +41,10 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	{
 		App->pathfinding->MakeNoWalkable(p);
 	}
-	if (side == NEUTRAL) {
+	if (side == S_NEUTRAL) {
 		App->pathfinding->MakeNoConstruible_neutral(p);
 	}
-	if (side == ALLY) {
+	if (side == S_ALLY) {
 		App->pathfinding->MakeNoConstruible_ally(p);
 	}
 }
@@ -58,10 +58,10 @@ void Building::Update()
 	Draw();
 	if (GetHp() < 0) {
 		iPoint p = App->map->WorldToMap(GetX(), GetY());
-		if (GetSide() == NEUTRAL) {
+		if (GetSide() == S_NEUTRAL) {
 			App->pathfinding->MakeConstruible_neutral(p);
 		}
-		if (GetSide() == ALLY) {
+		if (GetSide() == S_ALLY) {
 			App->pathfinding->MakeConstruible_ally(p);
 		}
 		App->pathfinding->MakeWalkable(p);

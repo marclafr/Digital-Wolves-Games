@@ -100,11 +100,11 @@ bool j1Scene::Start()
 	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
 	info_button* panel_btns = nullptr;
 	panel_btns = panel->AddButton(0, 0, 878, 910);
-	panel_btns->SetBuilding(TURRET);
+	panel_btns->SetBuilding(B_TURRET);
 	panel_btns = panel->AddButton(2, 0, 774, 962);
-	panel_btns->SetUnit(TWOHANDEDSWORDMAN, ALLY);
+	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
 	panel_btns = panel->AddButton(2, 1, 774, 962);
-	panel_btns->SetUnit(TWOHANDEDSWORDMAN, ENEMY);
+	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ENEMY);
 
 	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
 
@@ -260,10 +260,10 @@ bool j1Scene::Update(float dt)
 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-		App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(p.x, p.y), ALLY);
+		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(p.x, p.y), S_ALLY);
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-		App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(p.x, p.y), ENEMY);
+		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(p.x, p.y), S_ENEMY);
 
 	
 
@@ -330,9 +330,9 @@ bool j1Scene::Update(float dt)
 					{
 						BuildTower();
 						if (App->pathfinding->IsConstructible_neutral(r) == true)
-							App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), NEUTRAL);
+							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_NEUTRAL);
 						else if (App->pathfinding->IsConstructible_ally(r) == true)
-							App->entity_manager->CreateBuilding(TURRET, fPoint(p.x, p.y - 9), ALLY);
+							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_ALLY);
 						placing_tower = false;
 					}
 				}
