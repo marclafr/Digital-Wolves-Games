@@ -1,5 +1,7 @@
 #define BLACK {0,0,0,0}
 
+#define BAR_LIFE_CENTER 16
+
 #include "UIHUDPanelInfo.h"
 
 #include "p2Log.h"
@@ -97,7 +99,7 @@ void UIHUDPanelInfo::CreatePanel()
 			{
 				if (unit_selection)
 				{
-					entity_group_selection add_entity_selected;
+					entity_group_selection* add_entity_selected = new entity_group_selection();
 
 					Unit* selected = (Unit*)item._Ptr->_Myval;
 
@@ -107,11 +109,11 @@ void UIHUDPanelInfo::CreatePanel()
 
 					new_btn->Set({ 220 + (29 * count++), 666, 29, 29 }, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
 
-					add_entity_selected.btn_selected = new_btn;
+					add_entity_selected->btn_selected = new_btn;
 
-					add_entity_selected.pointer_entity = (Entity*)selected;
+					add_entity_selected->pointer_entity = (Entity*)selected;
 
-					entities_btn.push_back(&add_entity_selected);
+					entities_btn.push_back(add_entity_selected);
 				}
 				else
 				{
@@ -263,7 +265,7 @@ void UIHUDPanelInfo::DrawButtonsEntitiesSelected()
 		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		int rest_life_bar = 0;
-		int height_correction = 40;
+		int height_correction = 0;
 		ENTITY_TYPE e_type = item._Ptr->_Myval->pointer_entity->GetEntityType();
 		Entity* e_selected = item._Ptr->_Myval->pointer_entity;
 		Building* b_selected = nullptr;
@@ -273,28 +275,28 @@ void UIHUDPanelInfo::DrawButtonsEntitiesSelected()
 		{
 		case E_UNIT:
 			u_selected = (Unit*)e_selected;
-			//rest_life_bar = ReturnValueBarHPUnit(u_selected->GetUnitType(), u_selected->GetHp());
-			//height_correction = ReturnValueHeightCorrectionUnit(u_selected->GetUnitClass());
+			rest_life_bar = ReturnValueBarHPUnit(u_selected->GetUnitType(), u_selected->GetHp());
+			height_correction = ReturnValueHeightCorrectionUnit(u_selected->GetUnitClass());
 			break;
 
 		case E_BUILDING:
 			b_selected = (Building*)e_selected;
-			//rest_life_bar = ReturnValueBarHPBuilding(b_selected->GetBuildingType(), b_selected->GetHp());
-			//height_correction = ReturnValueHeightCorrectionBuilding(b_selected->GetBuildingType());
+			rest_life_bar = ReturnValueBarHPBuilding(b_selected->GetBuildingType(), b_selected->GetHp());
+			height_correction = ReturnValueHeightCorrectionBuilding(b_selected->GetBuildingType());
 			break;
 
 		case E_RESOURCE:
 			r_selected = (Resources*)e_selected;
-			//rest_life_bar = ReturnValueBarHPResource(r_selected->GetResourceType(), r_selected->GetHp());
-			//height_correction = ReturnValueHeightCorrectionResource(r_selected->GetResourceType());
+			rest_life_bar = ReturnValueBarHPResource(r_selected->GetResourceType(), r_selected->GetHp());
+			height_correction = ReturnValueHeightCorrectionResource(r_selected->GetResourceType());
 			break;
 		}
 
 		//Bar life unit
 		SDL_Rect mark_life_bar_red{ 1059, 832, 32, 4 };
 		SDL_Rect mark_life_bar_green{ 1059, 827, rest_life_bar, 4 };
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX(), e_selected->GetY() - height_correction, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX(), e_selected->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX() - BAR_LIFE_CENTER, e_selected->GetY() - height_correction, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX() - BAR_LIFE_CENTER, e_selected->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
 
 		item++;
 	}
@@ -303,11 +305,14 @@ void UIHUDPanelInfo::DrawButtonsEntitiesSelected()
 void UIHUDPanelInfo::DrawUnitSelected()
 {
 	Unit* unit_life_bar = (Unit*)entity_selected->pointer_entity;
-	//Bar life unit
+
+	//Bar life
+	int rest_life_bar = ReturnValueBarHPUnit(unit_life_bar->GetUnitType(), unit_life_bar->GetHp());
+	int height_correction = ReturnValueHeightCorrectionUnit(unit_life_bar->GetUnitClass());
 	SDL_Rect mark_life_bar_red{ 1059, 832, 32, 4 };
-	SDL_Rect mark_life_bar_green{ 1059, 827, ReturnValueBarHPUnit(unit_life_bar->GetUnitType(), unit_life_bar->GetHp()), 4 };
-	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), unit_life_bar->GetX(), unit_life_bar->GetY() - 40, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
-	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), unit_life_bar->GetX(), unit_life_bar->GetY() - 40, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+	SDL_Rect mark_life_bar_green{ 1059, 827, rest_life_bar, 4 };
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), unit_life_bar->GetX() - BAR_LIFE_CENTER, unit_life_bar->GetY() - height_correction, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), unit_life_bar->GetX() - BAR_LIFE_CENTER, unit_life_bar->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
 
 	UIComponents* entity_image = entity_selected->image;
 
@@ -342,6 +347,16 @@ void UIHUDPanelInfo::DrawUnitSelected()
 
 void UIHUDPanelInfo::DrawBuildingSelected()
 {
+	Building* building_life_bar = (Building*)entity_selected->pointer_entity;
+
+	//Bar life
+	int rest_life_bar = ReturnValueBarHPBuilding(building_life_bar->GetBuildingType(), building_life_bar->GetHp());
+	int height_correction = ReturnValueHeightCorrectionBuilding(building_life_bar->GetBuildingType());
+	SDL_Rect mark_life_bar_red{ 1059, 832, 32, 4 };
+	SDL_Rect mark_life_bar_green{ 1059, 827, rest_life_bar, 4 };
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), building_life_bar->GetX() - BAR_LIFE_CENTER, building_life_bar->GetY() - height_correction, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), building_life_bar->GetX() - BAR_LIFE_CENTER, building_life_bar->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+
 	UIComponents* entity_image = entity_selected->image;
 
 	SDL_Rect mark_btn{ 1029, 827, 29, 33 };
@@ -395,6 +410,16 @@ void UIHUDPanelInfo::DrawBuildingSelected()
 
 void UIHUDPanelInfo::DrawResourceSelected()
 {
+	Resources* resource_life_bar = (Resources*)entity_selected->pointer_entity;
+
+	//Bar life
+	int rest_life_bar = ReturnValueBarHPResource(resource_life_bar->GetResourceType(), resource_life_bar->GetHp());
+	int height_correction = ReturnValueHeightCorrectionResource(resource_life_bar->GetResourceType());
+	SDL_Rect mark_life_bar_red{ 1059, 832, 32, 4 };
+	SDL_Rect mark_life_bar_green{ 1059, 827, rest_life_bar, 4 };
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), resource_life_bar->GetX() - BAR_LIFE_CENTER, resource_life_bar->GetY() - height_correction, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), resource_life_bar->GetX() - BAR_LIFE_CENTER, resource_life_bar->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+
 	UIComponents* entity_image = entity_selected->image;
 
 	SDL_Rect mark_btn{ 1029, 827, 29, 33 };

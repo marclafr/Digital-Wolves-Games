@@ -1,7 +1,8 @@
 #ifndef __GETENTITYINFO__
 #define __GETENTITYINFO__
 
-#define TURRET_BUILD 9000
+#define TURRET_BUILD 11000
+#define STONEWALL_BUILD 11000
 
 #include "Entity.h"
 #include "Units.h"
@@ -21,9 +22,14 @@ const char* GetBuildingName(const BUILDING_TYPE type);
 const uint GetBuildingPercentage(const Entity* build);
 const double GetBuildTotalTime(const BUILDING_TYPE type);
 const bool isBuilded(const Entity* build);
-SDL_Rect GetAtlasBarBuilding(const uint percentage);
 
 const char* GetSideName(const Side type);
 
 int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp);
+int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp);
+int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp);
+
+int ReturnValueHeightCorrectionUnit(const UNIT_CLASS u_class);
+int ReturnValueHeightCorrectionBuilding(const BUILDING_TYPE type);
+int ReturnValueHeightCorrectionResource(const RESOURCE_TYPE type);
 #endif

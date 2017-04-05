@@ -2,6 +2,12 @@
 #define CAVALRYARCHER_HP 50
 #define SIEGERAM_HP 270
 
+#define TURRET_HP 250
+#define STONEWALL_HP 500
+#define TOWNHALL_HP 1500
+
+#define RESOURCES_HP 10
+
 #include "UIGetEntitiesInfo.h"
 
 SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
@@ -186,7 +192,11 @@ const char* GetSideName(const Side type)
 
 int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp)
 {
+	if (hp <= 0)
+		return 1;
+
 	int ret = 0;
+
 	switch (type)
 	{
 	case U_TWOHANDEDSWORDMAN:
@@ -204,6 +214,140 @@ int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp)
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
 		ret = 0;
+		break;
+	}
+
+	return ret;
+}
+
+int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp)
+{
+	if (hp <= 0)
+		return 1;
+
+	int ret = 0;
+
+	switch (type)
+	{
+	case B_TURRET:
+		ret = hp * 32 / TURRET_HP;
+		break;
+	case B_STONE_WALL:
+		ret = hp * 32 / STONEWALL_HP;
+		break;
+	case B_TOWNHALL:
+		ret = hp * 32 / TOWNHALL_HP;
+		break;
+	default:
+		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
+		ret = 0;
+		break;
+	}
+
+	return ret;
+}
+
+int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp)
+{
+	if (hp <= 0)
+		return 1;
+
+	int ret = 0;
+
+	switch (type)
+	{
+	case WOOD:
+		ret = hp * 32 / RESOURCES_HP;
+		break;
+	case STONE:
+		ret = hp * 32 / RESOURCES_HP;
+		break;
+	case FOOD:
+		ret = hp * 32 / RESOURCES_HP;
+		break;
+	case GOLD:
+		ret = hp * 32 / RESOURCES_HP;
+		break;
+	}
+
+	return ret;
+}
+
+int ReturnValueHeightCorrectionUnit(const UNIT_CLASS u_class)
+{
+	int ret = 0;
+
+	switch (u_class)
+	{
+	case C_INFANTRY:
+		ret = 47;
+		break;
+
+	case C_ARCHER:
+		ret = 47;
+		break;
+
+	case C_CAVALRY:
+		ret = 50;
+		break;
+			
+	case C_SIEGE:
+		ret = 50;
+		break;
+
+	case C_SUICIDAL:
+		ret = 47;
+		break;
+
+	default:
+		ret = 0;
+		break;
+	}
+
+	return ret;
+}
+
+int ReturnValueHeightCorrectionBuilding(const BUILDING_TYPE type)
+{
+	int ret = 0;
+
+	switch (type)
+	{
+	case B_TURRET:
+		ret = 180;
+		break;
+	case B_STONE_WALL:
+		ret = 90;
+		break;
+	case B_TOWNHALL:
+		ret = 210;
+		break;
+	default:
+		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
+		ret = 0;
+		break;
+	}
+
+	return ret;
+}
+
+int ReturnValueHeightCorrectionResource(const RESOURCE_TYPE type)
+{
+	int ret = 0;
+
+	switch (type)
+	{
+	case WOOD:
+		ret = 70;
+		break;
+	case STONE:
+		ret = 70;
+		break;
+	case FOOD:
+		ret = 70;
+		break;
+	case GOLD:
+		ret = 70;
 		break;
 	}
 
@@ -234,6 +378,10 @@ const double GetBuildTotalTime(const BUILDING_TYPE type)
 		ret = TURRET_BUILD;
 		break;
 
+	case B_STONE_WALL:
+		ret = STONEWALL_BUILD;
+		break;
+
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
 		ret = 0;
@@ -249,17 +397,10 @@ const bool isBuilded(const Entity * build)
 
 	double actual_build_time = building->GetBuildTime();
 
-	double time_build = building->GetBuildingType();
+	double time_build = GetBuildTotalTime(building->GetBuildingType());
 
 	if (actual_build_time > time_build)
 		return true;
 
 	return false;
-}
-
-SDL_Rect GetAtlasBarBuilding(const uint percentage)
-{
-	SDL_Rect test = { 0,0,0,0 };
-
-	return test;
 }
