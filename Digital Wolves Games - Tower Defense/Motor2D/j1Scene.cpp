@@ -171,7 +171,7 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT || ((y > 750) && res.y < 2317))
 		App->render->camera->MoveDown(floor(450.0f * dt));
 
-	if (App->render->camera->GetPosition().x < 3000 & App->render->camera->GetPosition().x > 0)
+	if (App->render->camera->GetPosition().x < 3000 & App->render->camera->GetPosition().x > -1200)
 	{ 
 		if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT || (x < (App->render->camera->GetWidth() / 70 ) && res.x > -2400))
 			App->render->camera->MoveLeft(floor(450.0f * dt));
@@ -182,6 +182,10 @@ bool j1Scene::Update(float dt)
 		if (App->render->camera->GetPosition().x > 3000)
 		{
 			App->render->camera->SetPosition(iPoint(2999, App->render->camera->GetPosition().y));
+		}
+		if (App->render->camera->GetPosition().x < -1200)
+		{
+			App->render->camera->SetPosition(iPoint(-1200, App->render->camera->GetPosition().y));
 		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
