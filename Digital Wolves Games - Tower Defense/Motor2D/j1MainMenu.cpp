@@ -42,7 +42,7 @@ bool j1MainMenu::Awake()
 // Called before the first frame
 bool j1MainMenu::Start()
 {
-
+	App->uimanager->Enable();
 	App->audio->PlayMusic("audio/music/Menu01.ogg");
 
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
@@ -114,12 +114,12 @@ bool j1MainMenu::Update(float dt)
 		App->scene->lose = false;
 	}
 
-	if (exit->GetStat() == SELECTED) {
+	/*if (exit->GetStat() == SELECTED) {
 		exit->Set({ 174, 673, 200, 95 }, { 477, 1374, 200, 95 });
 	}
 	if (exit->GetStat() == UNSELECTED) {
 		exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
-	}
+	}*/
 
 	return true;
 }
@@ -141,22 +141,7 @@ bool j1MainMenu::PostUpdate()
 bool j1MainMenu::CleanUp()
 {
 	LOG("Freeing  MainMenu");
-	
-	background->SetDraw(false);
-
-	single_player->SetDraw(false);
-	title_single_player->SetDraw(false);
-	single_player->SetInteractive(false);
-
-	tutorial->SetDraw(false);
-	history->SetDraw(false);
-	trophies->SetDraw(false);
-	options->SetDraw(false);
-
-	exit->SetDraw(false);
-	title_exit->SetDraw(false);
-	exit->SetInteractive(false);
-
+	App->uimanager->Disable();
 	return true;
 }
 

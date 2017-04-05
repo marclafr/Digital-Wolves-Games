@@ -50,7 +50,7 @@ bool j1Scene::Start()
 {
 	App->wave_manager->Enable();
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg");
-
+	App->uimanager->Enable();
 
 	if(App->map->Load("NewMap.tmx") == true)
 	{
@@ -408,7 +408,7 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 	App->wave_manager->Disable();
 	App->entity_manager->CleanUp();
-
+	App->uimanager->Disable();
 	return true;
 }
 
