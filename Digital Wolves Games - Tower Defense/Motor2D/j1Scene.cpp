@@ -149,7 +149,7 @@ bool j1Scene::Start()
 	//RESOURCES
 	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(STONE, fPoint(450, 850)));
 	*/
-	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-768, 696), S_ALLY);
+	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-912, 672), S_ALLY);
 	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(-75, 50));
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(75, 50));
@@ -181,7 +181,7 @@ bool j1Scene::Update(float dt)
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
 	/*int a = 7;
-	int b = 22;
+	int b = 21;
 	iPoint aa = App->map->MapToWorld(a, b);
 	LOG("%i, %i", aa.x, aa.y);*/
 	// Camera Movement

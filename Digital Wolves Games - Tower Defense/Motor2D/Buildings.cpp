@@ -46,10 +46,10 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetAttack(0);
 		rate_of_fire = 0;
 		range = 0;
-		rect = { 83,218,240,215 };
+		rect = { 836,1,366,317 };
 		SetRect(rect);
-		SetPivot(0.5*240,0.725581*215);
-		SetTextureID(T_WALL);
+		SetPivot(0.52459 * 192, 0.72555 * 230);//
+		SetTextureID(T_TOWNHALL);
 		totallybuilded = true;
 		break;
 	default:
