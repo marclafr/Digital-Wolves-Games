@@ -18,7 +18,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	{
 	case B_TURRET:
 		SetSide(side);
-		SetHp(1000);
+		SetHp(700);
 		SetAttack(30);
 		SetArmor(1);
 		rate_of_fire = 1;
@@ -31,7 +31,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		break;
 	case B_STONE_WALL:
 		SetSide(side);
-		SetHp(1000);
+		SetHp(300);
 		SetAttack(0);
 		rate_of_fire = 0;
 		range = 0;
@@ -60,7 +60,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	buildtimer.Start();
 	iPoint p = App->map->WorldToMap(pos.x, pos.y);
 
-	if (App->pathfinding->IsWalkable(p) == true && building_type != B_TOWNHALL)
+	if (App->pathfinding->IsWalkable(p) == true && (building_type == B_TURRET || building_type == B_STONE_WALL))
 	{
 		App->pathfinding->MakeNoWalkable(p);
 	}
