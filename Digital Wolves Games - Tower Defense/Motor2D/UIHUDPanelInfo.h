@@ -76,6 +76,9 @@ private:
 	//Status of Panel Info
 	PANEL_TYPE status = NONE;
 
+	//Bool of entity selected if erased
+	bool entity_selected_erased = false;
+
 public:
 	UIHUDPanelInfo(UICOMPONENT_TYPE type);
 	~UIHUDPanelInfo();
