@@ -67,7 +67,6 @@ private:
 	uint height;
 	// all map walkability values [0..255]
 	uchar* map;
-	//TODO1 create a node map
 	PathNode* node_map;
 	uchar* constructible_map_ally;
 	uchar* constructible_map_neutral;

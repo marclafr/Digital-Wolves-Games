@@ -286,19 +286,13 @@ int PathNode::CalculateFopt(const iPoint& destination)
 int j1PathFinding::CreatePath(const iPoint & origin, const iPoint & destination, std::list<iPoint>& list)
 {
 	int size = width*height;
-	//TODO 2
-	// Fill the node_map with with null PathNodes 
 	std::fill(node_map, node_map + size, PathNode(-1, -1, iPoint(-1, -1), nullptr));
 	int ret = -1;
 
 	if (IsWalkable(origin) && IsWalkable(destination))
 	{
 		ret = 1;
-		//TODO 3 
-		//Create a priority_queue open that compares a PathNode* in a vector of PathNodes* using the compare struct
 		std::priority_queue<PathNode*, std::vector<PathNode*>, compare> open;
-		//TODO 5
-		//Inicialize firstNode getting its node and setting its position, g and h
 		PathNode* firstNode = GetPathNode(origin.x, origin.y);
 		firstNode->SetPosition(origin);
 		firstNode->g = 0;
@@ -308,8 +302,6 @@ int j1PathFinding::CreatePath(const iPoint & origin, const iPoint & destination,
 		PathNode* current = nullptr;
 		while (open.size() != 0)
 		{
-			//TODO 6 
-			//Get the top of the queue as the current node, set it on_close and pop the top node.
 			current = open.top();
 			open.top()->on_close = true;
 			open.pop();
@@ -318,8 +310,6 @@ int j1PathFinding::CreatePath(const iPoint & origin, const iPoint & destination,
 
 				std::vector<iPoint>* path = new std::vector<iPoint>;
 				last_path.clear();
-				//TODO 8
-				// make a look for current, and until its parent is nullptr, make current = ParentNode
 				for (; current->parent != nullptr; current = GetPathNode(current->parent->pos.x, current->parent->pos.y))
 				{
 					last_path.push_back(current->pos);
@@ -336,8 +326,6 @@ int j1PathFinding::CreatePath(const iPoint & origin, const iPoint & destination,
 				current->FindWalkableAdjacents(&neighbours);
 				for (std::list<PathNode*>::iterator item = neighbours.begin(); item != neighbours.end(); item++) {
 					PathNode* temp = item._Mynode()->_Myval;
-					//TODO 7
-					//change if an else if for on_open, on_close booleans 
 					if (temp->on_close == true)
 					{
 						continue;
@@ -371,19 +359,13 @@ int j1PathFinding::CreatePath(const iPoint & origin, const iPoint & destination,
 float j1PathFinding::CreatePath(const iPoint & origin, const iPoint & destination)
 {
 	int size = width*height;
-	//TODO 2
-	// Fill the node_map with with null PathNodes 
 	std::fill(node_map, node_map + size, PathNode(-1, -1, iPoint(-1, -1), nullptr));
 	int ret = -1;
 
 	if (IsWalkable(origin) && IsWalkable(destination))
 	{
 		ret = 1;
-		//TODO 3 
-		//Create a priority_queue open that compares a PathNode* in a vector of PathNodes* using the compare struct
 		std::priority_queue<PathNode*, std::vector<PathNode*>, compare> open;
-		//TODO 5
-		//Inicialize firstNode getting its node and setting its position, g and h
 		PathNode* firstNode = GetPathNode(origin.x, origin.y);
 		firstNode->SetPosition(origin);
 		firstNode->g = 0;
@@ -393,8 +375,6 @@ float j1PathFinding::CreatePath(const iPoint & origin, const iPoint & destinatio
 		PathNode* current = nullptr;
 		while (open.size() != 0)
 		{
-			//TODO 6 
-			//Get the top of the queue as the current node, set it on_close and pop the top node.
 			current = open.top();
 			open.top()->on_close = true;
 			open.pop();
@@ -403,8 +383,6 @@ float j1PathFinding::CreatePath(const iPoint & origin, const iPoint & destinatio
 
 				std::vector<iPoint>* path = new std::vector<iPoint>;
 				last_path.clear();
-				//TODO 8
-				// make a look for current, and until its parent is nullptr, make current = ParentNode
 				for (; current->parent != nullptr; current = GetPathNode(current->parent->pos.x, current->parent->pos.y))
 				{
 					last_path.push_back(current->pos);
@@ -419,8 +397,6 @@ float j1PathFinding::CreatePath(const iPoint & origin, const iPoint & destinatio
 				current->FindWalkableAdjacents(&neighbours);
 				for (std::list<PathNode*>::iterator item = neighbours.begin(); item != neighbours.end(); item++) {
 					PathNode* temp = item._Mynode()->_Myval;
-					//TODO 7
-					//change if an else if for on_open, on_close booleans 
 					if (temp->on_close == true)
 					{
 						continue;
@@ -451,8 +427,7 @@ float j1PathFinding::CreatePath(const iPoint & origin, const iPoint & destinatio
 	}
 	return -1;
 }
-//TODO 4
-// Create a function that returns a pointer of a PathNode by entering its position.
+
 PathNode* j1PathFinding::GetPathNode(int x, int y)
 {
 	return &node_map[(y*width) + x];

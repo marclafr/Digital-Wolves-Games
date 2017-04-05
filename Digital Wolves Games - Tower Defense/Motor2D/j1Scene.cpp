@@ -144,16 +144,17 @@ bool j1Scene::Start()
 	App->entity_manager->CreateBuilding(TURRET, fPoint(-144, 40), ENEMY);
 	App->entity_manager->CreateBuilding(TURRET, fPoint(45, 40), ENEMY);
 	App->entity_manager->CreateBuilding(TURRET, fPoint(145, 85), ENEMY);
-
+	
 
 	//RESOURCES
 	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(STONE, fPoint(450, 850)));
 	*/
+	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-900, 720), S_ALLY);
 	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(-75, 50));
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(75, 50));
 	resources_panel->AddResource(resource_wood);
-
+	
 	return true;
 }
 
@@ -162,31 +163,12 @@ bool j1Scene::PreUpdate()
 {
 
 	// debug pathfing ------------------
-	static iPoint origin;
-	static bool origin_selected = false;
-
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	
 	iPoint p = App->render->ScreenToWorld(x, y);
 	
 	p = App->map->WorldToMap(p.x, p.y);
-	
-		
-	if(App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-	{
-		if(origin_selected == true)
-		{
-			App->pathfinding->CreatePath(origin, p);
-			origin_selected = false;
-		}
-		else
-		{
-			App->entity_manager->GetUnitsPath(p);
-			origin = p;
-			origin_selected = true;
-		}
-	}
 
 	return true;
 }
@@ -202,6 +184,19 @@ bool j1Scene::Update(float dt)
 	iPoint aa = App->map->MapToWorld(a, b);
 	LOG("%i, %i", aa.x, aa.y);*/
 	// Camera Movement
+
+	//DEBUG: increase resources
+	if (App->debug_features.add_wood)
+	{
+		resource_wood->AddResource(1000);
+		App->debug_features.add_wood = false;
+	}
+	
+	if (App->debug_features.add_stone)
+	{
+		resource_stone->AddResource(1000);
+		App->debug_features.add_stone = false;
+	}//--
 
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN )
 		App->LoadGame("save_game.xml");
@@ -362,6 +357,9 @@ bool j1Scene::Update(float dt)
 	if (placing_wall == true) {
 		if (App->pathfinding->IsConstructible_ally(r) == false)
 		{
+			SDL_Rect rect;
+			rect = { 591,583,691,583 };
+			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
 		}
 		else if (App->pathfinding->IsConstructible_ally(r) == true) {
 			SDL_Rect rect;
@@ -394,7 +392,9 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	//Unit test
+	//TODO: defeat
+	if (townhall->GetHp() <= 0)
+		LOG("DEFEAT");
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

@@ -37,9 +37,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// TODO 2: Create the factory methods
 	// Gui creation functions
-
 	UIComponents* addUIComponent(UICOMPONENT_TYPE type);
 
 	const SDL_Texture* GetAtlas() const;

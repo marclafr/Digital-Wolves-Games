@@ -16,6 +16,7 @@ class UIHUDPanelInfo;
 class UIHUDDescription;
 class UIHUDResources;
 class Resources;
+class Building;
 
 class j1Scene : public j1Module
 {
@@ -73,6 +74,8 @@ private:
 
 	Resources* resource_wood;
 	Resources* resource_stone;
+
+	Building* townhall;
 
 public:
 	UIHUDPanelInfo* panel_info;

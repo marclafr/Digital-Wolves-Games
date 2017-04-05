@@ -14,8 +14,6 @@ j1EntityManager::j1EntityManager() : j1Module()
 j1EntityManager::~j1EntityManager() {}
 
 
-bool j1EntityManager::Awake() { return true; }
-
 bool j1EntityManager::CleanUp() { // not done
 
 	//if(sprites != nullptr)
@@ -27,9 +25,6 @@ bool j1EntityManager::CleanUp() { // not done
 
 	entity_array.clear();
 
-	//Borrar enemigos
-	//for(uint i = 0;             ; ++i)
-		//if(unit_list[i])
 	return true;
 }
 
@@ -73,22 +68,22 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 			if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 			{
 				entity_array[i]->SetEntityStatus(ST_SELECTED);
-				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+				if(entity_array[i]->GetEntityType() != ENTITY_TYPE:: E_WALL) App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 			{
 				entity_array[i]->SetEntityStatus(ST_SELECTED);
-				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+				if(entity_array[i]->GetEntityType() != ENTITY_TYPE::E_WALL) App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 			{
 				entity_array[i]->SetEntityStatus(ST_SELECTED);
-				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+				if (entity_array[i]->GetEntityType() != ENTITY_TYPE::E_WALL) App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 			{
 				entity_array[i]->SetEntityStatus(ST_SELECTED);
-				App->scene->panel_info->AddEntitySelection(entity_array[i]);
+				if (entity_array[i]->GetEntityType() != ENTITY_TYPE::E_WALL) App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 		}
 	}
@@ -219,24 +214,14 @@ bool j1EntityManager::PostUpdate()
 	return true;
 }
 
-//TODO: Why this function?
-void j1EntityManager::GetUnitsPath(iPoint destination) 
-{
-	std::vector<Entity*>::iterator prove = entity_array.begin();
-
-	while (prove != entity_array.end())
-		//if (prove._Ptr->_Myval->GetEntityStatus() == E_SELECTED)
-			prove++;
-
-}
-
 Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
 {
 	for  (int i = 0; i < entity_array.size(); i++)
 	{
 		if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range &&
 			entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range &&
-			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0)
+			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0
+			&& (entity_array[i]->GetEntityType() == E_UNIT || entity_array[i]->GetEntityType() == E_BUILDING))
 			return entity_array[i];
 	}
 	return nullptr;
@@ -249,7 +234,8 @@ Entity* j1EntityManager::CheckForObjective(iPoint position, int vision_range, Si
 	{
 		if (entity_array[i]->GetX() <= position.x + vision_range && entity_array[i]->GetX() >= position.x - vision_range &&
 			entity_array[i]->GetY() <= position.y + vision_range && entity_array[i]->GetY() >= position.y - vision_range &&
-			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0 && entity_array[i]->GetSide() != S_NEUTRAL)
+			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0 && entity_array[i]->GetSide() != S_NEUTRAL
+			&& entity_array[i]->GetEntityType() == E_UNIT)
 		{
 			if(ret == nullptr)
 				ret = entity_array[i];

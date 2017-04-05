@@ -19,7 +19,6 @@ public:
 	j1EntityManager();
 	~j1EntityManager();
 
-	bool Awake();
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
@@ -36,7 +35,6 @@ public:
 	void DeleteBuilding(Entity* ptr);
 	void DeleteResource(Entity* ptr);
 	void DeleteWall(Entity* ptr);
-	void GetUnitsPath(iPoint destintation);
 
 	Entity* CheckForCombat(iPoint position, int range, Side side);
 	Entity* CheckForObjective(iPoint position, int vision_range, Side side);

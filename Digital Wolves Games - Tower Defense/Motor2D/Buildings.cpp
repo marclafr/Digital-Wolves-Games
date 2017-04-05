@@ -40,6 +40,18 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetPivot(0.505263 * 95, 0.578947 * 57);
 		SetTextureID(T_WALL);
 		break;
+	case B_TOWNHALL:
+		SetSide(side);
+		SetHp(1500);
+		SetAttack(0);
+		rate_of_fire = 0;
+		range = 0;
+		rect = { 83,218,240,215 };
+		SetRect(rect);
+		SetPivot(0.5*240,0.725581*215);
+		SetTextureID(T_WALL);
+		totallybuilded = true;
+		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
 		building_type = B_NO_BUILDING;
@@ -80,13 +92,14 @@ void Building::Update()
 		targetpos.x = Target->GetX();
 		targetpos.y = Target->GetY() - 35;
 		UpdateArrow(arrowpos, targetpos);
-		if (arrowpos.x > targetpos.x - 3 && arrowpos.x < targetpos.x + 3 && arrowpos.y < targetpos.y + 3 && arrowpos.y > targetpos.y- 3) {
+		if (arrowpos.x > targetpos.x - 3 && arrowpos.x < targetpos.x + 3 && arrowpos.y < targetpos.y + 3 && arrowpos.y > targetpos.y- 3)
+		{
 			attacking = false;
 			Target->Damaged(12);
 		}
-		SDL_Rect rect = { 20,16,18,10 };
+		SDL_Rect rect = { 0,44,24,5 };
 		iPoint pivots(0.5 * 18, 0.5 * 10);
-		App->render->Blit(App->tex->GetTexture(T_TURRET), arrowpos.x, arrowpos.y, &rect, SDL_FLIP_NONE, pivots.x, pivots.y);
+		App->render->Blit(App->tex->GetTexture(T_ARROW), arrowpos.x, arrowpos.y, &rect, SDL_FLIP_NONE, pivots.x, pivots.y);
 	}
 	if (GetHp() < 0) {
 		iPoint p = App->map->WorldToMap(GetX(), GetY());

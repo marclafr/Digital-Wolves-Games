@@ -126,7 +126,7 @@ void Unit::AI()
 			break;
 		}
 
-		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED)
+		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED && this->GetSide() == S_ALLY)
 		{
 			iPoint objective;
 			App->input->GetMousePosition(objective.x, objective.y);
@@ -164,6 +164,17 @@ void Unit::AI()
 			this->action = A_DIE;
 			changed = true;
 			PlayDeathSound();
+			break;
+		}
+
+		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED && this->GetSide() == S_ALLY)
+		{
+			iPoint objective;
+			App->input->GetMousePosition(objective.x, objective.y);
+			objective.x -= App->render->camera->GetPosition().x;
+			objective.y -= App->render->camera->GetPosition().y;
+
+			GoTo(objective);
 			break;
 		}
 

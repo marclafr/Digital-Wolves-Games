@@ -23,7 +23,7 @@ class j1UIManager;
 class j1EntityManager;
 class j1Collision;
 class j1SceneManager;
-class j1Console;
+class j1WaveManager;
 
 	//Scenes
 class j1MainMenu;
@@ -33,12 +33,14 @@ class j1Scene;
 struct DebugFeatures
 {
 public:
-	DebugFeatures() : debug_mode(false), print_walkability_map(false) {}
+	DebugFeatures() : debug_mode(false), print_walkability_map(false), add_wood(false), add_stone(false){}
 	~DebugFeatures(){}
 
 public:
 	bool debug_mode;
 	bool print_walkability_map;
+	bool add_wood;
+	bool add_stone;
 };
 
 class j1App
@@ -118,9 +120,9 @@ public:
 	j1EntityManager*    entity_manager = NULL;
 	j1Collision*		collision = NULL;
 	j1SceneManager*		scene_manager = NULL;
-	j1Console*			console = NULL;
+	j1WaveManager*		wave_manager = NULL;
 
-		//Scenes
+		//Scenesko
 	j1MainMenu*			main_menu = NULL;
 	j1Scene*			scene = NULL;
 
