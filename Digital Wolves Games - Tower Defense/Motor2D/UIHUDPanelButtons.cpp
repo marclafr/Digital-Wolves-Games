@@ -72,6 +72,15 @@ void UIHUDPanelButtons::CreateEntity()
 		if (App->scene->placing_tower == false)
 			App->scene->placing_tower = true;
 	}
+	if (if_active->e_type == E_UNIT) {
+		if (App->scene->CanTrainSoldier())
+		{
+			App->scene->TrainSoldier();
+			App->entity_manager->CreateUnit(if_active->u_type, fPoint(-480, 552), if_active->s_type);
+		}
+		if_active = nullptr;
+		return;
+	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
 		App->scene->placing_tower = false;
 		if_active = nullptr;
@@ -90,8 +99,12 @@ void UIHUDPanelButtons::CreateEntity()
 		switch (if_active->e_type)
 		{
 		case ENTITY_TYPE::E_UNIT:
-				if (App->pathfinding->IsWalkable(r) == true)
-					App->entity_manager->CreateUnit(if_active->u_type, fPoint(s.x, s.y - 9), if_active->s_type);
+
+			if (App->scene->CanTrainSoldier())
+			{
+				App->scene->TrainSoldier();
+				App->entity_manager->CreateUnit(if_active->u_type, fPoint(-720, 672), if_active->s_type);
+			}
 			break;
 
 			case ENTITY_TYPE::E_BUILDING:
@@ -104,12 +117,10 @@ void UIHUDPanelButtons::CreateEntity()
 								if (App->pathfinding->IsConstructible_ally(r) == true)
 								{
 									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_ALLY);
-									App->scene->placing_tower = false;
 								}
 								if (App->pathfinding->IsConstructible_neutral(r) == true)
 								{
 									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_NEUTRAL);
-									App->scene->placing_tower = false;
 								}
 							}
 					}

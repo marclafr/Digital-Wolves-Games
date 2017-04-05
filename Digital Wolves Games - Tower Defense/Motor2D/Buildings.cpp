@@ -8,9 +8,6 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 
-
-
-
 Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILDING, pos, side), building_type(b_type)
 {
 	SDL_Rect rect;
@@ -18,7 +15,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	{
 	case B_TURRET:
 		SetSide(side);
-		SetHp(700);
+		SetHp(250);
 		SetAttack(30);
 		SetArmor(1);
 		rate_of_fire = 1;
@@ -31,7 +28,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		break;
 	case B_STONE_WALL:
 		SetSide(side);
-		SetHp(300);
+		SetHp(500);
 		SetAttack(0);
 		rate_of_fire = 0;
 		range = 0;
