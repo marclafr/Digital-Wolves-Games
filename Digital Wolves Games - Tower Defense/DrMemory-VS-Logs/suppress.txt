@@ -1,0 +1,84 @@
+# File for suppressing errors found in pid 9968: "Development - Class 11 Handout.exe"
+
+# Suppression for Error #1
+INVALID HEAP ARGUMENT
+name=Error #1 (update to meaningful name)
+drmemorylib.dll!replace_operator_delete_nothrow
+Development - Class 11 Handout.e!operator delete
+Development - Class 11 Handout.e!j1App::LoadConfig
+Development - Class 11 Handout.e!j1App::Awake
+Development - Class 11 Handout.e!SDL_main
+Development - Class 11 Handout.e!main_utf8
+Development - Class 11 Handout.e!WinMain
+
+## Mod+offs-style suppression for Error #1:
+INVALID HEAP ARGUMENT
+name=Error #1 (update to meaningful name)
+<drmemorylib.dll+0x210f0>
+<Development - Class 11 Handout.e+0x119dde>
+<Development - Class 11 Handout.e+0x91cde>
+<Development - Class 11 Handout.e+0x90e32>
+<Development - Class 11 Handout.e+0x8d70a>
+<Development - Class 11 Handout.e+0x70115>
+<Development - Class 11 Handout.e+0x70257>
+
+# Suppression for Error #2
+LEAK
+name=Error #2 (update to meaningful name)
+drmemorylib.dll!replace_RtlAllocateHeap
+IMM32.dll!CtfImmNotify
+IMM32.dll!ImmGetContext
+SDL2.dll!*
+SDL2.dll!*
+SDL2.dll!*
+USER32.dll!CharNextW
+USER32.dll!CallWindowProcW
+USER32.dll!DispatchMessageW
+USER32.dll!PeekMessageW
+ntdll.dll!KiUserCallbackDispatcher
+SDL2.dll!*
+
+## Mod+offs-style suppression for Error #2:
+LEAK
+name=Error #2 (update to meaningful name)
+<drmemorylib.dll+0x1ec00>
+<IMM32.dll+0x59ab>
+<IMM32.dll+0x3625>
+<SDL2.dll+0xbe6e7>
+<SDL2.dll+0xbf60a>
+<SDL2.dll+0xbcb1f>
+<USER32.dll+0x34923>
+<USER32.dll+0x14790>
+<USER32.dll+0x14370>
+<USER32.dll+0x1b179>
+<ntdll.dll+0x6ae46>
+<SDL2.dll+0xb7d36>
+
+# Suppression for Error #3
+LEAK
+name=Error #3 (update to meaningful name)
+drmemorylib.dll!replace_RtlAllocateHeap
+avghookx.dll!*
+avghookx.dll!*
+avghookx.dll!*
+avghookx.dll!*
+ntdll.dll!WinSqmSetDWORD64
+ntdll.dll!RtlActivateActivationContextUnsafeFast
+ntdll.dll!RtlAnsiCharToUnicodeChar
+ntdll.dll!LdrInitializeThunk
+ntdll.dll!LdrInitializeThunk
+
+## Mod+offs-style suppression for Error #3:
+LEAK
+name=Error #3 (update to meaningful name)
+<drmemorylib.dll+0x1ec00>
+<avghookx.dll+0x1e36a>
+<avghookx.dll+0x1c31>
+<avghookx.dll+0x3ba6>
+<avghookx.dll+0x1e227>
+<ntdll.dll+0x68b9e>
+<ntdll.dll+0x42237>
+<ntdll.dll+0x4209c>
+<ntdll.dll+0x61866>
+<ntdll.dll+0x617c0>
+

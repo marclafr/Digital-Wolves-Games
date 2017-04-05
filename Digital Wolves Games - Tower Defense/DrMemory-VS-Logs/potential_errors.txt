@@ -1,0 +1,3399 @@
+Dr. Memory version 1.11.0 build 2 built on Aug 29 2016 02:42:07
+Dr. Memory errors that are likely to be false positives, for pid 9968: "Development - Class 11 Handout.exe"
+These errors matched the blacklist 'C:\windows*.d??' for 4 frames.
+Run with -lib_blacklist_frames 0 to treat these as regular errors.
+If these are all false positives and your focus is unaddressable errors, consider running with -light to skip all uninitialized reads and leaks for higher performance.
+
+Potential Error #1: UNINITIALIZED READ: reading 4 byte(s)
+system call NtSetTimer2 parameter #3
+    <system call>
+ntdll.dll!RtlAcquireSRWLockExclusive
+    ??:0
+ntdll.dll!RtlAcquireSRWLockExclusive
+    ??:0
+ntdll.dll!TpIsTimerSet
+    ??:0
+ntdll.dll!TpSetTimerEx
+    ??:0
+RPCRT4.dll!I_RpcParseSecurity
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!I_RpcGetBufferWithObject
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!RpcBindingFree
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+
+Potential Error #2: UNINITIALIZED READ: reading 244 byte(s)
+system call NtCreateFile parameter #9
+    <system call>
+AVRT.dll!AvSetMmThreadCharacteristicsW
+    ??:0
+AVRT.dll!AvSetMmThreadCharacteristicsW
+    ??:0
+AVRT.dll!AvSetMmThreadCharacteristicsA
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #3: UNINITIALIZED READ: reading 4 byte(s)
+system call NtTraceControl parameter value #4
+    <system call>
+ntdll.dll!TpSetPoolWorkerThreadIdleTimeout
+    ??:0
+ntdll.dll!TpSetPoolWorkerThreadIdleTimeout
+    ??:0
+ntdll.dll!TpSetPoolWorkerThreadIdleTimeout
+    ??:0
+ntdll.dll!EtwNotificationRegister
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #4: WARNING: prefetching unaddressable memory 0x0292da80-0x0292da81
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #5: UNINITIALIZED READ: reading 4 byte(s)
+ntdll.dll!RtlDeleteTimer
+    ??:0
+ntdll.dll!RtlDeleteTimer
+    ??:0
+ntdll.dll!TpSetPoolWorkerThreadIdleTimeout
+    ??:0
+ntdll.dll!TpSetPoolWorkerThreadIdleTimeout
+    ??:0
+ntdll.dll!EtwNotificationRegister
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #6: UNINITIALIZED READ: reading 244 byte(s)
+system call NtCreateFile parameter #9
+    <system call>
+AVRT.dll!AvSetMmThreadCharacteristicsW
+    ??:0
+AVRT.dll!AvSetMmThreadCharacteristicsW
+    ??:0
+AVRT.dll!AvSetMmThreadCharacteristicsW
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+msvcrt.dll!_beginthreadex
+    ??:0
+msvcrt.dll!_endthreadex
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #7: UNINITIALIZED READ: reading register ax
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WINMMBASE.dll!midiOutOpen  
+    ??:0
+WINMMBASE.dll!waveOutWrite 
+    ??:0
+WINMMBASE.dll!waveOutWrite 
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+
+Potential Error #8: UNINITIALIZED READ: reading register ax
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WINMMBASE.dll!midiOutOpen  
+    ??:0
+WINMMBASE.dll!waveOutWrite 
+    ??:0
+WINMMBASE.dll!waveOutWrite 
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+
+Potential Error #9: UNINITIALIZED READ: reading register ax
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WINMMBASE.dll!midiOutOpen  
+    ??:0
+WINMMBASE.dll!waveOutWrite 
+    ??:0
+WINMMBASE.dll!waveOutWrite 
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+
+Potential Error #10: UNINITIALIZED READ: reading register ax
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WINMMBASE.dll!midiOutOpen  
+    ??:0
+WINMMBASE.dll!waveOutWrite 
+    ??:0
+WINMMBASE.dll!waveOutWrite 
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+
+Potential Error #11: LEAK 8 direct bytes + 184 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!widMessage
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!mmTaskYield  
+    ??:0
+WINMMBASE.dll!?            
+    ??:0
+WINMMBASE.dll!midiOutMessage
+    ??:0
+WINMMBASE.dll!waveOutMessage
+    ??:0
+WINMMBASE.dll!midiOutGetDevCapsA
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+
+Potential Error #12: LEAK 12 direct bytes + 1116 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+
+Potential Error #13: LEAK 224 direct bytes + 576 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+
+Potential Error #14: LEAK 264 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+
+Potential Error #15: POSSIBLE LEAK 24 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+combase.dll!StringFromIID
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+
+Potential Error #16: LEAK 56 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+KERNELBASE.dll!LocalAlloc    
+    ??:0
+MSCTF.dll!CtfImeProcessCicHotkey
+    ??:0
+MSCTF.dll!CtfImeProcessCicHotkey
+    ??:0
+MSCTF.dll!CtfImeCreateThreadMgr
+    ??:0
+MSCTF.dll!CtfImeCreateThreadMgr
+    ??:0
+IMM32.dll!CtfImmTIMActivate
+    ??:0
+IMM32.dll!ImmGetOpenStatus
+    ??:0
+IMM32.dll!ImmDestroyContext
+    ??:0
+IMM32.dll!ImmSetCompositionStringW
+    ??:0
+IMM32.dll!ImmSetCompositionStringW
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Potential Error #17: LEAK 12 direct bytes + 540 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+KERNELBASE.dll!LocalAlloc    
+    ??:0
+MSCTF.dll!CtfImeCreateThreadMgr
+    ??:0
+MSCTF.dll!CtfImeProcessCicHotkey
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!RemovePropW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!SendMessageW
+    ??:0
+
+Potential Error #18: POSSIBLE LEAK 36 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+ntdll.dll!RtlUnwind
+    ??:0
+ntdll.dll!RtlUnwind
+    ??:0
+ntdll.dll!LdrFindResource_U
+    ??:0
+ntdll.dll!RtlAllocateHeap
+    ??:0
+ntdll.dll!TpIsTimerSet
+    ??:0
+ntdll.dll!RtlGetActiveActivationContext
+    ??:0
+ntdll.dll!RtlPrefixUnicodeString
+    ??:0
+ntdll.dll!RtlGetActiveActivationContext
+    ??:0
+ntdll.dll!ApiSetQueryApiSetPresence
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+
+Potential Error #19: POSSIBLE LEAK 24 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+combase.dll!StringFromIID
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+WINMMBASE.dll!mixerSetControlDetails
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #20: POSSIBLE LEAK 36 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+ntdll.dll!RtlUnwind
+    ??:0
+ntdll.dll!RtlUnwind
+    ??:0
+ntdll.dll!LdrFindResource_U
+    ??:0
+ntdll.dll!RtlGetActiveActivationContext
+    ??:0
+ntdll.dll!LdrResolveDelayLoadedAPI
+    ??:0
+ntdll.dll!ApiSetQueryApiSetPresence
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+ntdll.dll!LdrLoadDll
+    ??:0
+KERNELBASE.dll!LoadLibraryExW
+    ??:0
+KERNELBASE.dll!LoadLibraryW  
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Potential Error #21: LEAK 80 direct bytes + 7852 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+DEVOBJ.dll!DevObjCreateDeviceInfoList
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal5    
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+
+Potential Error #22: LEAK 32 direct bytes + 36 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+RPCRT4.dll!NdrOleFree
+    ??:0
+RPCRT4.dll!RpcBindingFromStringBindingW
+    ??:0
+MMDevAPI.DLL!Ordinal9    
+    ??:0
+ntdll.dll!RtlRunOnceExecuteOnce
+    ??:0
+KERNELBASE.dll!InitOnceExecuteOnce
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal5    
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+
+Potential Error #23: LEAK 520 direct bytes + 328 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+RPCRT4.dll!NdrOleFree
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!I_RpcGetBufferWithObject
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!NdrClientCall2
+    ??:0
+RPCRT4.dll!NdrClientCall4
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal5    
+    ??:0
+
+Potential Error #24: POSSIBLE LEAK 136 direct bytes + 56 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+ntdll.dll!TpAllocWork
+    ??:0
+KERNELBASE.dll!CreateThreadpoolWork
+    ??:0
+MMDevAPI.DLL!Ordinal9    
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal5    
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+
+Potential Error #25: LEAK 328 direct bytes + 588 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+RPCRT4.dll!NdrOleFree
+    ??:0
+RPCRT4.dll!RpcStringBindingComposeW
+    ??:0
+RPCRT4.dll!RpcBindingSetAuthInfoExW
+    ??:0
+RPCRT4.dll!RpcBindingFromStringBindingW
+    ??:0
+WINMMBASE.dll!midiOutMessage
+    ??:0
+WINMMBASE.dll!waveOutMessage
+    ??:0
+WINMMBASE.dll!midiOutGetDevCapsA
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+
+Potential Error #26: POSSIBLE LEAK 512 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+
+Potential Error #27: POSSIBLE LEAK 512 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+xaudio2.dll!?          
+    ??:0
+
+Potential Error #28: POSSIBLE LEAK 288 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+ntdll.dll!TpAllocWait
+    ??:0
+ntdll.dll!EtwGetTraceLoggerHandle
+    ??:0
+ntdll.dll!EtwGetTraceLoggerHandle
+    ??:0
+ntdll.dll!RtlSubscribeWnfStateChangeNotification
+    ??:0
+ntdll.dll!RtlSubscribeWnfStateChangeNotification
+    ??:0
+CFGMGR32.dll!CMP_Register_Notification
+    ??:0
+CFGMGR32.dll!CM_Register_Notification
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+
+Potential Error #29: POSSIBLE LEAK 160 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+RPCRT4.dll!NdrOleFree
+    ??:0
+RPCRT4.dll!TowerExplode
+    ??:0
+RPCRT4.dll!NdrClientCall2
+    ??:0
+RPCRT4.dll!NdrClientCall4
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal9    
+    ??:0
+SECHOST.dll!I_ScUnregisterDeviceNotification
+    ??:0
+ntdll.dll!RtlDeleteTimer
+    ??:0
+
+Potential Error #30: LEAK 8 direct bytes + 184 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!?            
+    ??:0
+WINMMBASE.dll!midiOutMessage
+    ??:0
+WINMMBASE.dll!waveOutMessage
+    ??:0
+WINMMBASE.dll!midiOutGetDevCapsA
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+
+Potential Error #31: LEAK 224 direct bytes + 552 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+
+Potential Error #32: LEAK 224 direct bytes + 552 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+
+Potential Error #33: LEAK 224 direct bytes + 1716 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+
+Potential Error #34: LEAK 12 direct bytes + 1116 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+
+Potential Error #35: LEAK 224 direct bytes + 552 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!?         
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+
+Potential Error #36: LEAK 316 direct bytes + 1612 indirect bytes
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!wodMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!?            
+    ??:0
+WINMMBASE.dll!midiOutMessage
+    ??:0
+
+Potential Error #37: LEAK 1216 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+
+Potential Error #38: LEAK 144 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+UxTheme.dll!GetThemeColor
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+
+Potential Error #39: LEAK 524 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!EndBufferedAnimation
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+
+Potential Error #40: LEAK 4096 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+KERNELBASE.dll!TlsSetValue   
+    ??:0
+MSACM32.dll!acmFormatTagEnumW
+    ??:0
+MSACM32.dll!acmGetVersion
+    ??:0
+ntdll.dll!WinSqmSetDWORD64
+    ??:0
+ntdll.dll!RtlActivateActivationContextUnsafeFast
+    ??:0
+ntdll.dll!RtlAnsiCharToUnicodeChar
+    ??:0
+ntdll.dll!LdrInitializeThunk
+    ??:0
+ntdll.dll!LdrInitializeThunk
+    ??:0
+
+Potential Error #41: LEAK 264 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+WINMMBASE.dll!mixerSetControlDetails
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #42: HANDLE LEAK: KERNEL handle 0x000000a8 and 0 similar handle(s) were opened but not closed:
+system call NtUserGetProcessWindowStation
+    <system call>
+MSCTF.dll!TF_GetAppCompatFlags
+    ??:0
+MSCTF.dll!DllGetClassObject
+    ??:0
+MSCTF.dll!DllGetClassObject
+    ??:0
+MSCTF.dll!CtfImeSetActiveContext
+    ??:0
+MSCTF.dll!TF_GetInitSystemFlags
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+
+Potential Error #43: HANDLE LEAK: KERNEL handle 0x000001a8 and 0 similar handle(s) were opened but not closed:
+system call NtCreateMutant
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateMutexExW
+    ??:0
+KERNELBASE.dll!OutputDebugStringA
+    ??:0
+KERNELBASE.dll!OutputDebugStringA
+    ??:0
+log                             
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\p2log.cpp(14):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(28):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #44: HANDLE LEAK: KERNEL handle 0x000001bc and 1 similar handle(s) were opened but not closed:
+system call NtCreateMutant
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateMutexExW
+    ??:0
+KERNELBASE.dll!CreateMutexA  
+    ??:0
+__PHYSFS_platformCreateMutex    
+    ??:0
+j1FileSystem::j1FileSystem      
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1filesystem.cpp(16):
+j1App::j1App                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(38):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(42):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #45: HANDLE LEAK: KERNEL handle 0x000001c4 and 0 similar handle(s) were opened but not closed:
+system call NtCreateFile
+    <system call>
+ntdll.dll!RtlReleaseRelativeName
+    ??:0
+ntdll.dll!RtlAllocateHandle
+    ??:0
+ntdll.dll!LdrLoadAlternateResourceModuleEx
+    ??:0
+ntdll.dll!RtlImageDirectoryEntryToData
+    ??:0
+ntdll.dll!LdrFindResource_U
+    ??:0
+ntdll.dll!RtlFindMessage
+    ??:0
+KERNELBASE.dll!FormatMessageW
+    ??:0
+KERNELBASE.dll!FormatMessageW
+    ??:0
+__PHYSFS_platformWrite          
+    ??:0
+__PHYSFS_platformExists         
+    ??:0
+SzFileSeekImp                   
+    ??:0
+__PHYSFS_sort                   
+    ??:0
+PHYSFS_openRead                 
+    ??:0
+j1FileSystem::Load              
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1filesystem.cpp(96):
+j1App::LoadConfig               
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(201):
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(119):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #46: HANDLE LEAK: KERNEL handle 0x000001dc and 0 similar handle(s) were opened but not closed:
+system call NtConnectPort
+    <system call>
+UxTheme.dll!ThemeInitApiHook
+    ??:0
+UxTheme.dll!ThemeInitApiHook
+    ??:0
+UxTheme.dll!ThemeInitApiHook
+    ??:0
+UxTheme.dll!ThemeInitApiHook
+    ??:0
+USER32.dll!InitDManipHook
+    ??:0
+USER32.dll!InitDManipHook
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #47: HANDLE LEAK: KERNEL handle 0x000001e4 and 0 similar handle(s) were opened but not closed:
+system call NtOpenKey
+    <system call>
+ntdll.dll!RtlOpenCurrentUser
+    ??:0
+KERNELBASE.dll!ExpandEnvironmentStringsW
+    ??:0
+KERNELBASE.dll!MapPredefinedHandleInternal
+    ??:0
+KERNELBASE.dll!RegOpenKeyExInternalW
+    ??:0
+KERNELBASE.dll!RegOpenKeyExW 
+    ??:0
+SHLWAPI.dll!Ordinal635 
+    ??:0
+SHLWAPI.dll!Ordinal635 
+    ??:0
+Windows.Storage.dll!SHGetFolderPathEx  
+    ??:0
+Windows.Storage.dll!SHGetFolderPathEx  
+    ??:0
+Windows.Storage.dll!SHGetFolderPathEx  
+    ??:0
+Windows.Storage.dll!ILCloneFirst       
+    ??:0
+Windows.Storage.dll!SHGetFolderPathEx  
+    ??:0
+Windows.Storage.dll!SHGetFolderPathW   
+    ??:0
+SDL2.dll!?       
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #48: HANDLE LEAK: KERNEL handle 0x000001e8 and 0 similar handle(s) were opened but not closed:
+system call NtOpenKey
+    <system call>
+KERNEL32.dll!SortGetHandle
+    ??:0
+KERNEL32.dll!SortGetHandle
+    ??:0
+KERNEL32.dll!SortGetHandle
+    ??:0
+KERNEL32.dll!SortGetHandle
+    ??:0
+KERNELBASE.dll!BaseDllMapResourceIdW
+    ??:0
+KERNELBASE.dll!BaseDllMapResourceIdW
+    ??:0
+KERNELBASE.dll!StrStrIW      
+    ??:0
+Windows.Storage.dll!ILLoadFromStreamEx 
+    ??:0
+Windows.Storage.dll!ILLoadFromStreamEx 
+    ??:0
+Windows.Storage.dll!SHGetFolderPathEx  
+    ??:0
+Windows.Storage.dll!SHGetFolderPathEx  
+    ??:0
+Windows.Storage.dll!SHGetFolderPathEx  
+    ??:0
+Windows.Storage.dll!ILCloneFirst       
+    ??:0
+Windows.Storage.dll!SHGetFolderPathEx  
+    ??:0
+Windows.Storage.dll!SHGetFolderPathW   
+    ??:0
+SDL2.dll!?       
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+
+Potential Error #49: HANDLE LEAK: KERNEL handle 0x000001f4 and 0 similar handle(s) were opened but not closed:
+system call NtOpenSection
+    <system call>
+UxTheme.dll!ThemeInitApiHook
+    ??:0
+UxTheme.dll!ThemeInitApiHook
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!GetThemeAppProperties
+    ??:0
+UxTheme.dll!GetThemeAppProperties
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!RemovePropW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+
+Potential Error #50: HANDLE LEAK: KERNEL handle 0x000001fc and 0 similar handle(s) were opened but not closed:
+system call NtOpenSection
+    <system call>
+UxTheme.dll!ThemeInitApiHook
+    ??:0
+UxTheme.dll!ThemeInitApiHook
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!GetThemeAppProperties
+    ??:0
+UxTheme.dll!GetThemeAppProperties
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!RemovePropW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+
+Potential Error #51: HANDLE LEAK: KERNEL handle 0x0000020c and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventW  
+    ??:0
+combase.dll!StringFromIID
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Potential Error #52: HANDLE LEAK: KERNEL handle 0x00000210 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventW  
+    ??:0
+combase.dll!StringFromIID
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Potential Error #53: HANDLE LEAK: KERNEL handle 0x00000214 and 0 similar handle(s) were opened but not closed:
+system call NtOpenSection
+    <system call>
+KERNELBASE.dll!OpenFileMappingW
+    ??:0
+combase.dll!RoInitialize
+    ??:0
+combase.dll!GetCatalogHelper
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+
+Potential Error #54: HANDLE LEAK: KERNEL handle 0x00000218 and 0 similar handle(s) were opened but not closed:
+system call NtOpenKey
+    <system call>
+KERNELBASE.dll!RegOpenUserClassesRoot
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!IsErrorPropagationEnabled
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!GetCatalogHelper
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+
+Potential Error #55: HANDLE LEAK: KERNEL handle 0x0000022c and 0 similar handle(s) were opened but not closed:
+system call NtOpenKey
+    <system call>
+KERNELBASE.dll!RegOpenUserClassesRoot
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!CLSIDFromString
+    ??:0
+combase.dll!CLSIDFromString
+    ??:0
+combase.dll!CoGetTreatAsClass
+    ??:0
+combase.dll!StringFromGUID2
+    ??:0
+combase.dll!CoGetTreatAsClass
+    ??:0
+combase.dll!CoCreateInstance
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+
+Potential Error #56: HANDLE LEAK: KERNEL handle 0x00000230 and 0 similar handle(s) were opened but not closed:
+system call NtDuplicateObject
+    <system call>
+KERNELBASE.dll!DuplicateHandle
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #57: HANDLE LEAK: KERNEL handle 0x00000234 and 0 similar handle(s) were opened but not closed:
+system call NtAlpcConnectPort
+    <system call>
+MSCTF.dll!CtfImeInquireExW
+    ??:0
+MSCTF.dll!CtfNotifyIME
+    ??:0
+MSCTF.dll!CtfImeSetActiveContext
+    ??:0
+MSCTF.dll!CtfImeSetActiveContext
+    ??:0
+MSCTF.dll!TF_GetInitSystemFlags
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+
+Potential Error #58: HANDLE LEAK: KERNEL handle 0x0000023c and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventExA
+    ??:0
+KERNELBASE.dll!CreateEventA  
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #59: HANDLE LEAK: KERNEL handle 0x0000024c and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventExA
+    ??:0
+KERNELBASE.dll!CreateEventA  
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #60: HANDLE LEAK: KERNEL handle 0x00000254 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventExA
+    ??:0
+KERNELBASE.dll!CreateEventA  
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #61: HANDLE LEAK: KERNEL handle 0x00000258 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventW  
+    ??:0
+DEVOBJ.dll!DevObjCreateDeviceInfoList
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal5    
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+
+Potential Error #62: HANDLE LEAK: KERNEL handle 0x0000025c and 0 similar handle(s) were opened but not closed:
+system call NtCreateMutant
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateMutexExW
+    ??:0
+KERNELBASE.dll!CreateMutexW  
+    ??:0
+DEVOBJ.dll!DevObjCreateDeviceInfoList
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal5    
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+combase.dll!RoGetActivationFactory
+    ??:0
+
+Potential Error #63: HANDLE LEAK: KERNEL handle 0x00000260 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventW  
+    ??:0
+RPCRT4.dll!TowerExplode
+    ??:0
+RPCRT4.dll!I_RpcGetBufferWithObject
+    ??:0
+RPCRT4.dll!RpcStringFreeW
+    ??:0
+RPCRT4.dll!RpcStringFreeW
+    ??:0
+RPCRT4.dll!RpcStringBindingComposeW
+    ??:0
+MMDevAPI.DLL!Ordinal9    
+    ??:0
+ntdll.dll!RtlRunOnceExecuteOnce
+    ??:0
+KERNELBASE.dll!InitOnceExecuteOnce
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal5    
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+
+Potential Error #64: HANDLE LEAK: KERNEL handle 0x00000270 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventW  
+    ??:0
+RPCRT4.dll!TowerExplode
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!TowerExplode
+    ??:0
+RPCRT4.dll!RpcBindingFromStringBindingW
+    ??:0
+MMDevAPI.DLL!Ordinal9    
+    ??:0
+ntdll.dll!RtlRunOnceExecuteOnce
+    ??:0
+KERNELBASE.dll!InitOnceExecuteOnce
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal5    
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+
+Potential Error #65: HANDLE LEAK: KERNEL handle 0x00000274 and 0 similar handle(s) were opened but not closed:
+system call NtDuplicateObject
+    <system call>
+KERNELBASE.dll!DuplicateHandle
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!TowerExplode
+    ??:0
+RPCRT4.dll!RpcBindingFromStringBindingW
+    ??:0
+MMDevAPI.DLL!Ordinal9    
+    ??:0
+ntdll.dll!RtlRunOnceExecuteOnce
+    ??:0
+KERNELBASE.dll!InitOnceExecuteOnce
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal5    
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!WindowsCreateString
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+combase.dll!DllGetClassObject
+    ??:0
+
+Potential Error #66: HANDLE LEAK: KERNEL handle 0x0000027c and 0 similar handle(s) were opened but not closed:
+system call NtCreateSemaphore
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateSemaphoreExW
+    ??:0
+KERNELBASE.dll!CreateSemaphoreW
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #67: HANDLE LEAK: KERNEL handle 0x00000280 and 0 similar handle(s) were opened but not closed:
+system call NtCreateThreadEx
+    <system call>
+KERNELBASE.dll!CreateRemoteThreadEx
+    ??:0
+KERNEL32.dll!CreateThread
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #68: HANDLE LEAK: KERNEL handle 0x00000290 and 0 similar handle(s) were opened but not closed:
+system call NtCreateFile
+    <system call>
+ntdll.dll!RtlReleaseRelativeName
+    ??:0
+ntdll.dll!RtlAllocateHandle
+    ??:0
+ntdll.dll!LdrLoadAlternateResourceModuleEx
+    ??:0
+ntdll.dll!RtlImageDirectoryEntryToData
+    ??:0
+ntdll.dll!LdrFindResource_U
+    ??:0
+ntdll.dll!RtlLoadString
+    ??:0
+KERNELBASE.dll!LoadStringBaseExW
+    ??:0
+KERNELBASE.dll!LoadStringW   
+    ??:0
+MMDevAPI.DLL!Ordinal27   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+
+Potential Error #69: HANDLE LEAK: KERNEL handle 0x000002ac and 0 similar handle(s) were opened but not closed:
+system call NtCreateIoCompletion
+    <system call>
+ntdll.dll!RtlCreateTimerQueue
+    ??:0
+ntdll.dll!TpAllocPool
+    ??:0
+KERNELBASE.dll!CreateThreadpool
+    ??:0
+RPCRT4.dll!I_RpcParseSecurity
+    ??:0
+RPCRT4.dll!I_RpcParseSecurity
+    ??:0
+RPCRT4.dll!I_RpcParseSecurity
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!I_RpcGetBufferWithObject
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!RpcBindingFree
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Potential Error #70: HANDLE LEAK: KERNEL handle 0x000002b0 and 0 similar handle(s) were opened but not closed:
+system call NtCreateWorkerFactory
+    <system call>
+ntdll.dll!RtlCreateTimerQueue
+    ??:0
+ntdll.dll!TpAllocPool
+    ??:0
+KERNELBASE.dll!CreateThreadpool
+    ??:0
+RPCRT4.dll!I_RpcParseSecurity
+    ??:0
+RPCRT4.dll!I_RpcParseSecurity
+    ??:0
+RPCRT4.dll!I_RpcParseSecurity
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!I_RpcGetBufferWithObject
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!RpcBindingFree
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Potential Error #71: HANDLE LEAK: KERNEL handle 0x000002c4 and 0 similar handle(s) were opened but not closed:
+system call NtAlpcConnectPort
+    <system call>
+POWRPROF.dll!PowerRegisterSuspendResumeNotification
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #72: HANDLE LEAK: KERNEL handle 0x000002c8 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventW  
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+AudioSes.DLL!DllGetClassObject
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #73: HANDLE LEAK: KERNEL handle 0x000002d8 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventExA
+    ??:0
+KERNELBASE.dll!CreateEventA  
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #74: HANDLE LEAK: KERNEL handle 0x000002dc and 0 similar handle(s) were opened but not closed:
+system call NtDuplicateObject
+    <system call>
+KERNELBASE.dll!DuplicateHandle
+    ??:0
+AudioSes.DLL!DllCanUnloadNow
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!?          
+    ??:0
+xaudio2.dll!?          
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #75: HANDLE LEAK: KERNEL handle 0x00000308 and 0 similar handle(s) were opened but not closed:
+system call NtCreateFile
+    <system call>
+AVRT.dll!AvSetMmThreadCharacteristicsW
+    ??:0
+AVRT.dll!AvSetMmThreadCharacteristicsW
+    ??:0
+AVRT.dll!AvSetMmThreadCharacteristicsA
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+xaudio2.dll!DllUnregisterServer
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #76: HANDLE LEAK: KERNEL handle 0x00000334 and 0 similar handle(s) were opened but not closed:
+system call NtCreateThreadEx
+    <system call>
+KERNELBASE.dll!CreateRemoteThreadEx
+    ??:0
+KERNEL32.dll!CreateThread
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #77: HANDLE LEAK: KERNEL handle 0x00000348 and 0 similar handle(s) were opened but not closed:
+system call NtAlpcConnectPort
+    <system call>
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!I_RpcGetBufferWithObject
+    ??:0
+RPCRT4.dll!NdrGetBuffer
+    ??:0
+RPCRT4.dll!NdrClientCall2
+    ??:0
+RPCRT4.dll!NdrClientCall4
+    ??:0
+SECHOST.dll!OpenSCManagerW
+    ??:0
+WINMMBASE.dll!waveOutMessage
+    ??:0
+WINMMBASE.dll!waveOutMessage
+    ??:0
+WINMMBASE.dll!midiOutGetDevCapsA
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #78: HANDLE LEAK: KERNEL handle 0x00000358 and 0 similar handle(s) were opened but not closed:
+system call NtDuplicateObject
+    <system call>
+KERNELBASE.dll!DuplicateHandle
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!TowerExplode
+    ??:0
+RPCRT4.dll!NdrClientCall2
+    ??:0
+RPCRT4.dll!NdrClientCall4
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal9    
+    ??:0
+SECHOST.dll!I_ScUnregisterDeviceNotification
+    ??:0
+ntdll.dll!RtlDeleteTimer
+    ??:0
+ntdll.dll!RtlDeleteTimer
+    ??:0
+ntdll.dll!RtlDeleteTimer
+    ??:0
+ntdll.dll!TpSetPoolWorkerThreadIdleTimeout
+    ??:0
+ntdll.dll!TpSetPoolWorkerThreadIdleTimeout
+    ??:0
+ntdll.dll!EtwNotificationRegister
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #79: HANDLE LEAK: KERNEL handle 0x0000035c and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventW  
+    ??:0
+RPCRT4.dll!TowerExplode
+    ??:0
+RPCRT4.dll!I_RpcFreeBuffer
+    ??:0
+RPCRT4.dll!TowerExplode
+    ??:0
+RPCRT4.dll!NdrClientCall2
+    ??:0
+RPCRT4.dll!NdrClientCall4
+    ??:0
+MMDevAPI.DLL!Ordinal10   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal9    
+    ??:0
+SECHOST.dll!I_ScUnregisterDeviceNotification
+    ??:0
+ntdll.dll!RtlDeleteTimer
+    ??:0
+ntdll.dll!RtlDeleteTimer
+    ??:0
+ntdll.dll!RtlDeleteTimer
+    ??:0
+ntdll.dll!TpSetPoolWorkerThreadIdleTimeout
+    ??:0
+ntdll.dll!TpSetPoolWorkerThreadIdleTimeout
+    ??:0
+
+Potential Error #80: HANDLE LEAK: KERNEL handle 0x00000374 and 0 similar handle(s) were opened but not closed:
+system call NtCreateFile
+    <system call>
+ntdll.dll!RtlReleaseRelativeName
+    ??:0
+ntdll.dll!RtlAllocateHandle
+    ??:0
+ntdll.dll!LdrLoadAlternateResourceModuleEx
+    ??:0
+ntdll.dll!RtlImageDirectoryEntryToData
+    ??:0
+ntdll.dll!LdrFindResource_U
+    ??:0
+ntdll.dll!RtlLoadString
+    ??:0
+KERNELBASE.dll!LoadStringBaseExW
+    ??:0
+KERNELBASE.dll!LoadStringW   
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WDMAUD.dll!mxdMessage
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!?            
+    ??:0
+WINMMBASE.dll!midiOutMessage
+    ??:0
+WINMMBASE.dll!waveOutMessage
+    ??:0
+WINMMBASE.dll!midiOutGetDevCapsA
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+
+Potential Error #81: HANDLE LEAK: KERNEL handle 0x00000378 and 0 similar handle(s) were opened but not closed:
+system call NtCreateMutant
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateMutexExW
+    ??:0
+KERNELBASE.dll!CreateMutexW  
+    ??:0
+KERNEL32.dll!BasepQueryAppCompat
+    ??:0
+KERNEL32.dll!WerRegisterMemoryBlockWorker
+    ??:0
+KERNEL32.dll!WerRegisterMemoryBlockWorker
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal27   
+    ??:0
+WINMMBASE.dll!waveOutGetDevCapsW
+    ??:0
+WINMMBASE.dll!midiOutMessage
+    ??:0
+WINMMBASE.dll!midiOutGetDevCapsA
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+
+Potential Error #82: HANDLE LEAK: KERNEL handle 0x00000380 and 0 similar handle(s) were opened but not closed:
+system call NtCreateFile
+    <system call>
+ntdll.dll!RtlReleaseRelativeName
+    ??:0
+ntdll.dll!RtlAllocateHandle
+    ??:0
+ntdll.dll!LdrLoadAlternateResourceModuleEx
+    ??:0
+ntdll.dll!RtlImageDirectoryEntryToData
+    ??:0
+ntdll.dll!LdrFindResource_U
+    ??:0
+ntdll.dll!RtlLoadString
+    ??:0
+KERNELBASE.dll!LoadStringBaseExW
+    ??:0
+KERNELBASE.dll!LoadStringW   
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+WINMMBASE.dll!midiOutGetNumDevs
+    ??:0
+WINMMBASE.dll!midiOutGetDevCapsA
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+SDL2_mixer.dll!?             
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #83: HANDLE LEAK: KERNEL handle 0x00000388 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+ntdll.dll!RtlRunOnceExecuteOnce
+    ??:0
+ntdll.dll!RtlSubscribeWnfStateChangeNotification
+    ??:0
+ntdll.dll!RtlSubscribeWnfStateChangeNotification
+    ??:0
+CFGMGR32.dll!CMP_Register_Notification
+    ??:0
+CFGMGR32.dll!CM_Register_Notification
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+MMDevAPI.DLL!Ordinal21   
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WDMAUD.dll!midMessage
+    ??:0
+WINMMBASE.dll!midiOutOpen  
+    ??:0
+WINMMBASE.dll!waveOutWrite 
+    ??:0
+WINMMBASE.dll!waveOutWrite 
+    ??:0
+WINMMBASE.dll!midiStreamOpen
+    ??:0
+MIDIMAP.dll!DriverProc 
+    ??:0
+
+Potential Error #84: HANDLE LEAK: KERNEL handle 0x000003e4 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventW  
+    ??:0
+combase.dll!StringFromIID
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+WINMMBASE.dll!mixerSetControlDetails
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #85: HANDLE LEAK: KERNEL handle 0x000003e8 and 0 similar handle(s) were opened but not closed:
+system call NtCreateEvent
+    <system call>
+avghookx.dll!?           
+    ??:0
+KERNELBASE.dll!CreateEventExW
+    ??:0
+KERNELBASE.dll!CreateEventW  
+    ??:0
+combase.dll!StringFromIID
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CreateStreamOnHGlobal
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+WINMMBASE.dll!mixerSetControlDetails
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #86: HANDLE LEAK: USER handle 0x00030e44 and 0 similar handle(s) were opened but not closed:
+system call NtUserCreateWindowEx
+    <system call>
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+combase.dll!HBITMAP_UserMarshal
+    ??:0
+combase.dll!CoUninitialize
+    ??:0
+combase.dll!CoInitializeEx
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+
+Potential Error #87: HANDLE LEAK: USER handle 0x00030e46 and 0 similar handle(s) were opened but not closed:
+system call NtUserCreateWindowEx
+    <system call>
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!IsThreadDesktopComposited
+    ??:0
+USER32.dll!IsServerSideWindow
+    ??:0
+USER32.dll!IsServerSideWindow
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!SendMessageW
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!SendMessageW
+    ??:0
+USER32.dll!SendMessageW
+    ??:0
+
+Potential Error #88: HANDLE LEAK: USER handle 0x05330bc7 and 0 similar handle(s) were opened but not closed:
+system call NtUserSetWinEventHook
+    <system call>
+USER32.dll!SetWinEventHook
+    ??:0
+MSCTF.dll!TF_Notify
+    ??:0
+MSCTF.dll!TF_CreateInputProcessorProfiles
+    ??:0
+MSCTF.dll!DllGetClassObject
+    ??:0
+MSCTF.dll!TF_GetInitSystemFlags
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+
+Potential Error #89: HANDLE LEAK: USER handle 0x00030e48 and 0 similar handle(s) were opened but not closed:
+system call NtUserCreateWindowEx
+    <system call>
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+MSCTF.dll!TF_Notify
+    ??:0
+MSCTF.dll!CtfImeProcessCicHotkey
+    ??:0
+MSCTF.dll!CtfNotifyIME
+    ??:0
+MSCTF.dll!CtfImeSetActiveContext
+    ??:0
+MSCTF.dll!CtfImeSetActiveContext
+    ??:0
+MSCTF.dll!TF_GetInitSystemFlags
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Potential Error #90: HANDLE LEAK: USER handle 0x00030e4a and 0 similar handle(s) were opened but not closed:
+system call NtUserCreateWindowEx
+    <system call>
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!CreateWindowExA
+    ??:0
+WINMMBASE.dll!mixerSetControlDetails
+    ??:0
+KERNEL32.dll!BaseThreadInitThunk
+    ??:0
+
+Potential Error #91: HANDLE LEAK: USER handle 0x00040ecc and 0 similar handle(s) were opened but not closed:
+system call NtUserCreateWindowEx
+    <system call>
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #92: HANDLE LEAK: USER handle 0x02aa0e0d and 0 similar handle(s) were opened but not closed:
+system call NtUserSetWinEventHook
+    <system call>
+USER32.dll!SetWinEventHook
+    ??:0
+MSCTF.dll!TF_Notify
+    ??:0
+MSCTF.dll!TF_CreateInputProcessorProfiles
+    ??:0
+MSCTF.dll!TF_CreateInputProcessorProfiles
+    ??:0
+MSCTF.dll!CtfImeSetActiveContext
+    ??:0
+MSCTF.dll!TF_GetInitSystemFlags
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+
+Potential Error #93: HANDLE LEAK: USER handle 0x02012320 and 0 similar handle(s) were opened but not closed:
+system call NtUserGetDCEx
+    <system call>
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!Ordinal49  
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+
+Potential Error #94: HANDLE LEAK: GDI handle 0xf1052581 and 0 similar handle(s) were opened but not closed:
+system call NtGdiCreateCompatibleBitmap
+    <system call>
+GDI32.dll!CreateCompatibleBitmap
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!SendMessageW
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+
+Potential Error #95: HANDLE LEAK: GDI handle 0x990a2587 and 0 similar handle(s) were opened but not closed:
+system call NtGdiHfontCreate
+    <system call>
+GDI32.dll!CreateFontIndirectExW
+    ??:0
+GDI32.dll!CreateFontIndirectW
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!EndBufferedAnimation
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!IsRectEmpty
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+
+Potential Error #96: HANDLE LEAK: GDI handle 0x018a0048 and 0 similar handle(s) were opened but not closed:
+system call NtGdiGetDCObject
+    <system call>
+GDI32.dll!GetCurrentObject
+    ??:0
+MSCTF.dll!CtfImeSelectEx
+    ??:0
+MSCTF.dll!CtfImeSelectEx
+    ??:0
+MSCTF.dll!CtfImeSelectEx
+    ??:0
+IMM32.dll!ImmSetCompositionFontW
+    ??:0
+IMM32.dll!ImmGetOpenStatus
+    ??:0
+IMM32.dll!ImmDestroyContext
+    ??:0
+IMM32.dll!ImmSetCompositionStringW
+    ??:0
+IMM32.dll!ImmSetCompositionStringW
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Potential Error #97: HANDLE LEAK: GDI handle 0x8c05258e and 0 similar handle(s) were opened but not closed:
+system call NtGdiCreateBitmap
+    <system call>
+GDI32.dll!CreateBitmap
+    ??:0
+USER32.dll!ReleaseDC 
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!LoadCursorW
+    ??:0
+USER32.dll!CreateWindowExW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!SendMessageW
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+
+Potential Error #98: HANDLE LEAK: GDI handle 0x01900015 and 0 similar handle(s) were opened but not closed:
+system call NtGdiGetStockObject
+    <system call>
+GDI32.dll!GetStockObject
+    ??:0
+MSCTF.dll!CtfImeInquireExW
+    ??:0
+MSCTF.dll!CtfImeInquireExW
+    ??:0
+MSCTF.dll!CtfImeInquireExW
+    ??:0
+IMM32.dll!CtfImmNotify
+    ??:0
+IMM32.dll!CtfImmNotify
+    ??:0
+IMM32.dll!ImmLoadIME
+    ??:0
+USER32.dll!MonitorFromPoint
+    ??:0
+USER32.dll!IsThreadDesktopComposited
+    ??:0
+USER32.dll!IsServerSideWindow
+    ??:0
+USER32.dll!IsServerSideWindow
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Potential Error #99: HANDLE LEAK: GDI handle 0x3f102556 and 0 similar handle(s) were opened but not closed:
+system call NtGdiCreatePatternBrushInternal
+    <system call>
+GDI32.dll!CreatePatternBrush
+    ??:0
+UxTheme.dll!BufferedPaintUnInit
+    ??:0
+UxTheme.dll!EndBufferedAnimation
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!IsRectEmpty
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SHELL32.dll!DragAcceptFiles
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Potential Error #100: HANDLE LEAK: GDI handle 0x90011e16 and 0 similar handle(s) were opened but not closed:
+system call NtUserGetDC
+    <system call>
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #101: HANDLE LEAK: GDI handle 0xce0a25da and 0 similar handle(s) were opened but not closed:
+system call NtGdiHfontCreate
+    <system call>
+GDI32.dll!CreateFontIndirectExW
+    ??:0
+GDI32.dll!CreateFontIndirectW
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!EndBufferedAnimation
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!IsRectEmpty
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+
+Potential Error #102: HANDLE LEAK: GDI handle 0x2b0125dc and 0 similar handle(s) were opened but not closed:
+system call NtGdiCreateCompatibleDC
+    <system call>
+GDI32.dll!CreateCompatibleDC
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #103: HANDLE LEAK: GDI handle 0x380525e0 and 0 similar handle(s) were opened but not closed:
+system call NtGdiCreateDIBSection
+    <system call>
+GDI32.dll!CreateDIBSection
+    ??:0
+GDI32.dll!CreateDIBSection
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(143):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Potential Error #104: HANDLE LEAK: GDI handle 0xd51025af and 0 similar handle(s) were opened but not closed:
+system call NtGdiCreateSolidBrush
+    <system call>
+GDI32.dll!CreateSolidBrush
+    ??:0
+UxTheme.dll!BufferedPaintUnInit
+    ??:0
+UxTheme.dll!EndBufferedAnimation
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!Ordinal43  
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+UxTheme.dll!OpenThemeData
+    ??:0
+USER32.dll!GetClientRect
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!IsRectEmpty
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SHELL32.dll!DragAcceptFiles
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+DUPLICATE POTENTIAL ERROR COUNTS:
+	Potential Error #   4:     30
+	Potential Error #   7:    226
+	Potential Error #   8:    226
+	Potential Error #   9:    535
+	Potential Error #  10:    535
+	Potential Error #  11:      2
+	Potential Error #  13:      4
+	Potential Error #  18:      6
+	Potential Error #  20:      3
+	Potential Error #  30:      4
+	Potential Error #  44:      2
+
+POTENTIAL ERRORS FOUND:
+      0 unique,     0 total potential unaddressable access(es)
+      9 unique,  1527 total potential uninitialized access(es)
+      0 unique,     0 total potential invalid heap argument(s)
+      0 unique,     0 total potential GDI usage error(s)
+     63 unique,    64 total potential handle leak(s)
+      1 unique,    30 total potential warning(s)
+     22 unique,    29 total,  32752 byte(s) of potential leak(s)
+      9 unique,    16 total,   2036 byte(s) of potential possible leak(s)
+Details: D:\ProgramFiles\Dr.Memory\drmemory\logs\DrMemory-Development - Class 11 Handout.exe.9968.000\potential_errors.txt

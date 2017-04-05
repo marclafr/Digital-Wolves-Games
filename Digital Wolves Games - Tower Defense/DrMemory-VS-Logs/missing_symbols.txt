@@ -1,0 +1,28 @@
+C:\windows\SYSTEM32\KERNELBASE.dll
+C:\windows\SysWOW64\uxtheme.dll
+C:\windows\SYSTEM32\ntdll.dll
+C:\windows\SYSTEM32\USER32.dll
+C:\Users\Marti\Desktop\Github\Digital_Wolves\Digital Wolves Games - Tower Defense\Debug\SDL2.dll
+C:\windows\SysWOW64\XAudio2_7.dll
+C:\windows\SYSTEM32\combase.dll
+C:\Users\Marti\Desktop\Github\Digital_Wolves\Digital Wolves Games - Tower Defense\Debug\SDL2_mixer.dll
+C:\windows\SYSTEM32\RPCRT4.dll
+C:\windows\SysWOW64\AudioSes.dll
+C:\windows\SysWOW64\avrt.dll
+C:\windows\SYSTEM32\KERNEL32.DLL
+C:\windows\SysWOW64\wdmaud.drv
+C:\windows\SYSTEM32\WINMMBASE.dll
+C:\windows\SysWOW64\midimap.dll
+C:\windows\SYSTEM32\GDI32.dll
+C:\windows\SYSTEM32\IMM32.DLL
+C:\windows\SYSTEM32\MSCTF.dll
+C:\windows\SYSTEM32\DEVOBJ.dll
+C:\windows\SysWOW64\MMDevAPI.dll
+C:\Program Files (x86)\AVG\Av\avghookx.dll
+C:\windows\SYSTEM32\cfgmgr32.dll
+C:\windows\SYSTEM32\sechost.dll
+C:\windows\SysWOW64\msacm32.dll
+C:\windows\SYSTEM32\shlwapi.dll
+C:\windows\SYSTEM32\windows.storage.dll
+C:\windows\SYSTEM32\powrprof.dll
+C:\windows\SYSTEM32\SHELL32.dll
