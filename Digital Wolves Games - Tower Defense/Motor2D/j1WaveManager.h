@@ -10,7 +10,7 @@
 #define ENEMY_CREATION_POS_X2 -2064
 #define ENEMY_CREATION_POS_Y2 1008
 
-#define WAVE_TIMER 4
+#define WAVE_TIMER 3
 
 class j1WaveManager : public j1Module
 {
@@ -30,6 +30,9 @@ private:
 	j1Timer wave_time_order;
 	j1Timer wave_timer;
 	j1Timer wave_timer2;
+	j1Timer wave_timer3;
+	j1Timer wave_timer4;
+	j1Timer wavetime;
 	j1Timer totaltimer;
 	int wave_num = 1;
 
