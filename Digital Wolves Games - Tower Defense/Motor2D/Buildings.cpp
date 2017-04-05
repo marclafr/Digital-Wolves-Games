@@ -7,6 +7,7 @@
 #include "j1Map.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
+#include "j1Audio.h"
 
 Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILDING, pos, side), building_type(b_type)
 {
@@ -128,6 +129,7 @@ void Building::AI()
 				{
 					Target = *item;
 					AttackTimer.Start();
+					App->audio->PlayFx(App->entity_manager->fx_arrow);
 				}
 			}
 		}

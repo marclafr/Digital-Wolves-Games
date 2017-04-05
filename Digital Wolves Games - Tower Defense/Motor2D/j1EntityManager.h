@@ -48,6 +48,7 @@ public:
 	int GetScore();
 	void AddScore(int points);
 	void ResetScores();
+	void LoadAllFx();
 
 private:
 
@@ -72,12 +73,17 @@ private:
 	int priority = 0;
 
 public: //TODO: should be protected
-	//FX
+	//FX UNITS
 	unsigned int fx_twohanded_die01;
 	unsigned int fx_twohanded_die02;
 	unsigned int fx_twohanded_die03;
 	unsigned int fx_twohanded_die04;
 	unsigned int fx_twohanded_die05;
+
+	//FX BUILDING
+	unsigned int fx_building_destroyed;
+	unsigned int fx_arrow;
+	unsigned int fx_construction;
 
 };
 #endif //_j1EntityManager_
