@@ -44,10 +44,14 @@ public:
 	std::vector<Entity*> GetEntityVector();
 
 	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;
+	int GetScore();
+	void AddScore(int points);
+	void ResetScores();
 
 private:
 
-	int enemies_killed;
+	int enemies_killed = 0;
+	int score = 0;
 	bool enemy_killed = true;
 	char text_num_kills[256];
 	char text_score[256];
@@ -62,7 +66,6 @@ private:
 
 	//TODO:Must change this
 	int priority = 0;
-	int score = 0;
 
 };
 #endif //_j1EntityManager_

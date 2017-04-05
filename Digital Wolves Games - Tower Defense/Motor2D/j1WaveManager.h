@@ -7,7 +7,7 @@
 #define ENEMY_CREATION_POS_X -2112
 #define ENEMY_CREATION_POS_Y 1032
 
-#define WAVE_TIMER 60
+#define WAVE_TIMER 5
 
 class j1WaveManager : public j1Module
 {
@@ -25,7 +25,7 @@ private:
 	void CreateWave(int wave_num);
 
 	j1Timer wave_timer;
-	int wave_num = 0;
+	int wave_num = 1;
 
 	//Creation place
 	int creation_pos_x = -2112;

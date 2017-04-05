@@ -5,6 +5,7 @@
 
 #define BASIC_TOWER_WOOD_COST 75
 #define BASIC_TOWER_STONE_COST 25
+#define WINNING_TIME 600
 
 struct SDL_Texture;
 class UILabel;
@@ -76,6 +77,7 @@ private:
 	Resources* resource_stone;
 
 	Building* townhall;
+	j1Timer game_time;
 
 public:
 	UIHUDPanelInfo* panel_info;

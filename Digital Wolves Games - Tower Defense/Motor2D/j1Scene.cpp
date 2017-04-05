@@ -155,6 +155,9 @@ bool j1Scene::Start()
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(75, 50));
 	resources_panel->AddResource(resource_wood);
 	
+	//Reset scores and timers
+	game_time.Start();
+	App->entity_manager->ResetScores();
 
 	return true;
 }
@@ -275,10 +278,7 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(p.x, p.y), S_ENEMY);
-
 	
-
-
 	const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
 	
 	if (path->size() != 0)
@@ -394,7 +394,16 @@ bool j1Scene::PostUpdate()
 
 	//TODO: defeat
 	if (townhall->GetHp() <= 0)
-		LOG("DEFEAT");
+	{
+		lose = true;
+		App->scene_manager->ChangeScene(App->main_menu, this);
+	}
+	if (game_time.ReadSec() >= 10)// WINNING_TIME)
+	{
+		win = true;
+		App->entity_manager->AddScore(townhall->GetHp() * 3);
+		App->scene_manager->ChangeScene(App->main_menu, this);
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
