@@ -21,6 +21,7 @@
 #include "j1MainMenu.h"
 #include "j1App.h"
 #include "j1Collision.h"
+#include "j1Console.h"
 #include "j1SceneManager.h"
 
 // Constructor
@@ -44,6 +45,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new j1Scene();
 	collision = new j1Collision();
 	scene_manager = new j1SceneManager();
+	console = new j1Console();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -58,8 +60,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(anim);
 	AddModule(collision);
 	AddModule(uimanager);
+	AddModule(console);
 	AddModule(entity_manager);
-
 
 	// scene last
 	
@@ -240,15 +242,35 @@ void j1App::FinishUpdate()
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-	static char title[256];
-	sprintf_s(title, 256, "Mouse Pos: %d,%d         Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d,         Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %lu ",
-		x, y,
-		App->map->data.width, App->map->data.height,
-		App->map->data.tile_width, App->map->data.tile_height,
-		App->map->data.tilesets.size(),
-		map_coordinates.x, map_coordinates.y,
-		avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count);
-	App->win->SetTitle(title);
+
+	static char mouse_pos[256];
+	sprintf_s(mouse_pos, 256, "Mouse Pos: %d,%d", x, y);
+	App->console->PushText(mouse_pos);
+
+	static char map[256];
+	sprintf_s(map, 256, "Map:%dx%d", App->map->data.width, App->map->data.height);
+	App->console->PushText(map);
+
+	static char tiles[256];
+	sprintf_s(tiles, 256, "Tiles:%dx%d", App->map->data.tile_width, App->map->data.tile_height);
+	App->console->PushText(tiles);
+
+	static char tilesets[256];
+	sprintf_s(tilesets, 256, "Tilesets:%d", App->map->data.tilesets.size());
+	App->console->PushText(tilesets);
+	
+	static char tile[256];
+	sprintf_s(tile, 256, "Tile:%d,%d", map_coordinates.x, map_coordinates.y);
+	App->console->PushText(tile);
+
+	static char current_frame[256];
+	sprintf_s(current_frame, 256, "Av.FPS: %.2f Last Frame Ms: %u Last sec frames: %i Last dt: %.3f", avg_fps, last_frame_ms, frames_on_last_update, dt);
+	App->console->PushText(current_frame);
+
+	static char scince_startup[256];
+	sprintf_s(scince_startup, 256, "Time since startup: %.3f /n Frame Count: %lu ", seconds_since_startup, frame_count);
+	App->console->PushText(scince_startup);
+		
 
 	if (capped_ms > 0 && last_frame_ms < capped_ms)
 	{

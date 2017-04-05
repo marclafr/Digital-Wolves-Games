@@ -23,6 +23,7 @@ class j1UIManager;
 class j1EntityManager;
 class j1Collision;
 class j1SceneManager;
+class j1Console;
 
 	//Scenes
 class j1MainMenu;
@@ -117,6 +118,7 @@ public:
 	j1EntityManager*    entity_manager = NULL;
 	j1Collision*		collision = NULL;
 	j1SceneManager*		scene_manager = NULL;
+	j1Console*			console = NULL;
 
 		//Scenes
 	j1MainMenu*			main_menu = NULL;

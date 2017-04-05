@@ -3,6 +3,7 @@
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Window.h"
+#include "j1Console.h"
 #include "SDL/include/SDL.h"
 
 #define MAX_KEYS 300
@@ -127,7 +128,6 @@ bool j1Input::PreUpdate()
 			break;
 		}
 	}
-
 	return true;
 }
 
@@ -137,9 +137,21 @@ bool j1Input::Update(float dt)
 	if (GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		App->debug_features.debug_mode = !App->debug_features.debug_mode;
 
+	if (GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		App->console->TurnOnOff();
+
+	if (GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		ShellExecute(NULL, "open", "https://twitter.com/DigitalWolvesG", NULL, NULL, SW_SHOWMAXIMIZED);
+
+	if (GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		ShellExecute(NULL, "open", "https://www.facebook.com/Digital-Wolves-Games-233798633695568/?ref=bookmarks", NULL, NULL, SW_SHOWMAXIMIZED);
+
+	if (GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/wiki", NULL, NULL, SW_SHOWMAXIMIZED);
+
 	if (App->debug_features.debug_mode == true)
 	{
-		if (GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		if (GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 			App->debug_features.print_walkability_map = !App->debug_features.print_walkability_map;
 	}
 	//

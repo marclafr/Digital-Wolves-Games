@@ -14,6 +14,7 @@ enum TextureID
 	T_MAP,
 	T_TILESET,
 	T_AOE_UI_FONT,
+	T_CONSOLE_TEXT,
 	T_TURRET,
 	T_WALL,
 	T_RESOURCE,
@@ -23,7 +24,6 @@ enum TextureID
 	T_CAVALRYARCHER,
 	T_SIEGERAM
 };
-
 
 struct Texture
 {
