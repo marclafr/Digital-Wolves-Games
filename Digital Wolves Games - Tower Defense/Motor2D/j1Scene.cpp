@@ -282,12 +282,17 @@ bool j1Scene::Update(float dt)
 				{
 					if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
 					{
-						BuildTower();
 						App->audio->PlayFx(App->entity_manager->fx_construction);
 						if (App->pathfinding->IsConstructible_neutral(r) == true)
+						{
 							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_NEUTRAL);
+							BuildTower();
+						}
 						else if (App->pathfinding->IsConstructible_ally(r) == true)
+						{
 							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_ALLY);
+							BuildTower();
+						}
 					}
 				}
 			}

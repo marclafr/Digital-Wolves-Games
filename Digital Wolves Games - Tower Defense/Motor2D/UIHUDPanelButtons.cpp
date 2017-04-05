@@ -121,13 +121,14 @@ void UIHUDPanelButtons::CreateEntity()
 						{
 							if (App->scene->CanBuildTower())
 							{
-								App->scene->BuildTower();
 								if (App->pathfinding->IsConstructible_ally(r) == true)
 								{
+									App->scene->BuildTower();
 									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_ALLY);
 								}
 								if (App->pathfinding->IsConstructible_neutral(r) == true)
 								{
+									App->scene->BuildTower();
 									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_NEUTRAL);
 								}
 							}
