@@ -315,7 +315,6 @@ bool j1Scene::Update(float dt)
 				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
 				{
 					if (App->pathfinding->IsConstructible_ally(r) == true)
-						App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint(p.x, p.y - 9), S_ALLY);
 						if (CanBuildWall())
 						{
 							BuildWall();
