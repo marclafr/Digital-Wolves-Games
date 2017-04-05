@@ -113,42 +113,7 @@ bool j1Scene::Start()
 	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
 	hud_description->SetEnableButton(btn_description);
 	
-	/*
-	//Entity Manager
-	//ALLIES
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(100, 105), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(70, 115), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(40, 130), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(10, 145), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(-20, 160), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(130, 135), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(100, 150), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(70, 165), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(40, 180), ALLY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(10, 195), ALLY);
-
-	//ENEMIES
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 350), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(470, 365), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(440, 380), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(410, 395), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(380, 410), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(530, 385), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(500, 385), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(470, 400), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(440, 415), ENEMY);
-	App->entity_manager->CreateUnit(TWOHANDEDSWORDMAN, fPoint(410, 430), ENEMY);
-
-	//TOWERS
-	App->entity_manager->CreateBuilding(TURRET, fPoint(-48, 87), ENEMY);
-	App->entity_manager->CreateBuilding(TURRET, fPoint(-144, 40), ENEMY);
-	App->entity_manager->CreateBuilding(TURRET, fPoint(45, 40), ENEMY);
-	App->entity_manager->CreateBuilding(TURRET, fPoint(145, 85), ENEMY);
-	
-
-	//RESOURCES
-	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(STONE, fPoint(450, 850)));
-	*/
+	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
 	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(-75, 50));
 	resources_panel->AddResource(resource_stone);

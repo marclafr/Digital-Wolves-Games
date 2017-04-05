@@ -121,14 +121,14 @@ bool j1MainMenu::Update(float dt)
 		App->scene->win = false;
 		App->scene->lose = false;
 	}
-
-	/*if (exit->GetStat() == SELECTED) {
+/*
+	if (exit->GetStat() == SELECTED) {
 		exit->Set({ 174, 673, 200, 95 }, { 477, 1374, 200, 95 });
 	}
 	if (exit->GetStat() == UNSELECTED) {
 		exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
-	}*/
-
+	}
+*/
 	return true;
 }
 

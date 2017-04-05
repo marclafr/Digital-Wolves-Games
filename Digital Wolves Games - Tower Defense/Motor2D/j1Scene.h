@@ -49,6 +49,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void CreateSceneUI();
 	//Enable Module with submodules
 	void EnableScene();
 	bool CanBuildTower();
