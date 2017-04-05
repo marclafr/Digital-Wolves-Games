@@ -28,11 +28,6 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
 		SetTextureID(T_TWOHANDEDSWORDMAN);
-		fx_twohanded_die01 = App->audio->LoadFx("audio/fx/Male_Death01.wav");
-		fx_twohanded_die02 = App->audio->LoadFx("audio/fx/Male_Death02.wav");
-		fx_twohanded_die03 = App->audio->LoadFx("audio/fx/Male_Death03.wav");
-		fx_twohanded_die04 = App->audio->LoadFx("audio/fx/Male_Death04.wav");
-		fx_twohanded_die05 = App->audio->LoadFx("audio/fx/Male_Death05.wav");
 		priority = 3;
 
 		break;
@@ -443,24 +438,7 @@ void Unit::PlayDeathSound() const
 {
 	int rand_num = rand() % 5;
 
-	switch (rand_num)
-	{
-		case 0:
-			App->audio->PlayFx(fx_twohanded_die01);
-			break;
-		case 1:
-			App->audio->PlayFx(fx_twohanded_die02);
-			break;
-		case 2:
-			App->audio->PlayFx(fx_twohanded_die03);
-			break;
-		case 3:
-			App->audio->PlayFx(fx_twohanded_die04);
-			break;
-		case 4:
-			App->audio->PlayFx(fx_twohanded_die05);
-			break;
-	}
+	
 }
 
 bool Unit::GetNextTile()
