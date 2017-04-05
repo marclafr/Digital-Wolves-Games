@@ -329,7 +329,7 @@ void j1Render::BlitAllEntities()
 {
 	Entity* sp = nullptr;
 	Unit* u_sp = nullptr;
-
+	Building* b_sp = nullptr;
 	for (int i = 0; i < sprite_queue.size(); i++)
 	{
 		sp = sprite_queue[i];
@@ -350,8 +350,17 @@ void j1Render::BlitAllEntities()
 
 		}
 		else
-		{
+		{	
 			Blit(App->tex->GetTexture(sp->GetTextureID()), sp->GetX(), sp->GetY(), &sp->GetRect(), SDL_FLIP_NONE, sp->GetPivot().x, sp->GetPivot().y);
+			if (sp->GetEntityType() == E_BUILDING)
+			{
+				b_sp = (Building*)sp;
+				if (sp->GetEntityStatus() == ST_SELECTED)
+				{
+					App->render->DrawCircle(b_sp->GetX() + camera->GetPosition().x, b_sp->GetY() + camera->GetPosition().y, b_sp->GetRange(), 255, 255, 255);
+				}
+			}
+			
 		}		
 	}
 

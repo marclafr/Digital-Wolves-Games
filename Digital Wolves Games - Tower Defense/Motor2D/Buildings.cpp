@@ -22,7 +22,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetAttack(30);
 		SetArmor(1);
 		rate_of_fire = 1;
-		range = 300;
+		range = 250;
 		build_time = 7;
 		rect = { 610,1,107,206 };
 		SetRect(rect);
