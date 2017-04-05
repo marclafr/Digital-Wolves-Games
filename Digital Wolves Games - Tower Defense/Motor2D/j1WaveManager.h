@@ -7,7 +7,7 @@
 #define ENEMY_CREATION_POS_X -2112
 #define ENEMY_CREATION_POS_Y 1032
 
-#define WAVE_TIMER 5
+#define WAVE_TIMER 15
 
 class j1WaveManager : public j1Module
 {

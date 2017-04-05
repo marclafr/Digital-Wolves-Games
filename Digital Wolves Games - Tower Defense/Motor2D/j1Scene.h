@@ -5,6 +5,9 @@
 
 #define BASIC_TOWER_WOOD_COST 75
 #define BASIC_TOWER_STONE_COST 25
+#define TWOHANDED_WOOD_COST 15
+#define TWOHANDED_STONE_COST 15
+#define BASIC_WALL_STONE_COST 50
 #define WINNING_TIME 600
 
 struct SDL_Texture;
@@ -46,10 +49,16 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void CreateSceneUI();
 	//Enable Module with submodules
 	void EnableScene();
 	bool CanBuildTower();
 	void BuildTower();
+	bool CanBuildWall();
+	void BuildWall();
+	bool CanTrainSoldier();
+	void TrainSoldier();
+
 	bool placing_tower = false;
 	bool placing_wall = false;
 	bool game_scene = true;

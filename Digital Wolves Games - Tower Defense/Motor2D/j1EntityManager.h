@@ -33,9 +33,9 @@ public:
 
 	void DeleteEntity(Entity* ptr); // will call other delete methods
 	void DeleteUnit(Unit* ptr);
-	void DeleteBuilding(Entity* ptr);
-	void DeleteResource(Entity* ptr);
-	void DeleteWall(Entity* ptr);
+	void DeleteBuilding(Building* ptr);
+	void DeleteResource(Resources* ptr);
+
 
 	void BlitEnemyDeathCount();
 	void EnemyDead();
