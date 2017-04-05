@@ -64,6 +64,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(uimanager);
 	AddModule(entity_manager);
 	AddModule(wave_manager);
+	wave_manager->active = false;
 	AddModule(console);
 
 	// scene last

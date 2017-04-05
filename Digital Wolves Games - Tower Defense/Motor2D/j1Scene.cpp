@@ -17,7 +17,7 @@
 #include "Resources.h"
 #include "j1SceneManager.h"
 #include "j1MainMenu.h"
-
+#include "j1WaveManager.h"
 #include "UIButton.h"
 #include "UILabel.h"
 #include "UIHUDPanelButtons.h"
@@ -48,7 +48,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-
+	App->wave_manager->Enable();
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg");
 
 
@@ -155,6 +155,7 @@ bool j1Scene::Start()
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(75, 50));
 	resources_panel->AddResource(resource_wood);
 	
+
 	return true;
 }
 
@@ -405,7 +406,7 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
-
+	App->wave_manager->Disable();
 	App->entity_manager->CleanUp();
 
 	return true;
