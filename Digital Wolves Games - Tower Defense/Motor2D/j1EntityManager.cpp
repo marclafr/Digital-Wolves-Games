@@ -72,26 +72,23 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 			int unit_y = entity_array[i]->GetY();
 			if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 			{
-				entity_array[i]->SetEntityStatus(ST_SELECTED);
 				 App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 			{
-				entity_array[i]->SetEntityStatus(ST_SELECTED);
 				App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 			{
-				entity_array[i]->SetEntityStatus(ST_SELECTED);
 				App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 			{
-				entity_array[i]->SetEntityStatus(ST_SELECTED);
 				App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 		}
 	}
+
 	if(!App->scene->panel_info->isSelectionTempEmpty())
 		App->scene->panel_info->DefineSelection();
 }
