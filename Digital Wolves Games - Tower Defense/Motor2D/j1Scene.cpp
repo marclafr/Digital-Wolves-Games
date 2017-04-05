@@ -73,6 +73,7 @@ bool j1Scene::Start()
 	//wall_tex = 
 
 	CreateSceneUI();
+
 	
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
@@ -310,7 +311,6 @@ bool j1Scene::Update(float dt)
 				{
 					if (App->pathfinding->IsConstructible_ally(r) == true)
 						App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint(p.x, p.y - 9), S_ALLY);
-					placing_wall = false;
 				}
 			}
 		}
@@ -428,8 +428,10 @@ void j1Scene::CreateSceneUI()
 	panel_btns->SetBuilding(B_TURRET);
 	panel_btns = panel->AddButton(2, 0, 774, 962);
 	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
-	panel_btns = panel->AddButton(2, 1, 774, 962);
-	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ENEMY);
+	//	panel_btns = panel->AddButton(2, 1, 774, 962);
+	//	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ENEMY);
+	panel_btns = panel->AddButton(1, 0, 774, 910);
+	panel_btns->SetBuilding(B_STONE_WALL);
 
 	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
 

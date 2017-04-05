@@ -65,16 +65,16 @@ SDL_Rect GetResourceIconPositionFromAtlas(const RESOURCE_TYPE type)
 	switch (type)
 	{
 	case WOOD:
-		ret = { 0, 0, 0, 0 };
+		ret = { 852, 858, 25, 25 };
 		break;
 	case STONE:
-		ret = { 0, 0, 0, 0 };
+		ret = { 878, 858, 25, 25 };
 		break;
 	case FOOD:
 		ret = { 0, 0, 0, 0 };
 		break;
 	case GOLD:
-		ret = { 0, 0, 0, 0 };
+		ret = { 878, 858, 25, 25 };
 		break;
 	default:
 		//LOG("Error Resource TYPE SDL_Rect NULL (UIManager)");
@@ -122,6 +122,14 @@ SDL_Rect GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
 		ret = { 878, 910, 25, 25 };
 		break;
 
+	case B_STONE_WALL:
+		ret = { 774, 910, 25, 25 };
+		break;
+
+	case B_TOWNHALL:
+		ret = { 852, 884, 25, 25 };
+		break;
+
 	default:
 		//LOG("Error BUilding TYPE SDL_Rect NULL (UIManager)");
 		ret = { 0, 0, 0, 0 };
@@ -138,10 +146,10 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_TURRET:
-		ret = "Turret - Wood: 75 Stone: 25";
+		ret = "Basic Tower - Wood: 75 Stone: 25";
 		break;
 	case B_STONE_WALL:
-		ret = "stone wall - Stone: 50";
+		ret = "Stone Wall - Stone: 50";
 		break;
 	case B_TOWNHALL:
 		ret = "Town Hall";

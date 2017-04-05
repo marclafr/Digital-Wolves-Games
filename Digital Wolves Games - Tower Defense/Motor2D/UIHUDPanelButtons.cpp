@@ -68,9 +68,17 @@ info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atl
 
 void UIHUDPanelButtons::CreateEntity()
 {
-	if (if_active->e_type == E_BUILDING) {
+	if (if_active->e_type == E_BUILDING && if_active->b_type == B_TURRET) {
 		if (App->scene->placing_tower == false)
 			App->scene->placing_tower = true;
+		if (App->scene->placing_wall == true)
+			App->scene->placing_wall = false;
+	}
+	if (if_active->e_type == E_BUILDING && if_active->b_type == B_STONE_WALL) {
+		if (App->scene->placing_wall == false)
+			App->scene->placing_wall = true;
+		if (App->scene->placing_tower == true)
+			App->scene->placing_tower = false;
 	}
 	if (if_active->e_type == E_UNIT) {
 		if (App->scene->CanTrainSoldier())
@@ -143,4 +151,5 @@ void info_button::SetBuilding(BUILDING_TYPE type)
 	b_type = type;
 	e_type = ENTITY_TYPE::E_BUILDING;
 }
+
 
