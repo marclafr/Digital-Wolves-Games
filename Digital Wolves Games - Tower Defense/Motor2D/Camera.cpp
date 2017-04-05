@@ -76,11 +76,11 @@ bool Camera::InsideRenderTarget(int x, int y)
 	int zoomed_tile_height = App->map->data.tile_height *(1.0f + zoom / 100.0f);
 	int zoomed_margin_h = H_MARGIN * (1.0f + zoom / 100.0f);
 
-	if (x < -zoomed_tile_width)
+	if (x < -(zoomed_tile_width + zoomed_margin_w))
 		return false;
-	if (x > view_port.w)
+	if (x > view_port.w + zoomed_margin_w)
 		return false; 
-	if (y < -zoomed_tile_height)
+	if (y < -(zoomed_tile_height + zoomed_margin_h))
 		return false;
 	if (y > (view_port.h + zoomed_margin_h)) // IF NOT FOR TOWER HEIGHT TOWERS WOULD NOT PRINT UNTIL THEIR LOWEST PART IS INSIDE THE CAMERA
 		return false;
