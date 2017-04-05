@@ -110,25 +110,31 @@ bool j1MainMenu::PreUpdate()
 bool j1MainMenu::Update(float dt)
 {
 	
-	if (single_player->GetStat() == SELECTED) {
+	if (single_player->GetStat() == SELECTED) 
+	{
 		single_player->Set({ 539, 17, 177, 244 }, { 298, 1229, 177, 244 });
 	}
-	if (single_player->GetStat() == UNSELECTED) {
+	if (single_player->GetStat() == UNSELECTED)
+	{
 		single_player->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
 	}
-	if (single_player->GetStat() == CLICKL_UP) {
+
+	if (exit->GetStat() == SELECTED) 
+	{
+	exit->Set({ 174, 673, 200, 95 }, { 477, 1374, 200, 95 });
+	}
+	if (exit->GetStat() == UNSELECTED) 
+	{
+	exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
+	}
+	
+	if (single_player->GetStat() == CLICKL_UP) 
+	{
 		App->scene_manager->ChangeScene(App->scene, this);
 		App->scene->win = false;
 		App->scene->lose = false;
 	}
-/*
-	if (exit->GetStat() == SELECTED) {
-		exit->Set({ 174, 673, 200, 95 }, { 477, 1374, 200, 95 });
-	}
-	if (exit->GetStat() == UNSELECTED) {
-		exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
-	}
-*/
+
 	return true;
 }
 

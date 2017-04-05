@@ -27,17 +27,10 @@ bool j1Console::PostUpdate()
 	if (on == true)
 	{
 		SDL_RenderDrawRect(App->render->renderer, &rect);
-		SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, 100);
 		SDL_RenderFillRect(App->render->renderer, &rect);
 		BlitText();
 	}
-
-	for (int i = 0; i < text_textures.size(); i++)
-	{
-		SDL_DestroyTexture(text_textures[i]);
-	}
-
-	text_textures.clear();
 
 	return true;
 }
@@ -47,9 +40,14 @@ bool j1Console::CleanUp()
 	return true;
 }
 
-void j1Console::PushText(char * text)
+bool j1Console::PushText(char * text)
 {
-	text_textures.push_back(App->font->Print(text));
+	if (on)
+	{
+		text_textures.push_back(App->font->Print(text));
+		return true;
+	}
+	return false;
 }
 
 void j1Console::BlitText()
@@ -66,6 +64,8 @@ void j1Console::BlitText()
 		SDL_QueryTexture(text_textures[i], format, acces, &width, &height);
 		App->render->Blit(text_textures[i],x,y);
 		y += height;
+		
+		SDL_DestroyTexture(text_textures[i]);
 	}
 
 	text_textures.clear();

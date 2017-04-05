@@ -14,13 +14,17 @@ enum UNIT_TYPE;
 class UIHUDPanelInfo : public UIComponents
 {
 private:
+	//Stat of Panel Info
 	enum PANEL_TYPE
 	{
+		//Entityes selected
 		ENTITIESSELECTED,
+		//One selection
 		ENTITYINFO,
 		NONE
 	};
 
+	//Struct of 1 selection entity
 	struct entity_info
 	{
 		UIComponents* image = nullptr;
@@ -46,29 +50,48 @@ private:
 		void PrepareResourceInfo();
 	};
 
+	//Struct of every Button of entities selection
+	struct entity_group_selection
+	{
+		UIButton* btn_selected = nullptr;
+
+		Entity* pointer_entity = nullptr;
+
+		~entity_group_selection();
+	};
+
+	//list of Entity_manager
 	std::list<Entity*> selection_tmp;
+
+	//Final list after Defione selection
 	std::list<Entity*> selection;
 	bool unit_selection = false;
 
-	std::list<UIButton*>  entities_btn;
+	//List of various entities selected
+	std::list<entity_group_selection*>  entities_btn;
 
+	//Pointer when selecting one entity
 	entity_info* entity_selected;
 
+	//Status of Panel Info
 	PANEL_TYPE status = NONE;
 
 public:
 	UIHUDPanelInfo(UICOMPONENT_TYPE type);
 	~UIHUDPanelInfo();
 
+	//Main Functions of list fill o remove
 	void AddEntitySelection(Entity* selected);
 	void DefineSelection();
 	void DeleteSelection();
 
+	//Prepare the Panel Info structure
 	void CreatePanel();
 	void DeleteButtons();
 	bool isSelectionTempEmpty();
 	bool isSelectionEmpty();
 
+	//Draw functions
 	void Draw();
 	void DrawButtonsEntitiesSelected();
 	void DrawUnitSelected();

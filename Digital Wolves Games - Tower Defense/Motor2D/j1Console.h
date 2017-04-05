@@ -7,7 +7,7 @@
 #include "p2Point.h"
 
 #define RECT_WIDHT 375
-#define RECT_HEIGHT 150
+#define RECT_HEIGHT 130
 
 class j1Console : public j1Module
 {
@@ -33,7 +33,7 @@ public:
 	// Called before quitting
 	virtual bool CleanUp();
 
-	void PushText(char* text);
+	bool PushText(char* text);
 	void BlitText();
 
 	void TurnOnOff();
