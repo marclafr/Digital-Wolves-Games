@@ -34,7 +34,7 @@ bool j1Console::PostUpdate()
 
 	for (int i = 0; i < text_textures.size(); i++)
 	{
-		//delete text_textures[i];
+		SDL_DestroyTexture(text_textures[i]);
 	}
 
 	text_textures.clear();

@@ -36,6 +36,9 @@ public:
 	void DeleteResource(Entity* ptr);
 	void DeleteWall(Entity* ptr);
 
+	void BlitEnemyDeathCount();
+	void EnemyDead();
+
 	Entity* CheckForCombat(iPoint position, int range, Side side);
 	Entity* CheckForObjective(iPoint position, int vision_range, Side side);
 	std::vector<Entity*> GetEntityVector();
@@ -43,6 +46,8 @@ public:
 	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;
 
 private:
+
+	int enemies_killed;
 
 	//Textura provisional para sprites por si no se cargan en animation
 	//SDL_Texture* sprites;

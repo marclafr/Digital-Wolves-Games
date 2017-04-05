@@ -121,6 +121,8 @@ void Unit::AI()
 		if (GetHp() <= 0)
 		{
 			this->action = A_DIE;
+			if(GetSide() == S_ENEMY)
+				App->entity_manager->EnemyDead();
 			changed = true;
 			PlayDeathSound();
 			break;
@@ -162,6 +164,8 @@ void Unit::AI()
 		if (GetHp() <= 0)
 		{
 			this->action = A_DIE;
+			if (GetSide() == S_ENEMY)
+				App->entity_manager->EnemyDead();
 			changed = true;
 			PlayDeathSound();
 			break;
@@ -209,6 +213,8 @@ void Unit::AI()
 		if (GetHp() <= 0)
 		{
 			this->action = A_DIE;
+			if (GetSide() == S_ENEMY)
+				App->entity_manager->EnemyDead();
 			changed = true;
 			PlayDeathSound();
 			break;

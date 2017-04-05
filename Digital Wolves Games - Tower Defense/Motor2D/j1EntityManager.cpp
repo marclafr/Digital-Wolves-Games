@@ -4,9 +4,13 @@
 #include "j1UIManager.h"
 #include "UIHUDPanelInfo.h"
 #include "j1Scene.h"
+#include "j1Render.h"
+#include "j1Fonts.h"
+#include "j1Window.h"
+#include "Camera.h"
 #include "j1Map.h"
 
-j1EntityManager::j1EntityManager() : j1Module()
+j1EntityManager::j1EntityManager() : j1Module(), enemies_killed(0)
 {
 	name.assign("Units");
 }
@@ -179,6 +183,31 @@ void j1EntityManager::DeleteWall(Entity* ptr)
 	}
 }
 
+void j1EntityManager::BlitEnemyDeathCount()
+{
+	uint width = 0;
+	uint height = 0;
+
+	App->win->GetWindowSize(width, height);
+
+	SDL_Rect rect{width - 100, 20,100,20};
+	char text [256];
+
+	sprintf_s(text, 256, "Enemies Killed: %d", enemies_killed);
+
+	SDL_RenderDrawRect(App->render->renderer, &rect);
+	SDL_SetRenderDrawColor(App->render->renderer, 100, 100, 100, 100);
+	SDL_RenderFillRect(App->render->renderer, &rect);
+
+	App->render->Blit(App->font->Print(text), -App->render->camera->GetPosition().x + rect.x, -App->render->camera->GetPosition().y + rect.y);
+
+}
+
+void j1EntityManager::EnemyDead()
+{
+	enemies_killed++;
+}
+
 
 
 bool j1EntityManager::Update(float dt)
@@ -211,6 +240,9 @@ bool j1EntityManager::PostUpdate()
 			DeleteEntity(entity_array[i]);
 		}
 	}
+
+	BlitEnemyDeathCount();
+
 	return true;
 }
 
