@@ -208,7 +208,7 @@ bool j1Scene::Update(float dt)
 		if (placing_wall == true) placing_wall = false;
 
 	}
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
 		if (placing_wall == false) placing_wall = true;
 		else placing_wall = false;
