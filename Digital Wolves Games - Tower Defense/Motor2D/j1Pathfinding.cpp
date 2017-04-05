@@ -22,8 +22,10 @@ bool j1PathFinding::CleanUp()
 	LOG("Freeing pathfinding library");
 
 	last_path.clear();
-	RELEASE_ARRAY(map);
-	RELEASE_ARRAY(node_map);
+	if(map != nullptr) RELEASE_ARRAY(map);
+	if (node_map != nullptr) RELEASE_ARRAY(node_map);
+	if (constructible_map_ally != nullptr) RELEASE_ARRAY(constructible_map_ally);
+	if (constructible_map_neutral != nullptr) RELEASE_ARRAY(constructible_map_neutral);
 	return true;
 }
 
