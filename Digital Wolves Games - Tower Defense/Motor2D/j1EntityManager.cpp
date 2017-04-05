@@ -25,9 +25,6 @@ bool j1EntityManager::CleanUp() { // not done
 
 	entity_array.clear();
 
-	//Borrar enemigos
-	//for(uint i = 0;             ; ++i)
-		//if(unit_list[i])
 	return true;
 }
 
@@ -215,17 +212,6 @@ bool j1EntityManager::PostUpdate()
 		}
 	}
 	return true;
-}
-
-//TODO: Why this function?
-void j1EntityManager::GetUnitsPath(iPoint destination) 
-{
-	std::vector<Entity*>::iterator prove = entity_array.begin();
-
-	while (prove != entity_array.end())
-		//if (prove._Ptr->_Myval->GetEntityStatus() == E_SELECTED)
-			prove++;
-
 }
 
 Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
