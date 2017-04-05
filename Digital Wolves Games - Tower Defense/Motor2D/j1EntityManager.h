@@ -48,6 +48,11 @@ public:
 private:
 
 	int enemies_killed;
+	bool enemy_killed = true;
+	char text_num_kills[256];
+	char text_score[256];
+	SDL_Texture* tex_num_kills = nullptr;
+	SDL_Texture* tex_score = nullptr;
 
 	//Textura provisional para sprites por si no se cargan en animation
 	//SDL_Texture* sprites;

@@ -192,29 +192,35 @@ void j1EntityManager::BlitEnemyDeathCount()
 
 	SDL_Rect rect{ width - 120, 20,120,20 };
 	SDL_Rect rect2{ width - 120, 40,120,20 };
-	char text_num_kills[256];
-	char text_score[256];
+
 
 	sprintf_s(text_num_kills, 256, " Enemies Killed: %d", enemies_killed);
 	sprintf_s(text_score, 256, " Score: %d", score);
 
+	if (enemy_killed)
+	{
+		tex_num_kills = App->font->Print(text_num_kills);
+		tex_score = App->font->Print(text_score);
+		enemy_killed = false;
+	}
+	
 	SDL_RenderDrawRect(App->render->renderer, &rect);
 	SDL_SetRenderDrawColor(App->render->renderer, 100, 100, 100, 100);
-	SDL_RenderFillRect(App->render->renderer, &rect);
-
-	App->render->Blit(App->font->Print(text_num_kills), -App->render->camera->GetPosition().x + rect.x, -App->render->camera->GetPosition().y + rect.y);
+	SDL_RenderFillRect(App->render->renderer, &rect); 
+	App->render->Blit(tex_num_kills, -App->render->camera->GetPosition().x + rect.x, -App->render->camera->GetPosition().y + rect.y);
 
 	SDL_RenderDrawRect(App->render->renderer, &rect2);
 	SDL_SetRenderDrawColor(App->render->renderer, 100, 100, 100, 100);
 	SDL_RenderFillRect(App->render->renderer, &rect2);
-	App->render->Blit(App->font->Print(text_score), -App->render->camera->GetPosition().x + rect2.x, -App->render->camera->GetPosition().y + rect2.y);
-
+	App->render->Blit(tex_score, -App->render->camera->GetPosition().x + rect2.x, -App->render->camera->GetPosition().y + rect2.y);
+	
 }
 
 void j1EntityManager::EnemyDead()
 {
 	enemies_killed++;
 	score += 100;
+	enemy_killed = true;
 }
 
 bool j1EntityManager::Update(float dt)
