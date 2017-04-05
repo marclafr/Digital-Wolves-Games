@@ -115,7 +115,8 @@ public:
 	void LookAt(iPoint pos);
 	bool GoTo(iPoint destination);
 	bool ChangeDirection(iPoint destination);
-	void PlayDeathSound() const;	
+	void PlayDeathSound() const;
+	void PlayAttackSound() const;
 };
 
 #endif

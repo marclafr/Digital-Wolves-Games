@@ -217,9 +217,10 @@ void Unit::AI()
 
 		if (attacking != nullptr)
 		{
-			if (animation->Finished())
+			if (animation->Finished()) {
 				attacking->Damaged(attack);
-
+				PlayAttackSound();
+			}
 			if (attacking->GetHp() <= 0)
 			{
 				if (GetSide() == S_ENEMY)
@@ -477,4 +478,22 @@ bool Unit::GetNextTile()
 	LookAt(path_objective);
 
 	return ret;
+}
+
+void Unit::PlayAttackSound() const
+{
+	int rand_num = rand() % 3;
+
+	switch (rand_num)
+	{
+	case 0:
+		App->audio->PlayFx(App->entity_manager->fx_attack01);
+		break;
+	case 1:
+		App->audio->PlayFx(App->entity_manager->fx_attack02);
+		break;
+	case 2:
+		App->audio->PlayFx(App->entity_manager->fx_attack03);
+		break;
+	}
 }
