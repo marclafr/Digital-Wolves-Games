@@ -77,11 +77,11 @@ private:
 	Resources* resource_stone;
 
 	Building* townhall;
-	j1Timer game_time;
 
 public:
 	UIHUDPanelInfo* panel_info;
 	UIHUDDescription* hud_description;
+	j1Timer game_time;
 };
 
 #endif // __j1SCENE_H__

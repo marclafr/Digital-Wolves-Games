@@ -55,8 +55,11 @@ private:
 	bool enemy_killed = true;
 	char text_num_kills[256];
 	char text_score[256];
-	SDL_Texture* tex_num_kills = nullptr;
-	SDL_Texture* tex_score = nullptr;
+	char time_left[256];
+	SDL_Texture* num_kills_texture = nullptr;
+	SDL_Texture* score_texture = nullptr;
+	SDL_Texture* time_texture = nullptr;
+
 
 	//Textura provisional para sprites por si no se cargan en animation
 	//SDL_Texture* sprites;

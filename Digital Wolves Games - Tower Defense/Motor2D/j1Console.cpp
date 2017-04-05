@@ -67,6 +67,8 @@ void j1Console::BlitText()
 		App->render->Blit(text_textures[i],x,y);
 		y += height;
 	}
+
+	text_textures.clear();
 }
 
 void j1Console::TurnOnOff()

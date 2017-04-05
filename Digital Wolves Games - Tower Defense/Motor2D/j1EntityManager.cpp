@@ -10,7 +10,7 @@
 #include "Camera.h"
 #include "j1Map.h"
 
-j1EntityManager::j1EntityManager() : j1Module(), enemies_killed(0)
+j1EntityManager::j1EntityManager() : j1Module()
 {
 	name.assign("Units");
 }
@@ -192,28 +192,39 @@ void j1EntityManager::BlitEnemyDeathCount()
 
 		App->win->GetWindowSize(width, height);
 
-		SDL_Rect rect{ width - 120, 20,120,20 };
-		SDL_Rect rect2{ width - 120, 40,120,20 };
+		SDL_Rect rect{ width - 120, 25, 120, 60};
 
-		sprintf_s(text_num_kills, 256, " Enemies Killed: %d", enemies_killed);
-		sprintf_s(text_score, 256, " Score: %d", score);
-
+		int secs = WINNING_TIME - App->scene->game_time.ReadSec();
+		int mins = secs / 60;
+		secs -= mins * 60;
+		
+		sprintf_s(time_left, 256, " Time Left: %d:%d", mins, secs);
+		
 		if (enemy_killed)
 		{
-			tex_num_kills = App->font->Print(text_num_kills);
-			tex_score = App->font->Print(text_score);
+			SDL_DestroyTexture(num_kills_texture);
+			SDL_DestroyTexture(score_texture);
+
+			sprintf_s(text_num_kills, 256, " Enemies Killed: %d", enemies_killed);
+			sprintf_s(text_score, 256, " Score: %d", score);
+
+			num_kills_texture = App->font->Print(text_num_kills);
+			score_texture = App->font->Print(text_score);
+
 			enemy_killed = false;
 		}
+
+		time_texture = App->font->Print(time_left);
 
 		SDL_RenderDrawRect(App->render->renderer, &rect);
 		SDL_SetRenderDrawColor(App->render->renderer, 100, 100, 100, 100);
 		SDL_RenderFillRect(App->render->renderer, &rect);
-		App->render->Blit(tex_num_kills, -App->render->camera->GetPosition().x + rect.x, -App->render->camera->GetPosition().y + rect.y);
 
-		SDL_RenderDrawRect(App->render->renderer, &rect2);
-		SDL_SetRenderDrawColor(App->render->renderer, 100, 100, 100, 100);
-		SDL_RenderFillRect(App->render->renderer, &rect2);
-		App->render->Blit(tex_score, -App->render->camera->GetPosition().x + rect2.x, -App->render->camera->GetPosition().y + rect2.y);
+		App->render->Blit(num_kills_texture, -App->render->camera->GetPosition().x + rect.x, -App->render->camera->GetPosition().y + rect.y);
+		App->render->Blit(score_texture, -App->render->camera->GetPosition().x + rect.x, -App->render->camera->GetPosition().y + rect.y + 20);
+		App->render->Blit(time_texture, -App->render->camera->GetPosition().x + rect.x, -App->render->camera->GetPosition().y + rect.y + 40);
+
+		SDL_DestroyTexture(time_texture);
 	}
 }
 
@@ -231,9 +242,7 @@ bool j1EntityManager::Update(float dt)
 	{
 		entity_array[i]->Update();
 	}
-
-
-
+	
 	//a través de la lista donde 
 	//tenemos los enemigos ejecutamos los siguientes pasos
 
@@ -333,8 +342,5 @@ void j1EntityManager::ResetScores()
 {
 	score = 0;
 	enemies_killed = 0;
-	sprintf_s(text_num_kills, 256, " Enemies Killed: %d", enemies_killed);
-	sprintf_s(text_score, 256, " Score: %d", score);
-	tex_num_kills = App->font->Print(text_num_kills);
-	tex_score = App->font->Print(text_score);
+	enemy_killed = true;
 }

@@ -385,8 +385,6 @@ bool j1Scene::Update(float dt)
 }
 
 
-
-
 // Called each loop iteration
 bool j1Scene::PostUpdate()
 {
@@ -398,7 +396,7 @@ bool j1Scene::PostUpdate()
 		lose = true;
 		App->scene_manager->ChangeScene(App->main_menu, this);
 	}
-	if (game_time.ReadSec() >= 10)// WINNING_TIME)
+	if (game_time.ReadSec() >= WINNING_TIME)
 	{
 		win = true;
 		App->entity_manager->AddScore(townhall->GetHp() * 3);

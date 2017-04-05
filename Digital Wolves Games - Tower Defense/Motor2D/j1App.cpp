@@ -272,11 +272,7 @@ void j1App::FinishUpdate()
 	App->console->PushText(current_frame);
 
 	static char scince_startup[256];
-	sprintf_s(scince_startup, 256, "Time since startup: %.3f /n Frame Count: %lu ", seconds_since_startup, frame_count);
-	App->console->PushText(scince_startup);
-
-	static char score[256];
-	sprintf_s(scince_startup, 256, "Score: %d /n", score);
+	sprintf_s(scince_startup, 256, "Time since startup: %.3f Frame Count: %lu ", seconds_since_startup, frame_count);
 	App->console->PushText(scince_startup);
 
 	if (capped_ms > 0 && last_frame_ms < capped_ms)
