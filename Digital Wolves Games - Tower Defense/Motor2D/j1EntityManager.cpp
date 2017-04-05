@@ -9,6 +9,7 @@
 #include "j1Window.h"
 #include "Camera.h"
 #include "j1Map.h"
+#include "j1Audio.h"
 
 j1EntityManager::j1EntityManager() : j1Module()
 {
@@ -233,6 +234,16 @@ void j1EntityManager::EnemyDead()
 	enemies_killed++;
 	score += 100;
 	enemy_killed = true;
+}
+
+bool j1EntityManager::Start()
+{
+	fx_twohanded_die01 = App->audio->LoadFx("audio/fx/Male_Death01.wav");
+	fx_twohanded_die02 = App->audio->LoadFx("audio/fx/Male_Death02.wav");
+	fx_twohanded_die03 = App->audio->LoadFx("audio/fx/Male_Death03.wav");
+	fx_twohanded_die04 = App->audio->LoadFx("audio/fx/Male_Death04.wav");
+	fx_twohanded_die05 = App->audio->LoadFx("audio/fx/Male_Death05.wav");
+	return true;
 }
 
 bool j1EntityManager::Update(float dt)

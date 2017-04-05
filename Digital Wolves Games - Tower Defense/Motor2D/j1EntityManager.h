@@ -19,6 +19,7 @@ public:
 	j1EntityManager();
 	~j1EntityManager();
 
+	bool Start();
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
@@ -69,6 +70,14 @@ private:
 
 	//TODO:Must change this
 	int priority = 0;
+
+public: //TODO: should be protected
+	//FX
+	unsigned int fx_twohanded_die01;
+	unsigned int fx_twohanded_die02;
+	unsigned int fx_twohanded_die03;
+	unsigned int fx_twohanded_die04;
+	unsigned int fx_twohanded_die05;
 
 };
 #endif //_j1EntityManager_

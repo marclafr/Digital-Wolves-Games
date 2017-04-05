@@ -115,15 +115,7 @@ public:
 	void LookAt(iPoint pos);
 	bool GoTo(iPoint destination);
 	bool ChangeDirection(iPoint destination);
-	void PlayDeathSound() const;
-
-	//FX
-	unsigned int fx_twohanded_die01;
-	unsigned int fx_twohanded_die02;
-	unsigned int fx_twohanded_die03;
-	unsigned int fx_twohanded_die04;
-	unsigned int fx_twohanded_die05;
-	
+	void PlayDeathSound() const;	
 };
 
 #endif

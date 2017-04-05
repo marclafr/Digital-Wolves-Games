@@ -438,7 +438,24 @@ void Unit::PlayDeathSound() const
 {
 	int rand_num = rand() % 5;
 
-	
+	switch (rand_num)
+	{
+	case 0:
+		App->audio->PlayFx(App->entity_manager->fx_twohanded_die01);
+		break;
+	case 1:
+		App->audio->PlayFx(App->entity_manager->fx_twohanded_die02);
+		break;
+	case 2:
+		App->audio->PlayFx(App->entity_manager->fx_twohanded_die03);
+		break;
+	case 3:
+		App->audio->PlayFx(App->entity_manager->fx_twohanded_die04);
+		break;
+	case 4:
+		App->audio->PlayFx(App->entity_manager->fx_twohanded_die05);
+		break;
+	}	
 }
 
 bool Unit::GetNextTile()
