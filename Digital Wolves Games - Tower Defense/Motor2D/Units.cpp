@@ -116,6 +116,7 @@ void Unit::AI()
 		if (GetHp() <= 0)
 		{
 			this->action = A_DIE;
+			this->SetEntityStatus(ST_NON_SELECTED);
 			if(GetSide() == S_ENEMY)
 				App->entity_manager->EnemyDead();
 			changed = true;
@@ -159,6 +160,7 @@ void Unit::AI()
 		if (GetHp() <= 0)
 		{
 			this->action = A_DIE;
+			this->SetEntityStatus(ST_NON_SELECTED);
 			if (GetSide() == S_ENEMY)
 				App->entity_manager->EnemyDead();
 			changed = true;
@@ -208,6 +210,7 @@ void Unit::AI()
 		if (GetHp() <= 0)
 		{
 			this->action = A_DIE;
+			this->SetEntityStatus(ST_NON_SELECTED);
 			if (GetSide() == S_ENEMY)
 				App->entity_manager->EnemyDead();
 			changed = true;
