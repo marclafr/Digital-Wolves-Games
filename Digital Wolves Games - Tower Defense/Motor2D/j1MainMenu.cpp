@@ -81,11 +81,13 @@ bool j1MainMenu::Start()
 	if (App->scene->win == true) {
 		title_win = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 		title_win->Set(900, 690, "You Win");
+		App->audio->PlayMusic("audio/music/Main_Theme01.ogg");
 	}
 
 	if (App->scene->lose == true) {
 		title_lose = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 		title_lose->Set(900, 690, "You Lose");
+		App->audio->PlayMusic("audio/music/Lost_Game01.ogg");
 	}
 
 	return true;
