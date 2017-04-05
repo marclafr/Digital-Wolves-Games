@@ -114,14 +114,12 @@ void j1EntityManager::DeleteEntity(Entity* ptr)
 			DeleteUnit((Unit*)ptr);
 			break;
 		case E_BUILDING:
-			DeleteBuilding(ptr);
+			DeleteBuilding((Building*)ptr);
 			break;
 		case E_RESOURCE:
-			DeleteResource(ptr);
+			DeleteResource((Resources*)ptr);
 			break;
-		case E_WALL:
-			DeleteWall(ptr);
-			break;
+	
 	}
 }
 
@@ -140,7 +138,7 @@ void j1EntityManager::DeleteUnit(Unit* ptr)
 	}
 }
 
-void j1EntityManager::DeleteBuilding(Entity* ptr)
+void j1EntityManager::DeleteBuilding(Building* ptr)
 {
 	for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end();)
 	{
@@ -155,7 +153,7 @@ void j1EntityManager::DeleteBuilding(Entity* ptr)
 	}
 }
 
-void j1EntityManager::DeleteResource(Entity* ptr)
+void j1EntityManager::DeleteResource(Resources* ptr)
 {
 	for (std::vector<Entity*>::iterator i = entity_array.begin(); i != entity_array.end();)
 	{
