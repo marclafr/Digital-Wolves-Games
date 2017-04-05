@@ -19,7 +19,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	case B_TURRET:
 		SetSide(side);
 		SetHp(1000);
-		SetAttack(12);
+		SetAttack(30);
 		SetArmor(1);
 		rate_of_fire = 1;
 		range = 300;
@@ -95,10 +95,11 @@ void Building::Update()
 		if (arrowpos.x > targetpos.x - 3 && arrowpos.x < targetpos.x + 3 && arrowpos.y < targetpos.y + 3 && arrowpos.y > targetpos.y- 3)
 		{
 			attacking = false;
-			Target->Damaged(12);
+			Target->Damaged(20);
 		}
-		SDL_Rect rect = { 0,44,24,5 };
-		iPoint pivots(0.5 * 18, 0.5 * 10);
+		SDL_Rect rect = { 1,45,25,4 };
+		iPoint pivots(0.5 * 25, 0.25 * 4);
+		UpdateArrowSprite(targetpos, rect, pivots);
 		App->render->Blit(App->tex->GetTexture(T_ARROW), arrowpos.x, arrowpos.y, &rect, SDL_FLIP_NONE, pivots.x, pivots.y);
 	}
 	if (GetHp() < 0) {
@@ -279,4 +280,55 @@ void Building::UpdateArrow(iPoint &arrowpos, iPoint targetpos)
 	if (arrowpos.x == targetpos.x && arrowpos.y > targetpos.y) {
 		arrowpos.y -= 2;
 	}
+}
+void Building::UpdateArrowSprite(iPoint targetpos, SDL_Rect& rect, iPoint &pivots)
+{
+	if (arrowpos.x < targetpos.x && arrowpos.y < targetpos.y) {
+
+		rect = { 1,78,12,13 };
+		pivots.x = 0.5 * 12;
+		pivots.y = 0.384615 * 13;
+	}
+	else if (arrowpos.x < targetpos.x && arrowpos.y > targetpos.y) {
+
+		rect = { 1,78,12,13};
+		pivots.x = 0.5 * 12;
+		pivots.y = 0.384615 * 13;
+	}
+	else if (arrowpos.x > targetpos.x && arrowpos.y > targetpos.y) {
+
+		rect = { 55,1,13,12 };
+		pivots.x = 0.538462 * 13;
+		pivots.y = 0.5 * 12;
+	}
+	else if (arrowpos.x > targetpos.x && arrowpos.y < targetpos.y) {
+		rect = { 55,1,13,12 };
+		pivots.x = 0.538462 * 13;
+		pivots.y = 0.5 * 12;
+		
+	}
+	else if (arrowpos.x > targetpos.x && arrowpos.y == targetpos.y) {
+		rect = { 1,45,25,4 };
+		pivots.x = 0.518519 * 25;
+		pivots.y = 0.333333 * 4;
+	}
+	else if (arrowpos.x < targetpos.x && arrowpos.y == targetpos.y) {
+		rect = { 1,45,25,4 };
+		pivots.x = 0.518519 * 25;
+		pivots.y = 0.333333 * 4;
+	}
+	else if (arrowpos.x == targetpos.x && arrowpos.y < targetpos.y) {
+		rect = { 52,78,3,15 };
+		pivots.x = 0.666667 * 3;
+		pivots.y = 0.4 * 15;
+	}
+	else if (arrowpos.x == targetpos.x && arrowpos.y > targetpos.y) {
+		rect = { 1,1,3,13 };
+		pivots.x = 0.518519 * 3;
+		pivots.y = 0.461538 * 13;
+	}
+
+
+
+
 }

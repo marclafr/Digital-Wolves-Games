@@ -343,7 +343,6 @@ bool j1Scene::Update(float dt)
 							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_NEUTRAL);
 						else if (App->pathfinding->IsConstructible_ally(r) == true)
 							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_ALLY);
-						placing_tower = false;
 					}
 				}
 			}
