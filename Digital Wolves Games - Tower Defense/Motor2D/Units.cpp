@@ -18,10 +18,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 	case U_TWOHANDEDSWORDMAN:
-		SetHp(60);
+		SetHp(200);
 		attack = 12;
 		SetArmor(1);
-		speed = 0.9;
+		speed = 1;
 		rate_of_fire = 2;
 		range = 30;
 		vision_range = 300;

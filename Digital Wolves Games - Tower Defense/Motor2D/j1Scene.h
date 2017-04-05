@@ -86,7 +86,8 @@ private:
 	Resources* resource_stone;
 
 	Building* townhall;
-
+	Building* townhalltower1;
+	Building* townhalltower2;
 public:
 	UIHUDPanelInfo* panel_info;
 	UIHUDDescription* hud_description;

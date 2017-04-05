@@ -81,7 +81,8 @@ bool j1Scene::Start()
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1824, 1080));
 	resources_panel->AddResource(resource_wood);
-	
+	townhalltower1 = (Building*)App->entity_manager->CreateBuilding(B_TURRET, fPoint(-624, 528), S_ALLY);
+	townhalltower2 = (Building*)App->entity_manager->CreateBuilding(B_TURRET, fPoint(-432, 624), S_ALLY);
 	//Reset scores and timers
 	game_time.Start();
 	App->entity_manager->ResetScores();
@@ -110,12 +111,12 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
-	int a = 39;
-	int b = 3;
+	int a = 9;
+	int b = 17;
 	iPoint aa = App->map->MapToWorld(a, b);
 	LOG("%i, %i", aa.x, aa.y);
-	int c = 42;
-	int d = 3;
+	int c = 5;
+	int d = 17;
 	iPoint bb = App->map->MapToWorld(c, d);
 	LOG("%i, %i", bb.x, bb.y);
 

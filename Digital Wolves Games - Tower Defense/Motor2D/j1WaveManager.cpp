@@ -59,7 +59,7 @@ bool j1WaveManager::Update(float dt)
 			
 		
 		}
-		if (totaltimer.ReadSec() > 300 && wave_timer3.ReadSec() >= 1)
+		if (totaltimer.ReadSec() > 150 && wave_timer3.ReadSec() >= 1.5)
 		{
 
 			App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
@@ -70,7 +70,7 @@ bool j1WaveManager::Update(float dt)
 		
 			wave_timer3.Start();
 		}
-		if (totaltimer.ReadSec() > 300 && wave_timer4.ReadSec() >= 0.5)
+		if (totaltimer.ReadSec() > 400 && wave_timer4.ReadSec() >= 1)
 		{
 
 			App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
