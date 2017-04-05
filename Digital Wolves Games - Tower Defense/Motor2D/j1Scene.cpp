@@ -111,14 +111,6 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
-	int a = 9;
-	int b = 17;
-	iPoint aa = App->map->MapToWorld(a, b);
-	LOG("%i, %i", aa.x, aa.y);
-	int c = 5;
-	int d = 17;
-	iPoint bb = App->map->MapToWorld(c, d);
-	LOG("%i, %i", bb.x, bb.y);
 
 	//DEBUG: increase resources
 	if (App->debug_features.add_wood)
@@ -169,8 +161,8 @@ bool j1Scene::Update(float dt)
 		App->render->camera->SetPosition(iPoint(App->render->camera->GetPosition().x, -1600));
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
-		App->render->camera->Move(iPoint(300,300), 10);
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+		App->render->camera->Move(iPoint(1200, -250), 10);
 
 	//App->map->Draw();
 	
@@ -209,6 +201,14 @@ bool j1Scene::Update(float dt)
 		else placing_wall = false;
 		if (placing_tower == true) placing_tower = false;
 
+	}
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		if (App->scene->CanTrainSoldier())
+		{
+			App->scene->TrainSoldier();
+			App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(-480, 552), S_ALLY);
+		}
 	}
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
