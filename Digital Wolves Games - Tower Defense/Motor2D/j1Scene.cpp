@@ -52,6 +52,8 @@ bool j1Scene::Start()
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg");
 	App->uimanager->Enable();
 
+	App->render->camera->SetPosition(iPoint(2300, -800));
+
 	if(App->map->Load("NewMap.tmx") == true)
 	{
 		int w, h;
@@ -69,49 +71,8 @@ bool j1Scene::Start()
 	tower_tex = App->tex->GetTexture(T_TURRET);
 	wall_tex = App->tex->GetTexture(T_WALL);
 	//wall_tex = 
-	//UIElements
-		//Top_HUD
-	top_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	top_hud->Set({0, 0, 1336, 23}, {0, 1011, 1366, 23});
-	top_hud->SetInteractive(false);
 
-	objectives = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	objectives->Set({1252, 2, 36, 14}, {1252, 996, 36, 14});
-
-	tree_tech = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	tree_tech->Set({1288, 2, 35, 14}, {1289, 996, 35, 14});
-
-	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	ingame_menu->Set({1323, 2, 36 , 15}, {1325, 996, 36, 14});
-
-	resources_panel = (UIHUDResources*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDRESOURCES);
-
-	title_game_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_game_name->Set(685, 3, "AoE 2: Defenders");
-	title_game_name->SetInteractive(false);
-	
-		//Down_HUD
-	down_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	down_hud->Set({0, 643, 1366, 125}, {0, 1036, 1366, 125});
-	down_hud->SetInteractive(false);
-
-	btn_description = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UICHECKBUTTON);
-	btn_description->clicked = true;
-	btn_description->Set({1316, 653, 19, 17}, {1347, 1163, 19, 17}, { 1347, 1163, 19, 17 });
-
-	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
-	info_button* panel_btns = nullptr;
-	panel_btns = panel->AddButton(0, 0, 878, 910);
-	panel_btns->SetBuilding(B_TURRET);
-	panel_btns = panel->AddButton(2, 0, 774, 962);
-	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
-	panel_btns = panel->AddButton(2, 1, 774, 962);
-	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ENEMY);
-
-	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
-
-	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
-	hud_description->SetEnableButton(btn_description);
+	CreateSceneUI();
 	
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
@@ -152,7 +113,7 @@ bool j1Scene::Update(float dt)
 	int b = 21;
 	iPoint aa = App->map->MapToWorld(a, b);
 	LOG("%i, %i", aa.x, aa.y);*/
-	// Camera Movement
+	
 
 	//DEBUG: increase resources
 	if (App->debug_features.add_wood)
@@ -172,7 +133,8 @@ bool j1Scene::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
-	
+
+	// Camera Movement
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT ||  ((y < (App->render->camera->GetHeight() / 30) && res.y > -30)))
 		App->render->camera->MoveUp(floor(450.0f * dt));
 
@@ -185,14 +147,25 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT || (x > (((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349))
 		App->render->camera->MoveRight(floor(450.0f * dt));
 
+	if (App->render->camera->GetPosition().x > 2700)
+	{
+		App->render->camera->SetPosition(iPoint(2699, App->render->camera->GetPosition().y));
+	}
+	if (App->render->camera->GetPosition().x < -1200)
+	{
+		App->render->camera->SetPosition(iPoint(-1199, App->render->camera->GetPosition().y));
+	}
+	if (App->render->camera->GetPosition().y > 100)
+	{
+		App->render->camera->SetPosition(iPoint(App->render->camera->GetPosition().x, 100));
+	}
+	if (App->render->camera->GetPosition().y < -1600)
+	{
+		App->render->camera->SetPosition(iPoint(App->render->camera->GetPosition().x, -1600));
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_REPEAT)
 		App->render->camera->Move(iPoint(300,300), 10);
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-		App->render->camera->ZoomIn();
-
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
-		App->render->camera->ZoomOut();
 
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT)
 		App->render->camera->FadeToBlack(2,2,2);
@@ -202,13 +175,13 @@ bool j1Scene::Update(float dt)
 
 	//App->map->Draw();
 	
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 		win = true;
 		App->scene_manager->ChangeScene(App->main_menu, this);
 		
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
 		lose = true;
 		App->scene_manager->ChangeScene(App->main_menu, this);
 	}
@@ -369,8 +342,8 @@ bool j1Scene::PostUpdate()
 		App->scene_manager->ChangeScene(App->main_menu, this);
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		App->scene_manager->ChangeScene(App->main_menu, this);
 
 	return ret;
 }
@@ -415,4 +388,51 @@ void j1Scene::TrainSoldier()
 {
 	resource_wood->UseResource(TWOHANDED_WOOD_COST);
 	resource_stone->UseResource(TWOHANDED_STONE_COST);
+}
+
+void j1Scene::CreateSceneUI()
+{
+	//UIElements
+	//Top_HUD
+	top_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	top_hud->Set({ 0, 0, 1336, 23 }, { 0, 1011, 1366, 23 });
+	top_hud->SetInteractive(false);
+
+	objectives = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	objectives->Set({ 1252, 2, 36, 14 }, { 1252, 996, 36, 14 });
+
+	tree_tech = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	tree_tech->Set({ 1288, 2, 35, 14 }, { 1289, 996, 35, 14 });
+
+	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	ingame_menu->Set({ 1323, 2, 36 , 15 }, { 1325, 996, 36, 14 });
+
+	resources_panel = (UIHUDResources*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDRESOURCES);
+
+	title_game_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_game_name->Set(685, 3, "AoE 2: Defenders");
+	title_game_name->SetInteractive(false);
+
+	//Down_HUD
+	down_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	down_hud->Set({ 0, 643, 1366, 125 }, { 0, 1036, 1366, 125 });
+	down_hud->SetInteractive(false);
+
+	btn_description = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UICHECKBUTTON);
+	btn_description->clicked = true;
+	btn_description->Set({ 1316, 653, 19, 17 }, { 1347, 1163, 19, 17 }, { 1347, 1163, 19, 17 });
+
+	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
+	info_button* panel_btns = nullptr;
+	panel_btns = panel->AddButton(0, 0, 878, 910);
+	panel_btns->SetBuilding(B_TURRET);
+	panel_btns = panel->AddButton(2, 0, 774, 962);
+	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
+	panel_btns = panel->AddButton(2, 1, 774, 962);
+	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ENEMY);
+
+	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
+
+	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
+	hud_description->SetEnableButton(btn_description);
 }
