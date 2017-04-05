@@ -25,6 +25,7 @@ struct info_button
 
 	void SetUnit(UNIT_TYPE type, Side side);
 	void SetBuilding(BUILDING_TYPE type);
+
 };
 
 class UIHUDPanelButtons : public UIComponents
