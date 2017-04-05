@@ -127,3 +127,9 @@ void Entity::Damaged(int dmg)
 {
 	hp -= (dmg - armor);
 }
+
+void Entity::UpgradeUnit(int plushealth) {
+
+	this->SetHp(GetHp() + plushealth);
+
+}
