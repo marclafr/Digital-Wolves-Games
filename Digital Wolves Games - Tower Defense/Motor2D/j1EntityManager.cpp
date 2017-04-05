@@ -114,6 +114,7 @@ void j1EntityManager::DeleteEntity(Entity* ptr)
 			DeleteUnit((Unit*)ptr);
 			break;
 		case E_BUILDING:
+			App->audio->PlayFx(fx_building_destroyed);
 			DeleteBuilding((Building*)ptr);
 			break;
 		case E_RESOURCE:
@@ -222,11 +223,8 @@ void j1EntityManager::EnemyDead()
 
 bool j1EntityManager::Start()
 {
-	fx_twohanded_die01 = App->audio->LoadFx("audio/fx/Male_Death01.wav");
-	fx_twohanded_die02 = App->audio->LoadFx("audio/fx/Male_Death02.wav");
-	fx_twohanded_die03 = App->audio->LoadFx("audio/fx/Male_Death03.wav");
-	fx_twohanded_die04 = App->audio->LoadFx("audio/fx/Male_Death04.wav");
-	fx_twohanded_die05 = App->audio->LoadFx("audio/fx/Male_Death05.wav");
+	LoadAllFx();
+
 	return true;
 }
 
@@ -338,4 +336,17 @@ void j1EntityManager::ResetScores()
 	score = 0;
 	enemies_killed = 0;
 	enemy_killed = true;
+}
+
+void j1EntityManager::LoadAllFx()
+{
+	fx_twohanded_die01 = App->audio->LoadFx("audio/fx/Male_Death01.wav");
+	fx_twohanded_die02 = App->audio->LoadFx("audio/fx/Male_Death02.wav");
+	fx_twohanded_die03 = App->audio->LoadFx("audio/fx/Male_Death03.wav");
+	fx_twohanded_die04 = App->audio->LoadFx("audio/fx/Male_Death04.wav");
+	fx_twohanded_die05 = App->audio->LoadFx("audio/fx/Male_Death05.wav");
+
+	fx_building_destroyed = App->audio->LoadFx("audio/fx/Building_destroyed01.wav");
+	fx_arrow = App->audio->LoadFx("audio/fx/Arrow01.wav");
+	fx_construction = App->audio->LoadFx("audio/fx/Construction01.wav");
 }

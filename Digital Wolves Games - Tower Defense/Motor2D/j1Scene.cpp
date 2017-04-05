@@ -54,7 +54,7 @@ bool j1Scene::Start()
 
 	App->render->camera->SetPosition(iPoint(2300, -800));
 
-	if(App->map->Load("NewMap.tmx") == true)
+	if(App->map->Load("OtherMap.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -77,9 +77,9 @@ bool j1Scene::Start()
 	
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
-	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(-75, 50));
+	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(1680, 1008));
 	resources_panel->AddResource(resource_stone);
-	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(75, 50));
+	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1824, 1080));
 	resources_panel->AddResource(resource_wood);
 	
 	//Reset scores and timers
@@ -110,11 +110,14 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
-	/*int a = 7;
-	int b = 21;
+	int a = 39;
+	int b = 3;
 	iPoint aa = App->map->MapToWorld(a, b);
-	LOG("%i, %i", aa.x, aa.y);*/
-	
+	LOG("%i, %i", aa.x, aa.y);
+	int c = 42;
+	int d = 3;
+	iPoint bb = App->map->MapToWorld(c, d);
+	LOG("%i, %i", bb.x, bb.y);
 
 	//DEBUG: increase resources
 	if (App->debug_features.add_wood)
@@ -196,7 +199,7 @@ bool j1Scene::Update(float dt)
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
 
-	App->render->Blit(debug_tex, p.x - 44, p.y - 31);
+	//App->render->Blit(debug_tex, p.x - 44, p.y - 31);
 
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
@@ -280,6 +283,7 @@ bool j1Scene::Update(float dt)
 					if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
 					{
 						BuildTower();
+						App->audio->PlayFx(App->entity_manager->fx_construction);
 						if (App->pathfinding->IsConstructible_neutral(r) == true)
 							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_NEUTRAL);
 						else if (App->pathfinding->IsConstructible_ally(r) == true)
@@ -301,7 +305,8 @@ bool j1Scene::Update(float dt)
 			rect = { 689,122,99,178 };
 			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
 		}
-		else if (App->pathfinding->IsConstructible_ally(r) == true) {
+		else if (App->pathfinding->IsConstructible_ally(r) == true)		
+		{
 			SDL_Rect rect;
 			rect = { 325,218,99,178};
 			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949*99, 178*0.865169);
@@ -311,6 +316,12 @@ bool j1Scene::Update(float dt)
 				{
 					if (App->pathfinding->IsConstructible_ally(r) == true)
 						App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint(p.x, p.y - 9), S_ALLY);
+						if (CanBuildWall())
+						{
+							BuildWall();
+							App->audio->PlayFx(App->entity_manager->fx_construction);
+							App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint(p.x, p.y - 9), S_ALLY);
+						}
 				}
 			}
 		}
