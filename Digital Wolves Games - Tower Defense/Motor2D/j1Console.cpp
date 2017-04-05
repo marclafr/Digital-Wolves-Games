@@ -27,7 +27,7 @@ bool j1Console::PostUpdate()
 	if (on == true)
 	{
 		SDL_RenderDrawRect(App->render->renderer, &rect);
-		SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, 100);
 		SDL_RenderFillRect(App->render->renderer, &rect);
 		BlitText();
 	}
