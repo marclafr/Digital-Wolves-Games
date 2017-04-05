@@ -32,6 +32,8 @@ private:
 	j1Timer wave_timer2;
 	j1Timer wave_timer3;
 	j1Timer wave_timer4;
+	j1Timer wave_timer5;
+	j1Timer wave_timer6;
 	j1Timer wavetime;
 	j1Timer totaltimer;
 	int wave_num = 1;

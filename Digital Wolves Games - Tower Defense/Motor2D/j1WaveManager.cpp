@@ -19,6 +19,8 @@ bool j1WaveManager::Start()
 	wave_timer2.Start();
 	wave_time_order.Start();
 	totaltimer.Start();
+	wave_timer5.Start();
+	wave_timer6.Start();
 	wavetime.Start();
 	creation_pos_x1 = ENEMY_CREATION_POS_X1;
 	creation_pos_y1 = ENEMY_CREATION_POS_Y1;
@@ -70,7 +72,18 @@ bool j1WaveManager::Update(float dt)
 		
 			wave_timer3.Start();
 		}
-		if (totaltimer.ReadSec() > 400 && wave_timer4.ReadSec() >= 1)
+		if (totaltimer.ReadSec() > 300 && wave_timer5.ReadSec() >= 1.2)
+		{
+
+			App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
+			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
+
+			App->map->WorldToMap(creation_pos_x2, creation_pos_y2);
+			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x2, creation_pos_y2), S_ENEMY);
+
+			wave_timer5.Start();
+		}
+		if (totaltimer.ReadSec() > 500 && wave_timer4.ReadSec() >= 1)
 		{
 
 			App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
@@ -80,6 +93,17 @@ bool j1WaveManager::Update(float dt)
 			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x2, creation_pos_y2), S_ENEMY);
 
 			wave_timer4.Start();
+		}
+		if (totaltimer.ReadSec() > 800 && wave_timer6.ReadSec() >= 0.9)
+		{
+
+			App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
+			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
+
+			App->map->WorldToMap(creation_pos_x2, creation_pos_y2);
+			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x2, creation_pos_y2), S_ENEMY);
+
+			wave_timer6.Start();
 		}
 	}
 	return true;
