@@ -4,7 +4,8 @@
 #include "SDL\include\SDL.h"
 #include "p2Point.h"
 
-#define TOWER_HEIGHT 60
+#define H_MARGIN 60 //biggest height for culling without popping
+#define W_MARGIN 60 //biggest width for culling without popping
 #define FPS 60
 
 class Camera
