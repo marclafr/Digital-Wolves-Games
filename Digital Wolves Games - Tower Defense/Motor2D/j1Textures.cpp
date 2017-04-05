@@ -48,7 +48,7 @@ bool j1Textures::Start()
 	App->tex->Load("textures/Towers.png", T_TURRET);
 	App->tex->Load("animations/StoneWall.png", T_WALL);
 	App->tex->Load("textures/Resouce.png", T_RESOURCE);
-	App->tex->Load("animations/HorizontalArrowAngles.png", T_WALL);
+	App->tex->Load("animations/HorizontalArrowAngles.png", T_ARROW);
 
 	bool ret = true;
 	return ret;

@@ -92,13 +92,14 @@ void Building::Update()
 		targetpos.x = Target->GetX();
 		targetpos.y = Target->GetY() - 35;
 		UpdateArrow(arrowpos, targetpos);
-		if (arrowpos.x > targetpos.x - 3 && arrowpos.x < targetpos.x + 3 && arrowpos.y < targetpos.y + 3 && arrowpos.y > targetpos.y- 3) {
+		if (arrowpos.x > targetpos.x - 3 && arrowpos.x < targetpos.x + 3 && arrowpos.y < targetpos.y + 3 && arrowpos.y > targetpos.y- 3)
+		{
 			attacking = false;
 			Target->Damaged(12);
 		}
-		SDL_Rect rect = { 20,16,18,10 };
+		SDL_Rect rect = { 0,44,24,5 };
 		iPoint pivots(0.5 * 18, 0.5 * 10);
-		App->render->Blit(App->tex->GetTexture(T_TURRET), arrowpos.x, arrowpos.y, &rect, SDL_FLIP_NONE, pivots.x, pivots.y);
+		App->render->Blit(App->tex->GetTexture(T_ARROW), arrowpos.x, arrowpos.y, &rect, SDL_FLIP_NONE, pivots.x, pivots.y);
 	}
 	if (GetHp() < 0) {
 		iPoint p = App->map->WorldToMap(GetX(), GetY());
