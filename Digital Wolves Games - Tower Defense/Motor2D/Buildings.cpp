@@ -60,7 +60,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	buildtimer.Start();
 	iPoint p = App->map->WorldToMap(pos.x, pos.y);
 
-	if (App->pathfinding->IsWalkable(p) == true)
+	if (App->pathfinding->IsWalkable(p) == true && building_type != B_TOWNHALL)
 	{
 		App->pathfinding->MakeNoWalkable(p);
 	}

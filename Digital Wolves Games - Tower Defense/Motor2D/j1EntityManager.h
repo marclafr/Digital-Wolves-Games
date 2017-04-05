@@ -57,6 +57,8 @@ private:
 
 	//TODO:Must change this
 	int priority = 0;
+	int score = 0;
+
 };
 #endif //_j1EntityManager_
 
