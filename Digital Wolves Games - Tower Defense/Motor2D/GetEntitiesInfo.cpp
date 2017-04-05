@@ -138,9 +138,14 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_TURRET:
-		ret = "Turret";
+		ret = "Turret - Wood: 75 Stone: 25";
 		break;
-
+	case B_STONE_WALL:
+		ret = "stone wall - Stone 100";
+		break;
+	case B_TOWNHALL:
+		ret = "Town Hall";
+		break;
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
 		ret = "Error Building";
@@ -157,7 +162,7 @@ const char* GetSideName(const Side type)
 	switch (type)
 	{
 	case S_ALLY:
-		ret = "Ally";
+		ret = "";
 		break;
 	case S_ENEMY:
 		ret = "Enemy";

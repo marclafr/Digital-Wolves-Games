@@ -162,7 +162,7 @@ Texture::Texture(const Texture & copy): id(copy.id)
 
 Texture::~Texture()
 {
-	SDL_DestroyTexture(texture);
+	//SDL_DestroyTexture(texture);
 }
 
 TextureID Texture::GetID() const
