@@ -27,6 +27,14 @@ bool j1WaveManager::Update(float dt)
 	return true;
 }
 
+bool j1WaveManager::CleanUp()
+{
+	wave_num = 0;
+	creation_pos_x = ENEMY_CREATION_POS_X;
+	creation_pos_y = ENEMY_CREATION_POS_Y;
+	return true;
+}
+
 void j1WaveManager::CreateWave(int wave)
 {
 	wave_num++;

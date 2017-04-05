@@ -154,10 +154,10 @@ bool j1Input::Update(float dt)
 		if (GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 			App->debug_features.print_walkability_map = !App->debug_features.print_walkability_map;
 
-		if (GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		if (GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			App->debug_features.add_wood = true;
 
-		if (GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		if (GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 			App->debug_features.add_stone = true;
 			
 	}
