@@ -38,7 +38,7 @@ const char* GetUnitName(const UNIT_TYPE type)
 	switch (type)
 	{
 	case U_TWOHANDEDSWORDMAN:
-		ret = "Two Handed Sword Man";
+		ret = "Two Handed Sword Man - Wood:15 Stone:15";
 		break;
 
 	case U_CAVALRYARCHER:
@@ -141,7 +141,7 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 		ret = "Turret - Wood: 75 Stone: 25";
 		break;
 	case B_STONE_WALL:
-		ret = "stone wall - Stone 100";
+		ret = "stone wall - Stone: 50";
 		break;
 	case B_TOWNHALL:
 		ret = "Town Hall";

@@ -273,12 +273,13 @@ bool j1Scene::Update(float dt)
 		if (placing_tower == true) placing_tower = false;
 
 	}
+	/*
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(p.x, p.y), S_ALLY);
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(p.x, p.y), S_ENEMY);
-	
+	*/
 	const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
 	
 	if (path->size() != 0)
@@ -428,4 +429,25 @@ void j1Scene::BuildTower()
 {
 	resource_wood->UseResource(BASIC_TOWER_WOOD_COST);
 	resource_stone->UseResource(BASIC_TOWER_STONE_COST);
+}
+
+bool j1Scene::CanBuildWall()
+{
+	return resource_stone->CanUseResource(BASIC_WALL_STONE_COST);
+}
+
+void j1Scene::BuildWall()
+{
+	resource_stone->UseResource(BASIC_WALL_STONE_COST);
+}
+
+bool j1Scene::CanTrainSoldier()
+{
+	return resource_wood->CanUseResource(TWOHANDED_WOOD_COST) && resource_stone->CanUseResource(TWOHANDED_STONE_COST);
+}
+
+void j1Scene::TrainSoldier()
+{
+	resource_wood->UseResource(TWOHANDED_WOOD_COST);
+	resource_stone->UseResource(TWOHANDED_STONE_COST);
 }
