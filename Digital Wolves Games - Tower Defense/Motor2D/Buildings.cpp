@@ -48,7 +48,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		range = 0;
 		rect = { 836,1,366,317 };
 		SetRect(rect);
-		SetPivot(0.52459 * 192, 0.72555 * 230);//
+		SetPivot(0.52459 * 366, 0.72555 * 317);//
 		SetTextureID(T_TOWNHALL);
 		totallybuilded = true;
 		break;

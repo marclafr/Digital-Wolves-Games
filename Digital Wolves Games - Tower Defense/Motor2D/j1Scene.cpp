@@ -149,7 +149,7 @@ bool j1Scene::Start()
 	//RESOURCES
 	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(STONE, fPoint(450, 850)));
 	*/
-	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-912, 672), S_ALLY);
+	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
 	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(-75, 50));
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(75, 50));
@@ -398,7 +398,7 @@ bool j1Scene::PostUpdate()
 		lose = true;
 		App->scene_manager->ChangeScene(App->main_menu, this);
 	}
-	if (game_time.ReadSec() >= 10)// WINNING_TIME)
+	if (game_time.ReadSec() >= WINNING_TIME)
 	{
 		win = true;
 		App->entity_manager->AddScore(townhall->GetHp() * 3);
