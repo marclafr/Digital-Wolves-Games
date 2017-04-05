@@ -24,6 +24,7 @@ class j1EntityManager;
 class j1Collision;
 class j1SceneManager;
 class j1WaveManager;
+class j1Console;
 
 	//Scenes
 class j1MainMenu;
@@ -121,6 +122,7 @@ public:
 	j1Collision*		collision = NULL;
 	j1SceneManager*		scene_manager = NULL;
 	j1WaveManager*		wave_manager = NULL;
+	j1Console*			console = NULL;
 
 		//Scenesko
 	j1MainMenu*			main_menu = NULL;
