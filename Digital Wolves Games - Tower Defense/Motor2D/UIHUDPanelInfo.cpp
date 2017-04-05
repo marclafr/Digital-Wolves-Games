@@ -45,31 +45,30 @@ void UIHUDPanelInfo::DefineSelection()
 
 	while (item != selection_tmp.end())
 	{
-		if (item._Ptr->_Myval->GetEntityType() == E_UNIT)
+		if (item._Ptr->_Myval->GetEntityType() == E_UNIT && (*item)->GetSide() != S_ENEMY && (*item)->GetHp() > 0 && unit_selection == false)
 		{
+			selection.clear();
+
+			selection.push_back(*item);
+
 			unit_selection = true;
-			break;
 		}
+
+		if (item._Ptr->_Myval->GetEntityType() == E_UNIT && (*item)->GetSide() != S_ENEMY && (*item)->GetHp() > 0 && unit_selection == true)
+		{
+			selection.push_back(*item);
+		}
+
+		if ((item._Ptr->_Myval->GetEntityType() == E_BUILDING || item._Ptr->_Myval->GetEntityType() == E_RESOURCE) && (*item)->GetSide() != S_ENEMY && (*item)->GetHp() > 0 && unit_selection == false)
+		{
+			selection.push_back(*item);
+		}
+
+		if (selection.size() >= 25)
+			break;
+
 		item++;
 	}
-
-	if (unit_selection)
-	{
-		item = selection_tmp.begin();
-
-		while (item != selection_tmp.end())
-		{
-			if (item._Ptr->_Myval->GetEntityType() == E_UNIT)
-				selection.push_back(item._Ptr->_Myval);
-
-			item++;
-		}
-	}
-	else
-		selection = selection_tmp;
-
-	if (selection.size() > 25)
-		selection.resize(25);
 
 	selection_tmp.clear();
 
