@@ -45,6 +45,12 @@ void UIHUDPanelInfo::DefineSelection()
 
 	while (item != selection_tmp.end())
 	{
+		if (item._Ptr->_Myval->GetEntityType() == E_UNIT && (*item)->GetSide() != S_ENEMY && (*item)->GetHp() > 0 && unit_selection == true)
+		{
+			selection.push_back(*item);
+			(*item)->SetEntityStatus(ST_SELECTED);
+		}
+
 		if (item._Ptr->_Myval->GetEntityType() == E_UNIT && (*item)->GetSide() != S_ENEMY && (*item)->GetHp() > 0 && unit_selection == false)
 		{
 			selection.clear();
@@ -53,12 +59,6 @@ void UIHUDPanelInfo::DefineSelection()
 			(*item)->SetEntityStatus(ST_SELECTED);
 
 			unit_selection = true;
-		}
-
-		if (item._Ptr->_Myval->GetEntityType() == E_UNIT && (*item)->GetSide() != S_ENEMY && (*item)->GetHp() > 0 && unit_selection == true)
-		{
-			selection.push_back(*item);
-			(*item)->SetEntityStatus(ST_SELECTED);
 		}
 
 		if ((item._Ptr->_Myval->GetEntityType() == E_BUILDING || item._Ptr->_Myval->GetEntityType() == E_RESOURCE) && (*item)->GetSide() != S_ENEMY && (*item)->GetHp() > 0 && unit_selection == false)
