@@ -149,12 +149,12 @@ bool j1Scene::Start()
 	//RESOURCES
 	resources_panel->AddResource((Resources*)App->entity_manager->CreateResource(STONE, fPoint(450, 850)));
 	*/
-	App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-900, 720), S_ALLY);
+	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-900, 720), S_ALLY);
 	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(-75, 50));
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(75, 50));
 	resources_panel->AddResource(resource_wood);
-
+	
 	return true;
 }
 
@@ -202,6 +202,19 @@ bool j1Scene::Update(float dt)
 	iPoint aa = App->map->MapToWorld(a, b);
 	LOG("%i, %i", aa.x, aa.y);*/
 	// Camera Movement
+
+	//DEBUG: increase resources
+	if (App->debug_features.add_wood)
+	{
+		resource_wood->AddResource(1000);
+		App->debug_features.add_wood = false;
+	}
+	
+	if (App->debug_features.add_stone)
+	{
+		resource_stone->AddResource(1000);
+		App->debug_features.add_stone = false;
+	}//--
 
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN )
 		App->LoadGame("save_game.xml");
@@ -397,7 +410,9 @@ bool j1Scene::PostUpdate()
 {
 	bool ret = true;
 
-	//Unit test
+	//TODO: defeat
+	if (townhall->GetHp() <= 0)
+		LOG("DEFEAT");
 
 	if(App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;

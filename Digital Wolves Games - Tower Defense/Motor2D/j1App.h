@@ -33,12 +33,14 @@ class j1Scene;
 struct DebugFeatures
 {
 public:
-	DebugFeatures() : debug_mode(false), print_walkability_map(false) {}
+	DebugFeatures() : debug_mode(false), print_walkability_map(false), add_wood(false), add_stone(false){}
 	~DebugFeatures(){}
 
 public:
 	bool debug_mode;
 	bool print_walkability_map;
+	bool add_wood;
+	bool add_stone;
 };
 
 class j1App
