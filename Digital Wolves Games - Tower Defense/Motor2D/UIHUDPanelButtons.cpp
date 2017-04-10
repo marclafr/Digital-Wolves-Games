@@ -14,6 +14,7 @@
 #include "j1Collision.h"
 
 #include "UIButton.h"
+#include "UIHUDDescription.h"
 
 #include "Entity.h"
 #include "Units.h"
@@ -41,6 +42,19 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 
 bool UIHUDPanelButtons::Update()
 {
+	std::list<info_button*>::iterator ib_item = panel.begin();
+
+	while (ib_item != panel.end())
+	{
+		if ((*ib_item)->btn->GetStat() == UICOMPONENT_STAT::SELECTED)
+			App->scene->hud_description->SetDescription((*ib_item));
+
+		if((*ib_item)->btn->GetStat() == UICOMPONENT_STAT::CLICKL_UP)
+			if_active = (*ib_item);
+
+		ib_item++;
+	}
+	
 	if (if_active != nullptr)
 		CreateEntity();
 
@@ -56,10 +70,6 @@ info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atl
 	new_btn->x = x;
 	new_btn->y = y;
 	new_btn->btn->Set({ 26 + (30 * (int)x), 666 + (30 * (int)y), 29, 29 }, { (int)atlas_x, (int)atlas_y, 25, 25 });
-
-	new_btn->btn->from_if_HUDPB = new_btn;
-
-	new_btn->btn->SetFrom(this);
 
 	panel.push_back(new_btn);
 

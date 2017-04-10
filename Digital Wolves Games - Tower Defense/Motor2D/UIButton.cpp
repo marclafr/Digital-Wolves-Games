@@ -54,22 +54,11 @@ bool UIButton::Update()
 	//Click of UIButton
 	case CLICKL_DOWN:
 		clicked = true;
-
-		if (from_if_HUDPB != nullptr)
-		{
-			UIHUDPanelButtons* temp = (UIHUDPanelButtons*)GetFrom();
-			temp->if_active = from_if_HUDPB;
-		}
 		break;
 
 	//UIButton set click to false
 	case CLICKL_UP:
 		clicked = false;
-		break;
-
-	case SELECTED:
-		if (from_if_HUDPB != nullptr)
-			App->scene->hud_description->SetDescription(from_if_HUDPB);
 		break;
 	}
 

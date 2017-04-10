@@ -12,8 +12,6 @@ public:
 	bool clicked = false;
 	UILabel* title;
 
-	info_button* from_if_HUDPB = nullptr;
-
 public:
 	UIButton(UICOMPONENT_TYPE type);
 
