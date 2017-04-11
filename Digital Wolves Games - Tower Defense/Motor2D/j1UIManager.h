@@ -38,9 +38,11 @@ public:
 	bool CleanUp();
 
 	// Gui creation functions
-	UIComponents* addUIComponent(UICOMPONENT_TYPE type);
+	UIComponents* addUIComponent(UICOMPONENT_TYPE type, std::list<UIComponents*>::iterator* ref = nullptr);
 
 	const SDL_Texture* GetAtlas() const;
+
+	void erase_list(std::list<UIComponents*>::iterator* first, std::list<UIComponents*>::iterator* last);
 
 private:
 

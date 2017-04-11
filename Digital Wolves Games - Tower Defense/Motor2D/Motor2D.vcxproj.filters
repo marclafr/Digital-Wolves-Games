@@ -85,9 +85,6 @@
     <ClCompile Include="UIHUDPanelButtons.cpp">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="UIHUDPanelInfo.cpp">
-      <Filter>Awsome_Game\UIComponents\HUD</Filter>
-    </ClCompile>
     <ClCompile Include="UIHUDResources.cpp">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClCompile>
@@ -120,6 +117,15 @@
     </ClCompile>
     <ClCompile Include="j1Console.cpp">
       <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDPanelInfo.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelInfoGroupSelection.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelInfoOneSelection.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -225,9 +231,6 @@
     <ClInclude Include="UIHUDPanelButtons.h">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="UIHUDPanelInfo.h">
-      <Filter>Awsome_Game\UIComponents\HUD</Filter>
-    </ClInclude>
     <ClInclude Include="UIHUDResources.h">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
@@ -260,6 +263,18 @@
     </ClInclude>
     <ClInclude Include="j1Console.h">
       <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDPanelInfo.h">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelInfoBasicStructure.h">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelInfoGroupSelection.h">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelInfoOneSelection.h">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +310,9 @@
     </Filter>
     <Filter Include="Awsome_Game\UIComponents\GetInfo">
       <UniqueIdentifier>{1e8d9cd4-3e8d-4f18-9f90-7062b7cb007f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\UIComponents\HUD\UIHUDPanelInfo">
+      <UniqueIdentifier>{06f88748-2ca2-4806-b68a-c3480589e69f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

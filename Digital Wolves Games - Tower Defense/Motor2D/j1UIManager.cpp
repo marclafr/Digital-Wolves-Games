@@ -148,7 +148,7 @@ bool j1UIManager::CleanUp()
 
 	while (item != components.end())
 	{
-		delete item._Ptr->_Myval;
+		delete *item;
 		
 		item++;
 	}
@@ -158,7 +158,7 @@ bool j1UIManager::CleanUp()
 	return true;
 }
 
-UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
+UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type, std::list<UIComponents*>::iterator* ref)
 {
 	UIComponents* ret = nullptr;
 
@@ -193,6 +193,8 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 		break;
 	}
 	
+	ref = &components.end();
+
 	return ret;
 }
 
@@ -200,4 +202,9 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 const SDL_Texture* j1UIManager::GetAtlas() const
 {
 	return atlas;
+}
+
+void j1UIManager::erase_list(std::list<UIComponents*>::iterator* first, std::list<UIComponents*>::iterator* last)
+{
+	components.erase(*first,*last);
 }
