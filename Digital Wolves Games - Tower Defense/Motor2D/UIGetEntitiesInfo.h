@@ -11,13 +11,14 @@
 
 SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type);
 const char* GetUnitName(const UNIT_TYPE type);
+const char* GetUnitPrice(const UNIT_TYPE type);
 
 SDL_Rect GetResourceIconPositionFromAtlas(const RESOURCE_TYPE type);
 const char* GetResourceName(const RESOURCE_TYPE type);
 
 SDL_Rect GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type);
 const char* GetBuildingName(const BUILDING_TYPE type);
-
+const char* GetBuildingPrice(const BUILDING_TYPE type);
 
 const uint GetBuildingPercentage(const Entity* build);
 const double GetBuildTotalTime(const BUILDING_TYPE type);

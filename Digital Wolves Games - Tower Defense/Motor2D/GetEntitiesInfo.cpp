@@ -44,7 +44,7 @@ const char* GetUnitName(const UNIT_TYPE type)
 	switch (type)
 	{
 	case U_TWOHANDEDSWORDMAN:
-		ret = "Two Handed Sword Man - Wood:15 Stone:15";
+		ret = "Two Handed Sword Man";
 		break;
 
 	case U_CAVALRYARCHER:
@@ -58,6 +58,25 @@ const char* GetUnitName(const UNIT_TYPE type)
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
 		ret = "Error Unit";
+		break;
+	}
+
+	return ret;
+}
+
+const char * GetUnitPrice(const UNIT_TYPE type)
+{
+	char* ret;
+
+	switch (type)
+	{
+	case U_TWOHANDEDSWORDMAN:
+		ret = "Wood:15 Stone:15";
+		break;
+
+	default:
+		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
+		ret = "Error Unit Price";
 		break;
 	}
 
@@ -152,10 +171,10 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_TURRET:
-		ret = "Basic Tower - Wood: 75 Stone: 25";
+		ret = "Basic Tower";
 		break;
 	case B_STONE_WALL:
-		ret = "Stone Wall - Stone: 50";
+		ret = "Stone Wall";
 		break;
 	case B_TOWNHALL:
 		ret = "Town Hall";
@@ -163,6 +182,27 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
 		ret = "Error Building";
+		break;
+	}
+
+	return ret;
+}
+
+const char * GetBuildingPrice(const BUILDING_TYPE type)
+{
+	char* ret;
+
+	switch (type)
+	{
+	case B_TURRET:
+		ret = "Wood: 75 Stone: 25";
+		break;
+	case B_STONE_WALL:
+		ret = "Stone: 50";
+		break;
+	default:
+		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
+		ret = "Error Building Price";
 		break;
 	}
 
