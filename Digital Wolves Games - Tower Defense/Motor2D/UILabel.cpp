@@ -61,7 +61,7 @@ bool UILabel::Update()
 void UILabel::ChangeText(const char* text, SDL_Color color)
 {
 	std::string text_to_change(text);
-	if (this->text.compare(text_to_change))
+	if (this->text.compare(text_to_change) != 0)
 	{
 		App->tex->UnloadLabel(text_img);
 

@@ -12,15 +12,15 @@
 
 OneSelection::~OneSelection()
 {
-	if(image == nullptr) delete image;
-	if (name == nullptr) delete name;
-	if (life == nullptr) delete life;
+	if(image != nullptr) delete image;
+	if (name != nullptr) delete name;
+	if (life != nullptr) delete life;
 
-	if (damage == nullptr) delete damage;
-	if (armor == nullptr) delete armor;
-	if (range == nullptr) delete range;
+	if (damage != nullptr) delete damage;
+	if (armor != nullptr) delete armor;
+	if (range != nullptr) delete range;
 
-	if (building_percentage == nullptr) delete building_percentage;
+	if (building_percentage != nullptr) delete building_percentage;
 }
 
 void OneSelection::Prepare()
@@ -131,7 +131,7 @@ void OneSelection::Update()
 		UpdateHP();
 
 		if (e_ptr->GetEntityType() == E_BUILDING)
-			if (build == false && isBuilded(e_ptr))
+			if (build == false && isBuilded(e_ptr) == false)
 			{
 				build = true;
 				PrepareBuildingConstruction();

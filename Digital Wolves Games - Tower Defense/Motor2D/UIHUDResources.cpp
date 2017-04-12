@@ -89,18 +89,14 @@ void UIHUDResources::UpdateResourcesNum()
 void UIHUDResources::UpdateLabels()
 {
 	std::string num_stone_str = std::to_string(num_stone);
-	if (stone->text.compare(num_stone_str))
-		stone->ChangeText(num_stone_str.c_str());
+	stone->ChangeText(num_stone_str.c_str());
 
 	std::string num_food_str = std::to_string(num_food);
-	if (food->text.compare(num_food_str))
-		food->ChangeText(num_food_str.c_str());
+	food->ChangeText(num_food_str.c_str());
 
 	std::string num_gold_str = std::to_string(num_gold);
-	if (gold->text.compare(num_gold_str))
-		gold->ChangeText(num_gold_str.c_str());
+	gold->ChangeText(num_gold_str.c_str());
 
 	std::string num_wood_str = std::to_string(num_wood);
-	if (wood->text.compare(num_wood_str))
-		wood->ChangeText(num_wood_str.c_str());
+	wood->ChangeText(num_wood_str.c_str());
 }
