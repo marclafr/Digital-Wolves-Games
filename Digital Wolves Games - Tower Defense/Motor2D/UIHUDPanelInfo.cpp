@@ -78,6 +78,15 @@ void UIHUDPanelInfo::DefineSelection()
 	CreatePanel();
 }
 
+void UIHUDPanelInfo::DefineOneSelected(Entity* oneselected)
+{
+	selection_tmp.push_back(oneselected);
+
+	DeleteSelection();
+
+	DefineSelection();
+}
+
 void UIHUDPanelInfo::DeleteSelection()
 {
 	selection.clear();
@@ -95,13 +104,13 @@ void UIHUDPanelInfo::CreatePanel()
 	{
 		if (selection.size() > 1)
 		{
-			//actual_panelinfo = new GroupSelection(selection);
+			actual_panelinfo = new GroupSelection(selection);
 		}
 		else
 		{
 			actual_panelinfo = new OneSelection(selection);
-			actual_panelinfo->Prepare();
 		}
+		actual_panelinfo->Prepare();
 	}
 
 	unit_selection = false;
@@ -128,6 +137,9 @@ bool UIHUDPanelInfo::Update()
 	if (actual_panelinfo != nullptr)
 	{
 		actual_panelinfo->Update();
+
+		if (actual_panelinfo->GetEntityForOneSelected() != nullptr && !actual_panelinfo->if_ToDelete())
+			DefineOneSelected(actual_panelinfo->GetEntityForOneSelected());
 
 		if (actual_panelinfo->if_ToDelete())
 			DeleteSelection();

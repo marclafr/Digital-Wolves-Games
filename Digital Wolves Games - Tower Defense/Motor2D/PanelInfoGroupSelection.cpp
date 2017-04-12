@@ -16,14 +16,12 @@ GroupSelection::~GroupSelection()
 
 	while (es_item != es_selection.end())
 	{
-		delete (*es_item)->btn_selected;
-
 		delete *es_item;
 
 		es_item++;
 	}
 
-	//App->uimanager->erase_list(&first_component, &last_component);
+	App->uimanager->erase_list(first_component, last_component);
 
 	es_selection.clear();
 }
@@ -42,6 +40,9 @@ void GroupSelection::PrepareUnitSelection()
 {
 	std::list<Entity*>::iterator u_item = selection->begin();
 
+	std::list<Entity*>::iterator last_u_item = selection->end();
+	last_u_item--;
+
 	while (u_item != selection->end())
 	{
 		entity_selected* add_entity_selected = new entity_selected();
@@ -49,12 +50,12 @@ void GroupSelection::PrepareUnitSelection()
 		Unit* selected = (Unit*)*u_item;
 		UIButton* new_btn = nullptr;
 
+		new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+
 		if (u_item == selection->begin())
-			new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON, &first_component);
-		else if (u_item == selection->end())
-			new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON, &last_component);
-		else
-			new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+			first_component = App->uimanager->GetLastComponent();
+		else if (u_item == last_u_item)
+			last_component = App->uimanager->GetLastComponent();
 
 		new_btn->Set(MARK_BTN, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
 
@@ -72,6 +73,9 @@ void GroupSelection::PrepareNoUnitSelection()
 {
 	std::list<Entity*>::iterator e_item = selection->begin();
 
+	std::list<Entity*>::iterator last_e_item = selection->end();
+	last_e_item--;
+
 	while (e_item != selection->end())
 	{
 		entity_selected* add_entity_selected = new entity_selected();
@@ -80,12 +84,12 @@ void GroupSelection::PrepareNoUnitSelection()
 
 		UIButton* new_btn = nullptr;
 
+		new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+
 		if (e_item == selection->begin())
-			new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON, &first_component);
-		else if (e_item == selection->end())
-			new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON, &last_component);
-		else
-			new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+			first_component = App->uimanager->GetLastComponent();
+		else if (e_item == last_e_item)
+			last_component = App->uimanager->GetLastComponent();
 
 		switch ((*e_item)->GetEntityType())
 		{
@@ -116,12 +120,12 @@ void GroupSelection::Update()
 
 	while (es_item != es_selection.end())
 	{
-		//if ((*es_item)->btn_selected->stat == UICOMPONENT_STAT::CLICKL_UP)
-			//SetOneEntitySelection((*es_item)->pointer_entity);
+		if ((*es_item)->btn_selected->stat == UICOMPONENT_STAT::CLICKL_UP)
+			SetOneEntitySelection((*es_item)->pointer_entity);
 
 		if ((*es_item)->pointer_entity->GetEntityStatus() == ST_NON_SELECTED)
 		{
-			to_delete.push_back(&es_item);
+			to_delete.push_back(es_item);
 			deletion = true;
 		}
 
@@ -137,16 +141,18 @@ void GroupSelection::Update()
 
 void GroupSelection::DeleteESDeath()
 {
-	std::list<std::list<entity_selected*>::iterator*>::iterator delete_item = to_delete.begin();
+	std::list<std::list<entity_selected*>::iterator>::iterator delete_item = to_delete.begin();
 
 	while (delete_item != to_delete.end())
 	{
-		delete (*(*delete_item))._Ptr->_Myval->btn_selected;
-		es_selection.erase(*(*delete_item));
+		(*(*delete_item))->btn_selected->SetDraw(false);
+
+		es_selection.erase(*delete_item);
 
 		delete_item++;
 	}
 
+	to_delete.clear();
 	deletion = false;
 }
 
@@ -210,5 +216,5 @@ void GroupSelection::Draw()
 
 void GroupSelection::SetOneEntitySelection(Entity* e_selected)
 {
-	//TODO when one selection complete
+	e_oneselected = e_selected;
 }

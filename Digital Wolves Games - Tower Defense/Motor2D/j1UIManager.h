@@ -38,11 +38,13 @@ public:
 	bool CleanUp();
 
 	// Gui creation functions
-	UIComponents* addUIComponent(UICOMPONENT_TYPE type, std::list<UIComponents*>::iterator* ref = nullptr);
+	UIComponents* addUIComponent(UICOMPONENT_TYPE type);
 
 	const SDL_Texture* GetAtlas() const;
 
-	void erase_list(std::list<UIComponents*>::iterator* first, std::list<UIComponents*>::iterator* last);
+	void erase_list(std::list<UIComponents*>::iterator first, std::list<UIComponents*>::iterator last);
+
+	const std::list<UIComponents*>::iterator GetLastComponent();
 
 private:
 
@@ -50,5 +52,9 @@ private:
 
 	SDL_Texture* atlas;
 	std::string atlas_file_name;
+
+	bool delete_some_components = false;
+	std::list<UIComponents*>::iterator first_item_delete;
+	std::list<UIComponents*>::iterator last_item_delete;
 };
 #endif // __j1GUIMANAGER_H__

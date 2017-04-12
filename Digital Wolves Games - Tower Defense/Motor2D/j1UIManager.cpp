@@ -134,6 +134,23 @@ bool j1UIManager::PostUpdate()
 
 		item++;
 	}
+
+	if (delete_some_components)
+	{
+		std::list<UIComponents*>::iterator c_item = first_item_delete;
+		++last_item_delete;
+
+		while (c_item != last_item_delete)
+		{
+			if(*c_item != nullptr)
+				delete (*c_item);
+
+			c_item++;
+		}
+		components.erase(first_item_delete, last_item_delete);
+
+		delete_some_components = false;
+	}
 	
 	return true;
 }
@@ -158,7 +175,7 @@ bool j1UIManager::CleanUp()
 	return true;
 }
 
-UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type, std::list<UIComponents*>::iterator* ref)
+UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 {
 	UIComponents* ret = nullptr;
 
@@ -193,8 +210,6 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type, std::list<UICom
 		break;
 	}
 	
-	ref = &components.end();
-
 	return ret;
 }
 
@@ -204,7 +219,20 @@ const SDL_Texture* j1UIManager::GetAtlas() const
 	return atlas;
 }
 
-void j1UIManager::erase_list(std::list<UIComponents*>::iterator* first, std::list<UIComponents*>::iterator* last)
+void j1UIManager::erase_list(std::list<UIComponents*>::iterator first, std::list<UIComponents*>::iterator last)
 {
-	components.erase(*first,*last);
+	delete_some_components = true;
+
+	first_item_delete = first;
+
+	last_item_delete = last;
+}
+
+const std::list<UIComponents*>::iterator j1UIManager::GetLastComponent()
+{
+	std::list<UIComponents*>::iterator temp = components.end();
+
+	--temp;
+
+	return temp;
 }

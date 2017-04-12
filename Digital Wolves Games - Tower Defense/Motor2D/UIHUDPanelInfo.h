@@ -21,9 +21,6 @@ private:
 	std::list<Entity*> selection;
 	bool unit_selection = false;
 
-	//Bool of entity selected if erased
-	bool entity_selected_erased = false;
-
 public:
 	UIHUDPanelInfo(UICOMPONENT_TYPE type);
 	~UIHUDPanelInfo();
@@ -31,6 +28,7 @@ public:
 	//Main Functions of list fill o remove
 	void AddEntitySelection(Entity* selected);
 	void DefineSelection();
+	void DefineOneSelected(Entity* oneselected);
 	void DeleteSelection();
 
 	//Prepare the Panel Info structure

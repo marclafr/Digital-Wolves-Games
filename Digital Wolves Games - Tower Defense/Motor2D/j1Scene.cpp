@@ -1,3 +1,5 @@
+#define RECT_INGAME_WITHOUT_UI {0, 27, 1360, 644}
+
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
@@ -234,26 +236,30 @@ bool j1Scene::Update(float dt)
 	//SELECTION
 	App->input->GetMousePosition(x, y);
 
-	if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+	SDL_Rect rect_ingame_no_ui = RECT_INGAME_WITHOUT_UI;
+	if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
 	{
-		App->entity_manager->UnselectEverything();
+		if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+		{
+			App->entity_manager->UnselectEverything();
 
-		select_rect.x = x - App->render->camera->GetPosition().x;
-		select_rect.y = y - App->render->camera->GetPosition().y;
-		select_rect.w = select_rect.x;
-		select_rect.h = select_rect.y;
-	}
+			select_rect.x = x - App->render->camera->GetPosition().x;
+			select_rect.y = y - App->render->camera->GetPosition().y;
+			select_rect.w = select_rect.x;
+			select_rect.h = select_rect.y;
+		}
 
-	else if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
-	{
-		select_rect.w = x - App->render->camera->GetPosition().x;
-		select_rect.h = y - App->render->camera->GetPosition().y;
-		App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
-	}
+		else if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+		{
+			select_rect.w = x - App->render->camera->GetPosition().x;
+			select_rect.h = y - App->render->camera->GetPosition().y;
+			App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
+		}
 
-	if (App->input->GetMouseButtonDown(1) == KEY_UP)
-	{
-		App->entity_manager->SelectInQuad(select_rect);
+		if (App->input->GetMouseButtonDown(1) == KEY_UP)
+		{
+			App->entity_manager->SelectInQuad(select_rect);
+		}
 	}
 	//--
 

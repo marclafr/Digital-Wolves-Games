@@ -24,6 +24,8 @@ protected:
 
 	bool delete_panel_info = false;
 
+	Entity* e_oneselected = nullptr;
+
 public:
 	PanelInfo(std::list<Entity*>& selection) { this->selection = &selection; };
 
@@ -36,4 +38,8 @@ public:
 	virtual void Draw() {};
 
 	bool if_ToDelete() { return delete_panel_info; };
+
+	Entity* GetEntityForOneSelected() { return e_oneselected; };
+
+	void ClearOneSelected() { e_oneselected = nullptr; };
 };

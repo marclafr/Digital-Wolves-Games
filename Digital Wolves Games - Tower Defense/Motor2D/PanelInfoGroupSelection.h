@@ -16,7 +16,7 @@ private:
 
 	std::list<entity_selected*> es_selection;
 
-	std::list<std::list<entity_selected*>::iterator*> to_delete;
+	std::list<std::list<entity_selected*>::iterator> to_delete;
 
 	bool deletion = false;
 
