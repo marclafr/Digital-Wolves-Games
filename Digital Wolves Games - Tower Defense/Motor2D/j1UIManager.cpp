@@ -21,6 +21,7 @@
 #include "UIHUDPanelInfo.h"
 #include "UIHUDDescription.h"
 #include "UIHUDResources.h"
+#include "UIHUDTownHallBarLife.h"
 
 j1UIManager::j1UIManager() : j1Module()
 {
@@ -204,6 +205,9 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 		break;
 	case UIHUDRESOURCES:
 		components.push_back(ret = (UIComponents*)new UIHUDResources(UICOMPONENT_TYPE::UIHUDRESOURCES));
+		break;
+	case UIHUDTOWNHALLBARLIFE:
+		components.push_back(ret = (UIComponents*)new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE));
 		break;
 	default:
 		components.push_back(ret = new UIComponents(type));

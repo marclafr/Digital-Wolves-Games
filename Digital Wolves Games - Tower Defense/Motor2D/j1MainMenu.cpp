@@ -112,7 +112,7 @@ bool j1MainMenu::Update(float dt)
 	
 	if (single_player->GetStat() == SELECTED) 
 	{
-		single_player->Set({ 539, 17, 177, 244 }, { 298, 1229, 177, 244 });
+		single_player->Set({ 539, 17, 177, 240 }, { 298, 1229, 177, 240 });
 	}
 	if (single_player->GetStat() == UNSELECTED)
 	{

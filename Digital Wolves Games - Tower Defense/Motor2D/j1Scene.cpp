@@ -25,6 +25,7 @@
 #include "UIHUDPanelButtons.h"
 #include "UIHUDDescription.h"
 #include "UIHUDResources.h"
+#include "UIHUDTownHallBarLife.h"
 #include "UICheckbutton.h"
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
@@ -79,6 +80,7 @@ bool j1Scene::Start()
 	
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
+	townhall_bar_life->SetTownHall(townhall);
 	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(1680, 1008));
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1824, 1080));
@@ -453,4 +455,6 @@ void j1Scene::CreateSceneUI()
 
 	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
 	hud_description->SetEnableButton(btn_description);
+
+	townhall_bar_life = (UIHUDTownHallBarLife*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE);
 }

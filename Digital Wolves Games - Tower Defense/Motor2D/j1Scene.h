@@ -19,6 +19,7 @@ class UIHUDPanelButtons;
 class UIHUDPanelInfo;
 class UIHUDDescription;
 class UIHUDResources;
+class UIHUDTownHallBarLife;
 class Resources;
 class Building;
 
@@ -79,6 +80,7 @@ private:
 	UIComponents* down_hud;
 	UICheckbutton* btn_description;
 	UIHUDPanelButtons* panel;
+	UIHUDTownHallBarLife* townhall_bar_life;
 
 	SDL_Rect select_rect;
 

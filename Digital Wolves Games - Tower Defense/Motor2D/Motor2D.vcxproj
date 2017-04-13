@@ -116,6 +116,7 @@
     <ClCompile Include="UIHUDPanelButtons.cpp" />
     <ClCompile Include="UIHUDPanelInfo.cpp" />
     <ClCompile Include="UIHUDResources.cpp" />
+    <ClCompile Include="UIHUDTownHallBarLife.cpp" />
     <ClCompile Include="UILabel.cpp" />
     <ClCompile Include="UISelectOption.cpp" />
     <ClCompile Include="Units.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="UIHUDPanelButtons.h" />
     <ClInclude Include="UIHUDPanelInfo.h" />
     <ClInclude Include="UIHUDResources.h" />
+    <ClInclude Include="UIHUDTownHallBarLife.h" />
     <ClInclude Include="UILabel.h" />
     <ClInclude Include="UISelectOption.h" />
     <ClInclude Include="Units.h" />

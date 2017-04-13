@@ -260,7 +260,7 @@ int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp)
 	return ret;
 }
 
-int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp)
+int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp, const uint pixels)
 {
 	if (hp <= 0)
 		return 1;
@@ -270,13 +270,13 @@ int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp)
 	switch (type)
 	{
 	case B_TURRET:
-		ret = hp * 32 / TURRET_HP;
+		ret = hp * pixels / TURRET_HP;
 		break;
 	case B_STONE_WALL:
-		ret = hp * 32 / STONEWALL_HP;
+		ret = hp * pixels / STONEWALL_HP;
 		break;
 	case B_TOWNHALL:
-		ret = hp * 32 / TOWNHALL_HP;
+		ret = hp * pixels / TOWNHALL_HP;
 		break;
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");

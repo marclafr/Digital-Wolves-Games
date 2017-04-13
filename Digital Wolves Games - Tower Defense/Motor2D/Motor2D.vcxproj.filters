@@ -127,6 +127,7 @@
     <ClCompile Include="PanelInfoOneSelection.cpp">
       <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
     </ClCompile>
+    <ClCompile Include="UIHUDTownHallBarLife.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -275,6 +276,9 @@
     </ClInclude>
     <ClInclude Include="PanelInfoOneSelection.h">
       <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDTownHallBarLife.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
