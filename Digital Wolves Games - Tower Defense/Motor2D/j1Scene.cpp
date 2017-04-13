@@ -1,4 +1,4 @@
-#define RECT_INGAME_WITHOUT_UI {0, 27, 1360, 644}
+#define RECT_INGAME_WITHOUT_UI {0, 27, 1360, 624}
 
 #include "p2Defs.h"
 #include "p2Log.h"
@@ -351,6 +351,7 @@ bool j1Scene::PostUpdate()
 	if (townhall->GetHp() <= 0)
 	{
 		lose = true;
+		App->uimanager->lost = true;
 		App->scene_manager->ChangeScene(App->main_menu, this);
 	}
 	if (game_time.ReadSec() >= WINNING_TIME)

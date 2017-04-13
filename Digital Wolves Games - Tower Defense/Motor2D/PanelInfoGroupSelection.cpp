@@ -1,6 +1,9 @@
 #define MARK_BTN { 220, 666, 29, 29 }
 #define BAR_LIFE_CENTER 16
 
+#define BAR_LIFE_PIXELS 29
+#define BAR_LIFE { 999, 861, 29, 4 }
+
 #include "PanelInfoGroupSelection.h"
 
 #include "j1App.h"
@@ -21,7 +24,8 @@ GroupSelection::~GroupSelection()
 		es_item++;
 	}
 
-	App->uimanager->erase_list(first_component, last_component);
+	if(!deletion)
+		App->uimanager->erase_list(first_component, last_component);
 
 	es_selection.clear();
 }
@@ -34,6 +38,8 @@ void GroupSelection::Prepare()
 		PrepareUnitSelection();
 	else
 		PrepareNoUnitSelection();
+
+	life_bar = BAR_LIFE;
 }
 
 void GroupSelection::PrepareUnitSelection()
@@ -123,7 +129,12 @@ void GroupSelection::Update()
 		if ((*es_item)->btn_selected->stat == UICOMPONENT_STAT::CLICKL_UP)
 			SetOneEntitySelection((*es_item)->pointer_entity);
 
-		if ((*es_item)->pointer_entity->GetEntityStatus() == ST_NON_SELECTED)
+		if (App->uimanager->lost)
+		{
+			to_delete.push_back(es_item);
+			deletion = true;
+		}
+		else if ((*es_item)->pointer_entity->GetHp() <= 0)
 		{
 			to_delete.push_back(es_item);
 			deletion = true;
@@ -173,8 +184,7 @@ void GroupSelection::Draw()
 			SDL_Rect mark_btn{ 999, 827, 29, 29 };
 			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x + 2 - App->render->camera->GetPosition().x, uibutton->rect_position.y + 2 - App->render->camera->GetPosition().y, &uibutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-
-
+			
 			int rest_life_bar = 0;
 			int height_correction = 0;
 			ENTITY_TYPE e_type = (*es_item)->pointer_entity->GetEntityType();
@@ -188,18 +198,21 @@ void GroupSelection::Draw()
 				u_selected = (Unit*)e_selected;
 				rest_life_bar = ReturnValueBarHPUnit(u_selected->GetUnitType(), u_selected->GetHp());
 				height_correction = ReturnValueHeightCorrectionUnit(u_selected->GetUnitClass());
+				life_bar.w = ReturnValueBarHPUnit(u_selected->GetUnitType(), u_selected->GetHp(), BAR_LIFE_PIXELS);
 				break;
 
 			case E_BUILDING:
 				b_selected = (Building*)e_selected;
 				rest_life_bar = ReturnValueBarHPBuilding(b_selected->GetBuildingType(), b_selected->GetHp());
 				height_correction = ReturnValueHeightCorrectionBuilding(b_selected->GetBuildingType());
+				life_bar.w = ReturnValueBarHPBuilding(b_selected->GetBuildingType(), b_selected->GetHp(), BAR_LIFE_PIXELS);
 				break;
 
 			case E_RESOURCE:
 				r_selected = (Resources*)e_selected;
 				rest_life_bar = ReturnValueBarHPResource(r_selected->GetResourceType(), r_selected->GetHp());
 				height_correction = ReturnValueHeightCorrectionResource(r_selected->GetResourceType());
+				life_bar.w = ReturnValueBarHPResource(r_selected->GetResourceType(), r_selected->GetHp(), BAR_LIFE_PIXELS);
 				break;
 			}
 
@@ -208,6 +221,9 @@ void GroupSelection::Draw()
 			SDL_Rect mark_life_bar_green{ 1059, 827, rest_life_bar, 4 };
 			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX() - BAR_LIFE_CENTER, e_selected->GetY() - height_correction, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
 			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX() - BAR_LIFE_CENTER, e_selected->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+		
+			//Down bar_life
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y + 25 - App->render->camera->GetPosition().y, &life_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		}
 
 		es_item++;

@@ -26,9 +26,9 @@ const bool isBuilded(const Entity* build);
 
 const char* GetSideName(const Side type);
 
-int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp);
+int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp, const uint pixels = 32);
 int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp, const uint pixels = 32);
-int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp);
+int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp, const uint pixels = 32);
 
 int ReturnValueHeightCorrectionUnit(const UNIT_CLASS u_class);
 int ReturnValueHeightCorrectionBuilding(const BUILDING_TYPE type);

@@ -1,5 +1,8 @@
 #define BLACK {0,0,0,0}
 
+#define GREEN_BAR_SELECTED {1029, 861, 29, 6}
+#define GREEN_BAR_PIXELS 29
+
 #define BAR_LIFE_CENTER 16
 
 #include "PanelInfoOneSelection.h"
@@ -25,6 +28,8 @@ OneSelection::~OneSelection()
 
 void OneSelection::Prepare()
 {
+	life_bar_selected = GREEN_BAR_SELECTED;
+
 	e_ptr = *selection->begin();
 
 	switch (e_ptr->GetEntityType())
@@ -179,6 +184,8 @@ void OneSelection::DrawUnitInfo()
 
 	if (unit_life_bar->GetHp() > 0)
 	{
+		life_bar_selected.w = ReturnValueBarHPUnit(unit_life_bar->GetUnitType(), unit_life_bar->GetHp(), GREEN_BAR_PIXELS);
+
 		//Bar life
 		int rest_life_bar = ReturnValueBarHPUnit(unit_life_bar->GetUnitType(), unit_life_bar->GetHp());
 		int height_correction = ReturnValueHeightCorrectionUnit(unit_life_bar->GetUnitClass());
@@ -192,6 +199,8 @@ void OneSelection::DrawUnitInfo()
 		SDL_Rect mark_btn{ 1029, 827, 29, 33 };
 		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			//bar_life
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		UILabel* entity_label = name;
 		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
@@ -225,6 +234,8 @@ void OneSelection::DrawBuildInfo()
 
 	if (building_life_bar->GetHp() > 0)
 	{
+		life_bar_selected.w = ReturnValueBarHPBuilding(building_life_bar->GetBuildingType(), building_life_bar->GetHp(), GREEN_BAR_PIXELS);
+
 		//Bar life
 		int rest_life_bar = ReturnValueBarHPBuilding(building_life_bar->GetBuildingType(), building_life_bar->GetHp());
 		int height_correction = ReturnValueHeightCorrectionBuilding(building_life_bar->GetBuildingType());
@@ -238,6 +249,8 @@ void OneSelection::DrawBuildInfo()
 		SDL_Rect mark_btn{ 1029, 827, 29, 33 };
 		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		//bar_life
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		UILabel* entity_label = name;
 		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
@@ -291,6 +304,8 @@ void OneSelection::DrawResourceInfo()
 
 	if (resource_life_bar->GetHp() > 0)
 	{
+		life_bar_selected.w = ReturnValueBarHPResource(resource_life_bar->GetResourceType(), resource_life_bar->GetHp(), GREEN_BAR_PIXELS);
+
 		//Bar life
 		int rest_life_bar = ReturnValueBarHPResource(resource_life_bar->GetResourceType(), resource_life_bar->GetHp());
 		int height_correction = ReturnValueHeightCorrectionResource(resource_life_bar->GetResourceType());
@@ -304,6 +319,8 @@ void OneSelection::DrawResourceInfo()
 		SDL_Rect mark_btn{ 1029, 827, 29, 33 };
 		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		//bar_life
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		UILabel* entity_label = name;
 		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);

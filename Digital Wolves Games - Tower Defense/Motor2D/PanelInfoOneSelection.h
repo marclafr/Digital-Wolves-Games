@@ -20,6 +20,8 @@ private:
 
 	Entity* e_ptr = nullptr;
 
+	SDL_Rect life_bar_selected;
+
 public:
 	OneSelection(std::list<Entity*>& selection) : PanelInfo(selection) { type = PANEL_TYPE::ONESELECTION; };
 

@@ -20,6 +20,8 @@ private:
 
 	bool deletion = false;
 
+	SDL_Rect life_bar;
+
 public:
 	GroupSelection(std::list<Entity*>& selection) : PanelInfo(selection) { type = PANEL_TYPE::GROUPSELECTION; };
 

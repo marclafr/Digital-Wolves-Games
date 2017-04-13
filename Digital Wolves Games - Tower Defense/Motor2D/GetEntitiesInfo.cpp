@@ -230,7 +230,7 @@ const char* GetSideName(const Side type)
 	return ret;
 }
 
-int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp)
+int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp, const uint pixels)
 {
 	if (hp <= 0)
 		return 1;
@@ -240,15 +240,15 @@ int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp)
 	switch (type)
 	{
 	case U_TWOHANDEDSWORDMAN:
-		ret = hp * 32/ TWOHANDEDSWORDMAN_HP;
+		ret = hp * pixels / TWOHANDEDSWORDMAN_HP;
 		break;
 
 	case U_CAVALRYARCHER:
-		ret = hp * 32 / CAVALRYARCHER_HP;
+		ret = hp * pixels / CAVALRYARCHER_HP;
 		break;
 
 	case U_SIEGERAM:
-		ret = hp * 32 / SIEGERAM_HP;
+		ret = hp * pixels / SIEGERAM_HP;
 		break;
 
 	default:
@@ -287,7 +287,7 @@ int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp, const uint
 	return ret;
 }
 
-int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp)
+int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp, const uint pixels)
 {
 	if (hp <= 0)
 		return 1;
@@ -297,16 +297,16 @@ int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp)
 	switch (type)
 	{
 	case WOOD:
-		ret = hp * 32 / RESOURCES_HP;
+		ret = hp * pixels / RESOURCES_HP;
 		break;
 	case STONE:
-		ret = hp * 32 / RESOURCES_HP;
+		ret = hp * pixels / RESOURCES_HP;
 		break;
 	case FOOD:
-		ret = hp * 32 / RESOURCES_HP;
+		ret = hp * pixels / RESOURCES_HP;
 		break;
 	case GOLD:
-		ret = hp * 32 / RESOURCES_HP;
+		ret = hp * pixels / RESOURCES_HP;
 		break;
 	}
 

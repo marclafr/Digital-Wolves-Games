@@ -46,6 +46,9 @@ public:
 
 	const std::list<UIComponents*>::iterator GetLastComponent();
 
+public:
+	bool lost = false;
+
 private:
 
 	std::list<UIComponents*> components;

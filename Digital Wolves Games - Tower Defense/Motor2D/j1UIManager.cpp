@@ -143,7 +143,7 @@ bool j1UIManager::PostUpdate()
 
 		while (c_item != last_item_delete)
 		{
-			if(*c_item != nullptr)
+			if (*c_item != nullptr)
 				delete (*c_item);
 
 			c_item++;
