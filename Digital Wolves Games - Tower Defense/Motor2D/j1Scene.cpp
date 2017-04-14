@@ -53,7 +53,6 @@ bool j1Scene::Start()
 {
 	App->wave_manager->Enable();
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg");
-	App->uimanager->Enable();
 
 	App->render->camera->SetPosition(iPoint(2300, -800));
 
@@ -351,7 +350,6 @@ bool j1Scene::PostUpdate()
 	if (townhall->GetHp() <= 0)
 	{
 		lose = true;
-		App->uimanager->lost = true;
 		App->scene_manager->ChangeScene(App->main_menu, this);
 	}
 	if (game_time.ReadSec() >= WINNING_TIME)
@@ -373,7 +371,7 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 	App->wave_manager->Disable();
 	App->entity_manager->CleanUp();
-	App->uimanager->Disable();
+	App->uimanager->CleanUp();
 	return true;
 }
 

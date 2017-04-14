@@ -24,8 +24,7 @@ GroupSelection::~GroupSelection()
 		es_item++;
 	}
 
-	if(!deletion)
-		App->uimanager->erase_list(first_component, last_component);
+	App->uimanager->erase_list(first_component, last_component);
 
 	es_selection.clear();
 }
@@ -129,12 +128,7 @@ void GroupSelection::Update()
 		if ((*es_item)->btn_selected->stat == UICOMPONENT_STAT::CLICKL_UP)
 			SetOneEntitySelection((*es_item)->pointer_entity);
 
-		if (App->uimanager->lost)
-		{
-			to_delete.push_back(es_item);
-			deletion = true;
-		}
-		else if ((*es_item)->pointer_entity->GetHp() <= 0)
+		if ((*es_item)->pointer_entity->GetHp() <= 0)
 		{
 			to_delete.push_back(es_item);
 			deletion = true;
@@ -157,6 +151,8 @@ void GroupSelection::DeleteESDeath()
 	while (delete_item != to_delete.end())
 	{
 		(*(*delete_item))->btn_selected->SetDraw(false);
+
+		delete (*(*delete_item));
 
 		es_selection.erase(*delete_item);
 

@@ -143,8 +143,7 @@ bool j1UIManager::PostUpdate()
 
 		while (c_item != last_item_delete)
 		{
-			if (*c_item != nullptr)
-				delete (*c_item);
+			delete *c_item;
 
 			c_item++;
 		}
@@ -172,6 +171,9 @@ bool j1UIManager::CleanUp()
 	}
 
 	components.clear();
+
+	if (delete_some_components)
+		delete_some_components = false;
 
 	return true;
 }

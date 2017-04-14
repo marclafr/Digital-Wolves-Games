@@ -42,7 +42,6 @@ bool j1MainMenu::Awake()
 // Called before the first frame
 bool j1MainMenu::Start()
 {
-	App->uimanager->Enable();
 	App->audio->PlayMusic("audio/music/Menu01.ogg");
 
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
@@ -155,7 +154,7 @@ bool j1MainMenu::PostUpdate()
 bool j1MainMenu::CleanUp()
 {
 	LOG("Freeing  MainMenu");
-	App->uimanager->Disable();
+	App->uimanager->CleanUp();
 	return true;
 }
 
