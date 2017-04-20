@@ -91,7 +91,8 @@ private:
 	Building* townhalltower1;
 	Building* townhalltower2;
 
-	
+	UIButton* new_wave;
+	bool clicked = false;
 
 
 public:
