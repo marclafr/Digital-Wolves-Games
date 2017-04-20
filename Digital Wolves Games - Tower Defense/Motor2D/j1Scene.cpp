@@ -363,9 +363,6 @@ bool j1Scene::Update(float dt)
 		new_wave->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
 		clicked = false;
 	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
-		App->main_menu->trophies_hud->SetDraw(true);
 
 
 	return true;
