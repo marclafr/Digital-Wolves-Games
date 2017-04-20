@@ -54,7 +54,7 @@ bool j1Investigations::Update(float dt)
 	//TEST
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
 	{
-		if (this->CanInvestigate(investigations[0]))
+		if (this->CanInvestigate(investigations[0]) && investigations[0]->investigation_on_course == false)
 		{
 			Resources* gold = App->scene->GetResource(GOLD);
 			gold->UseResource(investigations[0]->cost);
