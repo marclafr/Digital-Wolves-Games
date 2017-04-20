@@ -80,6 +80,10 @@ bool j1Scene::Start()
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
 	townhall_bar_life->SetTownHall(townhall);
+	resource_food = (Resources*)App->entity_manager->CreateResource(FOOD, fPoint(1680, 1008));
+	resources_panel->AddResource(resource_food);
+	resource_gold = (Resources*)App->entity_manager->CreateResource(GOLD, fPoint(1680, 1008));
+	resources_panel->AddResource(resource_gold);
 	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(1680, 1008));
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1824, 1080));
@@ -117,6 +121,11 @@ bool j1Scene::Update(float dt)
 	iPoint res = App->render->ScreenToWorld(x, y);
 
 	//DEBUG: increase resources
+	if (App->debug_features.add_food)
+	{
+		resource_food->AddResource(1000);
+		App->debug_features.add_food = false;
+	}
 	if (App->debug_features.add_wood)
 	{
 		resource_wood->AddResource(1000);
@@ -127,7 +136,14 @@ bool j1Scene::Update(float dt)
 	{
 		resource_stone->AddResource(1000);
 		App->debug_features.add_stone = false;
-	}//--
+	}
+
+	if (App->debug_features.add_gold)
+	{
+		resource_gold->AddResource(1000);
+		App->debug_features.add_gold = false;
+	}
+	//--
 
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN )
 		App->LoadGame("save_game.xml");
@@ -433,6 +449,28 @@ void j1Scene::TrainSoldier()
 {
 	resource_wood->UseResource(TWOHANDED_WOOD_COST);
 	resource_stone->UseResource(TWOHANDED_STONE_COST);
+}
+
+Resources* j1Scene::GetResource(RESOURCE_TYPE type)
+{
+	switch (type)
+	{
+	case FOOD:
+		return resource_food;
+		break;
+	case WOOD:
+		return resource_wood;
+		break;
+	case GOLD:
+		return resource_gold;
+		break;
+	case STONE:
+		return resource_stone;
+		break;
+	default:
+		return nullptr;
+		break;
+	}
 }
 
 void j1Scene::CreateSceneUI()

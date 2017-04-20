@@ -22,6 +22,7 @@ class UIHUDResources;
 class UIHUDTownHallBarLife;
 class Resources;
 class Building;
+enum RESOURCE_TYPE;
 
 class j1Scene : public j1Module
 {
@@ -64,8 +65,8 @@ public:
 	bool placing_wall = false;
 	bool game_scene = true;
 
-	bool win=false;
-	bool lose=false;
+	bool win = false;
+	bool lose = false;
 private:
 	SDL_Texture* debug_tex;
 	SDL_Texture* tower_tex;
@@ -84,7 +85,9 @@ private:
 
 	SDL_Rect select_rect;
 
+	Resources* resource_food;
 	Resources* resource_wood;
+	Resources* resource_gold;
 	Resources* resource_stone;
 
 	Building* townhall;
@@ -93,6 +96,9 @@ private:
 
 	UIButton* new_wave;
 	bool clicked = false;
+
+public:
+	Resources* GetResource(RESOURCE_TYPE type);
 
 
 public:

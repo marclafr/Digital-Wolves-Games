@@ -5,8 +5,6 @@
 #include "j1Timer.h"
 #include <vector>
 
-#define INVESTIGATIONS_MAX_LVL 6
-
 enum LEVEL
 {
 	LOCKED,
@@ -23,7 +21,7 @@ enum LEVEL
 class Investigation
 {
 public:
-	Investigation(const char* name, bool has_lvls, float time) : inv_name(name), has_levels(has_lvls), time_to_upgrade(time){}
+	Investigation(const char* name, bool has_lvls, uint cost, float time) : inv_name(name), has_levels(has_lvls), cost(cost), time_to_upgrade(time){}
 	~Investigation(){}
 
 public:
@@ -33,6 +31,7 @@ public:
 	bool investigation_on_course = false;
 	float time_to_upgrade;
 	j1Timer upgrade_timer;
+	uint cost = 0;
 };
 
 class j1Investigations : public j1Module
@@ -46,12 +45,14 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 
-	Investigation* CreateInvestigation(const char* investigation_name, bool has_lvls, float time_to_upgrade);
+	Investigation* CreateInvestigation(const char* investigation_name, bool has_lvls, uint cost, float time_to_upgrade);
 	bool DeleteInvestigation(Investigation* ptr);
+
+	bool CanInvestigate(Investigation* investigation);
 
 private:
 	std::vector<Investigation*> investigations;
-	bool UpgradeInvestigation(Investigation* investigation_name);
+	bool UpgradeInvestigation(Investigation* investigation);
 
 };
 #endif //_j1Investigations_

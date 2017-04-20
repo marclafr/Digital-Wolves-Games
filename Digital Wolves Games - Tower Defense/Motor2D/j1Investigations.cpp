@@ -1,4 +1,12 @@
 #include "j1Investigations.h"
+#include "j1App.h"
+#include "Resources.h"
+#include "j1Scene.h"
+
+//TEST
+#include "j1Input.h"
+#include "SDL/include/SDL.h"
+//--
 
 j1Investigations::j1Investigations()
 {
@@ -14,25 +22,25 @@ bool j1Investigations::Start()
 	bool ret = true;
 
 	//RESOURCES
-	CreateInvestigation("food", true, 5);
-	CreateInvestigation("wood", true, 5.0);
-	CreateInvestigation("gold", true, 5.0);
-	CreateInvestigation("stone", true, 5.0);
+	CreateInvestigation("food", true, 300, 1.0);
+	CreateInvestigation("wood", true, 300, 1.0);
+	CreateInvestigation("gold", true, 300, 1.0);
+	CreateInvestigation("stone", true, 300, 1.0);
 	//TROPS
-	CreateInvestigation("cavalry unlock", false, 5.0);
-	CreateInvestigation("cavalry attack", false, 5.0);
-	CreateInvestigation("cavalry defense", false, 5.0);
-	CreateInvestigation("archers unlock", false, 5.0);
-	CreateInvestigation("archers attack", false, 5.0);
-	CreateInvestigation("archers defense", false, 5.0);
-	CreateInvestigation("infantry unlock", false, 5.0);
-	CreateInvestigation("infantry attack", false, 5.0);
-	CreateInvestigation("infantry defense", false, 5.0);	//TODO: Should attack/defense have levels? in that case swap to true
+	CreateInvestigation("cavalry unlock", false, 150, 15.0);
+	CreateInvestigation("cavalry attack", false, 300, 30.0);
+	CreateInvestigation("cavalry defense", false, 300, 25.0);
+	CreateInvestigation("archers unlock", false, 150, 15.0);
+	CreateInvestigation("archers attack", false, 300, 30.0);
+	CreateInvestigation("archers defense", false, 300, 25.0);
+	CreateInvestigation("infantry unlock", false, 100, 15.0);
+	CreateInvestigation("infantry attack", false, 300, 30.0);
+	CreateInvestigation("infantry defense", false, 300, 25.0);
 	//TOWERS
-	CreateInvestigation("elemental", false, 5.0);
-	CreateInvestigation("fire tower", false, 5.0);
-	CreateInvestigation("ice tower", false, 5.0);
-	CreateInvestigation("air tower", false, 5.0);
+	CreateInvestigation("elemental", false, 100, 10.0);
+	CreateInvestigation("fire tower", false, 200, 10.0);
+	CreateInvestigation("ice tower", false, 250, 10.0);
+	CreateInvestigation("air tower", false, 300, 10.0);
 	//--
 
 	return ret;
@@ -43,6 +51,19 @@ bool j1Investigations::Update(float dt)
 	bool ret = true;
 
 	//IMPORTANT: When activating the investigation upgrade-> USE THIS:	investigations[i]->upgrade_timer.Start();
+	//TEST
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+	{
+		if (this->CanInvestigate(investigations[0]))
+		{
+			Resources* gold = App->scene->GetResource(GOLD);
+			gold->UseResource(investigations[0]->cost);
+			investigations[0]->cost += 100;
+			investigations[0]->investigation_on_course = true;
+			investigations[0]->upgrade_timer.Start();
+		}
+	}
+	//--
 
 	for (int i = 0; i < investigations.size(); i++)
 	{
@@ -62,9 +83,9 @@ bool j1Investigations::CleanUp()
 	return ret;
 }
 
-Investigation* j1Investigations::CreateInvestigation(const char* investigation_name, bool has_lvls, float time_to_upgrade)
+Investigation* j1Investigations::CreateInvestigation(const char* investigation_name, bool has_lvls, uint cost, float time_to_upgrade)
 {
-	Investigation* new_inv = new Investigation(investigation_name, has_lvls, time_to_upgrade);
+	Investigation* new_inv = new Investigation(investigation_name, has_lvls, cost, time_to_upgrade);
 	investigations.push_back(new_inv);
 
 	return new_inv;
@@ -83,6 +104,15 @@ bool j1Investigations::DeleteInvestigation(Investigation* ptr)
 		else
 			it++;
 	}
+	return false;
+}
+
+bool j1Investigations::CanInvestigate(Investigation* investigation)
+{
+	Resources* current_gold = App->scene->GetResource(GOLD);
+	if (current_gold->CanUseResource(investigation->cost))	//TODO: Multiply by level upgrade????
+		return true;
+
 	return false;
 }
 

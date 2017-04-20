@@ -152,14 +152,19 @@ bool j1Input::Update(float dt)
 	if (App->debug_features.debug_mode == true)
 	{
 		if (GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-			App->debug_features.print_walkability_map = !App->debug_features.print_walkability_map;
+			App->debug_features.add_food = true;
 
 		if (GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			App->debug_features.add_wood = true;
 
 		if (GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
+			App->debug_features.add_gold = true;
+
+		if (GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 			App->debug_features.add_stone = true;
-			
+
+		if (GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+			App->debug_features.print_walkability_map = !App->debug_features.print_walkability_map;
 	}
 	//
 	return true;

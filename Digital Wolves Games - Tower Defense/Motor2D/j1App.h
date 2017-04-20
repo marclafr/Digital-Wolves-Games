@@ -41,8 +41,10 @@ public:
 public:
 	bool debug_mode;
 	bool print_walkability_map;
+	bool add_food;
 	bool add_wood;
 	bool add_stone;
+	bool add_gold;
 };
 
 class j1App
