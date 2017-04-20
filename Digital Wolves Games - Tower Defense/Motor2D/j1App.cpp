@@ -24,6 +24,7 @@
 #include "j1SceneManager.h"
 #include "j1Console.h"
 #include "j1WaveManager.h"
+#include "j1Investigations.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -48,6 +49,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	scene_manager = new j1SceneManager();
 	wave_manager = new j1WaveManager();
 	console = new j1Console();
+	investigations = new j1Investigations();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -66,6 +68,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(wave_manager);
 	wave_manager->active = false;
 	AddModule(console);
+	AddModule(investigations);
 
 	// scene last
 	
