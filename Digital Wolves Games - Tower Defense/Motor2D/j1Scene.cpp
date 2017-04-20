@@ -456,4 +456,8 @@ void j1Scene::CreateSceneUI()
 	hud_description->SetEnableButton(btn_description);
 
 	townhall_bar_life = (UIHUDTownHallBarLife*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE);
+
+	//INFO SCORE, TIME, ENEMIES LEFT
+	info_ui = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	info_ui->Set({ 1236, 25, 130, 65 }, { 405, 1162, 130, 65 });
 }

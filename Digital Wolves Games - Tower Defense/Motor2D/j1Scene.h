@@ -90,10 +90,16 @@ private:
 	Building* townhall;
 	Building* townhalltower1;
 	Building* townhalltower2;
+
+	
+
+
 public:
 	UIHUDPanelInfo* panel_info;
 	UIHUDDescription* hud_description;
 	j1Timer game_time;
+
+	UIComponents* info_ui;
 };
 
 #endif // __j1SCENE_H__
