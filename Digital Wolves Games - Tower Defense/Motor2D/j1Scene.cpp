@@ -86,6 +86,7 @@ bool j1Scene::Start()
 	resources_panel->AddResource(resource_wood);
 	townhalltower1 = (Building*)App->entity_manager->CreateBuilding(B_TURRET, fPoint(-624, 528), S_ALLY);
 	townhalltower2 = (Building*)App->entity_manager->CreateBuilding(B_TURRET, fPoint(-432, 624), S_ALLY);
+	
 	//Reset scores and timers
 	game_time.Start();
 	App->entity_manager->ResetScores();
@@ -363,6 +364,10 @@ bool j1Scene::Update(float dt)
 		clicked = false;
 	}
 	
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
+		App->main_menu->trophies_hud->SetDraw(true);
+
+
 	return true;
 }
 
