@@ -278,7 +278,8 @@ bool j1Scene::Update(float dt)
 			else
 			{
 				SDL_Rect rect;
-				rect = { 610,1,107,206 };
+				rect = { 580 ,538 ,107,206 };
+				//rect = { 610,1,107,206 };
 				App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 				{
@@ -315,7 +316,8 @@ bool j1Scene::Update(float dt)
 		else if (App->pathfinding->IsConstructible_ally(r) == true)		
 		{
 			SDL_Rect rect;
-			rect = { 325,218,99,178};
+			rect = { 690,303,99,178};
+			//rect = { 325,218,99,178 };
 			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949*99, 178*0.865169);
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
