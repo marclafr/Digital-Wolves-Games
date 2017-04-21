@@ -87,6 +87,7 @@
     <ClCompile Include="j1Console.cpp" />
     <ClCompile Include="j1FileSystem.cpp" />
     <ClCompile Include="j1Fonts.cpp" />
+    <ClCompile Include="j1Investigations.cpp" />
     <ClCompile Include="j1MainMenu.cpp" />
     <ClCompile Include="j1SceneManager.cpp" />
     <ClCompile Include="j1UIManager.cpp" />
@@ -105,6 +106,8 @@
     <ClCompile Include="j1Render.cpp" />
     <ClCompile Include="j1Textures.cpp" />
     <ClCompile Include="j1Window.cpp" />
+    <ClCompile Include="PanelInfoGroupSelection.cpp" />
+    <ClCompile Include="PanelInfoOneSelection.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="UIButton.cpp" />
@@ -114,6 +117,7 @@
     <ClCompile Include="UIHUDPanelButtons.cpp" />
     <ClCompile Include="UIHUDPanelInfo.cpp" />
     <ClCompile Include="UIHUDResources.cpp" />
+    <ClCompile Include="UIHUDTownHallBarLife.cpp" />
     <ClCompile Include="UILabel.cpp" />
     <ClCompile Include="UISelectOption.cpp" />
     <ClCompile Include="Units.cpp" />
@@ -128,6 +132,7 @@
     <ClInclude Include="j1Console.h" />
     <ClInclude Include="j1FileSystem.h" />
     <ClInclude Include="j1Fonts.h" />
+    <ClInclude Include="j1Investigations.h" />
     <ClInclude Include="j1MainMenu.h" />
     <ClInclude Include="j1SceneManager.h" />
     <ClInclude Include="j1UIManager.h" />
@@ -151,6 +156,9 @@
     <ClInclude Include="j1Textures.h" />
     <ClInclude Include="j1Window.h" />
     <ClInclude Include="p2SString.h" />
+    <ClInclude Include="PanelInfoBasicStructure.h" />
+    <ClInclude Include="PanelInfoGroupSelection.h" />
+    <ClInclude Include="PanelInfoOneSelection.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="Resources.h" />
@@ -162,6 +170,7 @@
     <ClInclude Include="UIHUDPanelButtons.h" />
     <ClInclude Include="UIHUDPanelInfo.h" />
     <ClInclude Include="UIHUDResources.h" />
+    <ClInclude Include="UIHUDTownHallBarLife.h" />
     <ClInclude Include="UILabel.h" />
     <ClInclude Include="UISelectOption.h" />
     <ClInclude Include="Units.h" />

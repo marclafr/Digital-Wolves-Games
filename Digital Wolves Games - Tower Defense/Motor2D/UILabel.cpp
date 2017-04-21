@@ -60,15 +60,16 @@ bool UILabel::Update()
 
 void UILabel::ChangeText(const char* text, SDL_Color color)
 {
-	if (this->text != text)
+	std::string text_to_change(text);
+	if (this->text.compare(text_to_change) != 0)
 	{
 		App->tex->UnloadLabel(text_img);
 
-		text_img = App->font->Print(text, T_AOE_UI_FONT, color);
+		text_img = App->font->Print(text_to_change.c_str(), T_AOE_UI_FONT, color);
 
 		App->render->GetDimensionsFromTexture(text_img, rect_position.w, rect_position.h);
 
 		this->text.erase();
-		this->text.assign(text);
+		this->text.assign(text_to_change);
 	}
 }

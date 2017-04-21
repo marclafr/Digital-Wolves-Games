@@ -2,7 +2,6 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
-#include <vector>
 
 #define BASIC_TOWER_WOOD_COST 75
 #define BASIC_TOWER_STONE_COST 25
@@ -20,8 +19,10 @@ class UIHUDPanelButtons;
 class UIHUDPanelInfo;
 class UIHUDDescription;
 class UIHUDResources;
+class UIHUDTownHallBarLife;
 class Resources;
 class Building;
+enum RESOURCE_TYPE;
 
 class j1Scene : public j1Module
 {
@@ -64,8 +65,8 @@ public:
 	bool placing_wall = false;
 	bool game_scene = true;
 
-	bool win=false;
-	bool lose=false;
+	bool win = false;
+	bool lose = false;
 private:
 	SDL_Texture* debug_tex;
 	SDL_Texture* tower_tex;
@@ -80,21 +81,32 @@ private:
 	UIComponents* down_hud;
 	UICheckbutton* btn_description;
 	UIHUDPanelButtons* panel;
+	UIHUDTownHallBarLife* townhall_bar_life;
 
 	SDL_Rect select_rect;
 
+	Resources* resource_food;
 	Resources* resource_wood;
+	Resources* resource_gold;
 	Resources* resource_stone;
 
 	Building* townhall;
 	Building* townhalltower1;
 	Building* townhalltower2;
+
+	UIButton* new_wave_button;
+	bool clicked = false;
+
+public:
+	Resources* GetResource(RESOURCE_TYPE type);
+
+
 public:
 	UIHUDPanelInfo* panel_info;
 	UIHUDDescription* hud_description;
 	j1Timer game_time;
 
-	std::vector<iPoint> hi;
+	UIComponents* info_ui;
 };
 
 #endif // __j1SCENE_H__

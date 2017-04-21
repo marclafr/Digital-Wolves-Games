@@ -24,7 +24,7 @@ But you will need to do a good managment with resouces.
 
 Controls:
 
-The game controles are based in a mouse and keyboard. While the keyboard can be used for ìhot-keysî the mouse is used for most of the gameís control:
+The game controles are based in a mouse and keyboard. While the keyboard can be used for ‚Äúhot-keys‚Äù the mouse is used for most of the game‚Äôs control:
  - left click: select units or buildings and interact with ui (mainlly click buttons)
  - left click and drag: grup selection of units and multi wall consturction.
  - right click: is used to move selected units, chose targets and to change spawn destination of buildings that produce units.
@@ -64,10 +64,11 @@ What we cand do now?
 Team members:
 
 | Role         |     Name      |           Github             |
+|:------------:|:-------------:|:----------------------------:|
 | Team Leader  | Marc Latorre  | https://github.com/marclafr  |
 | Code         | Dani Lopez    | https://github.com/Danny0ner |
-| Design       | JosÈ Rodriguez| https://github.com/joserm45  |
+| Design       | Jos√© Rodriguez| https://github.com/joserm45  |
 | Art/Audio    | Pau Serra     | https://github.com/pau5erra  |
-| UI           | Juli‡ Mauri   | https://github.com/juliamauri|
-|Management    | MartÌ MajÛ    | https://github.com/martimyc  |
+| UI           | Juli√† Mauri   | https://github.com/juliamauri|
+|Management    | Mart√≠ Maj√≥    | https://github.com/martimyc  |
 |QA            | Marc Samper   |https://github.com/marcsamper |

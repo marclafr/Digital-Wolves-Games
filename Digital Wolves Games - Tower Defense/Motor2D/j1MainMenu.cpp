@@ -42,12 +42,12 @@ bool j1MainMenu::Awake()
 // Called before the first frame
 bool j1MainMenu::Start()
 {
-	App->uimanager->Enable();
 	App->audio->PlayMusic("audio/music/Menu01.ogg");
 
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	background->Set({ 0, 0, 1336, 767 }, { 0, 0, 1366, 767 });
 
+	//SINGLE PLAYER
 	single_player = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	single_player->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
 	single_player->SetInteractive(true);
@@ -55,28 +55,44 @@ bool j1MainMenu::Start()
 	title_single_player = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_single_player->Set(590, 30, "Single Player");
 
+	//TUTORIAL
 	tutorial = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	tutorial->Set({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
 	tutorial->SetInteractive(false);
 
+	//HISTORY
 	history = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	history->Set({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
 	history->SetInteractive(false);
 
+	//TROPHIES
 	trophies = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	trophies->Set({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
-	trophies->SetInteractive(false);
+	trophies->SetInteractive(true);
 
+	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_trophies->Set(545, 286, "Trophies");
+
+	
+
+	//OPTIONS
 	options = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	options->Set({ 300, 448, 125, 122 }, { 288, 862, 125, 123 });
 	options->SetInteractive(false);
 	
+	//EXIT
 	exit = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
 	exit->SetInteractive(true);
 
 	title_exit = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_exit->Set(265, 708, "Exit");
+
+	//TROPHIES HUD
+	trophies_hud = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	trophies_hud->Set({ 110, 110, 1119, 513 }, { 2, 1513, 1119, 513 });
+	trophies_hud->SetInteractive(true);
+	trophies_hud->SetDraw(false);
 
 	if (App->scene->win == true)
 	{
@@ -112,12 +128,14 @@ bool j1MainMenu::Update(float dt)
 	
 	if (single_player->GetStat() == SELECTED) 
 	{
-		single_player->Set({ 539, 17, 177, 244 }, { 298, 1229, 177, 244 });
+		single_player->Set({ 539, 17, 177, 240 }, { 298, 1229, 177, 240 });
 	}
 	if (single_player->GetStat() == UNSELECTED)
 	{
 		single_player->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
 	}
+
+	
 
 	if (exit->GetStat() == SELECTED) 
 	{
@@ -128,13 +146,31 @@ bool j1MainMenu::Update(float dt)
 	exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
 	}
 	
-	if (single_player->GetStat() == CLICKL_UP) 
+	
+
+	if (trophies->GetStat() == SELECTED)
 	{
-		App->scene_manager->ChangeScene(App->scene, this);
-		App->scene->win = false;
-		App->scene->lose = false;
+		trophies->Set({ 500, 282, 148, 160 }, { 792, 1162, 148, 160 });
+	}
+	if (trophies->GetStat() == UNSELECTED)
+	{
+		trophies->Set({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
+	}
+	if (trophies->GetStat() == CLICKL_UP)
+	{
+		trophies_hud->SetDraw(true);
+	}
+	if (trophies_hud->GetStat() == CLICKL_UP && trophies_hud->GetDraw() == true)
+	{
+		trophies_hud->SetDraw(false);
 	}
 
+	if (single_player->GetStat() == CLICKL_UP) 
+			{
+				App->scene_manager->ChangeScene(App->scene, this);
+				App->scene->win = false;
+				App->scene->lose = false;
+			}
 	return true;
 }
 
@@ -155,7 +191,7 @@ bool j1MainMenu::PostUpdate()
 bool j1MainMenu::CleanUp()
 {
 	LOG("Freeing  MainMenu");
-	App->uimanager->Disable();
+	App->uimanager->CleanUp();
 	return true;
 }
 

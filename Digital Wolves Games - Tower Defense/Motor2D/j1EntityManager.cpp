@@ -175,7 +175,7 @@ void j1EntityManager::BlitEnemyDeathCount()
 
 		App->win->GetWindowSize(width, height);
 
-		SDL_Rect rect{ width - 120, 25, 120, 60};
+		//SDL_Rect rect{ width - 120, 25, 120, 60};
 
 		int secs = WINNING_TIME - App->scene->game_time.ReadSec();
 		int mins = secs / 60;
@@ -199,13 +199,9 @@ void j1EntityManager::BlitEnemyDeathCount()
 
 		time_texture = App->font->Print(time_left);
 
-		SDL_RenderDrawRect(App->render->renderer, &rect);
-		SDL_SetRenderDrawColor(App->render->renderer, 100, 100, 100, 100);
-		SDL_RenderFillRect(App->render->renderer, &rect);
-
-		App->render->Blit(num_kills_texture, -App->render->camera->GetPosition().x + rect.x, -App->render->camera->GetPosition().y + rect.y);
-		App->render->Blit(score_texture, -App->render->camera->GetPosition().x + rect.x, -App->render->camera->GetPosition().y + rect.y + 20);
-		App->render->Blit(time_texture, -App->render->camera->GetPosition().x + rect.x, -App->render->camera->GetPosition().y + rect.y + 40);
+		App->render->Blit(num_kills_texture, -App->render->camera->GetPosition().x + App->scene->info_ui->rect_position.x+10, -App->render->camera->GetPosition().y + App->scene->info_ui->rect_position.y+5);
+		App->render->Blit(score_texture, -App->render->camera->GetPosition().x + App->scene->info_ui->rect_position.x+10, -App->render->camera->GetPosition().y + App->scene->info_ui->rect_position.y + 25);
+		App->render->Blit(time_texture, -App->render->camera->GetPosition().x + App->scene->info_ui->rect_position.x+10, -App->render->camera->GetPosition().y + App->scene->info_ui->rect_position.y + 45);
 
 		SDL_DestroyTexture(time_texture);
 	}

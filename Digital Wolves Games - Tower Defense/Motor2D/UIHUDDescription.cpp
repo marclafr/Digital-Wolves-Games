@@ -1,13 +1,12 @@
-#define X_BACKGROUND 1
-#define Y_BACKGROUND 628
+#define BACKGROUND_POSITION_NAME {1, 593, 194, 15}
+#define BACKGROUND_POSITION_PRICE {1, 608, 194, 15}
 
-#define XATLAS_BACKGROUND 1
-#define YATLAS_BACKGROUND 995
-#define WATLAS_BACKGROUND 194
-#define HATLAS_BACKGROUND 15
+#define ATLAS_BACKGROUND {1, 995, 194, 15}
 
-#define X_LABEL 3
-#define Y_LABEL 628
+#define X_LABEL_NAME 3
+#define Y_LABEL_NAME 593
+#define X_LABEL_PRICE 3
+#define Y_LABEL_PRICE 608
 
 #include "UIHUDDescription.h"
 
@@ -28,13 +27,21 @@ UIHUDDescription::UIHUDDescription(UICOMPONENT_TYPE type) : UIComponents(type)
 	SetInteractive(false);
 	SetDraw(false);
 
-	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	background->Set({ X_BACKGROUND, Y_BACKGROUND, WATLAS_BACKGROUND, HATLAS_BACKGROUND }, { XATLAS_BACKGROUND, YATLAS_BACKGROUND, WATLAS_BACKGROUND, HATLAS_BACKGROUND });
-	background->SetDraw(false);
+	background_name = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	background_name->Set(BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+	background_name->SetDraw(false);
 
-	description = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	description->Set(X_LABEL, Y_LABEL, "init");
-	description->SetDraw(false);
+	background_price = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	background_price->Set(BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+	background_price->SetDraw(false);
+
+	description_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	description_name->Set(X_LABEL_NAME, Y_LABEL_NAME, "init");
+	description_name->SetDraw(false);
+
+	description_price = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	description_price->Set(X_LABEL_PRICE, Y_LABEL_PRICE, "init");
+	description_price->SetDraw(false);
 
 	unit_desc = UNIT_TYPE::U_NO_UNIT;
 	build_desc = BUILDING_TYPE::B_NO_BUILDING;
@@ -81,22 +88,24 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 
 void UIHUDDescription::SetLabelUnit()
 {
-	std::string tmp(GetUnitName(unit_desc));
-	tmp += ": ";
-	tmp += GetSideName(side_desc);
-	description->ChangeText(tmp.c_str());
-	background->SetDraw(true);
-	description->SetDraw(true);
+	description_name->ChangeText(GetUnitName(unit_desc));
+	background_name->SetDraw(true);
+	description_name->SetDraw(true);
+
+	description_price->ChangeText(GetUnitPrice(unit_desc));
+	background_price->SetDraw(true);
+	description_price->SetDraw(true);
 }
 
 void UIHUDDescription::SetLabelBuilding()
 {
-	std::string tmp(GetBuildingName(build_desc));
-	tmp += ": ";
-	tmp += GetSideName(side_desc);
-	description->ChangeText(tmp.c_str());
-	background->SetDraw(true);
-	description->SetDraw(true);
+	description_name->ChangeText(GetBuildingName(build_desc));
+	background_name->SetDraw(true);
+	description_name->SetDraw(true);
+
+	description_price->ChangeText(GetBuildingPrice(build_desc));
+	background_price->SetDraw(true);
+	description_price->SetDraw(true);
 }
 
 void UIHUDDescription::Clear()
@@ -104,8 +113,10 @@ void UIHUDDescription::Clear()
 	unit_desc = UNIT_TYPE::U_NO_UNIT;
 	build_desc = BUILDING_TYPE::B_NO_BUILDING;
 	side_desc = Side::S_NO_SIDE;
-	background->SetDraw(false);
-	description->SetDraw(false);
+	background_name->SetDraw(false);
+	description_name->SetDraw(false);
+	background_price->SetDraw(false);
+	description_price->SetDraw(false);
 	selected = nullptr;
 }
 

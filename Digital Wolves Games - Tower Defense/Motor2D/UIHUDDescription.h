@@ -18,8 +18,10 @@ public:
 
 	bool enable = false;
 
-	UIComponents* background = nullptr;
-	UILabel* description = nullptr;
+	UIComponents* background_name = nullptr;
+	UIComponents* background_price = nullptr;
+	UILabel* description_name = nullptr;
+	UILabel* description_price = nullptr;
 
 	UNIT_TYPE unit_desc;
 

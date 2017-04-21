@@ -1,3 +1,5 @@
+#define RECT_INGAME_WITHOUT_UI {0, 27, 1360, 624}
+
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
@@ -23,6 +25,7 @@
 #include "UIHUDPanelButtons.h"
 #include "UIHUDDescription.h"
 #include "UIHUDResources.h"
+#include "UIHUDTownHallBarLife.h"
 #include "UICheckbutton.h"
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
@@ -50,7 +53,6 @@ bool j1Scene::Start()
 {
 	App->wave_manager->Enable();
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg");
-	App->uimanager->Enable();
 
 	App->render->camera->SetPosition(iPoint(2300, -800));
 
@@ -77,12 +79,18 @@ bool j1Scene::Start()
 	
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
+	townhall_bar_life->SetTownHall(townhall);
+	resource_food = (Resources*)App->entity_manager->CreateResource(FOOD, fPoint(1680, 1008));
+	resources_panel->AddResource(resource_food);
+	resource_gold = (Resources*)App->entity_manager->CreateResource(GOLD, fPoint(1680, 1008));
+	resources_panel->AddResource(resource_gold);
 	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(1680, 1008));
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1824, 1080));
 	resources_panel->AddResource(resource_wood);
 	townhalltower1 = (Building*)App->entity_manager->CreateBuilding(B_TURRET, fPoint(-624, 528), S_ALLY);
 	townhalltower2 = (Building*)App->entity_manager->CreateBuilding(B_TURRET, fPoint(-432, 624), S_ALLY);
+	
 	//Reset scores and timers
 	game_time.Start();
 	App->entity_manager->ResetScores();
@@ -113,6 +121,11 @@ bool j1Scene::Update(float dt)
 	iPoint res = App->render->ScreenToWorld(x, y);
 
 	//DEBUG: increase resources
+	if (App->debug_features.add_food)
+	{
+		resource_food->AddResource(1000);
+		App->debug_features.add_food = false;
+	}
 	if (App->debug_features.add_wood)
 	{
 		resource_wood->AddResource(1000);
@@ -123,7 +136,14 @@ bool j1Scene::Update(float dt)
 	{
 		resource_stone->AddResource(1000);
 		App->debug_features.add_stone = false;
-	}//--
+	}
+
+	if (App->debug_features.add_gold)
+	{
+		resource_gold->AddResource(1000);
+		App->debug_features.add_gold = false;
+	}
+	//--
 
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN )
 		App->LoadGame("save_game.xml");
@@ -215,6 +235,7 @@ bool j1Scene::Update(float dt)
 			App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(-480, 552), S_ALLY);
 		}
 	}
+
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(p.x, p.y), S_ALLY);
@@ -239,26 +260,30 @@ bool j1Scene::Update(float dt)
 	//SELECTION
 	App->input->GetMousePosition(x, y);
 
-	if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+	SDL_Rect rect_ingame_no_ui = RECT_INGAME_WITHOUT_UI;
+	if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
 	{
-		App->entity_manager->UnselectEverything();
+		if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+		{
+			App->entity_manager->UnselectEverything();
 
-		select_rect.x = x - App->render->camera->GetPosition().x;
-		select_rect.y = y - App->render->camera->GetPosition().y;
-		select_rect.w = select_rect.x;
-		select_rect.h = select_rect.y;
-	}
+			select_rect.x = x - App->render->camera->GetPosition().x;
+			select_rect.y = y - App->render->camera->GetPosition().y;
+			select_rect.w = select_rect.x;
+			select_rect.h = select_rect.y;
+		}
 
-	else if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
-	{
-		select_rect.w = x - App->render->camera->GetPosition().x;
-		select_rect.h = y - App->render->camera->GetPosition().y;
-		App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
-	}
+		else if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
+		{
+			select_rect.w = x - App->render->camera->GetPosition().x;
+			select_rect.h = y - App->render->camera->GetPosition().y;
+			App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
+		}
 
-	if (App->input->GetMouseButtonDown(1) == KEY_UP)
-	{
-		App->entity_manager->SelectInQuad(select_rect);
+		if (App->input->GetMouseButtonDown(1) == KEY_UP)
+		{
+			App->entity_manager->SelectInQuad(select_rect);
+		}
 	}
 	//--
 
@@ -276,7 +301,8 @@ bool j1Scene::Update(float dt)
 			else
 			{
 				SDL_Rect rect;
-				rect = { 610,1,107,206 };
+				rect = { 580 ,538 ,107,206 };
+				//rect = { 610,1,107,206 };
 				App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
 				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 				{
@@ -313,7 +339,8 @@ bool j1Scene::Update(float dt)
 		else if (App->pathfinding->IsConstructible_ally(r) == true)		
 		{
 			SDL_Rect rect;
-			rect = { 325,218,99,178};
+			rect = { 690,303,99,178};
+			//rect = { 325,218,99,178 };
 			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949*99, 178*0.865169);
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
@@ -335,6 +362,31 @@ bool j1Scene::Update(float dt)
 			placing_wall = false;
 		}
 	}
+
+
+
+
+	if (new_wave_button->GetStat() == CLICKL_DOWN)
+	{
+		new_wave_button->Set({ 1254, 93, 104 , 104 }, { 687, 1227, 104, 104 });
+		clicked = true;
+	}
+	if (new_wave_button->GetStat() == CLICKL_UP)
+	{
+		new_wave_button->Set({ 1256, 95, 98 , 99 }, { 687, 1229, 98, 99 });
+		clicked = false;
+	}
+	if (new_wave_button->GetStat() == SELECTED && !clicked)
+	{
+		new_wave_button->Set({ 1252, 92, 104 , 104 }, { 580, 1226, 104, 104 });
+	}
+	if (new_wave_button->GetStat() == UNSELECTED)
+	{	
+		new_wave_button->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
+		clicked = false;
+	}
+
+
 	return true;
 }
 
@@ -369,7 +421,7 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 	App->wave_manager->Disable();
 	App->entity_manager->CleanUp();
-	App->uimanager->Disable();
+	App->uimanager->CleanUp();
 	return true;
 }
 
@@ -403,6 +455,28 @@ void j1Scene::TrainSoldier()
 {
 	resource_wood->UseResource(TWOHANDED_WOOD_COST);
 	resource_stone->UseResource(TWOHANDED_STONE_COST);
+}
+
+Resources* j1Scene::GetResource(RESOURCE_TYPE type)
+{
+	switch (type)
+	{
+	case FOOD:
+		return resource_food;
+		break;
+	case WOOD:
+		return resource_wood;
+		break;
+	case GOLD:
+		return resource_gold;
+		break;
+	case STONE:
+		return resource_stone;
+		break;
+	default:
+		return nullptr;
+		break;
+	}
 }
 
 void j1Scene::CreateSceneUI()
@@ -452,4 +526,17 @@ void j1Scene::CreateSceneUI()
 
 	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
 	hud_description->SetEnableButton(btn_description);
+
+	townhall_bar_life = (UIHUDTownHallBarLife*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE);
+
+	new_wave_button = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	new_wave_button->Set({ 1266, 95, 98 , 99 }, { 476, 1229, 98, 99 });
+	new_wave_button->SetInteractive(true);
+
+	
+
+
+	//INFO SCORE, TIME, ENEMIES LEFT
+	info_ui = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	info_ui->Set({ 1236, 25, 130, 65 }, { 405, 1162, 130, 65 });
 }

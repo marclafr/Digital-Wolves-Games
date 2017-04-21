@@ -21,6 +21,7 @@
 #include "UIHUDPanelInfo.h"
 #include "UIHUDDescription.h"
 #include "UIHUDResources.h"
+#include "UIHUDTownHallBarLife.h"
 
 j1UIManager::j1UIManager() : j1Module()
 {
@@ -134,6 +135,22 @@ bool j1UIManager::PostUpdate()
 
 		item++;
 	}
+
+	if (delete_some_components)
+	{
+		std::list<UIComponents*>::iterator c_item = first_item_delete;
+		++last_item_delete;
+
+		while (c_item != last_item_delete)
+		{
+			delete *c_item;
+
+			c_item++;
+		}
+		components.erase(first_item_delete, last_item_delete);
+
+		delete_some_components = false;
+	}
 	
 	return true;
 }
@@ -148,12 +165,15 @@ bool j1UIManager::CleanUp()
 
 	while (item != components.end())
 	{
-		delete item._Ptr->_Myval;
+		delete *item;
 		
 		item++;
 	}
 
 	components.clear();
+
+	if (delete_some_components)
+		delete_some_components = false;
 
 	return true;
 }
@@ -188,6 +208,9 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 	case UIHUDRESOURCES:
 		components.push_back(ret = (UIComponents*)new UIHUDResources(UICOMPONENT_TYPE::UIHUDRESOURCES));
 		break;
+	case UIHUDTOWNHALLBARLIFE:
+		components.push_back(ret = (UIComponents*)new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE));
+		break;
 	default:
 		components.push_back(ret = new UIComponents(type));
 		break;
@@ -200,4 +223,22 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 const SDL_Texture* j1UIManager::GetAtlas() const
 {
 	return atlas;
+}
+
+void j1UIManager::erase_list(std::list<UIComponents*>::iterator first, std::list<UIComponents*>::iterator last)
+{
+	delete_some_components = true;
+
+	first_item_delete = first;
+
+	last_item_delete = last;
+}
+
+const std::list<UIComponents*>::iterator j1UIManager::GetLastComponent()
+{
+	std::list<UIComponents*>::iterator temp = components.end();
+
+	--temp;
+
+	return temp;
 }

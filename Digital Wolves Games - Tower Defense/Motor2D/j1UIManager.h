@@ -42,11 +42,19 @@ public:
 
 	const SDL_Texture* GetAtlas() const;
 
+	void erase_list(std::list<UIComponents*>::iterator first, std::list<UIComponents*>::iterator last);
+
+	const std::list<UIComponents*>::iterator GetLastComponent();
+
 private:
 
 	std::list<UIComponents*> components;
 
 	SDL_Texture* atlas;
 	std::string atlas_file_name;
+
+	bool delete_some_components = false;
+	std::list<UIComponents*>::iterator first_item_delete;
+	std::list<UIComponents*>::iterator last_item_delete;
 };
 #endif // __j1GUIMANAGER_H__

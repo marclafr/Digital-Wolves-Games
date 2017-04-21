@@ -23,6 +23,7 @@ public:
 
 	bool Update();
 
+	//Before check if the text to change is diferent from actual
 	void ChangeText(const char* text, SDL_Color color = { 255,255,255,0 });
 };
 

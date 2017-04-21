@@ -44,6 +44,7 @@ public:
 	void EnableScene();
 
 	bool game_scene = true;
+	UIComponents* trophies_hud;
 
 private:
 	
@@ -54,7 +55,11 @@ private:
 
 	UIButton* tutorial;
 	UIButton* history;
+
 	UIButton* trophies;
+	UILabel* title_trophies;
+	
+		
 	UIButton* options;
 	
 	UIButton* exit;

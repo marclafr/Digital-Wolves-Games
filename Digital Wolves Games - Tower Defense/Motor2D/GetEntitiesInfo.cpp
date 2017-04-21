@@ -44,7 +44,7 @@ const char* GetUnitName(const UNIT_TYPE type)
 	switch (type)
 	{
 	case U_TWOHANDEDSWORDMAN:
-		ret = "Two Handed Sword Man - Wood:15 Stone:15";
+		ret = "Two Handed Sword Man";
 		break;
 
 	case U_CAVALRYARCHER:
@@ -58,6 +58,25 @@ const char* GetUnitName(const UNIT_TYPE type)
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
 		ret = "Error Unit";
+		break;
+	}
+
+	return ret;
+}
+
+const char * GetUnitPrice(const UNIT_TYPE type)
+{
+	char* ret;
+
+	switch (type)
+	{
+	case U_TWOHANDEDSWORDMAN:
+		ret = "Wood:15 Stone:15";
+		break;
+
+	default:
+		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
+		ret = "Error Unit Price";
 		break;
 	}
 
@@ -152,10 +171,10 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_TURRET:
-		ret = "Basic Tower - Wood: 75 Stone: 25";
+		ret = "Basic Tower";
 		break;
 	case B_STONE_WALL:
-		ret = "Stone Wall - Stone: 50";
+		ret = "Stone Wall";
 		break;
 	case B_TOWNHALL:
 		ret = "Town Hall";
@@ -163,6 +182,27 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
 		ret = "Error Building";
+		break;
+	}
+
+	return ret;
+}
+
+const char * GetBuildingPrice(const BUILDING_TYPE type)
+{
+	char* ret;
+
+	switch (type)
+	{
+	case B_TURRET:
+		ret = "Wood: 75 Stone: 25";
+		break;
+	case B_STONE_WALL:
+		ret = "Stone: 50";
+		break;
+	default:
+		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
+		ret = "Error Building Price";
 		break;
 	}
 
@@ -190,7 +230,7 @@ const char* GetSideName(const Side type)
 	return ret;
 }
 
-int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp)
+int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp, const uint pixels)
 {
 	if (hp <= 0)
 		return 1;
@@ -200,15 +240,15 @@ int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp)
 	switch (type)
 	{
 	case U_TWOHANDEDSWORDMAN:
-		ret = hp * 32/ TWOHANDEDSWORDMAN_HP;
+		ret = hp * pixels / TWOHANDEDSWORDMAN_HP;
 		break;
 
 	case U_CAVALRYARCHER:
-		ret = hp * 32 / CAVALRYARCHER_HP;
+		ret = hp * pixels / CAVALRYARCHER_HP;
 		break;
 
 	case U_SIEGERAM:
-		ret = hp * 32 / SIEGERAM_HP;
+		ret = hp * pixels / SIEGERAM_HP;
 		break;
 
 	default:
@@ -220,7 +260,7 @@ int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp)
 	return ret;
 }
 
-int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp)
+int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp, const uint pixels)
 {
 	if (hp <= 0)
 		return 1;
@@ -230,13 +270,13 @@ int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp)
 	switch (type)
 	{
 	case B_TURRET:
-		ret = hp * 32 / TURRET_HP;
+		ret = hp * pixels / TURRET_HP;
 		break;
 	case B_STONE_WALL:
-		ret = hp * 32 / STONEWALL_HP;
+		ret = hp * pixels / STONEWALL_HP;
 		break;
 	case B_TOWNHALL:
-		ret = hp * 32 / TOWNHALL_HP;
+		ret = hp * pixels / TOWNHALL_HP;
 		break;
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
@@ -247,7 +287,7 @@ int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp)
 	return ret;
 }
 
-int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp)
+int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp, const uint pixels)
 {
 	if (hp <= 0)
 		return 1;
@@ -257,16 +297,16 @@ int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp)
 	switch (type)
 	{
 	case WOOD:
-		ret = hp * 32 / RESOURCES_HP;
+		ret = hp * pixels / RESOURCES_HP;
 		break;
 	case STONE:
-		ret = hp * 32 / RESOURCES_HP;
+		ret = hp * pixels / RESOURCES_HP;
 		break;
 	case FOOD:
-		ret = hp * 32 / RESOURCES_HP;
+		ret = hp * pixels / RESOURCES_HP;
 		break;
 	case GOLD:
-		ret = hp * 32 / RESOURCES_HP;
+		ret = hp * pixels / RESOURCES_HP;
 		break;
 	}
 
