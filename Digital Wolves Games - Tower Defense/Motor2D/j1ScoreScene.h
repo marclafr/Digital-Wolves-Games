@@ -51,8 +51,13 @@ private:
 	UIButton* back_menu;
 
 	UIButton* score;
+	UILabel* title_score;
+
 	UIButton* achievements;
+	UILabel* title_achievements;
+
 	UIButton* investigations;
+	UILabel* title_investigations;
 
 	UILabel* title_win;
 	UILabel* title_lose;

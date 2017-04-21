@@ -58,21 +58,34 @@ bool j1ScoreScene::Start()
 	back_menu->Set({ 1014, 638, 129, 36 }, { 1234, 1432, 129, 36 });
 	back_menu->SetInteractive(true);
 
+	//PLAY AGAIN
 	play_again = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	play_again->Set({ 846, 637, 129, 37 }, { 1102, 1431, 129, 37 });
 	play_again->SetInteractive(true);
 
+	//SCORE
 	score = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	score->Set({ 278, 696, 126, 55 }, { 0, 0, 0, 0 });
 	score->SetInteractive(true);
 
+	title_score = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_score->Set(316, 710, "Trophies");
+
+	//ACHIEVEMENTS
 	achievements = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	achievements->Set({ 416, 696, 123, 55 }, { 0, 0, 0, 0 });
 	achievements->SetInteractive(true);
 
+	title_achievements = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_achievements->Set(440, 710, "Achievements");
+
+	//INVESTIGATIONS
 	investigations = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	investigations->Set({ 555, 696, 123, 55 }, { 0, 0, 0, 0 });
 	investigations->SetInteractive(true);
+
+	title_investigations = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_investigations->Set(575, 710, "Investigations");
 
 	if (App->scene->win == true)
 	{
