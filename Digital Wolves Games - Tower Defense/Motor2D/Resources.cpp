@@ -21,9 +21,9 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
-		collect_time = 12;
+		collect_time = 12.0f;
 		amount_collected = 50;
-		build_time = 7;
+		build_time = 7.0f;
 		rect = { 1,146,171,101 };	//TODO CHANGE RECT/PIVOT : SPRITE?????
 		SetRect(rect);
 		SetPivot(0.491228 * 171, 0.653465 * 101);
@@ -36,9 +36,9 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
-		collect_time = 10;
+		collect_time = 10.0f;
 		amount_collected = 100;
-		build_time = 7;
+		build_time = 7.0f;
 		rect = { 242,0,156,138 };
 		SetRect(rect);
 		SetPivot(0.491228 * 171, 0.653465 * 101);
@@ -51,9 +51,9 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
-		collect_time = 10;
+		collect_time = 10.0f;
 		amount_collected = 100;
-		build_time = 7;
+		build_time = 7.0f;
 		rect = { 242,0,156,138 };	//TODO CHANGE RECT/PIVOT : SPRITE?????
 		SetRect(rect);
 		SetPivot(0.491228 * 171, 0.653465 * 101);
@@ -66,9 +66,9 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
-		collect_time = 12;
+		collect_time = 12.0f;
 		amount_collected = 50;
-		build_time = 7;
+		build_time = 7.0f;
 		rect = { 1,146,171,101 };
 		SetRect(rect);
 		SetPivot(0.491228 * 171, 0.653465 * 101);
@@ -110,7 +110,7 @@ void Resources::Update()
 
 void Resources::AI()
 {
-	if (CollectTimer.ReadMs() >= collect_time * 1000)
+	if (CollectTimer.ReadSec() >= collect_time)
 	{
 		AddResource(amount_collected);
 		CollectTimer.Start();
@@ -129,7 +129,7 @@ const RESOURCE_TYPE Resources::GetResourceType() const
 
 const double Resources::GetBuildTime() const
 {
-	return buildtimer.ReadMs();
+	return buildtimer.Read();
 }
 
 int Resources::GetResource()

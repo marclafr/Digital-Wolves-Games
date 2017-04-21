@@ -7,7 +7,7 @@
 #include "j1Module.h"
 #include "Entity.h"
 #include "Units.h"
-#include "j1PerfTimer.h"
+#include "j1Timer.h"
 #include <vector>
 
 enum RESOURCE_TYPE
@@ -27,8 +27,8 @@ private:
 	enum RESOURCE_TYPE resource_type;
 	float collect_time;
 	float build_time;
-	j1PerfTimer buildtimer;
-	j1PerfTimer CollectTimer;
+	j1Timer buildtimer;
+	j1Timer CollectTimer;
 	bool totallybuilded = false;
 public:
 

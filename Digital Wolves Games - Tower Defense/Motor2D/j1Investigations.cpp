@@ -22,25 +22,25 @@ bool j1Investigations::Start()
 	bool ret = true;
 
 	//RESOURCES
-	CreateInvestigation("food", true, 300, 1.0);
-	CreateInvestigation("wood", true, 300, 1.0);
-	CreateInvestigation("gold", true, 300, 1.0);
-	CreateInvestigation("stone", true, 300, 1.0);
+	CreateInvestigation(INV_FOOD, true, 300, 1.0);
+	CreateInvestigation(INV_WOOD, true, 300, 1.0);
+	CreateInvestigation(INV_GOLD, true, 300, 1.0);
+	CreateInvestigation(INV_STONE, true, 300, 1.0);
 	//TROPS
-	CreateInvestigation("cavalry unlock", false, 150, 15.0);
-	CreateInvestigation("cavalry attack", false, 300, 30.0);
-	CreateInvestigation("cavalry defense", false, 300, 25.0);
-	CreateInvestigation("archers unlock", false, 150, 15.0);
-	CreateInvestigation("archers attack", false, 300, 30.0);
-	CreateInvestigation("archers defense", false, 300, 25.0);
-	CreateInvestigation("infantry unlock", false, 100, 15.0);
-	CreateInvestigation("infantry attack", false, 300, 30.0);
-	CreateInvestigation("infantry defense", false, 300, 25.0);
+	CreateInvestigation(INV_CAVALRY_UNLOCK, false, 150, 15.0);
+	CreateInvestigation(INV_CAVALRY_ATTACK, false, 300, 30.0);
+	CreateInvestigation(INV_CAVALRY_DEFENSE, false, 300, 25.0);
+	CreateInvestigation(INV_ARCHERS_UNLOCK, false, 150, 15.0);
+	CreateInvestigation(INV_ARCHERS_ATTACK, false, 300, 30.0);
+	CreateInvestigation(INV_ARCHERS_DEFENSE, false, 300, 25.0);
+	CreateInvestigation(INV_INFANTRY_UNLOCK, false, 100, 15.0);
+	CreateInvestigation(INV_INFANTRY_ATTACK, false, 300, 30.0);
+	CreateInvestigation(INV_INFANTRY_DEFENSE, false, 300, 25.0);
 	//TOWERS
-	CreateInvestigation("elemental", false, 100, 10.0);
-	CreateInvestigation("fire tower", false, 200, 10.0);
-	CreateInvestigation("ice tower", false, 250, 10.0);
-	CreateInvestigation("air tower", false, 300, 10.0);
+	CreateInvestigation(INV_ELEMENTAL, false, 100, 10.0);
+	CreateInvestigation(INV_FIRE_TOWER, false, 200, 10.0);
+	CreateInvestigation(INV_ICE_TOWER, false, 250, 10.0);
+	CreateInvestigation(INV_AIR_TOWER, false, 300, 10.0);
 	//--
 
 	return ret;
@@ -53,16 +53,7 @@ bool j1Investigations::Update(float dt)
 	//IMPORTANT: When activating the investigation upgrade-> USE THIS:	investigations[i]->upgrade_timer.Start();
 	//TEST
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-	{
-		if (this->CanInvestigate(investigations[0]) && investigations[0]->investigation_on_course == false)
-		{
-			Resources* gold = App->scene->GetResource(GOLD);
-			gold->UseResource(investigations[0]->cost);
-			investigations[0]->cost += 100;
-			investigations[0]->investigation_on_course = true;
-			investigations[0]->upgrade_timer.Start();
-		}
-	}
+		DoInvestigationUpgrade(investigations[0]);
 	//--
 
 	for (int i = 0; i < investigations.size(); i++)
@@ -83,9 +74,9 @@ bool j1Investigations::CleanUp()
 	return ret;
 }
 
-Investigation* j1Investigations::CreateInvestigation(const char* investigation_name, bool has_lvls, uint cost, float time_to_upgrade)
+Investigation* j1Investigations::CreateInvestigation(INVESTIGATION_TYPE investigation, bool has_lvls, uint cost, float time_to_upgrade)
 {
-	Investigation* new_inv = new Investigation(investigation_name, has_lvls, cost, time_to_upgrade);
+	Investigation* new_inv = new Investigation(investigation, has_lvls, cost, time_to_upgrade);
 	investigations.push_back(new_inv);
 
 	return new_inv;
@@ -116,6 +107,23 @@ bool j1Investigations::CanInvestigate(Investigation* investigation)
 	return false;
 }
 
+bool j1Investigations::DoInvestigationUpgrade(Investigation* investigation)
+{
+	if (this->CanInvestigate(investigation) && investigation->investigation_on_course == false)
+	{
+		Resources* gold = App->scene->GetResource(GOLD);
+		gold->UseResource(investigation->cost);
+
+		if (investigation->has_levels == true)
+			investigation->cost += COST_INCREASE_BY_LVL;
+
+		investigation->investigation_on_course = true;
+		investigation->upgrade_timer.Start();
+		return true;
+	}
+	return false;
+}
+
 bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 {
 
@@ -125,13 +133,13 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 
 		if (investigation->has_levels == false)
 		{
-			investigation->invest_state = UNLOCKED;
+			investigation->invest_state = L_UNLOCKED;
 			return true;
 		}
 
 		switch (investigation->invest_state)
 		{
-		case LOCKED:
+		case L_LOCKED:
 			investigation->invest_state = LVL1;
 			break;
 		case LVL1:
