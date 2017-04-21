@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include <vector>
 
 #define BASIC_TOWER_WOOD_COST 75
 #define BASIC_TOWER_STONE_COST 25
@@ -92,6 +93,8 @@ public:
 	UIHUDPanelInfo* panel_info;
 	UIHUDDescription* hud_description;
 	j1Timer game_time;
+
+	std::vector<iPoint> hi;
 };
 
 #endif // __j1SCENE_H__

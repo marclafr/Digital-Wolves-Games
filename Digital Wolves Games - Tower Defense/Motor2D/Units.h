@@ -3,7 +3,7 @@
 
 #include "Entity.h"
 #include "j1Timer.h"
-#include <list>
+#include <vector>
 
 #define XY_TILES_RELATION 2
 #define TOWN_HALL iPoint(-720,672) //TODO final townhall destination;, 
@@ -78,7 +78,7 @@ private:
 	Entity* target;
 	Entity* attacking;
 
-	std::list<iPoint> path_list;
+	std::vector<iPoint> path_vec;
 
 	int priority;
 
@@ -98,14 +98,13 @@ public:
 	const UNIT_CLASS GetUnitClass() const;
 	const ACTION GetAction() const;
 	const int GetUnitRadius() const;
-	int GetPath(iPoint dest);
+	bool GetPath(iPoint dest);
 	const int GetAttack() const;
 	const int GetRange() const;
 	const int GetVisionRange() const;
 	const bool IsMoving() const;
 
 	const int GetPriority() const;
-	void PopFirstPath();
 	void SetAction(const ACTION action);
 
 	//TODO:this should be private?

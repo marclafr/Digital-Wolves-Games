@@ -301,11 +301,13 @@ const int Unit::GetUnitRadius() const
 	return unit_radius;
 }
 
-int Unit::GetPath(iPoint dest)
+bool Unit::GetPath(iPoint dest)
 {
 	iPoint ori = App->map->WorldToMap(GetX(), GetY());
 	iPoint destinat = App->map->WorldToMap(dest.x, dest.y);
-	return App->pathfinding->CreatePath(ori, destinat, path_list);
+	if(App->pathfinding->CalculatePath(ori, destinat, path_vec) == false)
+		return false;
+	return true;
 }
 
 const int Unit::GetAttack() const
@@ -333,11 +335,6 @@ const bool Unit::IsMoving() const
 const int Unit::GetPriority() const
 {
 	return priority;
-}
-
-void Unit::PopFirstPath()
-{
-	path_list.pop_front();
 }
 
 void Unit::SetAction(const ACTION action)
@@ -410,10 +407,8 @@ void Unit::LookAt(iPoint pos)
 
 bool Unit::GoTo( iPoint destination)
 {
-	path_list.clear();
-	if (this->GetPath({ destination.x, destination.y }) != -1)
+	if (this->GetPath({ destination.x, destination.y }) != false)
 	{
-		path_list.pop_front();
 		GetNextTile();
 		this->action = A_WALK;
 		changed = true;
@@ -426,10 +421,8 @@ bool Unit::GoTo( iPoint destination)
 
 bool Unit::ChangeDirection(iPoint destination)
 {
-	path_list.clear();
-	if (this->GetPath({ destination.x, destination.y }) != -1)
+	if (this->GetPath(destination) != true)
 	{
-		path_list.pop_front();
 		GetNextTile();
 		this->destination.x = destination.x;
 		this->destination.y = destination.y;
@@ -466,15 +459,17 @@ bool Unit::GetNextTile()
 {
 	bool ret = true;
 
-	if (path_list.size() <= 0)
+	if (path_vec.size() <= 0)
 		return false;
 
-	path_objective = App->map->MapToWorld(path_list.front().x, path_list.front().y);
-	path_list.pop_front();
+	path_objective = App->map->MapToWorld(path_vec.back().x, path_vec.back().y);
+	path_vec.pop_back();
 
 	move_vector.x = (float)path_objective.x - GetX();
 	move_vector.y = (float)path_objective.y - GetY();
+
 	float modul = (sqrt(move_vector.x*move_vector.x + move_vector.y * move_vector.y));
+
 	move_vector.x = move_vector.x / modul;
 	move_vector.y = move_vector.y / modul;
 

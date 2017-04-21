@@ -2,6 +2,7 @@
 #define __P2DEFS_H__
 
 #include <stdio.h>
+#include <algorithm>
 
 //  NULL just in case ----------------------
 
@@ -59,6 +60,12 @@ inline const char* const PATH(const char* folder, const char* file)
 	static char path[MID_STR];
 	sprintf_s(path, MID_STR, "%s/%s", folder, file);
 	return path;
+}
+
+template <typename T>
+T clamp(const T& n, const T& lower, const T&upper)
+{
+	return std::max(lower, std::min(n, upper));
 }
 
 // Performance macros

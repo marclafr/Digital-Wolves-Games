@@ -131,6 +131,11 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		App->SaveGame("save_game.xml");
 
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+		App->render->camera->ZoomIn();
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+		App->render->camera->ZoomOut();
+
 	// Camera Movement
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT ||  ((y < (App->render->camera->GetHeight() / 30) && res.y > -30)))
 		App->render->camera->MoveUp(floor(450.0f * dt));
@@ -226,7 +231,7 @@ bool j1Scene::Update(float dt)
 		while(item != path->end())
 		{
 			iPoint pos = App->map->MapToWorld(item->x, item->y);
-			//App->render->Blit(debug_tex, pos.x - 32, pos.y - 32);
+			App->render->Blit(debug_tex, pos.x - 32, pos.y - 32);
 			item++;
 		}
 	}

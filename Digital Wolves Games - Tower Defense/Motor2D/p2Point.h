@@ -39,6 +39,15 @@ public:
 	}
 
 	// Math ------------------------------------------------
+
+	const p2Point& operator = (const p2Point& point)
+	{
+		x = point.x;
+		y = point.y;
+
+		return *this;
+	}
+
 	p2Point operator -(const p2Point &v) const
 	{
 		p2Vector2 r;
