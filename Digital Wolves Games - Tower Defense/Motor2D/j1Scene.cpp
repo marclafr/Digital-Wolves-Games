@@ -230,6 +230,7 @@ bool j1Scene::Update(float dt)
 			App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(-480, 552), S_ALLY);
 		}
 	}
+
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(p.x, p.y), S_ALLY);
@@ -360,23 +361,23 @@ bool j1Scene::Update(float dt)
 
 
 
-	if (new_wave->GetStat() == CLICKL_DOWN)
+	if (new_wave_button->GetStat() == CLICKL_DOWN)
 	{
-		new_wave->Set({ 1254, 93, 104 , 104 }, { 687, 1227, 104, 104 });
+		new_wave_button->Set({ 1254, 93, 104 , 104 }, { 687, 1227, 104, 104 });
 		clicked = true;
 	}
-	if (new_wave->GetStat() == CLICKL_UP)
+	if (new_wave_button->GetStat() == CLICKL_UP)
 	{
-		new_wave->Set({ 1256, 95, 98 , 99 }, { 687, 1229, 98, 99 });
+		new_wave_button->Set({ 1256, 95, 98 , 99 }, { 687, 1229, 98, 99 });
 		clicked = false;
 	}
-	if (new_wave->GetStat() == SELECTED && !clicked)
+	if (new_wave_button->GetStat() == SELECTED && !clicked)
 	{
-		new_wave->Set({ 1252, 92, 104 , 104 }, { 580, 1226, 104, 104 });
+		new_wave_button->Set({ 1252, 92, 104 , 104 }, { 580, 1226, 104, 104 });
 	}
-	if (new_wave->GetStat() == UNSELECTED)
+	if (new_wave_button->GetStat() == UNSELECTED)
 	{	
-		new_wave->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
+		new_wave_button->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
 		clicked = false;
 	}
 
@@ -523,9 +524,11 @@ void j1Scene::CreateSceneUI()
 
 	townhall_bar_life = (UIHUDTownHallBarLife*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE);
 
-	new_wave = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	new_wave->Set({ 1266, 95, 98 , 99 }, { 476, 1229, 98, 99 });
-	new_wave->SetInteractive(true);
+	new_wave_button = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	new_wave_button->Set({ 1266, 95, 98 , 99 }, { 476, 1229, 98, 99 });
+	new_wave_button->SetInteractive(true);
+
+	
 
 
 	//INFO SCORE, TIME, ENEMIES LEFT
