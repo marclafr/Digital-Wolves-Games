@@ -30,6 +30,7 @@ class j1Investigations;
 	//Scenes
 class j1MainMenu;
 class j1Scene;
+class j1ScoreScene;
 
 
 struct DebugFeatures
@@ -131,6 +132,7 @@ public:
 		//Scenesko
 	j1MainMenu*			main_menu = NULL;
 	j1Scene*			scene = NULL;
+	j1ScoreScene*		score_scene = NULL;
 
 	DebugFeatures		debug_features;
 

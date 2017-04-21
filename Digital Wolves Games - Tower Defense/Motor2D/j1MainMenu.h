@@ -7,10 +7,6 @@ struct SDL_Texture;
 class UILabel;
 class UIComponents;
 class UIButton;
-class UICheckbutton;
-class UIHUDPanelButtons;
-class UIHUDPanelInfo;
-class UIHUDDescription;
 
 
 class j1MainMenu : public j1Module
@@ -44,7 +40,6 @@ public:
 	void EnableScene();
 
 	bool game_scene = true;
-	UIComponents* trophies_hud;
 
 private:
 	

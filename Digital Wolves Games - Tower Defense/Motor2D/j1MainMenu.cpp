@@ -8,17 +8,13 @@
 #include "Camera.h"
 #include "j1Window.h"
 #include "j1Scene.h"
+#include "j1ScoreScene.h"
 #include "j1EntityManager.h"
 #include "j1MainMenu.h"
 #include "j1SceneManager.h"
 
 #include "UIButton.h"
 #include "UILabel.h"
-#include "UIHUDPanelButtons.h"
-#include "UIHUDDescription.h"
-#include "UIHUDResources.h"
-#include "UICheckbutton.h"
-#include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
 
 j1MainMenu::j1MainMenu() : j1Module()
@@ -44,6 +40,7 @@ bool j1MainMenu::Start()
 {
 	App->audio->PlayMusic("audio/music/Menu01.ogg");
 
+	//BACKGROUND
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	background->Set({ 0, 0, 1336, 767 }, { 0, 0, 1366, 767 });
 
@@ -87,12 +84,6 @@ bool j1MainMenu::Start()
 
 	title_exit = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_exit->Set(265, 708, "Exit");
-
-	//TROPHIES HUD
-	trophies_hud = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	trophies_hud->Set({ 110, 110, 1119, 513 }, { 2, 1513, 1119, 513 });
-	trophies_hud->SetInteractive(true);
-	trophies_hud->SetDraw(false);
 
 	if (App->scene->win == true)
 	{
@@ -156,14 +147,12 @@ bool j1MainMenu::Update(float dt)
 	{
 		trophies->Set({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
 	}
+
 	if (trophies->GetStat() == CLICKL_UP)
 	{
-		trophies_hud->SetDraw(true);
+		App->scene_manager->ChangeScene(App->score_scene, this);
 	}
-	if (trophies_hud->GetStat() == CLICKL_UP && trophies_hud->GetDraw() == true)
-	{
-		trophies_hud->SetDraw(false);
-	}
+	
 
 	if (single_player->GetStat() == CLICKL_UP) 
 			{

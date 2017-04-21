@@ -4,6 +4,8 @@
 #include "j1Module.h"
 #include "SDL\include\SDL_rect.h"
 
+class UIComponents;
+
 class j1SceneManager : public j1Module
 {
 public:
@@ -25,7 +27,6 @@ public:
 	bool CleanUp();
 
 	bool ChangeScene(j1Module* scene_on , j1Module* scene_off);
-
 
 private:
 	SDL_Rect screen;

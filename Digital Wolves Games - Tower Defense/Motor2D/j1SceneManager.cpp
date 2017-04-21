@@ -7,6 +7,9 @@
 #include "j1Window.h"
 #include "Camera.h"
 #include "j1Render.h"
+#include "j1UIManager.h"
+
+#include "UIButton.h"
 
 j1SceneManager::j1SceneManager() : j1Module()
 {
