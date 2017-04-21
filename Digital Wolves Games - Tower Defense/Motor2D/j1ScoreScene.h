@@ -54,6 +54,8 @@ private:
 	UIButton* achievements;
 	UIButton* investigations;
 
+	bool scene_changing = false;
+
 public:
 
 };

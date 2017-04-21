@@ -44,6 +44,7 @@ bool j1ScoreScene::Awake()
 bool j1ScoreScene::Start()
 {
 	App->audio->PlayMusic("audio/music/Menu01.ogg");
+	scene_changing = false;
 
 	//BACKGROUND
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
@@ -86,20 +87,7 @@ bool j1ScoreScene::PreUpdate()
 // Called each loop iteration
 bool j1ScoreScene::Update(float dt)
 {
-	//	BACK MENU
-	if (back_menu->GetStat() == SELECTED)
-	{
-		back_menu->Set({ 1010, 635, 137, 42 }, { 1226, 1386, 137, 42 });
-	}
-	if (back_menu->GetStat() == UNSELECTED)
-	{
-		back_menu->Set({ 1014, 638, 129, 36 }, { 1234, 1432, 129, 36 });
-	}
-	if (back_menu->GetStat() == CLICKL_UP)
-	{
-		App->scene_manager->ChangeScene(App->main_menu, this);
-	}
-
+	
 	//PLAY AGAIN
 	if (play_again->GetStat() == SELECTED)
 	{
@@ -112,6 +100,25 @@ bool j1ScoreScene::Update(float dt)
 	if (play_again->GetStat() == CLICKL_UP)
 	{
 		App->scene_manager->ChangeScene(App->scene, this);
+		scene_changing = true;
+
+	}
+
+	//BACK MENU
+	if (!scene_changing) 
+	{
+		if (back_menu->GetStat() == SELECTED)
+		{
+			back_menu->Set({ 1010, 635, 137, 42 }, { 1226, 1386, 137, 42 });
+		}
+		if (back_menu->GetStat() == UNSELECTED)
+		{
+			back_menu->Set({ 1014, 638, 129, 36 }, { 1234, 1432, 129, 36 });
+		}
+		if (back_menu->GetStat() == CLICKL_UP)
+		{
+			App->scene_manager->ChangeScene(App->main_menu, this);
+		}
 	}
 
 	//SCORE
