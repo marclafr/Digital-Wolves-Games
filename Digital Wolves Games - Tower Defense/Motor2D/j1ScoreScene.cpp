@@ -74,6 +74,25 @@ bool j1ScoreScene::Start()
 	investigations->Set({ 555, 696, 123, 55 }, { 0, 0, 0, 0 });
 	investigations->SetInteractive(true);
 
+	if (App->scene->win == true)
+	{
+		title_win = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+		char text_score[256];
+		sprintf_s(text_score, 256, " You Win!!  Score: %d", App->entity_manager->GetScore());
+		title_win->Set(600, 200, text_score);
+		App->audio->PlayMusic("audio/music/Main_Theme01.ogg");
+	}
+
+	if (App->scene->lose == true)
+	{
+		title_lose = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+		char text_score[256];
+		sprintf_s(text_score, 256, " You Lose :(  Score: %d", App->entity_manager->GetScore());
+		title_lose->Set(600, 200, text_score);
+		App->audio->PlayMusic("audio/music/Lost_Game01.ogg");
+	}
+
+
 	return true;
 }
 
@@ -101,6 +120,8 @@ bool j1ScoreScene::Update(float dt)
 	{
 		App->scene_manager->ChangeScene(App->scene, this);
 		scene_changing = true;
+		App->scene->win = false;
+		App->scene->lose = false;
 
 	}
 
@@ -118,6 +139,8 @@ bool j1ScoreScene::Update(float dt)
 		if (back_menu->GetStat() == CLICKL_UP)
 		{
 			App->scene_manager->ChangeScene(App->main_menu, this);
+			App->scene->win = false;
+			App->scene->lose = false;
 		}
 	}
 

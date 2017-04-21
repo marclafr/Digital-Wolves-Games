@@ -85,24 +85,6 @@ bool j1MainMenu::Start()
 	title_exit = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_exit->Set(265, 708, "Exit");
 
-	if (App->scene->win == true)
-	{
-		title_win = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-		char text_score[256];
-		sprintf_s(text_score, 256, " You Win!!  Score: %d", App->entity_manager->GetScore());
-		title_win->Set(900, 690, text_score);
-		App->audio->PlayMusic("audio/music/Main_Theme01.ogg");
-	}
-
-	if (App->scene->lose == true)
-	{
-		title_lose = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-		char text_score[256];
-		sprintf_s(text_score, 256, " You Lose :(  Score: %d", App->entity_manager->GetScore());
-		title_lose->Set(900, 690, text_score);	
-		App->audio->PlayMusic("audio/music/Lost_Game01.ogg");
-	}
-
 	return true;
 }
 

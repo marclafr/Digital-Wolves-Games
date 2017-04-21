@@ -54,6 +54,9 @@ private:
 	UIButton* achievements;
 	UIButton* investigations;
 
+	UILabel* title_win;
+	UILabel* title_lose;
+
 	bool scene_changing = false;
 
 public:

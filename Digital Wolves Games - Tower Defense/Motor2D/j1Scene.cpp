@@ -19,6 +19,7 @@
 #include "Resources.h"
 #include "j1SceneManager.h"
 #include "j1MainMenu.h"
+#include "j1ScoreScene.h"
 #include "j1WaveManager.h"
 #include "UIButton.h"
 #include "UILabel.h"
@@ -190,17 +191,6 @@ bool j1Scene::Update(float dt)
 		App->render->camera->Move(iPoint(1200, -250), 10);
 
 	//App->map->Draw();
-	
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
-		win = true;
-		App->scene_manager->ChangeScene(App->main_menu, this);
-		
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
-		lose = true;
-		App->scene_manager->ChangeScene(App->main_menu, this);
-	}
 
 		
 
@@ -406,12 +396,23 @@ bool j1Scene::PostUpdate()
 	{
 		win = true;
 		App->entity_manager->AddScore(townhall->GetHp() * 3);
-		App->scene_manager->ChangeScene(App->main_menu, this);
+		App->scene_manager->ChangeScene(App->score_scene, this);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		App->scene_manager->ChangeScene(App->main_menu, this);
+		App->scene_manager->ChangeScene(App->score_scene, this);
 
+
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
+		win = true;
+		App->scene_manager->ChangeScene(App->score_scene, this);
+
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+		lose = true;
+		App->scene_manager->ChangeScene(App->score_scene, this);
+	}
 	return ret;
 }
 
