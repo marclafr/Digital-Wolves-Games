@@ -50,6 +50,10 @@ private:
 	UIButton* play_again;
 	UIButton* back_menu;
 
+	UIButton* score;
+	UIButton* achievements;
+	UIButton* investigations;
+
 public:
 
 };

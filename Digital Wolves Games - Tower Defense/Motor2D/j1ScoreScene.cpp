@@ -61,6 +61,18 @@ bool j1ScoreScene::Start()
 	play_again->Set({ 846, 637, 129, 37 }, { 1102, 1431, 129, 37 });
 	play_again->SetInteractive(true);
 
+	score = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	score->Set({ 278, 696, 126, 55 }, { 0, 0, 0, 0 });
+	score->SetInteractive(true);
+
+	achievements = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	achievements->Set({ 416, 696, 123, 55 }, { 0, 0, 0, 0 });
+	achievements->SetInteractive(true);
+
+	investigations = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	investigations->Set({ 555, 696, 123, 55 }, { 0, 0, 0, 0 });
+	investigations->SetInteractive(true);
+
 	return true;
 }
 
@@ -74,6 +86,7 @@ bool j1ScoreScene::PreUpdate()
 // Called each loop iteration
 bool j1ScoreScene::Update(float dt)
 {
+	//	BACK MENU
 	if (back_menu->GetStat() == SELECTED)
 	{
 		back_menu->Set({ 1010, 635, 137, 42 }, { 1226, 1386, 137, 42 });
@@ -87,7 +100,7 @@ bool j1ScoreScene::Update(float dt)
 		App->scene_manager->ChangeScene(App->main_menu, this);
 	}
 
-
+	//PLAY AGAIN
 	if (play_again->GetStat() == SELECTED)
 	{
 		play_again->Set({ 842, 634, 137, 43 }, { 1085, 1385, 137, 43 });
@@ -101,6 +114,24 @@ bool j1ScoreScene::Update(float dt)
 		App->scene_manager->ChangeScene(App->scene, this);
 	}
 
+	//SCORE
+	if (score->GetStat() == CLICKL_UP)
+	{
+		background->Set({ 0, 622, 1336, 144 }, { 0, 2131, 1366, 144 });
+	}
+
+	//ACHIEVEMENTS
+	if (achievements->GetStat() == CLICKL_UP)
+	{
+		background->Set({ 0, 622, 1336, 144 }, { 0, 2278, 1366, 144 });
+	}
+
+	//INVESTIGATIONS
+	if (investigations->GetStat() == CLICKL_UP)
+	{
+		background->Set({ 0, 622, 1336, 144 }, { 0, 2426, 1366, 144 });
+	}
+
 	return true;
 }
 
@@ -108,6 +139,9 @@ bool j1ScoreScene::Update(float dt)
 bool j1ScoreScene::PostUpdate()
 {
 	bool ret = true;
+
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		App->scene_manager->ChangeScene(App->main_menu, this);
 
 	return ret;
 }
