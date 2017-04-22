@@ -37,8 +37,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	//Enable Module with submodules
-	void EnableScene();
+	void OptionSelected();
 
 	bool game_scene = true;
 
@@ -62,7 +61,17 @@ private:
 	UILabel* title_win;
 	UILabel* title_lose;
 
+	//TROPHIES
+	UIComponents* trophie_wood;
+	UIComponents* trophie_bronze;
+	UIComponents* trophie_silver;
+	UIComponents* trophie_gold;
+	UIComponents* trophie_rubi;
+
 	bool scene_changing = false;
+	bool score_unselected = true;
+	bool achievements_unselected = true;
+	bool investigation_unselected = true;
 
 public:
 

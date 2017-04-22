@@ -50,8 +50,8 @@ bool j1ScoreScene::Start()
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	background->Set({ 0, 0, 1336, 622 }, { 0, 1504, 1366, 622 });
 
-	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	background->Set({ 0, 622, 1336, 144 }, { 0, 2131, 1366, 144 });
+	under_background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	under_background->Set({ 0, 622, 1336, 144 }, { 0, 2131, 1366, 144 });
 
 	//BACK_MENU
 	back_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
@@ -67,6 +67,7 @@ bool j1ScoreScene::Start()
 	score = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	score->Set({ 278, 696, 126, 55 }, { 0, 0, 0, 0 });
 	score->SetInteractive(true);
+	score_unselected = false;
 
 	title_score = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_score->Set(316, 710, "Trophies");
@@ -87,12 +88,28 @@ bool j1ScoreScene::Start()
 	title_investigations = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_investigations->Set(575, 710, "Investigations");
 
+	//TROPHIES
+	trophie_wood = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	trophie_wood->Set({ 380, 200, 87, 98 }, { 677, 1370, 87, 98 });
+
+	trophie_bronze = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	trophie_bronze->Set({ 500, 185, 97, 113 }, { 765, 1355, 97, 113 });
+
+	trophie_silver = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	trophie_silver->Set({ 630, 169, 113, 129 }, { 941, 1162, 113, 129 });
+
+	trophie_gold = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	trophie_gold->Set({ 772, 159, 119, 139 }, { 1058, 1162, 119, 139 });
+
+	trophie_rubi = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	trophie_rubi->Set({ 920, 145, 136, 153 }, { 1181, 1162, 136, 153 });
+
 	if (App->scene->win == true)
 	{
 		title_win = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 		char text_score[256];
 		sprintf_s(text_score, 256, " You Win!!  Score: %d", App->entity_manager->GetScore());
-		title_win->Set(600, 200, text_score);
+		title_win->Set(655, 21, text_score);
 		App->audio->PlayMusic("audio/music/Main_Theme01.ogg");
 	}
 
@@ -101,7 +118,7 @@ bool j1ScoreScene::Start()
 		title_lose = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 		char text_score[256];
 		sprintf_s(text_score, 256, " You Lose :(  Score: %d", App->entity_manager->GetScore());
-		title_lose->Set(600, 200, text_score);
+		title_lose->Set(655, 21, text_score);
 		App->audio->PlayMusic("audio/music/Lost_Game01.ogg");
 	}
 
@@ -160,20 +177,25 @@ bool j1ScoreScene::Update(float dt)
 	//SCORE
 	if (score->GetStat() == CLICKL_UP)
 	{
-		background->Set({ 0, 622, 1336, 144 }, { 0, 2131, 1366, 144 });
+		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2131, 1366, 144 });
+		score_unselected = false;
 	}
 
 	//ACHIEVEMENTS
 	if (achievements->GetStat() == CLICKL_UP)
 	{
-		background->Set({ 0, 622, 1336, 144 }, { 0, 2278, 1366, 144 });
+		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2278, 1366, 144 });
+		score_unselected = true;
 	}
 
 	//INVESTIGATIONS
 	if (investigations->GetStat() == CLICKL_UP)
 	{
-		background->Set({ 0, 622, 1336, 144 }, { 0, 2426, 1366, 144 });
+		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2426, 1366, 144 });
+		score_unselected = true;
 	}
+
+	OptionSelected();
 
 	return true;
 }
@@ -195,5 +217,36 @@ bool j1ScoreScene::CleanUp()
 	LOG("Freeing  MainMenu");
 	App->uimanager->CleanUp();
 	return true;
+}
+
+
+void j1ScoreScene::OptionSelected()
+{
+	if (score_unselected)
+	{
+		trophie_wood->SetDraw(false);
+		trophie_bronze->SetDraw(false);
+		trophie_silver->SetDraw(false);
+		trophie_gold->SetDraw(false);
+		trophie_rubi->SetDraw(false);
+	}
+	else
+	{
+		trophie_wood->SetDraw(true);
+		trophie_bronze->SetDraw(true);
+		trophie_silver->SetDraw(true);
+		trophie_gold->SetDraw(true);
+		trophie_rubi->SetDraw(true);
+	}
+
+	if (achievements_unselected)
+	{
+
+	}
+
+	if (investigation_unselected)
+	{
+
+	}
 }
 

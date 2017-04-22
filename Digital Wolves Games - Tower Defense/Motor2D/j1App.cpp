@@ -77,9 +77,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	scene->active = false;
 	AddModule(score_scene);
-	score_scene->active = false;
+	score_scene->active = true;
 	AddModule(main_menu);
-	main_menu->active = true;
+	main_menu->active = false;
 	AddModule(scene_manager);
 
 	// render last to swap buffer
