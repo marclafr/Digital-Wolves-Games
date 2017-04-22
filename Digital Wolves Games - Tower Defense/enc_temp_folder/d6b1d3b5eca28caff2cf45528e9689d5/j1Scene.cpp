@@ -77,6 +77,7 @@ bool j1Scene::Start()
 
 	CreateSceneUI();
 
+	
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
 	townhall_bar_life->SetTownHall(townhall);

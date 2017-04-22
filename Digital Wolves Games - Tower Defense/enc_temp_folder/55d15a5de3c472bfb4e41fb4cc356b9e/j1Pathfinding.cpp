@@ -791,9 +791,7 @@ void j1PathFinding::DestinationReached(PathNode* destination, const PathNode* st
 		else if (path_to != nullptr && !diagonal_pushed)
 			destination->parent = path_to;
 		else
-		{
 			destination->parent = start;
-		}
 
 		if (destination_reached == false)
 		{
