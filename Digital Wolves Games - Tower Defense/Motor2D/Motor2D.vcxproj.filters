@@ -103,9 +103,6 @@
     <ClCompile Include="UISelectOption.cpp">
       <Filter>Awsome_Game\UIComponents\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Wall.cpp">
-      <Filter>Awsome_Game\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="j1MainMenu.cpp">
       <Filter>Awsome_Game\Scenes</Filter>
     </ClCompile>
@@ -255,9 +252,6 @@
     </ClInclude>
     <ClInclude Include="UISelectOption.h">
       <Filter>Awsome_Game\UIComponents\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>Awsome_Game\Entities</Filter>
     </ClInclude>
     <ClInclude Include="j1MainMenu.h">
       <Filter>Awsome_Game\Scenes</Filter>

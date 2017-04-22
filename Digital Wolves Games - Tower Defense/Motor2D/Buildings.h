@@ -14,6 +14,7 @@ enum BUILDING_TYPE
 {
 	B_NO_BUILDING = 0,
 	B_TURRET,
+	B_CANNON,
 	B_STONE_WALL,
 	B_TOWNHALL//PER TENIR ALGO
 };
@@ -42,6 +43,8 @@ public:
 	bool attacking = false;
 	const BUILDING_TYPE GetBuildingType() const;
 	const int GetRange() const;
+	void UpgradeTurret();
+	void UpgradeWall();
 	const double GetBuildTime() const;
 };
 

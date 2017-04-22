@@ -54,13 +54,6 @@ Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos)
 	entity_array.push_back(new_entity);
 	return new_entity;
 }
-Entity * j1EntityManager::CreateWall(WALL_TYPE w_type, fPoint pos)
-{
-	Entity* new_entity = (Entity*) new Wall(w_type, pos);
-	entity_array.push_back(new_entity);
-	return new_entity;
-}
-
 
 void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 {

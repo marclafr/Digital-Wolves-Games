@@ -331,3 +331,10 @@ void Building::UpdateArrowSprite(iPoint targetpos, SDL_Rect& rect, iPoint &pivot
 
 
 }
+
+void UpgradeBuilding() 
+{
+
+
+
+}

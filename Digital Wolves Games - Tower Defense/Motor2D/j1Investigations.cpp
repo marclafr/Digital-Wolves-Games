@@ -133,29 +133,29 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 
 		if (investigation->has_levels == false)
 		{
-			investigation->invest_state = L_UNLOCKED;
+			investigation->invest_state = LVL_UNLOCKED;
 			return true;
 		}
 
 		switch (investigation->invest_state)
 		{
-		case L_LOCKED:
-			investigation->invest_state = LVL1;
+		case LVL_LOCKED:
+			investigation->invest_state = LVL_1;
 			break;
-		case LVL1:
-			investigation->invest_state = LVL2;
+		case LVL_1:
+			investigation->invest_state = LVL_2;
 			break;
-		case LVL2:
-			investigation->invest_state = LVL3;
+		case LVL_2:
+			investigation->invest_state = LVL_3;
 			break;
-		case LVL3:
-			investigation->invest_state = LVL4;
+		case LVL_3:
+			investigation->invest_state = LVL_4;
 			break;
-		case LVL4:
-			investigation->invest_state = LVL5;
+		case LVL_4:
+			investigation->invest_state = LVL_5;
 			break;
-		case LVL5:
-			investigation->invest_state = LVL6;
+		case LVL_5:
+			investigation->invest_state = LVL_6;
 			break;
 			//ADD MORE JUST IN CASE
 		default:

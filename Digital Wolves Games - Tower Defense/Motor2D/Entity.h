@@ -12,7 +12,6 @@ enum ENTITY_TYPE
 	E_BUILDING,
 	E_UNIT,
 	E_RESOURCE,
-	E_WALL
 };
 
 enum Side

@@ -9,14 +9,14 @@
 
 enum LEVEL
 {
-	L_LOCKED,
-	L_UNLOCKED,
-	LVL1,
-	LVL2,
-	LVL3,
-	LVL4,
-	LVL5,
-	LVL6
+	LVL_LOCKED,
+	LVL_UNLOCKED,
+	LVL_1,
+	LVL_2,
+	LVL_3,
+	LVL_4,
+	LVL_5,
+	LVL_6
 	//look for: "ADD MORE JUST IN CASE" in case you add more levels and add more cases to upgrade them.
 };
 
@@ -53,7 +53,7 @@ public:
 public:
 	INVESTIGATION_TYPE investigation_type;
 	bool has_levels = true;
-	LEVEL invest_state = L_LOCKED;
+	LEVEL invest_state = LVL_LOCKED;
 	bool investigation_on_course = false;
 	float time_to_upgrade;
 	j1Timer upgrade_timer;
