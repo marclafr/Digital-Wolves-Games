@@ -132,13 +132,13 @@ bool j1MainMenu::Update(float dt)
 
 	if (trophies->GetStat() == CLICKL_UP)
 	{
-		App->scene_manager->ChangeScene(App->score_scene, this);
+		App->scene_manager->ChangeScene(SC_SCORE);
 	}
 	
 
 	if (single_player->GetStat() == CLICKL_UP) 
 			{
-				App->scene_manager->ChangeScene(App->scene, this);
+				App->scene_manager->ChangeScene(SC_GAME);
 				App->scene->win = false;
 				App->scene->lose = false;
 			}

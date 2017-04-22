@@ -51,35 +51,36 @@ bool j1Input::Start()
 bool j1Input::PreUpdate()
 {
 	static SDL_Event event;
-	
+
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
-	for(int i = 0; i < MAX_KEYS; ++i)
+	for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
-		if(keys[i] == 1)
+		if (mouse_buttons[i] == KEY_DOWN)
+			mouse_buttons[i] = KEY_REPEAT;
+
+		if (mouse_buttons[i] == KEY_UP)
+			mouse_buttons[i] = KEY_IDLE;
+	}
+
+	for (int i = 0; i < MAX_KEYS; ++i)
+	{
+		if (keys[i] == 1)
 		{
-			if(keyboard[i] == KEY_IDLE)
+			if (keyboard[i] == KEY_IDLE)
 				keyboard[i] = KEY_DOWN;
 			else
 				keyboard[i] = KEY_REPEAT;
 		}
 		else
 		{
-			if(keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+			if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
 				keyboard[i] = KEY_UP;
 			else
 				keyboard[i] = KEY_IDLE;
 		}
 	}
-
-	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
-	{
-		if(mouse_buttons[i] == KEY_DOWN)
-			mouse_buttons[i] = KEY_REPEAT;
-
-		if(mouse_buttons[i] == KEY_UP)
-			mouse_buttons[i] = KEY_IDLE;
-	}
+	
 
 	while(SDL_PollEvent(&event) != 0)
 	{
@@ -110,25 +111,59 @@ bool j1Input::PreUpdate()
 			break;
 
 			case SDL_MOUSEBUTTONDOWN:
+
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;
 				if(App->scene->active)
-					App->scene->HandleInput(SDL_MOUSEBUTTONDOWN);
+					App->scene->HandleInput(event);
 			break;
 
 			case SDL_MOUSEBUTTONUP:
+
+				for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
+				{
+					if (mouse_buttons[i] == KEY_DOWN)
+						mouse_buttons[i] = KEY_REPEAT;
+
+					if (mouse_buttons[i] == KEY_UP)
+						mouse_buttons[i] = KEY_IDLE;
+				}
+
 				mouse_buttons[event.button.button - 1] = KEY_UP;
 				if (App->scene->active)
-					App->scene->HandleInput(SDL_MOUSEBUTTONUP);
+					App->scene->HandleInput(event);
 			break;
 
 			case SDL_KEYDOWN:
+
+				for (int i = 0; i < MAX_KEYS; ++i)
+				{
+					if (keys[i] == 1)
+					{
+						if (keyboard[i] == KEY_IDLE)
+							keyboard[i] = KEY_DOWN;
+						else
+							keyboard[i] = KEY_REPEAT;
+					}
+					else
+					{
+						if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+							keyboard[i] = KEY_UP;
+						else
+							keyboard[i] = KEY_IDLE;
+					}
+				}
+
 				if (App->scene->active)
-					App->scene->HandleInput(SDL_KEYDOWN);
+					App->scene->HandleInput(event);
+
 				break;
 
 			case SDL_KEYUP:
+
+				
+
 				if (App->scene->active)
-					App->scene->HandleInput(SDL_KEYUP);
+					App->scene->HandleInput(event);
 				break;
 
 			case SDL_MOUSEMOTION:

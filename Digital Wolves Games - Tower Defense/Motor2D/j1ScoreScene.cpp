@@ -148,7 +148,7 @@ bool j1ScoreScene::Update(float dt)
 	}
 	if (play_again->GetStat() == CLICKL_UP)
 	{
-		App->scene_manager->ChangeScene(App->scene, this);
+		App->scene_manager->ChangeScene(SC_MAIN_MENU);
 		scene_changing = true;
 		App->scene->win = false;
 		App->scene->lose = false;
@@ -168,7 +168,7 @@ bool j1ScoreScene::Update(float dt)
 		}
 		if (back_menu->GetStat() == CLICKL_UP)
 		{
-			App->scene_manager->ChangeScene(App->main_menu, this);
+			App->scene_manager->ChangeScene(SC_MAIN_MENU);
 			App->scene->win = false;
 			App->scene->lose = false;
 		}
@@ -206,7 +206,7 @@ bool j1ScoreScene::PostUpdate()
 	bool ret = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		App->scene_manager->ChangeScene(App->main_menu, this);
+		App->scene_manager->ChangeScene(SC_MAIN_MENU);
 
 	return ret;
 }

@@ -25,6 +25,15 @@ enum j1KeyState
 	KEY_UP
 };
 
+enum MOUSE_KEYS
+{
+	MK_LEFT,
+	MK_WHEEL,
+	MK_RIGHT,
+	MK_SIDE_FRONT,
+	MK_SIDE_BACK
+};
+
 class j1Input : public j1Module
 {
 

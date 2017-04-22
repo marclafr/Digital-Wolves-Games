@@ -8,8 +8,6 @@ class UILabel;
 class UIComponents;
 class UIButton;
 
-
-
 class j1ScoreScene : public j1Module
 {
 public:

@@ -322,28 +322,28 @@ bool j1Scene::PostUpdate()
 	if (townhall->GetHp() <= 0)
 	{
 		lose = true;
-		App->scene_manager->ChangeScene(App->main_menu, this);
+		App->scene_manager->ChangeScene(SC_SCORE);
 	}
 	if (game_time.ReadSec() >= WINNING_TIME)
 	{
 		win = true;
 		App->entity_manager->AddScore(townhall->GetHp() * 3);
-		App->scene_manager->ChangeScene(App->score_scene, this);
+		App->scene_manager->ChangeScene(SC_SCORE);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		App->scene_manager->ChangeScene(App->score_scene, this);
+		App->scene_manager->ChangeScene(SC_SCORE);
 
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 		win = true;
-		App->scene_manager->ChangeScene(App->score_scene, this);
+		App->scene_manager->ChangeScene(SC_SCORE);
 
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
 		lose = true;
-		App->scene_manager->ChangeScene(App->score_scene, this);
+		App->scene_manager->ChangeScene(SC_SCORE);
 	}
 	return ret;
 }
@@ -390,13 +390,13 @@ void j1Scene::TrainSoldier()
 	resource_stone->UseResource(TWOHANDED_STONE_COST);
 }
 
-void j1Scene::HandleInput(SDL_EventType type)
+void j1Scene::HandleInput( SDL_Event event)
 {
 	int x = 0;
 	int y = 0;
 	SDL_Rect rect_ingame_no_ui = RECT_INGAME_WITHOUT_UI;
 
-	switch (type)
+	switch (event.type)
 	{
 	case SDL_MOUSEBUTTONDOWN:
 		
@@ -404,7 +404,7 @@ void j1Scene::HandleInput(SDL_EventType type)
 
 		if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
 		{
-			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+			if (event.button.button == MK_LEFT)
 			{
 				App->entity_manager->UnselectEverything();
 
@@ -422,22 +422,17 @@ void j1Scene::HandleInput(SDL_EventType type)
 		break;
 
 	case SDL_KEYDOWN:
-		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+
+		if (event.button.button == SDL_SCANCODE_L)
 			App->LoadGame("save_game.xml");
 
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		if (event.button.button == SDL_SCANCODE_S)
 			App->SaveGame("save_game.xml");
 
-		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-			App->render->camera->ZoomIn();
-
-		if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-			App->render->camera->ZoomOut();
-
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		if (event.button.button == SDL_SCANCODE_SPACE)
 			App->render->camera->Move(iPoint(1200, -250), 10);
 
-		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		if (event.button.button == SDL_SCANCODE_1)
 		{
 			if (placing_tower == false)
 				placing_tower = true;
@@ -448,7 +443,7 @@ void j1Scene::HandleInput(SDL_EventType type)
 				placing_wall = false;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		if (event.button.button == SDL_SCANCODE_2)
 		{
 			if (placing_wall == false)
 				placing_wall = true;
@@ -459,7 +454,7 @@ void j1Scene::HandleInput(SDL_EventType type)
 				placing_tower = false;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+		if (event.button.button == SDL_SCANCODE_3)
 		{
 			if (App->scene->CanTrainSoldier())
 			{

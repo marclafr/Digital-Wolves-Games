@@ -4,7 +4,13 @@
 #include "j1Module.h"
 #include "SDL\include\SDL_rect.h"
 
-class UIComponents;
+enum SCENES
+{
+	SC_NO_SCENE,
+	SC_SCORE,
+	SC_MAIN_MENU,
+	SC_GAME
+};
 
 class j1SceneManager : public j1Module
 {
@@ -26,14 +32,16 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool ChangeScene(j1Module* scene_on , j1Module* scene_off);
+	bool ChangeScene(SCENES change_to);
+
+	j1Module* GetCurrentScene() const;
 
 private:
-	SDL_Rect screen;
+	j1Module* main_menu = nullptr;
+	j1Module* game_scene = nullptr;
+	j1Module* score_scene = nullptr;
 
-	j1Module* new_scene = nullptr;
-	j1Module* old_scene = nullptr;
-
+	SCENES current_scene = SC_NO_SCENE;
 
 };
 

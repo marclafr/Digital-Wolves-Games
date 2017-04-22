@@ -61,7 +61,7 @@ public:
 	bool CanTrainSoldier();
 	void TrainSoldier();
 
-	void HandleInput(SDL_EventType);
+	void HandleInput(SDL_Event event);
 
 	bool placing_tower = false;
 	bool placing_wall = false;

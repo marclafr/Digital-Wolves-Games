@@ -323,9 +323,8 @@ bool j1App::DoUpdate()
 	{
 		pModule = (*item);
 
-		if (pModule->active == false) {
+		if (pModule->active == false)
 			continue;
-		}
 
 		ret = (*item)->Update(dt);
 	}
