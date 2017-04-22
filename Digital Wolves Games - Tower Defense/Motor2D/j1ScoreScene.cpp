@@ -121,15 +121,13 @@ bool j1ScoreScene::Start()
 		title_lose->Set(655, 21, text_score);
 		App->audio->PlayMusic("audio/music/Lost_Game01.ogg");
 	}
-
-
+	
 	return true;
 }
 
 // Called each loop iteration
 bool j1ScoreScene::PreUpdate()
 {
-
 	return true;
 }
 

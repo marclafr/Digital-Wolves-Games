@@ -75,8 +75,8 @@ bool j1SceneManager::ChangeScene(SCENES change_to)
 		break;
 
 	case SC_SCORE:
-		game_scene->Enable();
-		current_scene = SC_GAME;
+		score_scene->Enable();
+		current_scene = SC_SCORE;
 		break;
 	}
 
