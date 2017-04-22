@@ -145,11 +145,10 @@ uchar j1PathFinding::GetTileAtConstructible_neutral(const iPoint& pos) const
 }
 
 // To request all tiles involved in the last generated path
-const std::vector<iPoint>* j1PathFinding::GetLastPath() const
+const std::vector<iPoint>& j1PathFinding::GetLastPath() const
 {
-	return &last_path;
+	return last_path;
 }
-
 
 PathNode* j1PathFinding::GetPathNode(int x, int y)
 {
@@ -195,7 +194,10 @@ bool j1PathFinding::CalculatePath(iPoint start, const iPoint & end, std::vector<
 	PathNode* check = new PathNode(*origin);
 
 	if (IsWalkable(start))
+	{
 		visited.push_back(check);
+		visited.push_back(destination);
+	}
 	else
 	{
 		LOG("Non-Walkable origin");
@@ -609,6 +611,26 @@ bool j1PathFinding::CheckForTiles(const PathNode* start, int dx, int dy, const i
 	return false;
 }
 
+void j1PathFinding::PushToVisited(PathNode* node)
+{	
+	bool found = false;
+
+	for (std::vector<PathNode*>::iterator it = visited.begin(); it != visited.end(); ++it)
+	{
+		if ((*it)->pos == node->pos)
+		{
+			if (node->cost_so_far <= (*it)->cost_so_far || (*it)->cost_so_far == 0)
+			{
+				*it = node;
+			}
+			found = true;
+		}
+	}
+
+	if (found == false)
+		visited.push_back(node);
+}
+
 void j1PathFinding::FoundForcedNeighbour(PathNode*& before, iPoint after_pos, const PathNode* start, iPoint destination, bool& pushed_path, PathNode * path_to)
 {
 	if (path_to != nullptr)
@@ -656,29 +678,32 @@ void j1PathFinding::FoundForcedNeighbour(PathNode*& before, iPoint after_pos, co
 
 	std::list<ForcedNeighbour>::iterator pos;
 
-	if (!CheckIfInFrontier(corner, pos))
+	if (CheckIfInFrontier(corner, pos) == false)
 	{
-		if (pushed_path == false && path_to != nullptr)
+		if (pushed_path == false && path_to != nullptr && path_to->pos != start->pos && path_to->pos != before->pos)
 		{
-			visited.push_back(path_to);
+			PushToVisited(path_to);
 			pushed_path = true;
 		}
 
-		visited.push_back(before);
-		visited.push_back(after);
+		PushToVisited(before);
+		PushToVisited(after);
 		frontier.push_back(corner);
 
 		before = new PathNode(before->pos);
 	}
 	else if (after->cost_so_far < pos->after->cost_so_far)
 	{
-		if (pushed_path == false)
+		if (pushed_path == false && path_to != nullptr && path_to->pos != start->pos && path_to->pos != before->pos)
 		{
-			visited.push_back(path_to);
+			PushToVisited(path_to);
 			pushed_path = true;
 		}
-		*pos->before = *before;
-		*pos->after = *after;
+
+		PushToVisited(before);
+		PushToVisited(after);
+
+		before = new PathNode(before->pos);
 
 		ChangeCosts(after, after->cost_so_far);
 	}
@@ -780,24 +805,30 @@ void j1PathFinding::DestinationReached(PathNode* destination, const PathNode* st
 {
 	if (destination->cost_so_far < this->destination->cost_so_far || destination_reached == false)
 	{		
-		if (path_to != nullptr && diagonal_pushed == false)
+		if (path_to != nullptr && path_to->pos != start->pos)		
 		{
+			path_to->cost_so_far = start->cost_so_far + abs(destination->pos.x - start->pos.x) * DIAGONAL_COST;
 			path_to->parent = start;
-			visited.push_back(path_to);
 
-			diagonal_pushed = true;
+			if (diagonal_pushed == false)
+			{
+				path_to->parent = start;
+				PushToVisited(path_to);
+				diagonal_pushed = true;
+			}
+
 			destination->parent = path_to;
+			destination->cost_so_far = path_to->cost_so_far + abs(destination->pos.x - start->pos.x) * STRAIGHT_COST + abs(destination->pos.y - start->pos.y) * STRAIGHT_COST;
 		}
-		else if (path_to != nullptr && !diagonal_pushed)
-			destination->parent = path_to;
 		else
 		{
 			destination->parent = start;
+			destination->cost_so_far = start->cost_so_far + abs(destination->pos.x - start->pos.x) * DIAGONAL_COST;
 		}
 
 		if (destination_reached == false)
 		{
-			visited.push_back(destination);
+			PushToVisited(destination);
 			destination_reached = true;
 		}
 		else

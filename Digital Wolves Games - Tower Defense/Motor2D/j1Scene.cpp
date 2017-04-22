@@ -145,28 +145,19 @@ bool j1Scene::Update(float dt)
 	}
 	//--
 
-	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN )
-		App->LoadGame("save_game.xml");
-
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-		App->SaveGame("save_game.xml");
-
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-		App->render->camera->ZoomIn();
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-		App->render->camera->ZoomOut();
+	//App->map->Draw();
 
 	// Camera Movement
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT ||  ((y < (App->render->camera->GetHeight() / 30) && res.y > -30)))
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || ((y < (App->render->camera->GetHeight() / 30) && res.y > -30)))
 		App->render->camera->MoveUp(floor(450.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || ((y > 750) && res.y < 2317))
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || ((y > 750) && res.y < 2317))
 		App->render->camera->MoveDown(floor(450.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || (x < (App->render->camera->GetWidth() / 70 ) && res.x > -2400))
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || (x < (App->render->camera->GetWidth() / 70) && res.x > -2400))
 		App->render->camera->MoveLeft(floor(450.0f * dt));
 
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || (x > (((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349))
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || (x >(((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349))
 		App->render->camera->MoveRight(floor(450.0f * dt));
 
 	if (App->render->camera->GetPosition().x > 2700)
@@ -186,13 +177,6 @@ bool j1Scene::Update(float dt)
 		App->render->camera->SetPosition(iPoint(App->render->camera->GetPosition().x, -1600));
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-		App->render->camera->Move(iPoint(1200, -250), 10);
-
-	//App->map->Draw();
-
-		
-
 	// Debug pathfinding ------------------------------
 
 	iPoint p = App->render->ScreenToWorld(x, y);
@@ -200,83 +184,35 @@ bool j1Scene::Update(float dt)
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
 
-	//App->render->Blit(debug_tex, p.x - 44, p.y - 31);
+	iPoint pos;
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	for(std::vector<iPoint>::const_iterator item = App->pathfinding->GetLastPath().begin();
+		item != App->pathfinding->GetLastPath().end();
+		++item)
 	{
-		if (placing_tower == false) placing_tower = true;
-		else placing_tower = false;
-		if (placing_wall == true) placing_wall = false;
-
-	}
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-	{
-		if (placing_wall == false) placing_wall = true;
-		else placing_wall = false;
-		if (placing_tower == true) placing_tower = false;
-
-	}
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-	{
-		if (App->scene->CanTrainSoldier())
-		{
-			App->scene->TrainSoldier();
-			App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(-480, 552), S_ALLY);
-		}
-	}
-
-	/*
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(p.x, p.y), S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(p.x, p.y), S_ENEMY);
-	*/
-	const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
-	
-	if (path->size() != 0)
-	{
-		std::vector<iPoint>::const_iterator item = path->begin();
-
-		while(item != path->end())
-		{
-			iPoint pos = App->map->MapToWorld(item->x, item->y);
-			App->render->Blit(debug_tex, pos.x - 32, pos.y - 32);
-			item++;
-		}
+		pos = App->map->MapToWorld(item->x, item->y);
+		App->render->Blit(debug_tex, pos.x - 32, pos.y - 32);
 	}
 
 	//SELECTION
-	App->input->GetMousePosition(x, y);
-
-	SDL_Rect rect_ingame_no_ui = RECT_INGAME_WITHOUT_UI;
-	if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
+	if (selecting)
 	{
-		if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
-		{
-			App->entity_manager->UnselectEverything();
+		select_rect.w = x - App->render->camera->GetPosition().x;
+		select_rect.h = y - App->render->camera->GetPosition().y;
+		App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
 
-			select_rect.x = x - App->render->camera->GetPosition().x;
-			select_rect.y = y - App->render->camera->GetPosition().y;
-			select_rect.w = select_rect.x;
-			select_rect.h = select_rect.y;
-		}
-
-		else if (App->input->GetMouseButtonDown(1) == KEY_REPEAT)
-		{
-			select_rect.w = x - App->render->camera->GetPosition().x;
-			select_rect.h = y - App->render->camera->GetPosition().y;
-			App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
-		}
 
 		if (App->input->GetMouseButtonDown(1) == KEY_UP)
 		{
 			App->entity_manager->SelectInQuad(select_rect);
+			selecting = false;
 		}
 	}
+
 	//--
 
 	App->render->BlitAllEntities();
+
 	if (placing_tower == true)
 	{
 		if (CanBuildTower())
@@ -351,9 +287,6 @@ bool j1Scene::Update(float dt)
 			placing_wall = false;
 		}
 	}
-
-
-
 
 	if (new_wave_button->GetStat() == CLICKL_DOWN)
 	{
@@ -455,6 +388,90 @@ void j1Scene::TrainSoldier()
 {
 	resource_wood->UseResource(TWOHANDED_WOOD_COST);
 	resource_stone->UseResource(TWOHANDED_STONE_COST);
+}
+
+void j1Scene::HandleInput(SDL_EventType type)
+{
+	int x = 0;
+	int y = 0;
+	SDL_Rect rect_ingame_no_ui = RECT_INGAME_WITHOUT_UI;
+
+	switch (type)
+	{
+	case SDL_MOUSEBUTTONDOWN:
+		
+		App->input->GetMousePosition(x, y);
+
+		if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
+		{
+			if (App->input->GetMouseButtonDown(1) == KEY_DOWN)
+			{
+				App->entity_manager->UnselectEverything();
+
+				select_rect.x = x - App->render->camera->GetPosition().x;
+				select_rect.y = y - App->render->camera->GetPosition().y;
+				select_rect.w = select_rect.x;
+				select_rect.h = select_rect.y;
+
+				selecting = true;
+			}
+		}
+		break;
+
+	case SDL_MOUSEBUTTONUP:
+		break;
+
+	case SDL_KEYDOWN:
+		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+			App->LoadGame("save_game.xml");
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+			App->SaveGame("save_game.xml");
+
+		if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+			App->render->camera->ZoomIn();
+
+		if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+			App->render->camera->ZoomOut();
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			App->render->camera->Move(iPoint(1200, -250), 10);
+
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			if (placing_tower == false)
+				placing_tower = true;
+			else
+				placing_tower = false;
+
+			if (placing_wall == true)
+				placing_wall = false;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		{
+			if (placing_wall == false)
+				placing_wall = true;
+			else
+				placing_wall = false;
+
+			if (placing_tower == true) 
+				placing_tower = false;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+		{
+			if (App->scene->CanTrainSoldier())
+			{
+				App->scene->TrainSoldier();
+				App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(-480, 552), S_ALLY);
+			}
+		}
+		break;
+
+	case SDL_KEYUP:
+		break;
+	}
 }
 
 Resources* j1Scene::GetResource(RESOURCE_TYPE type)

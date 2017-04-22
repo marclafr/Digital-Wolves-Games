@@ -61,6 +61,8 @@ public:
 	bool CanTrainSoldier();
 	void TrainSoldier();
 
+	void HandleInput(SDL_EventType);
+
 	bool placing_tower = false;
 	bool placing_wall = false;
 	bool game_scene = true;
@@ -68,6 +70,8 @@ public:
 	bool win = false;
 	bool lose = false;
 private:
+	bool selecting = false;
+
 	SDL_Texture* debug_tex;
 	SDL_Texture* tower_tex;
 	SDL_Texture* wall_tex;
@@ -99,7 +103,6 @@ private:
 
 public:
 	Resources* GetResource(RESOURCE_TYPE type);
-
 
 public:
 	UIHUDPanelInfo* panel_info;

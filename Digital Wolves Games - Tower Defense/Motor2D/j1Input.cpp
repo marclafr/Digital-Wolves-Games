@@ -4,6 +4,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1Console.h"
+#include "j1Scene.h"
 #include "SDL/include/SDL.h"
 
 #define MAX_KEYS 300
@@ -110,13 +111,25 @@ bool j1Input::PreUpdate()
 
 			case SDL_MOUSEBUTTONDOWN:
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;
-				//LOG("Mouse button %d down", event.button.button-1);
+				if(App->scene->active)
+					App->scene->HandleInput(SDL_MOUSEBUTTONDOWN);
 			break;
 
 			case SDL_MOUSEBUTTONUP:
 				mouse_buttons[event.button.button - 1] = KEY_UP;
-				//LOG("Mouse button %d up", event.button.button-1);
+				if (App->scene->active)
+					App->scene->HandleInput(SDL_MOUSEBUTTONUP);
 			break;
+
+			case SDL_KEYDOWN:
+				if (App->scene->active)
+					App->scene->HandleInput(SDL_KEYDOWN);
+				break;
+
+			case SDL_KEYUP:
+				if (App->scene->active)
+					App->scene->HandleInput(SDL_KEYUP);
+				break;
 
 			case SDL_MOUSEMOTION:
 				int scale = App->win->GetScale();
@@ -124,7 +137,6 @@ bool j1Input::PreUpdate()
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
 				mouse_y = event.motion.y / scale;
-				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
 		}
 	}

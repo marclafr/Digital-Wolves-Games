@@ -53,7 +53,7 @@ public:
 
 	//float CreatePath(const iPoint & origin, const iPoint & destination);
 	// To request all tiles involved in the last generated path
-	const std::vector<iPoint>* GetLastPath() const;
+	const std::vector<iPoint>& GetLastPath() const;
 
 	// Utility: return true if pos is inside the map boundaries
 	bool CheckBoundaries(const iPoint& pos) const;
@@ -91,7 +91,8 @@ private:
 	void FoundForcedNeighbour(PathNode*& before, iPoint after_pos,const PathNode* start, iPoint destination, bool& pushed_path, PathNode* path_to = nullptr);
 	void DestinationReached(PathNode* destination,const PathNode* start, bool& diagonal_pushed, PathNode* path_to = nullptr);
 	void DeleteIfNotPushed(PathNode*& ptr);
-	bool CheckForTiles(const PathNode* start, int dx, int dy,const iPoint& destination);	
+	bool CheckForTiles(const PathNode* start, int dx, int dy,const iPoint& destination);
+	void PushToVisited(PathNode* node);
 	//JPS end
 
 private:
