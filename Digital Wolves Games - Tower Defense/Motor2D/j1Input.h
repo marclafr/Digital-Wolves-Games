@@ -27,6 +27,7 @@ enum j1KeyState
 
 enum MOUSE_KEYS
 {
+	MK_NO_KEY,
 	MK_LEFT,
 	MK_WHEEL,
 	MK_RIGHT,

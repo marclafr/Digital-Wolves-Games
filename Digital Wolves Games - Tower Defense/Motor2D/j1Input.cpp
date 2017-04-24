@@ -119,39 +119,12 @@ bool j1Input::PreUpdate()
 
 			case SDL_MOUSEBUTTONUP:
 
-				for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
-				{
-					if (mouse_buttons[i] == KEY_DOWN)
-						mouse_buttons[i] = KEY_REPEAT;
-
-					if (mouse_buttons[i] == KEY_UP)
-						mouse_buttons[i] = KEY_IDLE;
-				}
-
 				mouse_buttons[event.button.button - 1] = KEY_UP;
 				if (App->scene->active)
 					App->scene->HandleInput(event);
 			break;
 
 			case SDL_KEYDOWN:
-
-				for (int i = 0; i < MAX_KEYS; ++i)
-				{
-					if (keys[i] == 1)
-					{
-						if (keyboard[i] == KEY_IDLE)
-							keyboard[i] = KEY_DOWN;
-						else
-							keyboard[i] = KEY_REPEAT;
-					}
-					else
-					{
-						if (keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
-							keyboard[i] = KEY_UP;
-						else
-							keyboard[i] = KEY_IDLE;
-					}
-				}
 
 				if (App->scene->active)
 					App->scene->HandleInput(event);
