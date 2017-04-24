@@ -30,12 +30,6 @@ UIHUDScoreBar::UIHUDScoreBar(UICOMPONENT_TYPE type) : UIComponents(type)
 
 bool UIHUDScoreBar::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-		App->entity_manager->IncreaseScore();
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
-		App->entity_manager->DecreaseScore();
-
 	//rest_score_bar.w = ReturnValueBarHPBuilding(BUILDING_TYPE::B_TOWNHALL, townhall->GetHp(), BAR_PIXELS);
 	rest_score_bar.w = App->entity_manager->GetScore()/10;
 
