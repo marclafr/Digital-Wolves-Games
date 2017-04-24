@@ -15,10 +15,7 @@
 
 #include "UIButton.h"
 #include "UILabel.h"
-#include "UIHUDPanelButtons.h"
-#include "UIHUDDescription.h"
-#include "UIHUDResources.h"
-#include "UICheckbutton.h"
+#include "UIHUDScoreBar.h"
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
 
@@ -229,6 +226,7 @@ void j1ScoreScene::OptionSelected()
 		trophie_silver->SetDraw(false);
 		trophie_gold->SetDraw(false);
 		trophie_rubi->SetDraw(false);
+		score_bar->SetDraw(false);
 	}
 	else
 	{
@@ -237,6 +235,7 @@ void j1ScoreScene::OptionSelected()
 		trophie_silver->SetDraw(true);
 		trophie_gold->SetDraw(true);
 		trophie_rubi->SetDraw(true);
+		score_bar->SetDraw(true);
 	}
 
 	if (achievements_unselected)
