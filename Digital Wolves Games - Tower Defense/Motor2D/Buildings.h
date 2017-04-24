@@ -9,6 +9,7 @@
 #include "Units.h"
 #include "j1PerfTimer.h"
 #include <vector>
+#include "j1Investigations.h"
 
 enum BUILDING_TYPE
 {
@@ -31,6 +32,7 @@ private:
 	j1PerfTimer AttackTimer;
 	Entity* Target = nullptr;
 	bool totallybuilded = false;
+	enum LEVEL lvl = LVL_1;
 public:
 	iPoint arrowpos;
 	Building(BUILDING_TYPE b_type, fPoint pos, Side side);
@@ -45,6 +47,7 @@ public:
 	const int GetRange() const;
 	void UpgradeTurret();
 	void UpgradeWall();
+	const LEVEL GetLevel() const;
 	const double GetBuildTime() const;
 };
 

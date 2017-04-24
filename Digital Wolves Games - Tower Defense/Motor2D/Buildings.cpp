@@ -115,6 +115,13 @@ void Building::Update()
 
 void Building::AI()
 {
+	if (GetEntityStatus() == ST_SELECTED)
+	{
+		if(App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		{
+			if(this->GetBuildingType() == B_TURRET)		UpgradeTurret();
+		}
+	}
 	if (Target == nullptr)
 	{
 		attacking = false;
@@ -157,7 +164,6 @@ void Building::AI()
 			}
 		}
 	}
-	//std::list<Entity>::iterator ptarget = App->entity_manager->
 }
 
 void Building::Draw()
@@ -331,10 +337,31 @@ void Building::UpdateArrowSprite(iPoint targetpos, SDL_Rect& rect, iPoint &pivot
 
 
 }
-
-void UpgradeBuilding() 
+const LEVEL Building::GetLevel() const
 {
-
+	return this->lvl;
+}
+void Building::UpgradeTurret() 
+{
+	SDL_Rect rect;
+	switch (this->lvl)
+	{
+	case LVL_1:
+		rect = { 110,284,104,253};
+		SetRect(rect);
+		SetPivot(0.519231*104, 0.905138*253);
+		lvl = LVL_2;
+		break;
+	case LVL_2:
+		rect = {216,284,119,226};
+		SetRect(rect);
+		SetPivot(0.504202 * 119, 0.893805 * 226);
+		lvl = LVL_3;
+		break;
+	case LVL_3:
+		//maxlvl¿?¿?¿?
+		break;
+	}
 
 
 }
