@@ -38,7 +38,7 @@ bool j1MainMenu::Awake()
 // Called before the first frame
 bool j1MainMenu::Start()
 {
-	App->audio->PlayMusic("audio/music/Menu01.ogg");
+	App->audio->PlayMusic("audio/music/Menu01.ogg", 0.0f);
 
 	//BACKGROUND
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);

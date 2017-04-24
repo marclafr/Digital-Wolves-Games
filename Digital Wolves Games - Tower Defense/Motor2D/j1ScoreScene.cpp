@@ -43,7 +43,7 @@ bool j1ScoreScene::Awake()
 // Called before the first frame
 bool j1ScoreScene::Start()
 {
-	App->audio->PlayMusic("audio/music/Menu01.ogg");
+	App->audio->PlayMusic("audio/music/Menu01.ogg", 0.0f);
 	scene_changing = false;
 
 	//BACKGROUND
@@ -110,7 +110,7 @@ bool j1ScoreScene::Start()
 		char text_score[256];
 		sprintf_s(text_score, 256, " You Win!!  Score: %d", App->entity_manager->GetScore());
 		title_win->Set(655, 21, text_score);
-		App->audio->PlayMusic("audio/music/Main_Theme01.ogg");
+		App->audio->PlayMusic("audio/music/Main_Theme01.ogg", 0.0f);
 	}
 
 	if (App->scene->lose == true)
@@ -119,7 +119,7 @@ bool j1ScoreScene::Start()
 		char text_score[256];
 		sprintf_s(text_score, 256, " You Lose :(  Score: %d", App->entity_manager->GetScore());
 		title_lose->Set(655, 21, text_score);
-		App->audio->PlayMusic("audio/music/Lost_Game01.ogg");
+		App->audio->PlayMusic("audio/music/Lost_Game01.ogg", 0.0f);
 	}
 	
 	return true;

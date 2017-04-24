@@ -52,11 +52,11 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
+	App->pathfinding->Enable();
 	App->wave_manager->Enable();
-	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg");
+	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
 	App->render->camera->SetPosition(iPoint(2300, -800));
-
 	if(App->map->Load("OtherMap.tmx") == true)
 	{
 		int w, h;
@@ -71,12 +71,12 @@ bool j1Scene::Start()
 	}
 
 	debug_tex = App->tex->Load("maps/path2.png", T_MAP);
+	
 	tower_tex = App->tex->GetTexture(T_TURRET);
 	wall_tex = App->tex->GetTexture(T_WALL);
 	//wall_tex = 
 
 	CreateSceneUI();
-
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
 	townhall_bar_life->SetTownHall(townhall);
@@ -355,6 +355,7 @@ bool j1Scene::CleanUp()
 	App->wave_manager->Disable();
 	App->entity_manager->CleanUp();
 	App->uimanager->CleanUp();
+	App->pathfinding->CleanUp();
 	return true;
 }
 

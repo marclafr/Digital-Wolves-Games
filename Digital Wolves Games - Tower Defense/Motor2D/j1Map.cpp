@@ -316,7 +316,7 @@ bool j1Map::CleanUp()
 
 	while (item != data.tilesets.end())
 	{
-		RELEASE(item._Ptr->_Myval);
+		RELEASE(*item);
 		item++;
 	}
 	data.tilesets.clear();
@@ -326,7 +326,7 @@ bool j1Map::CleanUp()
 
 	while (item2 != data.layers.end())
 	{
-		RELEASE(item2._Ptr->_Myval);
+		RELEASE(*item2);
 		item2++;
 	}
 	data.layers.clear();

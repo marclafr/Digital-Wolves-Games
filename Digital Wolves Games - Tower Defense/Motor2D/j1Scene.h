@@ -70,6 +70,7 @@ public:
 	bool win = false;
 	bool lose = false;
 private:
+	j1Audio* scene_music;
 	bool selecting = false;
 
 	SDL_Texture* debug_tex;
