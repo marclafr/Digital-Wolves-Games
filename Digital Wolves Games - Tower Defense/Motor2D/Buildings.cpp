@@ -93,7 +93,7 @@ void Building::Update()
 		if (arrowpos.x > targetpos.x - 3 && arrowpos.x < targetpos.x + 3 && arrowpos.y < targetpos.y + 3 && arrowpos.y > targetpos.y- 3)
 		{
 			attacking = false;
-			Target->Damaged(20);
+			Target->Damaged(GetAttack());
 		}
 		SDL_Rect rect = { 1,45,25,4 };
 		iPoint pivots(0.5 * 25, 0.25 * 4);
@@ -349,6 +349,7 @@ void Building::UpgradeTurret()
 	case LVL_1:
 		rect = { 110,284,104,253};
 		SetRect(rect);
+		this->SetAttack(200);
 		SetPivot(0.519231*104, 0.905138*253);
 		lvl = LVL_2;
 		break;

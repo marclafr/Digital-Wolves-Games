@@ -68,6 +68,7 @@ public:
 	const int GetArmor() const;
 	const float GetX() const;
 	const float GetY() const;
+	const int GetAttack() const;
 	const iPoint GetPivot() const;
 	const SDL_Rect GetRect() const;
 	const TextureID GetTextureID() const;

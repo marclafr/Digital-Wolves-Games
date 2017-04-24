@@ -87,7 +87,11 @@ void Entity::SetHp(int new_hp)
 {
 	hp = new_hp;
 }
+const int Entity::GetAttack() const {
 
+	return attack;
+
+}
 void Entity::SetPivot(int x, int y)
 {
 	pivot.x = x;
