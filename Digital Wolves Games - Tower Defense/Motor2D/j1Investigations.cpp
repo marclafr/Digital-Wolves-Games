@@ -3,11 +3,6 @@
 #include "Resources.h"
 #include "j1Scene.h"
 
-//TEST
-#include "j1Input.h"
-#include "SDL/include/SDL.h"
-//--
-
 j1Investigations::j1Investigations()
 {
 	name.assign("investigations");
@@ -37,7 +32,6 @@ bool j1Investigations::Start()
 	CreateInvestigation(INV_INFANTRY_ATTACK, false, 300, 30.0);
 	CreateInvestigation(INV_INFANTRY_DEFENSE, false, 300, 25.0);
 	//TOWERS
-	CreateInvestigation(INV_ELEMENTAL, false, 100, 10.0);
 	CreateInvestigation(INV_FIRE_TOWER, false, 200, 10.0);
 	CreateInvestigation(INV_ICE_TOWER, false, 250, 10.0);
 	CreateInvestigation(INV_AIR_TOWER, false, 300, 10.0);
@@ -50,16 +44,29 @@ bool j1Investigations::Update(float dt)
 {
 	bool ret = true;
 
-	//IMPORTANT: When activating the investigation upgrade-> USE THIS:	investigations[i]->upgrade_timer.Start();
-	//TEST
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-		DoInvestigationUpgrade(investigations[0]);
-	//--
-
 	for (int i = 0; i < investigations.size(); i++)
 	{
-		if (investigations[i]->investigation_on_course == true)
+		switch (investigations[i]->inv_state)
+		{
+		case INV_S_IDLE:
+			break;
+
+		case INV_S_WAITING_TO_INVESTIGATE:
+			CanInvestigate(investigations[i]);
+			break; 
+
+		case INV_S_IN_COURSE:
 			UpgradeInvestigation(investigations[i]);
+			break;
+
+		case INV_S_COMPLETED:
+			if (investigations[i]->has_levels == true && investigations[i]->max_level == false)
+				investigations[i]->inv_state = INV_S_IDLE;
+			break;
+
+		default:
+			break;
+		}
 	}
 	return ret;
 }
@@ -101,24 +108,52 @@ bool j1Investigations::DeleteInvestigation(Investigation* ptr)
 bool j1Investigations::CanInvestigate(Investigation* investigation)
 {
 	Resources* current_gold = App->scene->GetResource(GOLD);
-	if (current_gold->CanUseResource(investigation->cost))	//TODO: Multiply by level upgrade????
+	if (current_gold->CanUseResource(investigation->cost) && investigation->max_level == false)
+	{
+		investigation->inv_state = INV_S_IN_COURSE;
+		DoInvestigationUpgrade(investigation);
 		return true;
+	}
 
+	if (investigation->investigation_level == INV_LVL_UNLOCKED || investigation->investigation_level == INV_LVL_6)	//TODO CHANGE IF MAX LEVEL IS CHANGED
+		investigation->inv_state = INV_S_COMPLETED;
+	else
+		investigation->inv_state = INV_S_IDLE;
 	return false;
 }
 
-bool j1Investigations::DoInvestigationUpgrade(Investigation* investigation)
+void j1Investigations::DoInvestigationUpgrade(Investigation* investigation)
 {
-	if (this->CanInvestigate(investigation) && investigation->investigation_on_course == false)
+
+	Resources* gold = App->scene->GetResource(GOLD);
+	gold->UseResource(investigation->cost);
+
+	if (investigation->has_levels == true)
+		investigation->cost += COST_INCREASE_BY_LVL;
+
+	investigation->upgrade_timer.Start();
+}
+
+Investigation * j1Investigations::GetInvestigation(INVESTIGATION_TYPE name)
+{
+	for (int i = 0; i < investigations.size(); i++)
 	{
-		Resources* gold = App->scene->GetResource(GOLD);
-		gold->UseResource(investigation->cost);
+		if (investigations[i]->investigation_type == name)
+			return investigations[i];
+	}
+	return nullptr;
+}
 
-		if (investigation->has_levels == true)
-			investigation->cost += COST_INCREASE_BY_LVL;
+LEVEL j1Investigations::GetLevel(Investigation * investigation)
+{
+	return investigation->investigation_level;
+}
 
-		investigation->investigation_on_course = true;
-		investigation->upgrade_timer.Start();
+bool j1Investigations::WantToInvestigate(Investigation * investigation)
+{
+	if (investigation->inv_state == INV_S_IDLE)
+	{
+		investigation->inv_state = INV_S_WAITING_TO_INVESTIGATE;
 		return true;
 	}
 	return false;
@@ -126,38 +161,39 @@ bool j1Investigations::DoInvestigationUpgrade(Investigation* investigation)
 
 bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 {
-
 	if (investigation->upgrade_timer.ReadSec() >= investigation->time_to_upgrade)
 	{
-		investigation->investigation_on_course = false;
+		investigation->inv_state = INV_S_COMPLETED;
 
 		if (investigation->has_levels == false)
 		{
-			investigation->invest_state = LVL_UNLOCKED;
+			investigation->investigation_level = INV_LVL_UNLOCKED;
+			investigation->max_level = true;
 			return true;
 		}
 
-		switch (investigation->invest_state)
+		switch (investigation->investigation_level)
 		{
-		case LVL_LOCKED:
-			investigation->invest_state = LVL_1;
+		case INV_LVL_LOCKED:
+			investigation->investigation_level = INV_LVL_1;
 			break;
-		case LVL_1:
-			investigation->invest_state = LVL_2;
+		case INV_LVL_1:
+			investigation->investigation_level = INV_LVL_2;
 			break;
-		case LVL_2:
-			investigation->invest_state = LVL_3;
+		case INV_LVL_2:
+			investigation->investigation_level = INV_LVL_3;
 			break;
-		case LVL_3:
-			investigation->invest_state = LVL_4;
+		case INV_LVL_3:
+			investigation->investigation_level = INV_LVL_4;
 			break;
-		case LVL_4:
-			investigation->invest_state = LVL_5;
+		case INV_LVL_4:
+			investigation->investigation_level = INV_LVL_5;
 			break;
-		case LVL_5:
-			investigation->invest_state = LVL_6;
+		case INV_LVL_5:
+			investigation->investigation_level = INV_LVL_6;
+			investigation->max_level = true;
 			break;
-			//ADD MORE JUST IN CASE
+			//TODO: CHANGE IF MAX LEVEL IS CHANGED
 		default:
 			break;
 		}

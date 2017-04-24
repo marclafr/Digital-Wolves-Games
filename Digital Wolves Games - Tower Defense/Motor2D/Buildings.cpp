@@ -355,20 +355,20 @@ void Building::UpgradeTurret()
 	SDL_Rect rect;
 	switch (this->lvl)
 	{
-	case LVL_1:
+	case INV_LVL_1:
 		rect = { 110,284,104,253};
 		SetRect(rect);
 		this->SetAttack(200);
 		SetPivot(0.519231*104, 0.905138*253);
-		lvl = LVL_2;
+		lvl = INV_LVL_2;
 		break;
-	case LVL_2:
+	case INV_LVL_2:
 		rect = {216,284,119,226};
 		SetRect(rect);
 		SetPivot(0.504202 * 119, 0.893805 * 226);
-		lvl = LVL_3;
+		lvl = INV_LVL_3;
 		break;
-	case LVL_3:
+	case INV_LVL_3:
 		//maxlvl¿?¿?¿?
 		break;
 	}

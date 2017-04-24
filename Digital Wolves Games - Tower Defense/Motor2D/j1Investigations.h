@@ -9,15 +9,15 @@
 
 enum LEVEL
 {
-	LVL_LOCKED,
-	LVL_UNLOCKED,
-	LVL_1,
-	LVL_2,
-	LVL_3,
-	LVL_4,
-	LVL_5,
-	LVL_6
-	//look for: "ADD MORE JUST IN CASE" in case you add more levels and add more cases to upgrade them.
+	INV_LVL_LOCKED,
+	INV_LVL_UNLOCKED,
+	INV_LVL_1,
+	INV_LVL_2,
+	INV_LVL_3,
+	INV_LVL_4,
+	INV_LVL_5,
+	INV_LVL_6
+	//look for: " CHANGE IF MAX LEVEL IS CHANGED" in case you add more levels and add more cases to upgrade them.
 };
 
 enum INVESTIGATION_TYPE
@@ -38,10 +38,17 @@ enum INVESTIGATION_TYPE
 	INV_INFANTRY_ATTACK,
 	INV_INFANTRY_DEFENSE,
 //TOWERS
-	INV_ELEMENTAL,
 	INV_FIRE_TOWER,
 	INV_ICE_TOWER,
 	INV_AIR_TOWER
+};
+
+enum INVESTIGATION_STATE
+{
+	INV_S_IDLE,
+	INV_S_WAITING_TO_INVESTIGATE,
+	INV_S_IN_COURSE,
+	INV_S_COMPLETED
 };
 
 class Investigation
@@ -53,8 +60,9 @@ public:
 public:
 	INVESTIGATION_TYPE investigation_type;
 	bool has_levels = true;
-	LEVEL invest_state = LVL_LOCKED;
-	bool investigation_on_course = false;
+	LEVEL investigation_level = INV_LVL_LOCKED;
+	INVESTIGATION_STATE inv_state = INV_S_IDLE;
+	bool max_level = false;
 	float time_to_upgrade;
 	j1Timer upgrade_timer;
 	uint cost = 0;
@@ -71,14 +79,17 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 
+	Investigation* GetInvestigation(INVESTIGATION_TYPE name);
+	LEVEL GetLevel(Investigation* investigation);
+	bool WantToInvestigate(Investigation* investigation);
+
+private:
 	Investigation* CreateInvestigation(INVESTIGATION_TYPE investigation, bool has_lvls, uint cost, float time_to_upgrade);
 	bool DeleteInvestigation(Investigation* ptr);
 
-	bool CanInvestigate(Investigation* investigation);
-	bool DoInvestigationUpgrade(Investigation* investigation);
-
-private:
 	std::vector<Investigation*> investigations;
+	bool CanInvestigate(Investigation* investigation);
+	void DoInvestigationUpgrade(Investigation* investigation);
 	bool UpgradeInvestigation(Investigation* investigation);
 
 };
