@@ -7,6 +7,7 @@ struct SDL_Texture;
 class UILabel;
 class UIComponents;
 class UIButton;
+class UIHUDScoreBar;
 
 class j1ScoreScene : public j1Module
 {
@@ -65,6 +66,8 @@ private:
 	UIComponents* trophie_silver;
 	UIComponents* trophie_gold;
 	UIComponents* trophie_rubi;
+
+	UIHUDScoreBar* score_bar;
 
 	bool scene_changing = false;
 	bool score_unselected = true;

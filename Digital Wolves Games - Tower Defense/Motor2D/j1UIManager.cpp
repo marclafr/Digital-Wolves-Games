@@ -22,6 +22,7 @@
 #include "UIHUDDescription.h"
 #include "UIHUDResources.h"
 #include "UIHUDTownHallBarLife.h"
+#include "UIHUDScoreBar.h"
 
 j1UIManager::j1UIManager() : j1Module()
 {
@@ -210,6 +211,9 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 		break;
 	case UIHUDTOWNHALLBARLIFE:
 		components.push_back(ret = (UIComponents*)new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE));
+		break;
+	case UIHUDSCOREBAR:
+		components.push_back(ret = (UIComponents*)new UIHUDScoreBar(UICOMPONENT_TYPE::UIHUDSCOREBAR));
 		break;
 	default:
 		components.push_back(ret = new UIComponents(type));

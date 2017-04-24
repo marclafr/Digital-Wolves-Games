@@ -312,6 +312,16 @@ int j1EntityManager::GetScore()
 	return score;
 }
 
+void j1EntityManager::IncreaseScore()
+{
+	score++;
+}
+
+void j1EntityManager::DecreaseScore()
+{
+	score--;
+}
+
 void j1EntityManager::AddScore(int points)
 {
 	score += points;

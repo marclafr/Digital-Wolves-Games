@@ -131,6 +131,9 @@
     <ClCompile Include="j1ScoreScene.cpp">
       <Filter>Awsome_Game\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="UIHUDScoreBar.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -283,6 +286,9 @@
     <ClInclude Include="j1Investigations.h" />
     <ClInclude Include="j1ScoreScene.h">
       <Filter>Awsome_Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDScoreBar.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

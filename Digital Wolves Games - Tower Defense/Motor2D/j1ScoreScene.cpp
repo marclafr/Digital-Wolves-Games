@@ -104,6 +104,8 @@ bool j1ScoreScene::Start()
 	trophie_rubi = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	trophie_rubi->Set({ 920, 145, 136, 153 }, { 1181, 1162, 136, 153 });
 
+	score_bar = (UIHUDScoreBar*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDSCOREBAR);
+
 	if (App->scene->win == true)
 	{
 		title_win = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
@@ -146,7 +148,7 @@ bool j1ScoreScene::Update(float dt)
 	}
 	if (play_again->GetStat() == CLICKL_UP)
 	{
-		App->scene_manager->ChangeScene(SC_MAIN_MENU);
+		App->scene_manager->ChangeScene(SC_GAME);
 		scene_changing = true;
 		App->scene->win = false;
 		App->scene->lose = false;
