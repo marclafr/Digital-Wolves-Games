@@ -290,6 +290,9 @@
     <ClInclude Include="UIHUDScoreBar.h">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">

@@ -164,6 +164,7 @@
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="Task.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UICheckbutton.h" />
     <ClInclude Include="UIComponents.h" />
