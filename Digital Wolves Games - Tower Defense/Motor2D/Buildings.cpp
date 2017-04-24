@@ -73,7 +73,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 void Building::Update()
 {
 
-	if (totallybuilded == true && GetBuildingType() == B_TURRET)
+	if (totallybuilded == true && GetBuildingType() == B_TURRET && alive == true)
 	{
 		AI();
 	}
@@ -100,7 +100,16 @@ void Building::Update()
 		UpdateArrowSprite(targetpos, rect, pivots);
 		App->render->Blit(App->tex->GetTexture(T_ARROW), arrowpos.x, arrowpos.y, &rect, SDL_FLIP_NONE, pivots.x, pivots.y);
 	}
-	if (GetHp() < 0) {
+	if (this->GetHp() <= 0 && alive == true) {
+		SetTextureID(T_TOWNHALL);
+		SDL_Rect rect;
+		rect = { 313, 1, 91, 51 };
+		SetRect(rect);
+		SetPivot(0.362637*91,0.431373*51);
+		DieTimer.Start();
+		alive = false;
+	}
+	if (alive == false && DieTimer.ReadSec() > 2){
 		iPoint p = App->map->WorldToMap(GetX(), GetY());
 		if (GetSide() == S_NEUTRAL) {
 			App->pathfinding->MakeConstruible_neutral(p);
