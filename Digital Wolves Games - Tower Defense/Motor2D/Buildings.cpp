@@ -72,7 +72,6 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 
 void Building::Update()
 {
-
 	if (totallybuilded == true && GetBuildingType() == B_TURRET && alive == true)
 	{
 		AI();
@@ -108,6 +107,7 @@ void Building::Update()
 		SetPivot(0.362637*91,0.431373*51);
 		DieTimer.Start();
 		alive = false;
+		totallybuilded = true;
 	}
 	if (alive == false && DieTimer.ReadSec() > 2){
 		iPoint p = App->map->WorldToMap(GetX(), GetY());
@@ -129,6 +129,10 @@ void Building::AI()
 		if(App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		{
 			if(this->GetBuildingType() == B_TURRET)		UpgradeTurret();
+		}
+		if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+		{
+			this->SetHp(0);
 		}
 	}
 	if (Target == nullptr)
