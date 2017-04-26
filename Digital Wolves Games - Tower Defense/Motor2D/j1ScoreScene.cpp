@@ -106,22 +106,22 @@ bool j1ScoreScene::Start()
 	//TEXT
 	title_score = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	sprintf_s(text_score, 256, "Score: %d", App->entity_manager->GetScore());
-	title_score->Set(490, 380, text_score);
+	title_score->Set(490, 400, text_score , { 0,0,0,0 });
 
 	title_enemies_killed = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	char text_enemies[256];
 	sprintf_s(text_enemies, 256, "Enemies Killed: %d", App->entity_manager->GetEnemiesKilled());
-	title_enemies_killed->Set(490, 410, text_enemies);
+	title_enemies_killed->Set(490, 430, text_enemies , { 0,0,0,0 });
 
 	title_time = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	char text_time[256];
 	sprintf_s(text_time, 256, "Time: %d:%d", App->entity_manager->GetMins(), App->entity_manager->GetSecs());
-	title_time->Set(490, 440, text_time);
+	title_time->Set(490, 460, text_time , { 0,0,0,0 });
 
 	title_act_rank = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	char text_rank[256];
 	sprintf_s(text_rank, 256, "Your Trophie", App->entity_manager->GetScore());
-	title_act_rank->Set(850, 380, text_rank);
+	title_act_rank->Set(850, 380, text_rank , { 0,0,0,0 });
 	
 	actual_trophie = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 
@@ -159,7 +159,8 @@ bool j1ScoreScene::Update(float dt)
 
 
 	sprintf_s(text_score, 256, "Score: %d", App->entity_manager->GetScore());
-	title_score->Set(490, 380, text_score);
+	title_score->Set(490, 400, text_score , { 0,0,0,0 });
+
 	ActualTrophie();
 
 	//PLAY AGAIN
