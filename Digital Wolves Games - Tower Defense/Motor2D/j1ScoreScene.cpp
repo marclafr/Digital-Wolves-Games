@@ -249,16 +249,16 @@ void j1ScoreScene::ActualTrophie()
 	if (App->entity_manager->GetScore() > 560) {
 		actual_trophie->Set({ 850, 410, 87, 98 }, { 677, 1370, 87, 98 });
 	}
-	if (App->entity_manager->GetScore() > 1000) {
+	if (App->entity_manager->GetScore() > 1830) {
 		actual_trophie->Set({ 845, 410, 97, 113 }, { 765, 1355, 97, 113 });
 	}
-	if (App->entity_manager->GetScore() > 1500) {
+	if (App->entity_manager->GetScore() > 3220) {
 		actual_trophie->Set({ 837, 410, 113, 129 }, { 941, 1162, 113, 129 });
 	}
-	if (App->entity_manager->GetScore() > 2000) {
+	if (App->entity_manager->GetScore() > 4680) {
 		actual_trophie->Set({ 833, 410, 119, 139 }, { 1058, 1162, 119, 139 });
 	}
-	if (App->entity_manager->GetScore() > 2500) {
+	if (App->entity_manager->GetScore() > 6250) {
 		actual_trophie->Set({ 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
 	}
 }
