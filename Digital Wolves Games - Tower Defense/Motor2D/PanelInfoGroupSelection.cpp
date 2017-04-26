@@ -7,6 +7,7 @@
 #include "PanelInfoGroupSelection.h"
 
 #include "j1App.h"
+#include "j1Input.h"
 #include "j1UIManager.h"
 #include "j1Render.h"
 #include "Camera.h"
@@ -15,17 +16,8 @@
 
 GroupSelection::~GroupSelection()
 {
-	std::list<entity_selected*>::iterator es_item = es_selection.begin();
-
-	while (es_item != es_selection.end())
-	{
+	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 		delete *es_item;
-
-		es_item++;
-	}
-
-	App->uimanager->erase_list(first_component, last_component);
-
 	es_selection.clear();
 }
 
@@ -121,46 +113,23 @@ void GroupSelection::PrepareNoUnitSelection()
 
 void GroupSelection::Update()
 {
-	std::list<entity_selected*>::iterator es_item = es_selection.begin();
-
-	while (es_item != es_selection.end())
+	
+	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 	{
-		if ((*es_item)->btn_selected->stat == UICOMPONENT_STAT::CLICKL_UP)
-			SetOneEntitySelection((*es_item)->pointer_entity);
+		if((*es_item)->btn_selected->IsFocus())
+			if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_UP)
+				SetOneEntitySelection((*es_item)->pointer_entity);
 
 		if ((*es_item)->pointer_entity->GetHp() <= 0)
 		{
-			to_delete.push_back(es_item);
-			deletion = true;
+			(*es_item)->btn_selected->SetToDelete(true);
+			delete *es_item;
+			es_selection.erase(es_item);
 		}
-
-		es_item++;
 	}
-
-	if (deletion)
-		DeleteESDeath();
 
 	if (es_selection.empty())
 		delete_panel_info = true;
-}
-
-void GroupSelection::DeleteESDeath()
-{
-	std::list<std::list<entity_selected*>::iterator>::iterator delete_item = to_delete.begin();
-
-	while (delete_item != to_delete.end())
-	{
-		(*(*delete_item))->btn_selected->SetDraw(false);
-
-		delete (*(*delete_item));
-
-		es_selection.erase(*delete_item);
-
-		delete_item++;
-	}
-
-	to_delete.clear();
-	deletion = false;
 }
 
 void GroupSelection::Draw()
@@ -175,11 +144,11 @@ void GroupSelection::Draw()
 		{
 			UIButton* uibutton = (*es_item)->btn_selected;
 
-			uibutton->Set({ 220 + (29 * count++), 666, 29, 29 }, uibutton->rect_atlas);
+			uibutton->Set({ 220 + (29 * count++), 666, 29, 29 }, uibutton->GetAtlasRect());
 
 			SDL_Rect mark_btn{ 999, 827, 29, 29 };
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x + 2 - App->render->camera->GetPosition().x, uibutton->rect_position.y + 2 - App->render->camera->GetPosition().y, &uibutton->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x + 2 - App->render->camera->GetPosition().x, uibutton->GetPosRect().y + 2 - App->render->camera->GetPosition().y, &uibutton->GetAtlasRect(), SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x - App->render->camera->GetPosition().x, uibutton->GetPosRect().y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			
 			int rest_life_bar = 0;
 			int height_correction = 0;
@@ -219,7 +188,7 @@ void GroupSelection::Draw()
 			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX() - BAR_LIFE_CENTER, e_selected->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
 		
 			//Down bar_life
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->rect_position.x - App->render->camera->GetPosition().x, uibutton->rect_position.y + 25 - App->render->camera->GetPosition().y, &life_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x - App->render->camera->GetPosition().x, uibutton->GetPosRect().y + 25 - App->render->camera->GetPosition().y, &life_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		}
 
 		es_item++;

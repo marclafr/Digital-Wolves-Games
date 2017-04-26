@@ -40,6 +40,10 @@ public:
 
 	void ActualTrophie();
 
+	void CreateTrophies();
+	void DeleteTrophies();
+	bool trophies_created = false;
+
 	bool game_scene = true;
 
 private:

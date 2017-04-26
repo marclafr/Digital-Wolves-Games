@@ -294,28 +294,6 @@ bool j1Scene::Update(float dt)
 			placing_wall = false;
 		}
 	}
-
-	if (new_wave_button->GetStat() == CLICKL_DOWN)
-	{
-		new_wave_button->Set({ 1254, 93, 104 , 104 }, { 687, 1227, 104, 104 });
-		clicked = true;
-	}
-	if (new_wave_button->GetStat() == CLICKL_UP)
-	{
-		new_wave_button->Set({ 1256, 95, 98 , 99 }, { 687, 1229, 98, 99 });
-		clicked = false;
-	}
-	if (new_wave_button->GetStat() == SELECTED && !clicked)
-	{
-		new_wave_button->Set({ 1252, 92, 104 , 104 }, { 580, 1226, 104, 104 });
-	}
-	if (new_wave_button->GetStat() == UNSELECTED)
-	{	
-		new_wave_button->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
-		clicked = false;
-	}
-
-
 	return true;
 }
 
@@ -528,7 +506,7 @@ void j1Scene::CreateSceneUI()
 	down_hud->SetInteractive(false);
 
 	btn_description = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UICHECKBUTTON);
-	btn_description->clicked = true;
+	btn_description->SetStat(CB_CHECK);
 	btn_description->Set({ 1316, 653, 19, 17 }, { 1347, 1163, 19, 17 }, { 1347, 1163, 19, 17 });
 
 	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
@@ -550,11 +528,11 @@ void j1Scene::CreateSceneUI()
 	townhall_bar_life = (UIHUDTownHallBarLife*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE);
 
 	new_wave_button = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	new_wave_button->Set({ 1266, 95, 98 , 99 }, { 476, 1229, 98, 99 });
+	new_wave_button->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
 	new_wave_button->SetInteractive(true);
-
-	
-
+	new_wave_button->SetAtlasClicked({ 687, 1227, 104, 104 }, { 1254, 93, 104 , 104 });
+	new_wave_button->SetAtlasUnclicked({ 687, 1229, 98, 99 });
+	new_wave_button->SetAtlasSelected({ 580, 1226, 104, 104 }, { 1252, 92, 104 , 104 });
 
 	//INFO SCORE, TIME, ENEMIES LEFT
 	info_ui = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);

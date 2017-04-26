@@ -23,7 +23,6 @@
 UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
-	SetDraw(false);
 }
 
 UIHUDPanelButtons::~UIHUDPanelButtons()
@@ -42,14 +41,12 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 
 bool UIHUDPanelButtons::Update()
 {
-	std::list<info_button*>::iterator ib_item = panel.begin();
-
-	while (ib_item != panel.end())
+	for (std::list<info_button*>::iterator ib_item = panel.begin(); ib_item != panel.end(); ++ib_item)
 	{
-		if ((*ib_item)->btn->GetStat() == UICOMPONENT_STAT::SELECTED)
+		if ((*ib_item)->btn->IsFocus())
 			App->scene->hud_description->SetDescription((*ib_item));
 
-		if((*ib_item)->btn->GetStat() == UICOMPONENT_STAT::CLICKL_UP)
+		if ((*ib_item)->btn->GetStat() == BS_UNCLICKED)
 			if_active = (*ib_item);
 
 		ib_item++;

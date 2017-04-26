@@ -197,32 +197,32 @@ void OneSelection::DrawUnitInfo()
 		UIComponents* entity_image = image;
 
 		SDL_Rect mark_btn{ 1029, 827, 29, 33 };
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->GetPosRect().x + 2 - App->render->camera->GetPosition().x, entity_image->GetPosRect().y + 2 - App->render->camera->GetPosition().y, &entity_image->GetAtlasRect(), SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->GetPosRect().x - App->render->camera->GetPosition().x, entity_image->GetPosRect().y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			//bar_life
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->GetPosRect().x - App->render->camera->GetPosition().x, entity_image->GetPosRect().y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		UILabel* entity_label = name;
-		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		entity_label = life;
-		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		SDL_Rect mark_attack{ 956, 858, 38, 22 };
 		entity_label = damage;
-		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 230 - App->render->camera->GetPosition().x, 703 - App->render->camera->GetPosition().y, &mark_attack, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		SDL_Rect mark_armor{ 956, 902, 37, 19 };
 		entity_label = armor;
-		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 230 - App->render->camera->GetPosition().x, 725 - App->render->camera->GetPosition().y, &mark_armor, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		entity_label = range;
 		if (entity_label != nullptr)
 		{
 			SDL_Rect mark_range{ 956, 881, 35, 20 };
-			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 231 - App->render->camera->GetPosition().x, 744 - App->render->camera->GetPosition().y, &mark_range, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		}
 	}
@@ -247,22 +247,22 @@ void OneSelection::DrawBuildInfo()
 		UIComponents* entity_image = image;
 
 		SDL_Rect mark_btn{ 1029, 827, 29, 33 };
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->GetPosRect().x + 2 - App->render->camera->GetPosition().x, entity_image->GetPosRect().y + 2 - App->render->camera->GetPosition().y, &entity_image->GetAtlasRect(), SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->GetPosRect().x - App->render->camera->GetPosition().x, entity_image->GetPosRect().y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		//bar_life
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->GetPosRect().x - App->render->camera->GetPosition().x, entity_image->GetPosRect().y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		UILabel* entity_label = name;
-		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		entity_label = life;
-		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		entity_label = range;
 		if (entity_label != nullptr)
 		{
 			SDL_Rect mark_range{ 956, 881, 35, 20 };
-			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 231 - App->render->camera->GetPosition().x, 711 - App->render->camera->GetPosition().y, &mark_range, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		}
 
@@ -273,7 +273,7 @@ void OneSelection::DrawBuildInfo()
 			{
 				UpdateBuildingPercentageStr();
 				entity_label = building_percentage;
-				App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+				App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 				entity_label = name;
 				App->render->Blit(entity_label->text_img, 400 - App->render->camera->GetPosition().x, 716 - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
@@ -317,15 +317,15 @@ void OneSelection::DrawResourceInfo()
 		UIComponents* entity_image = image;
 
 		SDL_Rect mark_btn{ 1029, 827, 29, 33 };
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->GetPosRect().x + 2 - App->render->camera->GetPosition().x, entity_image->GetPosRect().y + 2 - App->render->camera->GetPosition().y, &entity_image->GetAtlasRect(), SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->GetPosRect().x - App->render->camera->GetPosition().x, entity_image->GetPosRect().y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		//bar_life
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->GetPosRect().x - App->render->camera->GetPosition().x, entity_image->GetPosRect().y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		UILabel* entity_label = name;
-		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 		entity_label = life;
-		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit(entity_label->text_img, entity_label->GetPosRect().x - App->render->camera->GetPosition().x, entity_label->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 	}
 }
