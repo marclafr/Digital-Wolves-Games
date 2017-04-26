@@ -4,12 +4,10 @@
 
 class Task
 {
-private:
-	
+private:	
 	char* name;
 
 public:
-
 	virtual bool Execute();
 
 };
