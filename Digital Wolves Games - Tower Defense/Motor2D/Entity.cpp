@@ -58,6 +58,11 @@ const int Entity::GetArmor() const
 	return armor;
 }
 
+void Entity::IncreaseArmor(int extra_defense)
+{
+	armor += extra_defense;
+}
+
 const iPoint Entity::GetPivot() const
 {
 	return pivot;

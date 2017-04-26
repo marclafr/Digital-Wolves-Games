@@ -13,7 +13,12 @@
 
 Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), attacking(nullptr), target (nullptr), priority(priority)
 {
-	
+	if (side == S_ENEMY)
+	{
+		bonus_attack = true;
+		bonus_defense = true;
+	}
+
 	switch (u_type)
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
@@ -109,6 +114,77 @@ bool Unit::Move()
 
 void Unit::AI()
 {
+	if (bonus_attack == false)
+	{
+		switch (unit_class)
+		{
+		case C_INFANTRY:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_INFANTRY_ATTACK)) == INV_LVL_UNLOCKED)
+			{
+				attack += 6;
+				bonus_attack = true;
+			}
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_INFANTRY_DEFENSE)) == INV_LVL_UNLOCKED)
+			{
+				IncreaseArmor(4);
+				bonus_defense = true;
+			}
+			break;
+		case C_ARCHER:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ARCHERS_ATTACK)) == INV_LVL_UNLOCKED)
+			{
+				attack += 5;
+				bonus_attack = true;
+			}
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ARCHERS_DEFENSE)) == INV_LVL_UNLOCKED)
+			{
+				IncreaseArmor(3);
+				bonus_defense = true;
+			}
+			break;
+		case C_CAVALRY:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_CAVALRY_ATTACK)) == INV_LVL_UNLOCKED)
+			{
+				attack += 7;
+				bonus_attack = true;
+			}
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_CAVALRY_DEFENSE)) == INV_LVL_UNLOCKED)
+			{
+				IncreaseArmor(4);
+				bonus_defense = true;
+			}
+			break;
+		}
+	}
+
+	if (bonus_defense == false)
+	{
+		switch (unit_class)
+		{
+		case C_INFANTRY:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_INFANTRY_DEFENSE)) == INV_LVL_UNLOCKED)
+			{
+				IncreaseArmor(4);
+				bonus_defense = true;
+			}
+			break;
+		case C_ARCHER:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ARCHERS_DEFENSE)) == INV_LVL_UNLOCKED)
+			{
+				IncreaseArmor(3);
+				bonus_defense = true;
+			}
+			break;
+		case C_CAVALRY:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_CAVALRY_DEFENSE)) == INV_LVL_UNLOCKED)
+			{
+				IncreaseArmor(4);
+				bonus_defense = true;
+			}
+			break;
+		}
+	}
+
 	switch (action)
 	{
 	case A_IDLE:

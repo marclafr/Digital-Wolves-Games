@@ -6,7 +6,6 @@
 
 #include "j1Module.h"
 #include "p2Point.h"
-#include "p2DynArray.h"
 #include "j1PerfTimer.h"
 
 
@@ -23,16 +22,23 @@
 // Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
-struct PathNode;
-
-//class Corner;
-struct CornerCompare;
 
 struct PathNode;
-struct Path;
-struct PathList;
-
 struct ForcedNeighbour;
+
+enum X_DIRECTION
+{
+	X_NO_DIR,
+	X_RIGHT,
+	X_LEFT
+};
+
+enum Y_DIRECTION
+{
+	Y_NO_DIR,
+	Y_UP,
+	Y_DOWN
+};
 
 class j1PathFinding : public j1Module
 {
@@ -77,22 +83,59 @@ public:
 	PathNode* GetPathNode(int x, int y);
 
 	//JPS
+
+	//Main function of JPS Algorithm
 	bool CalculatePath(iPoint origin,const iPoint& destination, std::vector<iPoint>& vec_to_fill);
 
 private:
 
-	iPoint FindNearestWalkable(const iPoint& origin);
-	bool GetLowestFN(ForcedNeighbour& fn);
-	bool FrontierFinished();
-	void FillPathVec(std::vector<iPoint>& vec);
-	void ChangeCosts(PathNode* from, float new_cost);
+	//Look for forced neighbours from one point and in one direction (open a node)
+	bool CheckForTiles(const PathNode* start, X_DIRECTION dx, Y_DIRECTION dy);
+
+	//Open 4 diagonals from the origin
 	void OpenOrigin();
-	bool CheckIfInFrontier(ForcedNeighbour& FN, std::list<ForcedNeighbour>::iterator& pos);
-	void FoundForcedNeighbour(PathNode*& before, iPoint after_pos,const PathNode* start, iPoint destination, bool& pushed_path, PathNode* path_to = nullptr);
-	void DestinationReached(PathNode* destination,const PathNode* start, bool& diagonal_pushed, PathNode* path_to = nullptr);
+
+	//Check Directions
+	bool CheckX(const PathNode* start, X_DIRECTION dir);
+	bool CheckY(const PathNode* start, Y_DIRECTION dir);
+	bool MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION dy, bool& diagonal_end);
+
+	//Called When ForcedNeighbour is found
+	bool FoundForcedNeighbour(const PathNode* before, iPoint after_pos,const PathNode* path_to);
+	bool FoundForcedNeighbour(const PathNode* before, iPoint after_pos);
+
+	//Called when destination is reached through a path
+	void DestinationReached(const PathNode* destination, const PathNode* path_to);
+	void DestinationReached(const PathNode* destination);
+
+	//check for neighbours before moving diagonal
+	bool CheckForForcedNeighbours(const PathNode* node, X_DIRECTION dx, Y_DIRECTION dy);
+
+	//Push new node to list or change existing node with same pos so that it has the better path
+	const PathNode* PushToVisited(const PathNode* node);
+
+	//Push new ForcedNeighbour to list or change existing ForcedNeighbour so that it has the better path
+	void PushToFrontier(ForcedNeighbour& fn);
+
+	//Get Lowest Priority Forced neighbour aka most probable best path 
+	bool GetLowestFN(ForcedNeighbour& fn);
+
+	//Fill given vector after finding Path 
+	void FillPathVec(std::vector<iPoint>& vec);
+
+	//Update cost_so_far of all Nodes opened from a given tile after changin this ones cost
+	void ChangeCosts(PathNode* from, float new_cost);
+
+	//Extra
+	iPoint FindNearestWalkable(const iPoint& origin);
+
+	//Getters
+	const bool FrontierFinished() const;
+	const PathNode* GetNodeFromVisited(const iPoint& pos);
+	
+	//Chech if pointers are in the list & delete them if not	
 	void DeleteIfNotPushed(PathNode*& ptr);
-	bool CheckForTiles(const PathNode* start, int dx, int dy,const iPoint& destination);
-	void PushToVisited(PathNode* node);
+
 	//JPS end
 
 private:
@@ -111,11 +154,11 @@ private:
 	std::vector<iPoint> last_path;
 
 	//JPS
-	std::list<ForcedNeighbour> frontier;
-	std::vector<PathNode*> visited;
 	bool destination_reached = false;
 	PathNode* origin = nullptr;
 	PathNode* destination = nullptr;
+	std::list<ForcedNeighbour> frontier;
+	std::vector<PathNode*> visited;
 };
 
 // ---------------------------------------------------------------------
@@ -123,46 +166,49 @@ private:
 // ---------------------------------------------------------------------
 
 //JPS
-
-struct ForcedNeighbour
-{
-	PathNode* before;
-	PathNode* after;
-	bool opened;
-
-	ForcedNeighbour(PathNode* before, PathNode* after);
-	ForcedNeighbour();
-
-	bool operator > (const ForcedNeighbour& rhs) const;
-	bool operator < (const ForcedNeighbour& rhs) const;
-	const ForcedNeighbour& operator = (const ForcedNeighbour& rhs);
-};
-
 struct PathNode
 {
-	// Convenient constructors
-	PathNode();
-	PathNode(iPoint pos);
-	PathNode(float cost, float dist, const iPoint& pos, const PathNode* parent);
-	PathNode(const PathNode& node);
-
-	~PathNode();
-	
-	float CalculateDistance(iPoint destination);
-	float CalculatePriority(const iPoint& destination);
-
-	const PathNode& operator = (const PathNode& node);
-
-	inline bool operator > (const PathNode & rhs) const;
-	inline bool operator < (const PathNode & rhs) const;
-	inline bool operator == (const PathNode & rhs) const;
-
 	// -----------
 	float cost_so_far;
 	float distance;
 	float priority;
 	iPoint pos;
-	const PathNode* parent; // needed to reconstruct the path in the end
+	iPoint parent; // needed to reconstruct the path in the end
+
+	// Convenient constructors
+	PathNode();
+	PathNode(iPoint pos);
+	PathNode(float cost, float dist, const iPoint& pos,iPoint parent);
+	PathNode(const PathNode& node);
+
+	~PathNode();
+	
+	//Usefull
+	float CalculateDistance(iPoint destination);
+	float CalculatePriority(const iPoint& destination);
+
+	//Operators
+	const PathNode& operator = (const PathNode& node);
+	inline bool operator > (const PathNode & rhs) const;
+	inline bool operator < (const PathNode & rhs) const;
+	inline bool operator == (const PathNode & rhs) const;	
 };
+
+struct ForcedNeighbour
+{
+	iPoint before;
+	iPoint after;
+	float priority;
+	bool opened;
+
+	//Constructors
+	ForcedNeighbour(const iPoint& before,const iPoint& after, float priority);
+	ForcedNeighbour();
+
+	//Operators
+	const ForcedNeighbour& operator = (const ForcedNeighbour& rhs);
+};
+
+
 
 #endif // __j1PATHFINDING_H__
