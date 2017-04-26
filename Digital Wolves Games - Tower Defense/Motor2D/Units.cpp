@@ -15,6 +15,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 {
 	if (side == S_ENEMY)
 	{
+		//if the bonuses start in true they are never applied
 		bonus_attack = true;
 		bonus_defense = true;
 	}
@@ -26,8 +27,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(170);
 		attack = 12;
 		SetArmor(1);
-		speed = 1;
-		rate_of_fire = 2;
+		speed = 1.0f;
+		rate_of_fire = 200.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -41,8 +42,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(50);
 		attack = 6;
 		SetArmor(1);
-		speed = 1.4;
-		rate_of_fire = 2;
+		speed = 1.4f;
+		rate_of_fire = 200.0f;
 		range = 300;
 		vision_range = 350;
 		unit_class = C_ARCHER;
@@ -55,8 +56,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(270);
 		attack = 4;
 		SetArmor(-5);
-		speed = 0.6;
-		rate_of_fire = 5;
+		speed = 0.6f;
+		rate_of_fire = 500.0f;
 		range = 30;
 		vision_range = 100;
 		unit_class = C_SIEGE;
@@ -86,7 +87,10 @@ void Unit::Update()
 
 	if (changed == true)
 	{
-		animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action, direction));
+		if (action == A_ATTACK)
+			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action, direction), this->rate_of_fire);
+		else
+			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action, direction));
 		changed = false;
 	}
 
@@ -114,6 +118,8 @@ bool Unit::Move()
 
 void Unit::AI()
 {
+	//Investigations bonuses
+		//Bonus attack
 	if (bonus_attack == false)
 	{
 		switch (unit_class)
@@ -124,22 +130,12 @@ void Unit::AI()
 				attack += 6;
 				bonus_attack = true;
 			}
-			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_INFANTRY_DEFENSE)) == INV_LVL_UNLOCKED)
-			{
-				IncreaseArmor(4);
-				bonus_defense = true;
-			}
 			break;
 		case C_ARCHER:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ARCHERS_ATTACK)) == INV_LVL_UNLOCKED)
 			{
 				attack += 5;
 				bonus_attack = true;
-			}
-			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ARCHERS_DEFENSE)) == INV_LVL_UNLOCKED)
-			{
-				IncreaseArmor(3);
-				bonus_defense = true;
 			}
 			break;
 		case C_CAVALRY:
@@ -148,15 +144,11 @@ void Unit::AI()
 				attack += 7;
 				bonus_attack = true;
 			}
-			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_CAVALRY_DEFENSE)) == INV_LVL_UNLOCKED)
-			{
-				IncreaseArmor(4);
-				bonus_defense = true;
-			}
 			break;
 		}
 	}
 
+		//Bonus defense
 	if (bonus_defense == false)
 	{
 		switch (unit_class)
@@ -184,6 +176,7 @@ void Unit::AI()
 			break;
 		}
 	}
+	//----------------------
 
 	switch (action)
 	{

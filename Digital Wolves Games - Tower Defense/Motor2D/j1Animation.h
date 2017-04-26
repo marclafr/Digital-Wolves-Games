@@ -74,7 +74,7 @@ public:
 	Animation(const Animation& copy);
 	~Animation();
 
-	void ChangeAnimation(AnimationType* type);
+	void ChangeAnimation(AnimationType* type, float speed = 0.0f);
 
 	const Animation operator = (const Animation& anim);
 

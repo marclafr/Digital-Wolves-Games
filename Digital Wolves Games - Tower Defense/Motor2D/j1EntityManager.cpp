@@ -246,13 +246,23 @@ bool j1EntityManager::PostUpdate()
 
 Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
 {
-	for  (int i = 0; i < entity_array.size(); i++)
+	for (int i = 0; i < entity_array.size(); i++)
 	{
-		if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range &&
-			entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range &&
-			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0
-			&& (entity_array[i]->GetEntityType() == E_UNIT || entity_array[i]->GetEntityType() == E_BUILDING))
-			return entity_array[i];
+		if (entity_array[i]->GetEntityType() == E_BUILDING)
+		{
+			Building* building = (Building*)entity_array[i];
+			if (entity_array[i]->GetX() <= position.x + range + building->GetWidth() && entity_array[i]->GetX() >= position.x - range - building->GetWidth() &&
+				entity_array[i]->GetY() <= position.y + range + building->GetHeight() && entity_array[i]->GetY() >= position.y - range - building->GetHeight() &&
+				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0)
+				return entity_array[i];
+		}
+		if (entity_array[i]->GetEntityType() == E_UNIT)
+		{
+			if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range &&
+				entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range &&
+				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0)
+				return entity_array[i];
+		}
 	}
 	return nullptr;
 }

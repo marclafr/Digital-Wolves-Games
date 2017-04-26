@@ -215,11 +215,15 @@ Animation::Animation(const Animation & copy) : anim_type(copy.anim_type), curren
 Animation::~Animation()
 {}
 
-void Animation::ChangeAnimation(AnimationType * type)
+void Animation::ChangeAnimation(AnimationType * type, float new_speed)
 {
 	anim_type = type;
 	loop = type->GetLoopState();
-	speed = type->GetSpeed();
+	if (new_speed != 0.0f)
+		speed = new_speed;
+	else
+		speed = type->GetSpeed();
+
 	Reset();
 }
 
