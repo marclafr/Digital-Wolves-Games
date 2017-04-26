@@ -66,6 +66,7 @@ public:
 	ENTITY_STATUS GetEntityStatus();
 	const int GetHp() const;
 	const int GetArmor() const;
+	void IncreaseArmor(int extra_defense);
 	const float GetX() const;
 	const float GetY() const;
 	const int GetAttack() const;

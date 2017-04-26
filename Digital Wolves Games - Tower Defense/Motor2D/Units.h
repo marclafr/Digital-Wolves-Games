@@ -82,6 +82,10 @@ private:
 
 	int priority;
 
+	//Investigations bonuses:
+	bool bonus_attack = false;
+	bool bonus_defense = false;
+
 public:
 
 	Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority);
