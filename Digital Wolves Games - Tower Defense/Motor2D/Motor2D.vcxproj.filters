@@ -127,12 +127,14 @@
     <ClCompile Include="UIHUDTownHallBarLife.cpp">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="j1Investigations.cpp" />
     <ClCompile Include="j1ScoreScene.cpp">
       <Filter>Awsome_Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="UIHUDScoreBar.cpp">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Investigations.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -274,15 +276,14 @@
     <ClInclude Include="UIHUDTownHallBarLife.h">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="j1Investigations.h" />
     <ClInclude Include="j1ScoreScene.h">
       <Filter>Awsome_Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="UIHUDScoreBar.h">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="Task.h">
-      <Filter>Awsome_Game\Tools</Filter>
+    <ClInclude Include="j1Investigations.h">
+      <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

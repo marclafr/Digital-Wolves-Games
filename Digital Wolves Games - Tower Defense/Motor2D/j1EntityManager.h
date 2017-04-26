@@ -47,6 +47,9 @@ public:
 
 	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;
 	int GetScore();
+	int GetEnemiesKilled();
+	int GetMins();
+	int GetSecs();
 	void IncreaseScore();
 	void DecreaseScore();
 	void AddScore(int points);

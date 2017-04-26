@@ -30,9 +30,11 @@ private:
 	float build_time;
 	j1PerfTimer buildtimer;
 	j1PerfTimer AttackTimer;
+	j1Timer DieTimer;
+	bool alive = true;
 	Entity* Target = nullptr;
 	bool totallybuilded = false;
-	enum LEVEL lvl = LVL_1;
+	enum LEVEL lvl = INV_LVL_1;
 public:
 	iPoint arrowpos;
 	Building(BUILDING_TYPE b_type, fPoint pos, Side side);

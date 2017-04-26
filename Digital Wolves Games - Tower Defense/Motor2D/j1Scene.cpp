@@ -30,6 +30,7 @@
 #include "UICheckbutton.h"
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
+#include "j1Investigations.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -119,7 +120,13 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
+	//
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_FOOD));
 
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_INFANTRY_ATTACK));
+	//
 	//DEBUG: increase resources
 	if (App->debug_features.add_food)
 	{

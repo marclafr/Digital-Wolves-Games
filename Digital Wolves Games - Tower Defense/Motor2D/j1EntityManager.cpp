@@ -169,12 +169,8 @@ void j1EntityManager::BlitEnemyDeathCount()
 		App->win->GetWindowSize(width, height);
 
 		//SDL_Rect rect{ width - 120, 25, 120, 60};
-
-		int secs = WINNING_TIME - App->scene->game_time.ReadSec();
-		int mins = secs / 60;
-		secs -= mins * 60;
 		
-		sprintf_s(time_left, 256, " Time Left: %d:%d", mins, secs);
+		sprintf_s(time_left, 256, " Time Left: %d:%d", GetMins(), GetSecs());
 		
 		if (enemy_killed)
 		{
@@ -310,6 +306,27 @@ bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
 int j1EntityManager::GetScore()
 {
 	return score;
+}
+
+int j1EntityManager::GetEnemiesKilled()
+{
+	return enemies_killed;
+}
+
+int j1EntityManager::GetMins()
+{
+	int secs = WINNING_TIME - App->scene->game_time.ReadSec();
+	int mins = secs / 60;
+	secs -= mins * 60;
+	return mins;
+}
+
+int j1EntityManager::GetSecs()
+{
+	int secs = WINNING_TIME - App->scene->game_time.ReadSec();
+	int mins = secs / 60;
+	secs -= mins * 60;
+	return secs;
 }
 
 void j1EntityManager::IncreaseScore()

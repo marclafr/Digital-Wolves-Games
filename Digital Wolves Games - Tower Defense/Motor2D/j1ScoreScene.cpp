@@ -15,10 +15,7 @@
 
 #include "UIButton.h"
 #include "UILabel.h"
-#include "UIHUDPanelButtons.h"
-#include "UIHUDDescription.h"
-#include "UIHUDResources.h"
-#include "UICheckbutton.h"
+#include "UIHUDScoreBar.h"
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
 
@@ -64,13 +61,13 @@ bool j1ScoreScene::Start()
 	play_again->SetInteractive(true);
 
 	//SCORE
-	score = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	score->Set({ 278, 696, 126, 55 }, { 0, 0, 0, 0 });
-	score->SetInteractive(true);
-	score_unselected = false;
+	trophies = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	trophies->Set({ 278, 696, 126, 55 }, { 0, 0, 0, 0 });
+	trophies->SetInteractive(true);
+	trophies_unselected = false;
 
-	title_score = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_score->Set(316, 710, "Trophies");
+	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_trophies->Set(316, 710, "Trophies");
 
 	//ACHIEVEMENTS
 	achievements = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
@@ -106,21 +103,39 @@ bool j1ScoreScene::Start()
 
 	score_bar = (UIHUDScoreBar*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDSCOREBAR);
 
+	//TEXT
+	title_score = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	sprintf_s(text_score, 256, "Score: %d", App->entity_manager->GetScore());
+	title_score->Set(490, 380, text_score);
+
+	title_enemies_killed = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	char text_enemies[256];
+	sprintf_s(text_enemies, 256, "Enemies Killed: %d", App->entity_manager->GetEnemiesKilled());
+	title_enemies_killed->Set(490, 410, text_enemies);
+
+	title_time = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	char text_time[256];
+	sprintf_s(text_time, 256, "Time: %d:%d", App->entity_manager->GetMins(), App->entity_manager->GetSecs());
+	title_time->Set(490, 440, text_time);
+
+	title_act_rank = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	char text_rank[256];
+	sprintf_s(text_rank, 256, "Your Trophie", App->entity_manager->GetScore());
+	title_act_rank->Set(850, 380, text_rank);
+	
+	actual_trophie = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+
 	if (App->scene->win == true)
 	{
 		title_win = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-		char text_score[256];
-		sprintf_s(text_score, 256, " You Win!!  Score: %d", App->entity_manager->GetScore());
-		title_win->Set(655, 21, text_score);
+		title_win->Set(655, 21, "You Win!!");
 		App->audio->PlayMusic("audio/music/Main_Theme01.ogg", 0.0f);
 	}
 
 	if (App->scene->lose == true)
 	{
 		title_lose = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-		char text_score[256];
-		sprintf_s(text_score, 256, " You Lose :(  Score: %d", App->entity_manager->GetScore());
-		title_lose->Set(655, 21, text_score);
+		title_lose->Set(655, 21, "You Lose!!");
 		App->audio->PlayMusic("audio/music/Lost_Game01.ogg", 0.0f);
 	}
 	
@@ -136,7 +151,17 @@ bool j1ScoreScene::PreUpdate()
 // Called each loop iteration
 bool j1ScoreScene::Update(float dt)
 {
-	
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+		App->entity_manager->IncreaseScore();
+
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+		App->entity_manager->DecreaseScore();
+
+
+	sprintf_s(text_score, 256, "Score: %d", App->entity_manager->GetScore());
+	title_score->Set(490, 380, text_score);
+	ActualTrophie();
+
 	//PLAY AGAIN
 	if (play_again->GetStat() == SELECTED)
 	{
@@ -175,24 +200,24 @@ bool j1ScoreScene::Update(float dt)
 	}
 
 	//SCORE
-	if (score->GetStat() == CLICKL_UP)
+	if (trophies->GetStat() == CLICKL_UP)
 	{
 		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2131, 1366, 144 });
-		score_unselected = false;
+		trophies_unselected = false;
 	}
 
 	//ACHIEVEMENTS
 	if (achievements->GetStat() == CLICKL_UP)
 	{
 		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2278, 1366, 144 });
-		score_unselected = true;
+		trophies_unselected = true;
 	}
 
 	//INVESTIGATIONS
 	if (investigations->GetStat() == CLICKL_UP)
 	{
 		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2426, 1366, 144 });
-		score_unselected = true;
+		trophies_unselected = true;
 	}
 
 	OptionSelected();
@@ -219,16 +244,41 @@ bool j1ScoreScene::CleanUp()
 	return true;
 }
 
+void j1ScoreScene::ActualTrophie()
+{
+	if (App->entity_manager->GetScore() > 560) {
+		actual_trophie->Set({ 850, 410, 87, 98 }, { 677, 1370, 87, 98 });
+	}
+	if (App->entity_manager->GetScore() > 1000) {
+		actual_trophie->Set({ 845, 410, 97, 113 }, { 765, 1355, 97, 113 });
+	}
+	if (App->entity_manager->GetScore() > 1500) {
+		actual_trophie->Set({ 837, 410, 113, 129 }, { 941, 1162, 113, 129 });
+	}
+	if (App->entity_manager->GetScore() > 2000) {
+		actual_trophie->Set({ 833, 410, 119, 139 }, { 1058, 1162, 119, 139 });
+	}
+	if (App->entity_manager->GetScore() > 2500) {
+		actual_trophie->Set({ 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
+	}
+}
 
 void j1ScoreScene::OptionSelected()
 {
-	if (score_unselected)
+	if (trophies_unselected)
 	{
 		trophie_wood->SetDraw(false);
 		trophie_bronze->SetDraw(false);
 		trophie_silver->SetDraw(false);
 		trophie_gold->SetDraw(false);
 		trophie_rubi->SetDraw(false);
+		score_bar->SetDraw(false);
+		title_score->SetDraw(false);
+		title_enemies_killed->SetDraw(false);
+		title_time->SetDraw(false);
+
+		title_act_rank->SetDraw(false);
+		actual_trophie->SetDraw(false);
 	}
 	else
 	{
@@ -237,6 +287,13 @@ void j1ScoreScene::OptionSelected()
 		trophie_silver->SetDraw(true);
 		trophie_gold->SetDraw(true);
 		trophie_rubi->SetDraw(true);
+		score_bar->SetDraw(true);
+		title_score->SetDraw(true);
+		title_enemies_killed->SetDraw(true);
+		title_time->SetDraw(true);
+
+		title_act_rank->SetDraw(true);
+		actual_trophie->SetDraw(true);
 	}
 
 	if (achievements_unselected)

@@ -38,6 +38,8 @@ public:
 
 	void OptionSelected();
 
+	void ActualTrophie();
+
 	bool game_scene = true;
 
 private:
@@ -48,8 +50,8 @@ private:
 	UIButton* play_again;
 	UIButton* back_menu;
 
-	UIButton* score;
-	UILabel* title_score;
+	UIButton* trophies;
+	UILabel* title_trophies;
 
 	UIButton* achievements;
 	UILabel* title_achievements;
@@ -59,6 +61,13 @@ private:
 
 	UILabel* title_win;
 	UILabel* title_lose;
+	UILabel* title_score;
+	char text_score[256];
+	UILabel* title_enemies_killed;
+	UILabel* title_time;
+
+	UILabel* title_act_rank;
+	UIComponents* actual_trophie;
 
 	//TROPHIES
 	UIComponents* trophie_wood;
@@ -70,7 +79,7 @@ private:
 	UIHUDScoreBar* score_bar;
 
 	bool scene_changing = false;
-	bool score_unselected = true;
+	bool trophies_unselected = true;
 	bool achievements_unselected = true;
 	bool investigation_unselected = true;
 
