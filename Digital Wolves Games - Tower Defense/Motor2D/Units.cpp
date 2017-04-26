@@ -27,8 +27,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(170);
 		attack = 12;
 		SetArmor(1);
-		speed = 1;
-		rate_of_fire = 2;
+		speed = 1.0f;
+		rate_of_fire = 200.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -42,8 +42,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(50);
 		attack = 6;
 		SetArmor(1);
-		speed = 1.4;
-		rate_of_fire = 2;
+		speed = 1.4f;
+		rate_of_fire = 200.0f;
 		range = 300;
 		vision_range = 350;
 		unit_class = C_ARCHER;
@@ -56,8 +56,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(270);
 		attack = 4;
 		SetArmor(-5);
-		speed = 0.6;
-		rate_of_fire = 5;
+		speed = 0.6f;
+		rate_of_fire = 500.0f;
 		range = 30;
 		vision_range = 100;
 		unit_class = C_SIEGE;
@@ -87,7 +87,10 @@ void Unit::Update()
 
 	if (changed == true)
 	{
-		animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action, direction));
+		if (action == A_ATTACK)
+			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action, direction), this->rate_of_fire);
+		else
+			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action, direction));
 		changed = false;
 	}
 

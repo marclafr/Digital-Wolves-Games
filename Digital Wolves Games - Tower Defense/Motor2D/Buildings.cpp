@@ -19,36 +19,42 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetHp(250);
 		SetAttack(30);
 		SetArmor(1);
-		rate_of_fire = 1;
+		rate_of_fire = 100.0f;
 		range = 250;
 		build_time = 7;
 		rect = { 610,1,107,206 };
 		SetRect(rect);
 		SetPivot(0.504673 * 107, 0.902913 * 206);
 		SetTextureID(T_TURRET);
+		base_height = 25;
+		base_width = 25;
 		break;
 	case B_STONE_WALL:
 		SetSide(side);
 		SetHp(500);
 		SetAttack(0);
-		rate_of_fire = 0;
+		rate_of_fire = 0.0f;
 		range = 0;
 		rect = { 365,435,95,57 };
 		SetRect(rect);
 		SetPivot(0.505263 * 95, 0.578947 * 57);
 		SetTextureID(T_WALL);
+		base_height = 25;
+		base_width = 25;
 		break;
 	case B_TOWNHALL:
 		SetSide(side);
 		SetHp(1500);
 		SetAttack(0);
-		rate_of_fire = 0;
+		rate_of_fire = 0.0f;
 		range = 0;
 		rect = { 836,1,366,317 };
 		SetRect(rect);
 		SetPivot(0.52459 * 366, 0.72555 * 317);//
 		SetTextureID(T_TOWNHALL);
 		totallybuilded = true;
+		base_height = 125;
+		base_width = 125;
 		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
@@ -263,6 +269,14 @@ const int Building::GetRange() const
 const double Building::GetBuildTime() const
 {
 	return buildtimer.ReadMs();
+}
+const int Building::GetHeight() const
+{
+	return base_height;
+}
+const int Building::GetWidth()const
+{
+	return base_width;
 }
 void Building::UpdateArrow(iPoint &arrowpos, iPoint targetpos)
 {

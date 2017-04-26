@@ -35,6 +35,8 @@ private:
 	Entity* Target = nullptr;
 	bool totallybuilded = false;
 	enum LEVEL lvl = INV_LVL_1;
+	int base_height = 0;
+	int base_width = 0;
 public:
 	iPoint arrowpos;
 	Building(BUILDING_TYPE b_type, fPoint pos, Side side);
@@ -51,6 +53,8 @@ public:
 	void UpgradeWall();
 	const LEVEL GetLevel() const;
 	const double GetBuildTime() const;
+	const int GetHeight() const;
+	const int GetWidth() const;
 };
 
 #endif
