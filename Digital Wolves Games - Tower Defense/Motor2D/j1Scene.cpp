@@ -54,7 +54,7 @@ bool j1Scene::Awake()
 bool j1Scene::Start()
 {
 	App->pathfinding->Enable();
-	//App->wave_manager->Enable();
+	App->wave_manager->Enable();
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
 	App->render->camera->SetPosition(iPoint(2300, -800));
