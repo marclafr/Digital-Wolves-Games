@@ -4,6 +4,7 @@
 #include "j1PathFinding.h"
 #include "j1Render.h"
 #include "j1Input.h"
+#include "j1Map.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
@@ -189,8 +190,9 @@ bool j1PathFinding::CalculatePath(iPoint start, const iPoint & end, std::vector<
 {
 	CleanUpJPS();
 
+	float max_destination_cost = App->map->data.height * App->map->data.width;
 	origin = new PathNode(0.0f, 0.0f, start, iPoint(-1,-1));
-	destination = new PathNode(0.0f, 0.0f, end, iPoint(-1, -1));
+	destination = new PathNode(max_destination_cost, 0.0f, end, iPoint(-2, -2));
 	PathNode* check = new PathNode(*origin);
 
 	if (IsWalkable(start))
@@ -220,7 +222,7 @@ bool j1PathFinding::CalculatePath(iPoint start, const iPoint & end, std::vector<
 
 	while (GetLowestFN(forced_neighbour))
 	{
-		if (GetNodeFromVisited(forced_neighbour.after)->cost_so_far > destination->cost_so_far && destination_reached == true)
+		if (GetNodeFromVisited(forced_neighbour.after)->cost_so_far >= destination->cost_so_far && destination_reached == true)
 			break;
 
 		check = (PathNode*)GetNodeFromVisited(forced_neighbour.after);
@@ -255,15 +257,21 @@ bool j1PathFinding::CalculatePath(iPoint start, const iPoint & end, std::vector<
 
 bool j1PathFinding::CheckForTiles(const PathNode* start, X_DIRECTION dx, Y_DIRECTION dy) //true when destination reached
 {
-	if (CheckForForcedNeighbours(start, dx, dy))
-		return true;
-
 	bool diagonal_end = false;
-	PathNode* diagonal = new PathNode(start->pos);
+	PathNode* diagonal = new PathNode(*start);
 	diagonal->parent = start->pos;
 
 	while (diagonal_end == false)
 	{
+		//initial pos check
+		if (diagonal->pos == start->pos)
+		{
+			if (CheckForForcedNeighbours(start, dx, dy))
+				return true;
+		}
+		else
+			if (CheckForForcedNeighbours(diagonal, dx, dy))
+				return true;
 		//X
 		if (diagonal->pos == start->pos)
 		{
@@ -273,7 +281,6 @@ bool j1PathFinding::CheckForTiles(const PathNode* start, X_DIRECTION dx, Y_DIREC
 		else
 			if(CheckX(diagonal, dx) == true)
 				return true;
-
 		//Y
 		if (diagonal->pos == start->pos)
 		{
@@ -284,8 +291,8 @@ bool j1PathFinding::CheckForTiles(const PathNode* start, X_DIRECTION dx, Y_DIREC
 			if (CheckY(diagonal, dy) == true)
 				return true;
 		//Diagonal
-		if (MoveDiagonal(diagonal, dx, dy, diagonal_end) == true)
-			return true;	
+		MoveDiagonal(diagonal, dx, dy, diagonal_end);
+	
 	}
 	DELETE_PTR(diagonal);
 	return false;
@@ -300,10 +307,10 @@ const PathNode* j1PathFinding::PushToVisited(const PathNode* node)
 	{
 		if ((*it)->pos == node->pos)
 		{
-			if ((node->cost_so_far < (*it)->cost_so_far || (*it)->cost_so_far == 0.0f) && node->pos != origin->pos ) //put = for debug
+			if (node->cost_so_far < (*it)->cost_so_far && node->pos != origin->pos) //put = for debug
 			{
 				(*it)->parent = node->parent;
-				ChangeCosts(*it, node->cost_so_far);
+				ChangeCosts(it, node->cost_so_far);	
 			}
 			found = true;
 			ret = *it;
@@ -528,7 +535,7 @@ bool j1PathFinding::CheckY(const PathNode* start, Y_DIRECTION dir)
 	return false;
 }
 
-bool j1PathFinding::MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION dy, bool& diagonal_end)
+void j1PathFinding::MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION dy, bool& diagonal_end)
 {
 	if (dx == X_RIGHT && dy == Y_DOWN)
 		if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y + 1)))
@@ -537,36 +544,9 @@ bool j1PathFinding::MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION
 			diagonal->pos.y++;
 			diagonal->cost_so_far += DIAGONAL_COST;
 			diagonal->CalculatePriority(destination->pos);
-
-			if (diagonal->pos == destination->pos)
-			{
-				DestinationReached(diagonal);
-				DELETE_PTR(diagonal);
-				return true;
-			}
-
-			//x
-			if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y + 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x - 1, diagonal->pos.y + 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
-			//y
-			if (IsWalkable(iPoint(diagonal->pos.x, diagonal->pos.y - 1)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y - 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x + 1, diagonal->pos.y - 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
 		}
 		else
-		{
 			diagonal_end = true;
-			return false;
-		}
 
 	else if (dx == X_LEFT && dy == Y_UP)
 		if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y - 1)))
@@ -575,36 +555,9 @@ bool j1PathFinding::MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION
 			diagonal->pos.y--;
 			diagonal->cost_so_far += DIAGONAL_COST;
 			diagonal->CalculatePriority(destination->pos);
-
-			if (diagonal->pos == destination->pos)
-			{
-				DestinationReached(diagonal);
-				DELETE_PTR(diagonal);
-				return true;
-			}
-
-			//x
-			if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y - 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x + 1, diagonal->pos.y - 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
-			//y
-			if (IsWalkable(iPoint(diagonal->pos.x, diagonal->pos.y + 1)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y + 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x - 1, diagonal->pos.y + 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
 		}
 		else
-		{
 			diagonal_end = true;
-			return false;
-		}
 
 	else if (dx == X_RIGHT && dy == Y_UP)
 		if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y - 1)))
@@ -613,36 +566,9 @@ bool j1PathFinding::MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION
 			diagonal->pos.y--;
 			diagonal->cost_so_far += DIAGONAL_COST;
 			diagonal->CalculatePriority(destination->pos);
-
-			if (diagonal->pos == destination->pos)
-			{
-				DestinationReached(diagonal);
-				DELETE_PTR(diagonal);
-				return true;
-			}
-
-			//x
-			if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y - 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x - 1, diagonal->pos.y - 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
-			//y
-			if (IsWalkable(iPoint(diagonal->pos.x, diagonal->pos.y + 1)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y + 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x + 1, diagonal->pos.y + 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
 		}
 		else
-		{
 			diagonal_end = true;
-			return false;
-		}
 
 	else if (dx == X_LEFT && dy == Y_DOWN)
 		if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y + 1)))
@@ -651,36 +577,9 @@ bool j1PathFinding::MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION
 			diagonal->pos.y++;
 			diagonal->cost_so_far += DIAGONAL_COST;
 			diagonal->CalculatePriority(destination->pos);
-
-			if (diagonal->pos == destination->pos)
-			{
-				DestinationReached(diagonal);
-				DELETE_PTR(diagonal);
-				return true;
-			}
-
-			//x
-			if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y + 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x + 1, diagonal->pos.y + 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
-			//y
-			if (IsWalkable(iPoint(diagonal->pos.x, diagonal->pos.y - 1)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y - 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x - 1, diagonal->pos.y - 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
 		}
 		else
-		{
 			diagonal_end = true;
-			return false;
-		}
 
 	else if (dx == X_LEFT)
 		if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y)))
@@ -688,37 +587,9 @@ bool j1PathFinding::MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION
 			diagonal->pos.x--;
 			diagonal->cost_so_far += STRAIGHT_COST;
 			diagonal->CalculatePriority(destination->pos);
-
-			if (diagonal->pos == destination->pos)
-			{
-				DestinationReached(diagonal);
-				DELETE_PTR(diagonal);
-				return true;
-			}
-
-			//up
-			if (IsWalkable(iPoint(diagonal->pos.x, diagonal->pos.y - 1)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y - 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x - 1, diagonal->pos.y - 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
-
-			//down
-			if (IsWalkable(iPoint(diagonal->pos.x, diagonal->pos.y + 1)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y + 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x - 1, diagonal->pos.y + 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
 		}
 		else
-		{
 			diagonal_end = true;
-			return false;
-		}
 
 	else if (dx == X_RIGHT)
 		if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y)))
@@ -726,36 +597,9 @@ bool j1PathFinding::MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION
 			diagonal->pos.x++;
 			diagonal->cost_so_far += STRAIGHT_COST;
 			diagonal->CalculatePriority(destination->pos);
-
-			if (diagonal->pos == destination->pos)
-			{
-				DestinationReached(diagonal);
-				DELETE_PTR(diagonal);
-				return true;
-			}
-
-			//up
-			if (IsWalkable(iPoint(diagonal->pos.x, diagonal->pos.y - 1)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y - 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x + 1, diagonal->pos.y - 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
-			//down
-			if (IsWalkable(iPoint(diagonal->pos.x, diagonal->pos.y + 1)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y + 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x + 1, diagonal->pos.y + 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
 		}
 		else
-		{
 			diagonal_end = true;
-			return false;
-		}
 
 	else if (dy == Y_UP)
 		if (IsWalkable(iPoint(diagonal->pos.x, diagonal->pos.y - 1)))
@@ -763,74 +607,19 @@ bool j1PathFinding::MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION
 			diagonal->pos.y--;
 			diagonal->cost_so_far += STRAIGHT_COST;
 			diagonal->CalculatePriority(destination->pos);
-
-			if (diagonal->pos == destination->pos)
-			{
-				DestinationReached(diagonal);
-				DELETE_PTR(diagonal);
-				return true;
-			}
-
-			//right
-			if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y - 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x + 1, diagonal->pos.y - 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
-			//left
-			if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y - 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x - 1, diagonal->pos.y - 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
 		}
 		else
-		{
 			diagonal_end = true;
-			return false;
-		}
-
+			
 	else if (dy == Y_DOWN)
 		if (IsWalkable(iPoint(diagonal->pos.x, diagonal->pos.y + 1)))
 		{
 			diagonal->pos.y++;
 			diagonal->cost_so_far += STRAIGHT_COST;
 			diagonal->CalculatePriority(destination->pos);
-
-			if (diagonal->pos == destination->pos)
-			{
-				DestinationReached(diagonal);
-				DELETE_PTR(diagonal);
-				return true;
-			}
-
-			//right
-			if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x + 1, diagonal->pos.y + 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x + 1, diagonal->pos.y + 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
-			//left
-			if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y)) == false)
-				if (IsWalkable(iPoint(diagonal->pos.x - 1, diagonal->pos.y + 1)))
-					if(FoundForcedNeighbour(diagonal, iPoint(diagonal->pos.x - 1, diagonal->pos.y + 1)))
-					{
-						DELETE_PTR(diagonal);
-						return true;
-					}
 		}
 		else
-		{
 			diagonal_end = true;
-			return false;
-		}
-	return false;
 }
 
 bool j1PathFinding::GetLowestFN(ForcedNeighbour& fn)
@@ -890,25 +679,18 @@ void j1PathFinding::FillPathVec(std::vector<iPoint>& vec)
 	last_path = vec;
 }
 
-void j1PathFinding::ChangeCosts(PathNode* from, float new_cost)
+void j1PathFinding::ChangeCosts(std::vector<PathNode*>::iterator from, float new_cost)
 {	
-	float difference = from->cost_so_far - new_cost;
+	float difference = (*from)->cost_so_far - new_cost;
 
-	for (int i = 0; i > visited.size(); i++)
-	{
-		if (visited[i]->pos == from->pos)
-		{
-			visited[i]->cost_so_far = new_cost;
-			visited[i]->CalculatePriority(destination->pos);
-			break;
-		}
-	}
+	(*from)->cost_so_far = new_cost;
+	(*from)->CalculatePriority(destination->pos);
 	
-	for (int i = 0; i > visited.size(); i++)
-		if (visited[i]->parent == from->pos)
+	for (std::vector<PathNode*>::iterator it = visited.begin(); it != visited.end(); ++it)
+		if ((*it)->parent == (*from)->pos)
 		{
-			float cost = visited[i]->cost_so_far - difference;
-			ChangeCosts(visited[i], cost);
+			float cost = (*it)->cost_so_far - difference;
+			ChangeCosts(it, cost);
 		}
 }
 
@@ -952,105 +734,7 @@ bool j1PathFinding::CheckForForcedNeighbours(const PathNode * node, X_DIRECTION 
 		return true;
 	}
 
-	//Check for forced neighbours
-	if (dx == X_RIGHT && dy == Y_DOWN)
-	{
-		//x
-		if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y)) == false)
-			if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y + 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x - 1, node->pos.y + 1)))
-					return true;
-
-		//y
-		if (IsWalkable(iPoint(node->pos.x, node->pos.y - 1)) == false)
-			if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y - 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x + 1, node->pos.y - 1)))
-					return true;
-		//X + Y extra:
-		//X_Right up
-		if (IsWalkable(iPoint(node->pos.x, node->pos.y - 1)) == false)
-			if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y - 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x + 1, node->pos.y - 1)))
-					return true;
-		//Y_Down left
-		if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y)) == false)
-			if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y + 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x - 1, node->pos.y + 1)))
-					return true;
-	}
-	else if (dx == X_LEFT && dy == Y_UP)
-	{
-		//x
-		if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y)) == false)
-			if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y - 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x + 1, node->pos.y - 1)))
-					return true;
-		//y
-		if (IsWalkable(iPoint(node->pos.x, node->pos.y + 1)) == false)
-			if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y + 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x - 1, node->pos.y + 1)))
-					return true;
-		//X + Y extra:
-		//X_left down
-		if (IsWalkable(iPoint(node->pos.x, node->pos.y + 1)) == false)
-			if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y + 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x - 1, node->pos.y + 1)))
-					return true;
-		////Y_up right
-		if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y)) == false)
-			if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y - 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x + 1, node->pos.y - 1)))
-					return true;
-	}
-	else if (dx == X_RIGHT && dy == Y_UP)
-	{
-		//x
-		if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y)) == false)
-			if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y - 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x - 1, node->pos.y - 1)))
-					return true;
-		//y
-		if (IsWalkable(iPoint(node->pos.x, node->pos.y + 1)) == false)
-			if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y + 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x + 1, node->pos.y + 1)))
-					return true;
-		//X + Y extra:
-		//X_right down
-		if (IsWalkable(iPoint(node->pos.x, node->pos.y + 1)) == false)
-			if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y + 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x + 1, node->pos.y + 1)))
-					return true;
-		//Y_up left
-		if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y)) == false)
-			if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y - 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x - 1, node->pos.y - 1)))
-					return true;
-	}
-	else if (dx == X_LEFT && dy == Y_DOWN)		
-	{
-		//x
-		if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y)) == false)
-			if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y + 1)))
-				if (FoundForcedNeighbour(node, iPoint(node->pos.x + 1, node->pos.y + 1)))
-					return true;
-		//y
-		if (IsWalkable(iPoint(node->pos.x, node->pos.y - 1)) == false)
-			if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y - 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x - 1, node->pos.y - 1)))
-					return true;
-		//X + Y extra:
-		//X_left up
-		if (IsWalkable(iPoint(node->pos.x, node->pos.y - 1)) == false)
-			if (IsWalkable(iPoint(node->pos.x - 1, node->pos.y - 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x - 1, node->pos.y - 1)))
-					return true;
-		//Y_down right
-		if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y)) == false)
-			if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y + 1)))
-				if(FoundForcedNeighbour(node, iPoint(node->pos.x + 1, node->pos.y + 1)))
-					return true;
-	}
-	else if (dx == X_LEFT)
+	if (dx == X_LEFT)
 	{
 		//up
 		if (IsWalkable(iPoint(node->pos.x, node->pos.y - 1)) == false)
@@ -1063,7 +747,7 @@ bool j1PathFinding::CheckForForcedNeighbours(const PathNode * node, X_DIRECTION 
 				if(FoundForcedNeighbour(node, iPoint(node->pos.x - 1, node->pos.y + 1)))
 					return true;
 	}
-	else if (dx == X_RIGHT)
+	if (dx == X_RIGHT)
 	{
 		//up
 		if (IsWalkable(iPoint(node->pos.x, node->pos.y - 1)) == false)
@@ -1076,7 +760,7 @@ bool j1PathFinding::CheckForForcedNeighbours(const PathNode * node, X_DIRECTION 
 				if(FoundForcedNeighbour(node, iPoint(node->pos.x + 1, node->pos.y + 1)))
 					return true;
 	}
-	else if (dy == Y_UP)
+	if (dy == Y_UP)
 	{
 		//right
 		if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y)) == false)
@@ -1089,7 +773,7 @@ bool j1PathFinding::CheckForForcedNeighbours(const PathNode * node, X_DIRECTION 
 				if(FoundForcedNeighbour(node, iPoint(node->pos.x - 1, node->pos.y - 1)))
 					return true;
 	}
-	else if (dy == Y_DOWN)
+	if (dy == Y_DOWN)
 	{
 		//right
 		if (IsWalkable(iPoint(node->pos.x + 1, node->pos.y)) == false)
@@ -1145,8 +829,8 @@ PathNode::~PathNode()
 
 float PathNode::CalculateDistance(iPoint destination)
 {
-	int sr = (destination.x - pos.x) * (destination.x - pos.x) + (destination.y - pos.y) * (destination.y - pos.y);
-	distance = (float) sqrt(sr);
+	float sr = (destination.x - pos.x) * (destination.x - pos.x) + (destination.y - pos.y) * (destination.y - pos.y);
+	distance = sqrtf(sr);
 	return distance;
 }
 
@@ -1168,7 +852,7 @@ const PathNode & PathNode::operator=(const PathNode & node)
 
 inline bool PathNode::operator>(const PathNode & rhs) const
 {
-	if (this->distance + this->cost_so_far > rhs.cost_so_far + rhs.distance)
+	if (this->priority > rhs.priority)
 		return true;
 	return false;
 }

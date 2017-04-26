@@ -132,9 +132,6 @@ bool j1Input::PreUpdate()
 				break;
 
 			case SDL_KEYUP:
-
-				
-
 				if (App->scene->active)
 					App->scene->HandleInput(event);
 				break;

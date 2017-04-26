@@ -13,7 +13,7 @@
 #define INVALID_WALK_CODE 255
 
 //JPS
-#define DIAGONAL_COST sqrt(2)
+#define DIAGONAL_COST 1.414214f // sqrt 2
 #define STRAIGHT_COST 1.0f
 #define FIND_RADIUS 10
 
@@ -98,7 +98,7 @@ private:
 	//Check Directions
 	bool CheckX(const PathNode* start, X_DIRECTION dir);
 	bool CheckY(const PathNode* start, Y_DIRECTION dir);
-	bool MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION dy, bool& diagonal_end);
+	void MoveDiagonal(PathNode* diagonal, X_DIRECTION dx, Y_DIRECTION dy, bool& diagonal_end);
 
 	//Called When ForcedNeighbour is found
 	bool FoundForcedNeighbour(const PathNode* before, iPoint after_pos,const PathNode* path_to);
@@ -124,7 +124,7 @@ private:
 	void FillPathVec(std::vector<iPoint>& vec);
 
 	//Update cost_so_far of all Nodes opened from a given tile after changin this ones cost
-	void ChangeCosts(PathNode* from, float new_cost);
+	void ChangeCosts(std::vector<PathNode*>::iterator from, float new_cost);
 
 	//Extra
 	iPoint FindNearestWalkable(const iPoint& origin);
