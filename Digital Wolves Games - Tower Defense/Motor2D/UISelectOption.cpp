@@ -58,7 +58,7 @@ bool UISelectOption::Update()
 
 void UISelectOption::AddOption(const char * text)
 {
-	UILabel* newoption_label = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	UILabel* newoption_label = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
 
 	num_options++;
 

@@ -141,37 +141,37 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 
 	switch (type)
 	{
-	case UILABEL:
-		components.push_back(ret = (UIComponents*)new UILabel(UICOMPONENT_TYPE::UILABEL));
+	case UIT_UILABEL:
+		components.push_back(ret = (UIComponents*)new UILabel(UICOMPONENT_TYPE::UIT_UILABEL));
 		break;
-	case UIBUTTON:
-		components.push_back(ret = (UIComponents*)new UIButton(UICOMPONENT_TYPE::UIBUTTON));
+	case UIT_UIBUTTON:
+		components.push_back(ret = (UIComponents*)new UIButton(UICOMPONENT_TYPE::UIT_UIBUTTON));
 		break;
-	case UICHECKBUTTON:
-		components.push_back(ret = (UIComponents*)new UICheckbutton(UICOMPONENT_TYPE::UICHECKBUTTON));
+	case UIT_UICHECKBUTTON:
+		components.push_back(ret = (UIComponents*)new UICheckbutton(UICOMPONENT_TYPE::UIT_UICHECKBUTTON));
 		break;
 		/*
-	case UISELECTOPTION:
-		components.push_back(ret = (UIComponents*)new UISelectOption(UICOMPONENT_TYPE::UISELECTOPTION));
+	case UIT_UISELECTOPTION:
+		components.push_back(ret = (UIComponents*)new UISelectOption(UICOMPONENT_TYPE::UIT_UISELECTOPTION));
 		break;
 		*/
-	case UIHUDPANELBUTTONS:
-		components.push_back(ret = (UIComponents*)new UIHUDPanelButtons(UICOMPONENT_TYPE::UIHUDPANELBUTTONS));
+	case UIT_UIHUDPANELBUTTONS:
+		components.push_back(ret = (UIComponents*)new UIHUDPanelButtons(UICOMPONENT_TYPE::UIT_UIHUDPANELBUTTONS));
 		break;
-	case UIHUDPANELINFO:
-		components.push_back(ret = (UIComponents*)new UIHUDPanelInfo(UICOMPONENT_TYPE::UIHUDPANELINFO));
+	case UIT_UIHUDPANELINFO:
+		components.push_back(ret = (UIComponents*)new UIHUDPanelInfo(UICOMPONENT_TYPE::UIT_UIHUDPANELINFO));
 		break;
-	case UIHUDDESCRIPTION:
-		components.push_back(ret = (UIComponents*)new UIHUDDescription(UICOMPONENT_TYPE::UIHUDDESCRIPTION));
+	case UIT_UIHUDDESCRIPTION:
+		components.push_back(ret = (UIComponents*)new UIHUDDescription(UICOMPONENT_TYPE::UIT_UIHUDDESCRIPTION));
 		break;
-	case UIHUDRESOURCES:
-		components.push_back(ret = (UIComponents*)new UIHUDResources(UICOMPONENT_TYPE::UIHUDRESOURCES));
+	case UIT_UIHUDRESOURCES:
+		components.push_back(ret = (UIComponents*)new UIHUDResources(UICOMPONENT_TYPE::UIT_UIHUDRESOURCES));
 		break;
-	case UIHUDTOWNHALLBARLIFE:
-		components.push_back(ret = (UIComponents*)new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE));
+	case UIT_UIHUDTOWNHALLBARLIFE:
+		components.push_back(ret = (UIComponents*)new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIT_UIHUDTOWNHALLBARLIFE));
 		break;
-	case UIHUDSCOREBAR:
-		components.push_back(ret = (UIComponents*)new UIHUDScoreBar(UICOMPONENT_TYPE::UIHUDSCOREBAR));
+	case  UIT_UIHUDSCOREBAR:
+		components.push_back(ret = (UIComponents*)new UIHUDScoreBar(UICOMPONENT_TYPE:: UIT_UIHUDSCOREBAR));
 		break;
 	default:
 		components.push_back(ret = new UIComponents(type));

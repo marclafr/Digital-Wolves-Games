@@ -50,28 +50,28 @@ void OneSelection::PrepareUnitInfo()
 {
 	Unit* selected = (Unit*)e_ptr;
 
-	image = new UIComponents(UICOMPONENT_TYPE::UIIMAGE);
+	image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
 	image->Set({ 231, 667, 29, 33 }, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
 
-	name = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	name->Set(231, 653, GetUnitName(selected->GetUnitType()), BLACK);
 
 	std::string stats = std::to_string(selected->GetHp());
-	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	life->Set(262, 690, stats.c_str(), BLACK);
 
 	stats = std::to_string(selected->GetAttack());
-	damage = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	damage = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	damage->Set(272, 705, stats.c_str(), BLACK);
 
 	stats = std::to_string(selected->GetArmor());
-	armor = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	armor = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	armor->Set(272, 722, stats.c_str(), BLACK);
 
 	if (selected->GetUnitClass() == UNIT_CLASS::C_ARCHER)
 	{
 		stats = std::to_string(selected->GetRange());
-		range = new UILabel(UICOMPONENT_TYPE::UILABEL);
+		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 		range->Set(272, 745, stats.c_str(), BLACK);
 	}
 }
@@ -82,27 +82,27 @@ void OneSelection::PrepareBuildInfo()
 
 	BUILDING_TYPE b_type_selected = selected->GetBuildingType();
 
-	image = new UIComponents(UICOMPONENT_TYPE::UIIMAGE);
+	image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
 	image->Set({ 231, 667, 29, 33 }, GetBuildingIconPositionFromAtlas(b_type_selected));
 
-	name = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	name->Set(231, 653, GetBuildingName(b_type_selected), BLACK);
 
 	std::string stats = std::to_string(selected->GetHp());
-	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	life->Set(262, 690, stats.c_str(), BLACK);
 
 	if (selected->GetBuildingType() == b_type_selected)
 	{
 		stats = std::to_string(selected->GetRange());
-		range = new UILabel(UICOMPONENT_TYPE::UILABEL);
+		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 		range->Set(272, 710, stats.c_str(), BLACK);
 	}
 }
 
 void OneSelection::PrepareBuildingConstruction()
 {
-	building_percentage = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	building_percentage = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	uint percentage = GetBuildingPercentage(e_ptr);
 	std::string str_percentage("Constructing - ");
 	str_percentage += std::to_string(percentage);
@@ -116,14 +116,14 @@ void OneSelection::PrepareResourceInfo()
 
 	RESOURCE_TYPE r_type_selected = selected->GetResourceType();
 
-	image = new UIComponents(UICOMPONENT_TYPE::UIIMAGE);
+	image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
 	image->Set({ 231, 667, 29, 33 }, GetResourceIconPositionFromAtlas(r_type_selected));
 
-	name = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	name->Set(231, 653, GetResourceName(r_type_selected), BLACK);
 
 	std::string stats = std::to_string(selected->GetHp());
-	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	life->Set(262, 690, stats.c_str(), BLACK);
 }
 

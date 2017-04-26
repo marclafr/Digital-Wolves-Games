@@ -44,7 +44,7 @@ void UILabel::HandleInput(SDL_Event event)
 	case SDL_MOUSEBUTTONDOWN:
 		if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_DOWN)
 			//Selecting option from UISelectOption
-			if (GetFrom() != nullptr && GetFrom()->GetType() == UICOMPONENT_TYPE::UISELECTOPTION)
+			if (GetFrom() != nullptr && GetFrom()->GetType() == UICOMPONENT_TYPE::UIT_UISELECTOPTION)
 			{
 				from_option_selected = (UISelectOption*)GetFrom();
 

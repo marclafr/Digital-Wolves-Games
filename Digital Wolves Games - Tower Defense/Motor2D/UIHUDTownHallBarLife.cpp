@@ -23,10 +23,10 @@ UIHUDTownHallBarLife::UIHUDTownHallBarLife(UICOMPONENT_TYPE type) : UIComponents
 	Set(BAR_LIFE_POSITION, BAR_LIFE_ATLAS);
 	SetInteractive(false);
 
-	green_bar = new UIComponents(UICOMPONENT_TYPE::UIIMAGE);
+	green_bar = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
 	green_bar->Set(GREENBAR_LIFE_POSITION, GREENBAR_LIFE_ATLAS);
 
-	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	life->Set(LIFE_LABEL_X, LIFE_LABEL_Y, "init");
 
 	rest_green_bar = GREENBAR_LIFE_ATLAS;

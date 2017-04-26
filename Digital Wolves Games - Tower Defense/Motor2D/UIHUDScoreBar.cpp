@@ -22,7 +22,7 @@ UIHUDScoreBar::UIHUDScoreBar(UICOMPONENT_TYPE type) : UIComponents(type)
 	Set(BAR_SCORE_POSITION, BAR_SCORE_ATLAS);
 	SetInteractive(false);
 
-	score_bar = new UIComponents(UICOMPONENT_TYPE::UIIMAGE);
+	score_bar = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
 	score_bar->Set(YELLOWBAR_SCORE_POSITION, YELLOWBAR_SCORE_ATLAS);
 
 	rest_score_bar = YELLOWBAR_SCORE_ATLAS;

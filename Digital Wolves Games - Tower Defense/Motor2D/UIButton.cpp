@@ -69,7 +69,7 @@ void UIButton::Draw()
 
 		switch (GetFrom()->GetType())
 		{
-		case UIHUDPANELBUTTONS:
+		case UIT_UIHUDPANELBUTTONS:
 			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - 2 - App->render->camera->GetPosition().x, rect_position.y - 2 - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), actual_pos.x - App->render->camera->GetPosition().x, actual_pos.y - App->render->camera->GetPosition().y, &actual_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 			break;

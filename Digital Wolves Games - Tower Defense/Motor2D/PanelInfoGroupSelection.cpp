@@ -47,7 +47,7 @@ void GroupSelection::PrepareUnitSelection()
 		Unit* selected = (Unit*)*u_item;
 		UIButton* new_btn = nullptr;
 
-		new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+		new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
 
 		if (u_item == selection->begin())
 			first_component = App->uimanager->GetLastComponent();
@@ -81,7 +81,7 @@ void GroupSelection::PrepareNoUnitSelection()
 
 		UIButton* new_btn = nullptr;
 
-		new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+		new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
 
 		if (e_item == selection->begin())
 			first_component = App->uimanager->GetLastComponent();
