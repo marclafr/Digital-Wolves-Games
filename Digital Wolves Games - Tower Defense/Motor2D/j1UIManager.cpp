@@ -56,104 +56,56 @@ bool j1UIManager::Start()
 
 bool j1UIManager::PreUpdate()
 {
-	bool ret = false;
-
 	int x_mouse = 0;
 	int y_mouse = 0;
 
 	App->input->GetMousePosition(x_mouse, y_mouse);
 
-	std::list<UIComponents*>::iterator item;
-	item = components.begin();
-
-	while (item != components.end())
+	for (std::list<UIComponents*>::iterator item = components.begin(); item != components.end(); ++item)
 	{
-		UIComponents* component = item._Ptr->_Myval;
-
-		if (component->GetDraw() && component->GetInteractive())
+		if ((*item)->GetInteractive() &&
+			(x_mouse > (*item)->GetPosRect().x) &&
+			(x_mouse < (*item)->GetPosRect().x + (*item)->GetPosRect().w) &&
+			(y_mouse > (*item)->GetPosRect().y) &&
+			(y_mouse < (*item)->GetPosRect().y + (*item)->GetPosRect().h))
 		{
-			if ((x_mouse > component->rect_position.x) && (x_mouse < component->rect_position.x + component->rect_position.w) && (y_mouse > component->rect_position.y) && (y_mouse < component->rect_position.y + component->rect_position.h))
-			{
-				component->stat = UICOMPONENT_STAT::SELECTED;
-
-				if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_DOWN)
-				{
-					if (component->stat == UICOMPONENT_STAT::SELECTED)
-					{
-						component->stat = UICOMPONENT_STAT::CLICKL_DOWN;
-					}
-					else
-						component->stat = UICOMPONENT_STAT::CLICKL_REPEAT;
-				}
-				else if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_UP)
-				{
-					if (component->stat == UICOMPONENT_STAT::SELECTED)
-						component->stat = UICOMPONENT_STAT::CLICKL_UP;
-				}
-
-				if (App->input->GetMouseButtonDown(RIGHT_CLICK) == KEY_DOWN)
-				{
-					if (component->stat == UICOMPONENT_STAT::SELECTED)
-						component->stat = UICOMPONENT_STAT::CLICKR_DOWN;
-					else
-						component->stat = UICOMPONENT_STAT::CLICKR_REPEAT;
-				}
-				else if (App->input->GetMouseButtonDown(RIGHT_CLICK) == KEY_UP)
-				{
-					if (component->stat = UICOMPONENT_STAT::SELECTED)
-						component->stat = UICOMPONENT_STAT::CLICKR_UP;
-				}
-			}
-			else
-				component->stat = UICOMPONENT_STAT::UNSELECTED;
+			focus = (*item);
+			focus->SetIsFocus(true);
+			break;
 		}
-		item++;
+		else
+			(*item)->SetIsFocus(false);
 	}
-
-	item = components.begin();
-
-	while (item != components.end())
-	{
-		ret = item._Ptr->_Myval->Update();
-
-		item++;
-	}
-
-	return ret;
+	return true;
 }
 
+// Update all guis
+bool j1UIManager::Update(float dt)
+{
+	for (std::list<UIComponents*>::iterator it = components.begin(); it != components.end(); ++it)
+		if (!(*it)->Update())
+			return false;
+
+	return true;
+}
 
 // Called after all Updates
 bool j1UIManager::PostUpdate()
 {
-	std::list<UIComponents*>::iterator item;
-	item = components.begin();
-
-	while (item != components.end())
+	for (std::list<UIComponents*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
-		if(item._Ptr->_Myval->GetDraw())
-			item._Ptr->_Myval->Draw();
-
-		item++;
-	}
-
-	if (delete_some_components)
-	{
-		std::list<UIComponents*>::iterator c_item = first_item_delete;
-		++last_item_delete;
-
-		while (c_item != last_item_delete)
+		if ((*it)->ToDelete())
 		{
-			delete *c_item;
-
-			c_item++;
+			delete *it;
+			components.erase(it);
 		}
-		components.erase(first_item_delete, last_item_delete);
-
-		delete_some_components = false;
 	}
-	
 	return true;
+}
+
+void j1UIManager::HandleInput(SDL_Event event)
+{
+	focus->HandleInput(event);
 }
 
 // Called before quitting
@@ -173,9 +125,6 @@ bool j1UIManager::CleanUp()
 
 	components.clear();
 
-	if (delete_some_components)
-		delete_some_components = false;
-
 	return true;
 }
 
@@ -185,35 +134,37 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 
 	switch (type)
 	{
-	case UILABEL:
-		components.push_back(ret = (UIComponents*)new UILabel(UICOMPONENT_TYPE::UILABEL));
+	case UIT_UILABEL:
+		components.push_back(ret = (UIComponents*)new UILabel(UICOMPONENT_TYPE::UIT_UILABEL));
 		break;
-	case UIBUTTON:
-		components.push_back(ret = (UIComponents*)new UIButton(UICOMPONENT_TYPE::UIBUTTON));
+	case UIT_UIBUTTON:
+		components.push_back(ret = (UIComponents*)new UIButton(UICOMPONENT_TYPE::UIT_UIBUTTON));
 		break;
-	case UICHECKBUTTON:
-		components.push_back(ret = (UIComponents*)new UICheckbutton(UICOMPONENT_TYPE::UICHECKBUTTON));
+	case UIT_UICHECKBUTTON:
+		components.push_back(ret = (UIComponents*)new UICheckbutton(UICOMPONENT_TYPE::UIT_UICHECKBUTTON));
 		break;
-	case UISELECTOPTION:
-		components.push_back(ret = (UIComponents*)new UISelectOption(UICOMPONENT_TYPE::UISELECTOPTION));
+		/*
+	case UIT_UISELECTOPTION:
+		components.push_back(ret = (UIComponents*)new UISelectOption(UICOMPONENT_TYPE::UIT_UISELECTOPTION));
 		break;
-	case UIHUDPANELBUTTONS:
-		components.push_back(ret = (UIComponents*)new UIHUDPanelButtons(UICOMPONENT_TYPE::UIHUDPANELBUTTONS));
+		*/
+	case UIT_UIHUDPANELBUTTONS:
+		components.push_back(ret = (UIComponents*)new UIHUDPanelButtons(UICOMPONENT_TYPE::UIT_UIHUDPANELBUTTONS));
 		break;
-	case UIHUDPANELINFO:
-		components.push_back(ret = (UIComponents*)new UIHUDPanelInfo(UICOMPONENT_TYPE::UIHUDPANELINFO));
+	case UIT_UIHUDPANELINFO:
+		components.push_back(ret = (UIComponents*)new UIHUDPanelInfo(UICOMPONENT_TYPE::UIT_UIHUDPANELINFO));
 		break;
-	case UIHUDDESCRIPTION:
-		components.push_back(ret = (UIComponents*)new UIHUDDescription(UICOMPONENT_TYPE::UIHUDDESCRIPTION));
+	case UIT_UIHUDDESCRIPTION:
+		components.push_back(ret = (UIComponents*)new UIHUDDescription(UICOMPONENT_TYPE::UIT_UIHUDDESCRIPTION));
 		break;
-	case UIHUDRESOURCES:
-		components.push_back(ret = (UIComponents*)new UIHUDResources(UICOMPONENT_TYPE::UIHUDRESOURCES));
+	case UIT_UIHUDRESOURCES:
+		components.push_back(ret = (UIComponents*)new UIHUDResources(UICOMPONENT_TYPE::UIT_UIHUDRESOURCES));
 		break;
-	case UIHUDTOWNHALLBARLIFE:
-		components.push_back(ret = (UIComponents*)new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE));
+	case UIT_UIHUDTOWNHALLBARLIFE:
+		components.push_back(ret = (UIComponents*)new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIT_UIHUDTOWNHALLBARLIFE));
 		break;
-	case UIHUDSCOREBAR:
-		components.push_back(ret = (UIComponents*)new UIHUDScoreBar(UICOMPONENT_TYPE::UIHUDSCOREBAR));
+	case  UIT_UIHUDSCOREBAR:
+		components.push_back(ret = (UIComponents*)new UIHUDScoreBar(UICOMPONENT_TYPE:: UIT_UIHUDSCOREBAR));
 		break;
 	default:
 		components.push_back(ret = new UIComponents(type));
@@ -231,8 +182,6 @@ const SDL_Texture* j1UIManager::GetAtlas() const
 
 void j1UIManager::erase_list(std::list<UIComponents*>::iterator first, std::list<UIComponents*>::iterator last)
 {
-	delete_some_components = true;
-
 	first_item_delete = first;
 
 	last_item_delete = last;
@@ -245,4 +194,11 @@ const std::list<UIComponents*>::iterator j1UIManager::GetLastComponent()
 	--temp;
 
 	return temp;
+}
+
+const bool j1UIManager::InUse() const
+{
+	if (focus != nullptr)
+		return true;
+	return false;
 }

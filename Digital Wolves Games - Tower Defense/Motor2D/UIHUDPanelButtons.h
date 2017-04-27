@@ -41,7 +41,6 @@ public:
 	~UIHUDPanelButtons();
 
 	bool Update();
-
 	//x - 0 to 4 | y - 0 to 2 | Max 15 buttons
 	info_button* AddButton(uint x, uint y, uint atlas_x, uint atlas_y);
 

@@ -41,9 +41,12 @@ bool UIComponents::Update()
 	return true;
 }
 
-void UIComponents::SetDraw(bool draw)
+void UIComponents::HandleInput(SDL_Event event)
 {
-	this->draw = draw;
+	//if(event == SDL_MOUSEBUTTON) el que sigui (sta dins, clica, etd)
+	//if MOUSEBUTTONUP
+	//if(event == SDL_KEYDOWN) el que sigui (crear unit, readrecar camera, etd)
+	//if(KEYUP)
 }
 
 void UIComponents::SetInteractive(bool interactive)
@@ -51,14 +54,19 @@ void UIComponents::SetInteractive(bool interactive)
 	this->interactive = interactive;
 }
 
+void UIComponents::SetIsFocus(bool is_focus)
+{
+	this->is_focus = is_focus;
+}
+
 void UIComponents::SetFrom(UIComponents * from)
 {
 	this->from = from;
 }
 
-const bool UIComponents::GetDraw() const
+void UIComponents::SetToDelete(bool to_delete)
 {
-	return draw;
+	this->to_delete = to_delete;
 }
 
 const bool UIComponents::GetInteractive() const
@@ -66,9 +74,29 @@ const bool UIComponents::GetInteractive() const
 	return interactive;
 }
 
-const UICOMPONENT_STAT UIComponents::GetStat() const
+const bool UIComponents::IsFocus() const
 {
-	return stat;
+	return is_focus;
+}
+
+const SDL_Rect UIComponents::GetAtlasRect() const
+{
+	return rect_atlas;
+}
+
+const SDL_Rect UIComponents::GetPosRect() const
+{
+	return rect_position;
+}
+
+const bool UIComponents::ToDelete() const
+{
+	return to_delete;
+}
+
+const UICOMPONENT_TYPE UIComponents::GetType() const
+{
+	return type;
 }
 
 const UIComponents* UIComponents::GetFrom() const

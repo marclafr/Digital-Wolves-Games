@@ -22,7 +22,7 @@ UIHUDScoreBar::UIHUDScoreBar(UICOMPONENT_TYPE type) : UIComponents(type)
 	Set(BAR_SCORE_POSITION, BAR_SCORE_ATLAS);
 	SetInteractive(false);
 
-	score_bar = new UIComponents(UICOMPONENT_TYPE::UIIMAGE);
+	score_bar = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
 	score_bar->Set(YELLOWBAR_SCORE_POSITION, YELLOWBAR_SCORE_ATLAS);
 
 	rest_score_bar = YELLOWBAR_SCORE_ATLAS;
@@ -39,7 +39,5 @@ bool UIHUDScoreBar::Update()
 void UIHUDScoreBar::Draw()
 {
 	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-
-	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), score_bar->rect_position.x - App->render->camera->GetPosition().x, score_bar->rect_position.y - App->render->camera->GetPosition().y, &rest_score_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), score_bar->GetPosRect().x - App->render->camera->GetPosition().x, score_bar->GetPosRect().y - App->render->camera->GetPosition().y, &rest_score_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 }
