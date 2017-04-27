@@ -31,6 +31,7 @@
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
 #include "j1Investigations.h"
+#include "Towers.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -89,8 +90,8 @@ bool j1Scene::Start()
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1824, 1080));
 	resources_panel->AddResource(resource_wood);
-	townhalltower1 = (Building*)App->entity_manager->CreateBuilding(B_TURRET, fPoint(-624, 528), S_ALLY);
-	townhalltower2 = (Building*)App->entity_manager->CreateBuilding(B_TURRET, fPoint(-432, 624), S_ALLY);
+	townhalltower1 = (Building*)App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-624, 528));
+	townhalltower2 = (Building*)App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
 	
 	//Reset scores and timers
 	game_time.Start();
@@ -243,12 +244,12 @@ bool j1Scene::Update(float dt)
 						App->audio->PlayFx(App->entity_manager->fx_construction);
 						if (App->pathfinding->IsConstructible_neutral(r) == true)
 						{
-							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_NEUTRAL);
+							App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
 							BuildTower();
 						}
 						else if (App->pathfinding->IsConstructible_ally(r) == true)
 						{
-							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_ALLY);
+							App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
 							BuildTower();
 						}
 					}

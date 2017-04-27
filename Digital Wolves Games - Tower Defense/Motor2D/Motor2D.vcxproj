@@ -111,6 +111,7 @@
     <ClCompile Include="PanelInfoOneSelection.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Towers.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UICheckbutton.cpp" />
     <ClCompile Include="UIComponents.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Task.h" />
+    <ClInclude Include="Towers.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UICheckbutton.h" />
     <ClInclude Include="UIComponents.h" />

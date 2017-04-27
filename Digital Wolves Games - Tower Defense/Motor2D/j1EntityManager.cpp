@@ -48,6 +48,13 @@ Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side 
 	return new_entity;
 }
 
+Entity * j1EntityManager::CreateTower(TOWER_TYPE t_type, fPoint pos)
+{
+	Entity* new_entity = (Entity*) new Tower(t_type, pos);
+	entity_array.push_back(new_entity);
+	return new_entity;
+}
+
 Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos)
 {
 	Entity* new_entity = (Entity*) new Resources(r_type, pos);

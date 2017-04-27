@@ -136,6 +136,9 @@
     <ClCompile Include="j1Investigations.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Towers.cpp">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -286,6 +289,9 @@
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Task.h" />
+    <ClInclude Include="Towers.h">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Programacio 2 ===========">
