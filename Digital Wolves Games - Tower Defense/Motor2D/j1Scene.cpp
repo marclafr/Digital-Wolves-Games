@@ -31,7 +31,6 @@
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
 #include "j1Investigations.h"
-#include "Task.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -295,6 +294,28 @@ bool j1Scene::Update(float dt)
 			placing_wall = false;
 		}
 	}
+
+	if (new_wave_button->GetStat() == CLICKL_DOWN)
+	{
+		new_wave_button->Set({ 1254, 93, 104 , 104 }, { 687, 1227, 104, 104 });
+		clicked = true;
+	}
+	if (new_wave_button->GetStat() == CLICKL_UP)
+	{
+		new_wave_button->Set({ 1256, 95, 98 , 99 }, { 687, 1229, 98, 99 });
+		clicked = false;
+	}
+	if (new_wave_button->GetStat() == SELECTED && !clicked)
+	{
+		new_wave_button->Set({ 1252, 92, 104 , 104 }, { 580, 1226, 104, 104 });
+	}
+	if (new_wave_button->GetStat() == UNSELECTED)
+	{	
+		new_wave_button->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
+		clicked = false;
+	}
+
+
 	return true;
 }
 
@@ -482,35 +503,35 @@ void j1Scene::CreateSceneUI()
 {
 	//UIElements
 	//Top_HUD
-	top_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
+	top_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	top_hud->Set({ 0, 0, 1336, 23 }, { 0, 1011, 1366, 23 });
 	top_hud->SetInteractive(false);
 
-	objectives = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
+	objectives = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	objectives->Set({ 1252, 2, 36, 14 }, { 1252, 996, 36, 14 });
 
-	tree_tech = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
+	tree_tech = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	tree_tech->Set({ 1288, 2, 35, 14 }, { 1289, 996, 35, 14 });
 
-	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
+	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	ingame_menu->Set({ 1323, 2, 36 , 15 }, { 1325, 996, 36, 14 });
 
-	resources_panel = (UIHUDResources*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIHUDRESOURCES);
+	resources_panel = (UIHUDResources*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDRESOURCES);
 
-	title_game_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
+	title_game_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_game_name->Set(685, 3, "AoE 2: Defenders");
 	title_game_name->SetInteractive(false);
 
 	//Down_HUD
-	down_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
+	down_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	down_hud->Set({ 0, 643, 1366, 125 }, { 0, 1036, 1366, 125 });
 	down_hud->SetInteractive(false);
 
-	btn_description = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UICHECKBUTTON);
-	btn_description->SetStat(CB_CHECK);
+	btn_description = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UICHECKBUTTON);
+	btn_description->clicked = true;
 	btn_description->Set({ 1316, 653, 19, 17 }, { 1347, 1163, 19, 17 }, { 1347, 1163, 19, 17 });
 
-	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIHUDPANELBUTTONS);
+	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
 	info_button* panel_btns = nullptr;
 	panel_btns = panel->AddButton(0, 0, 878, 910);
 	panel_btns->SetBuilding(B_TURRET);
@@ -521,20 +542,21 @@ void j1Scene::CreateSceneUI()
 	panel_btns = panel->AddButton(1, 0, 774, 910);
 	panel_btns->SetBuilding(B_STONE_WALL);
 
-	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIHUDPANELINFO);
+	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
 
-	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIHUDDESCRIPTION);
+	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
 	hud_description->SetEnableButton(btn_description);
 
-	townhall_bar_life = (UIHUDTownHallBarLife*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIHUDTOWNHALLBARLIFE);
+	townhall_bar_life = (UIHUDTownHallBarLife*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE);
 
-	new_wave_button = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	new_wave_button->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
+	new_wave_button = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	new_wave_button->Set({ 1266, 95, 98 , 99 }, { 476, 1229, 98, 99 });
 	new_wave_button->SetInteractive(true);
-	new_wave_button->SetClickedTextRect({ 687, 1227, 104, 104 });
-	new_wave_button->SetMouseOnTopTextRect({ 580, 1226, 104, 104 });
+
+	
+
 
 	//INFO SCORE, TIME, ENEMIES LEFT
-	info_ui = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
+	info_ui = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	info_ui->Set({ 1236, 25, 130, 65 }, { 405, 1162, 130, 65 });
 }

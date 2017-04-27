@@ -25,6 +25,23 @@
 UIHUDDescription::UIHUDDescription(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
+	SetDraw(false);
+
+	background_name = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	background_name->Set(BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+	background_name->SetDraw(false);
+
+	background_price = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	background_price->Set(BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+	background_price->SetDraw(false);
+
+	description_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	description_name->Set(X_LABEL_NAME, Y_LABEL_NAME, "init");
+	description_name->SetDraw(false);
+
+	description_price = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	description_price->Set(X_LABEL_PRICE, Y_LABEL_PRICE, "init");
+	description_price->SetDraw(false);
 
 	unit_desc = UNIT_TYPE::U_NO_UNIT;
 	build_desc = BUILDING_TYPE::B_NO_BUILDING;
@@ -37,13 +54,10 @@ void UIHUDDescription::SetEnableButton(UICheckbutton* btn)
 
 bool UIHUDDescription::Update()
 {
-	if (button_enable_component->GetStat() == CB_CHECK)
-		enable = true;
-	else
-		enable = false;
+	enable = button_enable_component->clicked;
 
 	if(enable)
-		if(selected != nullptr && selected->btn->IsFocus() == false)
+		if(selected != nullptr && selected->btn->stat == UNSELECTED)
 			Clear();
 
 	return true;
@@ -74,32 +88,24 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 
 void UIHUDDescription::SetLabelUnit()
 {
-	background_name = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	background_name->Set(BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+	description_name->ChangeText(GetUnitName(unit_desc));
+	background_name->SetDraw(true);
+	description_name->SetDraw(true);
 
-	background_price = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	background_price->Set(BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
-
-	description_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	description_name->Set(X_LABEL_NAME, Y_LABEL_NAME, GetUnitName(unit_desc));
-
-	description_price = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	description_price->Set(X_LABEL_PRICE, Y_LABEL_PRICE, GetUnitPrice(unit_desc));
+	description_price->ChangeText(GetUnitPrice(unit_desc));
+	background_price->SetDraw(true);
+	description_price->SetDraw(true);
 }
 
 void UIHUDDescription::SetLabelBuilding()
 {
-	background_name = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	background_name->Set(BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+	description_name->ChangeText(GetBuildingName(build_desc));
+	background_name->SetDraw(true);
+	description_name->SetDraw(true);
 
-	background_price = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	background_price->Set(BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
-
-	description_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	description_name->Set(X_LABEL_NAME, Y_LABEL_NAME, GetBuildingName(build_desc));
-
-	description_price = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	description_price->Set(X_LABEL_PRICE, Y_LABEL_PRICE, GetBuildingPrice(build_desc));
+	description_price->ChangeText(GetBuildingPrice(build_desc));
+	background_price->SetDraw(true);
+	description_price->SetDraw(true);
 }
 
 void UIHUDDescription::Clear()
@@ -107,10 +113,10 @@ void UIHUDDescription::Clear()
 	unit_desc = UNIT_TYPE::U_NO_UNIT;
 	build_desc = BUILDING_TYPE::B_NO_BUILDING;
 	side_desc = Side::S_NO_SIDE;
-	background_name->SetToDelete(true);
-	description_name->SetToDelete(true);
-	background_price->SetToDelete(true);
-	description_price->SetToDelete(true);
+	background_name->SetDraw(false);
+	description_name->SetDraw(false);
+	background_price->SetDraw(false);
+	description_price->SetDraw(false);
 	selected = nullptr;
 }
 

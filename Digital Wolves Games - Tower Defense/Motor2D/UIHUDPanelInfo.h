@@ -37,6 +37,7 @@ public:
 	bool isSelectionEmpty();
 
 	void Draw();
+	
 	bool Update();
 };
 

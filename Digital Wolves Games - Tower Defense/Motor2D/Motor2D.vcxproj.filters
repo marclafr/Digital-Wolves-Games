@@ -23,7 +23,7 @@
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
     <ClCompile Include="p2Log.cpp">
-      <Filter>Usefull</Filter>
+      <Filter>Programacio 2 ===========</Filter>
     </ClCompile>
     <ClCompile Include="j1Scene.cpp">
       <Filter>Awsome_Game\Scenes</Filter>
@@ -160,13 +160,13 @@
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
     <ClInclude Include="p2Defs.h">
-      <Filter>Usefull</Filter>
+      <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="p2Log.h">
-      <Filter>Usefull</Filter>
+      <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="p2Point.h">
-      <Filter>Usefull</Filter>
+      <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="j1Scene.h">
       <Filter>Awsome_Game\Scenes</Filter>
@@ -285,11 +285,12 @@
     <ClInclude Include="j1Investigations.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Task.h">
-      <Filter>Usefull</Filter>
-    </ClInclude>
+    <ClInclude Include="Task.h" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="Programacio 2 ===========">
+      <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Awsome_Game">
       <UniqueIdentifier>{cb944693-b9d0-484c-bad2-02d5a7cdbec6}</UniqueIdentifier>
     </Filter>
@@ -322,9 +323,6 @@
     </Filter>
     <Filter Include="Awsome_Game\UIComponents\HUD\UIHUDPanelInfo">
       <UniqueIdentifier>{06f88748-2ca2-4806-b68a-c3480589e69f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Usefull">
-      <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

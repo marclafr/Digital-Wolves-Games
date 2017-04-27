@@ -23,6 +23,7 @@
 UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
+	SetDraw(false);
 }
 
 UIHUDPanelButtons::~UIHUDPanelButtons()
@@ -41,13 +42,14 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 
 bool UIHUDPanelButtons::Update()
 {
-	for (std::list<info_button*>::iterator ib_item = panel.begin(); ib_item != panel.end(); ++ib_item)
+	std::list<info_button*>::iterator ib_item = panel.begin();
+
+	while (ib_item != panel.end())
 	{
-		if ((*ib_item)->btn->IsFocus())
+		if ((*ib_item)->btn->GetStat() == UICOMPONENT_STAT::SELECTED)
 			App->scene->hud_description->SetDescription((*ib_item));
 
-		//todo change to tasks
-		if ((*ib_item)->btn->GetStat() == BS_MOUSE_ON_TOP)
+		if((*ib_item)->btn->GetStat() == UICOMPONENT_STAT::CLICKL_UP)
 			if_active = (*ib_item);
 
 		ib_item++;
@@ -64,7 +66,7 @@ info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atl
 {
 	info_button* new_btn = new info_button();
 
-	new_btn->btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
+	new_btn->btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	new_btn->x = x;
 	new_btn->y = y;
 	new_btn->btn->Set({ 26 + (30 * (int)x), 666 + (30 * (int)y), 29, 29 }, { (int)atlas_x, (int)atlas_y, 25, 25 });

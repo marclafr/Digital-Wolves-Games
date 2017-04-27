@@ -2,18 +2,12 @@
 #define __UICHECKBUTTION_H__
 
 #include "UIComponents.h"
+#include "UIButton.h"
 
-enum CHECKBUTTON_STAT
+class UICheckbutton : public UIButton
 {
-	CB_CHECK,
-	CB_UNCHECK
-};
-
-class UICheckbutton : public UIComponents
-{
-private:
+public:
 	SDL_Rect rect_atlas_clicked;
-	CHECKBUTTON_STAT cb_stat = CB_UNCHECK;
 
 public:
 	UICheckbutton(UICOMPONENT_TYPE type);
@@ -22,11 +16,7 @@ public:
 	void Set(const SDL_Rect& position, const SDL_Rect& atlas, const SDL_Rect & atlas_clicked);
 
 	void Draw();
-	void HandleInput(SDL_Event);
 	bool Update();
-
-	void SetStat(CHECKBUTTON_STAT cb_stat);
-	const CHECKBUTTON_STAT GetStat() const;
 };
 
 #endif // __UICHECKBUTTION_H__
