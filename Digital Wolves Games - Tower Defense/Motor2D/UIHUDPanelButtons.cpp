@@ -12,10 +12,9 @@
 #include "j1Scene.h"
 #include "SDL\include\SDL_rect.h"
 #include "j1Collision.h"
-
 #include "UIButton.h"
 #include "UIHUDDescription.h"
-
+#include "Towers.h"
 #include "Entity.h"
 #include "Units.h"
 #include "Buildings.h"
@@ -134,12 +133,12 @@ void UIHUDPanelButtons::CreateEntity()
 								if (App->pathfinding->IsConstructible_ally(r) == true)
 								{
 									App->scene->BuildTower();
-									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_ALLY);
+									App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(s.x, s.y - 9));
 								}
 								if (App->pathfinding->IsConstructible_neutral(r) == true)
 								{
 									App->scene->BuildTower();
-									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_NEUTRAL);
+									App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(s.x, s.y - 9));
 								}
 							}
 					}
@@ -160,6 +159,12 @@ void info_button::SetUnit(UNIT_TYPE type, Side side)
 void info_button::SetBuilding(BUILDING_TYPE type)
 {
 	b_type = type;
+	e_type = ENTITY_TYPE::E_BUILDING;
+}
+
+void info_button::SetTurret(TOWER_TYPE type)
+{
+	t_type = type;
 	e_type = ENTITY_TYPE::E_BUILDING;
 }
 
