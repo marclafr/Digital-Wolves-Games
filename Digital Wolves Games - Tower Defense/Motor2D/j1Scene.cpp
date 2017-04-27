@@ -31,6 +31,7 @@
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
 #include "j1Investigations.h"
+#include "Task.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -530,9 +531,8 @@ void j1Scene::CreateSceneUI()
 	new_wave_button = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
 	new_wave_button->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
 	new_wave_button->SetInteractive(true);
-	new_wave_button->SetAtlasClicked({ 687, 1227, 104, 104 }, { 1254, 93, 104 , 104 });
-	new_wave_button->SetAtlasUnclicked({ 687, 1229, 98, 99 });
-	new_wave_button->SetAtlasSelected({ 580, 1226, 104, 104 }, { 1252, 92, 104 , 104 });
+	new_wave_button->SetClickedTextRect({ 687, 1227, 104, 104 });
+	new_wave_button->SetMouseOnTopTextRect({ 580, 1226, 104, 104 });
 
 	//INFO SCORE, TIME, ENEMIES LEFT
 	info_ui = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);

@@ -82,18 +82,11 @@ bool j1UIManager::PreUpdate()
 // Update all guis
 bool j1UIManager::Update(float dt)
 {
-	bool ret = false;
-
 	for (std::list<UIComponents*>::iterator it = components.begin(); it != components.end(); ++it)
-	{
-		ret = (*it)->Update();
-		(*it)->Draw();
+		if (!(*it)->Update())
+			return false;
 
-		if (ret == false)
-			break;
-	}
-
-	return ret;
+	return true;
 }
 
 // Called after all Updates

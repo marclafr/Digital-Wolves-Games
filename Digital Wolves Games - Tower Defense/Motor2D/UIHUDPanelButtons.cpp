@@ -46,7 +46,8 @@ bool UIHUDPanelButtons::Update()
 		if ((*ib_item)->btn->IsFocus())
 			App->scene->hud_description->SetDescription((*ib_item));
 
-		if ((*ib_item)->btn->GetStat() == BS_UNCLICKED)
+		//todo change to tasks
+		if ((*ib_item)->btn->GetStat() == BS_MOUSE_ON_TOP)
 			if_active = (*ib_item);
 
 		ib_item++;

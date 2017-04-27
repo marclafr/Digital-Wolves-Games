@@ -49,7 +49,7 @@ bool j1MainMenu::Start()
 	single_player = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
 	single_player->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
 	single_player->SetInteractive(true);
-	single_player->SetAtlasSelected({ 298, 1229, 177, 240 });
+	single_player->SetMouseOnTopTextRect({ 298, 1229, 177, 240 });
 
 	title_single_player = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
 	title_single_player->Set(590, 30, "Single Player");
@@ -68,7 +68,7 @@ bool j1MainMenu::Start()
 	trophies = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
 	trophies->Set({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
 	trophies->SetInteractive(true);
-	trophies->SetAtlasSelected({ 792, 1162, 148, 160 }, { 500, 282, 148, 160 });
+	trophies->SetMouseOnTopTextRect({ 792, 1162, 148, 160 });
 
 	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
 	title_trophies->Set(545, 286, "Trophies");
@@ -82,7 +82,7 @@ bool j1MainMenu::Start()
 	exit = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
 	exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
 	exit->SetInteractive(true);
-	exit->SetAtlasSelected({ 477, 1374, 200, 95 }, { 174, 673, 200, 95 });
+	exit->SetMouseOnTopTextRect({ 477, 1374, 200, 95 });
 
 
 	title_exit = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
@@ -94,17 +94,17 @@ bool j1MainMenu::Start()
 // Called each loop iteration
 bool j1MainMenu::PreUpdate()
 {
-
 	return true;
 }
 
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
-	if (trophies->GetStat() == BS_UNCLICKED)
+	//TODO change to tasks
+	if (trophies->GetStat() == BS_MOUSE_ON_TOP)
 		App->scene_manager->ChangeScene(SC_SCORE);
 
-	if (single_player->GetStat() == BS_UNCLICKED)
+	if (single_player->GetStat() == BS_MOUSE_ON_TOP)
 	{
 		App->scene_manager->ChangeScene(SC_GAME);
 		App->scene->win = false;
@@ -119,8 +119,8 @@ bool j1MainMenu::PostUpdate()
 	bool ret = true;
 
 	//Unit test
-
-	if (exit->GetStat() == BS_UNCLICKED)
+	//todo Change to tasks
+	if (exit->GetStat() == BS_MOUSE_ON_TOP)
 		ret = false;
 
 	return ret;

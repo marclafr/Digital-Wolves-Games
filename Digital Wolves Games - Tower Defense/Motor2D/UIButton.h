@@ -3,36 +3,37 @@
 
 #include "UIComponents.h"
 #include "UILabel.h"
+#include "Task.h"
 
+#define UI_PANEL_MARK_MARGIN 2
 struct info_button;
 
 enum BUTTON_STAT
 {
 	BS_NONE,
 	BS_CLICKED,
-	BS_UNCLICKED
+	BS_MOUSE_ON_TOP
 };
 
 class UIButton : public UIComponents
 {
 private:
-	enum BUTTON_ATLAS_STAT
+	/*enum BUTTON_ATLAS_STAT
 	{
 		BA_UNSELECTED,
 		BA_SELECTED,
 		BA_CLICKED,
 		BA_UNCLICKED
-	};
-	BUTTON_STAT bs_stat = BS_NONE;
-	BUTTON_ATLAS_STAT ba_stat = BA_UNSELECTED;
+	};*/
+	BUTTON_STAT state = BS_NONE;
+	//BUTTON_ATLAS_STAT ba_stat = BA_UNSELECTED;
 
-	SDL_Rect atlas_selected = { 0,0,0,0 };
+	SDL_Rect atlas_mouse_on_top = { 0,0,0,0 };
 	SDL_Rect atlas_clicked = { 0,0,0,0 };
-	SDL_Rect atlas_unclicked = { 0,0,0,0 };
 
-	SDL_Rect pos_selected = { 0,0,0,0 };
-	SDL_Rect pos_clicked = { 0,0,0,0 };
-	SDL_Rect pos_unclicked = { 0,0,0,0 };
+	Task* task = nullptr;
+	
+	bool is_ui_pannel = false;
 
 public:
 	UILabel* title;
@@ -40,7 +41,6 @@ public:
 public:
 	UIButton(UICOMPONENT_TYPE type);
 
-	void Set(int pos_x, int pos_y, int pos_w, int pos_h, uint atlas_x, uint atlas_y, uint atlas_w, uint atlas_h);
 	void Set(const SDL_Rect& position, const SDL_Rect& atlas);
 
 	void Draw();
@@ -49,9 +49,9 @@ public:
 
 	const BUTTON_STAT GetStat() const;
 
-	void SetAtlasSelected(const SDL_Rect& a_selected, const SDL_Rect& p_selected = {0,0,0,0});
-	void SetAtlasClicked(const SDL_Rect& a_clicked, const SDL_Rect& p_clicked = { 0,0,0,0 });
-	void SetAtlasUnclicked(const SDL_Rect& a_unclicked, const SDL_Rect& p_unclicked = { 0,0,0,0 });
+	void SetMouseOnTopTextRect(const SDL_Rect & rect);
+	void SetClickedTextRect(const SDL_Rect& rect);
+	void SetTask(Task* task);
 };
 
 #endif // __UIBUTTON_H__

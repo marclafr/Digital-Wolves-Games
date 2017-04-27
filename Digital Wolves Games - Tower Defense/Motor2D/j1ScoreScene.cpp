@@ -125,8 +125,9 @@ bool j1ScoreScene::Update(float dt)
 	title_score->Set(490, 380, text_score);
 	ActualTrophie();
 
+	//TODO change to tasks
 	//PLAY AGAIN
-	if (play_again->GetStat() == BS_UNCLICKED)
+	if (play_again->GetStat() == BS_MOUSE_ON_TOP)
 	{
 		App->scene_manager->ChangeScene(SC_GAME);
 		scene_changing = true;
@@ -138,7 +139,7 @@ bool j1ScoreScene::Update(float dt)
 	//BACK MENU
 	if (!scene_changing)
 	{
-		if (back_menu->GetStat() == BS_UNCLICKED)
+		if (back_menu->GetStat() == BS_MOUSE_ON_TOP)
 		{
 			App->scene_manager->ChangeScene(SC_MAIN_MENU);
 			App->scene->win = false;
@@ -147,21 +148,21 @@ bool j1ScoreScene::Update(float dt)
 	}
 
 	//SCORE
-	if (trophies->GetStat() == BS_UNCLICKED)
+	if (trophies->GetStat() == BS_MOUSE_ON_TOP)
 	{
 		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2131, 1366, 144 });
 		trophies_unselected = false;
 	}
 
 	//ACHIEVEMENTS
-	if (achievements->GetStat() == BS_UNCLICKED)
+	if (achievements->GetStat() == BS_MOUSE_ON_TOP)
 	{
 		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2278, 1366, 144 });
 		trophies_unselected = true;
 	}
 
 	//INVESTIGATIONS
-	if (investigations->GetStat() == BS_UNCLICKED)
+	if (investigations->GetStat() == BS_MOUSE_ON_TOP)
 	{
 		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2426, 1366, 144 });
 		trophies_unselected = true;
