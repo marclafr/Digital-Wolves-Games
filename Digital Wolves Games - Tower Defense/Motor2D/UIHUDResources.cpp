@@ -18,21 +18,21 @@
 
 UIHUDResources::UIHUDResources(UICOMPONENT_TYPE type) : UIComponents(type) 
 {
-	SetInteractive(false);
+	SetDraw(false);
 
-	stone = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
+	stone = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	stone->Set(185, Y_LABEL, "0");
 	stone->SetInteractive(false);
 
-	food = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
+	food = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	food->Set(76, Y_LABEL, "0");
 	food->SetInteractive(false);
 
-	wood = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
+	wood = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	wood->Set(21, Y_LABEL, "0");
 	wood->SetInteractive(false);
 
-	gold = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
+	gold = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	gold->Set(143, Y_LABEL, "0");
 	gold->SetInteractive(false);
 }

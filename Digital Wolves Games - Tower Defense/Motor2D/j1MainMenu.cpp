@@ -41,51 +41,48 @@ bool j1MainMenu::Start()
 	App->audio->PlayMusic("audio/music/Menu01.ogg", 0.0f);
 
 	//BACKGROUND
-	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
+	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	background->Set({ 0, 0, 1336, 767 }, { 0, 0, 1366, 767 });
-	background->SetInteractive(false);
 
 	//SINGLE PLAYER
-	single_player = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
+	single_player = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	single_player->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
 	single_player->SetInteractive(true);
-	single_player->SetAtlasSelected({ 298, 1229, 177, 240 });
 
-	title_single_player = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
+	title_single_player = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_single_player->Set(590, 30, "Single Player");
 
 	//TUTORIAL
-	tutorial = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
+	tutorial = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	tutorial->Set({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
 	tutorial->SetInteractive(false);
 
 	//HISTORY
-	history = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
+	history = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	history->Set({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
 	history->SetInteractive(false);
 
 	//TROPHIES
-	trophies = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
+	trophies = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	trophies->Set({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
 	trophies->SetInteractive(true);
-	trophies->SetAtlasSelected({ 792, 1162, 148, 160 }, { 500, 282, 148, 160 });
 
-	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
+	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_trophies->Set(545, 286, "Trophies");
 
+	
+
 	//OPTIONS
-	options = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
+	options = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	options->Set({ 300, 448, 125, 122 }, { 288, 862, 125, 123 });
 	options->SetInteractive(false);
 	
 	//EXIT
-	exit = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
+	exit = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
 	exit->SetInteractive(true);
-	exit->SetAtlasSelected({ 477, 1374, 200, 95 }, { 174, 673, 200, 95 });
 
-
-	title_exit = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
+	title_exit = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_exit->Set(265, 708, "Exit");
 
 	return true;
@@ -101,15 +98,50 @@ bool j1MainMenu::PreUpdate()
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
-	if (trophies->GetStat() == BS_UNCLICKED)
-		App->scene_manager->ChangeScene(SC_SCORE);
-
-	if (single_player->GetStat() == BS_UNCLICKED)
+	
+	if (single_player->GetStat() == SELECTED) 
 	{
-		App->scene_manager->ChangeScene(SC_GAME);
-		App->scene->win = false;
-		App->scene->lose = false;
+		single_player->Set({ 539, 17, 177, 240 }, { 298, 1229, 177, 240 });
 	}
+	if (single_player->GetStat() == UNSELECTED)
+	{
+		single_player->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
+	}
+
+	
+
+	if (exit->GetStat() == SELECTED) 
+	{
+	exit->Set({ 174, 673, 200, 95 }, { 477, 1374, 200, 95 });
+	}
+	if (exit->GetStat() == UNSELECTED) 
+	{
+	exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
+	}
+	
+	
+
+	if (trophies->GetStat() == SELECTED)
+	{
+		trophies->Set({ 500, 282, 148, 160 }, { 792, 1162, 148, 160 });
+	}
+	if (trophies->GetStat() == UNSELECTED)
+	{
+		trophies->Set({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
+	}
+
+	if (trophies->GetStat() == CLICKL_UP)
+	{
+		App->scene_manager->ChangeScene(SC_SCORE);
+	}
+	
+
+	if (single_player->GetStat() == CLICKL_UP) 
+			{
+				App->scene_manager->ChangeScene(SC_GAME);
+				App->scene->win = false;
+				App->scene->lose = false;
+			}
 	return true;
 }
 
@@ -120,7 +152,7 @@ bool j1MainMenu::PostUpdate()
 
 	//Unit test
 
-	if (exit->GetStat() == BS_UNCLICKED)
+	if (exit->GetStat() == CLICKL_UP)
 		ret = false;
 
 	return ret;

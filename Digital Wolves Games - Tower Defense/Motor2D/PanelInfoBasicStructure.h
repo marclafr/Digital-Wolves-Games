@@ -34,6 +34,7 @@ public:
 	virtual void Prepare() {};
 
 	virtual void Update() {};
+
 	virtual void Draw() {};
 
 	bool if_ToDelete() { return delete_panel_info; };
