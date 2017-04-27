@@ -1,0 +1,87 @@
+Dr. Memory version 1.11.0 build 2 built on Aug 29 2016 02:42:07
+Dr. Memory results for pid 9968: "Development - Class 11 Handout.exe"
+Application cmdline: ""C:\Users\Marti\Desktop\Github\Digital_Wolves\Digital Wolves Games - Tower Defense\Debug\Development - Class 11 Handout.exe""
+Recorded 115 suppression(s) from default D:\ProgramFiles\Dr.Memory\bin\suppress-default.txt
+
+Error #1: INVALID HEAP ARGUMENT to free
+replace_operator_delete_nothrow
+    d:\drmemory_package\common\alloc_replace.c(2974):
+operator delete                 
+    f:\dd\vctools\crt\vcstartup\src\heap\delete_scalar_size.cpp(15):
+j1App::LoadConfig               
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(203):
+j1App::Awake                    
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1app.cpp(119):
+SDL_main                        
+    c:\users\marti\desktop\github\digital_wolves\digital wolves games - tower defense\motor2d\j1main.cpp(54):
+main_utf8                       
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(126):
+WinMain                         
+    c:\projects\sdl\src\main\windows\sdl_windows_main.c(189):
+
+Error #2: LEAK 52 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+IMM32.dll!CtfImmNotify
+    ??:0
+IMM32.dll!ImmGetContext
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+SDL2.dll!?       
+    ??:0
+USER32.dll!CharNextW 
+    ??:0
+USER32.dll!CallWindowProcW
+    ??:0
+USER32.dll!DispatchMessageW
+    ??:0
+USER32.dll!PeekMessageW
+    ??:0
+ntdll.dll!KiUserCallbackDispatcher
+    ??:0
+SDL2.dll!?       
+    ??:0
+
+Error #3: LEAK 200 bytes 
+replace_RtlAllocateHeap
+    d:\drmemory_package\common\alloc_replace.c(3770):
+avghookx.dll!?           
+    ??:0
+avghookx.dll!?           
+    ??:0
+avghookx.dll!?           
+    ??:0
+avghookx.dll!?           
+    ??:0
+ntdll.dll!WinSqmSetDWORD64
+    ??:0
+ntdll.dll!RtlActivateActivationContextUnsafeFast
+    ??:0
+ntdll.dll!RtlAnsiCharToUnicodeChar
+    ??:0
+ntdll.dll!LdrInitializeThunk
+    ??:0
+ntdll.dll!LdrInitializeThunk
+    ??:0
+
+===========================================================================
+FINAL SUMMARY:
+
+DUPLICATE ERROR COUNTS:
+	Error #   3:      5
+
+SUPPRESSIONS USED:
+
+ERRORS FOUND:
+      0 unique,     0 total unaddressable access(es)
+      0 unique,     0 total uninitialized access(es)
+      1 unique,     1 total invalid heap argument(s)
+      0 unique,     0 total GDI usage error(s)
+      0 unique,     0 total handle leak(s)
+      0 unique,     0 total warning(s)
+      2 unique,     6 total,   1052 byte(s) of leak(s)
+      0 unique,     0 total,      0 byte(s) of possible leak(s)
+Details: D:\ProgramFiles\Dr.Memory\drmemory\logs\DrMemory-Development - Class 11 Handout.exe.9968.000\results.txt

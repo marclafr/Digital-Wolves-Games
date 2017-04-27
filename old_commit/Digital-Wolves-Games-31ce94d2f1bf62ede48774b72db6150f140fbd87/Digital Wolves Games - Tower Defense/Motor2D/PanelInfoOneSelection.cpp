@@ -1,0 +1,331 @@
+#define BLACK {0,0,0,0}
+
+#define GREEN_BAR_SELECTED {1029, 861, 29, 6}
+#define GREEN_BAR_PIXELS 29
+
+#define BAR_LIFE_CENTER 16
+
+#include "PanelInfoOneSelection.h"
+
+#include "j1App.h"
+#include "j1Render.h"
+#include "Camera.h"
+
+#include "UIGetEntitiesInfo.h"
+
+OneSelection::~OneSelection()
+{
+	if(image != nullptr) delete image;
+	if (name != nullptr) delete name;
+	if (life != nullptr) delete life;
+
+	if (damage != nullptr) delete damage;
+	if (armor != nullptr) delete armor;
+	if (range != nullptr) delete range;
+
+	if (building_percentage != nullptr) delete building_percentage;
+}
+
+void OneSelection::Prepare()
+{
+	life_bar_selected = GREEN_BAR_SELECTED;
+
+	e_ptr = *selection->begin();
+
+	switch (e_ptr->GetEntityType())
+	{
+	case E_UNIT:
+		PrepareUnitInfo();
+		break;
+	case E_BUILDING:
+		PrepareBuildInfo();
+		break;
+	case E_RESOURCE:
+		PrepareResourceInfo();
+		break;
+	}
+}
+
+void OneSelection::PrepareUnitInfo()
+{
+	Unit* selected = (Unit*)e_ptr;
+
+	image = new UIComponents(UICOMPONENT_TYPE::UIIMAGE);
+	image->Set({ 231, 667, 29, 33 }, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
+
+	name = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	name->Set(231, 653, GetUnitName(selected->GetUnitType()), BLACK);
+
+	std::string stats = std::to_string(selected->GetHp());
+	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	life->Set(262, 690, stats.c_str(), BLACK);
+
+	stats = std::to_string(selected->GetAttack());
+	damage = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	damage->Set(272, 705, stats.c_str(), BLACK);
+
+	stats = std::to_string(selected->GetArmor());
+	armor = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	armor->Set(272, 722, stats.c_str(), BLACK);
+
+	if (selected->GetUnitClass() == UNIT_CLASS::C_ARCHER)
+	{
+		stats = std::to_string(selected->GetRange());
+		range = new UILabel(UICOMPONENT_TYPE::UILABEL);
+		range->Set(272, 745, stats.c_str(), BLACK);
+	}
+}
+
+void OneSelection::PrepareBuildInfo()
+{
+	Building* selected = (Building*)e_ptr;
+
+	BUILDING_TYPE b_type_selected = selected->GetBuildingType();
+
+	image = new UIComponents(UICOMPONENT_TYPE::UIIMAGE);
+	image->Set({ 231, 667, 29, 33 }, GetBuildingIconPositionFromAtlas(b_type_selected));
+
+	name = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	name->Set(231, 653, GetBuildingName(b_type_selected), BLACK);
+
+	std::string stats = std::to_string(selected->GetHp());
+	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	life->Set(262, 690, stats.c_str(), BLACK);
+
+	if (selected->GetBuildingType() == b_type_selected)
+	{
+		stats = std::to_string(selected->GetRange());
+		range = new UILabel(UICOMPONENT_TYPE::UILABEL);
+		range->Set(272, 710, stats.c_str(), BLACK);
+	}
+}
+
+void OneSelection::PrepareBuildingConstruction()
+{
+	building_percentage = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	uint percentage = GetBuildingPercentage(e_ptr);
+	std::string str_percentage("Constructing - ");
+	str_percentage += std::to_string(percentage);
+	str_percentage += "%";
+	building_percentage->Set(400, 703, str_percentage.c_str(), BLACK);
+}
+
+void OneSelection::PrepareResourceInfo()
+{
+	Resources* selected = (Resources*)e_ptr;
+
+	RESOURCE_TYPE r_type_selected = selected->GetResourceType();
+
+	image = new UIComponents(UICOMPONENT_TYPE::UIIMAGE);
+	image->Set({ 231, 667, 29, 33 }, GetResourceIconPositionFromAtlas(r_type_selected));
+
+	name = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	name->Set(231, 653, GetResourceName(r_type_selected), BLACK);
+
+	std::string stats = std::to_string(selected->GetHp());
+	life = new UILabel(UICOMPONENT_TYPE::UILABEL);
+	life->Set(262, 690, stats.c_str(), BLACK);
+}
+
+void OneSelection::Update()
+{
+	if(e_ptr->GetHp() <= 0)
+		delete_panel_info = true;
+	else
+	{
+		UpdateHP();
+
+		if (e_ptr->GetEntityType() == E_BUILDING)
+			if (build == false && isBuilded(e_ptr) == false)
+			{
+				build = true;
+				PrepareBuildingConstruction();
+			}
+	}
+}
+
+void OneSelection::UpdateHP()
+{
+	std::string hp = std::to_string(e_ptr->GetHp());
+	life->ChangeText(hp.c_str(), BLACK);
+}
+
+void OneSelection::UpdateBuildingPercentageStr()
+{
+	uint percentage = GetBuildingPercentage(e_ptr);
+	std::string str_percentage("Constructing - ");
+	str_percentage += std::to_string(percentage);
+	str_percentage += "%";
+
+	building_percentage->ChangeText(str_percentage.c_str(), BLACK);
+}
+
+void OneSelection::Draw()
+{
+	e_ptr = *selection->begin();
+
+	switch (e_ptr->GetEntityType())
+	{
+	case E_UNIT:
+		DrawUnitInfo();
+		break;
+	case E_BUILDING:
+		DrawBuildInfo();
+		break;
+	case E_RESOURCE:
+		DrawResourceInfo();
+		break;
+	}
+}
+
+void OneSelection::DrawUnitInfo()
+{
+	Unit* unit_life_bar = (Unit*)e_ptr;
+
+	if (unit_life_bar->GetHp() > 0)
+	{
+		life_bar_selected.w = ReturnValueBarHPUnit(unit_life_bar->GetUnitType(), unit_life_bar->GetHp(), GREEN_BAR_PIXELS);
+
+		//Bar life
+		int rest_life_bar = ReturnValueBarHPUnit(unit_life_bar->GetUnitType(), unit_life_bar->GetHp());
+		int height_correction = ReturnValueHeightCorrectionUnit(unit_life_bar->GetUnitClass());
+		SDL_Rect mark_life_bar_red{ 1059, 832, 32, 4 };
+		SDL_Rect mark_life_bar_green{ 1059, 827, rest_life_bar, 4 };
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), unit_life_bar->GetX() - BAR_LIFE_CENTER, unit_life_bar->GetY() - height_correction, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), unit_life_bar->GetX() - BAR_LIFE_CENTER, unit_life_bar->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+
+		UIComponents* entity_image = image;
+
+		SDL_Rect mark_btn{ 1029, 827, 29, 33 };
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			//bar_life
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+		UILabel* entity_label = name;
+		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+		entity_label = life;
+		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+		SDL_Rect mark_attack{ 956, 858, 38, 22 };
+		entity_label = damage;
+		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 230 - App->render->camera->GetPosition().x, 703 - App->render->camera->GetPosition().y, &mark_attack, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+		SDL_Rect mark_armor{ 956, 902, 37, 19 };
+		entity_label = armor;
+		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 230 - App->render->camera->GetPosition().x, 725 - App->render->camera->GetPosition().y, &mark_armor, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+		entity_label = range;
+		if (entity_label != nullptr)
+		{
+			SDL_Rect mark_range{ 956, 881, 35, 20 };
+			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 231 - App->render->camera->GetPosition().x, 744 - App->render->camera->GetPosition().y, &mark_range, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		}
+	}
+}
+
+void OneSelection::DrawBuildInfo()
+{
+	Building* building_life_bar = (Building*)e_ptr;
+
+	if (building_life_bar->GetHp() > 0)
+	{
+		life_bar_selected.w = ReturnValueBarHPBuilding(building_life_bar->GetBuildingType(), building_life_bar->GetHp(), GREEN_BAR_PIXELS);
+
+		//Bar life
+		int rest_life_bar = ReturnValueBarHPBuilding(building_life_bar->GetBuildingType(), building_life_bar->GetHp());
+		int height_correction = ReturnValueHeightCorrectionBuilding(building_life_bar->GetBuildingType());
+		SDL_Rect mark_life_bar_red{ 1059, 832, 32, 4 };
+		SDL_Rect mark_life_bar_green{ 1059, 827, rest_life_bar, 4 };
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), building_life_bar->GetX() - BAR_LIFE_CENTER, building_life_bar->GetY() - height_correction, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), building_life_bar->GetX() - BAR_LIFE_CENTER, building_life_bar->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+
+		UIComponents* entity_image = image;
+
+		SDL_Rect mark_btn{ 1029, 827, 29, 33 };
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		//bar_life
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+		UILabel* entity_label = name;
+		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+		entity_label = life;
+		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+		entity_label = range;
+		if (entity_label != nullptr)
+		{
+			SDL_Rect mark_range{ 956, 881, 35, 20 };
+			App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 231 - App->render->camera->GetPosition().x, 711 - App->render->camera->GetPosition().y, &mark_range, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		}
+
+		if (build)
+		{
+			uint percentage = GetBuildingPercentage(e_ptr);
+			if (percentage < 100)
+			{
+				UpdateBuildingPercentageStr();
+				entity_label = building_percentage;
+				App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+				entity_label = name;
+				App->render->Blit(entity_label->text_img, 400 - App->render->camera->GetPosition().x, 716 - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+				//Icon
+				SDL_Rect mark_icon{ 339, 1162, 40, 40 };
+				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 356 - App->render->camera->GetPosition().x, 701 - App->render->camera->GetPosition().y, &mark_icon, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+				//Progress bar
+				SDL_Rect mark_clear_bar{ 330, 1203, 100, 12 };
+				SDL_Rect mark_last_bar{ 403, 1216, 1, 12 };
+				SDL_Rect mark_full_bar{ 298, 1216, 2 + (int)percentage, 12 };
+				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 400 - App->render->camera->GetPosition().x, 729 - App->render->camera->GetPosition().y, &mark_clear_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+				App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 399 - App->render->camera->GetPosition().x, 729 - App->render->camera->GetPosition().y, &mark_full_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+				if (percentage < 98)
+					App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), 401 + (int)percentage - App->render->camera->GetPosition().x, 729 - App->render->camera->GetPosition().y, &mark_last_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			}
+			else
+				build = false;
+
+		}
+	}
+}
+
+void OneSelection::DrawResourceInfo()
+{
+	Resources* resource_life_bar = (Resources*)e_ptr;
+
+	if (resource_life_bar->GetHp() > 0)
+	{
+		life_bar_selected.w = ReturnValueBarHPResource(resource_life_bar->GetResourceType(), resource_life_bar->GetHp(), GREEN_BAR_PIXELS);
+
+		//Bar life
+		int rest_life_bar = ReturnValueBarHPResource(resource_life_bar->GetResourceType(), resource_life_bar->GetHp());
+		int height_correction = ReturnValueHeightCorrectionResource(resource_life_bar->GetResourceType());
+		SDL_Rect mark_life_bar_red{ 1059, 832, 32, 4 };
+		SDL_Rect mark_life_bar_green{ 1059, 827, rest_life_bar, 4 };
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), resource_life_bar->GetX() - BAR_LIFE_CENTER, resource_life_bar->GetY() - height_correction, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), resource_life_bar->GetX() - BAR_LIFE_CENTER, resource_life_bar->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+
+		UIComponents* entity_image = image;
+
+		SDL_Rect mark_btn{ 1029, 827, 29, 33 };
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x + 2 - App->render->camera->GetPosition().x, entity_image->rect_position.y + 2 - App->render->camera->GetPosition().y, &entity_image->rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		//bar_life
+		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), entity_image->rect_position.x - App->render->camera->GetPosition().x, entity_image->rect_position.y + 27 - App->render->camera->GetPosition().y, &life_bar_selected, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+		UILabel* entity_label = name;
+		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+		entity_label = life;
+		App->render->Blit(entity_label->text_img, entity_label->rect_position.x - App->render->camera->GetPosition().x, entity_label->rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+	}
+}

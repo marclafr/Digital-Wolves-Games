@@ -1,0 +1,328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="j1Window.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Audio.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1App.cpp">
+      <Filter>Awsome_Game</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Input.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Main.cpp">
+      <Filter>Awsome_Game</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Render.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Textures.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="p2Log.cpp">
+      <Filter>Programacio 2 ===========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Scene.cpp">
+      <Filter>Awsome_Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1FileSystem.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="PugiXml\src\pugixml.cpp">
+      <Filter>Awsome_Game\Tools\PuguiXML</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Map.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Timer.cpp">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="j1PerfTimer.cpp">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1UIManager.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Animation.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1EntityManager.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Units.cpp">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Buildings.cpp">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponents.cpp">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Collision.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDDescription.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDPanelButtons.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDResources.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="GetEntitiesInfo.cpp">
+      <Filter>Awsome_Game\UIComponents\GetInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="UIButton.cpp">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UICheckbutton.cpp">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UILabel.cpp">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UISelectOption.cpp">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="j1MainMenu.cpp">
+      <Filter>Awsome_Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="j1SceneManager.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1WaveManager.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Console.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDPanelInfo.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelInfoGroupSelection.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="PanelInfoOneSelection.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDTownHallBarLife.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="j1ScoreScene.cpp">
+      <Filter>Awsome_Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDScoreBar.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Investigations.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="j1Window.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Audio.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1App.h">
+      <Filter>Awsome_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Input.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Module.h">
+      <Filter>Awsome_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Render.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Textures.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Defs.h">
+      <Filter>Programacio 2 ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Log.h">
+      <Filter>Programacio 2 ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Point.h">
+      <Filter>Programacio 2 ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Scene.h">
+      <Filter>Awsome_Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1FileSystem.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="PugiXml\src\pugiconfig.hpp">
+      <Filter>Awsome_Game\Tools\PuguiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="PugiXml\src\pugixml.hpp">
+      <Filter>Awsome_Game\Tools\PuguiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Map.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Timer.h">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1PerfTimer.h">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1UIManager.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Animation.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1EntityManager.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Units.h">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Buildings.h">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponents.h">
+      <Filter>Awsome_Game\UIComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>Awsome_Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Collision.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDDescription.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDPanelButtons.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDResources.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="UIGetEntitiesInfo.h">
+      <Filter>Awsome_Game\UIComponents\GetInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="UIButton.h">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UICheckbutton.h">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UILabel.h">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UISelectOption.h">
+      <Filter>Awsome_Game\UIComponents\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="j1MainMenu.h">
+      <Filter>Awsome_Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="j1SceneManager.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1WaveManager.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Console.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDPanelInfo.h">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelInfoBasicStructure.h">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelInfoGroupSelection.h">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelInfoOneSelection.h">
+      <Filter>Awsome_Game\UIComponents\HUD\UIHUDPanelInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDTownHallBarLife.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="j1ScoreScene.h">
+      <Filter>Awsome_Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDScoreBar.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Investigations.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Programacio 2 ===========">
+      <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game">
+      <UniqueIdentifier>{cb944693-b9d0-484c-bad2-02d5a7cdbec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\Tools">
+      <UniqueIdentifier>{42c748be-4a37-49de-970f-5be811d06b38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\Tools\PuguiXML">
+      <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\Scenes">
+      <UniqueIdentifier>{e07660eb-d36f-4cc9-af59-324d31c2f2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\Modules">
+      <UniqueIdentifier>{244722d1-90ce-423d-8e7a-556211865a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\Entities">
+      <UniqueIdentifier>{d115a52a-3ab8-46bb-98e5-e070caf52475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\UIComponents">
+      <UniqueIdentifier>{6d1ada9c-c865-4b67-8806-67d059fb87d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\UIComponents\HUD">
+      <UniqueIdentifier>{c5854047-f795-4224-bafc-c2cee4ec71b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\UIComponents\Components">
+      <UniqueIdentifier>{415db45d-c97a-4034-bbaa-e0764d7de3a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\UIComponents\GetInfo">
+      <UniqueIdentifier>{1e8d9cd4-3e8d-4f18-9f90-7062b7cb007f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\UIComponents\HUD\UIHUDPanelInfo">
+      <UniqueIdentifier>{06f88748-2ca2-4806-b68a-c3480589e69f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

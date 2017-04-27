@@ -1,0 +1,96 @@
+#ifndef _j1Investigations_
+#define _j1Investigations_
+
+#include "j1Module.h"
+#include "j1Timer.h"
+#include <vector>
+
+#define COST_INCREASE_BY_LVL 100
+
+enum LEVEL
+{
+	INV_LVL_LOCKED,
+	INV_LVL_UNLOCKED,
+	INV_LVL_1,
+	INV_LVL_2,
+	INV_LVL_3,
+	INV_LVL_4,
+	INV_LVL_5,
+	INV_LVL_6
+	//look for: " CHANGE IF MAX LEVEL IS CHANGED" in case you add more levels and add more cases to upgrade them.
+};
+
+enum INVESTIGATION_TYPE
+{
+//RESOURCES
+	INV_FOOD,
+	INV_WOOD,
+	INV_GOLD,
+	INV_STONE,
+//TROPS
+	INV_CAVALRY_UNLOCK,
+	INV_CAVALRY_ATTACK,
+	INV_CAVALRY_DEFENSE,
+	INV_ARCHERS_UNLOCK,
+	INV_ARCHERS_ATTACK,
+	INV_ARCHERS_DEFENSE,
+	INV_INFANTRY_UNLOCK,
+	INV_INFANTRY_ATTACK,
+	INV_INFANTRY_DEFENSE,
+//TOWERS
+	INV_FIRE_TOWER,
+	INV_ICE_TOWER,
+	INV_AIR_TOWER
+};
+
+enum INVESTIGATION_STATE
+{
+	INV_S_IDLE,
+	INV_S_WAITING_TO_INVESTIGATE,
+	INV_S_IN_COURSE,
+	INV_S_COMPLETED
+};
+
+class Investigation
+{
+public:
+	Investigation(INVESTIGATION_TYPE investigation, bool has_lvls, uint cost, float time) : investigation_type(investigation), has_levels(has_lvls), cost(cost), time_to_upgrade(time){}
+	~Investigation(){}
+
+public:
+	INVESTIGATION_TYPE investigation_type;
+	bool has_levels = true;
+	LEVEL investigation_level = INV_LVL_LOCKED;
+	INVESTIGATION_STATE inv_state = INV_S_IDLE;
+	bool max_level = false;
+	float time_to_upgrade;
+	j1Timer upgrade_timer;
+	uint cost = 0;
+};
+
+class j1Investigations : public j1Module
+{
+public:
+
+	j1Investigations();
+	~j1Investigations();
+
+	bool Start();
+	bool Update(float dt);
+	bool CleanUp();
+
+	Investigation* GetInvestigation(INVESTIGATION_TYPE name);
+	LEVEL GetLevel(Investigation* investigation);
+	bool WantToInvestigate(Investigation* investigation);
+
+private:
+	Investigation* CreateInvestigation(INVESTIGATION_TYPE investigation, bool has_lvls, uint cost, float time_to_upgrade);
+	bool DeleteInvestigation(Investigation* ptr);
+
+	std::vector<Investigation*> investigations;
+	bool CanInvestigate(Investigation* investigation);
+	void DoInvestigationUpgrade(Investigation* investigation);
+	bool UpgradeInvestigation(Investigation* investigation);
+
+};
+#endif //_j1Investigations_
