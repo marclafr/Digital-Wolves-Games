@@ -121,13 +121,20 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
-	//
+
+	//TEST INVESTIGATIONS
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
 		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_FOOD));
 
 	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
 		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_INFANTRY_ATTACK));
-	//
+	//--
+
+	//CREATE ENEMIES
+	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
+		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 372 }, S_ENEMY);
+	//--
+
 	//DEBUG: increase resources
 	if (App->debug_features.add_food)
 	{

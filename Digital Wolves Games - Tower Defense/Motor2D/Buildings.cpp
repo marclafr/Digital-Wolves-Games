@@ -24,6 +24,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetSide(side);
 		SetHp(500);
 		SetAttack(0);
+		SetArmor(8);
 		rect = { 365,435,95,57 };
 		SetRect(rect);
 		SetPivot(0.505263 * 95, 0.578947 * 57);
@@ -36,6 +37,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetSide(side);
 		SetHp(1500);
 		SetAttack(0);
+		SetArmor(8);
 		rect = { 836,1,366,317 };
 		SetRect(rect);
 		SetPivot(0.52459 * 366, 0.72555 * 317);//

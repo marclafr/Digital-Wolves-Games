@@ -33,11 +33,11 @@ class Entity
 private:
 	SDL_Rect rect;
 	iPoint pivot;
-	bool to_delete;
+	bool to_delete = false;
 	fPoint position;
-	int hp;
-	int armor;
-	int attack;
+	int hp = 1;
+	int armor = 0;
+	int attack = 0;
 	enum ENTITY_TYPE entity_type;
 	enum ENTITY_STATUS entity_status = ST_NON_SELECTED;
 	enum TextureID texture_id;

@@ -28,7 +28,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 12;
 		SetArmor(1);
 		speed = 1.0f;
-		rate_of_fire = 200.0f;
+		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -43,7 +43,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 6;
 		SetArmor(1);
 		speed = 1.4f;
-		rate_of_fire = 200.0f;
+		rate_of_fire = 100.0f;
 		range = 300;
 		vision_range = 350;
 		unit_class = C_ARCHER;
@@ -57,7 +57,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 4;
 		SetArmor(-5);
 		speed = 0.6f;
-		rate_of_fire = 500.0f;
+		rate_of_fire = 250.0f;
 		range = 30;
 		vision_range = 100;
 		unit_class = C_SIEGE;

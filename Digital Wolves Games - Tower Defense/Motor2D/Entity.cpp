@@ -139,7 +139,10 @@ void Entity::Attack(Entity* entity)
 
 void Entity::Damaged(int dmg)
 {
-	hp -= (dmg - armor);
+	if (armor >= dmg)
+		hp--;
+	else
+		hp -= (dmg - armor);
 }
 
 void Entity::UpgradeUnit(int plushealth) {
