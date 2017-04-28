@@ -16,6 +16,7 @@
 #include "UIButton.h"
 #include "UILabel.h"
 #include "UIHUDScoreBar.h"
+#include "UICheckbutton.h"
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
 
@@ -50,58 +51,11 @@ bool j1ScoreScene::Start()
 	under_background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	under_background->Set({ 0, 622, 1336, 144 }, { 0, 2131, 1366, 144 });
 
-	//BACK_MENU
-	back_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	back_menu->Set({ 1014, 638, 129, 36 }, { 1234, 1432, 129, 36 });
-	back_menu->SetInteractive(true);
+	CreateAllButtons();
 
-	//PLAY AGAIN
-	play_again = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	play_again->Set({ 846, 637, 129, 37 }, { 1102, 1431, 129, 37 });
-	play_again->SetInteractive(true);
-
-	//SCORE
-	trophies = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	trophies->Set({ 278, 696, 126, 55 }, { 0, 0, 0, 0 });
-	trophies->SetInteractive(true);
-	trophies_unselected = false;
-
-	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_trophies->Set(316, 710, "Trophies");
-
-	//ACHIEVEMENTS
-	achievements = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	achievements->Set({ 416, 696, 123, 55 }, { 0, 0, 0, 0 });
-	achievements->SetInteractive(true);
-
-	title_achievements = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_achievements->Set(440, 710, "Achievements");
-
-	//INVESTIGATIONS
-	investigations = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	investigations->Set({ 555, 696, 123, 55 }, { 0, 0, 0, 0 });
-	investigations->SetInteractive(true);
-
-	title_investigations = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_investigations->Set(575, 710, "Investigations");
-
-	//TROPHIES
-	trophie_wood = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	trophie_wood->Set({ 380, 200, 87, 98 }, { 677, 1370, 87, 98 });
-
-	trophie_bronze = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	trophie_bronze->Set({ 500, 185, 97, 113 }, { 765, 1355, 97, 113 });
-
-	trophie_silver = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	trophie_silver->Set({ 630, 169, 113, 129 }, { 941, 1162, 113, 129 });
-
-	trophie_gold = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	trophie_gold->Set({ 772, 159, 119, 139 }, { 1058, 1162, 119, 139 });
-
-	trophie_rubi = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	trophie_rubi->Set({ 920, 145, 136, 153 }, { 1181, 1162, 136, 153 });
-
-	score_bar = (UIHUDScoreBar*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDSCOREBAR);
+	CreateTrophies();
+	
+	CreateAchievements();
 
 	//TEXT
 	title_score = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
@@ -207,6 +161,8 @@ bool j1ScoreScene::Update(float dt)
 	{
 		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2131, 1366, 144 });
 		trophies_unselected = false;
+		achievements_unselected = true;
+		investigation_unselected = true;
 	}
 
 	//ACHIEVEMENTS
@@ -214,6 +170,8 @@ bool j1ScoreScene::Update(float dt)
 	{
 		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2278, 1366, 144 });
 		trophies_unselected = true;
+		achievements_unselected = false;
+		investigation_unselected = true;
 	}
 
 	//INVESTIGATIONS
@@ -221,6 +179,8 @@ bool j1ScoreScene::Update(float dt)
 	{
 		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2426, 1366, 144 });
 		trophies_unselected = true;
+		achievements_unselected = true;
+		investigation_unselected = false;
 	}
 
 	OptionSelected();
@@ -296,6 +256,97 @@ void j1ScoreScene::VisualEffectsUI()
 	}
 }
 
+void j1ScoreScene::CreateAchievements()
+{
+	//ACHIEVEMENT 1
+	achievement1 = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	achievement1->Set({ 355, 73, 718, 130 }, { 0, 2606, 718, 130 });
+	achievement1->SetDraw(false);
+	title_achievement1 = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_achievement1->Set(410, 130, "Achievement 1", {0,0,0,0});
+	title_achievement1->SetDraw(false);
+	check_achievement1 = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UICHECKBUTTON);
+	check_achievement1->SetDraw(false);
+	check_achievement1->clicked = false;
+	check_achievement1->Set({ 1005, 120, 40, 39 }, { 995, 869, 40, 39 }, { 1036, 868, 40, 39 });
+
+	//ACHIEVEMENT 2
+	achievement2 = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	achievement2->Set({ 355, 203, 718, 130 }, { 0, 2737, 718, 130 });
+	achievement2->SetDraw(false);
+	title_achievement2 = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_achievement2->Set(410, 260, "Achievement 2", { 0,0,0,0 });
+	title_achievement2->SetDraw(false);
+	check_achievement2 = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UICHECKBUTTON);
+	check_achievement2->SetDraw(false);
+	check_achievement2->clicked = false;
+	check_achievement2->Set({ 1005, 250, 40, 39 }, { 995, 869, 40, 39 }, { 1036, 868, 40, 39 });
+
+}
+
+void j1ScoreScene::CreateTrophies()
+{
+
+	//TROPHIES
+	trophie_wood = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	trophie_wood->Set({ 380, 200, 87, 98 }, { 677, 1370, 87, 98 });
+
+	trophie_bronze = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	trophie_bronze->Set({ 500, 185, 97, 113 }, { 765, 1355, 97, 113 });
+
+	trophie_silver = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	trophie_silver->Set({ 630, 169, 113, 129 }, { 941, 1162, 113, 129 });
+
+	trophie_gold = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	trophie_gold->Set({ 772, 159, 119, 139 }, { 1058, 1162, 119, 139 });
+
+	trophie_rubi = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	trophie_rubi->Set({ 920, 145, 136, 153 }, { 1181, 1162, 136, 153 });
+
+	score_bar = (UIHUDScoreBar*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDSCOREBAR);
+
+}
+
+void j1ScoreScene::CreateAllButtons()
+{
+	//BACK_MENU
+	back_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	back_menu->Set({ 1014, 638, 129, 36 }, { 1234, 1432, 129, 36 });
+	back_menu->SetInteractive(true);
+
+	//PLAY AGAIN
+	play_again = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	play_again->Set({ 846, 637, 129, 37 }, { 1102, 1431, 129, 37 });
+	play_again->SetInteractive(true);
+
+	//SCORE
+	trophies = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	trophies->Set({ 278, 696, 126, 55 }, { 0, 0, 0, 0 });
+	trophies->SetInteractive(true);
+	trophies_unselected = false;
+
+	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_trophies->Set(316, 710, "Trophies");
+
+	//ACHIEVEMENTS
+	achievements = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	achievements->Set({ 416, 696, 123, 55 }, { 0, 0, 0, 0 });
+	achievements->SetInteractive(true);
+
+	title_achievements = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_achievements->Set(440, 710, "Achievements");
+
+	//INVESTIGATIONS
+	investigations = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	investigations->Set({ 555, 696, 123, 55 }, { 0, 0, 0, 0 });
+	investigations->SetInteractive(true);
+
+	title_investigations = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_investigations->Set(575, 710, "Investigations");
+
+}
+
+
 void j1ScoreScene::OptionSelected()
 {
 	if (trophies_unselected)
@@ -331,7 +382,21 @@ void j1ScoreScene::OptionSelected()
 
 	if (achievements_unselected)
 	{
-
+		achievement1->SetDraw(false);
+		title_achievement1->SetDraw(false);
+		check_achievement1->SetDraw(false);
+		achievement2->SetDraw(false);
+		title_achievement2->SetDraw(false);
+		check_achievement2->SetDraw(false);
+	}
+	else
+	{
+		achievement1->SetDraw(true);
+		title_achievement1->SetDraw(true);
+		check_achievement1->SetDraw(true);
+		achievement2->SetDraw(true);
+		title_achievement2->SetDraw(true);
+		check_achievement2->SetDraw(true);
 	}
 
 	if (investigation_unselected)

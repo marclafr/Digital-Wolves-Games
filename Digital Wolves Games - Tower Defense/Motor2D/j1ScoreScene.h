@@ -8,6 +8,7 @@ class UILabel;
 class UIComponents;
 class UIButton;
 class UIHUDScoreBar;
+class UICheckButton;
 
 class j1ScoreScene : public j1Module
 {
@@ -43,6 +44,9 @@ public:
 	bool game_scene = true;
 
 	void VisualEffectsUI();
+	void CreateAchievements();
+	void CreateTrophies();
+	void CreateAllButtons();
 
 private:
 
@@ -79,6 +83,15 @@ private:
 	UIComponents* trophie_rubi;
 
 	UIHUDScoreBar* score_bar;
+
+	//ACHIEVEMENTS
+	UIComponents* achievement1;
+	UILabel* title_achievement1;
+	UICheckbutton* check_achievement1;
+
+	UIComponents* achievement2;
+	UILabel* title_achievement2;
+	UICheckbutton* check_achievement2;
 
 	bool scene_changing = false;
 	bool trophies_unselected = true;
