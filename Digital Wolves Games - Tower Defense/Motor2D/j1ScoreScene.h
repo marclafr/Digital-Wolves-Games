@@ -42,6 +42,8 @@ public:
 
 	bool game_scene = true;
 
+	void VisualEffectsUI();
+
 private:
 
 	UIComponents* background;

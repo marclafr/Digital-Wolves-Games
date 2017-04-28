@@ -163,6 +163,8 @@ bool j1ScoreScene::Update(float dt)
 
 	ActualTrophie();
 
+	VisualEffectsUI();
+
 	//PLAY AGAIN
 	if (play_again->GetStat() == SELECTED)
 	{
@@ -261,6 +263,36 @@ void j1ScoreScene::ActualTrophie()
 	}
 	if (App->entity_manager->GetScore() > 6250) {
 		actual_trophie->Set({ 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
+	}
+}
+
+void j1ScoreScene::VisualEffectsUI()
+{
+	if (trophies->GetStat() == SELECTED)
+	{
+		title_trophies->Set(316, 710, "Trophies", { 255,255,0,0 });
+	}
+	if (trophies->GetStat() == UNSELECTED)
+	{
+		title_trophies->Set(316, 710, "Trophies", { 255,255,255,0 });
+	}
+
+	if (achievements->GetStat() == SELECTED)
+	{
+		title_achievements->Set(440, 710, "Achievements", { 255,255,0,0 });
+	}
+	if (achievements->GetStat() == UNSELECTED)
+	{
+		title_achievements->Set(440, 710, "Achievements", { 255,255,255,0 });
+	}
+
+	if (investigations->GetStat() == SELECTED)
+	{
+		title_investigations->Set(575, 710, "Investigations", { 255,255,0,0 });
+	}
+	if (investigations->GetStat() == UNSELECTED)
+	{
+		title_investigations->Set(575, 710, "Investigations", { 255,255,255,0 });
 	}
 }
 
