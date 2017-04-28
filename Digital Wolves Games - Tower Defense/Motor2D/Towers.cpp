@@ -42,7 +42,10 @@ void Tower::Update()
 			attacking = false;
 			Target = nullptr;
 		}
+		else
+		ArrowCreation();
 	}
+
 
 	if (attacking == true) {
 		iPoint targetpos;
@@ -211,4 +214,22 @@ void Tower::UpgradeTurret()
 		//maxlvl¿?¿?¿?
 		break;
 	}*/
+}
+void Tower::ArrowCreation() 
+{
+	iPoint pos;
+	SDL_Rect rect = { 350,268,5,5};
+	//\mathbf{ B }(t) = (1 - t) ^ { 2 }\mathbf{ P }_0 + 2t(1 - t)\mathbf{ P }_1 + t^{ 2 }\mathbf{ P }_2 \mbox{ , } t \in[0, 1].
+	for (float i = 0; i < 1; i += 0.05)
+	{
+		fPoint initial_point = { GetPosition().x,GetPosition().y - ARROW_TOWER_HEIGHT};
+		fPoint last_point = Target->GetPosition();
+		fPoint mid_point = { (initial_point.x + last_point.x) / 2,((initial_point.y + last_point.y) / 2) - 100 };
+
+		pos.x = ((1 - i)*(1 - i)*initial_point.x) + ((2 * i)*(1 - i)*mid_point.x) + ((i*i)*last_point.x);
+		pos.y = ((1 - i)*(1 - i)*initial_point.y) + ((2 * i)*(1 - i)*mid_point.y) + ((i*i)*last_point.y);
+		App->render->Blit(App->tex->GetTexture(T_WALL), pos.x, pos.y, &rect,SDL_FLIP_NONE,0,0,1,0,false);
+	}
+
+
 }

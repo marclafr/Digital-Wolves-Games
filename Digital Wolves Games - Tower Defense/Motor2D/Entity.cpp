@@ -48,6 +48,11 @@ const float Entity::GetY() const
 	return position.y;
 }
 
+const fPoint Entity::GetPosition() const
+{
+	return position;
+}
+
 const int Entity::GetHp() const
 {
 	return hp;

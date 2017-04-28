@@ -4,6 +4,7 @@
 #include "Buildings.h"
 #include "j1Timer.h"
 
+#define ARROW_TOWER_HEIGHT 146
 enum TOWER_TYPE
 {
 	T_NO_TYPE = 0,
@@ -41,6 +42,7 @@ public:
 	const TOWER_TYPE GetTowerType() const;
 	const int GetRange() const;
 	void UpgradeTurret();
+	void ArrowCreation();
 };
 
 #endif //__TOWERS_
