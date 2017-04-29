@@ -44,7 +44,7 @@ bool UIHUDPanelButtons::Update()
 	for (std::list<info_button*>::iterator ib_item = panel.begin(); ib_item != panel.end(); ++ib_item)
 	{
 		if ((*ib_item)->btn->IsFocus())
-			App->scene->hud_description->SetDescription((*ib_item));
+			App->uimanager->SetDescriptionHUDDescription((*ib_item));
 
 		//todo change to tasks
 		if ((*ib_item)->btn->GetStat() == BS_MOUSE_ON_TOP)

@@ -3,12 +3,6 @@
 
 #include "j1Module.h"
 
-struct SDL_Texture;
-class UILabel;
-class UIComponents;
-class UIButton;
-
-
 class j1MainMenu : public j1Module
 {
 public:
@@ -45,7 +39,6 @@ public:
 
 private:
 	bool ret_preupdate = true;
-
 };
 
 #endif // __j1MAINMENU_H__

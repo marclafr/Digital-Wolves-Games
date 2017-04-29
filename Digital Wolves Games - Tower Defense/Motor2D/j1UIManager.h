@@ -9,6 +9,11 @@ class UIComponents;
 enum UICOMPONENT_TYPE;
 struct SDL_Texture;
 union SDL_Event;
+class UIHUDTownHallBarLife;
+class UIHUDResources;
+class UIHUDPanelInfo;
+class UIHUDDescription;
+struct info_button;
 
 #define CURSOR_WIDTH 2
 
@@ -46,16 +51,30 @@ public:
 	UIComponents* addUIComponent(UICOMPONENT_TYPE type);
 
 	const SDL_Texture* GetAtlas() const;
-	void erase_list(std::list<UIComponents*>::iterator first, std::list<UIComponents*>::iterator last);
 	const std::list<UIComponents*>::iterator GetLastComponent();
 	const bool InUse() const;
+
+	void SetTownHall(Building*);
+	void SetResource(Resources*);
+	void AddEntityToPanelInfo(Entity*);
+	void DefineSelectionPanelInfo();
+	bool IsSelectionEmptyFromPanelInfo();
+	void DeleteSelectionPanelInfo();
+	void SetDescriptionHUDDescription(info_button*);
+	void SetInfoUIComponent(UIComponents*);
+	SDL_Rect GetPosRectFromInfoUI();
 
 private:
 	std::list<UIComponents*> components;
 	SDL_Texture* atlas;
 	std::string atlas_file_name;
-	std::list<UIComponents*>::iterator first_item_delete;
-	std::list<UIComponents*>::iterator last_item_delete;
 	UIComponents* focus = nullptr;
+
+	//Pointers of some compontnts from scenes
+	UIHUDTownHallBarLife* townhall_bar_life;
+	UIHUDResources* resources_panel;
+	UIHUDPanelInfo* panel_info;
+	UIHUDDescription* hud_description;
+	UIComponents* info_ui;
 };
 #endif // __j1GUIMANAGER_H__

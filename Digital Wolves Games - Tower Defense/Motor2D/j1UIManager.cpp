@@ -153,15 +153,19 @@ UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
 		break;
 	case UIT_UIHUDPANELINFO:
 		components.push_back(ret = (UIComponents*)new UIHUDPanelInfo(UICOMPONENT_TYPE::UIT_UIHUDPANELINFO));
+		panel_info = (UIHUDPanelInfo*)ret;
 		break;
 	case UIT_UIHUDDESCRIPTION:
 		components.push_back(ret = (UIComponents*)new UIHUDDescription(UICOMPONENT_TYPE::UIT_UIHUDDESCRIPTION));
+		hud_description = (UIHUDDescription*)ret;
 		break;
 	case UIT_UIHUDRESOURCES:
 		components.push_back(ret = (UIComponents*)new UIHUDResources(UICOMPONENT_TYPE::UIT_UIHUDRESOURCES));
+		resources_panel = (UIHUDResources*)ret;
 		break;
 	case UIT_UIHUDTOWNHALLBARLIFE:
 		components.push_back(ret = (UIComponents*)new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIT_UIHUDTOWNHALLBARLIFE));
+		townhall_bar_life = (UIHUDTownHallBarLife*)ret;
 		break;
 	case  UIT_UIHUDSCOREBAR:
 		components.push_back(ret = (UIComponents*)new UIHUDScoreBar(UICOMPONENT_TYPE:: UIT_UIHUDSCOREBAR));
@@ -180,13 +184,6 @@ const SDL_Texture* j1UIManager::GetAtlas() const
 	return atlas;
 }
 
-void j1UIManager::erase_list(std::list<UIComponents*>::iterator first, std::list<UIComponents*>::iterator last)
-{
-	first_item_delete = first;
-
-	last_item_delete = last;
-}
-
 const std::list<UIComponents*>::iterator j1UIManager::GetLastComponent()
 {
 	std::list<UIComponents*>::iterator temp = components.end();
@@ -201,4 +198,49 @@ const bool j1UIManager::InUse() const
 	if (focus != nullptr)
 		return true;
 	return false;
+}
+
+void j1UIManager::SetTownHall(Building * th)
+{
+	townhall_bar_life->SetTownHall(th);
+}
+
+void j1UIManager::SetResource(Resources* res)
+{
+	resources_panel->AddResource(res);
+}
+
+void j1UIManager::AddEntityToPanelInfo(Entity* entity_selected)
+{
+	panel_info->AddEntitySelection(entity_selected);
+}
+
+void j1UIManager::DefineSelectionPanelInfo()
+{
+	panel_info->DefineSelection();
+}
+
+bool j1UIManager::IsSelectionEmptyFromPanelInfo()
+{
+	return panel_info->isSelectionEmpty();
+}
+
+void j1UIManager::DeleteSelectionPanelInfo()
+{
+	panel_info->DeleteSelection();
+}
+
+void j1UIManager::SetDescriptionHUDDescription(info_button* infobutton_desc)
+{
+	hud_description->SetDescription(infobutton_desc);
+}
+
+void j1UIManager::SetInfoUIComponent(UIComponents* component)
+{
+	info_ui = component;
+}
+
+SDL_Rect j1UIManager::GetPosRectFromInfoUI()
+{
+	return info_ui->GetPosRect();
 }

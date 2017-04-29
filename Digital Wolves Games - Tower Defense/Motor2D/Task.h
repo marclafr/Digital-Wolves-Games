@@ -74,4 +74,13 @@ public:
 		App->main_menu->SetRetPreUpdate(false);
 	}
 };
+
+class ChangeBackgroundScoreSceneTask : public Task
+{
+private:
+	SDL_Rect to_atlas;
+
+public:
+
+};
 #endif
