@@ -98,14 +98,14 @@ bool j1Scene::Start()
 	App->entity_manager->ResetScores();
 
 	//Animation test
-	a1 = new Animation(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
-	a2 = new Animation(App->anim->GetAnimationType(ANIM_FIRE_ARROW));
-	a3 = new Animation(App->anim->GetAnimationType(ANIM_ICE_ARROW));
-	a4 = new Animation(App->anim->GetAnimationType(ANIM_AIR_ARROW));
-	a5 = new Animation(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
-	a6 = new Animation(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
-	a7 = new Animation(App->anim->GetAnimationType(ANIM_ICE_BOMB));
-	a8 = new Animation(App->anim->GetAnimationType(ANIM_AIR_BOMB));
+	a1 = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
+	a2 = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_ARROW));
+	a3 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_ARROW));
+	a4 = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_ARROW));
+	a5 = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
+	a6 = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
+	a7 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_BOMB));
+	a8 = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_BOMB));
 	return true;
 }
 

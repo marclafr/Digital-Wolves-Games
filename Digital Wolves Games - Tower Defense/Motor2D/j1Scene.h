@@ -23,7 +23,7 @@ class UIHUDTownHallBarLife;
 class Resources;
 class Building;
 enum RESOURCE_TYPE;
-class Animation;
+class AnimationManager;
 
 class j1Scene : public j1Module
 {
@@ -115,14 +115,14 @@ public:
 
 
 	//ANIMATION TEST
-	Animation* a1;
-	Animation* a2;
-	Animation* a3;
-	Animation* a4;
-	Animation* a5;
-	Animation* a6;
-	Animation* a7;
-	Animation* a8;
+	AnimationManager* a1;
+	AnimationManager* a2;
+	AnimationManager* a3;
+	AnimationManager* a4;
+	AnimationManager* a5;
+	AnimationManager* a6;
+	AnimationManager* a7;
+	AnimationManager* a8;
 	//--
 };
 

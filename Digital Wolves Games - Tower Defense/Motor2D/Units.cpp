@@ -72,7 +72,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		break;
 	}
 
-	animation = new Animation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
+	animation = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
 }
 
 Unit::~Unit()

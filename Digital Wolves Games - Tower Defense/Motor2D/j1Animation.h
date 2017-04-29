@@ -30,13 +30,13 @@ enum ANIMATION_NAME
 	ANIM_AIR_BOMB
 };
 
-class AnimationType
+class Animation
 {
 	friend class j1Animation;
 
 public:
-	AnimationType(ANIMATION_NAME name);
-	~AnimationType();
+	Animation(ANIMATION_NAME name);
+	~Animation();
 
 private:
 	ANIMATION_NAME name;
@@ -71,10 +71,10 @@ private:
 	void SetDirection(const pugi::xml_node node);
 };
 
-class Animation
+class AnimationManager
 {
 private:
-	AnimationType* anim_type;
+	Animation* anim_type;
 	float current_frame;
 	j1Timer	anim_timer;
 	j1Timer	idle_wait_timer;
@@ -84,14 +84,14 @@ private:
 	bool finished;
 
 public:
-	Animation();
-	Animation(AnimationType* type); //remember
-	Animation(const Animation& copy);
-	~Animation();
+	AnimationManager();
+	AnimationManager(Animation* type); //remember
+	AnimationManager(const AnimationManager& copy);
+	~AnimationManager();
 
-	void ChangeAnimation(AnimationType* type, float speed = 0.0f);
+	void ChangeAnimation(Animation* type, float speed = 0.0f);
 
-	const Animation operator = (const Animation& anim);
+	const AnimationManager operator = (const AnimationManager& anim);
 
 	bool Update(SDL_Rect& rect, iPoint& pivot_point);
 
@@ -117,10 +117,10 @@ public:
 
 	bool CleanUp();
 
-	AnimationType* GetAnimationType(const ANIMATION_NAME name, const UNIT_TYPE unit = U_NO_UNIT, const ACTION action = A_NO_ACTION, const DIRECTION direction = D_NO_DIRECTION) const;
+	Animation* GetAnimationType(const ANIMATION_NAME name, const UNIT_TYPE unit = U_NO_UNIT, const ACTION action = A_NO_ACTION, const DIRECTION direction = D_NO_DIRECTION) const;
 
 private:
-	std::vector<AnimationType*> animation_types;
+	std::vector<Animation*> animation_types;
 	ANIMATION_NAME AnimString2Enum(const std::string name);
 
 };

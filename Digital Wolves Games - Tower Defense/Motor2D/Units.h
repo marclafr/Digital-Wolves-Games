@@ -8,7 +8,7 @@
 #define XY_TILES_RELATION 2
 #define TOWN_HALL iPoint(-720,672) //TODO final townhall destination;, 
 
-class Animation;
+class AnimationManager;
 struct PathList;
 struct PathNode;
 
@@ -73,7 +73,7 @@ private:
 	float angle;
 	UNIT_CLASS unit_class;
 	int rand_num;
-	Animation* animation;
+	AnimationManager* animation;
 	bool changed;
 	Entity* target;
 	Entity* attacking;
