@@ -320,7 +320,6 @@ bool j1Scene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		App->scene_manager->ChangeScene(SC_SCORE);
 
-
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 		win = true;
 		App->scene_manager->ChangeScene(SC_SCORE);

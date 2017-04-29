@@ -1,7 +1,11 @@
 #ifndef _TASK
 #define _TASK
 
+#include "j1App.h"
 #include "j1EntityManager.h"
+#include "j1SceneManager.h"
+#include "j1Scene.h"
+#include "j1MainMenu.h"
 
 class Task
 {
@@ -39,6 +43,35 @@ public:
 	bool Execute()
 	{
 		App->entity_manager->CreateBuilding(type, position, side);
+	}
+};
+
+class ChangeSceneTask : public Task
+{
+private:
+	SCENES to_scene = SC_NO_SCENE;
+
+public:
+	ChangeSceneTask(SCENES to_scene) : to_scene(to_scene) {}
+
+	bool Execute()
+	{
+		App->scene_manager->ChangeScene(to_scene);
+
+		if (to_scene == SC_GAME)
+		{
+			App->scene->win = false;
+			App->scene->lose = false;
+		}
+	}
+};
+
+class SetPreUpdateFalseTask : public Task
+{
+public:
+	bool Execute()
+	{
+		App->main_menu->SetRetPreUpdate(false);
 	}
 };
 #endif
