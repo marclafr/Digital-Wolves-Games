@@ -50,6 +50,7 @@ bool j1Textures::Start()
 	App->tex->Load("textures/Extras.png", T_TOWNHALL);
 	App->tex->Load("textures/Resouce.png", T_RESOURCE);
 	App->tex->Load("animations/HorizontalArrowAngles.png", T_ARROW);
+	App->tex->Load("textures/ArrowsBombs.png", T_ARROW_BOMB);
 
 	bool ret = true;
 	return ret;

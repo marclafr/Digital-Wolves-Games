@@ -72,7 +72,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		break;
 	}
 
-	animation = new Animation(App->anim->GetAnimationType(unit_type, action, direction));
+	animation = new Animation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
 }
 
 Unit::~Unit()
@@ -88,9 +88,9 @@ void Unit::Update()
 	if (changed == true)
 	{
 		if (action == A_ATTACK)
-			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action, direction), this->rate_of_fire);
+			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), this->rate_of_fire);
 		else
-			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action, direction));
+			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), this->rate_of_fire);
 		changed = false;
 	}
 

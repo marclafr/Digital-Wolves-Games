@@ -97,6 +97,15 @@ bool j1Scene::Start()
 	game_time.Start();
 	App->entity_manager->ResetScores();
 
+	//Animation test
+	a1 = new Animation(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
+	a2 = new Animation(App->anim->GetAnimationType(ANIM_FIRE_ARROW));
+	a3 = new Animation(App->anim->GetAnimationType(ANIM_ICE_ARROW));
+	a4 = new Animation(App->anim->GetAnimationType(ANIM_AIR_ARROW));
+	a5 = new Animation(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
+	a6 = new Animation(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
+	a7 = new Animation(App->anim->GetAnimationType(ANIM_ICE_BOMB));
+	a8 = new Animation(App->anim->GetAnimationType(ANIM_AIR_BOMB));
 	return true;
 }
 
@@ -118,6 +127,29 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	//ANIMATION TEST
+	SDL_Rect rect_test;
+	iPoint pivot;
+
+	a1->Update(rect_test, pivot);
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 0, 300, &rect_test);
+	a2->Update(rect_test, pivot);
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 100, 300, &rect_test);
+	a3->Update(rect_test, pivot);
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 200, 300, &rect_test);
+	a4->Update(rect_test, pivot);
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 300, 300, &rect_test);
+	a5->Update(rect_test, pivot);
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 0, 400, &rect_test);
+	a6->Update(rect_test, pivot);
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 100, 400, &rect_test);
+	a7->Update(rect_test, pivot);
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 200, 400, &rect_test);
+	a8->Update(rect_test, pivot);
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 300, 400, &rect_test);
+	//--
+
+
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);

@@ -23,6 +23,7 @@ class UIHUDTownHallBarLife;
 class Resources;
 class Building;
 enum RESOURCE_TYPE;
+class Animation;
 
 class j1Scene : public j1Module
 {
@@ -111,6 +112,18 @@ public:
 	j1Timer game_time;
 
 	UIComponents* info_ui;
+
+
+	//ANIMATION TEST
+	Animation* a1;
+	Animation* a2;
+	Animation* a3;
+	Animation* a4;
+	Animation* a5;
+	Animation* a6;
+	Animation* a7;
+	Animation* a8;
+	//--
 };
 
 #endif // __j1SCENE_H__

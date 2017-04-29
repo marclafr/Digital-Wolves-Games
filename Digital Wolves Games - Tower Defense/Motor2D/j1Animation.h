@@ -16,16 +16,30 @@
 
 class Unit;
 
+enum ANIMATION_NAME
+{
+	NO_ANIM_NAME = 0,
+	ANIM_UNIT,
+	ANIM_SIMPLE_ARROW,
+	ANIM_FIRE_ARROW,
+	ANIM_ICE_ARROW,
+	ANIM_AIR_ARROW,
+	ANIM_SIMPLE_BOMB,
+	ANIM_FIRE_BOMB,
+	ANIM_ICE_BOMB,
+	ANIM_AIR_BOMB
+};
+
 class AnimationType
 {
 	friend class j1Animation;
 
 public:
-	AnimationType(std::string name);
+	AnimationType(ANIMATION_NAME name);
 	~AnimationType();
 
 private:
-	std::string name;
+	ANIMATION_NAME name;
 	UNIT_TYPE unit_type;
 	ACTION action;
 	DIRECTION direction_type;
@@ -48,6 +62,7 @@ public:
 	const ACTION GetActionType() const;
 	const UNIT_TYPE GetUnitType() const;
 	const DIRECTION GetDirection() const;
+	const ANIMATION_NAME GetName() const;
 
 private:
 	bool CleanUp();
@@ -87,7 +102,7 @@ public:
 
 //------------------------------------------------------------------------//
 
-class j1Animation:public j1Module
+class j1Animation :public j1Module
 {
 public:
 
@@ -95,17 +110,18 @@ public:
 
 	// Destructor
 	virtual ~j1Animation();
-	
+
 	bool Awake(pugi::xml_node& config);
 
 	bool Start();
 
 	bool CleanUp();
 
-	AnimationType* GetAnimationType(const UNIT_TYPE unit, const ACTION action, const DIRECTION direction) const;
+	AnimationType* GetAnimationType(const ANIMATION_NAME name, const UNIT_TYPE unit = U_NO_UNIT, const ACTION action = A_NO_ACTION, const DIRECTION direction = D_NO_DIRECTION) const;
 
 private:
 	std::vector<AnimationType*> animation_types;
+	ANIMATION_NAME AnimString2Enum(const std::string name);
 
 };
 
