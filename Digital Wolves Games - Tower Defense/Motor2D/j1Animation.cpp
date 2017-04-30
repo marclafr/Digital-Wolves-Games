@@ -132,6 +132,44 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		arrows_bombs_node = arrows_bombs_node.next_sibling();
 	}
 
+
+	std::string anim_folder3 = "animations/fire.xml";
+	buff = nullptr;
+	size = App->fs->Load(anim_folder3.c_str(), &buff);
+	pugi::xml_document anim_data3;
+	result = anim_data3.load_buffer(buff, size);
+	RELEASE(buff);
+
+	if (result == NULL)
+	{
+		LOG("Error loading ARROW and BOMBS animations data: %s", result.description());
+		return false;
+	}
+
+	pugi::xml_node fire_node = anim_data3.child("Sprites").first_child();
+
+	while (fire_node != NULL)
+	{
+		std::string anim_name = fire_node.attribute("anim_name").as_string();
+		Animation* new_anim3 = new Animation(AnimString2Enum(anim_name));
+
+		pugi::xml_node sprite_node3 = fire_node.first_child();
+
+		while (sprite_node3 != NULL)
+		{
+			new_anim3->frames.push_back({ sprite_node3.attribute("x").as_int(),sprite_node3.attribute("y").as_int(), sprite_node3.attribute("w").as_int(),sprite_node3.attribute("h").as_int() });
+
+			int pX = sprite_node3.attribute("pX").as_int();
+			int pY = sprite_node3.attribute("pY").as_int();
+			new_anim3->pivot_points.push_back({ (int)pX, (int)pY });
+			sprite_node3 = sprite_node3.next_sibling();
+		}
+
+		new_anim3->speed = 75.0f;
+		animation_types.push_back(new_anim3);
+		fire_node = fire_node.next_sibling();
+	}
+
 	return ret;
 }
 
@@ -448,6 +486,9 @@ ANIMATION_NAME j1Animation::AnimString2Enum(const std::string name)
 
 	else if (name == "air_bomb")
 		return ANIM_AIR_BOMB;
+
+	else if (name == "fire_floor")
+		return ANIM_FIRE_FLOOR;
 
 	return NO_ANIM_NAME;
 }

@@ -123,6 +123,7 @@ public:
 	AnimationManager* a6;
 	AnimationManager* a7;
 	AnimationManager* a8;
+	AnimationManager* a_fire;
 	//--
 };
 

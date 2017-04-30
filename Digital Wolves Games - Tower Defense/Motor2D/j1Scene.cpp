@@ -106,6 +106,7 @@ bool j1Scene::Start()
 	a6 = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
 	a7 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_BOMB));
 	a8 = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_BOMB));
+	a_fire = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
 	return true;
 }
 
@@ -147,6 +148,9 @@ bool j1Scene::Update(float dt)
 	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 200, 400, &rect_test);
 	a8->Update(rect_test, pivot);
 	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 300, 400, &rect_test);
+
+	a_fire->Update(rect_test, pivot);
+	App->render->Blit(App->tex->GetTexture(T_FIRE_FLOOR), 0, 200, &rect_test, SDL_FLIP_NONE, pivot.x, pivot.y);
 	//--
 
 
