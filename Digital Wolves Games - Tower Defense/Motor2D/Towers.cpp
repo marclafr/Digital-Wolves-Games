@@ -41,17 +41,23 @@ void Tower::Update()
 		if (Target->GetHp() <= 0) {
 			attacking = false;
 			Target = nullptr;
+			ResetArrowPos();
 		}
 		else
-		ArrowCreation();
+			UpdateArrow(HEIGHT_BASIC_TOWER, Target->GetPosition(), 100, 100);
+		if (GetArrowPos() == 1)
+		{
+			ResetArrowPos();
+			Target->Damaged(GetAttack());
+		}
 	}
 
-
+	/*
 	if (attacking == true) {
 		iPoint targetpos;
 		targetpos.x = Target->GetX();
 		targetpos.y = Target->GetY() - 35;
-		UpdateArrow(arrowpos, targetpos);
+		updateArrow(arrowpos, targetpos);
 		if (arrowpos.x > targetpos.x - 3 && arrowpos.x < targetpos.x + 3 && arrowpos.y < targetpos.y + 3 && arrowpos.y > targetpos.y - 3)
 		{
 			attacking = false;
@@ -62,6 +68,7 @@ void Tower::Update()
 		UpdateArrowSprite(targetpos, rect, pivots);
 		App->render->Blit(App->tex->GetTexture(T_ARROW), arrowpos.x, arrowpos.y, &rect, SDL_FLIP_NONE, pivots.x, pivots.y);
 	}
+	*/
 
 	if (IsAlive() == true && this->GetHp() <= 0)
 		ConvertToRubble();
@@ -222,13 +229,13 @@ void Tower::ArrowCreation()
 	//\mathbf{ B }(t) = (1 - t) ^ { 2 }\mathbf{ P }_0 + 2t(1 - t)\mathbf{ P }_1 + t^{ 2 }\mathbf{ P }_2 \mbox{ , } t \in[0, 1].
 	for (float i = 0; i < 1; i += 0.05)
 	{
-		fPoint initial_point = { GetPosition().x,GetPosition().y - ARROW_TOWER_HEIGHT};
+		fPoint initial_point = { GetPosition().x,GetPosition().y - HEIGHT_BASIC_TOWER};
 		fPoint last_point = Target->GetPosition();
-		fPoint mid_point = { (initial_point.x + last_point.x) / 2,((initial_point.y + last_point.y) / 2) - 100 };
+		fPoint mid_point = { (initial_point.x + last_point.x) / 2,((initial_point.y + last_point.y) / 2) - 100};
 
 		pos.x = ((1 - i)*(1 - i)*initial_point.x) + ((2 * i)*(1 - i)*mid_point.x) + ((i*i)*last_point.x);
 		pos.y = ((1 - i)*(1 - i)*initial_point.y) + ((2 * i)*(1 - i)*mid_point.y) + ((i*i)*last_point.y);
-		App->render->Blit(App->tex->GetTexture(T_WALL), pos.x, pos.y, &rect,SDL_FLIP_NONE,0,0,1,0,false);
+		App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), pos.x, pos.y, &rect,SDL_FLIP_NONE,0,0,1,0,false);
 	}
 
 

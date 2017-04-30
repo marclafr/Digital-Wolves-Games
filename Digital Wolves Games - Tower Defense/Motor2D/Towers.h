@@ -4,7 +4,7 @@
 #include "Buildings.h"
 #include "j1Timer.h"
 
-#define ARROW_TOWER_HEIGHT 146
+#define HEIGHT_BASIC_TOWER 146
 enum TOWER_TYPE
 {
 	T_NO_TYPE = 0,

@@ -42,7 +42,7 @@ private:
 	enum ENTITY_STATUS entity_status = ST_NON_SELECTED;
 	enum TextureID texture_id;
 	enum Side side;
-
+	float Arrow_pos = 0; //It goes from 0 to 1
 public:
 	Entity(ENTITY_TYPE entity_type, fPoint pos, Side side);
 
@@ -61,7 +61,9 @@ public:
 
 	void SetEntityStatus(ENTITY_STATUS status);
 	void SetPosition(float x, float y);
-
+	float GetArrowPos() const;
+	void ResetArrowPos();
+	void UpdateArrow(int StartHeight, fPoint TargetPos, int CurveHeight, int TimeSecs);
 	ENTITY_TYPE GetEntityType() const;
 	ENTITY_STATUS GetEntityStatus();
 	const int GetHp() const;

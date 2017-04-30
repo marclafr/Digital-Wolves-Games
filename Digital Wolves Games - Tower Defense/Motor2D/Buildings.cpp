@@ -196,7 +196,7 @@ const int Building::GetRange() const
 	return 250;
 }
 
-void Building::UpdateArrow(iPoint &arrowpos, iPoint targetpos)
+void Building::updateArrow(iPoint &arrowpos, iPoint targetpos)
 {
 	if (arrowpos.x < targetpos.x && arrowpos.y < targetpos.y) {
 
