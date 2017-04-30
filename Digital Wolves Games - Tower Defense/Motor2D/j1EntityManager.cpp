@@ -260,14 +260,14 @@ Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
 			Building* building = (Building*)entity_array[i];
 			if (entity_array[i]->GetX() <= position.x + range + building->GetWidth() && entity_array[i]->GetX() >= position.x - range - building->GetWidth() &&
 				entity_array[i]->GetY() <= position.y + range + building->GetHeight() && entity_array[i]->GetY() >= position.y - range - building->GetHeight() &&
-				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0)
+				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() > 0)
 				return entity_array[i];
 		}
 		if (entity_array[i]->GetEntityType() == E_UNIT)
 		{
 			if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range &&
 				entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range &&
-				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0)
+				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() > 0)
 				return entity_array[i];
 		}
 	}

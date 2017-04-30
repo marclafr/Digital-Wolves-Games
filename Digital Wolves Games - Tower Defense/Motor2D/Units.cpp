@@ -24,7 +24,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 	case U_TWOHANDEDSWORDMAN:
-		SetHp(170);
+		/*SetHp(170);
 		attack = 12;
 		SetArmor(1);
 		speed = 1.0f;
@@ -35,7 +35,19 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		unit_radius = 6;
 		SetTextureID(T_TWOHANDEDSWORDMAN);
 		priority = 3;
-
+		*/
+		SetHp(50);
+		attack = 6;
+		SetArmor(1);
+		speed = 1.4f;
+		rate_of_fire = 100.0f;
+		range = 200;
+		vision_range = 250;
+		unit_class = C_ARCHER;
+		unit_radius = 8;
+		SetTextureID(T_CAVALRYARCHER);
+		priority = 2;
+		unit_type = U_CAVALRYARCHER;
 		break;
 
 	case U_CAVALRYARCHER:
@@ -44,8 +56,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetArmor(1);
 		speed = 1.4f;
 		rate_of_fire = 100.0f;
-		range = 300;
-		vision_range = 350;
+		range = 200;
+		vision_range = 250;
 		unit_class = C_ARCHER;
 		unit_radius = 8;
 		SetTextureID(T_CAVALRYARCHER);
@@ -191,12 +203,7 @@ void Unit::AI()
 
 		if (GetHp() <= 0)
 		{
-			this->action = A_DIE;
-			this->SetEntityStatus(ST_NON_SELECTED);
-			if(GetSide() == S_ENEMY)
-				App->entity_manager->EnemyDead();
-			changed = true;
-			PlayDeathSound();
+			UnitDies();
 			break;
 		}
 
@@ -235,12 +242,7 @@ void Unit::AI()
 
 		if (GetHp() <= 0)
 		{
-			this->action = A_DIE;
-			this->SetEntityStatus(ST_NON_SELECTED);
-			if (GetSide() == S_ENEMY)
-				App->entity_manager->EnemyDead();
-			changed = true;
-			PlayDeathSound();
+			UnitDies();
 			break;
 		}
 
@@ -285,12 +287,7 @@ void Unit::AI()
 
 		if (GetHp() <= 0)
 		{
-			this->action = A_DIE;
-			this->SetEntityStatus(ST_NON_SELECTED);
-			if (GetSide() == S_ENEMY)
-				App->entity_manager->EnemyDead();
-			changed = true;
-			PlayDeathSound();
+			UnitDies();
 			break;
 		}
 
@@ -581,4 +578,14 @@ void Unit::PlayAttackSound() const
 		App->audio->PlayFx(App->entity_manager->fx_attack03);
 		break;
 	}
+}
+
+void Unit::UnitDies()
+{
+	this->action = A_DIE;
+	this->SetEntityStatus(ST_NON_SELECTED);
+	if (GetSide() == S_ENEMY)
+		App->entity_manager->EnemyDead();
+	changed = true;
+	PlayDeathSound();
 }

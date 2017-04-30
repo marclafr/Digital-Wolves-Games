@@ -87,6 +87,8 @@ private:
 	bool bonus_attack = false;
 	bool bonus_defense = false;
 
+	void UnitDies();
+
 public:
 
 	Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority);
