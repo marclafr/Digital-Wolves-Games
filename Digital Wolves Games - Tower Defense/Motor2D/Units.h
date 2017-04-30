@@ -74,6 +74,7 @@ private:
 	UNIT_CLASS unit_class;
 	int rand_num;
 	AnimationManager* animation;
+	AnimationManager* idle_siege;
 	bool changed;
 	Entity* target;
 	Entity* attacking;

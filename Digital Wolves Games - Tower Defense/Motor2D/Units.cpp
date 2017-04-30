@@ -73,6 +73,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 	}
 
 	animation = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
+	if(unit_class == C_SIEGE)
+		idle_siege = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));
+
 }
 
 Unit::~Unit()
@@ -90,7 +93,11 @@ void Unit::Update()
 		if (action == A_ATTACK)
 			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), this->rate_of_fire);
 		else
-			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), this->rate_of_fire);
+			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
+
+		if (unit_class == C_SIEGE)
+			idle_siege->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));;
+		
 		changed = false;
 	}
 
@@ -335,6 +342,17 @@ void Unit::Draw()
 {
 	SDL_Rect rect;
 	iPoint pivot;
+	if (unit_class == C_SIEGE && action == A_WALK)
+	{
+		idle_siege->Update(rect, pivot);
+
+		SetPivot(pivot.x, pivot.y);
+		SetRect(rect);
+		if (direction == D_NORTH_EAST || direction == D_EAST || direction == D_SOUTH_EAST)
+			App->render->Blit(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_HORIZONTAL, GetPivot().x, GetPivot().y);
+		else
+			App->render->Blit(App->tex->GetTexture(GetTextureID()), GetX() - GetPivot().x, GetY() - GetPivot().y, &GetRect());
+	}
 
 	animation->Update(rect, pivot);
 	
