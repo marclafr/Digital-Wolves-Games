@@ -16,9 +16,18 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetArmor(1);
 		rate_of_fire = 100.0f;
 		range = 250;
-		SetRect({ 610,1,107,206 });
-		SetPivot(0.504673 * 107, 0.902913 * 206);
 		SetTextureID(T_TURRET);
+		tower_type = T_BASIC_TOWER;
+		break;
+
+	case T_BOMBARD_TOWER:
+		SetHp(250);
+		SetAttack(30);
+		SetArmor(1);
+		rate_of_fire = 100.0f;
+		range = 250;
+		SetTextureID(T_TURRET);
+		tower_type = T_BOMBARD_TOWER;
 		break;
 
 	default:
@@ -136,7 +145,7 @@ void Tower::Draw()
 
 
 		}
-		else if (GetBuildTime() > 9 && GetBuildTime() <= 11)
+		else if (GetBuildTime() > 9)
 		{
 			switch (tower_type)
 			{
@@ -146,7 +155,8 @@ void Tower::Draw()
 				break;
 
 			case T_BOMBARD_TOWER:
-				//TODO
+				SetRect({ 154,1,128,281 });
+				SetPivot(0.5 * 128,0.914591 * 281);
 				break;
 
 			default:

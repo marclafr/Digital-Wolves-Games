@@ -90,7 +90,7 @@ bool j1Scene::Start()
 	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1824, 1080));
 	resources_panel->AddResource(resource_wood);
-	townhalltower1 = (Building*)App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-624, 528));
+	townhalltower1 = (Building*)App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
 	townhalltower2 = (Building*)App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
 	
 	//Reset scores and timers
@@ -266,77 +266,11 @@ bool j1Scene::Update(float dt)
 
 	if (placing_tower == true)
 	{
-		if (CanBuildTower())
-		{
-			if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
-			{
-				SDL_Rect rect;
-				rect = { 1,284,107,206 };
-				App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
-			}
-			else
-			{
-				SDL_Rect rect;
-				rect = { 580 ,538 ,107,206 };
-				//rect = { 610,1,107,206 };
-				App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
-				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-				{
-					if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
-					{
-						App->audio->PlayFx(App->entity_manager->fx_construction);
-						if (App->pathfinding->IsConstructible_neutral(r) == true)
-						{
-							App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
-							BuildTower();
-						}
-						else if (App->pathfinding->IsConstructible_ally(r) == true)
-						{
-							App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
-							BuildTower();
-						}
-					}
-				}
-			}
-		}
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-		{
-			placing_tower = false;
-		}
+		PlacingBasicTower();
 	}
 
 	if (placing_wall == true) {
-		if (App->pathfinding->IsConstructible_ally(r) == false)
-		{
-			SDL_Rect rect;
-			rect = { 689,122,99,178 };
-			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
-		}
-		else if (App->pathfinding->IsConstructible_ally(r) == true)		
-		{
-			SDL_Rect rect;
-			rect = { 690,303,99,178};
-			//rect = { 325,218,99,178 };
-			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949*99, 178*0.865169);
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-			{
-				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
-				{
-					if (App->pathfinding->IsConstructible_ally(r) == true)
-						if (CanBuildWall())
-						{
-							BuildWall();
-							App->audio->PlayFx(App->entity_manager->fx_construction);
-							App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint(p.x, p.y - 9), S_ALLY);
-						}
-				}
-			}
-		}
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-		{
-			placing_wall = false;
-		}
+		PlacingWall();
 	}
 
 	if (new_wave_button->GetStat() == CLICKL_DOWN)
@@ -440,6 +374,96 @@ void j1Scene::TrainSoldier()
 {
 	resource_wood->UseResource(TWOHANDED_WOOD_COST);
 	resource_stone->UseResource(TWOHANDED_STONE_COST);
+}
+
+void j1Scene::PlacingBasicTower()
+{
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	iPoint r = App->map->WorldToMap(p.x, p.y);
+	p = App->map->WorldToMap(p.x, p.y);
+	p = App->map->MapToWorld(p.x, p.y);
+
+	if (CanBuildTower())
+	{
+		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
+		{
+			SDL_Rect rect;
+			rect = { 1,284,107,206 };
+			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+		}
+		else
+		{
+			SDL_Rect rect;
+			rect = { 580 ,538 ,107,206 };
+			//rect = { 610,1,107,206 };
+			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+				{
+					App->audio->PlayFx(App->entity_manager->fx_construction);
+					if (App->pathfinding->IsConstructible_neutral(r) == true)
+					{
+						App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
+						BuildTower();
+					}
+					else if (App->pathfinding->IsConstructible_ally(r) == true)
+					{
+						App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
+						BuildTower();
+					}
+				}
+			}
+		}
+	}
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	{
+		placing_tower = false;
+	}
+}
+
+void j1Scene::PlacingWall()
+{
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	iPoint r = App->map->WorldToMap(p.x, p.y);
+	p = App->map->WorldToMap(p.x, p.y);
+	p = App->map->MapToWorld(p.x, p.y);
+
+	if (App->pathfinding->IsConstructible_ally(r) == false)
+	{
+		SDL_Rect rect;
+		rect = { 689,122,99,178 };
+		App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
+	}
+	else if (App->pathfinding->IsConstructible_ally(r) == true)
+	{
+		SDL_Rect rect;
+		rect = { 690,303,99,178 };
+		//rect = { 325,218,99,178 };
+		App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		{
+			if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+			{
+				if (App->pathfinding->IsConstructible_ally(r) == true)
+					if (CanBuildWall())
+					{
+						BuildWall();
+						App->audio->PlayFx(App->entity_manager->fx_construction);
+						App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint(p.x, p.y - 9), S_ALLY);
+					}
+			}
+		}
+	}
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	{
+		placing_wall = false;
+	}
 }
 
 void j1Scene::HandleInput( SDL_Event event)
