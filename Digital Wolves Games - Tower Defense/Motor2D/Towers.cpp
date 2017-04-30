@@ -9,6 +9,7 @@
 Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
 	anim_fire = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
+	//TODO: anim_ice_floor = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
 	switch (t_type)
 	{
 	case T_BASIC_TOWER:
@@ -59,7 +60,6 @@ void Tower::Update()
 			ResetArrowPos();
 			Target->Damaged(GetAttack());
 			element_terrain_pos = Target->GetPosition();
-			print_element_terrain = true;
 			PrintElementTerrainTimer.Start();
 		}
 	}
@@ -122,8 +122,9 @@ void Tower::AI()
 
 void Tower::Draw()
 {
-	if (print_element_terrain == true && PrintElementTerrainTimer.ReadSec() <= ELEMENT_TERRAIN_TIME)
-		PrintElementTerrain(GetElementFromTower(tower_type), element_terrain_pos, 30);
+	if (PrintElementTerrainTimer.ReadSec() <= ELEMENT_TERRAIN_TIME)
+		PrintElementTerrain(GetElementFromTower(tower_type), element_terrain_pos, 100);
+	
 
 	if (IsBuilt())
 		App->render->PushEntity(this);
@@ -217,10 +218,18 @@ void Tower::PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int r
 	anim_fire->Update(rect, pivot);
 	App->render->Blit(App->tex->GetTexture(T_FIRE), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 
-
-
+/*
+	for (int i = 0; i < 3; i++)
+	{
+		int rand_distance = rand() % radius;
+		float rand_angle = rand() % 360;
+		rand_angle *= 3.14f / 360;
+		int X = rand_distance*sin(rand_angle);
+		int Y = rand_distance*cos(rand_angle);
+		App->render->Blit(App->tex->GetTexture(T_FIRE), center.x + X, center.y + Y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+	}
+*/
 }
-
 
 TOWER_ELEMENT_TYPE Tower::GetElementFromTower(TOWER_TYPE tower)
 {

@@ -40,9 +40,9 @@ private:
 	Entity* Target = nullptr;
 
 	j1Timer PrintElementTerrainTimer;
-	bool print_element_terrain = false;
 	fPoint element_terrain_pos;
 	AnimationManager* anim_fire = nullptr;
+	AnimationManager* anim_ice_floor = nullptr;
 	void PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int radius);
 	TOWER_ELEMENT_TYPE GetElementFromTower(TOWER_TYPE tower);
 public:
