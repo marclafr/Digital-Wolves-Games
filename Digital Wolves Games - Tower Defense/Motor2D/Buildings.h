@@ -37,8 +37,6 @@ public:
 	~Building();
 
 	virtual void Update(); // defines order
-	void updateArrow(iPoint &arrow, iPoint Target);
-	void UpdateArrowSprite(iPoint Target, SDL_Rect& rect, iPoint &pivots);
 	virtual void AI();
 	virtual void Draw();
 	const BUILDING_TYPE GetBuildingType() const;

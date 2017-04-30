@@ -63,7 +63,7 @@ public:
 	void SetPosition(float x, float y);
 	float GetArrowPos() const;
 	void ResetArrowPos();
-	void UpdateArrow(int StartHeight, fPoint TargetPos, int CurveHeight, int TimeSecs);
+	void UpdateArrow(int StartHeight, fPoint TargetPos, int CurveHeight, float TimeSecs);
 	ENTITY_TYPE GetEntityType() const;
 	ENTITY_STATUS GetEntityStatus();
 	const int GetHp() const;

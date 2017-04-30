@@ -50,9 +50,9 @@ void Entity::ResetArrowPos()
 	Arrow_pos = 0;
 }
 
-void Entity::UpdateArrow(int StartHeight, fPoint TargetPos, int CurveHeight, int TimeSecs)
+void Entity::UpdateArrow(int StartHeight, fPoint TargetPos, int CurveHeight, float TimeSecs)
 {
-	SDL_Rect rect = { 350,268,5,5};
+	SDL_Rect rect = { 0,0,45,8};
 	iPoint pos;
 
 	fPoint initial_point = { GetPosition().x,GetPosition().y - StartHeight };
@@ -62,8 +62,8 @@ void Entity::UpdateArrow(int StartHeight, fPoint TargetPos, int CurveHeight, int
 	pos.x = ((1 - Arrow_pos)*(1 - Arrow_pos)*initial_point.x) + ((2 * Arrow_pos)*(1 - Arrow_pos)*mid_point.x) + ((Arrow_pos*Arrow_pos)*last_point.x);
 	pos.y = ((1 - Arrow_pos)*(1 - Arrow_pos)*initial_point.y) + ((2 * Arrow_pos)*(1 - Arrow_pos)*mid_point.y) + ((Arrow_pos*Arrow_pos)*last_point.y);
 
-	App->render->Blit(App->tex->GetTexture(T_WALL), pos.x, pos.y, &rect, SDL_FLIP_NONE, 0, 0, 1, 0, false);
-	float diferential = 0.03;
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), pos.x, pos.y, &rect, SDL_FLIP_NONE, 0, 0, 1, 0, false);
+	float diferential = 1/ TimeSecs;
 
 	Arrow_pos += diferential;
 	if (Arrow_pos > 1) Arrow_pos = 1;

@@ -34,15 +34,12 @@ public:
 	~Tower();
 
 	void Update(); // defines order
-	//void UpdateArrow(iPoint &arrow, iPoint Target);
-	//void UpdateArrowSprite(iPoint Target, SDL_Rect& rect, iPoint &pivots);
 	void AI();
 	void Draw();
 	bool attacking = false;
 	const TOWER_TYPE GetTowerType() const;
 	const int GetRange() const;
 	void UpgradeTurret();
-	void ArrowCreation();
-};
+	};
 
 #endif //__TOWERS_
