@@ -24,7 +24,7 @@ enum TextureID
 	T_TWOHANDEDSWORDMAN,
 	T_CAVALRYARCHER,
 	T_SIEGERAM,
-	T_FIRE_FLOOR
+	T_FIRE
 };
 
 struct Texture

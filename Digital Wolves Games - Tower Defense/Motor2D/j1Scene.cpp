@@ -150,7 +150,7 @@ bool j1Scene::Update(float dt)
 	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 300, 400, &rect_test);
 
 	a_fire->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_FIRE_FLOOR), 0, 200, &rect_test, SDL_FLIP_NONE, pivot.x, pivot.y);
+	App->render->Blit(App->tex->GetTexture(T_FIRE), 0, 200, &rect_test, SDL_FLIP_NONE, pivot.x, pivot.y);
 	//--
 
 

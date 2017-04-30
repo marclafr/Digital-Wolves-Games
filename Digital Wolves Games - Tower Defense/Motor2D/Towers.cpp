@@ -4,10 +4,11 @@
 #include "p2Log.h"
 #include "j1Audio.h"
 #include "j1EntityManager.h"
+#include "j1Animation.h"
 
 Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
-	SDL_Rect rect;
+	anim_fire = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
 	switch (t_type)
 	{
 	case T_BASIC_TOWER:
@@ -57,6 +58,9 @@ void Tower::Update()
 		{
 			ResetArrowPos();
 			Target->Damaged(GetAttack());
+			element_terrain_pos = Target->GetPosition();
+			print_element_terrain = true;
+			PrintElementTerrainTimer.Start();
 		}
 	}
 
@@ -118,6 +122,9 @@ void Tower::AI()
 
 void Tower::Draw()
 {
+	if (print_element_terrain == true && PrintElementTerrainTimer.ReadSec() <= ELEMENT_TERRAIN_TIME)
+		PrintElementTerrain(GetElementFromTower(tower_type), element_terrain_pos, 30);
+
 	if (IsBuilt())
 		App->render->PushEntity(this);
 
@@ -201,4 +208,42 @@ void Tower::UpgradeTurret()
 		//maxlvl¿?¿?¿?
 		break;
 	}*/
+}
+
+void Tower::PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int radius)
+{
+	SDL_Rect rect;
+	iPoint pivot;
+	anim_fire->Update(rect, pivot);
+	App->render->Blit(App->tex->GetTexture(T_FIRE), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+
+
+
+}
+
+
+TOWER_ELEMENT_TYPE Tower::GetElementFromTower(TOWER_TYPE tower)
+{
+	switch (tower)
+	{
+	case T_BASIC_TOWER:
+	case T_BOMBARD_TOWER:
+		return TE_NO_ELEMENT;
+		break;
+	case T_FIRE_TOWER:
+	case T_BOMBARD_FIRE_TOWER:
+		return TE_FIRE;
+		break;
+	case T_ICE_TOWER:
+	case T_BOMBARD_ICE_TOWER:
+		return TE_ICE;
+		break;
+	case T_AIR_TOWER:
+	case T_BOMBARD_AIR_TOWER:
+		return TE_AIR;
+		break;
+	default:
+		break;
+	}
+	return TE_NULL;
 }

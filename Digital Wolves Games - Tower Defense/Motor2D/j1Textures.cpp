@@ -51,7 +51,7 @@ bool j1Textures::Start()
 	App->tex->Load("textures/Resouce.png", T_RESOURCE);
 	App->tex->Load("animations/HorizontalArrowAngles.png", T_ARROW);
 	App->tex->Load("textures/ArrowsBombs.png", T_ARROW_BOMB);
-	App->tex->Load("animations/fireTest.png", T_FIRE_FLOOR);
+	App->tex->Load("animations/fireTest.png", T_FIRE);
 
 	bool ret = true;
 	return ret;
