@@ -42,10 +42,17 @@ bool j1Textures::Start()
 	LOG("start textures");
 
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
-	App->tex->Load("animations/CavalryArcher.png", T_CAVALRYARCHER);
-	App->tex->Load("animations/Manatarms.png", T_MANATARMS);
-	App->tex->Load("animations/Twohandedswordman.png", T_TWOHANDEDSWORDMAN);
-	App->tex->Load("animations/SiegeRam.png", T_SIEGERAM);
+	//Units
+	App->tex->Load("animations/Units/Militia.png", T_MILITIA);
+	App->tex->Load("animations/Units/Manatarms.png", T_MANATARMS);
+	App->tex->Load("animations/Units/Longswordman.png", T_LONGSWORDMAN);
+	App->tex->Load("animations/Units/Twohandedswordman.png", T_TWOHANDEDSWORDMAN);
+	App->tex->Load("animations/Units/Champion.png", T_CHAMPION);
+	App->tex->Load("animations/Units/Archer.png", T_ARCHER);
+	App->tex->Load("animations/Units/Arbalest.png", T_ARBALEST);
+	App->tex->Load("animations/Units/CavalryArcher.png", T_CAVALRYARCHER);
+	App->tex->Load("animations/Units/SiegeRam.png", T_SIEGERAM);
+	//--
 	App->tex->Load("textures/Towers.png", T_TURRET);
 	App->tex->Load("animations/StoneWall.png", T_WALL);
 	App->tex->Load("textures/Extras.png", T_TOWNHALL);

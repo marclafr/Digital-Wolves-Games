@@ -168,7 +168,19 @@ bool j1Scene::Update(float dt)
 
 	//CREATE UNITS
 	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_MANATARMS, { -200.0f, 372 }, S_ALLY);
+		App->entity_manager->CreateUnit(U_MILITIA, { -200.0f, 372 }, S_ALLY);
+
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+		App->entity_manager->CreateUnit(U_LONGSWORDMAN, { -200.0f, 372 }, S_ALLY);
+
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+		App->entity_manager->CreateUnit(U_CHAMPION, { -200.0f, 372 }, S_ALLY);
+
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		App->entity_manager->CreateUnit(U_ARCHER, { -200.0f, 372 }, S_ALLY);
+
+	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+		App->entity_manager->CreateUnit(U_ARBALEST, { -200.0f, 372 }, S_ALLY);
 
 	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 372 }, S_ENEMY);

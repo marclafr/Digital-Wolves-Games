@@ -60,6 +60,8 @@ const char* GetUnitName(const UNIT_TYPE type)
 		ret = "Man at Arms";
 		break;
 
+		//TODO: ADD UNIT
+
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
 		ret = "Error Unit";
@@ -259,6 +261,9 @@ int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp, const uint pixels)
 	case U_MANATARMS:
 		ret = hp * pixels / MANATARMS_HP;
 		break;
+
+		//TODO: ADD UNIT
+
 
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");

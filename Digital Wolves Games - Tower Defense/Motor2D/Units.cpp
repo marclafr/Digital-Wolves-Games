@@ -65,6 +65,20 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		priority = 1;
 		break;
 
+	case U_MILITIA:
+		SetHp(100);
+		attack = 8;
+		SetArmor(1);
+		speed = 1.0f;
+		rate_of_fire = 100.0f;
+		range = 30;
+		vision_range = 300;
+		unit_class = C_INFANTRY;
+		unit_radius = 6;
+		SetTextureID(T_MILITIA);
+		priority = 1;
+		break;
+
 	case U_MANATARMS:
 		SetHp(100);
 		attack = 8;
@@ -78,6 +92,64 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetTextureID(T_MANATARMS);
 		priority = 1;
 		break;
+
+	case U_LONGSWORDMAN:
+		SetHp(100);
+		attack = 8;
+		SetArmor(1);
+		speed = 1.0f;
+		rate_of_fire = 100.0f;
+		range = 30;
+		vision_range = 300;
+		unit_class = C_INFANTRY;
+		unit_radius = 6;
+		SetTextureID(T_LONGSWORDMAN);
+		priority = 1;
+		break;
+
+	case U_CHAMPION:
+		SetHp(100);
+		attack = 8;
+		SetArmor(1);
+		speed = 1.0f;
+		rate_of_fire = 100.0f;
+		range = 30;
+		vision_range = 300;
+		unit_class = C_INFANTRY;
+		unit_radius = 6;
+		SetTextureID(T_CHAMPION);
+		priority = 1;
+		break;
+
+	case U_ARCHER:
+		SetHp(100);
+		attack = 8;
+		SetArmor(1);
+		speed = 1.0f;
+		rate_of_fire = 100.0f;
+		range = 150;
+		vision_range = 300;
+		unit_class = C_ARCHER;
+		unit_radius = 6;
+		SetTextureID(T_ARCHER);
+		priority = 1;
+		break;
+
+	case U_ARBALEST:
+		SetHp(100);
+		attack = 8;
+		SetArmor(1);
+		speed = 1.0f;
+		rate_of_fire = 100.0f;
+		range = 150;
+		vision_range = 300;
+		unit_class = C_ARCHER;
+		unit_radius = 6;
+		SetTextureID(T_ARBALEST);
+		priority = 1;
+		break;
+
+		//TODO: ADD UNIT
 
 	default:
 		LOG("Error UNIT TYPE STATS NULL");

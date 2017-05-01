@@ -396,17 +396,43 @@ void AnimationManager::Reset()
 void Animation::SetUnit(const pugi::xml_node node)
 {
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
-	if (strcmp(node.name(), "twohandedswordman") == 0)
+		//INFANTRY:
+	if (strcmp(node.name(), "militia") == 0)
+		unit_type = U_MILITIA;
+
+	else if (strcmp(node.name(), "manatarms") == 0)
+		unit_type = U_MANATARMS;
+
+	else if (strcmp(node.name(), "longswordman") == 0)
+		unit_type = U_LONGSWORDMAN;
+
+	else if (strcmp(node.name(), "twohandedswordman") == 0)
 		unit_type = U_TWOHANDEDSWORDMAN;
+
+	else if (strcmp(node.name(), "champion") == 0)
+		unit_type = U_CHAMPION;
+
+	//--------
+		//ARCHERS
+	else if (strcmp(node.name(), "archer") == 0)
+		unit_type = U_ARCHER;
+
+	else if (strcmp(node.name(), "arbalest") == 0)
+		unit_type = U_ARBALEST;
 
 	else if (strcmp(node.name(), "cavalryarcher") == 0)
 		unit_type = U_CAVALRYARCHER;
 
+	//-------
+		//CAVALRY	
+	
+	//-------
+		//SIEGE
 	else if (strcmp(node.name(), "siegeram") == 0)
 		unit_type = U_SIEGERAM;
+	//-------
 
-	else if (strcmp(node.name(), "manatarms") == 0)
-		unit_type = U_MANATARMS;
+	//TODO: ADD UNIT
 
 	else
 	{
