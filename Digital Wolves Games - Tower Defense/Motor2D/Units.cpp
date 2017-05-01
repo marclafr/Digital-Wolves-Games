@@ -23,6 +23,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 	switch (u_type)
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
+		//TODO: ALL UNITS VALUES MUST BE CHANGED
 
 		//INFANTRY
 
@@ -784,19 +785,25 @@ bool Unit::GetNextTile()
 
 void Unit::PlayAttackSound() const
 {
-	int rand_num = rand() % 3;
+	if(unit_class == C_ARCHER)
+		App->audio->PlayFx(App->entity_manager->fx_arrow);
 
-	switch (rand_num)
+	else
 	{
-	case 0:
-		App->audio->PlayFx(App->entity_manager->fx_attack01);
-		break;
-	case 1:
-		App->audio->PlayFx(App->entity_manager->fx_attack02);
-		break;
-	case 2:
-		App->audio->PlayFx(App->entity_manager->fx_attack03);
-		break;
+		int rand_num = rand() % 3;
+
+		switch (rand_num)
+		{
+		case 0:
+			App->audio->PlayFx(App->entity_manager->fx_attack01);
+			break;
+		case 1:
+			App->audio->PlayFx(App->entity_manager->fx_attack02);
+			break;
+		case 2:
+			App->audio->PlayFx(App->entity_manager->fx_attack03);
+			break;
+		}
 	}
 }
 
