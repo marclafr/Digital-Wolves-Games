@@ -412,6 +412,12 @@ void Animation::SetUnit(const pugi::xml_node node)
 	else if (strcmp(node.name(), "champion") == 0)
 		unit_type = U_CHAMPION;
 
+	else if (strcmp(node.name(), "spearman") == 0)
+		unit_type = U_SPEARMAN;
+
+	else if (strcmp(node.name(), "pikeman") == 0)
+		unit_type = U_PIKEMAN;
+
 	//--------
 		//ARCHERS
 	else if (strcmp(node.name(), "archer") == 0)
@@ -423,9 +429,19 @@ void Animation::SetUnit(const pugi::xml_node node)
 	else if (strcmp(node.name(), "cavalryarcher") == 0)
 		unit_type = U_CAVALRYARCHER;
 
+	else if (strcmp(node.name(), "heavycavalryarcher") == 0)
+		unit_type = U_HEAVYCAVALRYARCHER;
+
 	//-------
 		//CAVALRY	
-	
+	else if (strcmp(node.name(), "knight") == 0)
+		unit_type = U_KNIGHT;
+
+	else if (strcmp(node.name(), "cavalier") == 0)
+		unit_type = U_CAVALIER;
+
+	else if (strcmp(node.name(), "paladin") == 0)
+		unit_type = U_PALADIN;
 	//-------
 		//SIEGE
 	else if (strcmp(node.name(), "siegeram") == 0)

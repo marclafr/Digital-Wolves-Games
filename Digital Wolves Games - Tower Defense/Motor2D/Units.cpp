@@ -23,47 +23,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 	switch (u_type)
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
-	case U_TWOHANDEDSWORDMAN:
-		SetHp(170);
-		attack = 12;
-		SetArmor(1);
-		speed = 1.0f;
-		rate_of_fire = 100.0f;
-		range = 30;
-		vision_range = 300;
-		unit_class = C_INFANTRY;
-		unit_radius = 6;
-		SetTextureID(T_TWOHANDEDSWORDMAN);
-		priority = 3;
-		break;
 
-	case U_CAVALRYARCHER:
-		SetHp(50);
-		attack = 6;
-		SetArmor(1);
-		speed = 1.4f;
-		rate_of_fire = 100.0f;
-		range = 200;
-		vision_range = 250;
-		unit_class = C_ARCHER;
-		unit_radius = 8;
-		SetTextureID(T_CAVALRYARCHER);
-		priority = 2;
-		break;
-
-	case U_SIEGERAM:
-		SetHp(270);
-		attack = 4;
-		SetArmor(-5);
-		speed = 0.6f;
-		rate_of_fire = 250.0f;
-		range = 30;
-		vision_range = 100;
-		unit_class = C_SIEGE;
-		unit_radius = 15;
-		SetTextureID(T_SIEGERAM);
-		priority = 1;
-		break;
+		//INFANTRY
 
 	case U_MILITIA:
 		SetHp(100);
@@ -107,6 +68,20 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		priority = 1;
 		break;
 
+	case U_TWOHANDEDSWORDMAN:
+		SetHp(170);
+		attack = 55;
+		SetArmor(1);
+		speed = 1.0f;
+		rate_of_fire = 100.0f;
+		range = 30;
+		vision_range = 300;
+		unit_class = C_INFANTRY;
+		unit_radius = 6;
+		SetTextureID(T_TWOHANDEDSWORDMAN);
+		priority = 3;
+		break;
+
 	case U_CHAMPION:
 		SetHp(100);
 		attack = 8;
@@ -120,6 +95,37 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetTextureID(T_CHAMPION);
 		priority = 1;
 		break;
+
+	case U_SPEARMAN:
+		SetHp(100);
+		attack = 8;
+		SetArmor(1);
+		speed = 1.0f;
+		rate_of_fire = 100.0f;
+		range = 30;
+		vision_range = 300;
+		unit_class = C_INFANTRY;
+		unit_radius = 6;
+		SetTextureID(T_SPEARMAN);
+		priority = 1;
+		break;
+
+	case U_PIKEMAN:
+		SetHp(100);
+		attack = 8;
+		SetArmor(1);
+		speed = 1.0f;
+		rate_of_fire = 100.0f;
+		range = 30;
+		vision_range = 300;
+		unit_class = C_INFANTRY;
+		unit_radius = 6;
+		SetTextureID(T_PIKEMAN);
+		priority = 1;
+		break;
+
+			//---
+			//ARCHERS
 
 	case U_ARCHER:
 		SetHp(100);
@@ -135,6 +141,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		priority = 1;
 		break;
 
+
 	case U_ARBALEST:
 		SetHp(100);
 		attack = 8;
@@ -146,6 +153,96 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		unit_class = C_ARCHER;
 		unit_radius = 6;
 		SetTextureID(T_ARBALEST);
+		priority = 1;
+		break;
+
+	case U_CAVALRYARCHER:
+		SetHp(50);
+		attack = 6;
+		SetArmor(1);
+		speed = 1.4f;
+		rate_of_fire = 100.0f;
+		range = 200;
+		vision_range = 250;
+		unit_class = C_ARCHER;
+		unit_radius = 8;
+		SetTextureID(T_CAVALRYARCHER);
+		priority = 2;
+		break;
+
+	case U_HEAVYCAVALRYARCHER:
+		SetHp(50);
+		attack = 6;
+		SetArmor(1);
+		speed = 1.4f;
+		rate_of_fire = 100.0f;
+		range = 200;
+		vision_range = 250;
+		unit_class = C_ARCHER;
+		unit_radius = 8;
+		SetTextureID(T_HEAVYCAVALRYARCHER);
+		priority = 2;
+		break;
+
+			//---
+			//CAVALRY
+
+	case U_PALADIN:
+		SetHp(50);
+		attack = 6;
+		SetArmor(1);
+		speed = 1.4f;
+		rate_of_fire = 100.0f;
+		range = 40;
+		vision_range = 250;
+		unit_class = C_CAVALRY;
+		unit_radius = 8;
+		SetTextureID(T_PALADIN);
+		priority = 2;
+		break;
+
+	case U_KNIGHT:
+		SetHp(50);
+		attack = 6;
+		SetArmor(1);
+		speed = 1.4f;
+		rate_of_fire = 100.0f;
+		range = 40;
+		vision_range = 250;
+		unit_class = C_CAVALRY;
+		unit_radius = 8;
+		SetTextureID(T_KNIGHT);
+		priority = 2;
+		break;
+
+	case U_CAVALIER:
+		SetHp(50);
+		attack = 6;
+		SetArmor(1);
+		speed = 1.4f;
+		rate_of_fire = 100.0f;
+		range = 40;
+		vision_range = 250;
+		unit_class = C_CAVALRY;
+		unit_radius = 8;
+		SetTextureID(T_CAVALIER);
+		priority = 2;
+		break;
+
+			//---
+			//SIEGE
+
+	case U_SIEGERAM:
+		SetHp(270);
+		attack = 4;
+		SetArmor(-5);
+		speed = 0.6f;
+		rate_of_fire = 250.0f;
+		range = 30;
+		vision_range = 100;
+		unit_class = C_SIEGE;
+		unit_radius = 15;
+		SetTextureID(T_SIEGERAM);
 		priority = 1;
 		break;
 
