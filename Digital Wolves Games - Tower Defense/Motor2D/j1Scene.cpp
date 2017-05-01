@@ -335,7 +335,7 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 	App->wave_manager->Disable();
 	App->entity_manager->CleanUp();
-	App->uimanager->CleanUp();
+	App->uimanager->SetAllToDelete();
 	App->pathfinding->CleanUp();
 	return true;
 }

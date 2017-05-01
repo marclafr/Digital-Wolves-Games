@@ -42,7 +42,7 @@ void UILabel::HandleInput(SDL_Event event)
 	switch (event.type)
 	{
 	case SDL_MOUSEBUTTONDOWN:
-		if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_DOWN)
+		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
 			//Selecting option from UISelectOption
 			if (GetFrom() != nullptr && GetFrom()->GetType() == UICOMPONENT_TYPE::UIT_UISELECTOPTION)
 			{
@@ -61,6 +61,21 @@ void UILabel::HandleInput(SDL_Event event)
 
 bool UILabel::Update()
 {
+	if(IsFocus())
+		if(App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
+			if (GetFrom() != nullptr && GetFrom()->GetType() == UICOMPONENT_TYPE::UIT_UISELECTOPTION)
+			{
+				UISelectOption* from_option_selected = (UISelectOption*)GetFrom();
+
+				if (this != from_option_selected->current)
+				{
+					from_option_selected->ChangeCurrent(this);
+					from_option_selected->ChangeDrawAllOptions();
+					from_option_selected->selecting = false;
+				}
+			}
+
+	Draw();
 	return true;
 }
 

@@ -7,9 +7,6 @@
 #include "j1UIManager.h"
 #include "SDL\include\SDL.h"
 
-#define RIGHT_CLICK 3
-#define LEFT_CLICK 1
-
 enum UICOMPONENT_TYPE
 {
 	UIT_UILABEL,

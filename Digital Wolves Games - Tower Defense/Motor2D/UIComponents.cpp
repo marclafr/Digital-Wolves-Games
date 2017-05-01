@@ -38,6 +38,7 @@ void UIComponents::Draw()
 
 bool UIComponents::Update() 
 {
+	Draw();
 	return true;
 }
 

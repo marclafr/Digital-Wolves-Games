@@ -188,7 +188,7 @@ bool j1ScoreScene::PostUpdate()
 bool j1ScoreScene::CleanUp()
 {
 	LOG("Freeing  MainMenu");
-	App->uimanager->CleanUp();
+	App->uimanager->SetAllToDelete();
 	return true;
 }
 

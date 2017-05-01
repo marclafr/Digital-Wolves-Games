@@ -36,7 +36,6 @@ public:
 	bool isSelectionTempEmpty();
 	bool isSelectionEmpty();
 
-	void Draw();
 	bool Update();
 };
 

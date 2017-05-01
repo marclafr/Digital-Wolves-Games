@@ -142,6 +142,8 @@ void OneSelection::Update()
 				PrepareBuildingConstruction();
 			}
 	}
+
+	Draw();
 }
 
 void OneSelection::UpdateHP()

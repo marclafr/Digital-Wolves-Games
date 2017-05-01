@@ -116,8 +116,8 @@ bool j1Input::PreUpdate()
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;
 				if(App->scene->active)
 					App->scene->HandleInput(event);
-				if (App->uimanager->InUse())
-					App->uimanager->HandleInput(event);
+				//if (App->uimanager->InUse())
+					//App->uimanager->HandleInput(event);
 			break;
 
 			case SDL_MOUSEBUTTONUP:
@@ -125,24 +125,24 @@ bool j1Input::PreUpdate()
 				mouse_buttons[event.button.button - 1] = KEY_UP;
 				if (App->scene->active)
 					App->scene->HandleInput(event);
-				if (App->uimanager->InUse())
-					App->uimanager->HandleInput(event);
+				//if (App->uimanager->InUse())
+					//App->uimanager->HandleInput(event);
 			break;
 
 			case SDL_KEYDOWN:
 
 				if (App->scene->active)
 					App->scene->HandleInput(event);
-				if (App->uimanager->InUse())
-					App->uimanager->HandleInput(event);
+				//if (App->uimanager->InUse())
+					//App->uimanager->HandleInput(event);
 
 				break;
 
 			case SDL_KEYUP:
 				if (App->scene->active)
 					App->scene->HandleInput(event);
-				if (App->uimanager->InUse())
-					App->uimanager->HandleInput(event);
+				//if (App->uimanager->InUse())
+					//App->uimanager->HandleInput(event);
 				break;
 
 			case SDL_MOUSEMOTION:

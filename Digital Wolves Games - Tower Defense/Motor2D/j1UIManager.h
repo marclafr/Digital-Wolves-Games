@@ -14,6 +14,9 @@ class UIHUDResources;
 class UIHUDPanelInfo;
 class UIHUDDescription;
 struct info_button;
+class Building;
+class Resources;
+class Entity;
 
 #define CURSOR_WIDTH 2
 
@@ -53,6 +56,7 @@ public:
 	const SDL_Texture* GetAtlas() const;
 	const std::list<UIComponents*>::iterator GetLastComponent();
 	const bool InUse() const;
+	void SetAllToDelete();
 
 	void SetTownHall(Building*);
 	void SetResource(Resources*);

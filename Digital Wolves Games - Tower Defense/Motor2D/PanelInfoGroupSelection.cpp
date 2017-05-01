@@ -113,11 +113,10 @@ void GroupSelection::PrepareNoUnitSelection()
 
 void GroupSelection::Update()
 {
-	
 	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 	{
 		if((*es_item)->btn_selected->IsFocus())
-			if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_UP)
+			if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
 				SetOneEntitySelection((*es_item)->pointer_entity);
 
 		if ((*es_item)->pointer_entity->GetHp() <= 0)
@@ -130,6 +129,8 @@ void GroupSelection::Update()
 
 	if (es_selection.empty())
 		delete_panel_info = true;
+
+	Draw();
 }
 
 void GroupSelection::Draw()

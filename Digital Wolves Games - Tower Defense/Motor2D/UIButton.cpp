@@ -72,7 +72,16 @@ bool UIButton::Update()
 		state = BS_MOUSE_ON_TOP;
 	else if (!IsFocus())
 		state = BS_NONE;
-	
+
+	if (IsFocus())
+		if(App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
+			state = BS_CLICKED;
+		else if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
+		{
+			state = BS_MOUSE_ON_TOP;	
+			task->Execute();
+		}
+
 	Draw();
 
 	return true;

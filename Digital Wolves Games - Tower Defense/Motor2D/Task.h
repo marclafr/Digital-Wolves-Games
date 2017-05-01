@@ -43,6 +43,8 @@ public:
 	bool Execute()
 	{
 		App->entity_manager->CreateBuilding(type, position, side);
+
+		return true;
 	}
 };
 
@@ -63,6 +65,7 @@ public:
 			App->scene->win = false;
 			App->scene->lose = false;
 		}
+		return true;
 	}
 };
 
@@ -72,6 +75,7 @@ public:
 	bool Execute()
 	{
 		App->main_menu->SetRetPreUpdate(false);
+		return true;
 	}
 };
 

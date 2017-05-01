@@ -52,6 +52,7 @@ bool UISelectOption::Update()
 		ChangeDrawAllOptions();
 		break;
 	}
+	Draw();
 	*/
 	return true;
 }

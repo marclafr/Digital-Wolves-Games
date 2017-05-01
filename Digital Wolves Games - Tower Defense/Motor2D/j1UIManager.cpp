@@ -53,7 +53,6 @@ bool j1UIManager::Start()
 }
 
 // Update all guis
-
 bool j1UIManager::PreUpdate()
 {
 	int x_mouse = 0;
@@ -198,6 +197,14 @@ const bool j1UIManager::InUse() const
 	if (focus != nullptr)
 		return true;
 	return false;
+}
+
+void j1UIManager::SetAllToDelete()
+{
+	for (std::list<UIComponents*>::iterator it = components.begin(); it != components.end(); ++it)
+	{
+		(*it)->SetToDelete(true);
+	}
 }
 
 void j1UIManager::SetTownHall(Building * th)

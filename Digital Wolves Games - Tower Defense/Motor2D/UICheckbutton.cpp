@@ -51,7 +51,7 @@ void UICheckbutton::HandleInput(SDL_Event event)
 	switch (event.type)
 	{
 	case SDL_MOUSEBUTTONDOWN:
-		if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_DOWN)
+		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
 			if (cb_stat == CB_CHECK)
 				cb_stat == CB_UNCHECK;
 			else
@@ -62,6 +62,14 @@ void UICheckbutton::HandleInput(SDL_Event event)
 
 bool UICheckbutton::Update()
 {
+	if(IsFocus())
+		if(App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
+			if (cb_stat == CB_CHECK)
+				cb_stat == CB_UNCHECK;
+			else
+				cb_stat == CB_CHECK;
+
+	Draw();
 	return true;
 }
 

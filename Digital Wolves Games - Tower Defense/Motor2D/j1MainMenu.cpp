@@ -126,7 +126,7 @@ bool j1MainMenu::PostUpdate()
 bool j1MainMenu::CleanUp()
 {
 	LOG("Freeing  MainMenu");
-	App->uimanager->CleanUp();
+	App->uimanager->SetAllToDelete();
 	return true;
 }
 
