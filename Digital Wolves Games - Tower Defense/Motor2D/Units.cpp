@@ -36,7 +36,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		SetTextureID(T_MILITIA);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_MILITIA);
+		else
+			SetTextureID(T_MILITIA);
+		
 		priority = 1;
 		break;
 
@@ -50,7 +54,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		SetTextureID(T_MANATARMS);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_MANATARMS);
+		else
+			SetTextureID(T_MANATARMS);
 		priority = 1;
 		break;
 
@@ -64,13 +71,17 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		SetTextureID(T_LONGSWORDMAN);
+		//TODO:
+		//if (side == S_ENEMY)
+			//SetTextureID(T_ENEMY_LONGSWORDMAN);
+		//else
+			SetTextureID(T_LONGSWORDMAN);
 		priority = 1;
 		break;
 
 	case U_TWOHANDEDSWORDMAN:
 		SetHp(170);
-		attack = 55;
+		attack = 12;
 		SetArmor(1);
 		speed = 1.0f;
 		rate_of_fire = 100.0f;
@@ -78,7 +89,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		SetTextureID(T_TWOHANDEDSWORDMAN);
+		//TODO:
+		//if (side == S_ENEMY)
+			//SetTextureID(T_ENEMY_TWOHANDEDSWORDMAN);
+		//else
+			SetTextureID(T_TWOHANDEDSWORDMAN);
 		priority = 3;
 		break;
 
@@ -92,7 +107,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		SetTextureID(T_CHAMPION);
+		//TODO:
+		//if (side == S_ENEMY)
+			//SetTextureID(T_ENEMY_CHAMPION);
+		//else
+			SetTextureID(T_CHAMPION);
 		priority = 1;
 		break;
 
@@ -106,7 +125,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		SetTextureID(T_SPEARMAN);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_SPEARMAN);
+		else
+			SetTextureID(T_SPEARMAN);
 		priority = 1;
 		break;
 
@@ -120,7 +142,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		SetTextureID(T_PIKEMAN);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_PIKEMAN);
+		else
+			SetTextureID(T_PIKEMAN);
 		priority = 1;
 		break;
 
@@ -137,7 +162,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_ARCHER;
 		unit_radius = 6;
-		SetTextureID(T_ARCHER);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_ARCHER);
+		else
+			SetTextureID(T_ARCHER);
 		priority = 1;
 		break;
 
@@ -152,7 +180,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_ARCHER;
 		unit_radius = 6;
-		SetTextureID(T_ARBALEST);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_ARBALEST);
+		else
+			SetTextureID(T_ARBALEST);
 		priority = 1;
 		break;
 
@@ -166,7 +197,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 250;
 		unit_class = C_ARCHER;
 		unit_radius = 8;
-		SetTextureID(T_CAVALRYARCHER);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_CAVALRYARCHER);
+		else
+			SetTextureID(T_CAVALRYARCHER);
 		priority = 2;
 		break;
 
@@ -180,7 +214,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 250;
 		unit_class = C_ARCHER;
 		unit_radius = 8;
-		SetTextureID(T_HEAVYCAVALRYARCHER);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_HEAVYCAVALRYARCHER);
+		else
+			SetTextureID(T_HEAVYCAVALRYARCHER);
 		priority = 2;
 		break;
 
@@ -197,7 +234,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 250;
 		unit_class = C_CAVALRY;
 		unit_radius = 8;
-		SetTextureID(T_PALADIN);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_PALADIN);
+		else
+			SetTextureID(T_PALADIN);
 		priority = 2;
 		break;
 
@@ -211,7 +251,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 250;
 		unit_class = C_CAVALRY;
 		unit_radius = 8;
-		SetTextureID(T_KNIGHT);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_KNIGHT);
+		else
+			SetTextureID(T_KNIGHT);
 		priority = 2;
 		break;
 
@@ -225,7 +268,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 250;
 		unit_class = C_CAVALRY;
 		unit_radius = 8;
-		SetTextureID(T_CAVALIER);
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_CAVALIER);
+		else
+			SetTextureID(T_CAVALIER);
 		priority = 2;
 		break;
 
@@ -242,7 +288,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 100;
 		unit_class = C_SIEGE;
 		unit_radius = 15;
-		SetTextureID(T_SIEGERAM);
+		//TODO:
+		//if (side == S_ENEMY)
+		//	SetTextureID(T_ENEMY_SIEGERAM);
+		//else
+			SetTextureID(T_SIEGERAM);
 		priority = 1;
 		break;
 
