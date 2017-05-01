@@ -139,6 +139,12 @@
     <ClCompile Include="Towers.cpp">
       <Filter>Awsome_Game\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectileManager.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -291,6 +297,12 @@
     <ClInclude Include="Task.h" />
     <ClInclude Include="Towers.h">
       <Filter>Awsome_Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileManager.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

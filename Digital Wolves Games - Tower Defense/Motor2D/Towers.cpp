@@ -4,6 +4,7 @@
 #include "p2Log.h"
 #include "j1Audio.h"
 #include "j1EntityManager.h"
+#include "ProjectileManager.h"
 #include "j1Animation.h"
 
 Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
@@ -17,7 +18,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetAttack(30);
 		SetArmor(1);
 		rate_of_fire = 100.0f;
-		range = 250;
+		range = 300;
 		SetTextureID(T_TURRET);
 		tower_type = T_BASIC_TOWER;
 		break;
@@ -27,7 +28,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetAttack(30);
 		SetArmor(1);
 		rate_of_fire = 100.0f;
-		range = 250;
+		range = 300;
 		SetTextureID(T_TURRET);
 		tower_type = T_BOMBARD_TOWER;
 		break;
@@ -51,16 +52,17 @@ void Tower::Update()
 	if (Target != nullptr) {
 		if (Target->GetHp() <= 0) {
 			Target = nullptr;
-			ResetArrowPos();
 		}
-		else
-			UpdateArrow(HEIGHT_BASIC_TOWER, Target->GetPosition(), 100, 110);
-		if (GetArrowPos() == 1)
+		/*
+		ResetArrowPos();
+		Target->Damaged(GetAttack());
+		element_terrain_pos = Target->GetPosition();
+		PrintElementTerrainTimer.Start();*/
+		else if (AttackTimer.ReadSec() > 0.5)
 		{
-			ResetArrowPos();
-			Target->Damaged(GetAttack());
-			element_terrain_pos = Target->GetPosition();
-			PrintElementTerrainTimer.Start();
+			App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), 100, HEIGHT_BASIC_TOWER, 100, P_BASIC_ARROW);
+			App->audio->PlayFx(App->entity_manager->fx_arrow);
+			AttackTimer.Start();
 		}
 	}
 
@@ -78,7 +80,6 @@ void Tower::AI()
 
 	if (Target == nullptr)
 	{
-		attacking = false;
 		std::vector<Entity*> EntityVector = App->entity_manager->GetEntityVector();
 		std::vector<Entity*>::iterator item = EntityVector.begin();
 		for (; item != EntityVector.end(); item++)
@@ -90,7 +91,7 @@ void Tower::AI()
 				{
 					Target = *item;
 					AttackTimer.Start();
-					App->audio->PlayFx(App->entity_manager->fx_arrow);
+					
 				}
 			}
 		}

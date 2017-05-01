@@ -38,7 +38,6 @@ private:
 	float range;
 	j1Timer AttackTimer;
 	Entity* Target = nullptr;
-
 	j1Timer PrintElementTerrainTimer;
 	fPoint element_terrain_pos;
 	AnimationManager* anim_fire = nullptr;

@@ -109,6 +109,8 @@
     <ClCompile Include="j1Window.cpp" />
     <ClCompile Include="PanelInfoGroupSelection.cpp" />
     <ClCompile Include="PanelInfoOneSelection.cpp" />
+    <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="ProjectileManager.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="Resources.cpp" />
     <ClCompile Include="Towers.cpp" />
@@ -159,6 +161,8 @@
     <ClInclude Include="PanelInfoBasicStructure.h" />
     <ClInclude Include="PanelInfoGroupSelection.h" />
     <ClInclude Include="PanelInfoOneSelection.h" />
+    <ClInclude Include="Projectile.h" />
+    <ClInclude Include="ProjectileManager.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="Resources.h" />
