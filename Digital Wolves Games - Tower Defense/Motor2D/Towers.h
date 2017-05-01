@@ -3,7 +3,7 @@
 
 #include "Buildings.h"
 #include "j1Timer.h"
-
+#include "Projectile.h"
 #define HEIGHT_BASIC_TOWER 146
 #define ELEMENT_TERRAIN_TIME 3
 
@@ -34,6 +34,7 @@ class Tower : public Building
 private:
 
 	TOWER_TYPE tower_type = T_NO_TYPE;
+	PROJECTILE_TYPE projectile_type;
 	float rate_of_fire;
 	float range;
 	j1Timer AttackTimer;

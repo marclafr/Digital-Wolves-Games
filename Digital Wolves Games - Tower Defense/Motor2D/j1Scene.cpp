@@ -409,12 +409,12 @@ void j1Scene::PlacingBasicTower()
 					App->audio->PlayFx(App->entity_manager->fx_construction);
 					if (App->pathfinding->IsConstructible_neutral(r) == true)
 					{
-						App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
+						App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(p.x, p.y - 9));
 						BuildTower();
 					}
 					else if (App->pathfinding->IsConstructible_ally(r) == true)
 					{
-						App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
+						App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(p.x, p.y - 9));
 						BuildTower();
 					}
 				}

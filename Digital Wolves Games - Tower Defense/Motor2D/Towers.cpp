@@ -21,6 +21,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 300;
 		SetTextureID(T_TURRET);
 		tower_type = T_BASIC_TOWER;
+		projectile_type = P_BASIC_ARROW;
 		break;
 
 	case T_BOMBARD_TOWER:
@@ -31,6 +32,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 300;
 		SetTextureID(T_TURRET);
 		tower_type = T_BOMBARD_TOWER;
+		projectile_type = P_CANNONBALL;
 		break;
 
 	default:
@@ -60,15 +62,17 @@ void Tower::Update()
 		PrintElementTerrainTimer.Start();*/
 		else if (AttackTimer.ReadSec() > 0.5)
 		{
-			App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), 100, HEIGHT_BASIC_TOWER, 100, P_BASIC_ARROW);
+			App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), 100, HEIGHT_BASIC_TOWER, 100, projectile_type);
 			App->audio->PlayFx(App->entity_manager->fx_arrow);
 			AttackTimer.Start();
 		}
 	}
 
 	if (IsAlive() == true && this->GetHp() <= 0)
+	{
+		Target = nullptr;
 		ConvertToRubble();
-
+	}
 	if (IsAlive() == false && GetDieTime() >= 2)
 		DestroyBuilding();
 	

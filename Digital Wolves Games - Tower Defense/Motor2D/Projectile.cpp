@@ -13,12 +13,16 @@ Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float Tim
 		SetRect({0,0,45,8});
 		break;
 	case P_FIRE_ARROW:
+		SetRect({ 0,9,50,19 });
 		break;
 	case P_ICE_ARROW:
+		SetRect({ 0,29,50,19 });
 		break;
 	case P_AIR_ARROW:
+		SetRect({ 0,49,50,19 });
 		break;
 	case P_CANNONBALL:
+		SetRect({ 0,70,23,25 });
 		break;
 	default:
 		break;
