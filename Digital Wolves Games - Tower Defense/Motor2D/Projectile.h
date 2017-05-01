@@ -24,13 +24,14 @@ class Projectile
 private:
 	SDL_Rect rect;
 	fPoint StartPos;
-	fPoint ActualPos;
+	fPoint ActualPos, PreActualPos;
 	fPoint LastPos;
 	Entity* Target;
 	int Damage;
 	float Diferential;
 	enum PROJECTILE_TYPE projectile_type;
 	float ProjectilePos = 0; //it goes from 0 to 1
+	int angle = 0;
 	int StartHeight;
 	int CurveHeight;
 public:
