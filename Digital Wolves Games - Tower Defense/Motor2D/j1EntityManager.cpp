@@ -111,7 +111,6 @@ void j1EntityManager::DeleteEntity(Entity* ptr)
 			DeleteUnit((Unit*)ptr);
 			break;
 		case E_BUILDING:
-			App->audio->PlayFx(fx_building_destroyed);
 			DeleteBuilding((Building*)ptr);
 			break;
 		case E_RESOURCE:

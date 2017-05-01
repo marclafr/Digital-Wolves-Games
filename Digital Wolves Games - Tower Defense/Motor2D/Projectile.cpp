@@ -44,7 +44,8 @@ void Projectile::Update()
 
 	Draw();
 	
-	if (Target != nullptr && ProjectilePos == 1) Target->Damaged(Damage);
+	if (Target != nullptr && ProjectilePos == 1) 
+		Target->Damaged(Damage);
 
 
 }

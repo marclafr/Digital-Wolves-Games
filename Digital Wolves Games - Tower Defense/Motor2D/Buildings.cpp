@@ -167,6 +167,7 @@ bool Building::IsAlive() const
 void Building::ConvertToRubble()
 {
 	//TODO: If townhall, change the rect
+	App->audio->PlayFx(App->entity_manager->fx_building_destroyed);
 	SetTextureID(T_TOWNHALL);
 	SDL_Rect rect;
 	rect = { 313, 1, 91, 51 };
