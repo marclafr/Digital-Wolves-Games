@@ -43,6 +43,7 @@ bool j1Textures::Start()
 
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 	App->tex->Load("animations/CavalryArcher.png", T_CAVALRYARCHER);
+	App->tex->Load("animations/Manatarms.png", T_MANATARMS);
 	App->tex->Load("animations/Twohandedswordman.png", T_TWOHANDEDSWORDMAN);
 	App->tex->Load("animations/SiegeRam.png", T_SIEGERAM);
 	App->tex->Load("textures/Towers.png", T_TURRET);

@@ -59,7 +59,7 @@ bool j1Scene::Start()
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
 	App->render->camera->SetPosition(iPoint(2300, -800));
-	if(App->map->Load("OtherMap.tmx") == true)
+	if(App->map->Load("AlphaOne.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -168,7 +168,7 @@ bool j1Scene::Update(float dt)
 
 	//CREATE UNITS
 	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_SIEGERAM, { -200.0f, 372 }, S_ALLY);
+		App->entity_manager->CreateUnit(U_MANATARMS, { -200.0f, 372 }, S_ALLY);
 
 	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 372 }, S_ENEMY);
@@ -202,18 +202,19 @@ bool j1Scene::Update(float dt)
 	//App->map->Draw();
 
 	// Camera Movement
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || ((y < (App->render->camera->GetHeight() / 30) && res.y > -30)))
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)// || ((y < (App->render->camera->GetHeight() / 30) && res.y > -30))
 		App->render->camera->MoveUp(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || ((y > 750) && res.y < 2317))
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)//|| ((y > 750) && res.y < 2317)
 		App->render->camera->MoveDown(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || (x < (App->render->camera->GetWidth() / 70) && res.x > -2400))
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)// || (x < (App->render->camera->GetWidth() / 70) && res.x > -2400)
 		App->render->camera->MoveLeft(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || (x >(((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349))
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)//|| (x >(((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349)
 		App->render->camera->MoveRight(floor(450.0f * dt));
 
+	/*
 	if (App->render->camera->GetPosition().x > 2700)
 	{
 		App->render->camera->SetPosition(iPoint(2699, App->render->camera->GetPosition().y));
@@ -230,7 +231,7 @@ bool j1Scene::Update(float dt)
 	{
 		App->render->camera->SetPosition(iPoint(App->render->camera->GetPosition().x, -1600));
 	}
-
+	*/
 	// Debug pathfinding ------------------------------
 
 	iPoint p = App->render->ScreenToWorld(x, y);

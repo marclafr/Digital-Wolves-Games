@@ -24,7 +24,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 	case U_TWOHANDEDSWORDMAN:
-		/*SetHp(170);
+		SetHp(170);
 		attack = 12;
 		SetArmor(1);
 		speed = 1.0f;
@@ -35,19 +35,6 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		unit_radius = 6;
 		SetTextureID(T_TWOHANDEDSWORDMAN);
 		priority = 3;
-		*/
-		SetHp(50);
-		attack = 6;
-		SetArmor(1);
-		speed = 1.4f;
-		rate_of_fire = 100.0f;
-		range = 200;
-		vision_range = 250;
-		unit_class = C_ARCHER;
-		unit_radius = 8;
-		SetTextureID(T_CAVALRYARCHER);
-		priority = 2;
-		unit_type = U_CAVALRYARCHER;
 		break;
 
 	case U_CAVALRYARCHER:
@@ -75,6 +62,20 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		unit_class = C_SIEGE;
 		unit_radius = 15;
 		SetTextureID(T_SIEGERAM);
+		priority = 1;
+		break;
+
+	case U_MANATARMS:
+		SetHp(100);
+		attack = 8;
+		SetArmor(1);
+		speed = 1.0f;
+		rate_of_fire = 100.0f;
+		range = 30;
+		vision_range = 300;
+		unit_class = C_INFANTRY;
+		unit_radius = 6;
+		SetTextureID(T_MANATARMS);
 		priority = 1;
 		break;
 
