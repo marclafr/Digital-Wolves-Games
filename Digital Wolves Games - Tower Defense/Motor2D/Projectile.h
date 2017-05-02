@@ -9,13 +9,18 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 
+class AnimationManager;
 
-enum PROJECTILE_TYPE {
+enum PROJECTILE_TYPE 
+{
 	P_BASIC_ARROW,
 	P_FIRE_ARROW,
 	P_ICE_ARROW,
 	P_AIR_ARROW,
-	P_CANNONBALL
+	P_CANNONBALL,
+	P_FIRE_CANNONBALL,
+	P_ICE_CANNONBALL,
+	P_AIR_CANNONBALL
 };
 
 
@@ -23,7 +28,7 @@ class Projectile
 {
 private:
 	SDL_Rect rect;
-	fPoint pivot;
+	iPoint pivot;
 	fPoint StartPos;
 	fPoint ActualPos, PreActualPos;
 	fPoint LastPos;
@@ -35,6 +40,7 @@ private:
 	int angle = 0;
 	int StartHeight;
 	int CurveHeight;
+	AnimationManager* arrow_anim = nullptr;
 public:
 
 	Projectile(fPoint initialpos, Entity* target, int damage, float TimeInSecs,int Startheight, int Curveheight, PROJECTILE_TYPE type);

@@ -1,42 +1,56 @@
 #include "Projectile.h"
+#include "j1Animation.h"
 #include <math.h>
 
 
 Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float TimeInSecs,int Startheight, int Curveheight, PROJECTILE_TYPE type) : StartPos(initialpos), Damage(damage),Target(target),StartHeight(Startheight),CurveHeight(Curveheight)
 {
-	//XMLPROJECTILE
+	//XMLPROJECTILE TODO PIVOTS??? (XML has no pivots on arrows/bombs)
 	LastPos = Target->GetPosition();
 	Diferential = 1 / TimeInSecs;
 	PreActualPos = initialpos;
 	switch (type)
 	{
 	case P_BASIC_ARROW:
-		SetRect({0,0,36,5});
-		pivot = { 18, 2.5 };
+		//arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
+		SetRect({ 0,0,36,5 });
+		pivot = { 18, 2 };
 		break;
 	case P_FIRE_ARROW:
-		SetRect({ 0,8,37,14 });
-		pivot = { 18.5, 7 };
+		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_ARROW));
 		break;
 	case P_ICE_ARROW:
-		SetRect({ 0,23,37,14 });
-		pivot = { 18.5, 7 };
+		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_ARROW));
+		//pivot = { 18, 7 };
 		break;
 	case P_AIR_ARROW:
-		SetRect({ 0,38,37,14 });
-		pivot = { 18.5, 7 };
+		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_ARROW));
+		//pivot = { 18, 7 };
 		break;
 	case P_CANNONBALL:
-		SetRect({ 0,54,10,10 });
+		//arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
+		SetRect({ 0,54,10,10 }); 
 		pivot = { 5, 5 };
 		break;
+	case P_FIRE_CANNONBALL:
+		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
+		break; 
+	case P_ICE_CANNONBALL:
+		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_BOMB));
+		break;
+	case P_AIR_CANNONBALL:
+		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_BOMB));
+		break;
 	default:
+		arrow_anim = nullptr;
 		break;
 	}
 }
 
 Projectile::~Projectile()
 {
+	if (arrow_anim != nullptr)
+		delete arrow_anim;
 }
 
 void Projectile::Update()
@@ -71,7 +85,8 @@ void Projectile::Update()
 void Projectile::Draw()
 {
 	//alfa = Math.atan2(by - ay, bx - ax);
-
+	if (arrow_anim != nullptr)
+		arrow_anim->Update(rect, pivot);
 	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
 }
 
