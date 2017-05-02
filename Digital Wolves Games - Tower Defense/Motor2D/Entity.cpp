@@ -1,5 +1,7 @@
 #include "Entity.h"
 #include "j1Textures.h"
+#include "j1App.h"
+#include "j1Render.h"
 
 Entity::Entity(ENTITY_TYPE entity_type, fPoint pos, Side side): to_delete (false), entity_type(entity_type), position(pos), side(side)
 {}
@@ -38,6 +40,35 @@ void Entity::SetPosition(float x, float y)
 	position.y = y;
 }
 
+float Entity::GetArrowPos() const
+{
+	return Arrow_pos;
+}
+
+void Entity::ResetArrowPos()
+{
+	Arrow_pos = 0;
+}
+
+void Entity::UpdateArrow(int StartHeight, fPoint TargetPos, int CurveHeight, float TimeSecs)
+{
+	SDL_Rect rect = { 0,0,45,8};
+	iPoint pos;
+
+	fPoint initial_point = { GetPosition().x,GetPosition().y - StartHeight };
+	fPoint last_point = TargetPos;
+	fPoint mid_point = { (initial_point.x + last_point.x) / 2,((initial_point.y + last_point.y) / 2) - CurveHeight};
+
+	pos.x = ((1 - Arrow_pos)*(1 - Arrow_pos)*initial_point.x) + ((2 * Arrow_pos)*(1 - Arrow_pos)*mid_point.x) + ((Arrow_pos*Arrow_pos)*last_point.x);
+	pos.y = ((1 - Arrow_pos)*(1 - Arrow_pos)*initial_point.y) + ((2 * Arrow_pos)*(1 - Arrow_pos)*mid_point.y) + ((Arrow_pos*Arrow_pos)*last_point.y);
+
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), pos.x, pos.y, &rect, SDL_FLIP_NONE, 0, 0, 1, 0, false);
+	float diferential = 1/ TimeSecs;
+
+	Arrow_pos += diferential;
+	if (Arrow_pos > 1) Arrow_pos = 1;
+}
+
 const float Entity::GetX() const
 {
 	return position.x;
@@ -46,6 +77,11 @@ const float Entity::GetX() const
 const float Entity::GetY() const
 {
 	return position.y;
+}
+
+const fPoint Entity::GetPosition() const
+{
+	return position;
 }
 
 const int Entity::GetHp() const
@@ -134,7 +170,10 @@ void Entity::Attack(Entity* entity)
 
 void Entity::Damaged(int dmg)
 {
-	hp -= (dmg - armor);
+	if (armor >= dmg)
+		hp--;
+	else
+		hp -= (dmg - armor);
 }
 
 void Entity::UpgradeUnit(int plushealth) {

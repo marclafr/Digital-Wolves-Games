@@ -12,7 +12,6 @@
 #include "j1EntityManager.h"
 #include "j1MainMenu.h"
 #include "j1SceneManager.h"
-#include "Task.h"
 
 #include "UIButton.h"
 #include "UILabel.h"
@@ -42,40 +41,47 @@ bool j1MainMenu::Start()
 	App->audio->PlayMusic("audio/music/Menu01.ogg", 0.0f);
 
 	//BACKGROUND
-	App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 0, 1336, 767 }, { 0, 0, 1366, 767 });
+	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
+	background->Set({ 0, 0, 1336, 767 }, { 0, 0, 1366, 767 });
 
 	//SINGLE PLAYER
-	UIButton* single_player = (UIButton*)App->uimanager->AddButton({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
-	single_player->SetMouseOnTopTextRect({ 298, 1229, 177, 240 });
-	single_player->SetTask(new ChangeSceneTask(SC_GAME));
+	single_player = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	single_player->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
+	single_player->SetInteractive(true);
 
-	App->uimanager->AddLabel(590, 30, "Single Player");
+	title_single_player = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_single_player->Set(590, 30, "Single Player");
 
 	//TUTORIAL
-	UIButton* tutorial = App->uimanager->AddButton({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
+	tutorial = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	tutorial->Set({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
 	tutorial->SetInteractive(false);
 
 	//HISTORY
-	UIButton* history = App->uimanager->AddButton({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
+	history = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	history->Set({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
 	history->SetInteractive(false);
 
 	//TROPHIES
-	UIButton* trophies = (UIButton*)App->uimanager->AddButton({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
-	trophies->SetMouseOnTopTextRect({ 792, 1162, 148, 160 });
-	trophies->SetTask(new ChangeSceneTask(SC_SCORE));
+	trophies = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	trophies->Set({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
+	trophies->SetInteractive(true);
 
-	App->uimanager->AddLabel(545, 286, "Trophies");
+	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_trophies->Set(545, 286, "Trophies");
 
 	//OPTIONS
-	UIButton* options = App->uimanager->AddButton({ 300, 448, 125, 122 }, { 288, 862, 125, 123 });
+	options = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	options->Set({ 300, 448, 125, 122 }, { 288, 862, 125, 123 });
 	options->SetInteractive(false);
 	
 	//EXIT
-	UIButton* exit = App->uimanager->AddButton({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
-	exit->SetMouseOnTopTextRect({ 477, 1374, 200, 95 });
-	exit->SetTask(new SetPreUpdateFalseTask());
+	exit = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+	exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
+	exit->SetInteractive(true);
 
-	App->uimanager->AddLabel(265, 708, "Exit");
+	title_exit = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	title_exit->Set(265, 708, "Exit");
 
 	return true;
 }
@@ -83,31 +89,78 @@ bool j1MainMenu::Start()
 // Called each loop iteration
 bool j1MainMenu::PreUpdate()
 {
+
 	return true;
 }
 
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
+	
+	if (single_player->GetStat() == SELECTED) 
+	{
+		single_player->Set({ 539, 17, 177, 240 }, { 298, 1229, 177, 240 });
+	}
+	if (single_player->GetStat() == UNSELECTED)
+	{
+		single_player->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
+	}
+
+	
+
+	if (exit->GetStat() == SELECTED) 
+	{
+	exit->Set({ 174, 673, 200, 95 }, { 477, 1374, 200, 95 });
+	}
+	if (exit->GetStat() == UNSELECTED) 
+	{
+	exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
+	}
+	
+	
+
+	if (trophies->GetStat() == SELECTED)
+	{
+		trophies->Set({ 500, 282, 148, 160 }, { 792, 1162, 148, 160 });
+	}
+	if (trophies->GetStat() == UNSELECTED)
+	{
+		trophies->Set({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
+	}
+
+	if (trophies->GetStat() == CLICKL_UP)
+	{
+		App->scene_manager->ChangeScene(SC_SCORE);
+	}
+	
+
+	if (single_player->GetStat() == CLICKL_UP) 
+			{
+				App->scene_manager->ChangeScene(SC_GAME);
+				App->scene->win = false;
+				App->scene->lose = false;
+			}
 	return true;
 }
 
 // Called each loop iteration
 bool j1MainMenu::PostUpdate()
 {
-	return ret_preupdate;
+	bool ret = true;
+
+	//Unit test
+
+	if (exit->GetStat() == CLICKL_UP)
+		ret = false;
+
+	return ret;
 }
 
 // Called before quitting
 bool j1MainMenu::CleanUp()
 {
 	LOG("Freeing  MainMenu");
-	App->uimanager->SetAllToDelete();
+	App->uimanager->CleanUp();
 	return true;
-}
-
-void j1MainMenu::SetRetPreUpdate(bool ret)
-{
-	ret_preupdate = ret;
 }
 

@@ -33,16 +33,16 @@ class Entity
 private:
 	SDL_Rect rect;
 	iPoint pivot;
-	bool to_delete;
+	bool to_delete = false;
 	fPoint position;
-	int hp;
-	int armor;
-	int attack;
+	int hp = 1;
+	int armor = 0;
+	int attack = 0;
 	enum ENTITY_TYPE entity_type;
 	enum ENTITY_STATUS entity_status = ST_NON_SELECTED;
 	enum TextureID texture_id;
 	enum Side side;
-
+	float Arrow_pos = 0; //It goes from 0 to 1
 public:
 	Entity(ENTITY_TYPE entity_type, fPoint pos, Side side);
 
@@ -61,7 +61,9 @@ public:
 
 	void SetEntityStatus(ENTITY_STATUS status);
 	void SetPosition(float x, float y);
-
+	float GetArrowPos() const;
+	void ResetArrowPos();
+	void UpdateArrow(int StartHeight, fPoint TargetPos, int CurveHeight, float TimeSecs);
 	ENTITY_TYPE GetEntityType() const;
 	ENTITY_STATUS GetEntityStatus();
 	const int GetHp() const;
@@ -69,6 +71,7 @@ public:
 	void IncreaseArmor(int extra_defense);
 	const float GetX() const;
 	const float GetY() const;
+	const fPoint GetPosition() const;
 	const int GetAttack() const;
 	const iPoint GetPivot() const;
 	const SDL_Rect GetRect() const;
