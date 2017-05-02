@@ -14,6 +14,12 @@
 UIButton::UIButton(UICOMPONENT_TYPE type) : UIComponents(type) 
 {}
 
+UIButton::~UIButton()
+{
+	if (task != nullptr)
+		DELETE_PTR(task);
+}
+
 void UIButton::Set(const SDL_Rect & position, const SDL_Rect & atlas)
 {
 	rect_position = position;
@@ -27,18 +33,23 @@ void UIButton::Draw()
 	rect.x -= App->render->camera->GetPosition().x;
 	rect.y -= App->render->camera->GetPosition().y;
 
+	SDL_Rect r_atlas = RECT_NULL;
 	switch (state)
 	{
 	case BS_NONE:	
-		App->render->Blit(atlas, rect.x, rect.y, &GetAtlasRect(), SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		r_atlas = GetAtlasRect();
 		break;
 	case BS_CLICKED:
-		App->render->Blit(atlas, rect.x, rect.y, &atlas_clicked, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		r_atlas = atlas_clicked;
 		break;
 	case BS_MOUSE_ON_TOP:
-		App->render->Blit(atlas, rect.x, rect.y, &atlas_mouse_on_top, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		r_atlas = atlas_mouse_on_top;
 		break;
 	}
+	SDL_Rect null = RECT_NULL;
+	if (SDL_RectEquals(&r_atlas, &null) == SDL_TRUE)
+		r_atlas = GetAtlasRect();
+	App->render->Blit(atlas, rect.x, rect.y, &r_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 	if (is_ui_pannel)
 	{
@@ -105,4 +116,9 @@ void UIButton::SetClickedTextRect(const SDL_Rect & rect)
 void UIButton::SetTask(Task* task)
 {
 	this->task = task;
+}
+
+void UIButton::IsUiPanel(bool is_ui_p)
+{
+	is_ui_pannel = is_ui_p;
 }
