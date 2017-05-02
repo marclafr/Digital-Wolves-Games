@@ -91,7 +91,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 	}
 
 	//Load ARROW/BOMBS animations data from animations folder
-	std::string anim_folder2 = "textures/ArrowsBombs.xml";
+	std::string anim_folder2 = "animations/ArrowsBombs.xml";
 
 	buff = nullptr;
 	size = App->fs->Load(anim_folder2.c_str(), &buff);
@@ -117,13 +117,9 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		{
 			new_anim2->frames.push_back({ sprite_node2.attribute("x").as_int(),sprite_node2.attribute("y").as_int(), sprite_node2.attribute("w").as_int(),sprite_node2.attribute("h").as_int() });
 
-			float pX = sprite_node2.attribute("w").as_int() * sprite_node2.attribute("pX").as_float();
-			float pY = sprite_node2.attribute("h").as_int() * sprite_node2.attribute("pY").as_float();
-			pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
-			pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
-			pX = 0;
-			pY = 0;
-			new_anim2->pivot_points.push_back({ (int)pX, (int)pY });
+			int pX = sprite_node2.attribute("pX").as_float();
+			int pY =  sprite_node2.attribute("pY").as_float();
+			new_anim2->pivot_points.push_back({ pX, pY });
 			sprite_node2 = sprite_node2.next_sibling();
 		}
 
