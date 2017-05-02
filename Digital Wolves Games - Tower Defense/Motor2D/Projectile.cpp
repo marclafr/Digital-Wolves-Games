@@ -4,30 +4,31 @@
 
 Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float TimeInSecs,int Startheight, int Curveheight, PROJECTILE_TYPE type) : StartPos(initialpos), Damage(damage),Target(target),StartHeight(Startheight),CurveHeight(Curveheight)
 {
+	//XMLPROJECTILE
 	LastPos = Target->GetPosition();
 	Diferential = 1 / TimeInSecs;
 	PreActualPos = initialpos;
 	switch (type)
 	{
 	case P_BASIC_ARROW:
-		SetRect({0,0,45,8});
-		pivot = { 22.5, 4 };
+		SetRect({0,0,36,5});
+		pivot = { 18, 2.5 };
 		break;
 	case P_FIRE_ARROW:
-		SetRect({ 0,9,50,19 });
-		pivot = { 25, 9.5 };
+		SetRect({ 0,8,37,14 });
+		pivot = { 18.5, 7 };
 		break;
 	case P_ICE_ARROW:
-		SetRect({ 0,29,50,19 });
-		pivot = { 25, 9.5 };
+		SetRect({ 0,23,37,14 });
+		pivot = { 18.5, 7 };
 		break;
 	case P_AIR_ARROW:
-		SetRect({ 0,49,50,19 });
-		pivot = { 25, 9.5 };
+		SetRect({ 0,38,37,14 });
+		pivot = { 18.5, 7 };
 		break;
 	case P_CANNONBALL:
-		SetRect({ 0,70,23,25 });
-		pivot = { 11.5, 12.5 };
+		SetRect({ 0,54,10,10 });
+		pivot = { 5, 5 };
 		break;
 	default:
 		break;
