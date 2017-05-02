@@ -138,23 +138,23 @@ void Tower::Draw()
 	{
 		if (GetBuildTime() <= 3)
 		{
-			SDL_Rect rect = { 394,1,96,64 };
+			SDL_Rect rect = { 0,0,96,65 };
 			SetRect(rect);
-			SetPivot(0.53125 * 96, 0.59375 * 64);
+			SetPivot(0.53125 * 96, 0.59375 * 65);
 
 		}
 		else if (GetBuildTime() > 3 && GetBuildTime() <= 6)
 		{
-			SDL_Rect rect = { 376,539,100,73 };
+			SDL_Rect rect = { 98,0,100,75 };
 			SetRect(rect);
-			SetPivot(0.55 * 100, 0.643836 * 73);
+			SetPivot(0.55 * 100, 0.643836 * 75);
 
 		}
 		else if (GetBuildTime() > 6 && GetBuildTime() <= 9)
 		{
-			SDL_Rect rect = { 478,539,100,73 };
+			SDL_Rect rect = { 202,0,100,75 };
 			SetRect(rect);
-			SetPivot(0.55 * 100, 0.643836 * 73);
+			SetPivot(0.55 * 100, 0.643836 * 75);
 
 
 		}
@@ -163,13 +163,13 @@ void Tower::Draw()
 			switch (tower_type)
 			{
 			case T_BASIC_TOWER:
-				SetRect({ 610,1,107,206 });
-				SetPivot(0.504673 * 107, 0.902913 * 206);
+				SetRect({ 302,0,107,208 });
+				SetPivot(0.504673 * 107, 0.902913 * 208);
 				break;
 
 			case T_BOMBARD_TOWER:
-				SetRect({ 154,1,128,281 });
-				SetPivot(0.5 * 128,0.914591 * 281);
+				SetRect({ 629,0,130,281 });
+				SetPivot(0.5 * 130, 0.914591 * 281);
 				break;
 
 			default:

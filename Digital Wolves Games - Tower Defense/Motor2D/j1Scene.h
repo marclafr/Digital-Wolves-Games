@@ -63,6 +63,9 @@ public:
 	void TrainSoldier();
 
 	void PlacingBasicTower();
+	
+	void PlacingBombardTower();
+	
 	void PlacingWall();
 
 	void HandleInput(SDL_Event event);

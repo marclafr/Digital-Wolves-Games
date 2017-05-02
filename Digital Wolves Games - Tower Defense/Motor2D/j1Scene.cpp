@@ -282,7 +282,7 @@ bool j1Scene::Update(float dt)
 
 	if (placing_tower == true)
 	{
-		PlacingBasicTower();
+		PlacingBombardTower();
 	}
 
 	if (placing_wall == true) {
@@ -400,21 +400,64 @@ void j1Scene::PlacingBasicTower()
 	iPoint r = App->map->WorldToMap(p.x, p.y);
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
-
+	SDL_Rect rect;
 	if (CanBuildTower())
 	{
 		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
 		{
-			SDL_Rect rect;
-			rect = { 1,284,107,206 };
+			rect = {411,0,107,208};
 			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
 		}
 		else
 		{
-			SDL_Rect rect;
-			rect = { 580 ,538 ,107,206 };
+			rect = { 521,0,107,208 };
 			//rect = { 610,1,107,206 };
 			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+				{
+					App->audio->PlayFx(App->entity_manager->fx_construction);
+					if (App->pathfinding->IsConstructible_neutral(r) == true)
+					{
+						App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
+						BuildTower();
+					}
+					else if (App->pathfinding->IsConstructible_ally(r) == true)
+					{
+						App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
+						BuildTower();
+					}
+				}
+			}
+		}
+	}
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	{
+		placing_tower = false;
+	}
+}
+
+void j1Scene::PlacingBombardTower()
+{
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	iPoint r = App->map->WorldToMap(p.x, p.y);
+	p = App->map->WorldToMap(p.x, p.y);
+	p = App->map->MapToWorld(p.x, p.y);
+	SDL_Rect rect;
+	if (CanBuildTower())
+	{
+		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
+		{
+			rect = {889,0,130,281};
+			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.902913);
+		}
+		else
+		{
+			rect = { 759,0,130,281};
+			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.914591);
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
