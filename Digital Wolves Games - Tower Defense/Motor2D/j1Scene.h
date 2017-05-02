@@ -70,7 +70,8 @@ public:
 
 	void HandleInput(SDL_Event event);
 
-	bool placing_tower = false;
+	bool placing_basic_tower = false;
+	bool placing_bombard_tower = false;
 	bool placing_wall = false;
 	bool game_scene = true;
 

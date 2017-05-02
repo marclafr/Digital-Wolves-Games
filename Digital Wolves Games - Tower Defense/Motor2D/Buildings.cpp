@@ -20,14 +20,11 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		base_width = 25;
 		break;
 
-	case B_STONE_WALL:
+	case B_WOOD_WALL:
 		SetSide(side);
 		SetHp(500);
 		SetAttack(0);
 		SetArmor(8);
-		rect = { 365,435,95,57 };
-		SetRect(rect);
-		SetPivot(0.505263 * 95, 0.578947 * 57);
 		SetTextureID(T_WALL);
 		base_height = 25;
 		base_width = 25;
@@ -115,6 +112,9 @@ void Building::Draw()
 		}
 		else
 		{
+			//rect = { 365,435,95,57 };
+			//SetRect(rect);
+			//SetPivot(0.505263 * 95, 0.578947 * 57);
 			SDL_Rect rect = { 325,218,99,178 };
 			SetRect(rect);
 			SetPivot(0.494949 * 99, 178 * 0.865169);

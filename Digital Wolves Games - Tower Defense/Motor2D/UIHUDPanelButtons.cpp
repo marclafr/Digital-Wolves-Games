@@ -78,16 +78,20 @@ info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atl
 void UIHUDPanelButtons::CreateEntity()
 {
 	if (if_active->e_type == E_BUILDING && if_active->b_type == B_TURRET) {
-		if (App->scene->placing_tower == false)
-			App->scene->placing_tower = true;
-		if (App->scene->placing_wall == true)
+		if (App->scene->placing_basic_tower == false)
+		{
+			App->scene->placing_basic_tower = true;
+			App->scene->placing_bombard_tower = false;
 			App->scene->placing_wall = false;
+		}
 	}
 	if (if_active->e_type == E_BUILDING && if_active->b_type == B_STONE_WALL) {
 		if (App->scene->placing_wall == false)
+		{
 			App->scene->placing_wall = true;
-		if (App->scene->placing_tower == true)
-			App->scene->placing_tower = false;
+			App->scene->placing_bombard_tower = false;
+			App->scene->placing_basic_tower = false;
+		}
 	}
 	if (if_active->e_type == E_UNIT) {
 		if (App->scene->CanTrainSoldier())
@@ -99,7 +103,9 @@ void UIHUDPanelButtons::CreateEntity()
 		return;
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
-		App->scene->placing_tower = false;
+		App->scene->placing_basic_tower = false;
+		App->scene->placing_wall = false;
+		App->scene->placing_bombard_tower = false;
 		if_active = nullptr;
 		return;
 	}
@@ -125,7 +131,7 @@ void UIHUDPanelButtons::CreateEntity()
 			break;
 
 			case ENTITY_TYPE::E_BUILDING:
-				if (App->scene->placing_tower == true) {
+				if (App->scene->placing_basic_tower == true) {
 						if (App->collision->AbleToBuild(iPoint(s.x, s.y - 9)))
 						{
 							if (App->scene->CanBuildTower())

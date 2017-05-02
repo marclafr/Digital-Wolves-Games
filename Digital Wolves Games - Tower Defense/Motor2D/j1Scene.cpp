@@ -280,11 +280,14 @@ bool j1Scene::Update(float dt)
 
 	App->render->BlitAllEntities();
 
-	if (placing_tower == true)
+	if (placing_basic_tower == true)
+	{
+		PlacingBasicTower();
+	}
+	if (placing_bombard_tower == true)
 	{
 		PlacingBombardTower();
 	}
-
 	if (placing_wall == true) {
 		PlacingWall();
 	}
@@ -434,7 +437,7 @@ void j1Scene::PlacingBasicTower()
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
-		placing_tower = false;
+		placing_basic_tower = false;
 	}
 }
 
@@ -479,7 +482,7 @@ void j1Scene::PlacingBombardTower()
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
-		placing_tower = false;
+		placing_bombard_tower = false;
 	}
 }
 
@@ -569,27 +572,42 @@ void j1Scene::HandleInput( SDL_Event event)
 
 		if (event.button.button == SDL_SCANCODE_1)
 		{
-			if (placing_tower == false)
-				placing_tower = true;
-			else
-				placing_tower = false;
-
-			if (placing_wall == true)
+			if (placing_basic_tower == false) 
+			{
+				placing_basic_tower = true;
+				placing_bombard_tower = false;
 				placing_wall = false;
+			}
+			else
+				placing_basic_tower = false;
 		}
 
 		if (event.button.button == SDL_SCANCODE_2)
 		{
-			if (placing_wall == false)
-				placing_wall = true;
-			else
+			if (placing_bombard_tower == false)
+			{
+				placing_bombard_tower = true;
+				placing_basic_tower = false;
 				placing_wall = false;
-
-			if (placing_tower == true) 
-				placing_tower = false;
+			}
+			else
+				placing_bombard_tower = false;
 		}
 
 		if (event.button.button == SDL_SCANCODE_3)
+		{
+			if (placing_wall == false)
+			{
+			placing_wall = true;
+			placing_basic_tower = false;
+			placing_bombard_tower = false;
+			}
+			else
+				placing_wall = false;
+				
+		}
+
+		if (event.button.button == SDL_SCANCODE_4)
 		{
 			if (App->scene->CanTrainSoldier())
 			{
