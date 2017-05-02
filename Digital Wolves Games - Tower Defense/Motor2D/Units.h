@@ -8,7 +8,7 @@
 #define XY_TILES_RELATION 2
 #define TOWN_HALL iPoint(-720,672) //TODO final townhall destination;, 
 
-class AnimationManager;
+class Animation;
 struct PathList;
 struct PathNode;
 
@@ -16,30 +16,9 @@ enum UNIT_TYPE
 {
 	U_NO_UNIT = 0,
 	U_VILLAGER,
-	U_GOD,
-
-		//INFANTRY
-	U_MILITIA,
-	U_MANATARMS,
-	U_LONGSWORDMAN,
 	U_TWOHANDEDSWORDMAN,
-	U_CHAMPION,
-
-	U_SPEARMAN,
-	U_PIKEMAN,
-		//ARCHERS
-	U_ARCHER,
-	U_ARBALEST,
 	U_CAVALRYARCHER,
-	U_HEAVYCAVALRYARCHER,
-		//CAVALRY
-	U_KNIGHT,
-	U_CAVALIER,
-	U_PALADIN,
-		//SIEGE
 	U_SIEGERAM
-
-	//TODO: ADD UNIT
 };
 
 enum UNIT_CLASS
@@ -94,8 +73,7 @@ private:
 	float angle;
 	UNIT_CLASS unit_class;
 	int rand_num;
-	AnimationManager* animation;
-	AnimationManager* idle_siege;
+	Animation* animation;
 	bool changed;
 	Entity* target;
 	Entity* attacking;
@@ -107,8 +85,6 @@ private:
 	//Investigations bonuses:
 	bool bonus_attack = false;
 	bool bonus_defense = false;
-
-	void UnitDies();
 
 public:
 
