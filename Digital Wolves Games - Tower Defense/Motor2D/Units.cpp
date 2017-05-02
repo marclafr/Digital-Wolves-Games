@@ -572,8 +572,9 @@ void Unit::AI()
 					attacking->Damaged(attack);
 
 				PlayAttackSound();
+				attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), range, GetSide());
 			}
-			if (attacking->GetHp() <= 0)
+			if (attacking == nullptr)
 			{
 				if (GetSide() == S_ENEMY)
 				{
