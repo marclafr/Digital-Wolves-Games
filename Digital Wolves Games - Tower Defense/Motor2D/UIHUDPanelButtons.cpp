@@ -41,7 +41,7 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 
 bool UIHUDPanelButtons::Update()
 {
-	for (std::list<info_button*>::iterator ib_item = panel.begin(); ib_item != panel.end(); ++ib_item)
+	for (std::list<info_button*>::iterator ib_item = panel.begin(); ib_item == panel.end(); ++ib_item)
 	{
 		if ((*ib_item)->btn->IsFocus())
 			App->uimanager->SetDescriptionHUDDescription((*ib_item));

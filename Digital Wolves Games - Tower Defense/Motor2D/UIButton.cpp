@@ -90,7 +90,8 @@ bool UIButton::Update()
 		else if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
 		{
 			state = BS_MOUSE_ON_TOP;	
-			task->Execute();
+			if(task != nullptr)
+				task->Execute();
 		}
 
 	Draw();
