@@ -36,6 +36,7 @@ private:
 	TOWER_TYPE tower_type = T_NO_TYPE;
 	PROJECTILE_TYPE projectile_type;
 	float rate_of_fire;
+	int projectile_spd;
 	float range;
 	j1Timer AttackTimer;
 	Entity* Target = nullptr;

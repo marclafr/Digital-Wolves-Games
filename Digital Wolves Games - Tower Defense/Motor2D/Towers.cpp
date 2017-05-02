@@ -17,22 +17,24 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetHp(250);
 		SetAttack(30);
 		SetArmor(1);
-		rate_of_fire = 100.0f;
+		rate_of_fire = 0.5f;	//time between each attack in seconds
 		range = 300;
 		SetTextureID(T_TURRET);
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;
+		projectile_spd = 50;
 		break;
 
 	case T_BOMBARD_TOWER:
 		SetHp(250);
 		SetAttack(30);
 		SetArmor(1);
-		rate_of_fire = 100.0f;
+		rate_of_fire = 2.0f;
 		range = 300;
 		SetTextureID(T_TURRET);
 		tower_type = T_BOMBARD_TOWER;
 		projectile_type = P_CANNONBALL;
+		projectile_spd = 150;
 		break;
 
 	default:
@@ -58,13 +60,14 @@ void Tower::Update()
 		/*
 		ResetArrowPos();
 		Target->Damaged(GetAttack());
-		element_terrain_pos = Target->GetPosition();
-		PrintElementTerrainTimer.Start();*/
-		else if (AttackTimer.ReadSec() > 0.5)
+		*/
+		else if (attacking == true && AttackTimer.ReadSec() > rate_of_fire)
 		{
-			App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), 100, HEIGHT_BASIC_TOWER, 100, projectile_type);
+			App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), projectile_spd, HEIGHT_BASIC_TOWER, 100, projectile_type);
 			App->audio->PlayFx(App->entity_manager->fx_arrow);
 			AttackTimer.Start();
+			element_terrain_pos = Target->GetPosition();
+			PrintElementTerrainTimer.Start();
 		}
 	}
 
@@ -94,8 +97,7 @@ void Tower::AI()
 				if ((*item)->GetX() >= (GetX() - GetRange()) && (*item)->GetX() < (GetX() + GetRange()) && (*item)->GetY() >= (GetY() - GetRange()) && (*item)->GetY() < (GetY() + GetRange()) && (*item)->GetHp() > 0 && (*item)->GetSide() == S_ENEMY)
 				{
 					Target = *item;
-					AttackTimer.Start();
-					
+					attacking = true;
 				}
 			}
 		}
@@ -176,6 +178,7 @@ void Tower::Draw()
 				break;
 			}
 			BuildingComplete();
+			AttackTimer.Start();
 		}
 
 		App->render->PushEntity(this);
