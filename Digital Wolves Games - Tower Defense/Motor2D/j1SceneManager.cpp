@@ -44,6 +44,38 @@ bool j1SceneManager::Update(float dt)
 
 bool j1SceneManager::PostUpdate()
 {
+	if (change_to != SC_NO_SCENE)
+	{
+		bool ret = true;
+		j1Module* current = GetCurrentScene();
+
+		if (current != nullptr)
+			current->Disable();
+
+		switch (change_to)
+		{
+		case SC_MAIN_MENU:
+			main_menu->Enable();
+			current_scene = SC_MAIN_MENU;
+			break;
+
+		case SC_GAME:
+			game_scene->Enable();
+			current_scene = SC_GAME;
+			break;
+
+		case SC_SCORE:
+			score_scene->Enable();
+			current_scene = SC_SCORE;
+			break;
+		}
+
+		//App->render->camera->FadeToBlack(0.05, 2, 1);
+
+		change_to = SC_NO_SCENE;
+
+		return ret;
+	}
 	return true;
 }
 
@@ -54,35 +86,9 @@ bool j1SceneManager::CleanUp()
 }
 
 
-bool j1SceneManager::ChangeScene(SCENES change_to)
+void j1SceneManager::ChangeScene(SCENES to)
 {
-	bool ret = true;
-	j1Module* current = GetCurrentScene();
-	
-	if(current != nullptr)
-		current->Disable();
-
-	switch (change_to)
-	{
-	case SC_MAIN_MENU:
-		main_menu->Enable();
-		current_scene = SC_MAIN_MENU;
-		break;
-
-	case SC_GAME:
-		game_scene->Enable();
-		current_scene = SC_GAME;
-		break;
-
-	case SC_SCORE:
-		score_scene->Enable();
-		current_scene = SC_SCORE;
-		break;
-	}
-
-	//App->render->camera->FadeToBlack(0.05, 2, 1);
-
-	return ret;
+	change_to = to;
 }
 
 j1Module * j1SceneManager::GetCurrentScene() const
