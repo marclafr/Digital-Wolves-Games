@@ -10,6 +10,7 @@
 #include "j1EntityManager.h"
 #include "j1Map.h"
 #include "j1Audio.h"
+#include "ProjectileManager.h"
 
 Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), attacking(nullptr), target (nullptr), priority(priority)
 {
@@ -24,6 +25,24 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 		//TODO: ALL UNITS VALUES MUST BE CHANGED
+
+	case U_GOD:
+		SetHp(1000);
+		attack = 100;
+		SetArmor(50);
+		speed = 5.0f;
+		rate_of_fire = 15.0f;
+		range = 350;
+		vision_range = 350;
+		unit_class = C_ARCHER;
+		unit_radius = 6;
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_HEAVYCAVALRYARCHER);
+		else
+			SetTextureID(T_HEAVYCAVALRYARCHER);
+
+		priority = 1;
+		break;
 
 		//INFANTRY
 
@@ -301,7 +320,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		break;
 	}
 
-	animation = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
+	if (unit_type == U_GOD)
+		animation = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, action, direction));
+	else
+		animation = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
+
 	if(unit_class == C_SIEGE)
 		idle_siege = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));
 
@@ -319,14 +342,25 @@ void Unit::Update()
 
 	if (changed == true)
 	{
-		if (action == A_ATTACK)
-			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), this->rate_of_fire);
-		else
-			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
+		if (unit_type == U_GOD)
+		{
+			if (action == A_ATTACK)
+				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, action, direction), this->rate_of_fire);
+			else
+				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, action, direction));
+		}
 
-		if (unit_class == C_SIEGE)
-			idle_siege->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));;
-		
+		else
+		{
+			if (action == A_ATTACK)
+				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), this->rate_of_fire);
+			else
+				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
+
+			if (unit_class == C_SIEGE)
+				idle_siege->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));;
+		}
+
 		changed = false;
 	}
 
@@ -510,8 +544,18 @@ void Unit::AI()
 
 		if (attacking != nullptr)
 		{
-			if (animation->Finished()) {
-				attacking->Damaged(attack);
+			if (animation->Finished())
+			{
+				if (unit_class == C_ARCHER)
+				{
+					if (unit_type == U_GOD)
+						App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 5, 20, 0, P_ICE_ARROW);
+					else
+						App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 15, 20, 0, P_BASIC_ARROW);
+				}
+				else
+					attacking->Damaged(attack);
+
 				PlayAttackSound();
 			}
 			if (attacking->GetHp() <= 0)

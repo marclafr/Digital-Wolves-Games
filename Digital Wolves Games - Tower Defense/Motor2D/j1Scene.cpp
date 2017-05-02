@@ -168,7 +168,7 @@ bool j1Scene::Update(float dt)
 
 	//CREATE UNITS
 	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_PIKEMAN, { -200.0f, 372 }, S_ALLY);
+		App->entity_manager->CreateUnit(U_GOD, { -200.0f, 372 }, S_ALLY);
 
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_SPEARMAN, { -200.0f, 372 }, S_ALLY);
