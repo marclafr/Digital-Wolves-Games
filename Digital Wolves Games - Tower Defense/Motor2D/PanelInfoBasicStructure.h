@@ -19,6 +19,9 @@ public:
 protected:
 	std::list<Entity*>* selection;
 
+	std::list<UIComponents*>::iterator first_component;
+	std::list<UIComponents*>::iterator last_component;
+
 	bool delete_panel_info = false;
 
 	Entity* e_oneselected = nullptr;
@@ -31,6 +34,7 @@ public:
 	virtual void Prepare() {};
 
 	virtual void Update() {};
+
 	virtual void Draw() {};
 
 	bool if_ToDelete() { return delete_panel_info; };

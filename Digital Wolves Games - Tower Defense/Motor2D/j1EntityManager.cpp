@@ -45,10 +45,13 @@ Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side 
 {
 	Entity* new_entity = (Entity*) new Building(b_type, pos, side);
 	entity_array.push_back(new_entity);
+	return new_entity;
+}
 
-	if (b_type == B_TOWNHALL)
-		App->uimanager->SetTownHall((Building*)new_entity);
-
+Entity * j1EntityManager::CreateTower(TOWER_TYPE t_type, fPoint pos)
+{
+	Entity* new_entity = (Entity*) new Tower(t_type, pos);
+	entity_array.push_back(new_entity);
 	return new_entity;
 }
 
@@ -56,8 +59,6 @@ Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos)
 {
 	Entity* new_entity = (Entity*) new Resources(r_type, pos);
 	entity_array.push_back(new_entity);
-	App->uimanager->SetResource((Resources*)new_entity);
-	
 	return new_entity;
 }
 
@@ -71,25 +72,25 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 			int unit_y = entity_array[i]->GetY();
 			if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 			{
-				 App->uimanager->AddEntityToPanelInfo(entity_array[i]);
+				 App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
 			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
 			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
+				App->scene->panel_info->AddEntitySelection(entity_array[i]);
 			}
 		}
 	}
 
-	if(!App->uimanager->IsSelectionEmptyFromPanelInfo())
-		App->uimanager->DefineSelectionPanelInfo();
+	if(!App->scene->panel_info->isSelectionTempEmpty())
+		App->scene->panel_info->DefineSelection();
 }
 
 void j1EntityManager::UnselectEverything()
@@ -98,8 +99,8 @@ void j1EntityManager::UnselectEverything()
 	{
 		entity_array[i]->SetEntityStatus(ST_NON_SELECTED);
 	}
-	if (!App->uimanager->IsSelectionEmptyFromPanelInfo())
-		App->uimanager->DeleteSelectionPanelInfo();
+	if (!App->scene->panel_info->isSelectionEmpty())
+		App->scene->panel_info->DeleteSelection();
 }
 
 void j1EntityManager::DeleteEntity(Entity* ptr)
@@ -110,7 +111,6 @@ void j1EntityManager::DeleteEntity(Entity* ptr)
 			DeleteUnit((Unit*)ptr);
 			break;
 		case E_BUILDING:
-			App->audio->PlayFx(fx_building_destroyed);
 			DeleteBuilding((Building*)ptr);
 			break;
 		case E_RESOURCE:
@@ -194,9 +194,9 @@ void j1EntityManager::BlitEnemyDeathCount()
 
 		time_texture = App->font->Print(time_left);
 
-		App->render->Blit(num_kills_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x+10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y+5);
-		App->render->Blit(score_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x+10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 25);
-		App->render->Blit(time_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x+10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 45);
+		App->render->Blit(num_kills_texture, -App->render->camera->GetPosition().x + App->scene->info_ui->rect_position.x+10, -App->render->camera->GetPosition().y + App->scene->info_ui->rect_position.y+5);
+		App->render->Blit(score_texture, -App->render->camera->GetPosition().x + App->scene->info_ui->rect_position.x+10, -App->render->camera->GetPosition().y + App->scene->info_ui->rect_position.y + 25);
+		App->render->Blit(time_texture, -App->render->camera->GetPosition().x + App->scene->info_ui->rect_position.x+10, -App->render->camera->GetPosition().y + App->scene->info_ui->rect_position.y + 45);
 
 		SDL_DestroyTexture(time_texture);
 	}
@@ -259,14 +259,14 @@ Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
 			Building* building = (Building*)entity_array[i];
 			if (entity_array[i]->GetX() <= position.x + range + building->GetWidth() && entity_array[i]->GetX() >= position.x - range - building->GetWidth() &&
 				entity_array[i]->GetY() <= position.y + range + building->GetHeight() && entity_array[i]->GetY() >= position.y - range - building->GetHeight() &&
-				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0)
+				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() > 0)
 				return entity_array[i];
 		}
 		if (entity_array[i]->GetEntityType() == E_UNIT)
 		{
 			if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range &&
 				entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range &&
-				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() >= 0)
+				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() > 0)
 				return entity_array[i];
 		}
 	}
