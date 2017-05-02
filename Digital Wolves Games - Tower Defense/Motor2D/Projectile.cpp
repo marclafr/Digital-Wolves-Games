@@ -11,18 +11,23 @@ Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float Tim
 	{
 	case P_BASIC_ARROW:
 		SetRect({0,0,45,8});
+		pivot = { 22.5, 4 };
 		break;
 	case P_FIRE_ARROW:
 		SetRect({ 0,9,50,19 });
+		pivot = { 25, 9.5 };
 		break;
 	case P_ICE_ARROW:
 		SetRect({ 0,29,50,19 });
+		pivot = { 25, 9.5 };
 		break;
 	case P_AIR_ARROW:
 		SetRect({ 0,49,50,19 });
+		pivot = { 25, 9.5 };
 		break;
 	case P_CANNONBALL:
 		SetRect({ 0,70,23,25 });
+		pivot = { 11.5, 12.5 };
 		break;
 	default:
 		break;
@@ -45,10 +50,12 @@ void Projectile::Update()
 	ActualPos.x = ((1 - ProjectilePos)*(1 - ProjectilePos)*initial_point.x) + ((2 * ProjectilePos)*(1 - ProjectilePos)*mid_point.x) + ((ProjectilePos*ProjectilePos)*LastPos.x);
 	ActualPos.y = ((1 - ProjectilePos)*(1 - ProjectilePos)*initial_point.y) + ((2 * ProjectilePos)*(1 - ProjectilePos)*mid_point.y) + ((ProjectilePos*ProjectilePos)*LastPos.y);
 
-	if(LastPos.y > StartPos.y)
-		angle = atan2(ActualPos.y - StartPos.y, ActualPos.x- StartPos.x)*360/PI;
-	else 
-		angle = -atan2(ActualPos.y - StartPos.y, ActualPos.x - StartPos.x) * 360 / PI;
+
+	fPoint first_point = { initial_point.x * (1 - ProjectilePos) + mid_point.x * ProjectilePos, initial_point.y * (1 - ProjectilePos) + mid_point.y * ProjectilePos };
+	fPoint second_point = { mid_point.x * (1 - ProjectilePos) + LastPos.x * ProjectilePos, mid_point.y * (1 - ProjectilePos) + LastPos.y * ProjectilePos };
+
+	fPoint vector = { second_point.x - first_point.x, second_point.y - first_point.y };
+	angle = atan2(vector.y, vector.x)*57.9257795;
 	ProjectilePos += Diferential;
 	if (ProjectilePos > 1) ProjectilePos = 1;
 
@@ -64,7 +71,7 @@ void Projectile::Draw()
 {
 	//alfa = Math.atan2(by - ay, bx - ax);
 
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_NONE, 0, 0, 1, angle, false);
+	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
 }
 
 int Projectile::GetProjectilePos() const

@@ -23,6 +23,7 @@ class Projectile
 {
 private:
 	SDL_Rect rect;
+	fPoint pivot;
 	fPoint StartPos;
 	fPoint ActualPos, PreActualPos;
 	fPoint LastPos;
