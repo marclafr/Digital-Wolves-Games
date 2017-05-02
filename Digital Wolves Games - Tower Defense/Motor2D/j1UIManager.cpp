@@ -55,8 +55,6 @@ bool j1UIManager::Start()
 // Update all guis
 bool j1UIManager::PreUpdate()
 {
-	bool ret = false;
-
 	int x_mouse = 0;
 	int y_mouse = 0;
 
@@ -67,7 +65,7 @@ bool j1UIManager::PreUpdate()
 		if ((*item)->GetInteractive() &&
 			(x_mouse > (*item)->GetPosRect().x) &&
 			(x_mouse < (*item)->GetPosRect().x + (*item)->GetPosRect().w) &&
-			(y_mouse > (*item)->GetPosRect().y) &&
+			(y_mouse >(*item)->GetPosRect().y) &&
 			(y_mouse < (*item)->GetPosRect().y + (*item)->GetPosRect().h))
 		{
 			focus = (*item);
@@ -93,34 +91,20 @@ bool j1UIManager::Update(float dt)
 // Called after all Updates
 bool j1UIManager::PostUpdate()
 {
-	std::list<UIComponents*>::iterator item;
-	item = components.begin();
-
-	while (item != components.end())
+	for (std::list<UIComponents*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
-		if(item._Ptr->_Myval->GetDraw())
-			item._Ptr->_Myval->Draw();
-
-		item++;
-	}
-
-	if (delete_some_components)
-	{
-		std::list<UIComponents*>::iterator c_item = first_item_delete;
-		++last_item_delete;
-
-		while (c_item != last_item_delete)
+		if ((*it)->ToDelete())
 		{
-			delete *c_item;
-
-			c_item++;
+			delete *it;
+			components.erase(it);
 		}
-		components.erase(first_item_delete, last_item_delete);
-
-		delete_some_components = false;
 	}
-	
 	return true;
+}
+
+void j1UIManager::HandleInput(SDL_Event event)
+{
+	focus->HandleInput(event);
 }
 
 // Called before quitting
@@ -134,14 +118,11 @@ bool j1UIManager::CleanUp()
 	while (item != components.end())
 	{
 		delete *item;
-		
+
 		item++;
 	}
 
 	components.clear();
-
-	if (delete_some_components)
-		delete_some_components = false;
 
 	return true;
 }
@@ -150,7 +131,7 @@ UIComponents* j1UIManager::AddComponent(UICOMPONENT_TYPE type, const SDL_Rect & 
 {
 	UIComponents* new_component;
 	components.push_back(new_component = new UIComponents(type));
-	new_component->Set(position,atlas);
+	new_component->Set(position, atlas);
 	if (type == UIT_UIIMAGE)
 		new_component->SetInteractive(false);
 	return new_component;
