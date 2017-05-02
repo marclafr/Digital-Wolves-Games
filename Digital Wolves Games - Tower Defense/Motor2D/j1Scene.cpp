@@ -178,7 +178,7 @@ bool j1Scene::Update(float dt)
 		App->entity_manager->CreateUnit(U_CAVALIER, { -200.0f, 372 }, S_ALLY);
 
 	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 372 }, S_ENEMY);
+		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);
 	//--
 
 	//DEBUG: increase resources

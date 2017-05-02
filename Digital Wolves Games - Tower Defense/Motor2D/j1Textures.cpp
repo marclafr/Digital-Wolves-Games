@@ -39,6 +39,7 @@ bool j1Textures::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool j1Textures::Start()
 {
+	bool ret = true;
 	LOG("start textures");
 
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
@@ -87,10 +88,9 @@ bool j1Textures::Start()
 	App->tex->Load("textures/Extras.png", T_TOWNHALL);
 	App->tex->Load("textures/Resouce.png", T_RESOURCE);
 	App->tex->Load("animations/HorizontalArrowAngles.png", T_ARROW);
-	App->tex->Load("textures/ArrowsBombs.png", T_ARROW_BOMB);
+	App->tex->Load("animations/ArrowsBombs.png", T_ARROW_BOMB);
 	App->tex->Load("animations/fireTest.png", T_FIRE);
 
-	bool ret = true;
 	return ret;
 }
 
