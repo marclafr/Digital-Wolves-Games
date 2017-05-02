@@ -27,7 +27,6 @@ private:
 
 	bool is_ui_pannel = false;
 
-public:
 	UILabel* title;
 
 public:
@@ -46,6 +45,7 @@ public:
 	void SetClickedTextRect(const SDL_Rect& rect);
 	void SetTask(Task* task);
 	void IsUiPanel(bool);
+	void SetLabel(UILabel*);
 };
 
 #endif // __UIBUTTON_H__

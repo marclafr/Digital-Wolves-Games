@@ -1,5 +1,3 @@
-#define RECT_NULL {0,0,0,0}
-
 #include "UIButton.h"
 #include "j1App.h"
 #include "j1Render.h"
@@ -24,6 +22,8 @@ void UIButton::Set(const SDL_Rect & position, const SDL_Rect & atlas)
 {
 	rect_position = position;
 	rect_atlas = atlas;
+	atlas_clicked = atlas;
+	atlas_mouse_on_top = atlas;
 }
 
 void UIButton::Draw()
@@ -33,23 +33,18 @@ void UIButton::Draw()
 	rect.x -= App->render->camera->GetPosition().x;
 	rect.y -= App->render->camera->GetPosition().y;
 
-	SDL_Rect r_atlas = RECT_NULL;
 	switch (state)
 	{
 	case BS_NONE:
-		r_atlas = GetAtlasRect();
+		App->render->Blit(atlas, rect.x, rect.y, &GetAtlasRect(), SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		break;
 	case BS_CLICKED:
-		r_atlas = atlas_clicked;
+		App->render->Blit(atlas, rect.x, rect.y, &atlas_clicked, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		break;
 	case BS_MOUSE_ON_TOP:
-		r_atlas = atlas_mouse_on_top;
+		App->render->Blit(atlas, rect.x, rect.y, &atlas_mouse_on_top, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 		break;
 	}
-	SDL_Rect null = RECT_NULL;
-	if (SDL_RectEquals(&r_atlas, &null) == SDL_TRUE)
-		r_atlas = GetAtlasRect();
-	App->render->Blit(atlas, rect.x, rect.y, &r_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 	if (is_ui_pannel)
 	{
@@ -80,9 +75,17 @@ void UIButton::HandleInput(SDL_Event event)
 bool UIButton::Update()
 {
 	if (IsFocus() && (state != BS_CLICKED))
+	{
 		state = BS_MOUSE_ON_TOP;
+		if(title != nullptr)
+			title->SetLabelStat(LS_MOUSE_ON_TOP);
+	}
 	else if (!IsFocus())
+	{
 		state = BS_NONE;
+		if (title != nullptr)
+			title->SetLabelStat(LS_NONE);
+	}
 
 	if (IsFocus())
 		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
@@ -122,4 +125,9 @@ void UIButton::SetTask(Task* task)
 void UIButton::IsUiPanel(bool is_ui_p)
 {
 	is_ui_pannel = is_ui_p;
+}
+
+void UIButton::SetLabel(UILabel * label)
+{
+	title = label;
 }

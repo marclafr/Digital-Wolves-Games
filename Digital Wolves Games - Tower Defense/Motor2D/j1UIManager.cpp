@@ -190,10 +190,11 @@ void j1UIManager::AddResourcesPanel()
 	resources_panel = new__resourcespanel;
 }
 
-void j1UIManager::AddScoreBar()
+UIHUDScoreBar* j1UIManager::AddScoreBar()
 {
 	UIHUDScoreBar* new_scorebar;
 	components.push_back(new_scorebar = new UIHUDScoreBar(UIT_UIHUDSCOREBAR));
+	return new_scorebar;
 }
 
 void j1UIManager::AddTownHallBarLife()

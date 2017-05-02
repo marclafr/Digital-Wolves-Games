@@ -51,6 +51,11 @@ void UIComponents::SetToDelete(bool to_delete)
 	this->to_delete = to_delete;
 }
 
+void UIComponents::SetAtlas(const SDL_Rect & atlas)
+{
+	rect_atlas = atlas;
+}
+
 const bool UIComponents::GetInteractive() const
 {
 	return interactive;

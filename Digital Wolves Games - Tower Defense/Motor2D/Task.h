@@ -6,6 +6,8 @@
 #include "j1SceneManager.h"
 #include "j1Scene.h"
 #include "j1MainMenu.h"
+#include "j1ScoreScene.h"
+#include "UIComponents.h"
 
 class Task
 {
@@ -14,12 +16,9 @@ private:
 
 public:
 	virtual bool Execute() = 0;
-
 };
 
-
 //TASKS
-
 class CreateTowerTask : public Task
 {
 private:
@@ -48,13 +47,13 @@ public:
 	}
 };
 
-class ChangeSceneTask : public Task
+class ChangeMainMenuSceneToTask : public Task
 {
 private:
 	SCENES to_scene = SC_NO_SCENE;
 
 public:
-	ChangeSceneTask(SCENES to_scene) : to_scene(to_scene) {}
+	ChangeMainMenuSceneToTask(SCENES to_scene) : to_scene(to_scene) {}
 
 	bool Execute()
 	{
@@ -79,12 +78,51 @@ public:
 	}
 };
 
-class ChangeBackgroundScoreSceneTask : public Task
+class ChangeScoreSceneToTask : public Task
 {
 private:
-	SDL_Rect to_atlas;
+	SCENES to_scene = SC_NO_SCENE;
 
 public:
+	ChangeScoreSceneToTask(SCENES to_scene) : to_scene(to_scene) {}
 
+	bool Execute()
+	{
+		App->scene_manager->ChangeScene(to_scene);
+
+		if (to_scene == SC_GAME)
+		{
+			App->score_scene->SetSceneChange(true);
+			App->scene->win = false;
+			App->scene->lose = false;
+		}
+		else if (SC_MAIN_MENU)
+		{
+			if (!App->score_scene->IsSceneChange())
+			{
+				App->scene->win = false;
+				App->scene->lose = false;
+			}
+		}
+		return true;
+	}
 };
+
+class ChangeBackGroundTask : public Task
+{
+private:
+	SDL_Rect rect_atlas;
+	BUTTONSUNDERGROUND underground;
+
+public:
+	ChangeBackGroundTask(const SDL_Rect & atlas, const BUTTONSUNDERGROUND underground) : rect_atlas(atlas), underground(underground) {}
+
+	bool Execute()
+	{
+		App->score_scene->GetUnderBackground()->SetAtlas(rect_atlas);
+		App->score_scene->ChangeUnselected(underground);
+		return true;
+	}
+};
+
 #endif

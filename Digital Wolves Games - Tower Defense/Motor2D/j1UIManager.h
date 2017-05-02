@@ -18,6 +18,7 @@ class UIHUDTownHallBarLife;
 class UIHUDResources;
 class UIHUDPanelInfo;
 class UIHUDDescription;
+class UIHUDScoreBar;
 struct info_button;
 class Building;
 class Resources;
@@ -64,7 +65,7 @@ public:
 	UIHUDDescription* AddPanelDescription();
 	UIHUDPanelButtons* AddPanelButtons();
 	void AddResourcesPanel();
-	void AddScoreBar();
+	UIHUDScoreBar* AddScoreBar();
 	void AddTownHallBarLife();
 
 	const SDL_Texture* GetAtlas() const;

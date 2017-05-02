@@ -5,6 +5,19 @@
 
 struct SDL_Texture;
 
+class UIComponents;
+class UIButton;
+class UILabel;
+class UICheckbutton;
+class UIHUDScoreBar;
+
+enum BUTTONSUNDERGROUND
+{
+	BU_TROPHIES,
+	BU_ACHIEVEMENTS,
+	BU_INVESTIGATIONS
+};
+
 class j1ScoreScene : public j1Module
 {
 public:
@@ -38,35 +51,20 @@ public:
 
 	bool game_scene = true;
 
-	void VisualEffectsUI();
 	void CreateAchievements();
 	void CreateTrophies();
 	void CreateAllButtons();
+	void SetSceneChange(bool);
+	bool IsSceneChange();
+	UIComponents* GetUnderBackground();
+	void ChangeUnselected(BUTTONSUNDERGROUND);
 
 private:
-	/*
-	UIComponents* background;
 	UIComponents* under_background;
 
-	UIButton* play_again;
-	UIButton* back_menu;
-
-	UIButton* trophies;
-	UILabel* title_trophies;
-
-	UIButton* achievements;
-	UILabel* title_achievements;
-
-	UIButton* investigations;
-	UILabel* title_investigations;
-
-	UILabel* title_win;
-	UILabel* title_lose;
 	UILabel* title_score;
-	char text_score[256];
 	UILabel* title_enemies_killed;
 	UILabel* title_time;
-
 	UILabel* title_act_rank;
 	UIComponents* actual_trophie;
 
@@ -87,11 +85,16 @@ private:
 	UIComponents* achievement2;
 	UILabel* title_achievement2;
 	UICheckbutton* check_achievement2;
-	*/
+
+	char text_score[256];
+
 	bool scene_changing = false;
 	bool trophies_unselected = true;
+	bool components_trophies_deleted = false;
 	bool achievements_unselected = true;
+	bool components_achievements_deleted = true;
 	bool investigation_unselected = true;
+	bool components_investigation_deleted = true;
 };
 
 #endif // __j1SCORESCENE_H__

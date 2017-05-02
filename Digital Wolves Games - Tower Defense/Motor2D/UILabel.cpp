@@ -31,6 +31,10 @@ void UILabel::Set(int pos_x, int pos_y, const char * text, SDL_Color color, _TTF
 	this->text.assign(text);
 
 	App->render->GetDimensionsFromTexture(text_img, rect_position.w, rect_position.h);
+
+	color_none = color;
+	color_mouse_on_top = color;
+	actualcolor = color;
 }
 
 void UILabel::Draw()
@@ -78,6 +82,18 @@ bool UILabel::Update()
 				}
 			}
 
+	switch (stat)
+	{
+	case LS_NONE:
+		if (!CompareColor(color_none))
+			ChangeColor(color_none);
+		break;
+	case LS_MOUSE_ON_TOP:
+		if (!CompareColor(color_mouse_on_top))
+			ChangeColor(color_mouse_on_top);
+		break;
+	}
+
 	Draw();
 	return true;
 }
@@ -96,4 +112,36 @@ void UILabel::ChangeText(const char* text, SDL_Color color)
 		this->text.erase();
 		this->text.assign(text_to_change);
 	}
+}
+
+void UILabel::ChangeColor(SDL_Color color)
+{
+	App->tex->UnloadLabel(text_img);
+	text_img = App->font->Print(text.c_str(), T_AOE_UI_FONT, color);
+	actualcolor = color;
+}
+
+void UILabel::SetColorMouseOnTop(SDL_Color color)
+{
+	color_mouse_on_top = color;
+}
+
+void UILabel::SetLabelStat(LABEL_STAT stat)
+{
+	this->stat = stat;
+}
+
+bool UILabel::CompareColor(SDL_Color color)
+{
+	return (actualcolor.a == color.a && actualcolor.b == color.b && actualcolor.g == color.g && actualcolor.r == color.r);
+}
+
+std::string * UILabel::GetString()
+{
+	return &text;
+}
+
+SDL_Texture * UILabel::GetTexture()
+{
+	return text_img;
 }

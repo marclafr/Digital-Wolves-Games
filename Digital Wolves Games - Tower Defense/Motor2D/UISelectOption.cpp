@@ -77,7 +77,7 @@ void UISelectOption::AddOption(const char * text)
 
 const char * UISelectOption::CheckSelected()
 {
-	return current->text.c_str();
+	return current->GetString()->c_str();
 }
 
 void UISelectOption::ChangeCurrent(UILabel * change)

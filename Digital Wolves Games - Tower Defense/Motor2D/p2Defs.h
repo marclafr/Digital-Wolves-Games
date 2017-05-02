@@ -81,4 +81,5 @@ T clamp(const T& n, const T& lower, const T&upper)
 #define PERF_START(timer) timer.Start()
 #define PERF_PEEK(timer) LOG("%s took %f ms", __FUNCTION__, timer.ReadMs())
 
+#define BLACK {0,0,0,0}
 #endif

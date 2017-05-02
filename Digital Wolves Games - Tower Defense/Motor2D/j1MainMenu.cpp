@@ -47,7 +47,7 @@ bool j1MainMenu::Start()
 	//SINGLE PLAYER
 	UIButton* single_player = (UIButton*)App->uimanager->AddButton({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
 	single_player->SetMouseOnTopTextRect({ 298, 1229, 177, 240 });
-	single_player->SetTask(new ChangeSceneTask(SC_GAME));
+	single_player->SetTask(new ChangeMainMenuSceneToTask(SC_GAME));
 
 	App->uimanager->AddLabel(590, 30, "Single Player");
 
@@ -62,7 +62,7 @@ bool j1MainMenu::Start()
 	//TROPHIES
 	UIButton* trophies = (UIButton*)App->uimanager->AddButton({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
 	trophies->SetMouseOnTopTextRect({ 792, 1162, 148, 160 });
-	trophies->SetTask(new ChangeSceneTask(SC_SCORE));
+	trophies->SetTask(new ChangeMainMenuSceneToTask(SC_SCORE));
 
 	App->uimanager->AddLabel(545, 286, "Trophies");
 

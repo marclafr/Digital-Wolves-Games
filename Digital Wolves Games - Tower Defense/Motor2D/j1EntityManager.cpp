@@ -92,7 +92,7 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
 		}
 	}
 
-	if (!App->uimanager->IsSelectionEmptyFromPanelInfo())
+	if (App->uimanager->IsSelectionEmptyFromPanelInfo())
 		App->uimanager->DefineSelectionPanelInfo();
 }
 
