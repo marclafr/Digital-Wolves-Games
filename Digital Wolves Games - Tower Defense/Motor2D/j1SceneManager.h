@@ -32,11 +32,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool ChangeScene(SCENES change_to);
+	void ChangeScene(SCENES to);
 
 	j1Module* GetCurrentScene() const;
 
 private:
+	SCENES change_to = SC_NO_SCENE;
+
 	j1Module* main_menu = nullptr;
 	j1Module* game_scene = nullptr;
 	j1Module* score_scene = nullptr;

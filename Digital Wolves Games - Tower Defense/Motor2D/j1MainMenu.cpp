@@ -70,8 +70,6 @@ bool j1MainMenu::Start()
 	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_trophies->Set(545, 286, "Trophies");
 
-	
-
 	//OPTIONS
 	options = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	options->Set({ 300, 448, 125, 122 }, { 288, 862, 125, 123 });
