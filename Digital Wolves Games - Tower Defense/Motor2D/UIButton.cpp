@@ -1,6 +1,9 @@
+#define RECT_NULL {0,0,0,0}
+
 #include "UIButton.h"
 #include "j1App.h"
 #include "j1Render.h"
+#include "j1Input.h"
 #include "j1UIManager.h"
 #include "Camera.h"
 #include "j1Scene.h"
@@ -8,19 +11,13 @@
 #include "UIHUDPanelButtons.h"
 #include "UIHUDDescription.h"
 
-UIButton::UIButton(UICOMPONENT_TYPE type) : UIComponents(type) {}
+UIButton::UIButton(UICOMPONENT_TYPE type) : UIComponents(type) 
+{}
 
-void UIButton::Set(int pos_x, int pos_y, int pos_w, int pos_h, uint atlas_x, uint atlas_y, uint atlas_w, uint atlas_h)
+UIButton::~UIButton()
 {
-	rect_position.x = pos_x;
-	rect_position.y = pos_y;
-	rect_position.w = pos_w;
-	rect_position.h = pos_h;
-
-	rect_atlas.x = atlas_x;
-	rect_atlas.y = atlas_y;
-	rect_atlas.w = atlas_w;
-	rect_atlas.h = atlas_h;
+	if (task != nullptr)
+		DELETE_PTR(task);
 }
 
 void UIButton::Set(const SDL_Rect & position, const SDL_Rect & atlas)
@@ -31,36 +28,98 @@ void UIButton::Set(const SDL_Rect & position, const SDL_Rect & atlas)
 
 void UIButton::Draw()
 {
-	if (GetFrom() != nullptr)
+	SDL_Texture* atlas = (SDL_Texture*)App->uimanager->GetAtlas();
+	SDL_Rect rect (GetPosRect());
+	rect.x -= App->render->camera->GetPosition().x;
+	rect.y -= App->render->camera->GetPosition().y;
+
+	SDL_Rect r_atlas = RECT_NULL;
+	switch (state)
+	{
+	case BS_NONE:	
+		r_atlas = GetAtlasRect();
+		break;
+	case BS_CLICKED:
+		r_atlas = atlas_clicked;
+		break;
+	case BS_MOUSE_ON_TOP:
+		r_atlas = atlas_mouse_on_top;
+		break;
+	}
+	SDL_Rect null = RECT_NULL;
+	if (SDL_RectEquals(&r_atlas, &null) == SDL_TRUE)
+		r_atlas = GetAtlasRect();
+	App->render->Blit(atlas, rect.x, rect.y, &r_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+
+	if (is_ui_pannel)
 	{
 		SDL_Rect mark_btn{ 969, 827, 29, 29 };
-
-		switch (GetFrom()->type)
-		{
-		case UIHUDPANELBUTTONS:
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - 2 - App->render->camera->GetPosition().x, rect_position.y - 2 - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-			break;
-		}
+		App->render->Blit(atlas, rect.x - UI_PANEL_MARK_MARGIN, rect.y - UI_PANEL_MARK_MARGIN, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 	}
-	else
-		App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+}
+
+void UIButton::HandleInput(SDL_Event event)
+{
+	switch (event.type)
+	{
+	case SDL_MOUSEBUTTONDOWN:
+		if (event.button.button == MK_LEFT)
+			state = BS_CLICKED;
+		break;
+
+	case SDL_MOUSEBUTTONUP:
+		if (event.button.button == MK_LEFT)
+		{
+			state = BS_MOUSE_ON_TOP;
+			task->Execute();
+		}
+		break;
+	}
 }
 
 bool UIButton::Update()
 {
-	switch (GetStat())
-	{
-	//Click of UIButton
-	case CLICKL_DOWN:
-		clicked = true;
-		break;
+	if (IsFocus() && (state != BS_CLICKED))
+		state = BS_MOUSE_ON_TOP;
+	else if (!IsFocus())
+		state = BS_NONE;
 
-	//UIButton set click to false
-	case CLICKL_UP:
-		clicked = false;
-		break;
-	}
+	if (IsFocus())
+		if(App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
+			state = BS_CLICKED;
+		else if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
+		{
+			state = BS_MOUSE_ON_TOP;	
+			if(task != nullptr)
+				task->Execute();
+		}
+
+	Draw();
 
 	return true;
+}
+
+const BUTTON_STAT UIButton::GetStat() const
+{
+	return state;
+}
+
+void UIButton::SetMouseOnTopTextRect(const SDL_Rect & rect)
+{
+	atlas_mouse_on_top = rect;
+}
+
+void UIButton::SetClickedTextRect(const SDL_Rect & rect)
+{
+	atlas_clicked = rect;
+}
+
+void UIButton::SetTask(Task* task)
+{
+	this->task = task;
+}
+
+void UIButton::IsUiPanel(bool is_ui_p)
+{
+	is_ui_pannel = is_ui_p;
 }

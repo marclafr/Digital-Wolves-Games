@@ -20,7 +20,6 @@ class j1Fonts;
 class j1Animation;
 class j1UIManager;
 class j1EntityManager;
-class ProjectileManager;
 class j1Collision;
 class j1SceneManager;
 class j1WaveManager;
@@ -123,7 +122,6 @@ public:
 	j1Animation*		anim = NULL;
 	j1UIManager*		uimanager = NULL;
 	j1EntityManager*    entity_manager = NULL;
-	ProjectileManager*   projectile_manager = NULL;
 	j1Collision*		collision = NULL;
 	j1SceneManager*		scene_manager = NULL;
 	j1WaveManager*		wave_manager = NULL;

@@ -4,6 +4,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "j1Console.h"
+#include "j1UIManager.h"
 #include "j1Scene.h"
 #include "SDL/include/SDL.h"
 
@@ -115,6 +116,8 @@ bool j1Input::PreUpdate()
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;
 				if(App->scene->active)
 					App->scene->HandleInput(event);
+				//if (App->uimanager->InUse())
+					//App->uimanager->HandleInput(event);
 			break;
 
 			case SDL_MOUSEBUTTONUP:
@@ -122,18 +125,24 @@ bool j1Input::PreUpdate()
 				mouse_buttons[event.button.button - 1] = KEY_UP;
 				if (App->scene->active)
 					App->scene->HandleInput(event);
+				//if (App->uimanager->InUse())
+					//App->uimanager->HandleInput(event);
 			break;
 
 			case SDL_KEYDOWN:
 
 				if (App->scene->active)
 					App->scene->HandleInput(event);
+				//if (App->uimanager->InUse())
+					//App->uimanager->HandleInput(event);
 
 				break;
 
 			case SDL_KEYUP:
 				if (App->scene->active)
 					App->scene->HandleInput(event);
+				//if (App->uimanager->InUse())
+					//App->uimanager->HandleInput(event);
 				break;
 
 			case SDL_MOUSEMOTION:
