@@ -12,19 +12,6 @@ UIComponents::UIComponents(UICOMPONENT_TYPE type)
 
 UIComponents::~UIComponents() {}
 
-void UIComponents::Set(int pos_x, int pos_y, int pos_w, int pos_h, uint atlas_x, uint atlas_y, uint atlas_w, uint atlas_h)
-{
-	rect_position.x = pos_x;
-	rect_position.y = pos_y;
-	rect_position.w = pos_w;
-	rect_position.h = pos_h;
-
-	rect_atlas.x = atlas_x;
-	rect_atlas.y = atlas_y;
-	rect_atlas.w = atlas_w;
-	rect_atlas.h = atlas_h;
-}
-
 void UIComponents::Set(const SDL_Rect & position, const SDL_Rect & atlas)
 {
 	rect_position = position;
@@ -38,6 +25,7 @@ void UIComponents::Draw()
 
 bool UIComponents::Update() 
 {
+	Draw();
 	return true;
 }
 

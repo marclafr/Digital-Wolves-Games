@@ -44,6 +44,7 @@ bool j1ScoreScene::Start()
 	App->audio->PlayMusic("audio/music/Menu01.ogg", 0.0f);
 	scene_changing = false;
 
+	/*
 	//BACKGROUND
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	background->Set({ 0, 0, 1336, 622 }, { 0, 1504, 1366, 622 });
@@ -92,7 +93,7 @@ bool j1ScoreScene::Start()
 		title_lose->Set(655, 21, "You Lose!!");
 		App->audio->PlayMusic("audio/music/Lost_Game01.ogg", 0.0f);
 	}
-	
+	*/
 	return true;
 }
 
@@ -111,7 +112,7 @@ bool j1ScoreScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
 		App->entity_manager->DecreaseScore();
 
-
+	/*
 	sprintf_s(text_score, 256, "Score: %d", App->entity_manager->GetScore());
 	title_score->Set(490, 400, text_score , { 0,0,0,0 });
 
@@ -120,15 +121,7 @@ bool j1ScoreScene::Update(float dt)
 	VisualEffectsUI();
 
 	//PLAY AGAIN
-	if (play_again->GetStat() == SELECTED)
-	{
-		play_again->Set({ 842, 634, 137, 43 }, { 1085, 1385, 137, 43 });
-	}
-	if (play_again->GetStat() == UNSELECTED)
-	{
-		play_again->Set({ 846, 637, 129, 37 }, { 1102, 1431, 129, 37 });
-	}
-	if (play_again->GetStat() == CLICKL_UP)
+	if (play_again->GetStat() == BS_MOUSE_ON_TOP)
 	{
 		App->scene_manager->ChangeScene(SC_GAME);
 		scene_changing = true;
@@ -140,15 +133,7 @@ bool j1ScoreScene::Update(float dt)
 	//BACK MENU
 	if (!scene_changing) 
 	{
-		if (back_menu->GetStat() == SELECTED)
-		{
-			back_menu->Set({ 1010, 635, 137, 42 }, { 1226, 1386, 137, 42 });
-		}
-		if (back_menu->GetStat() == UNSELECTED)
-		{
-			back_menu->Set({ 1014, 638, 129, 36 }, { 1234, 1432, 129, 36 });
-		}
-		if (back_menu->GetStat() == CLICKL_UP)
+		if (back_menu->GetStat() == BS_MOUSE_ON_TOP)
 		{
 			App->scene_manager->ChangeScene(SC_MAIN_MENU);
 			App->scene->win = false;
@@ -182,9 +167,8 @@ bool j1ScoreScene::Update(float dt)
 		achievements_unselected = true;
 		investigation_unselected = false;
 	}
-
+	*/
 	OptionSelected();
-
 	return true;
 }
 
@@ -203,12 +187,13 @@ bool j1ScoreScene::PostUpdate()
 bool j1ScoreScene::CleanUp()
 {
 	LOG("Freeing  MainMenu");
-	App->uimanager->CleanUp();
+	App->uimanager->SetAllToDelete();
 	return true;
 }
 
 void j1ScoreScene::ActualTrophie()
 {
+	/*
 	if (App->entity_manager->GetScore() > 560) {
 		actual_trophie->Set({ 850, 410, 87, 98 }, { 677, 1370, 87, 98 });
 	}
@@ -224,6 +209,7 @@ void j1ScoreScene::ActualTrophie()
 	if (App->entity_manager->GetScore() > 6250) {
 		actual_trophie->Set({ 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
 	}
+	*/
 }
 
 void j1ScoreScene::VisualEffectsUI()
@@ -325,25 +311,27 @@ void j1ScoreScene::CreateAllButtons()
 	trophies->SetInteractive(true);
 	trophies_unselected = false;
 
-	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_trophies->Set(316, 710, "Trophies");
+	actual_trophie = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
+	*/
+	trophies_created = true;
+}
 
-	//ACHIEVEMENTS
-	achievements = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	achievements->Set({ 416, 696, 123, 55 }, { 0, 0, 0, 0 });
-	achievements->SetInteractive(true);
-
-	title_achievements = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_achievements->Set(440, 710, "Achievements");
-
-	//INVESTIGATIONS
-	investigations = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	investigations->Set({ 555, 696, 123, 55 }, { 0, 0, 0, 0 });
-	investigations->SetInteractive(true);
-
-	title_investigations = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_investigations->Set(575, 710, "Investigations");
-
+void j1ScoreScene::DeleteTrophies()
+{
+	/*
+	trophie_wood->SetToDelete(true);
+	trophie_bronze->SetToDelete(true);
+	trophie_silver->SetToDelete(true);
+	trophie_gold->SetToDelete(true);
+	trophie_rubi->SetToDelete(true);
+	score_bar->SetToDelete(true);
+	title_score->SetToDelete(true);
+	title_enemies_killed->SetToDelete(true);
+	title_time->SetToDelete(true);
+	title_act_rank->SetToDelete(true);
+	actual_trophie->SetToDelete(true);
+	*/
+	trophies_created = false;
 }
 
 

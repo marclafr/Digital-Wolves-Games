@@ -19,9 +19,6 @@ public:
 protected:
 	std::list<Entity*>* selection;
 
-	std::list<UIComponents*>::iterator first_component;
-	std::list<UIComponents*>::iterator last_component;
-
 	bool delete_panel_info = false;
 
 	Entity* e_oneselected = nullptr;
