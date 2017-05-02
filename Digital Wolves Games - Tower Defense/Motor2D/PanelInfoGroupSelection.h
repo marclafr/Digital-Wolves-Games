@@ -15,11 +15,6 @@ private:
 	};
 
 	std::list<entity_selected*> es_selection;
-
-	std::list<std::list<entity_selected*>::iterator> to_delete;
-
-	bool deletion = false;
-
 	SDL_Rect life_bar;
 
 public:
@@ -32,8 +27,6 @@ public:
 	void PrepareNoUnitSelection();
 
 	void Update();
-	void DeleteESDeath();
-
 	void Draw();
 
 	void SetOneEntitySelection(Entity* e_selected);

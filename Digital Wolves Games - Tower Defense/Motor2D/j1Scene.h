@@ -11,19 +11,9 @@
 #define WINNING_TIME 600
 
 struct SDL_Texture;
-class UILabel;
-class UIComponents;
-class UIButton;
-class UICheckbutton;
-class UIHUDPanelButtons;
-class UIHUDPanelInfo;
-class UIHUDDescription;
-class UIHUDResources;
-class UIHUDTownHallBarLife;
 class Resources;
 class Building;
 enum RESOURCE_TYPE;
-class AnimationManager;
 
 class j1Scene : public j1Module
 {
@@ -62,16 +52,9 @@ public:
 	bool CanTrainSoldier();
 	void TrainSoldier();
 
-	void PlacingBasicTower();
-	
-	void PlacingBombardTower();
-	
-	void PlacingWall();
-
 	void HandleInput(SDL_Event event);
 
-	bool placing_basic_tower = false;
-	bool placing_bombard_tower = false;
+	bool placing_tower = false;
 	bool placing_wall = false;
 	bool game_scene = true;
 
@@ -84,17 +67,6 @@ private:
 	SDL_Texture* debug_tex;
 	SDL_Texture* tower_tex;
 	SDL_Texture* wall_tex;
-	UIComponents* top_hud;
-	UIButton* objectives;
-	UIButton* tree_tech;
-	UIButton* ingame_menu;
-	UIHUDResources* resources_panel;
-	UILabel* title_game_name;
-
-	UIComponents* down_hud;
-	UICheckbutton* btn_description;
-	UIHUDPanelButtons* panel;
-	UIHUDTownHallBarLife* townhall_bar_life;
 
 	SDL_Rect select_rect;
 
@@ -107,31 +79,13 @@ private:
 	Building* townhalltower1;
 	Building* townhalltower2;
 
-	UIButton* new_wave_button;
 	bool clicked = false;
 
 public:
 	Resources* GetResource(RESOURCE_TYPE type);
 
 public:
-	UIHUDPanelInfo* panel_info;
-	UIHUDDescription* hud_description;
 	j1Timer game_time;
-
-	UIComponents* info_ui;
-
-
-	//ANIMATION TEST
-	AnimationManager* a1;
-	AnimationManager* a2;
-	AnimationManager* a3;
-	AnimationManager* a4;
-	AnimationManager* a5;
-	AnimationManager* a6;
-	AnimationManager* a7;
-	AnimationManager* a8;
-	AnimationManager* a_fire;
-	//--
 };
 
 #endif // __j1SCENE_H__

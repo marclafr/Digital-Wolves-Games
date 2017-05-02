@@ -24,7 +24,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 
 	std::string anim_folder = "animations/Units_data.xml";
 
-	//Load UNIT animations data from animations folder
+	//Load animations data from animations folder
 	char* buff = nullptr;
 	int size = App->fs->Load(anim_folder.c_str(), &buff);
 	pugi::xml_document anim_data;
@@ -33,7 +33,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 
 	if (result == NULL)
 	{
-		LOG("Error loading UNIT animations data: %s", result.description());
+		LOG("Error loading animations data: %s", result.description());
 		return false;
 	}
 
@@ -49,22 +49,24 @@ bool j1Animation::Awake(pugi::xml_node& config)
 
 			while (direction_node != NULL)
 			{
-				Animation* new_anim = new Animation(ANIM_UNIT);
+				AnimationType* new_anim = new AnimationType(unit_node.name());
 				pugi::xml_node sprite_node = direction_node.first_child();
 
 				while (sprite_node != NULL)
 				{
 					new_anim->frames.push_back({ sprite_node.attribute("x").as_int(),sprite_node.attribute("y").as_int(), sprite_node.attribute("w").as_int(),sprite_node.attribute("h").as_int() });
-
+					
 					float pX = sprite_node.attribute("w").as_int() * sprite_node.attribute("pX").as_float();
 					float pY = sprite_node.attribute("h").as_int() * sprite_node.attribute("pY").as_float();
 					pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
 					pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
 					new_anim->pivot_points.push_back({ (int)pX, (int)pY });
-
+					
 					sprite_node = sprite_node.next_sibling();
 				}
 
+				std::string anim_name = unit_node.name();
+				new_anim->name = anim_name + "_" + action_node.name() + "_" + direction_node.name();
 				new_anim->SetUnit(unit_node);
 				new_anim->SetAction(action_node);
 				new_anim->SetDirection(direction_node);
@@ -90,93 +92,13 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		unit_node = unit_node.next_sibling();
 	}
 
-	//Load ARROW/BOMBS animations data from animations folder
-	std::string anim_folder2 = "textures/ArrowsBombs.xml";
-
-	buff = nullptr;
-	size = App->fs->Load(anim_folder2.c_str(), &buff);
-	pugi::xml_document anim_data2;
-	result = anim_data2.load_buffer(buff, size);
-	RELEASE(buff);
-
-	if (result == NULL)
-	{
-		LOG("Error loading ARROW and BOMBS animations data: %s", result.description());
-		return false;
-	}
-
-	pugi::xml_node arrows_bombs_node = anim_data2.child("TextureAtlas").first_child();
-	while (arrows_bombs_node != NULL)
-	{
-		std::string anim_name = arrows_bombs_node.attribute("anim_name").as_string();
-		Animation* new_anim2 = new Animation(AnimString2Enum(anim_name));
-
-		pugi::xml_node sprite_node2 = arrows_bombs_node.first_child();
-
-		while (sprite_node2 != NULL)
-		{
-			new_anim2->frames.push_back({ sprite_node2.attribute("x").as_int(),sprite_node2.attribute("y").as_int(), sprite_node2.attribute("w").as_int(),sprite_node2.attribute("h").as_int() });
-
-			float pX = sprite_node2.attribute("w").as_int() * sprite_node2.attribute("pX").as_float();
-			float pY = sprite_node2.attribute("h").as_int() * sprite_node2.attribute("pY").as_float();
-			pX = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
-			pY = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
-			pX = 0;
-			pY = 0;
-			new_anim2->pivot_points.push_back({ (int)pX, (int)pY });
-			sprite_node2 = sprite_node2.next_sibling();
-		}
-
-		new_anim2->speed = 75.0f; 
-		animation_types.push_back(new_anim2);
-		arrows_bombs_node = arrows_bombs_node.next_sibling();
-	}
-
-
-	std::string anim_folder3 = "animations/fire.xml";
-	buff = nullptr;
-	size = App->fs->Load(anim_folder3.c_str(), &buff);
-	pugi::xml_document anim_data3;
-	result = anim_data3.load_buffer(buff, size);
-	RELEASE(buff);
-
-	if (result == NULL)
-	{
-		LOG("Error loading ARROW and BOMBS animations data: %s", result.description());
-		return false;
-	}
-
-	pugi::xml_node fire_node = anim_data3.child("Sprites").first_child();
-
-	while (fire_node != NULL)
-	{
-		std::string anim_name = fire_node.attribute("anim_name").as_string();
-		Animation* new_anim3 = new Animation(AnimString2Enum(anim_name));
-
-		pugi::xml_node sprite_node3 = fire_node.first_child();
-
-		while (sprite_node3 != NULL)
-		{
-			new_anim3->frames.push_back({ sprite_node3.attribute("x").as_int(),sprite_node3.attribute("y").as_int(), sprite_node3.attribute("w").as_int(),sprite_node3.attribute("h").as_int() });
-
-			int pX = sprite_node3.attribute("pX").as_int();
-			int pY = sprite_node3.attribute("pY").as_int();
-			new_anim3->pivot_points.push_back({ (int)pX, (int)pY });
-			sprite_node3 = sprite_node3.next_sibling();
-		}
-
-		new_anim3->speed = 75.0f;
-		animation_types.push_back(new_anim3);
-		fire_node = fire_node.next_sibling();
-	}
-
 	return ret;
 }
 
 
 bool j1Animation::CleanUp()
 {
-	for (int i = 0; i < animation_types.size(); i++)
+	for(int i = 0; i < animation_types.size(); i++)
 	{
 		animation_types[i]->CleanUp();
 		delete animation_types[i];
@@ -187,13 +109,12 @@ bool j1Animation::CleanUp()
 	return true;
 }
 
-Animation* j1Animation::GetAnimationType(const ANIMATION_NAME name, const UNIT_TYPE unit, const ACTION action, const DIRECTION direction) const
+AnimationType* j1Animation::GetAnimationType(const UNIT_TYPE unit, const ACTION action, const DIRECTION direction) const
 {
 	DIRECTION dir = direction;
-	if (name == ANIM_UNIT)
+
+	switch (dir)
 	{
-		switch (dir)
-		{
 		case D_NORTH_EAST:
 			dir = D_NORTH_WEST;
 			break;
@@ -208,105 +129,93 @@ Animation* j1Animation::GetAnimationType(const ANIMATION_NAME name, const UNIT_T
 
 		default:
 			break;
-		}
-
-		for (int i = 0; i < animation_types.size(); i++)
-			if (animation_types[i]->unit_type == unit && animation_types[i]->action == action && animation_types[i]->direction_type == dir)
-				return animation_types[i];
 	}
 
 	for (int i = 0; i < animation_types.size(); i++)
-	{
-		if (animation_types[i]->GetName() == name)
+		if (animation_types[i]->unit_type == unit && animation_types[i]->action == action && animation_types[i]->direction_type == dir)
 			return animation_types[i];
-	}
 	return nullptr;
 }
 
 //--------------------------------------------------------------------------------------//
 
-Animation::Animation(ANIMATION_NAME name) : name(name)
+AnimationType::AnimationType(std::string name): name(name)
 {}
 
 // Destructor
-Animation::~Animation()
+AnimationType::~AnimationType()
 {}
 
-void Animation::SetSpeed(float spd)
+void AnimationType::SetSpeed(float spd)
 {
 	speed = spd;
 }
 
-void Animation::SetLoopState(bool state)
+void AnimationType::SetLoopState(bool state)
 {
 	loop = state;
 }
 
-const int Animation::GetNumFrames() const
-{
+const int AnimationType::GetNumFrames() const
+{	
 	return (frames.size() - 1);
 }
 
-const float Animation::GetSpeed() const
+const float AnimationType::GetSpeed() const
 {
 	return speed;
 }
 
-const bool Animation::GetLoopState() const
+const bool AnimationType::GetLoopState() const
 {
 	return loop;
 }
 
-const SDL_Rect Animation::GetFrame(int frame_num) const
+const SDL_Rect AnimationType::GetFrame(int frame_num) const
 {
 	return frames[frame_num];
 }
 
-const iPoint Animation::GetPivot(int frame_num) const
+const iPoint AnimationType::GetPivot(int frame_num) const
 {
 	return pivot_points[frame_num];
 }
 
-const ACTION Animation::GetActionType() const
+const ACTION AnimationType::GetActionType() const
 {
 	return action;
 }
 
-const UNIT_TYPE Animation::GetUnitType() const
+const UNIT_TYPE AnimationType::GetUnitType() const
 {
 	return unit_type;
 }
 
-const DIRECTION Animation::GetDirection() const
+const DIRECTION AnimationType::GetDirection() const
 {
 	return direction_type;
 }
 
-const ANIMATION_NAME Animation::GetName() const
-{
-	return name;
-}
-
-AnimationManager::AnimationManager() : anim_type(nullptr), current_frame(0.0f), anim_timer(j1Timer()), idle_wait_timer(j1Timer()), speed(START_SPEED), loop(true), wait_started(false), finished(false)
+Animation::Animation(): anim_type(nullptr), current_frame(0.0f), anim_timer(j1Timer()), idle_wait_timer(j1Timer()), speed(START_SPEED), loop(true), wait_started(false), finished(false)
 {}
 
-AnimationManager::AnimationManager(Animation * type) : anim_type(type), wait_started(false)
+Animation::Animation(AnimationType * type): anim_type(type), wait_started(false)
 {
 	loop = type->GetLoopState();
 	speed = type->GetSpeed();
 	anim_timer.Start();
 }
 
-AnimationManager::AnimationManager(const AnimationManager & copy) : anim_type(copy.anim_type), current_frame(copy.current_frame), speed(copy.speed), loop(copy.loop), wait_started(copy.wait_started), finished(copy.finished)
+Animation::Animation(const Animation & copy) : anim_type(copy.anim_type), current_frame(copy.current_frame), speed(copy.speed), loop(copy.loop), wait_started(copy.wait_started), finished(copy.finished)
 {
 	anim_timer.SetTicks(copy.anim_timer.Read());
 	idle_wait_timer.SetTicks(copy.idle_wait_timer.Read());
 }
 
-AnimationManager::~AnimationManager()
+Animation::~Animation()
 {}
 
-void AnimationManager::ChangeAnimation(Animation * type, float new_speed)
+void Animation::ChangeAnimation(AnimationType * type, float new_speed)
 {
 	anim_type = type;
 	loop = type->GetLoopState();
@@ -318,7 +227,7 @@ void AnimationManager::ChangeAnimation(Animation * type, float new_speed)
 	Reset();
 }
 
-const AnimationManager AnimationManager::operator = (const AnimationManager & anim)
+const Animation Animation::operator = (const Animation & anim)
 {
 	anim_type = anim.anim_type;
 	current_frame = anim.current_frame;
@@ -332,7 +241,7 @@ const AnimationManager AnimationManager::operator = (const AnimationManager & an
 	return *this;
 }
 
-bool AnimationManager::Update(SDL_Rect & rect, iPoint & pivot_point)
+bool Animation::Update(SDL_Rect & rect, iPoint & pivot_point)
 {
 	rect = anim_type->GetFrame(current_frame);
 	pivot_point = anim_type->GetPivot(current_frame);
@@ -348,34 +257,25 @@ bool AnimationManager::Update(SDL_Rect & rect, iPoint & pivot_point)
 	return Finished();
 }
 
-bool AnimationManager::Finished()
+bool Animation::Finished()
 {
 	if (current_frame >= anim_type->GetNumFrames())
 	{
-		if (anim_type->GetName() == ANIM_UNIT)
+		if (anim_type->GetActionType() == A_IDLE)
 		{
-			if (anim_type->GetActionType() == A_IDLE)
+			if (wait_started == false)
 			{
-				if (wait_started == false)
-				{
-					wait_started = true;
-					idle_wait_timer.Start();
-				}
-
-				if (idle_wait_timer.ReadSec() >= IDLE_ANIMATION_WAIT)
-				{
-					finished = true;
-					wait_started = false;
-					return true;
-				}
+				wait_started = true;
+				idle_wait_timer.Start();
 			}
-			else
+
+			if (idle_wait_timer.ReadSec() >= IDLE_ANIMATION_WAIT)
 			{
 				finished = true;
+				wait_started = false;
 				return true;
 			}
 		}
-		//NON_UNIT
 		else
 		{
 			finished = true;
@@ -385,7 +285,7 @@ bool AnimationManager::Finished()
 	return false;
 }
 
-void AnimationManager::Reset()
+void Animation::Reset()
 {
 	current_frame = 0.0f;
 	anim_timer.Start();
@@ -393,62 +293,17 @@ void AnimationManager::Reset()
 	wait_started = false;
 }
 
-void Animation::SetUnit(const pugi::xml_node node)
+void AnimationType::SetUnit(const pugi::xml_node node)
 {
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
-		//INFANTRY:
-	if (strcmp(node.name(), "militia") == 0)
-		unit_type = U_MILITIA;
-
-	else if (strcmp(node.name(), "manatarms") == 0)
-		unit_type = U_MANATARMS;
-
-	else if (strcmp(node.name(), "longswordman") == 0)
-		unit_type = U_LONGSWORDMAN;
-
-	else if (strcmp(node.name(), "twohandedswordman") == 0)
+	if (strcmp(node.name(), "twohandedswordman") == 0)
 		unit_type = U_TWOHANDEDSWORDMAN;
-
-	else if (strcmp(node.name(), "champion") == 0)
-		unit_type = U_CHAMPION;
-
-	else if (strcmp(node.name(), "spearman") == 0)
-		unit_type = U_SPEARMAN;
-
-	else if (strcmp(node.name(), "pikeman") == 0)
-		unit_type = U_PIKEMAN;
-
-	//--------
-		//ARCHERS
-	else if (strcmp(node.name(), "archer") == 0)
-		unit_type = U_ARCHER;
-
-	else if (strcmp(node.name(), "arbalest") == 0)
-		unit_type = U_ARBALEST;
 
 	else if (strcmp(node.name(), "cavalryarcher") == 0)
 		unit_type = U_CAVALRYARCHER;
 
-	else if (strcmp(node.name(), "heavycavalryarcher") == 0)
-		unit_type = U_HEAVYCAVALRYARCHER;
-
-	//-------
-		//CAVALRY	
-	else if (strcmp(node.name(), "knight") == 0)
-		unit_type = U_KNIGHT;
-
-	else if (strcmp(node.name(), "cavalier") == 0)
-		unit_type = U_CAVALIER;
-
-	else if (strcmp(node.name(), "paladin") == 0)
-		unit_type = U_PALADIN;
-	//-------
-		//SIEGE
 	else if (strcmp(node.name(), "siegeram") == 0)
 		unit_type = U_SIEGERAM;
-	//-------
-
-	//TODO: ADD UNIT
 
 	else
 	{
@@ -457,7 +312,7 @@ void Animation::SetUnit(const pugi::xml_node node)
 	}
 }
 
-void Animation::SetAction(const pugi::xml_node node)
+void AnimationType::SetAction(const pugi::xml_node node)
 {
 	if (strcmp(node.name(), "attack") == 0)
 		action = A_ATTACK;
@@ -481,7 +336,7 @@ void Animation::SetAction(const pugi::xml_node node)
 	}
 }
 
-void Animation::SetDirection(const pugi::xml_node node)
+void AnimationType::SetDirection(const pugi::xml_node node)
 {
 	if (strcmp(node.name(), "north") == 0)
 		direction_type = D_NORTH;
@@ -506,39 +361,7 @@ void Animation::SetDirection(const pugi::xml_node node)
 
 }
 
-ANIMATION_NAME j1Animation::AnimString2Enum(const std::string name)
-{
-	if (name == "simple_arrow")
-		return ANIM_SIMPLE_ARROW;
-
-	else if (name == "fire_arrow")
-		return ANIM_FIRE_ARROW;
-
-	else if (name == "ice_arrow")
-		return ANIM_ICE_ARROW;
-
-	else if (name == "air_arrow")
-		return ANIM_AIR_ARROW;
-
-	else if (name == "simple_bomb")
-		return ANIM_SIMPLE_BOMB;
-
-	else if (name == "fire_bomb")
-		return ANIM_FIRE_BOMB;
-
-	else if (name == "ice_bomb")
-		return ANIM_ICE_BOMB;
-
-	else if (name == "air_bomb")
-		return ANIM_AIR_BOMB;
-
-	else if (name == "fire_floor")
-		return ANIM_FIRE_FLOOR;
-
-	return NO_ANIM_NAME;
-}
-
-bool Animation::CleanUp()
+bool AnimationType::CleanUp()
 {
 	frames.clear();
 	pivot_points.clear();
