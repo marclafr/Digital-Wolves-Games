@@ -43,6 +43,7 @@ bool j1ScoreScene::Start()
 	App->audio->PlayMusic("audio/music/Menu01.ogg", 0.0f);
 	scene_changing = false;
 
+	/*
 	//BACKGROUND
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
 	background->Set({ 0, 0, 1336, 622 }, { 0, 1504, 1366, 622 });
@@ -101,7 +102,7 @@ bool j1ScoreScene::Start()
 		title_lose->Set(655, 21, "You Lose!!");
 		App->audio->PlayMusic("audio/music/Lost_Game01.ogg", 0.0f);
 	}
-	
+	*/
 	return true;
 }
 
@@ -120,7 +121,7 @@ bool j1ScoreScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
 		App->entity_manager->DecreaseScore();
 
-
+	/*
 	sprintf_s(text_score, 256, "Score: %d", App->entity_manager->GetScore());
 	title_score->Set(490, 380, text_score);
 	ActualTrophie();
@@ -167,9 +168,8 @@ bool j1ScoreScene::Update(float dt)
 		under_background->Set({ 0, 622, 1336, 144 }, { 0, 2426, 1366, 144 });
 		trophies_unselected = true;
 	}
-
+	*/
 	OptionSelected();
-
 	return true;
 }
 
@@ -194,6 +194,7 @@ bool j1ScoreScene::CleanUp()
 
 void j1ScoreScene::ActualTrophie()
 {
+	/*
 	if (App->entity_manager->GetScore() > 560) {
 		actual_trophie->Set({ 850, 410, 87, 98 }, { 677, 1370, 87, 98 });
 	}
@@ -209,10 +210,12 @@ void j1ScoreScene::ActualTrophie()
 	if (App->entity_manager->GetScore() > 6250) {
 		actual_trophie->Set({ 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
 	}
+	*/
 }
 
 void j1ScoreScene::CreateTrophies()
 {
+	/*
 	trophie_wood = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
 	trophie_wood->Set({ 380, 200, 87, 98 }, { 677, 1370, 87, 98 });
 
@@ -250,12 +253,13 @@ void j1ScoreScene::CreateTrophies()
 	title_act_rank->Set(850, 380, text_rank, { 0,0,0,0 });
 
 	actual_trophie = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-
+	*/
 	trophies_created = true;
 }
 
 void j1ScoreScene::DeleteTrophies()
 {
+	/*
 	trophie_wood->SetToDelete(true);
 	trophie_bronze->SetToDelete(true);
 	trophie_silver->SetToDelete(true);
@@ -267,7 +271,7 @@ void j1ScoreScene::DeleteTrophies()
 	title_time->SetToDelete(true);
 	title_act_rank->SetToDelete(true);
 	actual_trophie->SetToDelete(true);
-
+	*/
 	trophies_created = false;
 }
 

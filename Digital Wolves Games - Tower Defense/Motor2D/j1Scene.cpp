@@ -477,72 +477,55 @@ void j1Scene::CreateSceneUI()
 {
 	//UIElements
 	//Top_HUD
-	UIComponents* top_hud;
-	top_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	top_hud->Set({ 0, 0, 1336, 23 }, { 0, 1011, 1366, 23 });
-	top_hud->SetInteractive(false);
+	App->uimanager->AddComponent(UIT_UIIMAGE,{ 0, 0, 1336, 23 }, { 0, 1011, 1366, 23 });
 
-	UIButton* objectives;
-	objectives = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	objectives->Set({ 1252, 2, 36, 14 }, { 1252, 996, 36, 14 });
+		//Objectives
+	App->uimanager->AddButton({ 1252, 2, 36, 14 }, { 1252, 996, 36, 14 });
 
-	UIButton* tree_tech;
-	tree_tech = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	tree_tech->Set({ 1288, 2, 35, 14 }, { 1289, 996, 35, 14 });
+		//Tree Tech
+	App->uimanager->AddButton({ 1288, 2, 35, 14 }, { 1289, 996, 35, 14 });
 
-	UIButton* ingame_menu;
-	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	ingame_menu->Set({ 1323, 2, 36 , 15 }, { 1325, 996, 36, 14 });
+		//In Game Menu
+	App->uimanager->AddButton({ 1323, 2, 36 , 15 }, { 1325, 996, 36, 14 });
 
-	App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIHUDRESOURCES);
+		//Resource Panel
+	App->uimanager->AddResourcesPanel();
 
-	UILabel* title_game_name;
-	title_game_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	title_game_name->Set(685, 3, "AoE 2: Defenders");
-	title_game_name->SetInteractive(false);
+		//Title Game Name
+	App->uimanager->AddLabel(685, 3, "AoE 2: Defenders");
 
 	//Down_HUD
-	UIComponents* down_hud;
-	down_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	down_hud->Set({ 0, 643, 1366, 125 }, { 0, 1036, 1366, 125 });
-	down_hud->SetInteractive(false);
+	App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 643, 1366, 125 }, { 0, 1036, 1366, 125 });
 
-	UICheckbutton* btn_description;
-	btn_description = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UICHECKBUTTON);
+		//Button Description
+	UICheckbutton* btn_description = App->uimanager->AddCheckButton({ 1316, 653, 19, 17 }, { 1347, 1163, 19, 17 }, { 1347, 1163, 19, 17 });
 	btn_description->SetStat(CB_CHECK);
-	btn_description->Set({ 1316, 653, 19, 17 }, { 1347, 1163, 19, 17 }, { 1347, 1163, 19, 17 });
 
-	UIHUDPanelButtons* panel;
-	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIHUDPANELBUTTONS);
-	info_button* panel_btns = nullptr;
-	panel_btns = panel->AddButton(0, 0, 878, 910);
+		//Panel Buttons
+	UIHUDPanelButtons* panel = App->uimanager->AddPanelButtons();
+	info_button* panel_btns = panel->AddButton(0, 0, 878, 910);
 	panel_btns->SetBuilding(B_TURRET);
 	panel_btns = panel->AddButton(2, 0, 774, 962);
 	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
-	//	panel_btns = panel->AddButton(2, 1, 774, 962);
-	//	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ENEMY);
 	panel_btns = panel->AddButton(1, 0, 774, 910);
 	panel_btns->SetBuilding(B_STONE_WALL);
 
-	(UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIHUDPANELINFO);
+		//Panel Info
+	App->uimanager->AddPanelInfo();
 
-	UIHUDDescription* hud_description;
-	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIHUDDESCRIPTION);
+		//Panel Description
+	UIHUDDescription* hud_description = App->uimanager->AddPanelDescription();
 	hud_description->SetEnableButton(btn_description);
 
-	App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIHUDTOWNHALLBARLIFE);
+		//Town Hall Bar Life
+	App->uimanager->AddTownHallBarLife();
 	
-	UIButton* new_wave_button;
-	new_wave_button = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	new_wave_button->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
-	new_wave_button->SetInteractive(true);
+		//New Wave Button
+	UIButton* new_wave_button = App->uimanager->AddButton({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
 	new_wave_button->SetClickedTextRect({ 687, 1227, 104, 104 });
 	new_wave_button->SetMouseOnTopTextRect({ 580, 1226, 104, 104 });
 
 	//INFO SCORE, TIME, ENEMIES LEFT
-	UIComponents* info_ui;
-	info_ui = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	info_ui->Set({ 1236, 25, 130, 65 }, { 405, 1162, 130, 65 });
-	info_ui->SetInteractive(false);
+	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 405, 1162, 130, 65 });
 	App->uimanager->SetInfoUIComponent(info_ui);
 }

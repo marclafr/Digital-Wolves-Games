@@ -42,64 +42,40 @@ bool j1MainMenu::Start()
 	App->audio->PlayMusic("audio/music/Menu01.ogg", 0.0f);
 
 	//BACKGROUND
-	UIComponents* background;
-	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	background->Set({ 0, 0, 1336, 767 }, { 0, 0, 1366, 767 });
-	background->SetInteractive(false);
+	App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 0, 1336, 767 }, { 0, 0, 1366, 767 });
 
 	//SINGLE PLAYER
-	UIButton* single_player;
-	UILabel* title_single_player;
-	single_player = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	single_player->Set({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
-	single_player->SetInteractive(true);
+	UIButton* single_player = (UIButton*)App->uimanager->AddButton({ 539, 17, 177, 240 }, { 414, 769, 177, 240 });
 	single_player->SetMouseOnTopTextRect({ 298, 1229, 177, 240 });
 	single_player->SetTask(new ChangeSceneTask(SC_GAME));
 
-	title_single_player = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	title_single_player->Set(590, 30, "Single Player");
+	App->uimanager->AddLabel(590, 30, "Single Player");
 
 	//TUTORIAL
-	UIButton* tutorial;
-	tutorial = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	tutorial->Set({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
+	UIButton* tutorial = App->uimanager->AddButton({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
 	tutorial->SetInteractive(false);
 
 	//HISTORY
-	UIButton* history;
-	history = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	history->Set({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
+	UIButton* history = App->uimanager->AddButton({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
 	history->SetInteractive(false);
 
 	//TROPHIES
-	UIButton* trophies;
-	UILabel* title_trophies;
-	trophies = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	trophies->Set({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
-	trophies->SetInteractive(true);
+	UIButton* trophies = (UIButton*)App->uimanager->AddButton({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
 	trophies->SetMouseOnTopTextRect({ 792, 1162, 148, 160 });
 	trophies->SetTask(new ChangeSceneTask(SC_SCORE));
 
-	title_trophies = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	title_trophies->Set(545, 286, "Trophies");
+	App->uimanager->AddLabel(545, 286, "Trophies");
 
 	//OPTIONS
-	UIButton* options;
-	options = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	options->Set({ 300, 448, 125, 122 }, { 288, 862, 125, 123 });
+	UIButton* options = App->uimanager->AddButton({ 300, 448, 125, 122 }, { 288, 862, 125, 123 });
 	options->SetInteractive(false);
 	
 	//EXIT
-	UIButton* exit;
-	UILabel* title_exit;
-	exit = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
-	exit->Set({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
-	exit->SetInteractive(true);
+	UIButton* exit = App->uimanager->AddButton({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
 	exit->SetMouseOnTopTextRect({ 477, 1374, 200, 95 });
 	exit->SetTask(new SetPreUpdateFalseTask());
 
-	title_exit = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	title_exit->Set(265, 708, "Exit");
+	App->uimanager->AddLabel(265, 708, "Exit");
 
 	return true;
 }

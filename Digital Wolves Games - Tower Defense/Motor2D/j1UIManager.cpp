@@ -127,54 +127,80 @@ bool j1UIManager::CleanUp()
 	return true;
 }
 
-UIComponents* j1UIManager::addUIComponent(UICOMPONENT_TYPE type)
+UIComponents* j1UIManager::AddComponent(UICOMPONENT_TYPE type, const SDL_Rect & position, const SDL_Rect & atlas)
 {
-	UIComponents* ret = nullptr;
+	UIComponents* new_component;
+	components.push_back(new_component = new UIComponents(type));
+	new_component->Set(position,atlas);
+	if (type == UIT_UIIMAGE)
+		new_component->SetInteractive(false);
+	return new_component;
+}
 
-	switch (type)
-	{
-	case UIT_UILABEL:
-		components.push_back(ret = (UIComponents*)new UILabel(UICOMPONENT_TYPE::UIT_UILABEL));
-		break;
-	case UIT_UIBUTTON:
-		components.push_back(ret = (UIComponents*)new UIButton(UICOMPONENT_TYPE::UIT_UIBUTTON));
-		break;
-	case UIT_UICHECKBUTTON:
-		components.push_back(ret = (UIComponents*)new UICheckbutton(UICOMPONENT_TYPE::UIT_UICHECKBUTTON));
-		break;
-		/*
-	case UIT_UISELECTOPTION:
-		components.push_back(ret = (UIComponents*)new UISelectOption(UICOMPONENT_TYPE::UIT_UISELECTOPTION));
-		break;
-		*/
-	case UIT_UIHUDPANELBUTTONS:
-		components.push_back(ret = (UIComponents*)new UIHUDPanelButtons(UICOMPONENT_TYPE::UIT_UIHUDPANELBUTTONS));
-		break;
-	case UIT_UIHUDPANELINFO:
-		components.push_back(ret = (UIComponents*)new UIHUDPanelInfo(UICOMPONENT_TYPE::UIT_UIHUDPANELINFO));
-		panel_info = (UIHUDPanelInfo*)ret;
-		break;
-	case UIT_UIHUDDESCRIPTION:
-		components.push_back(ret = (UIComponents*)new UIHUDDescription(UICOMPONENT_TYPE::UIT_UIHUDDESCRIPTION));
-		hud_description = (UIHUDDescription*)ret;
-		break;
-	case UIT_UIHUDRESOURCES:
-		components.push_back(ret = (UIComponents*)new UIHUDResources(UICOMPONENT_TYPE::UIT_UIHUDRESOURCES));
-		resources_panel = (UIHUDResources*)ret;
-		break;
-	case UIT_UIHUDTOWNHALLBARLIFE:
-		components.push_back(ret = (UIComponents*)new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIT_UIHUDTOWNHALLBARLIFE));
-		townhall_bar_life = (UIHUDTownHallBarLife*)ret;
-		break;
-	case  UIT_UIHUDSCOREBAR:
-		components.push_back(ret = (UIComponents*)new UIHUDScoreBar(UICOMPONENT_TYPE:: UIT_UIHUDSCOREBAR));
-		break;
-	default:
-		components.push_back(ret = new UIComponents(type));
-		break;
-	}
-	
-	return ret;
+UIButton* j1UIManager::AddButton(const SDL_Rect & position, const SDL_Rect & atlas)
+{
+	UIButton* new_btn;
+	components.push_back(new_btn = new UIButton(UIT_UIBUTTON));
+	new_btn->Set(position, atlas);
+	return new_btn;
+}
+
+UILabel * j1UIManager::AddLabel(int pos_x, int pos_y, const char * text, SDL_Color color, _TTF_Font * font)
+{
+	UILabel* new_label;
+	components.push_back(new_label = new UILabel(UIT_UILABEL));
+	new_label->Set(pos_x, pos_y, text, color, font);
+	return new_label;
+}
+
+UICheckbutton * j1UIManager::AddCheckButton(const SDL_Rect & position, const SDL_Rect & atlas, const SDL_Rect & atlas_clicked)
+{
+	UICheckbutton* new_checkbutton;
+	components.push_back(new_checkbutton = new UICheckbutton(UIT_UICHECKBUTTON));
+	new_checkbutton->Set(position, atlas, atlas_clicked);
+	return new_checkbutton;
+}
+
+void j1UIManager::AddPanelInfo()
+{
+	UIHUDPanelInfo* new_panelinfo;
+	components.push_back(new_panelinfo = new UIHUDPanelInfo(UIT_UIHUDPANELINFO));
+	panel_info = new_panelinfo;
+}
+
+UIHUDDescription * j1UIManager::AddPanelDescription()
+{
+	UIHUDDescription* new_paneldescription;
+	components.push_back(new_paneldescription = new UIHUDDescription(UIT_UIHUDDESCRIPTION));
+	hud_description = new_paneldescription;
+	return new_paneldescription;
+}
+
+UIHUDPanelButtons * j1UIManager::AddPanelButtons()
+{
+	UIHUDPanelButtons* new_panelbuttons;
+	components.push_back(new_panelbuttons = new UIHUDPanelButtons(UIT_UIHUDPANELBUTTONS));
+	return new_panelbuttons;
+}
+
+void j1UIManager::AddResourcesPanel()
+{
+	UIHUDResources* new__resourcespanel;
+	components.push_back(new__resourcespanel = new UIHUDResources(UIT_UIHUDRESOURCES));
+	resources_panel = new__resourcespanel;
+}
+
+void j1UIManager::AddScoreBar()
+{
+	UIHUDScoreBar* new_scorebar;
+	components.push_back(new_scorebar = new UIHUDScoreBar(UIT_UIHUDSCOREBAR));
+}
+
+void j1UIManager::AddTownHallBarLife()
+{
+	UIHUDTownHallBarLife* new_thbarlife;
+	components.push_back(new_thbarlife = new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIT_UIHUDTOWNHALLBARLIFE));
+	townhall_bar_life = new_thbarlife;
 }
 
 // const getter for atlas

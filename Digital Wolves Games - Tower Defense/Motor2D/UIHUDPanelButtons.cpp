@@ -63,14 +63,10 @@ bool UIHUDPanelButtons::Update()
 info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atlas_y)
 {
 	info_button* new_btn = new info_button();
-
-	new_btn->btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIBUTTON);
 	new_btn->x = x;
 	new_btn->y = y;
-	new_btn->btn->Set({ 26 + (30 * (int)x), 666 + (30 * (int)y), 29, 29 }, { (int)atlas_x, (int)atlas_y, 25, 25 });
-
+	new_btn->btn = (UIButton*)App->uimanager->AddButton({ 26 + (30 * (int)x), 666 + (30 * (int)y), 29, 29 }, { (int)atlas_x, (int)atlas_y, 25, 25 });
 	panel.push_back(new_btn);
-
 	return new_btn;
 }
 

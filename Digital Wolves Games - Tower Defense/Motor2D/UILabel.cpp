@@ -8,7 +8,10 @@
 
 #include "UISelectOption.h"
 
-UILabel::UILabel(UICOMPONENT_TYPE type) : UIComponents(type) {}
+UILabel::UILabel(UICOMPONENT_TYPE type) : UIComponents(type) 
+{
+	SetInteractive(false);
+}
 
 UILabel::~UILabel()
 {

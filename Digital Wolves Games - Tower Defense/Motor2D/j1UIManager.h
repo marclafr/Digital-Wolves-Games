@@ -5,10 +5,15 @@
 #include <list>
 #include "SDL\include\SDL_rect.h"
 
-class UIComponents;
-enum UICOMPONENT_TYPE;
 struct SDL_Texture;
 union SDL_Event;
+class UIComponents;
+class UIButton;
+class UILabel;
+struct _TTF_Font;
+class UICheckbutton;
+class UIHUDPanelButtons;
+enum UICOMPONENT_TYPE;
 class UIHUDTownHallBarLife;
 class UIHUDResources;
 class UIHUDPanelInfo;
@@ -51,7 +56,16 @@ public:
 	bool CleanUp();
 
 	// Gui creation functions
-	UIComponents* addUIComponent(UICOMPONENT_TYPE type);
+	UIComponents* AddComponent(UICOMPONENT_TYPE type,const SDL_Rect & position, const SDL_Rect & atlas);
+	UIButton* AddButton(const SDL_Rect & position, const SDL_Rect & atlas);
+	UILabel* AddLabel(int pos_x, int pos_y, const char * text, SDL_Color color = { 255,255,255,0 }, _TTF_Font*  font = nullptr);
+	UICheckbutton* AddCheckButton(const SDL_Rect& position, const SDL_Rect& atlas, const SDL_Rect & atlas_clicked);
+	void AddPanelInfo();
+	UIHUDDescription* AddPanelDescription();
+	UIHUDPanelButtons* AddPanelButtons();
+	void AddResourcesPanel();
+	void AddScoreBar();
+	void AddTownHallBarLife();
 
 	const SDL_Texture* GetAtlas() const;
 	const std::list<UIComponents*>::iterator GetLastComponent();

@@ -74,32 +74,24 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 
 void UIHUDDescription::SetLabelUnit()
 {
-	background_name = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	background_name->Set(BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
 
-	background_price = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	background_price->Set(BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+	background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
 
-	description_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	description_name->Set(X_LABEL_NAME, Y_LABEL_NAME, GetUnitName(unit_desc));
+	description_name = App->uimanager->AddLabel(X_LABEL_NAME, Y_LABEL_NAME, GetUnitName(unit_desc));
 
-	description_price = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	description_price->Set(X_LABEL_PRICE, Y_LABEL_PRICE, GetUnitPrice(unit_desc));
+	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, GetUnitPrice(unit_desc));
 }
 
 void UIHUDDescription::SetLabelBuilding()
 {
-	background_name = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	background_name->Set(BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
 
-	background_price = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	background_price->Set(BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+	background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
 
-	description_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	description_name->Set(X_LABEL_NAME, Y_LABEL_NAME, GetBuildingName(build_desc));
+	description_name = App->uimanager->AddLabel(X_LABEL_NAME, Y_LABEL_NAME, GetBuildingName(build_desc));
 
-	description_price = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIT_UILABEL);
-	description_price->Set(X_LABEL_PRICE, Y_LABEL_PRICE, GetBuildingPrice(build_desc));
+	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, GetBuildingPrice(build_desc));
 }
 
 void UIHUDDescription::Clear()
