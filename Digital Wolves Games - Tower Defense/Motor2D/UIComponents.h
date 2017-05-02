@@ -7,55 +7,74 @@
 #include "j1UIManager.h"
 #include "SDL\include\SDL.h"
 
+enum UICOMPONENT_STAT
+{
+	SELECTED,
+	UNSELECTED,
+
+	CLICKL_DOWN,
+	CLICKR_DOWN,
+
+	CLICKL_REPEAT,
+	CLICKR_REPEAT,
+
+	CLICKL_UP,
+	CLICKR_UP
+};
+
 enum UICOMPONENT_TYPE
 {
-	UIT_UILABEL,
-	UIT_UIBUTTON,
-	UIT_UICHECKBUTTON,
-	UIT_UISELECTOPTION,
-	UIT_UIHUDPANELBUTTONS,
-	UIT_UIHUDPANELINFO,
-	UIT_UIIMAGE,
-	UIT_UIHUDDESCRIPTION,
-	UIT_UIHUDRESOURCES,
-	UIT_UIHUDTOWNHALLBARLIFE,
-	UIT_UIHUDSCOREBAR
+	UILABEL,
+	UIBUTTON,
+	UICHECKBUTTON,
+	UISELECTOPTION,
+	UIHUDPANELBUTTONS,
+	UIHUDPANELINFO,
+	UIIMAGE,
+	UIHUDDESCRIPTION,
+	UIHUDRESOURCES,
+	UIHUDTOWNHALLBARLIFE,
+	UIHUDSCOREBAR
 };
 
 class UIComponents
 {
-protected:
-	bool interactive = true;
-	bool is_focus = false;
-	bool to_delete = false;
-	UIComponents* from = nullptr;
+public:
 	SDL_Rect rect_position;
 	SDL_Rect rect_atlas;
+
 	UICOMPONENT_TYPE type;
+
+	UICOMPONENT_STAT stat = UICOMPONENT_STAT::UNSELECTED;
+
+
+private:
+	bool draw = true;
+
+	bool interactive = true;
+
+	UIComponents* from = nullptr;
 
 public:
 	UIComponents(UICOMPONENT_TYPE type);
 
 	virtual ~UIComponents();
 
+	virtual void Set(int pos_x, int pos_y, int pos_w, int pos_h, uint atlas_x, uint atlas_y, uint atlas_w, uint atlas_h);
 	virtual void Set(const SDL_Rect& position, const SDL_Rect& atlas);
 
 	virtual void Draw();
-	virtual void HandleInput(SDL_Event);
+
 	virtual bool Update();
 
+	const bool GetDraw() const;
 	const bool GetInteractive() const;
-	const bool IsFocus() const;
-	const SDL_Rect GetAtlasRect() const;
-	const SDL_Rect GetPosRect() const;
-	const bool ToDelete() const;
-	const UICOMPONENT_TYPE GetType() const;
+	const UICOMPONENT_STAT GetStat() const;
 	const UIComponents* GetFrom()const;
 	const UIComponents* GetThisComponent() const;
+	void SetDraw(bool draw);
 	void SetInteractive(bool interactive);
-	void SetIsFocus(bool is_focus);
 	void SetFrom(UIComponents* from);
-	void SetToDelete(bool to_delete);
 	
 };
 
