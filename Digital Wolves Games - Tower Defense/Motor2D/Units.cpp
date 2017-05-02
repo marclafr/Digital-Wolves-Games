@@ -72,10 +72,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		//TODO:
-		//if (side == S_ENEMY)
-			//SetTextureID(T_ENEMY_LONGSWORDMAN);
-		//else
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_LONGSWORDMAN);
+		else
 			SetTextureID(T_LONGSWORDMAN);
 		priority = 1;
 		break;
@@ -90,10 +89,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		//TODO:
-		//if (side == S_ENEMY)
-			//SetTextureID(T_ENEMY_TWOHANDEDSWORDMAN);
-		//else
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_TWOHANDEDSWORDMAN);
+		/else
 			SetTextureID(T_TWOHANDEDSWORDMAN);
 		priority = 3;
 		break;
@@ -108,10 +106,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		//TODO:
-		//if (side == S_ENEMY)
-			//SetTextureID(T_ENEMY_CHAMPION);
-		//else
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_CHAMPION);
+		else
 			SetTextureID(T_CHAMPION);
 		priority = 1;
 		break;
@@ -289,10 +286,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		vision_range = 100;
 		unit_class = C_SIEGE;
 		unit_radius = 15;
-		//TODO:
-		//if (side == S_ENEMY)
-		//	SetTextureID(T_ENEMY_SIEGERAM);
-		//else
+		if (side == S_ENEMY)
+			SetTextureID(T_ENEMY_SIEGERAM);
+		else
 			SetTextureID(T_SIEGERAM);
 		priority = 1;
 		break;

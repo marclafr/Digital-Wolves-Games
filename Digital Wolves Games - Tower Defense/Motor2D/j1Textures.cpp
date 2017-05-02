@@ -49,9 +49,12 @@ bool j1Textures::Start()
 	App->tex->Load("animations/Units/Manatarms.png", T_MANATARMS);
 	App->tex->Load("animations/Units/ManatarmsRed.png", T_ENEMY_MANATARMS);
 	App->tex->Load("animations/Units/Longswordman.png", T_LONGSWORDMAN);
+	App->tex->Load("animations/Units/LongswordmanRed.png", T_ENEMY_LONGSWORDMAN);
 	App->tex->Load("animations/Units/Twohandedswordman.png", T_TWOHANDEDSWORDMAN);
+	App->tex->Load("animations/Units/TwohandedswordmanRed.png", T_ENEMY_TWOHANDEDSWORDMAN);
 	App->tex->Load("animations/Units/Champion.png", T_CHAMPION);
-	
+	App->tex->Load("animations/Units/ChampionRed.png", T_ENEMY_CHAMPION);
+
 	App->tex->Load("animations/Units/Spearman.png", T_SPEARMAN);
 	App->tex->Load("animations/Units/SpearmanRed.png", T_ENEMY_SPEARMAN);
 	App->tex->Load("animations/Units/Pikeman.png", T_PIKEMAN);
@@ -77,6 +80,7 @@ bool j1Textures::Start()
 
 		//SIEGE
 	App->tex->Load("animations/Units/SiegeRam.png", T_SIEGERAM);
+	App->tex->Load("animations/Units/SiegeRamRed.png", T_ENEMY_SIEGERAM);
 	//--
 	App->tex->Load("textures/Towers.png", T_TURRET);
 	App->tex->Load("animations/StoneWall.png", T_WALL);
