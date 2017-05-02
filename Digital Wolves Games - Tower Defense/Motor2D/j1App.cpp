@@ -25,7 +25,6 @@
 #include "j1SceneManager.h"
 #include "j1Console.h"
 #include "j1WaveManager.h"
-#include "ProjectileManager.h"
 #include "j1Investigations.h"
 
 // Constructor
@@ -41,7 +40,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	fs = new j1FileSystem();
 	pathfinding = new j1PathFinding();
 	entity_manager = new j1EntityManager();
-	projectile_manager = new ProjectileManager();
 	font = new j1Fonts();
 	anim = new j1Animation();
 	map = new j1Map();
@@ -69,7 +67,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collision);
 	AddModule(uimanager);
 	AddModule(entity_manager);
-	AddModule(projectile_manager);
 	AddModule(wave_manager);
 	wave_manager->active = false;
 	AddModule(console);

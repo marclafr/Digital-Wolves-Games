@@ -1,14 +1,17 @@
 #include "UILabel.h"
-
 #include "j1App.h"
 #include "j1Render.h"
 #include "j1Textures.h"
+#include "j1Input.h"
 #include "j1Fonts.h"
 #include "Camera.h"
 
 #include "UISelectOption.h"
 
-UILabel::UILabel(UICOMPONENT_TYPE type) : UIComponents(type) {}
+UILabel::UILabel(UICOMPONENT_TYPE type) : UIComponents(type) 
+{
+	SetInteractive(false);
+}
 
 UILabel::~UILabel()
 {
@@ -35,26 +38,47 @@ void UILabel::Draw()
 	App->render->Blit(text_img, rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 }
 
-bool UILabel::Update()
+void UILabel::HandleInput(SDL_Event event)
 {
-	switch (GetStat())
-	{
-	//Selecting option from UISelectOption
-	case CLICKL_DOWN:
-		if (GetFrom() != nullptr && GetFrom()->type == UICOMPONENT_TYPE::UISELECTOPTION)
-		{
-			UISelectOption* from_option_selected = (UISelectOption*)GetFrom();
+	UISelectOption* from_option_selected = nullptr;
 
-			if (this != from_option_selected->current)
+	switch (event.type)
+	{
+	case SDL_MOUSEBUTTONDOWN:
+		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
+			//Selecting option from UISelectOption
+			if (GetFrom() != nullptr && GetFrom()->GetType() == UICOMPONENT_TYPE::UIT_UISELECTOPTION)
 			{
-				from_option_selected->ChangeCurrent(this);
-				from_option_selected->ChangeDrawAllOptions();
-				from_option_selected->selecting = false;
+				from_option_selected = (UISelectOption*)GetFrom();
+
+				if (this != from_option_selected->current)
+				{
+					from_option_selected->ChangeCurrent(this);
+					from_option_selected->ChangeDrawAllOptions();
+					from_option_selected->selecting = false;
+				}
 			}
-		}
 		break;
 	}
+}
 
+bool UILabel::Update()
+{
+	if(IsFocus())
+		if(App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
+			if (GetFrom() != nullptr && GetFrom()->GetType() == UICOMPONENT_TYPE::UIT_UISELECTOPTION)
+			{
+				UISelectOption* from_option_selected = (UISelectOption*)GetFrom();
+
+				if (this != from_option_selected->current)
+				{
+					from_option_selected->ChangeCurrent(this);
+					from_option_selected->ChangeDrawAllOptions();
+					from_option_selected->selecting = false;
+				}
+			}
+
+	Draw();
 	return true;
 }
 
