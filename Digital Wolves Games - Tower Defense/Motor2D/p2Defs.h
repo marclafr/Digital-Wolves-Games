@@ -10,7 +10,7 @@
 #undef NULL
 #endif
 #define NULL  0
-
+#define PI 3.14159265
 // Deletes a buffer
 #define RELEASE( x ) \
     {                        \

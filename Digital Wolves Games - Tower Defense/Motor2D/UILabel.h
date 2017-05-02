@@ -20,7 +20,7 @@ public:
 	void Set(int pos_x, int pos_y, const char* text, SDL_Color color = { 255,255,255,0 }, _TTF_Font*  font = nullptr);
 
 	void Draw();
-	void HandleInput(SDL_Event);
+
 	bool Update();
 
 	//Before check if the text to change is diferent from actual

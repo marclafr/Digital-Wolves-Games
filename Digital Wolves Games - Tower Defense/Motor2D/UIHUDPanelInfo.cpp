@@ -126,6 +126,12 @@ bool UIHUDPanelInfo::isSelectionEmpty()
 	return selection.empty();
 }
 
+void UIHUDPanelInfo::Draw()
+{
+	if (actual_panelinfo != nullptr)
+		actual_panelinfo->Draw();
+}
+
 bool UIHUDPanelInfo::Update()
 {
 	if (actual_panelinfo != nullptr)
