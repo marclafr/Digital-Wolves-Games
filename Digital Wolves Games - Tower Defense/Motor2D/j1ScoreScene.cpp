@@ -44,6 +44,7 @@ bool j1ScoreScene::Start()
 	App->audio->PlayMusic("audio/music/Menu01.ogg", 0.0f);
 	scene_changing = false;
 
+	/*
 	//BACKGROUND
 	background = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	background->Set({ 0, 0, 1336, 622 }, { 0, 1504, 1366, 622 });
@@ -92,7 +93,7 @@ bool j1ScoreScene::Start()
 		title_lose->Set(655, 21, "You Lose!!");
 		App->audio->PlayMusic("audio/music/Lost_Game01.ogg", 0.0f);
 	}
-	
+	*/
 	return true;
 }
 
@@ -111,14 +112,14 @@ bool j1ScoreScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
 		App->entity_manager->DecreaseScore();
 
-
+	/*
 	sprintf_s(text_score, 256, "Score: %d", App->entity_manager->GetScore());
 	title_score->Set(490, 400, text_score , { 0,0,0,0 });
 
 	ActualTrophie();
 
 	VisualEffectsUI();
-
+	 
 	//PLAY AGAIN
 	if (play_again->GetStat() == SELECTED)
 	{
@@ -136,7 +137,7 @@ bool j1ScoreScene::Update(float dt)
 		App->scene->lose = false;
 
 	}
-
+	
 	//BACK MENU
 	if (!scene_changing) 
 	{
@@ -182,7 +183,7 @@ bool j1ScoreScene::Update(float dt)
 		achievements_unselected = true;
 		investigation_unselected = false;
 	}
-
+	*/
 	OptionSelected();
 
 	return true;
@@ -209,6 +210,7 @@ bool j1ScoreScene::CleanUp()
 
 void j1ScoreScene::ActualTrophie()
 {
+	/*
 	if (App->entity_manager->GetScore() > 560) {
 		actual_trophie->Set({ 850, 410, 87, 98 }, { 677, 1370, 87, 98 });
 	}
@@ -224,10 +226,12 @@ void j1ScoreScene::ActualTrophie()
 	if (App->entity_manager->GetScore() > 6250) {
 		actual_trophie->Set({ 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
 	}
+	*/
 }
 
 void j1ScoreScene::VisualEffectsUI()
 {
+	/*
 	if (trophies->GetStat() == SELECTED)
 	{
 		title_trophies->Set(316, 710, "Trophies", { 255,255,0,0 });
@@ -254,10 +258,12 @@ void j1ScoreScene::VisualEffectsUI()
 	{
 		title_investigations->Set(575, 710, "Investigations", { 255,255,255,0 });
 	}
+	*/
 }
 
 void j1ScoreScene::CreateAchievements()
 {
+	/*
 	//ACHIEVEMENT 1
 	achievement1 = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	achievement1->Set({ 355, 73, 718, 130 }, { 0, 2606, 718, 130 });
@@ -281,12 +287,12 @@ void j1ScoreScene::CreateAchievements()
 	check_achievement2->SetDraw(false);
 	check_achievement2->clicked = false;
 	check_achievement2->Set({ 1005, 250, 40, 39 }, { 995, 869, 40, 39 }, { 1036, 868, 40, 39 });
-
+	*/
 }
 
 void j1ScoreScene::CreateTrophies()
 {
-
+	/*
 	//TROPHIES
 	trophie_wood = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
 	trophie_wood->Set({ 380, 200, 87, 98 }, { 677, 1370, 87, 98 });
@@ -304,11 +310,12 @@ void j1ScoreScene::CreateTrophies()
 	trophie_rubi->Set({ 920, 145, 136, 153 }, { 1181, 1162, 136, 153 });
 
 	score_bar = (UIHUDScoreBar*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDSCOREBAR);
-
+	*/
 }
 
 void j1ScoreScene::CreateAllButtons()
 {
+	/*
 	//BACK_MENU
 	back_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	back_menu->Set({ 1014, 638, 129, 36 }, { 1234, 1432, 129, 36 });
@@ -343,7 +350,7 @@ void j1ScoreScene::CreateAllButtons()
 
 	title_investigations = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 	title_investigations->Set(575, 710, "Investigations");
-
+	*/
 }
 
 
@@ -351,6 +358,7 @@ void j1ScoreScene::OptionSelected()
 {
 	if (trophies_unselected)
 	{
+		/*
 		trophie_wood->SetDraw(false);
 		trophie_bronze->SetDraw(false);
 		trophie_silver->SetDraw(false);
@@ -363,9 +371,11 @@ void j1ScoreScene::OptionSelected()
 
 		title_act_rank->SetDraw(false);
 		actual_trophie->SetDraw(false);
+		*/
 	}
 	else
 	{
+		/*
 		trophie_wood->SetDraw(true);
 		trophie_bronze->SetDraw(true);
 		trophie_silver->SetDraw(true);
@@ -378,25 +388,30 @@ void j1ScoreScene::OptionSelected()
 
 		title_act_rank->SetDraw(true);
 		actual_trophie->SetDraw(true);
+		*/
 	}
 
 	if (achievements_unselected)
 	{
+		/*
 		achievement1->SetDraw(false);
 		title_achievement1->SetDraw(false);
 		check_achievement1->SetDraw(false);
 		achievement2->SetDraw(false);
 		title_achievement2->SetDraw(false);
 		check_achievement2->SetDraw(false);
+		*/
 	}
 	else
 	{
+		/*
 		achievement1->SetDraw(true);
 		title_achievement1->SetDraw(true);
 		check_achievement1->SetDraw(true);
 		achievement2->SetDraw(true);
 		title_achievement2->SetDraw(true);
 		check_achievement2->SetDraw(true);
+		*/
 	}
 
 	if (investigation_unselected)

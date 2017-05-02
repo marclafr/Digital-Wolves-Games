@@ -4,11 +4,6 @@
 #include "j1Module.h"
 
 struct SDL_Texture;
-class UILabel;
-class UIComponents;
-class UIButton;
-class UIHUDScoreBar;
-class UICheckButton;
 
 class j1ScoreScene : public j1Module
 {
@@ -49,7 +44,7 @@ public:
 	void CreateAllButtons();
 
 private:
-
+	/*
 	UIComponents* background;
 	UIComponents* under_background;
 
@@ -92,14 +87,11 @@ private:
 	UIComponents* achievement2;
 	UILabel* title_achievement2;
 	UICheckbutton* check_achievement2;
-
+	*/
 	bool scene_changing = false;
 	bool trophies_unselected = true;
 	bool achievements_unselected = true;
 	bool investigation_unselected = true;
-
-public:
-
 };
 
 #endif // __j1SCORESCENE_H__

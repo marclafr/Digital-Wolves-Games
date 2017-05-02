@@ -41,28 +41,10 @@ public:
 
 	bool game_scene = true;
 
+	void SetRetPreUpdate(bool ret);
+
 private:
-	
-	UIComponents* background;
-
-	UIButton* single_player;
-	UILabel* title_single_player;
-
-	UIButton* tutorial;
-	UIButton* history;
-
-	UIButton* trophies;
-	UILabel* title_trophies;
-	
-		
-	UIButton* options;
-	
-	UIButton* exit;
-	UILabel* title_exit;
-
-
-public:
-
+	bool ret_preupdate = true;
 };
 
 #endif // __j1MAINMENU_H__

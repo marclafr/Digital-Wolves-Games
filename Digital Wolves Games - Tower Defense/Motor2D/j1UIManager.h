@@ -2,14 +2,26 @@
 #define __j1GUIMANAGER_H__
 
 #include "j1Module.h"
-
-
 #include <list>
 #include "SDL\include\SDL_rect.h"
 
-class UIComponents;
-enum UICOMPONENT_TYPE;
 struct SDL_Texture;
+union SDL_Event;
+class UIComponents;
+class UIButton;
+class UILabel;
+struct _TTF_Font;
+class UICheckbutton;
+class UIHUDPanelButtons;
+enum UICOMPONENT_TYPE;
+class UIHUDTownHallBarLife;
+class UIHUDResources;
+class UIHUDPanelInfo;
+class UIHUDDescription;
+struct info_button;
+class Building;
+class Resources;
+class Entity;
 
 #define CURSOR_WIDTH 2
 
@@ -31,30 +43,56 @@ public:
 	// Called before all Updates
 	bool PreUpdate();
 
+	// Update all guis
+	bool Update(float dt);
+
 	// Called after all Updates
 	bool PostUpdate();
+
+	//Handle inputs
+	void HandleInput(SDL_Event);
 
 	// Called before quitting
 	bool CleanUp();
 
 	// Gui creation functions
-	UIComponents* addUIComponent(UICOMPONENT_TYPE type);
+	UIComponents* AddComponent(UICOMPONENT_TYPE type, const SDL_Rect & position, const SDL_Rect & atlas);
+	UIButton* AddButton(const SDL_Rect & position, const SDL_Rect & atlas);
+	UILabel* AddLabel(int pos_x, int pos_y, const char * text, SDL_Color color = { 255,255,255,0 }, _TTF_Font*  font = nullptr);
+	UICheckbutton* AddCheckButton(const SDL_Rect& position, const SDL_Rect& atlas, const SDL_Rect & atlas_clicked);
+	void AddPanelInfo();
+	UIHUDDescription* AddPanelDescription();
+	UIHUDPanelButtons* AddPanelButtons();
+	void AddResourcesPanel();
+	void AddScoreBar();
+	void AddTownHallBarLife();
 
 	const SDL_Texture* GetAtlas() const;
-
-	void erase_list(std::list<UIComponents*>::iterator first, std::list<UIComponents*>::iterator last);
-
 	const std::list<UIComponents*>::iterator GetLastComponent();
+	const bool InUse() const;
+	void SetAllToDelete();
+
+	void SetTownHall(Building*);
+	void SetResource(Resources*);
+	void AddEntityToPanelInfo(Entity*);
+	void DefineSelectionPanelInfo();
+	bool IsSelectionEmptyFromPanelInfo();
+	void DeleteSelectionPanelInfo();
+	void SetDescriptionHUDDescription(info_button*);
+	void SetInfoUIComponent(UIComponents*);
+	SDL_Rect GetPosRectFromInfoUI();
 
 private:
-
 	std::list<UIComponents*> components;
-
 	SDL_Texture* atlas;
 	std::string atlas_file_name;
+	UIComponents* focus = nullptr;
 
-	bool delete_some_components = false;
-	std::list<UIComponents*>::iterator first_item_delete;
-	std::list<UIComponents*>::iterator last_item_delete;
+	//Pointers of some compontnts from scenes
+	UIHUDTownHallBarLife* townhall_bar_life;
+	UIHUDResources* resources_panel;
+	UIHUDPanelInfo* panel_info;
+	UIHUDDescription* hud_description;
+	UIComponents* info_ui;
 };
 #endif // __j1GUIMANAGER_H__

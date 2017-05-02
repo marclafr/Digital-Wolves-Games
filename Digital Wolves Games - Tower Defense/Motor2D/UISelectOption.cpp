@@ -32,7 +32,7 @@ void UISelectOption::Set(const SDL_Rect & position, const SDL_Rect & atlas)
 
 void UISelectOption::Draw()
 {
-	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x,rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
 
 	if (selecting)
 	{
@@ -43,29 +43,29 @@ void UISelectOption::Draw()
 
 bool UISelectOption::Update()
 {
+	/*
 	switch (GetStat())
 	{
 	//Expand options from UISelectOption
 	case CLICKL_DOWN:
-		selecting = true;
-		ChangeDrawAllOptions();
-		break;
+	selecting = true;
+	ChangeDrawAllOptions();
+	break;
 	}
-
+	Draw();
+	*/
 	return true;
 }
 
 void UISelectOption::AddOption(const char * text)
 {
-	UILabel* newoption_label = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
+	UILabel* newoption_label = App->uimanager->AddLabel(rect_position.x + 2, (rect_position.y + (rect_position.h / 4)) + (num_options*rect_position.h), text);
 
 	num_options++;
 
-	newoption_label->Set(rect_position.x + 2, (rect_position.y + (rect_position.h / 4)) + (num_options*rect_position.h), text);
-
 	UIComponents* newoptions_component = (UIComponents*)newoption_label;
 
-	newoptions_component->SetDraw(false);
+	//newoptions_component->SetDraw(false);
 
 	newoptions_component->SetFrom(this);
 
@@ -85,9 +85,9 @@ void UISelectOption::ChangeCurrent(UILabel * change)
 	if (current == nullptr)
 	{
 		current = change;
-		current->rect_position.x = rect_position.x;
-		current->rect_position.y = rect_position.y;
-		current->SetDraw(true);
+		//current->GetPosRect().x = rect_position.x;
+		//current->GetPosRect().y = rect_position.y;
+		//current->SetDraw(true);
 	}
 	else
 	{
@@ -100,14 +100,14 @@ void UISelectOption::ChangeCurrent(UILabel * change)
 
 		options.erase(item);
 
-		SWAP<int>(current->rect_position.x, change->rect_position.x);
-		SWAP<int>(current->rect_position.y, change->rect_position.y);
+		//SWAP<int>(current->GetPosRect().x, change->GetPosRect().x);
+		//SWAP<int>(current->GetPosRect().y, change->GetPosRect().y);
 
 		options.push_back(current);
 
 
 		current = change;
-		current->SetDraw(true);
+		//current->SetDraw(true);
 	}
 }
 
@@ -115,16 +115,16 @@ void UISelectOption::ChangeDrawAllOptions()
 {
 	std::list<UILabel*>::iterator item;
 	item = options.begin();
-	
+
 	while (item != options.end())
 	{
 		UIComponents* draw_label = (UIComponents*)item._Ptr->_Myval;
-
+		/*
 		if (draw_label->GetDraw())
-			draw_label->SetDraw(false);
+		draw_label->SetDraw(false);
 		else
-			draw_label->SetDraw(true);
-
+		draw_label->SetDraw(true);
+		*/
 		item++;
 	}
 }
