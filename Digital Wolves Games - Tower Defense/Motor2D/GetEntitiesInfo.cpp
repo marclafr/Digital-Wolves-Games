@@ -1,6 +1,7 @@
 #define TWOHANDEDSWORDMAN_HP 170
 #define CAVALRYARCHER_HP 50
 #define SIEGERAM_HP 270
+#define MANATARMS_HP 100
 
 #define TURRET_HP 250
 #define STONEWALL_HP 500
@@ -54,6 +55,12 @@ const char* GetUnitName(const UNIT_TYPE type)
 	case U_SIEGERAM:
 		ret = "Siege Ram";
 		break;
+
+	case U_MANATARMS:
+		ret = "Man at Arms";
+		break;
+
+		//TODO: ADD UNIT
 
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
@@ -250,6 +257,13 @@ int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp, const uint pixels)
 	case U_SIEGERAM:
 		ret = hp * pixels / SIEGERAM_HP;
 		break;
+
+	case U_MANATARMS:
+		ret = hp * pixels / MANATARMS_HP;
+		break;
+
+		//TODO: ADD UNIT
+
 
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");

@@ -43,7 +43,6 @@ void UISelectOption::Draw()
 
 bool UISelectOption::Update()
 {
-	/*
 	switch (GetStat())
 	{
 	//Expand options from UISelectOption
@@ -52,20 +51,21 @@ bool UISelectOption::Update()
 		ChangeDrawAllOptions();
 		break;
 	}
-	Draw();
-	*/
+
 	return true;
 }
 
 void UISelectOption::AddOption(const char * text)
 {
-	UILabel* newoption_label = App->uimanager->AddLabel(rect_position.x + 2, (rect_position.y + (rect_position.h / 4)) + (num_options*rect_position.h), text);
+	UILabel* newoption_label = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
 
 	num_options++;
 
+	newoption_label->Set(rect_position.x + 2, (rect_position.y + (rect_position.h / 4)) + (num_options*rect_position.h), text);
+
 	UIComponents* newoptions_component = (UIComponents*)newoption_label;
 
-	//newoptions_component->SetDraw(false);
+	newoptions_component->SetDraw(false);
 
 	newoptions_component->SetFrom(this);
 
@@ -85,9 +85,9 @@ void UISelectOption::ChangeCurrent(UILabel * change)
 	if (current == nullptr)
 	{
 		current = change;
-		//current->GetPosRect().x = rect_position.x;
-		//current->GetPosRect().y = rect_position.y;
-		//current->SetDraw(true);
+		current->rect_position.x = rect_position.x;
+		current->rect_position.y = rect_position.y;
+		current->SetDraw(true);
 	}
 	else
 	{
@@ -100,14 +100,14 @@ void UISelectOption::ChangeCurrent(UILabel * change)
 
 		options.erase(item);
 
-		//SWAP<int>(current->GetPosRect().x, change->GetPosRect().x);
-		//SWAP<int>(current->GetPosRect().y, change->GetPosRect().y);
+		SWAP<int>(current->rect_position.x, change->rect_position.x);
+		SWAP<int>(current->rect_position.y, change->rect_position.y);
 
 		options.push_back(current);
 
 
 		current = change;
-		//current->SetDraw(true);
+		current->SetDraw(true);
 	}
 }
 
@@ -119,12 +119,12 @@ void UISelectOption::ChangeDrawAllOptions()
 	while (item != options.end())
 	{
 		UIComponents* draw_label = (UIComponents*)item._Ptr->_Myval;
-		/*
+
 		if (draw_label->GetDraw())
 			draw_label->SetDraw(false);
 		else
 			draw_label->SetDraw(true);
-		*/
+
 		item++;
 	}
 }
