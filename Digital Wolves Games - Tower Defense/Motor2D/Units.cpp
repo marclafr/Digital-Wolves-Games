@@ -91,7 +91,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		unit_radius = 6;
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_TWOHANDEDSWORDMAN);
-		/else
+		else
 			SetTextureID(T_TWOHANDEDSWORDMAN);
 		priority = 3;
 		break;
