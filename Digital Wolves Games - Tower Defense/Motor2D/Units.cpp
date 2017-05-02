@@ -508,28 +508,32 @@ void Unit::AI()
 			break;
 		}
 
-		attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), range, GetSide());
-		if (attacking != nullptr)
-		{
-			this->action = A_ATTACK;
-			this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
-			changed = true;
-			break;
-		}
-
 		if (Move() == false)
 		{
 			this->action = A_IDLE;
 			changed = true;
 		}
 		
-		if (target != App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide()))
+		if (GetSide() == S_ENEMY)
 		{
-			target = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide());	
-		}
-		if (target != nullptr && animation->Finished())
-		{
-			ChangeDirection(iPoint(target->GetX(), target->GetY()));
+			attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), range, GetSide());
+			if (attacking != nullptr)
+			{
+				this->action = A_ATTACK;
+				this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
+				changed = true;
+				break;
+			}
+
+
+			if (target != App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide()))
+			{
+				target = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide());
+			}
+			if (target != nullptr && animation->Finished())
+			{
+				ChangeDirection(iPoint(target->GetX(), target->GetY()));
+			}
 		}
 
 		break;
@@ -539,6 +543,17 @@ void Unit::AI()
 		if (GetHp() <= 0)
 		{
 			UnitDies();
+			break;
+		}
+
+		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED && this->GetSide() == S_ALLY)
+		{
+			iPoint objective;
+			App->input->GetMousePosition(objective.x, objective.y);
+			objective.x -= App->render->camera->GetPosition().x;
+			objective.y -= App->render->camera->GetPosition().y;
+
+			GoTo(objective);
 			break;
 		}
 
@@ -557,8 +572,9 @@ void Unit::AI()
 					attacking->Damaged(attack);
 
 				PlayAttackSound();
+				attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), range, GetSide());
 			}
-			if (attacking->GetHp() <= 0)
+			if (attacking == nullptr)
 			{
 				if (GetSide() == S_ENEMY)
 				{
