@@ -40,6 +40,7 @@ public:
 
 public:
 	UIButton(UICOMPONENT_TYPE type);
+	~UIButton();
 
 	void Set(const SDL_Rect& position, const SDL_Rect& atlas);
 
@@ -52,6 +53,7 @@ public:
 	void SetMouseOnTopTextRect(const SDL_Rect & rect);
 	void SetClickedTextRect(const SDL_Rect& rect);
 	void SetTask(Task* task);
+	void IsUiPanel(bool);
 };
 
 #endif // __UIBUTTON_H__
