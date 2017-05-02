@@ -12,10 +12,9 @@
 #include "j1Scene.h"
 #include "SDL\include\SDL_rect.h"
 #include "j1Collision.h"
-
 #include "UIButton.h"
 #include "UIHUDDescription.h"
-
+#include "Towers.h"
 #include "Entity.h"
 #include "Units.h"
 #include "Buildings.h"
@@ -23,6 +22,7 @@
 UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
+	SetDraw(false);
 }
 
 UIHUDPanelButtons::~UIHUDPanelButtons()
@@ -41,13 +41,14 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 
 bool UIHUDPanelButtons::Update()
 {
-	for (std::list<info_button*>::iterator ib_item = panel.begin(); ib_item == panel.end(); ++ib_item)
-	{
-		if ((*ib_item)->btn->IsFocus())
-			App->uimanager->SetDescriptionHUDDescription((*ib_item));
+	std::list<info_button*>::iterator ib_item = panel.begin();
 
-		//todo change to tasks
-		if ((*ib_item)->btn->GetStat() == BS_MOUSE_ON_TOP)
+	while (ib_item != panel.end())
+	{
+		if ((*ib_item)->btn->GetStat() == UICOMPONENT_STAT::SELECTED)
+			App->scene->hud_description->SetDescription((*ib_item));
+
+		if((*ib_item)->btn->GetStat() == UICOMPONENT_STAT::CLICKL_UP)
 			if_active = (*ib_item);
 
 		ib_item++;
@@ -63,27 +64,34 @@ bool UIHUDPanelButtons::Update()
 info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atlas_y)
 {
 	info_button* new_btn = new info_button();
+
+	new_btn->btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
 	new_btn->x = x;
 	new_btn->y = y;
-	new_btn->btn = App->uimanager->AddButton({ 26 + (30 * (int)x), 666 + (30 * (int)y), 29, 29 }, { (int)atlas_x, (int)atlas_y, 25, 25 });
-	new_btn->btn->IsUiPanel(true);
+	new_btn->btn->Set({ 26 + (30 * (int)x), 666 + (30 * (int)y), 29, 29 }, { (int)atlas_x, (int)atlas_y, 25, 25 });
+
 	panel.push_back(new_btn);
+
 	return new_btn;
 }
 
 void UIHUDPanelButtons::CreateEntity()
 {
 	if (if_active->e_type == E_BUILDING && if_active->b_type == B_TURRET) {
-		if (App->scene->placing_tower == false)
-			App->scene->placing_tower = true;
-		if (App->scene->placing_wall == true)
+		if (App->scene->placing_basic_tower == false)
+		{
+			App->scene->placing_basic_tower = true;
+			App->scene->placing_bombard_tower = false;
 			App->scene->placing_wall = false;
+		}
 	}
 	if (if_active->e_type == E_BUILDING && if_active->b_type == B_STONE_WALL) {
 		if (App->scene->placing_wall == false)
+		{
 			App->scene->placing_wall = true;
-		if (App->scene->placing_tower == true)
-			App->scene->placing_tower = false;
+			App->scene->placing_bombard_tower = false;
+			App->scene->placing_basic_tower = false;
+		}
 	}
 	if (if_active->e_type == E_UNIT) {
 		if (App->scene->CanTrainSoldier())
@@ -95,7 +103,9 @@ void UIHUDPanelButtons::CreateEntity()
 		return;
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
-		App->scene->placing_tower = false;
+		App->scene->placing_basic_tower = false;
+		App->scene->placing_wall = false;
+		App->scene->placing_bombard_tower = false;
 		if_active = nullptr;
 		return;
 	}
@@ -121,7 +131,7 @@ void UIHUDPanelButtons::CreateEntity()
 			break;
 
 			case ENTITY_TYPE::E_BUILDING:
-				if (App->scene->placing_tower == true) {
+				if (App->scene->placing_basic_tower == true) {
 						if (App->collision->AbleToBuild(iPoint(s.x, s.y - 9)))
 						{
 							if (App->scene->CanBuildTower())
@@ -129,12 +139,12 @@ void UIHUDPanelButtons::CreateEntity()
 								if (App->pathfinding->IsConstructible_ally(r) == true)
 								{
 									App->scene->BuildTower();
-									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_ALLY);
+									App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(s.x, s.y - 9));
 								}
 								if (App->pathfinding->IsConstructible_neutral(r) == true)
 								{
 									App->scene->BuildTower();
-									App->entity_manager->CreateBuilding(if_active->b_type, fPoint(s.x, s.y - 9), S_NEUTRAL);
+									App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(s.x, s.y - 9));
 								}
 							}
 					}
@@ -155,6 +165,12 @@ void info_button::SetUnit(UNIT_TYPE type, Side side)
 void info_button::SetBuilding(BUILDING_TYPE type)
 {
 	b_type = type;
+	e_type = ENTITY_TYPE::E_BUILDING;
+}
+
+void info_button::SetTurret(TOWER_TYPE type)
+{
+	t_type = type;
 	e_type = ENTITY_TYPE::E_BUILDING;
 }
 

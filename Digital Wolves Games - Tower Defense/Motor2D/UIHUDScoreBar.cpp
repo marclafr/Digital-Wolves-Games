@@ -33,7 +33,6 @@ bool UIHUDScoreBar::Update()
 	//rest_score_bar.w = ReturnValueBarHPBuilding(BUILDING_TYPE::B_TOWNHALL, townhall->GetHp(), BAR_PIXELS);
 	rest_score_bar.w = App->entity_manager->GetScore()/10;
 
-	Draw();
 	return true;
 }
 

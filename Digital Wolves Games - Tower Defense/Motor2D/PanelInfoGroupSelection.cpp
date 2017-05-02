@@ -51,11 +51,23 @@ void GroupSelection::PrepareUnitSelection()
 	while (u_item != selection->end())
 	{
 		entity_selected* add_entity_selected = new entity_selected();
-		Unit* selected = (Unit*)*u_item;
 
-		UIButton* new_btn = App->uimanager->AddButton(MARK_BTN, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
+		Unit* selected = (Unit*)*u_item;
+		UIButton* new_btn = nullptr;
+
+		new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+
+		if (u_item == selection->begin())
+			first_component = App->uimanager->GetLastComponent();
+		else if (u_item == last_u_item)
+			last_component = App->uimanager->GetLastComponent();
+
+		new_btn->Set(MARK_BTN, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
+
 		add_entity_selected->btn_selected = new_btn;
+
 		add_entity_selected->pointer_entity = (Entity*)selected;
+
 		es_selection.push_back(add_entity_selected);
 
 		u_item++;
@@ -76,20 +88,31 @@ void GroupSelection::PrepareNoUnitSelection()
 		Resources* r_selected = nullptr;
 
 		UIButton* new_btn = nullptr;
+
+		new_btn = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
+
+		if (e_item == selection->begin())
+			first_component = App->uimanager->GetLastComponent();
+		else if (e_item == last_e_item)
+			last_component = App->uimanager->GetLastComponent();
+
 		switch ((*e_item)->GetEntityType())
 		{
 		case E_BUILDING:
 			b_selected = (Building*)*e_item;
-			new_btn = App->uimanager->AddButton(MARK_BTN, GetBuildingIconPositionFromAtlas(b_selected->GetBuildingType()));
+			new_btn->Set(MARK_BTN, GetBuildingIconPositionFromAtlas(b_selected->GetBuildingType()));
 			break;
 
 		case E_RESOURCE:
 			r_selected = (Resources*)*e_item;
-			new_btn = App->uimanager->AddButton(MARK_BTN, GetResourceIconPositionFromAtlas(r_selected->GetResourceType()));
+			new_btn->Set(MARK_BTN, GetResourceIconPositionFromAtlas(r_selected->GetResourceType()));
 			break;
 		}
+
 		add_entity_selected->btn_selected = new_btn;
+
 		add_entity_selected->pointer_entity = *e_item;
+
 		es_selection.push_back(add_entity_selected);
 
 		e_item++;
@@ -98,11 +121,12 @@ void GroupSelection::PrepareNoUnitSelection()
 
 void GroupSelection::Update()
 {
-	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
+	std::list<entity_selected*>::iterator es_item = es_selection.begin();
+
+	while (es_item != es_selection.end())
 	{
-		if((*es_item)->btn_selected->IsFocus())
-			if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
-				SetOneEntitySelection((*es_item)->pointer_entity);
+		if ((*es_item)->btn_selected->stat == UICOMPONENT_STAT::CLICKL_UP)
+			SetOneEntitySelection((*es_item)->pointer_entity);
 
 		if ((*es_item)->pointer_entity->GetHp() <= 0)
 		{
@@ -118,8 +142,6 @@ void GroupSelection::Update()
 
 	if (es_selection.empty())
 		delete_panel_info = true;
-
-	Draw();
 }
 
 void GroupSelection::DeleteESDeath()

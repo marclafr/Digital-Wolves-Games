@@ -44,8 +44,6 @@ bool UIHUDTownHallBarLife::Update()
 	hp_townhall = std::to_string(townhall->GetHp());
 	hp_townhall += "/1500";
 	life->ChangeText(hp_townhall.c_str());
-
-	Draw();
 	return true;
 }
 
