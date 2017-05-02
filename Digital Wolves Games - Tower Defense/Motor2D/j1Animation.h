@@ -16,31 +16,16 @@
 
 class Unit;
 
-enum ANIMATION_NAME
-{
-	NO_ANIM_NAME = 0,
-	ANIM_UNIT,
-	ANIM_SIMPLE_ARROW,
-	ANIM_FIRE_ARROW,
-	ANIM_ICE_ARROW,
-	ANIM_AIR_ARROW,
-	ANIM_SIMPLE_BOMB,
-	ANIM_FIRE_BOMB,
-	ANIM_ICE_BOMB,
-	ANIM_AIR_BOMB,
-	ANIM_FIRE_FLOOR
-};
-
-class Animation
+class AnimationType
 {
 	friend class j1Animation;
 
 public:
-	Animation(ANIMATION_NAME name);
-	~Animation();
+	AnimationType(std::string name);
+	~AnimationType();
 
 private:
-	ANIMATION_NAME name;
+	std::string name;
 	UNIT_TYPE unit_type;
 	ACTION action;
 	DIRECTION direction_type;
@@ -63,7 +48,6 @@ public:
 	const ACTION GetActionType() const;
 	const UNIT_TYPE GetUnitType() const;
 	const DIRECTION GetDirection() const;
-	const ANIMATION_NAME GetName() const;
 
 private:
 	bool CleanUp();
@@ -72,10 +56,10 @@ private:
 	void SetDirection(const pugi::xml_node node);
 };
 
-class AnimationManager
+class Animation
 {
 private:
-	Animation* anim_type;
+	AnimationType* anim_type;
 	float current_frame;
 	j1Timer	anim_timer;
 	j1Timer	idle_wait_timer;
@@ -85,14 +69,14 @@ private:
 	bool finished;
 
 public:
-	AnimationManager();
-	AnimationManager(Animation* type); //remember
-	AnimationManager(const AnimationManager& copy);
-	~AnimationManager();
+	Animation();
+	Animation(AnimationType* type); //remember
+	Animation(const Animation& copy);
+	~Animation();
 
-	void ChangeAnimation(Animation* type, float speed = 0.0f);
+	void ChangeAnimation(AnimationType* type, float speed = 0.0f);
 
-	const AnimationManager operator = (const AnimationManager& anim);
+	const Animation operator = (const Animation& anim);
 
 	bool Update(SDL_Rect& rect, iPoint& pivot_point);
 
@@ -103,7 +87,7 @@ public:
 
 //------------------------------------------------------------------------//
 
-class j1Animation :public j1Module
+class j1Animation:public j1Module
 {
 public:
 
@@ -111,18 +95,17 @@ public:
 
 	// Destructor
 	virtual ~j1Animation();
-
+	
 	bool Awake(pugi::xml_node& config);
 
 	bool Start();
 
 	bool CleanUp();
 
-	Animation* GetAnimationType(const ANIMATION_NAME name, const UNIT_TYPE unit = U_NO_UNIT, const ACTION action = A_NO_ACTION, const DIRECTION direction = D_NO_DIRECTION) const;
+	AnimationType* GetAnimationType(const UNIT_TYPE unit, const ACTION action, const DIRECTION direction) const;
 
 private:
-	std::vector<Animation*> animation_types;
-	ANIMATION_NAME AnimString2Enum(const std::string name);
+	std::vector<AnimationType*> animation_types;
 
 };
 

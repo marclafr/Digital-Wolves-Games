@@ -10,7 +10,6 @@
 #include "j1EntityManager.h"
 #include "j1Map.h"
 #include "j1Audio.h"
-#include "ProjectileManager.h"
 
 Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), attacking(nullptr), target (nullptr), priority(priority)
 {
@@ -24,184 +23,19 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 	switch (u_type)
 	{
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
-		//TODO: ALL UNITS VALUES MUST BE CHANGED
-
-	case U_GOD:
-		SetHp(1000);
-		attack = 100;
-		SetArmor(50);
-		speed = 5.0f;
-		rate_of_fire = 15.0f;
-		range = 350;
-		vision_range = 350;
-		unit_class = C_ARCHER;
-		unit_radius = 6;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_HEAVYCAVALRYARCHER);
-		else
-			SetTextureID(T_HEAVYCAVALRYARCHER);
-
-		priority = 1;
-		break;
-
-		//INFANTRY
-
-	case U_MILITIA:
-		SetHp(100);
-		attack = 8;
-		SetArmor(1);
-		speed = 1.0f;
-		rate_of_fire = 100.0f;
-		range = 30;
-		vision_range = 300;
-		unit_class = C_INFANTRY;
-		unit_radius = 6;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_MILITIA);
-		else
-			SetTextureID(T_MILITIA);
-		
-		priority = 1;
-		break;
-
-	case U_MANATARMS:
-		SetHp(100);
-		attack = 8;
-		SetArmor(1);
-		speed = 1.0f;
-		rate_of_fire = 100.0f;
-		range = 30;
-		vision_range = 300;
-		unit_class = C_INFANTRY;
-		unit_radius = 6;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_MANATARMS);
-		else
-			SetTextureID(T_MANATARMS);
-		priority = 1;
-		break;
-
-	case U_LONGSWORDMAN:
-		SetHp(100);
-		attack = 8;
-		SetArmor(1);
-		speed = 1.0f;
-		rate_of_fire = 100.0f;
-		range = 30;
-		vision_range = 300;
-		unit_class = C_INFANTRY;
-		unit_radius = 6;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_LONGSWORDMAN);
-		else
-			SetTextureID(T_LONGSWORDMAN);
-		priority = 1;
-		break;
-
 	case U_TWOHANDEDSWORDMAN:
 		SetHp(170);
 		attack = 12;
 		SetArmor(1);
 		speed = 1.0f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 200.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_radius = 6;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_TWOHANDEDSWORDMAN);
-		else
-			SetTextureID(T_TWOHANDEDSWORDMAN);
+		SetTextureID(T_TWOHANDEDSWORDMAN);
 		priority = 3;
-		break;
 
-	case U_CHAMPION:
-		SetHp(100);
-		attack = 8;
-		SetArmor(1);
-		speed = 1.0f;
-		rate_of_fire = 100.0f;
-		range = 30;
-		vision_range = 300;
-		unit_class = C_INFANTRY;
-		unit_radius = 6;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_CHAMPION);
-		else
-			SetTextureID(T_CHAMPION);
-		priority = 1;
-		break;
-
-	case U_SPEARMAN:
-		SetHp(100);
-		attack = 8;
-		SetArmor(1);
-		speed = 1.0f;
-		rate_of_fire = 100.0f;
-		range = 30;
-		vision_range = 300;
-		unit_class = C_INFANTRY;
-		unit_radius = 6;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_SPEARMAN);
-		else
-			SetTextureID(T_SPEARMAN);
-		priority = 1;
-		break;
-
-	case U_PIKEMAN:
-		SetHp(100);
-		attack = 8;
-		SetArmor(1);
-		speed = 1.0f;
-		rate_of_fire = 100.0f;
-		range = 30;
-		vision_range = 300;
-		unit_class = C_INFANTRY;
-		unit_radius = 6;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_PIKEMAN);
-		else
-			SetTextureID(T_PIKEMAN);
-		priority = 1;
-		break;
-
-			//---
-			//ARCHERS
-
-	case U_ARCHER:
-		SetHp(100);
-		attack = 8;
-		SetArmor(1);
-		speed = 1.0f;
-		rate_of_fire = 100.0f;
-		range = 150;
-		vision_range = 300;
-		unit_class = C_ARCHER;
-		unit_radius = 6;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_ARCHER);
-		else
-			SetTextureID(T_ARCHER);
-		priority = 1;
-		break;
-
-
-	case U_ARBALEST:
-		SetHp(100);
-		attack = 8;
-		SetArmor(1);
-		speed = 1.0f;
-		rate_of_fire = 100.0f;
-		range = 150;
-		vision_range = 300;
-		unit_class = C_ARCHER;
-		unit_radius = 6;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_ARBALEST);
-		else
-			SetTextureID(T_ARBALEST);
-		priority = 1;
 		break;
 
 	case U_CAVALRYARCHER:
@@ -209,110 +43,28 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 6;
 		SetArmor(1);
 		speed = 1.4f;
-		rate_of_fire = 100.0f;
-		range = 200;
-		vision_range = 250;
+		rate_of_fire = 200.0f;
+		range = 300;
+		vision_range = 350;
 		unit_class = C_ARCHER;
 		unit_radius = 8;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_CAVALRYARCHER);
-		else
-			SetTextureID(T_CAVALRYARCHER);
+		SetTextureID(T_CAVALRYARCHER);
 		priority = 2;
 		break;
-
-	case U_HEAVYCAVALRYARCHER:
-		SetHp(50);
-		attack = 6;
-		SetArmor(1);
-		speed = 1.4f;
-		rate_of_fire = 100.0f;
-		range = 200;
-		vision_range = 250;
-		unit_class = C_ARCHER;
-		unit_radius = 8;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_HEAVYCAVALRYARCHER);
-		else
-			SetTextureID(T_HEAVYCAVALRYARCHER);
-		priority = 2;
-		break;
-
-			//---
-			//CAVALRY
-
-	case U_PALADIN:
-		SetHp(50);
-		attack = 6;
-		SetArmor(1);
-		speed = 1.4f;
-		rate_of_fire = 100.0f;
-		range = 40;
-		vision_range = 250;
-		unit_class = C_CAVALRY;
-		unit_radius = 8;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_PALADIN);
-		else
-			SetTextureID(T_PALADIN);
-		priority = 2;
-		break;
-
-	case U_KNIGHT:
-		SetHp(50);
-		attack = 6;
-		SetArmor(1);
-		speed = 1.4f;
-		rate_of_fire = 100.0f;
-		range = 40;
-		vision_range = 250;
-		unit_class = C_CAVALRY;
-		unit_radius = 8;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_KNIGHT);
-		else
-			SetTextureID(T_KNIGHT);
-		priority = 2;
-		break;
-
-	case U_CAVALIER:
-		SetHp(50);
-		attack = 6;
-		SetArmor(1);
-		speed = 1.4f;
-		rate_of_fire = 100.0f;
-		range = 40;
-		vision_range = 250;
-		unit_class = C_CAVALRY;
-		unit_radius = 8;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_CAVALIER);
-		else
-			SetTextureID(T_CAVALIER);
-		priority = 2;
-		break;
-
-			//---
-			//SIEGE
 
 	case U_SIEGERAM:
 		SetHp(270);
 		attack = 4;
 		SetArmor(-5);
 		speed = 0.6f;
-		rate_of_fire = 250.0f;
+		rate_of_fire = 500.0f;
 		range = 30;
 		vision_range = 100;
 		unit_class = C_SIEGE;
 		unit_radius = 15;
-		if (side == S_ENEMY)
-			SetTextureID(T_ENEMY_SIEGERAM);
-		else
-			SetTextureID(T_SIEGERAM);
+		SetTextureID(T_SIEGERAM);
 		priority = 1;
 		break;
-
-		//TODO: ADD UNIT
 
 	default:
 		LOG("Error UNIT TYPE STATS NULL");
@@ -320,14 +72,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		break;
 	}
 
-	if (unit_type == U_GOD)
-		animation = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, action, direction));
-	else
-		animation = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
-
-	if(unit_class == C_SIEGE)
-		idle_siege = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));
-
+	animation = new Animation(App->anim->GetAnimationType(unit_type, action, direction));
 }
 
 Unit::~Unit()
@@ -342,25 +87,10 @@ void Unit::Update()
 
 	if (changed == true)
 	{
-		if (unit_type == U_GOD)
-		{
-			if (action == A_ATTACK)
-				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, action, direction), this->rate_of_fire);
-			else
-				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, action, direction));
-		}
-
+		if (action == A_ATTACK)
+			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action, direction), this->rate_of_fire);
 		else
-		{
-			if (action == A_ATTACK)
-				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), this->rate_of_fire);
-			else
-				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
-
-			if (unit_class == C_SIEGE)
-				idle_siege->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));;
-		}
-
+			animation->ChangeAnimation(App->anim->GetAnimationType(unit_type, action, direction));
 		changed = false;
 	}
 
@@ -454,7 +184,12 @@ void Unit::AI()
 
 		if (GetHp() <= 0)
 		{
-			UnitDies();
+			this->action = A_DIE;
+			this->SetEntityStatus(ST_NON_SELECTED);
+			if(GetSide() == S_ENEMY)
+				App->entity_manager->EnemyDead();
+			changed = true;
+			PlayDeathSound();
 			break;
 		}
 
@@ -493,7 +228,12 @@ void Unit::AI()
 
 		if (GetHp() <= 0)
 		{
-			UnitDies();
+			this->action = A_DIE;
+			this->SetEntityStatus(ST_NON_SELECTED);
+			if (GetSide() == S_ENEMY)
+				App->entity_manager->EnemyDead();
+			changed = true;
+			PlayDeathSound();
 			break;
 		}
 
@@ -505,6 +245,15 @@ void Unit::AI()
 			objective.y -= App->render->camera->GetPosition().y;
 
 			GoTo(objective);
+			break;
+		}
+
+		attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), range, GetSide());
+		if (attacking != nullptr)
+		{
+			this->action = A_ATTACK;
+			this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
+			changed = true;
 			break;
 		}
 
@@ -514,26 +263,13 @@ void Unit::AI()
 			changed = true;
 		}
 		
-		if (GetSide() == S_ENEMY)
+		if (target != App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide()))
 		{
-			attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), range, GetSide());
-			if (attacking != nullptr)
-			{
-				this->action = A_ATTACK;
-				this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
-				changed = true;
-				break;
-			}
-
-
-			if (target != App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide()))
-			{
-				target = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide());
-			}
-			if (target != nullptr && animation->Finished())
-			{
-				ChangeDirection(iPoint(target->GetX(), target->GetY()));
-			}
+			target = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide());	
+		}
+		if (target != nullptr && animation->Finished())
+		{
+			ChangeDirection(iPoint(target->GetX(), target->GetY()));
 		}
 
 		break;
@@ -542,39 +278,22 @@ void Unit::AI()
 
 		if (GetHp() <= 0)
 		{
-			UnitDies();
-			break;
-		}
-
-		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED && this->GetSide() == S_ALLY)
-		{
-			iPoint objective;
-			App->input->GetMousePosition(objective.x, objective.y);
-			objective.x -= App->render->camera->GetPosition().x;
-			objective.y -= App->render->camera->GetPosition().y;
-
-			GoTo(objective);
+			this->action = A_DIE;
+			this->SetEntityStatus(ST_NON_SELECTED);
+			if (GetSide() == S_ENEMY)
+				App->entity_manager->EnemyDead();
+			changed = true;
+			PlayDeathSound();
 			break;
 		}
 
 		if (attacking != nullptr)
 		{
-			if (animation->Finished())
-			{
-				if (unit_class == C_ARCHER)
-				{
-					if (unit_type == U_GOD)
-						App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 5, 20, 0, P_ICE_ARROW);
-					else
-						App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 15, 20, 0, P_BASIC_ARROW);
-				}
-				else
-					attacking->Damaged(attack);
-
+			if (animation->Finished()) {
+				attacking->Damaged(attack);
 				PlayAttackSound();
-				attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), range, GetSide());
 			}
-			if (attacking == nullptr)
+			if (attacking->GetHp() <= 0)
 			{
 				if (GetSide() == S_ENEMY)
 				{
@@ -616,17 +335,6 @@ void Unit::Draw()
 {
 	SDL_Rect rect;
 	iPoint pivot;
-	if (unit_class == C_SIEGE && action == A_WALK)
-	{
-		idle_siege->Update(rect, pivot);
-
-		SetPivot(pivot.x, pivot.y);
-		SetRect(rect);
-		if (direction == D_NORTH_EAST || direction == D_EAST || direction == D_SOUTH_EAST)
-			App->render->Blit(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_HORIZONTAL, GetPivot().x, GetPivot().y);
-		else
-			App->render->Blit(App->tex->GetTexture(GetTextureID()), GetX() - GetPivot().x, GetY() - GetPivot().y, &GetRect());
-	}
 
 	animation->Update(rect, pivot);
 	
@@ -841,34 +549,18 @@ bool Unit::GetNextTile()
 
 void Unit::PlayAttackSound() const
 {
-	if(unit_class == C_ARCHER)
-		App->audio->PlayFx(App->entity_manager->fx_arrow);
+	int rand_num = rand() % 3;
 
-	else
+	switch (rand_num)
 	{
-		int rand_num = rand() % 3;
-
-		switch (rand_num)
-		{
-		case 0:
-			App->audio->PlayFx(App->entity_manager->fx_attack01);
-			break;
-		case 1:
-			App->audio->PlayFx(App->entity_manager->fx_attack02);
-			break;
-		case 2:
-			App->audio->PlayFx(App->entity_manager->fx_attack03);
-			break;
-		}
+	case 0:
+		App->audio->PlayFx(App->entity_manager->fx_attack01);
+		break;
+	case 1:
+		App->audio->PlayFx(App->entity_manager->fx_attack02);
+		break;
+	case 2:
+		App->audio->PlayFx(App->entity_manager->fx_attack03);
+		break;
 	}
-}
-
-void Unit::UnitDies()
-{
-	this->action = A_DIE;
-	this->SetEntityStatus(ST_NON_SELECTED);
-	if (GetSide() == S_ENEMY)
-		App->entity_manager->EnemyDead();
-	changed = true;
-	PlayDeathSound();
 }

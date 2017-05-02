@@ -7,7 +7,6 @@
 enum ENTITY_TYPE;
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
-enum TOWER_TYPE;
 enum Side;
 
 struct info_button
@@ -20,15 +19,12 @@ struct info_button
 
 	BUILDING_TYPE b_type;
 
-	TOWER_TYPE t_type;
-
 	UNIT_TYPE u_type;
 
 	Side s_type;
 
 	void SetUnit(UNIT_TYPE type, Side side);
 	void SetBuilding(BUILDING_TYPE type);
-	void SetTurret(TOWER_TYPE type);
 
 };
 
@@ -45,7 +41,6 @@ public:
 	~UIHUDPanelButtons();
 
 	bool Update();
-
 	//x - 0 to 4 | y - 0 to 2 | Max 15 buttons
 	info_button* AddButton(uint x, uint y, uint atlas_x, uint atlas_y);
 

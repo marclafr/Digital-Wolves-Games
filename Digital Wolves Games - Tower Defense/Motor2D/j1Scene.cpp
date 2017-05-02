@@ -31,7 +31,7 @@
 #include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
 #include "j1Investigations.h"
-#include "Towers.h"
+#include "Task.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -59,7 +59,7 @@ bool j1Scene::Start()
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
 	App->render->camera->SetPosition(iPoint(2300, -800));
-	if(App->map->Load("AlphaOne.tmx") == true)
+	if(App->map->Load("OtherMap.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -81,32 +81,17 @@ bool j1Scene::Start()
 	CreateSceneUI();
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
-	townhall_bar_life->SetTownHall(townhall);
 	resource_food = (Resources*)App->entity_manager->CreateResource(FOOD, fPoint(1680, 1008));
-	resources_panel->AddResource(resource_food);
 	resource_gold = (Resources*)App->entity_manager->CreateResource(GOLD, fPoint(1680, 1008));
-	resources_panel->AddResource(resource_gold);
 	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(1680, 1008));
-	resources_panel->AddResource(resource_stone);
 	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1824, 1080));
-	resources_panel->AddResource(resource_wood);
-	townhalltower1 = (Building*)App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
-	townhalltower2 = (Building*)App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
+	townhalltower1 = (Building*)App->entity_manager->CreateBuilding(B_TURRET, fPoint(-624, 528), S_ALLY);
+	townhalltower2 = (Building*)App->entity_manager->CreateBuilding(B_TURRET, fPoint(-432, 624), S_ALLY);
 	
 	//Reset scores and timers
 	game_time.Start();
 	App->entity_manager->ResetScores();
 
-	//Animation test
-	a1 = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
-	a2 = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_ARROW));
-	a3 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_ARROW));
-	a4 = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_ARROW));
-	a5 = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
-	a6 = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
-	a7 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_BOMB));
-	a8 = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_BOMB));
-	a_fire = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
 	return true;
 }
 
@@ -128,64 +113,16 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	//ANIMATION TEST
-	SDL_Rect rect_test;
-	iPoint pivot;
-
-	a1->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 0, 300, &rect_test);
-	a2->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 100, 300, &rect_test);
-	a3->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 200, 300, &rect_test);
-	a4->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 300, 300, &rect_test);
-	a5->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 0, 400, &rect_test);
-	a6->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 100, 400, &rect_test);
-	a7->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 200, 400, &rect_test);
-	a8->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 300, 400, &rect_test);
-
-	a_fire->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_FIRE), 0, 200, &rect_test, SDL_FLIP_NONE, pivot.x, pivot.y);
-	//--
-
-
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
-
-	//TEST INVESTIGATIONS
+	//
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
 		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_FOOD));
 
 	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
 		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_INFANTRY_ATTACK));
-	//--
-
-	//CREATE UNITS
-	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_GOD, { -200.0f, 372 }, S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_SPEARMAN, { -200.0f, 372 }, S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_HEAVYCAVALRYARCHER, { -200.0f, 372 }, S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_KNIGHT, { -200.0f, 372 }, S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_CAVALIER, { -200.0f, 372 }, S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 372 }, S_ENEMY);
-	//--
-
+	//
 	//DEBUG: increase resources
 	if (App->debug_features.add_food)
 	{
@@ -214,19 +151,18 @@ bool j1Scene::Update(float dt)
 	//App->map->Draw();
 
 	// Camera Movement
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)// || ((y < (App->render->camera->GetHeight() / 30) && res.y > -30))
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || ((y < (App->render->camera->GetHeight() / 30) && res.y > -30)))
 		App->render->camera->MoveUp(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)//|| ((y > 750) && res.y < 2317)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || ((y > 750) && res.y < 2317))
 		App->render->camera->MoveDown(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)// || (x < (App->render->camera->GetWidth() / 70) && res.x > -2400)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || (x < (App->render->camera->GetWidth() / 70) && res.x > -2400))
 		App->render->camera->MoveLeft(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)//|| (x >(((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || (x >(((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349))
 		App->render->camera->MoveRight(floor(450.0f * dt));
 
-	/*
 	if (App->render->camera->GetPosition().x > 2700)
 	{
 		App->render->camera->SetPosition(iPoint(2699, App->render->camera->GetPosition().y));
@@ -243,7 +179,7 @@ bool j1Scene::Update(float dt)
 	{
 		App->render->camera->SetPosition(iPoint(App->render->camera->GetPosition().x, -1600));
 	}
-	*/
+
 	// Debug pathfinding ------------------------------
 
 	iPoint p = App->render->ScreenToWorld(x, y);
@@ -280,39 +216,80 @@ bool j1Scene::Update(float dt)
 
 	App->render->BlitAllEntities();
 
-	if (placing_basic_tower == true)
+	if (placing_tower == true)
 	{
-		PlacingBasicTower();
+		if (CanBuildTower())
+		{
+			if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
+			{
+				SDL_Rect rect;
+				rect = { 1,284,107,206 };
+				App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			}
+			else
+			{
+				SDL_Rect rect;
+				rect = { 580 ,538 ,107,206 };
+				//rect = { 610,1,107,206 };
+				App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+				{
+					if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+					{
+						App->audio->PlayFx(App->entity_manager->fx_construction);
+						if (App->pathfinding->IsConstructible_neutral(r) == true)
+						{
+							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_NEUTRAL);
+							BuildTower();
+						}
+						else if (App->pathfinding->IsConstructible_ally(r) == true)
+						{
+							App->entity_manager->CreateBuilding(B_TURRET, fPoint(p.x, p.y - 9), S_ALLY);
+							BuildTower();
+						}
+					}
+				}
+			}
+		}
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		{
+			placing_tower = false;
+		}
 	}
-	if (placing_bombard_tower == true)
-	{
-		PlacingBombardTower();
-	}
+
 	if (placing_wall == true) {
-		PlacingWall();
-	}
+		if (App->pathfinding->IsConstructible_ally(r) == false)
+		{
+			SDL_Rect rect;
+			rect = { 689,122,99,178 };
+			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
+		}
+		else if (App->pathfinding->IsConstructible_ally(r) == true)		
+		{
+			SDL_Rect rect;
+			rect = { 690,303,99,178};
+			//rect = { 325,218,99,178 };
+			App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949*99, 178*0.865169);
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+				{
+					if (App->pathfinding->IsConstructible_ally(r) == true)
+						if (CanBuildWall())
+						{
+							BuildWall();
+							App->audio->PlayFx(App->entity_manager->fx_construction);
+							App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint(p.x, p.y - 9), S_ALLY);
+						}
+				}
+			}
+		}
 
-	if (new_wave_button->GetStat() == CLICKL_DOWN)
-	{
-		new_wave_button->Set({ 1254, 93, 104 , 104 }, { 687, 1227, 104, 104 });
-		clicked = true;
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		{
+			placing_wall = false;
+		}
 	}
-	if (new_wave_button->GetStat() == CLICKL_UP)
-	{
-		new_wave_button->Set({ 1256, 95, 98 , 99 }, { 687, 1229, 98, 99 });
-		clicked = false;
-	}
-	if (new_wave_button->GetStat() == SELECTED && !clicked)
-	{
-		new_wave_button->Set({ 1252, 92, 104 , 104 }, { 580, 1226, 104, 104 });
-	}
-	if (new_wave_button->GetStat() == UNSELECTED)
-	{	
-		new_wave_button->Set({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
-		clicked = false;
-	}
-
-
 	return true;
 }
 
@@ -328,6 +305,7 @@ bool j1Scene::PostUpdate()
 		lose = true;
 		App->scene_manager->ChangeScene(SC_SCORE);
 	}
+
 	if (game_time.ReadSec() >= WINNING_TIME)
 	{
 		win = true;
@@ -337,7 +315,6 @@ bool j1Scene::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		App->scene_manager->ChangeScene(SC_SCORE);
-
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 		win = true;
@@ -358,7 +335,7 @@ bool j1Scene::CleanUp()
 	LOG("Freeing scene");
 	App->wave_manager->Disable();
 	App->entity_manager->CleanUp();
-	App->uimanager->CleanUp();
+	App->uimanager->SetAllToDelete();
 	App->pathfinding->CleanUp();
 	return true;
 }
@@ -393,139 +370,6 @@ void j1Scene::TrainSoldier()
 {
 	resource_wood->UseResource(TWOHANDED_WOOD_COST);
 	resource_stone->UseResource(TWOHANDED_STONE_COST);
-}
-
-void j1Scene::PlacingBasicTower()
-{
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	iPoint r = App->map->WorldToMap(p.x, p.y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-	SDL_Rect rect;
-	if (CanBuildTower())
-	{
-		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
-		{
-			rect = {411,0,107,208};
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
-		}
-		else
-		{
-			rect = { 521,0,107,208 };
-			//rect = { 610,1,107,206 };
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-			{
-				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
-				{
-					App->audio->PlayFx(App->entity_manager->fx_construction);
-					if (App->pathfinding->IsConstructible_neutral(r) == true)
-					{
-						App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
-						BuildTower();
-					}
-					else if (App->pathfinding->IsConstructible_ally(r) == true)
-					{
-						App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
-						BuildTower();
-					}
-				}
-			}
-		}
-	}
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-	{
-		placing_basic_tower = false;
-	}
-}
-
-void j1Scene::PlacingBombardTower()
-{
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	iPoint r = App->map->WorldToMap(p.x, p.y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-	SDL_Rect rect;
-	if (CanBuildTower())
-	{
-		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
-		{
-			rect = {889,0,130,281};
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.902913);
-		}
-		else
-		{
-			rect = { 759,0,130,281};
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.914591);
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-			{
-				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
-				{
-					App->audio->PlayFx(App->entity_manager->fx_construction);
-					if (App->pathfinding->IsConstructible_neutral(r) == true)
-					{
-						App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(p.x, p.y - 9));
-						BuildTower();
-					}
-					else if (App->pathfinding->IsConstructible_ally(r) == true)
-					{
-						App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(p.x, p.y - 9));
-						BuildTower();
-					}
-				}
-			}
-		}
-	}
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-	{
-		placing_bombard_tower = false;
-	}
-}
-
-void j1Scene::PlacingWall()
-{
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	iPoint r = App->map->WorldToMap(p.x, p.y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-
-	if (App->pathfinding->IsConstructible_ally(r) == false)
-	{
-		SDL_Rect rect;
-		rect = { 689,122,99,178 };
-		App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
-	}
-	else if (App->pathfinding->IsConstructible_ally(r) == true)
-	{
-		SDL_Rect rect;
-		rect = { 690,303,99,178 };
-		//rect = { 325,218,99,178 };
-		App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-		{
-			if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
-			{
-				if (App->pathfinding->IsConstructible_ally(r) == true)
-					if (CanBuildWall())
-					{
-						BuildWall();
-						App->audio->PlayFx(App->entity_manager->fx_construction);
-						App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint(p.x, p.y - 9), S_ALLY);
-					}
-			}
-		}
-	}
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-	{
-		placing_wall = false;
-	}
 }
 
 void j1Scene::HandleInput( SDL_Event event)
@@ -572,42 +416,27 @@ void j1Scene::HandleInput( SDL_Event event)
 
 		if (event.button.button == SDL_SCANCODE_1)
 		{
-			if (placing_basic_tower == false) 
-			{
-				placing_basic_tower = true;
-				placing_bombard_tower = false;
-				placing_wall = false;
-			}
+			if (placing_tower == false)
+				placing_tower = true;
 			else
-				placing_basic_tower = false;
+				placing_tower = false;
+
+			if (placing_wall == true)
+				placing_wall = false;
 		}
 
 		if (event.button.button == SDL_SCANCODE_2)
 		{
-			if (placing_bombard_tower == false)
-			{
-				placing_bombard_tower = true;
-				placing_basic_tower = false;
-				placing_wall = false;
-			}
+			if (placing_wall == false)
+				placing_wall = true;
 			else
-				placing_bombard_tower = false;
+				placing_wall = false;
+
+			if (placing_tower == true) 
+				placing_tower = false;
 		}
 
 		if (event.button.button == SDL_SCANCODE_3)
-		{
-			if (placing_wall == false)
-			{
-			placing_wall = true;
-			placing_basic_tower = false;
-			placing_bombard_tower = false;
-			}
-			else
-				placing_wall = false;
-				
-		}
-
-		if (event.button.button == SDL_SCANCODE_4)
 		{
 			if (App->scene->CanTrainSoldier())
 			{
@@ -648,60 +477,55 @@ void j1Scene::CreateSceneUI()
 {
 	//UIElements
 	//Top_HUD
-	top_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	top_hud->Set({ 0, 0, 1336, 23 }, { 0, 1011, 1366, 23 });
-	top_hud->SetInteractive(false);
+	App->uimanager->AddComponent(UIT_UIIMAGE,{ 0, 0, 1336, 23 }, { 0, 1011, 1366, 23 });
 
-	objectives = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	objectives->Set({ 1252, 2, 36, 14 }, { 1252, 996, 36, 14 });
+		//Objectives
+	App->uimanager->AddButton({ 1252, 2, 36, 14 }, { 1252, 996, 36, 14 });
 
-	tree_tech = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	tree_tech->Set({ 1288, 2, 35, 14 }, { 1289, 996, 35, 14 });
+		//Tree Tech
+	App->uimanager->AddButton({ 1288, 2, 35, 14 }, { 1289, 996, 35, 14 });
 
-	ingame_menu = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	ingame_menu->Set({ 1323, 2, 36 , 15 }, { 1325, 996, 36, 14 });
+		//In Game Menu
+	App->uimanager->AddButton({ 1323, 2, 36 , 15 }, { 1325, 996, 36, 14 });
 
-	resources_panel = (UIHUDResources*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDRESOURCES);
+		//Resource Panel
+	App->uimanager->AddResourcesPanel();
 
-	title_game_name = (UILabel*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UILABEL);
-	title_game_name->Set(685, 3, "AoE 2: Defenders");
-	title_game_name->SetInteractive(false);
+		//Title Game Name
+	App->uimanager->AddLabel(685, 3, "AoE 2: Defenders");
 
 	//Down_HUD
-	down_hud = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	down_hud->Set({ 0, 643, 1366, 125 }, { 0, 1036, 1366, 125 });
-	down_hud->SetInteractive(false);
+	App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 643, 1366, 125 }, { 0, 1036, 1366, 125 });
 
-	btn_description = (UICheckbutton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UICHECKBUTTON);
-	btn_description->clicked = true;
-	btn_description->Set({ 1316, 653, 19, 17 }, { 1347, 1163, 19, 17 }, { 1347, 1163, 19, 17 });
+		//Button Description
+	UICheckbutton* btn_description = App->uimanager->AddCheckButton({ 1316, 653, 19, 17 }, { 1347, 1163, 19, 17 }, { 1347, 1163, 19, 17 });
+	btn_description->SetStat(CB_CHECK);
 
-	panel = (UIHUDPanelButtons*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELBUTTONS);
-	info_button* panel_btns = nullptr;
-	panel_btns = panel->AddButton(0, 0, 878, 910);
+		//Panel Buttons
+	UIHUDPanelButtons* panel = App->uimanager->AddPanelButtons();
+	info_button* panel_btns = panel->AddButton(0, 0, 878, 910);
 	panel_btns->SetBuilding(B_TURRET);
 	panel_btns = panel->AddButton(2, 0, 774, 962);
 	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
-	//	panel_btns = panel->AddButton(2, 1, 774, 962);
-	//	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ENEMY);
 	panel_btns = panel->AddButton(1, 0, 774, 910);
 	panel_btns->SetBuilding(B_STONE_WALL);
 
-	panel_info = (UIHUDPanelInfo*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDPANELINFO);
+		//Panel Info
+	App->uimanager->AddPanelInfo();
 
-	hud_description = (UIHUDDescription*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDDESCRIPTION);
+		//Panel Description
+	UIHUDDescription* hud_description = App->uimanager->AddPanelDescription();
 	hud_description->SetEnableButton(btn_description);
 
-	townhall_bar_life = (UIHUDTownHallBarLife*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIHUDTOWNHALLBARLIFE);
-
-	new_wave_button = (UIButton*)App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIBUTTON);
-	new_wave_button->Set({ 1266, 95, 98 , 99 }, { 476, 1229, 98, 99 });
-	new_wave_button->SetInteractive(true);
-
+		//Town Hall Bar Life
+	App->uimanager->AddTownHallBarLife();
 	
-
+		//New Wave Button
+	UIButton* new_wave_button = App->uimanager->AddButton({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
+	new_wave_button->SetClickedTextRect({ 687, 1227, 104, 104 });
+	new_wave_button->SetMouseOnTopTextRect({ 580, 1226, 104, 104 });
 
 	//INFO SCORE, TIME, ENEMIES LEFT
-	info_ui = App->uimanager->addUIComponent(UICOMPONENT_TYPE::UIIMAGE);
-	info_ui->Set({ 1236, 25, 130, 65 }, { 405, 1162, 130, 65 });
+	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 405, 1162, 130, 65 });
+	App->uimanager->SetInfoUIComponent(info_ui);
 }
