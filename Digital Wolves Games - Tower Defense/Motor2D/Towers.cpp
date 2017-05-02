@@ -141,15 +141,14 @@ void Tower::Draw()
 			SDL_Rect rect = { 0,0,96,65 };
 			SetRect(rect);
 			SetPivot(0.53125 * 96, 0.59375 * 65);
-			
-			
+
 		}
 		else if (GetBuildTime() > 3 && GetBuildTime() <= 6)
 		{
 			SDL_Rect rect = { 98,0,100,75 };
 			SetRect(rect);
 			SetPivot(0.55 * 100, 0.643836 * 75);
-			
+
 		}
 		else if (GetBuildTime() > 6 && GetBuildTime() <= 9)
 		{
@@ -166,40 +165,12 @@ void Tower::Draw()
 			case T_BASIC_TOWER:
 				SetRect({ 302,0,107,208 });
 				SetPivot(0.504673 * 107, 0.902913 * 208);
-				SetRect({ 468,208,142,238 });
-				SetPivot(0.485714 * 142, 0.910448 * 238);
 				break;
 
 			case T_BOMBARD_TOWER:
 				SetRect({ 629,0,130,281 });
 				SetPivot(0.5 * 130, 0.914591 * 281);
 				break;
-
-			case T_ICE_TOWER:
-				SetRect({ 116,208,104,235 });
-				SetPivot(0.485714 * 104, 0.910448 * 235);
-				break;
-			case T_BOMBARD_ICE_TOWER:
-				SetRect({ 221,208,104,235 });
-				SetPivot(0.485714 * 104, 0.910448 * 235);
-				break;
-			case T_AIR_TOWER:
-				SetRect({ 326,208,142,238 });
-				SetPivot(0.485714 * 142, 0.910448 * 238);
-				break;
-			case T_BOMBARD_AIR_TOWER:
-				SetRect({ 468,208,142,238 });
-				SetPivot(0.485714 * 142, 0.910448 * 238);
-				break;
-			case T_FIRE_TOWER:
-				SetRect({ 924,283,119,237 });
-				SetPivot(0.508621 * 119, 0.898305 * 237);
-				break;
-			case T_BOMBARD_FIRE_TOWER:
-				SetRect({ 0,235,116,258 });
-				SetPivot(0.508621 * 116, 0.898305 * 258);
-				break;
-
 
 			default:
 				break;
