@@ -649,10 +649,15 @@ void j1Scene::CreateSceneUI()
 	UIHUDPanelButtons* panel = App->uimanager->AddPanelButtons();
 	info_button* panel_btns = panel->AddButton(0, 0, 878, 910);
 	panel_btns->SetBuilding(B_TURRET);
-	panel_btns = panel->AddButton(2, 0, 774, 962);
-	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
-	panel_btns = panel->AddButton(1, 0, 774, 910);
+	panel_btns->btn->SetTask(new PlaceBasicTowerTask());
+	panel_btns = panel->AddButton(1, 0, 878, 910);
+	panel_btns->btn->SetTask(new PlaceBombartTowerTask());
+	panel_btns = panel->AddButton(2, 0, 774, 910);
 	panel_btns->SetBuilding(B_STONE_WALL);
+	panel_btns->btn->SetTask(new PlaceWallTask());
+	panel_btns = panel->AddButton(3, 0, 774, 962);
+	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
+	panel_btns->btn->SetTask(new TrainUnitTask());
 
 	//Panel Info
 	App->uimanager->AddPanelInfo();

@@ -125,4 +125,69 @@ public:
 	}
 };
 
+class PlaceBasicTowerTask : public Task
+{
+public:
+	bool Execute()
+	{
+		if (App->scene->placing_bombard_tower == false)
+		{
+			App->scene->placing_bombard_tower = true;
+			App->scene->placing_basic_tower = false;
+			App->scene->placing_wall = false;
+		}
+		else
+			App->scene->placing_bombard_tower = false;
+		return true;
+	}
+};
+
+class PlaceBombartTowerTask : public Task
+{
+public:
+	bool Execute() 
+	{
+		if (App->scene->placing_bombard_tower == false)
+		{
+			App->scene->placing_bombard_tower = true;
+			App->scene->placing_basic_tower = false;
+			App->scene->placing_wall = false;
+		}
+		else
+			App->scene->placing_bombard_tower = false;
+		return true;
+	}
+};
+
+class PlaceWallTask : public Task
+{
+public:
+	bool Execute()
+	{
+		if (App->scene->placing_wall == false)
+		{
+			App->scene->placing_wall = true;
+			App->scene->placing_basic_tower = false;
+			App->scene->placing_bombard_tower = false;
+		}
+		else
+			App->scene->placing_wall = false;
+		return true;
+	}
+};
+
+class TrainUnitTask : public Task
+{
+public:
+	bool Execute()
+	{
+		if (App->scene->CanTrainSoldier())
+		{
+			App->scene->TrainSoldier();
+			App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(-480, 552), S_ALLY);
+		}
+		return true;
+	}
+};
+
 #endif

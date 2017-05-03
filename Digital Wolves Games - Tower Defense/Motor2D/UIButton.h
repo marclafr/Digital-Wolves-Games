@@ -27,7 +27,7 @@ private:
 
 	bool is_ui_pannel = false;
 
-	UILabel* title;
+	UILabel* title = nullptr;
 
 public:
 	UIButton(UICOMPONENT_TYPE type);
