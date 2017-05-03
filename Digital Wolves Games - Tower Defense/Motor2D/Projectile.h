@@ -1,6 +1,8 @@
 #ifndef _PROJECTILE
 #define _PROJECTILE
 
+#define AREA_DMG_RADIUS 30
+
 #include "j1App.h"
 #include "j1Module.h"
 #include "SDL/include/SDL_rect.h"
@@ -41,6 +43,8 @@ private:
 	int StartHeight;
 	int CurveHeight;
 	AnimationManager* arrow_anim = nullptr;
+
+	void AreaDamage(int damage, fPoint center, int radius);
 public:
 
 	Projectile(fPoint initialpos, Entity* target, int damage, float TimeInSecs,int Startheight, int Curveheight, PROJECTILE_TYPE type);

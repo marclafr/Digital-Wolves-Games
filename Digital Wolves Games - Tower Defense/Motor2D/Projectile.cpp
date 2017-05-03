@@ -76,9 +76,27 @@ void Projectile::Update()
 
 	Draw();
 	
-	if (Target != nullptr && ProjectilePos == 1) 
-		Target->Damaged(Damage);
-
+	if (Target != nullptr && ProjectilePos == 1)
+	{
+		switch (projectile_type)
+		{
+		case P_BASIC_ARROW:
+		case P_FIRE_ARROW:
+		case P_ICE_ARROW:
+		case P_AIR_ARROW:
+			Target->Damaged(Damage);
+			break;
+		case P_CANNONBALL:
+		case P_FIRE_CANNONBALL:
+		case P_ICE_CANNONBALL:
+		case P_AIR_CANNONBALL:
+			Target->Damaged(Damage);
+			AreaDamage(Damage, Target->GetPosition(), AREA_DMG_RADIUS);
+			break;
+		default:
+			break;
+		}
+	}
 
 }
 
@@ -103,4 +121,10 @@ int Projectile::GetDamage() const
 void Projectile::SetRect(SDL_Rect rect)
 {
 	this->rect = rect;
+}
+
+void Projectile::AreaDamage(int damage, fPoint center, int radius)
+{
+	//TODO: Create elipse and check if any unit is inside, if so, damage them.
+
 }
