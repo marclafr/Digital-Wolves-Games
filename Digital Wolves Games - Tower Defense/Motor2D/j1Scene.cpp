@@ -657,7 +657,9 @@ void j1Scene::CreateSceneUI()
 	panel_btns->btn->SetTask(new PlaceWallTask());
 	panel_btns = panel->AddButton(3, 0, 774, 962);
 	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
-	panel_btns->btn->SetTask(new TrainUnitTask());
+	panel_btns->btn->SetTask(new TrainUnitTask(U_TWOHANDEDSWORDMAN));
+	panel_btns = panel->AddButton(4, 0, 774, 962);
+	panel_btns->btn->SetTask(new TrainUnitTask(U_CAVALIER));
 
 	//Panel Info
 	App->uimanager->AddPanelInfo();

@@ -178,13 +178,17 @@ public:
 
 class TrainUnitTask : public Task
 {
+private:
+	UNIT_TYPE u_type;
 public:
+	TrainUnitTask(UNIT_TYPE u_type) : u_type(u_type) {}
+
 	bool Execute()
 	{
 		if (App->scene->CanTrainSoldier())
 		{
 			App->scene->TrainSoldier();
-			App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(-480, 552), S_ALLY);
+			App->entity_manager->CreateUnit(u_type, fPoint(-480, 552), S_ALLY);
 		}
 		return true;
 	}
