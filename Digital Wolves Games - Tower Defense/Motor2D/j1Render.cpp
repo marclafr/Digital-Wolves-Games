@@ -310,6 +310,37 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	return ret;
 }
 
+bool j1Render::DrawElipse(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, float angle, Uint8 a, bool use_camera) const
+{
+	bool ret = true;
+	uint scale = App->win->GetScale();
+
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+
+	int result = -1;
+	SDL_Point points[120];
+
+	float factor = ((float)M_PI / 180.0f) * 3;
+
+	for (uint i = 0; i < 120; ++i)
+	{
+		points[i].x = (int)(x + radius * cos(i * factor));
+		points[i].y = (int)(y + radius * sin(i * factor) * sin(angle * (PI / 180)));
+	}
+
+	result = SDL_RenderDrawPoints(renderer, points, 120);
+
+	if (result != 0)
+	{
+		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
+
 void j1Render::PushEntity(Entity* entity)
 {
 	std::deque<Entity*>::iterator queue_pos = sprite_queue.begin();
@@ -346,7 +377,7 @@ void j1Render::BlitAllEntities()
 			//selected should change cus after sprite order implementation it gets printed before the acual unit sprite 
 			
 			if (u_sp->GetEntityStatus() == ST_SELECTED)
-				App->render->DrawCircle(u_sp->GetX() + camera->GetPosition().x, u_sp->GetY() + camera->GetPosition().y, u_sp->GetUnitRadius(), 255, 255, 255);
+				App->render->DrawElipse(u_sp->GetX() + camera->GetPosition().x, u_sp->GetY() + camera->GetPosition().y, u_sp->GetUnitRadius(), 255, 255, 255, 20);
 
 		}
 		else
