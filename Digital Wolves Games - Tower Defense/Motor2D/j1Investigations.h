@@ -5,19 +5,12 @@
 #include "j1Timer.h"
 #include <vector>
 
-#define COST_INCREASE_BY_LVL 100
+#define COST_INCREASE_BY_LVL 150
 
 enum LEVEL
 {
 	INV_LVL_LOCKED,
 	INV_LVL_UNLOCKED,
-	INV_LVL_1,
-	INV_LVL_2,
-	INV_LVL_3,
-	INV_LVL_4,
-	INV_LVL_5,
-	INV_LVL_6
-	//look for: " CHANGE IF MAX LEVEL IS CHANGED" in case you add more levels and add more cases to upgrade them.
 };
 
 enum INVESTIGATION_TYPE
@@ -62,7 +55,6 @@ public:
 	bool has_levels = true;
 	LEVEL investigation_level = INV_LVL_LOCKED;
 	INVESTIGATION_STATE inv_state = INV_S_IDLE;
-	bool max_level = false;
 	float time_to_upgrade;
 	j1Timer upgrade_timer;
 	uint cost = 0;

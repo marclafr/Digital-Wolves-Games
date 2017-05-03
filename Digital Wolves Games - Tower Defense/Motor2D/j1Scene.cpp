@@ -155,7 +155,7 @@ bool j1Scene::Update(float dt)
 
 	//TEST INVESTIGATIONS
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_FOOD));
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_GOLD));
 
 	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
 		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_INFANTRY_ATTACK));

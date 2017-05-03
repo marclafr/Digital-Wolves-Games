@@ -60,7 +60,7 @@ bool j1Investigations::Update(float dt)
 			break;
 
 		case INV_S_COMPLETED:
-			if (investigations[i]->has_levels == true && investigations[i]->max_level == false)
+			if (investigations[i]->has_levels == true)
 				investigations[i]->inv_state = INV_S_IDLE;
 			break;
 
@@ -108,14 +108,14 @@ bool j1Investigations::DeleteInvestigation(Investigation* ptr)
 bool j1Investigations::CanInvestigate(Investigation* investigation)
 {
 	Resources* current_gold = App->scene->GetResource(GOLD);
-	if (current_gold->CanUseResource(investigation->cost) && investigation->max_level == false)
+	if (current_gold->CanUseResource(investigation->cost))
 	{
 		investigation->inv_state = INV_S_IN_COURSE;
 		DoInvestigationUpgrade(investigation);
 		return true;
 	}
 
-	if (investigation->investigation_level == INV_LVL_UNLOCKED || investigation->investigation_level == INV_LVL_6)	//TODO CHANGE IF MAX LEVEL IS CHANGED
+	if (investigation->investigation_level == INV_LVL_UNLOCKED)
 		investigation->inv_state = INV_S_COMPLETED;
 	else
 		investigation->inv_state = INV_S_IDLE;
@@ -168,32 +168,27 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 		if (investigation->has_levels == false)
 		{
 			investigation->investigation_level = INV_LVL_UNLOCKED;
-			investigation->max_level = true;
 			return true;
 		}
 
-		switch (investigation->investigation_level)
+		switch (investigation->investigation_type)
 		{
-		case INV_LVL_LOCKED:
-			investigation->investigation_level = INV_LVL_1;
+		case INV_FOOD:
+			if (!App->scene->resource_food->ReduceCollectTime(2))
+				App->scene->resource_food->IncreaseResourceAmount(25);
 			break;
-		case INV_LVL_1:
-			investigation->investigation_level = INV_LVL_2;
+		case INV_WOOD:
+			if(!App->scene->resource_wood->ReduceCollectTime(2))
+				App->scene->resource_wood->IncreaseResourceAmount(25);
 			break;
-		case INV_LVL_2:
-			investigation->investigation_level = INV_LVL_3;
+		case INV_GOLD:
+			if(!App->scene->resource_gold->ReduceCollectTime(2))
+				App->scene->resource_gold->IncreaseResourceAmount(25);
 			break;
-		case INV_LVL_3:
-			investigation->investigation_level = INV_LVL_4;
+		case INV_STONE:
+			if(!App->scene->resource_stone->ReduceCollectTime(2))
+				App->scene->resource_stone->IncreaseResourceAmount(25);
 			break;
-		case INV_LVL_4:
-			investigation->investigation_level = INV_LVL_5;
-			break;
-		case INV_LVL_5:
-			investigation->investigation_level = INV_LVL_6;
-			investigation->max_level = true;
-			break;
-			//TODO: CHANGE IF MAX LEVEL IS CHANGED
 		default:
 			break;
 		}

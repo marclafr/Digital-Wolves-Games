@@ -46,6 +46,8 @@ public:
 	bool CanUseResource(int cost);
 	bool UseResource(int cost);
 	int GetResource();
+	bool ReduceCollectTime(float reduction);
+	void IncreaseResourceAmount(int amount);
 };
 
 #endif

@@ -564,7 +564,7 @@ void Unit::AI()
 				if (unit_class == C_ARCHER)
 				{
 					if (unit_type == U_GOD)
-						App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 5, 20, 0, P_ICE_ARROW);
+						App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 5, 30, 0, P_ICE_ARROW);
 					else
 						App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 15, 20, 0, P_BASIC_ARROW);
 				}

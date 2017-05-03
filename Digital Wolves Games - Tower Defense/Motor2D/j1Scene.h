@@ -78,11 +78,6 @@ private:
 
 	SDL_Rect select_rect;
 
-	Resources* resource_food;
-	Resources* resource_wood;
-	Resources* resource_gold;
-	Resources* resource_stone;
-
 	Building* townhall;
 	Building* townhalltower1;
 	Building* townhalltower2;
@@ -92,6 +87,13 @@ public:
 
 public:
 	j1Timer game_time;
+
+	//RESOURCES
+	Resources* resource_food;
+	Resources* resource_wood;
+	Resources* resource_gold;
+	Resources* resource_stone;
+	//--
 
 	//ANIMATION TEST
 	AnimationManager* a1;

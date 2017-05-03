@@ -255,6 +255,7 @@ const bool Animation::GetLoopState() const
 
 const SDL_Rect Animation::GetFrame(int frame_num) const
 {
+	//TODO: if frame_num> frames.size?????? it broke once
 	return frames[frame_num];
 }
 
@@ -330,16 +331,16 @@ const AnimationManager AnimationManager::operator = (const AnimationManager & an
 
 bool AnimationManager::Update(SDL_Rect & rect, iPoint & pivot_point)
 {
+	if (finished == true && loop == true)
+	{
+		Reset();
+	}
+	
 	rect = anim_type->GetFrame(current_frame);
 	pivot_point = anim_type->GetPivot(current_frame);
 
 	if (wait_started == false)
 		current_frame = (float)floor(anim_timer.Read() / speed);
-
-	if (finished == true && loop == true)
-	{
-		Reset();
-	}
 
 	return Finished();
 }

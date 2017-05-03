@@ -21,7 +21,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
-		collect_time = 12.0f;
+		collect_time = 11.0f;
 		amount_collected = 50;
 		build_time = 7.0f;
 		rect = { 1,146,171,101 };	//TODO CHANGE RECT/PIVOT : SPRITE?????
@@ -36,7 +36,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
-		collect_time = 10.0f;
+		collect_time = 11.0f;
 		amount_collected = 100;
 		build_time = 7.0f;
 		rect = { 242,0,156,138 };
@@ -51,7 +51,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
-		collect_time = 10.0f;
+		collect_time = 11.0f;
 		amount_collected = 100;
 		build_time = 7.0f;
 		rect = { 242,0,156,138 };	//TODO CHANGE RECT/PIVOT : SPRITE?????
@@ -66,7 +66,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
-		collect_time = 12.0f;
+		collect_time = 11.0f;
 		amount_collected = 50;
 		build_time = 7.0f;
 		rect = { 1,146,171,101 };
@@ -135,6 +135,22 @@ const double Resources::GetBuildTime() const
 int Resources::GetResource()
 {
 	return resource;
+}
+
+bool Resources::ReduceCollectTime(float reduction)
+{
+	collect_time -= reduction;
+	if (collect_time < 1.0f)
+	{
+		collect_time = 1.0f;
+		return false;
+	}
+	return true;
+}
+
+void Resources::IncreaseResourceAmount(int amount)
+{
+	amount_collected += amount;
 }
 
 void Resources::AddResource(int add) 
