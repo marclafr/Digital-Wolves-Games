@@ -70,6 +70,10 @@ const char* GetUnitName(const UNIT_TYPE type)
 		ret = "Paladin";
 		break;
 
+	case U_GOD:
+		ret = "GOD";
+		break;
+
 		//TODO: ADD UNIT
 
 	default:
