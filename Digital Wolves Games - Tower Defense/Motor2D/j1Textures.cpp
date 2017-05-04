@@ -86,7 +86,7 @@ bool j1Textures::Start()
 	App->tex->Load("textures/Towers.png", T_TURRET);
 	App->tex->Load("animations/StoneWall.png", T_WALL);
 	App->tex->Load("textures/Extras.png", T_TOWNHALL);
-	App->tex->Load("textures/Resouce.png", T_RESOURCE);
+	App->tex->Load("textures/Resouces.png", T_RESOURCE);
 	App->tex->Load("animations/HorizontalArrowAngles.png", T_ARROW);
 	App->tex->Load("animations/ArrowsBombs.png", T_ARROW_BOMB);
 	App->tex->Load("animations/fireTest.png", T_FIRE);

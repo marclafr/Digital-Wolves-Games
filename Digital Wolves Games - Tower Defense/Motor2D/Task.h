@@ -130,14 +130,14 @@ class PlaceBasicTowerTask : public Task
 public:
 	bool Execute()
 	{
-		if (App->scene->placing_bombard_tower == false)
+		if (App->scene->placing_basic_tower == false)
 		{
-			App->scene->placing_bombard_tower = true;
-			App->scene->placing_basic_tower = false;
+			App->scene->placing_basic_tower = true;
+			App->scene->placing_bombard_tower = false;
 			App->scene->placing_wall = false;
 		}
 		else
-			App->scene->placing_bombard_tower = false;
+			App->scene->placing_basic_tower = false;
 		return true;
 	}
 };

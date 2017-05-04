@@ -4,6 +4,7 @@
 #include "j1Render.h"
 #include "j1Map.h"
 #include "Camera.h"
+#include "p2Log.h"
 
 
 Camera::Camera(Camera & copy) : moving(false), destination(iPoint(0,0)), speed(0), x_movement(0), y_movement(0), zoom(0.0f), opacity(255), frames_to_black(0), frames_in_black(0), frames_to_light(0), opacity_delta(0)

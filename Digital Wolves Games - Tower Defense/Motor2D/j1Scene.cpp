@@ -78,10 +78,10 @@ bool j1Scene::Start()
 	CreateSceneUI();
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
-	resource_food = (Resources*)App->entity_manager->CreateResource(FOOD, fPoint(1680, 1008));
-	resource_gold = (Resources*)App->entity_manager->CreateResource(GOLD, fPoint(1680, 1008));
-	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(1680, 1008));
-	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1824, 1080));
+	resource_food = (Resources*)App->entity_manager->CreateResource(FOOD, fPoint(860, 640));
+	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1040, 775));
+	resource_gold = (Resources*)App->entity_manager->CreateResource(GOLD, fPoint(1000, 645));
+	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(1200, 750));
 	townhalltower1 = (Building*)App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
 	townhalltower2 = (Building*)App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
 	
@@ -152,16 +152,23 @@ bool j1Scene::Update(float dt)
 
 	//TEST INVESTIGATIONS
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_GOLD));
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_WOOD));
 
 	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
-		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_INFANTRY_ATTACK));
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_STONE));
+
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_CAVALRY_ATTACK));
+
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_CAVALRY_DEFENSE));
 	//--
 
 	//CREATE UNITS
 	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_GOD, { -200.0f, 372 }, S_ALLY);
 
+	/*
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_SPEARMAN, { -200.0f, 372 }, S_ALLY);
 
@@ -173,9 +180,9 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_CAVALIER, { -200.0f, 372 }, S_ALLY);
-
+	*/
 	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);
+		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);	
 	//--
 
 	//DEBUG: increase resources
@@ -779,19 +786,19 @@ void j1Scene::CreateSceneUI()
 
 	//Panel Buttons
 	UIHUDPanelButtons* panel = App->uimanager->AddPanelButtons();
-	info_button* panel_btns = panel->AddButton(0, 0, 878, 910);
+	info_button* panel_btns = panel->AddButton(0, 0, 826, 910);
 	panel_btns->SetBuilding(B_TURRET);
 	panel_btns->btn->SetTask(new PlaceBasicTowerTask());
-	panel_btns = panel->AddButton(1, 0, 878, 910);
+	panel_btns = panel->AddButton(1, 0, 826, 910);	//TODO: CHANGE RECT
 	panel_btns->btn->SetTask(new PlaceBombartTowerTask());
-	panel_btns = panel->AddButton(2, 0, 774, 910);
+	panel_btns = panel->AddButton(2, 0, 774, 936);
 	panel_btns->SetBuilding(B_STONE_WALL);
 	panel_btns->btn->SetTask(new PlaceWallTask());
 	panel_btns = panel->AddButton(3, 0, 774, 962);
 	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
 	panel_btns->btn->SetTask(new TrainUnitTask(U_TWOHANDEDSWORDMAN));
-	panel_btns = panel->AddButton(4, 0, 774, 962);
-	panel_btns->btn->SetTask(new TrainUnitTask(U_CAVALIER));
+	panel_btns = panel->AddButton(4, 0, 930, 910);
+	panel_btns->btn->SetTask(new TrainUnitTask(U_PALADIN));
 
 	//Panel Info
 	App->uimanager->AddPanelInfo();

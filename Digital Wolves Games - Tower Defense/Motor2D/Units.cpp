@@ -242,12 +242,12 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 			//CAVALRY
 
 	case U_PALADIN:
-		SetHp(50);
-		attack = 6;
-		SetArmor(1);
+		SetHp(200);
+		attack = 15;
+		SetArmor(3);
 		speed = 1.4f;
 		rate_of_fire = 100.0f;
-		range = 40;
+		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
 		unit_radius = 25;
@@ -264,7 +264,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetArmor(1);
 		speed = 1.4f;
 		rate_of_fire = 100.0f;
-		range = 40;
+		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
 		unit_radius = 25;
@@ -281,7 +281,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetArmor(1);
 		speed = 1.4f;
 		rate_of_fire = 100.0f;
-		range = 40;
+		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
 		unit_radius = 25;

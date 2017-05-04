@@ -183,20 +183,20 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 
 		if (flip == SDL_FLIP_HORIZONTAL)
 		{
-			screen_position.x -= (rect.w - pivot_x);
-			screen_position.y -= pivot_y;
+			rect.x -= (rect.w - pivot_x);
+			rect.y -= pivot_y;
 		}
 
 		else if (flip == SDL_FLIP_VERTICAL)
 		{
-			screen_position.x -= pivot_x;
-			screen_position.y -= (rect.h - pivot_y);
+			rect.x -= pivot_x;
+			rect.y -= (rect.h - pivot_y);
 		}
 
 		else if (flip == SDL_FLIP_NONE)
 		{
-			screen_position.x -= pivot_x;
-			screen_position.y -= pivot_y;
+			rect.x -= pivot_x;
+			rect.y -= pivot_y;
 		}
 
 		rect.w *= scale;
@@ -214,11 +214,11 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	
 		if (not_in_world == false)
 		{
-			rect = App->render->camera->GetZoomedRect(SDL_Rect{ screen_position.x,screen_position.y,rect.w,rect.h });
-			SDL_SetTextureAlphaMod(texture, App->render->camera->GetOpacity());
+			//rect = App->render->camera->GetZoomedRect(SDL_Rect{ screen_position.x,screen_position.y,rect.w,rect.h });
+			//SDL_SetTextureAlphaMod(texture, App->render->camera->GetOpacity());
 		}
 
-		if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, (SDL_RendererFlip)flip) != 0)
+		if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, &pivot, (SDL_RendererFlip)flip) != 0)
 		{
 			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 			ret = false;

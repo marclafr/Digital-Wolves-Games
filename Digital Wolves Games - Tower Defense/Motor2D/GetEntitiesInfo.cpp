@@ -2,8 +2,10 @@
 #define CAVALRYARCHER_HP 50
 #define SIEGERAM_HP 270
 #define MANATARMS_HP 100
+#define PALADIN_HP 200
 
 #define TURRET_HP 250
+#define WOODWALL_HP 500
 #define STONEWALL_HP 500
 #define TOWNHALL_HP 1500
 
@@ -22,13 +24,17 @@ SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
 		break;
 
 	case U_CAVALRYARCHER:
-		ret = { 800, 962, 25, 25 };
+	case U_GOD:
+		ret = { 956, 935, 25, 25 };
 		break;
 
 	case U_SIEGERAM:
 		ret = { 748, 962, 25, 25 };
 		break;
 
+	case U_PALADIN:
+		ret = { 930, 910, 25, 25 };
+		break;
 	default:
 		//LOG("Error UNIT TYPE SDL_Rect NULL (UIManager)");
 		ret = { 0, 0, 0, 0 };
@@ -60,6 +66,10 @@ const char* GetUnitName(const UNIT_TYPE type)
 		ret = "Man at Arms";
 		break;
 
+	case U_PALADIN:
+		ret = "Paladin";
+		break;
+
 		//TODO: ADD UNIT
 
 	default:
@@ -78,6 +88,10 @@ const char * GetUnitPrice(const UNIT_TYPE type)
 	switch (type)
 	{
 	case U_TWOHANDEDSWORDMAN:
+		ret = "Wood:15 Stone:15";
+		break;
+
+	case U_PALADIN:
 		ret = "Wood:15 Stone:15";
 		break;
 
@@ -133,7 +147,7 @@ const char * GetResourceName(const RESOURCE_TYPE type)
 		ret = "Mill";
 		break;
 	case GOLD:
-		ret = "Quarry";
+		ret = "Gold Mine";
 		break;
 	default:
 		//LOG("Error Resource TYPE SDL_Rect NULL (UIManager)");
@@ -151,7 +165,11 @@ SDL_Rect GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_TURRET:
-		ret = { 878, 910, 25, 25 };
+		ret = { 826, 910, 25, 25 };
+		break;
+
+	case B_WOOD_WALL:
+		ret = { 774, 936, 25, 25 };
 		break;
 
 	case B_STONE_WALL:
@@ -159,7 +177,7 @@ SDL_Rect GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
 		break;
 
 	case B_TOWNHALL:
-		ret = { 852, 884, 25, 25 };
+		ret = { 800, 936, 25, 25 };
 		break;
 
 	default:
@@ -179,6 +197,9 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	{
 	case B_TURRET:
 		ret = "Basic Tower";
+		break;
+	case B_WOOD_WALL:
+		ret = "Wood Wall";
 		break;
 	case B_STONE_WALL:
 		ret = "Stone Wall";
@@ -203,6 +224,9 @@ const char * GetBuildingPrice(const BUILDING_TYPE type)
 	{
 	case B_TURRET:
 		ret = "Wood: 75 Stone: 25";
+		break;
+	case B_WOOD_WALL:
+		ret = "Stone: 50";
 		break;
 	case B_STONE_WALL:
 		ret = "Stone: 50";
@@ -262,6 +286,10 @@ int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp, const uint pixels)
 		ret = hp * pixels / MANATARMS_HP;
 		break;
 
+	case U_PALADIN:
+		ret = hp * pixels / PALADIN_HP;
+		break;
+
 		//TODO: ADD UNIT
 
 
@@ -285,6 +313,9 @@ int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp, const uint
 	{
 	case B_TURRET:
 		ret = hp * pixels / TURRET_HP;
+		break;
+	case B_WOOD_WALL:
+		ret = hp * pixels / WOODWALL_HP;
 		break;
 	case B_STONE_WALL:
 		ret = hp * pixels / STONEWALL_HP;

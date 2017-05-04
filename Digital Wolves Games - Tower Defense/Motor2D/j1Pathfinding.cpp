@@ -212,6 +212,12 @@ bool j1PathFinding::CalculatePath(iPoint start, const iPoint & end, std::vector<
 		return false;
 	}
 
+	if (origin->pos == destination->pos)
+	{
+		LOG("NOT MOVING");
+		return false;
+	}
+
 	X_DIRECTION dx = X_NO_DIR;
 	Y_DIRECTION dy = Y_NO_DIR;
 

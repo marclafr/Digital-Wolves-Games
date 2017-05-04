@@ -15,7 +15,7 @@
   </font>
 
   <uimanager>
-    <atlas file="uimanager/atlas.png"/>
+    <atlas file="uimanager/atlas_test.png"/>
   </uimanager>
     
   <window>
