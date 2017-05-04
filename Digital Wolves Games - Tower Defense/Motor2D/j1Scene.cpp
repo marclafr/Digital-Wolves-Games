@@ -73,9 +73,6 @@ bool j1Scene::Start()
 	}
 
 	debug_tex = App->tex->Load("maps/path2.png", T_MAP);
-	
-	tower_tex = App->tex->GetTexture(T_TURRET);
-	wall_tex = App->tex->GetTexture(T_WALL);
 	//wall_tex = 
 
 	CreateSceneUI();
@@ -382,13 +379,13 @@ void j1Scene::PlacingBasicTower()
 		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
 		{
 			rect = {411,0,107,208};
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
 		}
 		else
 		{
 			rect = { 521,0,107,208 };
 			//rect = { 610,1,107,206 };
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
@@ -428,12 +425,12 @@ void j1Scene::PlacingBombardTower()
 		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
 		{
 			rect = {889,0,130,281};
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.902913);
+			App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.902913);
 		}
 		else
 		{
 			rect = { 759,0,130,281};
-			App->render->Blit(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.914591);
+			App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.914591);
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
@@ -471,15 +468,14 @@ void j1Scene::PlacingWall()
 	if (App->pathfinding->IsConstructible_ally(r) == false)
 	{
 		SDL_Rect rect;
-		rect = { 689,122,99,178 };
-		App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
+		rect = { 710,289,100,106 };
+		App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rect, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 	}
 	else if (App->pathfinding->IsConstructible_ally(r) == true)
 	{
 		SDL_Rect rect;
-		rect = { 690,303,99,178 };
-		//rect = { 325,218,99,178 };
-		App->render->Blit(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
+		rect = { 810,289,100,106 };
+		App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rect, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
 			if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))

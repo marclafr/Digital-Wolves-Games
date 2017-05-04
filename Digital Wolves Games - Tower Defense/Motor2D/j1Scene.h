@@ -73,8 +73,6 @@ private:
 	bool selecting = false;
 
 	SDL_Texture* debug_tex;
-	SDL_Texture* tower_tex;
-	SDL_Texture* wall_tex;
 
 	SDL_Rect select_rect;
 

@@ -12,6 +12,7 @@
 Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILDING, pos, side), building_type(b_type)
 {
 	SDL_Rect rect;
+	SetTextureID(T_TURRET);
 	switch (b_type)
 	{
 	case B_TURRET:
@@ -25,7 +26,6 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetHp(500);
 		SetAttack(0);
 		SetArmor(8);
-		SetTextureID(T_WALL);
 		base_height = 25;
 		base_width = 25;
 		break;
@@ -86,38 +86,16 @@ void Building::AI()
 void Building::Draw()
 {
 	if (totally_built != true) {
-		if (buildtimer.ReadSec() <= 3)
+		if (buildtimer.ReadSec() <= 6)
 		{
-			SDL_Rect rect = { 365,435,95,57 };
-			SetRect(rect);
-			SetPivot(0.505263 * 95, 0.578947 * 57);
+			SetRect({98,0,100,75});
+			SetPivot(0.55 * 100, 75*0.643836);
 		}
-		else if (buildtimer.ReadSec() > 3 && buildtimer.ReadSec() <= 6)
-		{
-			SDL_Rect rect = { 462,435,94,99 };
-			SetRect(rect);
-			SetPivot(0.5 * 94, 0.757576 * 99);
-		}
-		else if (buildtimer.ReadSec() > 6 && buildtimer.ReadSec() <= 9)
-		{
-			SDL_Rect rect = { 558,435,94,147 };
-			SetRect(rect);
-			SetPivot(0.5 * 94, 0.829932 * 147);
-		}
-		else if (buildtimer.ReadSec() > 9 && buildtimer.ReadSec() <= 11)
-		{
-			SDL_Rect rect = { 1,584,100,147 };
-			SetRect(rect);
-			SetPivot(0.5 * 100, 0.829932 * 147);
-		}
+		
 		else
 		{
-			//rect = { 365,435,95,57 };
-			//SetRect(rect);
-			//SetPivot(0.505263 * 95, 0.578947 * 57);
-			SDL_Rect rect = { 325,218,99,178 };
-			SetRect(rect);
-			SetPivot(0.494949 * 99, 178 * 0.865169);
+			SetRect({ 610,289,100,106 });
+			SetPivot(0.49 * 100, 106 * 0.754717);
 			totally_built = true;
 		}
 	}

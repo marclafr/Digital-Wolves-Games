@@ -11,6 +11,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 {
 	anim_fire = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
 	//TODO: anim_ice_floor = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
+
 	switch (t_type)
 	{
 	case T_BASIC_TOWER:
@@ -19,7 +20,6 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetArmor(1);
 		rate_of_fire = 0.5f;	//time between each attack in seconds
 		range = 300;
-		SetTextureID(T_TURRET);
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;
 		projectile_spd = 50;
@@ -31,7 +31,6 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetArmor(1);
 		rate_of_fire = 2.0f;
 		range = 300;
-		SetTextureID(T_TURRET);
 		tower_type = T_BOMBARD_TOWER;
 		projectile_type = P_CANNONBALL;
 		projectile_spd = 150;
@@ -42,6 +41,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		tower_type = T_NO_TYPE;
 		break;
 	}
+	SetTextureID(T_TURRET);
 	AttackTimer.Start();
 }
 
