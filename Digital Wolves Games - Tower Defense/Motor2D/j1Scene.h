@@ -16,6 +16,13 @@ class Building;
 enum RESOURCE_TYPE;
 class AnimationManager;
 
+enum PlacingWallDirection {
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST,
+	DIAGONAL,
+};
 class j1Scene : public j1Module
 {
 public:
@@ -80,6 +87,10 @@ private:
 	Building* townhalltower1;
 	Building* townhalltower2;
 
+	iPoint firstSelectedForWall;
+	iPoint LastSelectedForWall;
+	PlacingWallDirection direction;
+	bool placing_wall_clicked = false;
 public:
 	Resources* GetResource(RESOURCE_TYPE type);
 
