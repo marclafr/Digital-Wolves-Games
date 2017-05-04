@@ -50,18 +50,17 @@ Tower::~Tower()
 
 void Tower::Update()
 {
-	if (IsBuilt() == true && IsAlive() == true)
-		AI();
 
 	if (Target != nullptr) {
 		if (Target->GetHp() <= 0) {
 			Target = nullptr;
 		}
-		/*
-		ResetArrowPos();
-		Target->Damaged(GetAttack());
-		*/
-		else if (attacking == true && AttackTimer.ReadSec() > rate_of_fire)
+	}
+
+	if (IsBuilt() == true && IsAlive() == true)
+		AI();
+
+	if (attacking == true && Target != nullptr && AttackTimer.ReadSec() >= rate_of_fire)
 		{
 			App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), projectile_spd, HEIGHT_BASIC_TOWER, 100, projectile_type);
 			App->audio->PlayFx(App->entity_manager->fx_arrow);
@@ -69,7 +68,6 @@ void Tower::Update()
 			element_terrain_pos = Target->GetPosition();
 			PrintElementTerrainTimer.Start();
 		}
-	}
 
 	if (IsAlive() == true && this->GetHp() <= 0)
 	{
@@ -84,8 +82,7 @@ void Tower::Update()
 
 void Tower::AI()
 {
-
-	if (Target == nullptr)
+	if (Target == nullptr && AttackTimer.ReadSec() >= rate_of_fire)
 	{
 		std::vector<Entity*> EntityVector = App->entity_manager->GetEntityVector();
 		std::vector<Entity*>::iterator item = EntityVector.begin();
@@ -98,29 +95,6 @@ void Tower::AI()
 				{
 					Target = *item;
 					attacking = true;
-				}
-			}
-		}
-	}
-	else 
-	{
-		if (Target->GetHp() <= 0)
-		{
-			Target = nullptr;
-			attacking = false;
-		}
-		else
-		{
-			if (Target != nullptr && Target->GetSide() != S_ALLY && Target->GetHp() > 0)
-			{
-				if (Target->GetX() >= (GetX() - GetRange()) && Target->GetX() < (GetX() + GetRange()) && Target->GetY() >= (GetY() - GetRange()) && Target->GetY() < (GetY() + GetRange()))
-				{
-					arrowpos.x = GetX();
-					arrowpos.y = GetY() - 100;
-				}
-				else
-				{
-					Target = nullptr;
 				}
 			}
 		}
