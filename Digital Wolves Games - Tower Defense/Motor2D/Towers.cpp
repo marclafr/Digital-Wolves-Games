@@ -42,6 +42,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		tower_type = T_NO_TYPE;
 		break;
 	}
+	AttackTimer.Start();
 }
 
 Tower::~Tower()
@@ -54,10 +55,12 @@ void Tower::Update()
 	if (Target != nullptr) {
 		if (Target->GetHp() <= 0) {
 			Target = nullptr;
+			attacking = false;
 		}
 	}
+	else	attacking = false;
 
-	if (IsBuilt() == true && IsAlive() == true)
+	if (attacking == false && IsBuilt() == true && IsAlive() == true)
 		AI();
 
 	if (attacking == true && Target != nullptr && AttackTimer.ReadSec() >= rate_of_fire)
