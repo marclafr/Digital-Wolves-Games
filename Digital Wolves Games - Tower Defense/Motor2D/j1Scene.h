@@ -2,6 +2,9 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+//#include <vector.h>
+#include <vector>
+#include "Entity.h"
 
 #define BASIC_TOWER_WOOD_COST 75
 #define BASIC_TOWER_STONE_COST 25
@@ -61,7 +64,7 @@ public:
 	void TrainSoldier();
 
 	void PlacingBasicTower();
-	
+	void CheckClick();
 	void PlacingBombardTower();
 	
 	void PlacingWall();
@@ -86,7 +89,7 @@ private:
 	Building* townhall;
 	Building* townhalltower1;
 	Building* townhalltower2;
-
+	std::vector<Entity*> ClickingVector; 
 	iPoint firstSelectedForWall;
 	iPoint LastSelectedForWall;
 	PlacingWallDirection direction;
