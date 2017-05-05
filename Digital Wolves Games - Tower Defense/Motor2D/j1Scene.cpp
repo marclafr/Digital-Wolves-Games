@@ -7,6 +7,7 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Render.h"
+#include "j1Fonts.h"
 #include "Camera.h"
 #include "j1Window.h"
 #include "j1Map.h"
@@ -15,6 +16,8 @@
 #include "j1Animation.h"
 #include "j1EntityManager.h"
 #include "j1Collision.h"
+#include "j1Score.h"
+#include "ProjectileManager.h"
 #include "Units.h"
 #include "Resources.h"
 #include "j1SceneManager.h"
@@ -53,9 +56,17 @@ bool j1Scene::Awake()
 
 // Called before the first frame
 bool j1Scene::Start()
-{
+{	
 	App->pathfinding->Enable();
+	App->map->Enable();
+	App->anim->Enable();
+	App->collision->Enable();
+	App->entity_manager->Enable();
+	App->projectile_manager->Enable();
 	App->wave_manager->Enable();
+	App->investigations->Enable();
+	App->score->Enable();
+
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
 	App->render->camera->SetPosition(iPoint(2300, -800));
@@ -85,8 +96,7 @@ bool j1Scene::Start()
 	townhalltower2 = (Building*)App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
 	
 	//Reset scores and timers
-	game_time.Start();
-	App->entity_manager->ResetScores();
+	App->score->Reset();
 
 	//Animation test
 	a1 = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
@@ -143,7 +153,6 @@ bool j1Scene::Update(float dt)
 	a_fire->Update(rect_test, pivot);
 	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE), 0, 200, &rect_test, SDL_FLIP_NONE, pivot.x, pivot.y);
 	//--
-
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -304,10 +313,10 @@ bool j1Scene::PostUpdate()
 		lose = true;
 		App->scene_manager->ChangeScene(SC_SCORE);
 	}
-	if (game_time.ReadSec() >= WINNING_TIME)
+	if (App->score->GetTime() >= WINNING_TIME)
 	{
 		win = true;
-		App->entity_manager->AddScore(townhall->GetHp() * 3);
+		App->score->AddScore(townhall->GetHp() * 3);
 		App->scene_manager->ChangeScene(SC_SCORE);
 	}
 
@@ -332,10 +341,18 @@ bool j1Scene::PostUpdate()
 bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
+
+	App->investigations->Disable();
 	App->wave_manager->Disable();
-	App->entity_manager->CleanUp();
+	App->projectile_manager->Disable();
+	App->entity_manager->Disable();
+	App->collision->Disable();
+	App->anim->Disable();
+	App->map->Disable();
+	App->pathfinding->Disable();
+	
 	App->uimanager->SetAllToDelete();
-	App->pathfinding->CleanUp();
+
 	return true;
 }
 
@@ -374,7 +391,7 @@ void j1Scene::TrainSoldier()
 void j1Scene::PlacingBasicTower()
 {
 	SDL_Texture* tower_tex = App->tex->GetTexture(T_TURRET);
-	SDL_SetTextureAlphaMod(tower_tex, 180);
+	//SDL_SetTextureAlphaMod(tower_tex, 180);
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -431,15 +448,13 @@ void j1Scene::CheckClick()
 	std::vector<Entity*>::iterator item = EntityVector.begin();
 	for (; item != EntityVector.end(); item++)
 	{
-		if ((*item)->GetEntityType() == E_BUILDING) {
+		if ((*item)->GetEntityType() == E_BUILDING)
+		{
 			SDL_Rect rect = (*item)->GetRect();
-			if (res.x >= (*item)->GetX() - rect.w / 2 && res.x <= (*item)->GetX() + rect.w / 2 && res.y >= (*item)->GetY() - (rect.h - 20)  && res.y <= (*item)->GetY() + 20)
-			{
-
+			if (res.x >= (*item)->GetX() - rect.w / 2 && res.x <= (*item)->GetX() + rect.w / 2 && res.y >= (*item)->GetY() - (rect.h - 20) && res.y <= (*item)->GetY() + 20)
 				ClickingVector.push_back((*item));
-			
-			}
 		}
+
 	}
 	if (ClickingVector.size() != 0) {
 		Entity* selected = ClickingVector.front();
@@ -448,10 +463,9 @@ void j1Scene::CheckClick()
 		{
 			if (selected->GetY() < (*item2)->GetY())		selected = (*item2);
 		}
-		LOG("selectedpos = %f,%f", selected->GetX(), selected->GetY());
+		LOG("selected_pos = %f,%f", selected->GetX(), selected->GetY());
 		//selected es el edificio seleccionado, hace falta ponerlo en la ui
 	}
-
 }
 
 void j1Scene::PlacingBombardTower()
@@ -504,7 +518,7 @@ void j1Scene::PlacingBombardTower()
 void j1Scene::PlacingWall()
 {
 	SDL_Texture* wall_tex = App->tex->GetTexture(T_WALL);
-	SDL_SetTextureAlphaMod(wall_tex, 180);
+	//SDL_SetTextureAlphaMod(wall_tex, 180);
 
 	int x, y;
 	App->input->GetMousePosition(x, y);

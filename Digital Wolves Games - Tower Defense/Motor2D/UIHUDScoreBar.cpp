@@ -14,6 +14,7 @@
 #include "j1Render.h"
 #include "Camera.h"
 #include "j1EntityManager.h"
+#include "j1Score.h"
 
 #include "UIGetEntitiesInfo.h"
 
@@ -31,7 +32,7 @@ UIHUDScoreBar::UIHUDScoreBar(UICOMPONENT_TYPE type) : UIComponents(type)
 bool UIHUDScoreBar::Update()
 {
 	//rest_score_bar.w = ReturnValueBarHPBuilding(BUILDING_TYPE::B_TOWNHALL, townhall->GetHp(), BAR_PIXELS);
-	rest_score_bar.w = App->entity_manager->GetScore() / 10;
+	rest_score_bar.w = App->score->GetScore() / 10;
 
 	Draw();
 	return true;

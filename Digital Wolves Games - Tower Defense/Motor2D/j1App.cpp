@@ -27,6 +27,7 @@
 #include "j1WaveManager.h"
 #include "ProjectileManager.h"
 #include "j1Investigations.h"
+#include "j1Score.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -54,36 +55,37 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	wave_manager = new j1WaveManager();
 	console = new j1Console();
 	investigations = new j1Investigations();
+	score = new j1Score();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
+
+	//Activa at start
 	AddModule(fs);
 	AddModule(input);
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(pathfinding);
 	AddModule(font);
-	AddModule(map);
-	AddModule(anim);
-	AddModule(collision);
 	AddModule(uimanager);
-	AddModule(entity_manager);
-	AddModule(projectile_manager);
-	AddModule(wave_manager);
-	wave_manager->active = false;
 	AddModule(console);
-	AddModule(investigations);
-
-	// scene last
-	
-	AddModule(scene);
-	scene->active = false;
-	AddModule(score_scene);
-	score_scene->active = false;
-	AddModule(main_menu);
-	main_menu->active = true;
 	AddModule(scene_manager);
+
+	//Not-Active at start
+	AddModule(pathfinding, false);
+	AddModule(map, false);
+	AddModule(anim, false);
+	AddModule(collision, false);
+	AddModule(entity_manager, false);
+	AddModule(projectile_manager, false);
+	AddModule(wave_manager, false);
+	AddModule(investigations, false);
+	AddModule(score, false);
+
+	// Scenes	
+	AddModule(scene, false);
+	AddModule(score_scene, false);
+	AddModule(main_menu);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -106,13 +108,11 @@ j1App::~j1App()
 	modules.clear();
 }
 
-void j1App::AddModule(j1Module* module)
+void j1App::AddModule(j1Module* module, bool active)
 {
-	if (module->name == "scene") {
-	}
-	else {
+	if (active)
 		module->Init();
-	}	
+
 	modules.push_back(module);
 }
 

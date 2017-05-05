@@ -12,6 +12,7 @@
 #include "j1MainMenu.h"
 #include "j1SceneManager.h"
 #include "j1ScoreScene.h"
+#include "j1Score.h"
 #include "Task.h"
 
 #include "UIButton.h"
@@ -90,10 +91,10 @@ bool j1ScoreScene::PreUpdate()
 bool j1ScoreScene::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-		App->entity_manager->IncreaseScore();
+		App->score->IncreaseScore();
 
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
-		App->entity_manager->DecreaseScore();
+		App->score->DecreaseScore();
 
 	OptionSelected();
 
@@ -116,21 +117,24 @@ bool j1ScoreScene::PostUpdate()
 bool j1ScoreScene::CleanUp()
 {
 	LOG("Freeing  MainMenu");
+
+	App->score->Disable();
 	App->uimanager->SetAllToDelete();
+
 	return true;
 }
 
 void j1ScoreScene::ActualTrophie()
 {
-	if (App->entity_manager->GetScore() > 560) 
+	if (App->score->GetScore() > 560)
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 850, 410, 87, 98 }, { 677, 1370, 87, 98 });
-	else if (App->entity_manager->GetScore() > 1830) 
+	else if (App->score->GetScore() > 1830)
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 845, 410, 97, 113 }, { 765, 1355, 97, 113 });
-	else if (App->entity_manager->GetScore() > 3220) 
+	else if (App->score->GetScore() > 3220)
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 837, 410, 113, 129 }, { 941, 1162, 113, 129 });
-	else if (App->entity_manager->GetScore() > 4680) 
+	else if (App->score->GetScore() > 4680)
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 833, 410, 119, 139 }, { 1058, 1162, 119, 139 });
-	else if (App->entity_manager->GetScore() > 6250) 
+	else if (App->score->GetScore() > 6250)
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
 	else if(true)
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 0, 0, 0 }, { 0, 0, 0, 0 });
@@ -172,22 +176,25 @@ void j1ScoreScene::CreateTrophies()
 	score_bar = App->uimanager->AddScoreBar();
 
 	//Title Score
-	sprintf_s(text_score, 256, "Score: %d", App->entity_manager->GetScore());
+	sprintf_s(text_score, 256, "Score: %d", App->score->GetScore());
 	title_score = App->uimanager->AddLabel(490, 400, text_score, BLACK);
 
 	//Title Enemies Killed
 	char text_enemies[256];
-	sprintf_s(text_enemies, 256, "Enemies Killed: %d", App->entity_manager->GetEnemiesKilled());
+	sprintf_s(text_enemies, 256, "Enemies Killed: %d", App->score->GetEnemiesKilled());
 	title_enemies_killed = App->uimanager->AddLabel(490, 430, text_enemies, BLACK);
 
 	//Title Time
 	char text_time[256];
-	sprintf_s(text_time, 256, "Time: %d:%d", App->entity_manager->GetMins(), App->entity_manager->GetSecs());
+	int minutes = 0;
+	int seconds = 0;
+	App->score->GetTimer(minutes, seconds);
+	sprintf_s(text_time, 256, "Time: %d:%d", minutes, seconds);
 	title_time = App->uimanager->AddLabel(490, 460, text_time, BLACK);
 
 	//Title Act Rank
 	char text_rank[256];
-	sprintf_s(text_rank, 256, "Your Trophie", App->entity_manager->GetScore()); //??
+	sprintf_s(text_rank, 256, "Your Trophie", App->score->GetScore()); //??
 	title_act_rank = (UILabel*)App->uimanager->AddLabel(850, 380, text_rank, BLACK);
 
 	ActualTrophie();

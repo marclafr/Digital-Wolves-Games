@@ -39,38 +39,14 @@ public:
 	void DeleteBuilding(Building* ptr);
 	void DeleteResource(Resources* ptr);
 
-
-	void BlitEnemyDeathCount();
-	void EnemyDead();
-
 	Entity* CheckForCombat(iPoint position, int range, Side side);
 	Entity* CheckForObjective(iPoint position, int vision_range, Side side);
 	std::vector<Entity*> GetEntityVector();
 
 	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;
-	int GetScore();
-	int GetEnemiesKilled();
-	int GetMins();
-	int GetSecs();
-	void IncreaseScore();
-	void DecreaseScore();
-	void AddScore(int points);
-	void ResetScores();
 	void LoadAllFx();
 
 private:
-
-	int enemies_killed = 0;
-	int score = 0;
-	bool enemy_killed = true;
-	char text_num_kills[256];
-	char text_score[256];
-	char time_left[256];
-	SDL_Texture* num_kills_texture = nullptr;
-	SDL_Texture* score_texture = nullptr;
-	SDL_Texture* time_texture = nullptr;
-
-
 	//Textura provisional para sprites por si no se cargan en animation
 	//SDL_Texture* sprites;
 

@@ -11,6 +11,8 @@
 #include "j1Map.h"
 #include "j1Audio.h"
 #include "ProjectileManager.h"
+#include "j1Score.h"
+#include "j1Scene.h"
 
 Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), attacking(nullptr), target (nullptr), priority(priority)
 {
@@ -869,7 +871,7 @@ void Unit::UnitDies()
 	this->action = A_DIE;
 	this->SetEntityStatus(ST_NON_SELECTED);
 	if (GetSide() == S_ENEMY)
-		App->entity_manager->EnemyDead();
+		App->score->EnemyKilled();
 	changed = true;
 	PlayDeathSound();
 }

@@ -90,6 +90,7 @@
     <ClCompile Include="j1Investigations.cpp" />
     <ClCompile Include="j1MainMenu.cpp" />
     <ClCompile Include="j1SceneManager.cpp" />
+    <ClCompile Include="j1Score.cpp" />
     <ClCompile Include="j1ScoreScene.cpp" />
     <ClCompile Include="j1UIManager.cpp" />
     <ClCompile Include="j1Main.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="j1Investigations.h" />
     <ClInclude Include="j1MainMenu.h" />
     <ClInclude Include="j1SceneManager.h" />
+    <ClInclude Include="j1Score.h" />
     <ClInclude Include="j1ScoreScene.h" />
     <ClInclude Include="j1UIManager.h" />
     <ClInclude Include="j1Map.h" />

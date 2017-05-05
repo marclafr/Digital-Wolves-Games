@@ -26,6 +26,7 @@ class j1SceneManager;
 class j1WaveManager;
 class j1Console;
 class j1Investigations;
+class j1Score;
 
 	//Scenes
 class j1MainMenu;
@@ -71,7 +72,7 @@ public:
 	bool CleanUp();
 
 	// Add a new module to handle
-	void AddModule(j1Module* module);
+	void AddModule(j1Module* module, bool active = true);
 
 	// Exposing some properties for reading
 	int GetArgc() const;
@@ -111,29 +112,30 @@ private:
 public:
 
 	// Modules
-	j1Window*			win = NULL;
-	j1Input*			input = NULL;
-	j1Render*			render = NULL;
-	j1Textures*			tex = NULL;
-	j1Audio*			audio = NULL;
-	j1FileSystem*		fs = NULL;
-	j1Map*				map = NULL;
-	j1PathFinding*		pathfinding = NULL;
-	j1Fonts*			font = NULL;
-	j1Animation*		anim = NULL;
-	j1UIManager*		uimanager = NULL;
-	j1EntityManager*    entity_manager = NULL;
-	ProjectileManager*   projectile_manager = NULL;
-	j1Collision*		collision = NULL;
-	j1SceneManager*		scene_manager = NULL;
-	j1WaveManager*		wave_manager = NULL;
-	j1Console*			console = NULL;
-	j1Investigations*	investigations = NULL;
+	j1Window*			win = nullptr;
+	j1Input*			input = nullptr;
+	j1Render*			render = nullptr;
+	j1Textures*			tex = nullptr;
+	j1Audio*			audio = nullptr;
+	j1FileSystem*		fs = nullptr;
+	j1Map*				map = nullptr;
+	j1PathFinding*		pathfinding = nullptr;
+	j1Fonts*			font = nullptr;
+	j1Animation*		anim = nullptr;
+	j1UIManager*		uimanager = nullptr;
+	j1EntityManager*    entity_manager = nullptr;
+	ProjectileManager*   projectile_manager = nullptr;
+	j1Collision*		collision = nullptr;
+	j1SceneManager*		scene_manager = nullptr;
+	j1WaveManager*		wave_manager = nullptr;
+	j1Console*			console = nullptr;
+	j1Investigations*	investigations = nullptr;
+	j1Score*			score = nullptr;
 
 		//Scenesko
-	j1MainMenu*			main_menu = NULL;
-	j1Scene*			scene = NULL;
-	j1ScoreScene*		score_scene = NULL;
+	j1MainMenu*			main_menu = nullptr;
+	j1Scene*			scene = nullptr;
+	j1ScoreScene*		score_scene = nullptr;
 
 	DebugFeatures		debug_features;
 
