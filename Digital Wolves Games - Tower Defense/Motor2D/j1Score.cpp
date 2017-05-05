@@ -8,7 +8,7 @@
 
 bool j1Score::SecChange() const
 {
-	if (game_time.Read() % 1000 == 0)
+	if (game_time.Read() / 1000.0f != (game_time.Read() - 166) / 1000.0f)
 		return true;
 	return false;
 }

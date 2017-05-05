@@ -83,9 +83,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(score, false);
 
 	// Scenes	
-	AddModule(scene, false);
-	AddModule(score_scene, false);
 	AddModule(main_menu);
+	AddModule(scene, false);
+	AddModule(score_scene, false);	
 
 	// render last to swap buffer
 	AddModule(render);

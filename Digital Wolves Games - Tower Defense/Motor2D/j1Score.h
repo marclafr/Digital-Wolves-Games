@@ -13,7 +13,7 @@ class j1Score : public j1Module
 private:
 	int enemies_killed = 0;
 	int score = 0;
-	bool enemy_killed = false;
+	bool enemy_killed = true;
 	SDL_Texture* num_kills_texture = nullptr;
 	SDL_Texture* score_texture = nullptr;
 	SDL_Texture* time_texture = nullptr;

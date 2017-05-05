@@ -220,18 +220,7 @@ bool j1Scene::Update(float dt)
 
 	//App->map->Draw();
 
-	// Camera Movement
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)// || ((y < (App->render->camera->GetHeight() / 30) && res.y > -30))
-		App->render->camera->MoveUp(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)//|| ((y > 750) && res.y < 2317)
-		App->render->camera->MoveDown(floor(450.0f * dt));
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)// || (x < (App->render->camera->GetWidth() / 70) && res.x > -2400)
-		App->render->camera->MoveLeft(floor(450.0f * dt));
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)//|| (x >(((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349)
-		App->render->camera->MoveRight(floor(450.0f * dt));
 
 	/*
 	if (App->render->camera->GetPosition().x > 2700)
@@ -298,6 +287,20 @@ bool j1Scene::Update(float dt)
 	}
 
 	App->render->BlitGameScene();
+
+	// Camera Movement (has to go after blit so that sprites print in the right camera position)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)// || ((y < (App->render->camera->GetHeight() / 30) && res.y > -30))
+		App->render->camera->MoveUp(floor(450.0f * dt));
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)//|| ((y > 750) && res.y < 2317)
+		App->render->camera->MoveDown(floor(450.0f * dt));
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)// || (x < (App->render->camera->GetWidth() / 70) && res.x > -2400)
+		App->render->camera->MoveLeft(floor(450.0f * dt));
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)//|| (x >(((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349)
+		App->render->camera->MoveRight(floor(450.0f * dt));
+
 	return true;
 }
 
