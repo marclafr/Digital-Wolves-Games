@@ -345,6 +345,8 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
+	App->score->active = false;
+
 	App->investigations->Disable();
 	App->wave_manager->Disable();
 	App->projectile_manager->Disable();
@@ -353,6 +355,7 @@ bool j1Scene::CleanUp()
 	App->anim->Disable();
 	App->map->Disable();
 	App->pathfinding->Disable();
+
 	
 	App->uimanager->SetAllToDelete();
 
