@@ -34,7 +34,9 @@ public:
 
 	void ChangeScene(SCENES to);
 
-	j1Module* GetCurrentScene() const;
+	j1Module* GetCurrentScenePtr() const;
+
+	SCENES GetCurrentScene() const;
 
 private:
 	SCENES change_to = SC_NO_SCENE;

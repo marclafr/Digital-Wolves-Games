@@ -89,6 +89,7 @@ bool j1MainMenu::PreUpdate()
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
+	App->render->BlitMainMenu();
 	return true;
 }
 

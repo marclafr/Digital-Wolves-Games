@@ -39,6 +39,6 @@ bool UIHUDScoreBar::Update()
 
 void UIHUDScoreBar::Draw()
 {
-	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), score_bar->GetPosRect().x - App->render->camera->GetPosition().x, score_bar->GetPosRect().y - App->render->camera->GetPosition().y, &rest_score_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas);
+	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), score_bar->GetPosRect().x - App->render->camera->GetPosition().x, score_bar->GetPosRect().y - App->render->camera->GetPosition().y, &rest_score_bar);
 }

@@ -613,19 +613,20 @@ void Unit::AI()
 }
 
 void Unit::Draw()
-{
+{	
 	SDL_Rect rect;
 	iPoint pivot;
+
 	if (unit_class == C_SIEGE && action == A_WALK)
-	{
+	{	
 		idle_siege->Update(rect, pivot);
 
 		SetPivot(pivot.x, pivot.y);
 		SetRect(rect);
 		if (direction == D_NORTH_EAST || direction == D_EAST || direction == D_SOUTH_EAST)
-			App->render->Blit(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_HORIZONTAL, GetPivot().x, GetPivot().y);
+			App->render->PushInGameSprite(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_HORIZONTAL, GetPivot().x, GetPivot().y);
 		else
-			App->render->Blit(App->tex->GetTexture(GetTextureID()), GetX() - GetPivot().x, GetY() - GetPivot().y, &GetRect());
+			App->render->PushInGameSprite(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_NONE, GetPivot().x, GetPivot().y);
 	}
 
 	animation->Update(rect, pivot);
@@ -633,7 +634,7 @@ void Unit::Draw()
 	SetPivot(pivot.x, pivot.y);
 	SetRect(rect);
 
-	App->render->PushEntity(this);
+	App->render->PushInGameSprite(this);
 
 }
 

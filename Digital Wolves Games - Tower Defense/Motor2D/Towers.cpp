@@ -111,7 +111,7 @@ void Tower::Draw()
 	
 
 	if (IsBuilt())
-		App->render->PushEntity(this);
+		App->render->PushInGameSprite(this);
 
 	else
 	{
@@ -134,8 +134,6 @@ void Tower::Draw()
 			SDL_Rect rect = { 202,0,100,75 };
 			SetRect(rect);
 			SetPivot(0.55 * 100, 0.643836 * 75);
-
-
 		}
 		else if (GetBuildTime() > 9)
 		{
@@ -158,7 +156,7 @@ void Tower::Draw()
 			AttackTimer.Start();
 		}
 
-		App->render->PushEntity(this);
+		App->render->PushInGameSprite(this);
 	}
 }
 
@@ -201,7 +199,7 @@ void Tower::PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int r
 	SDL_Rect rect;
 	iPoint pivot;
 	anim_fire->Update(rect, pivot);
-	App->render->Blit(App->tex->GetTexture(T_FIRE), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 
 /*
 	for (int i = 0; i < 3; i++)
@@ -211,7 +209,7 @@ void Tower::PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int r
 		rand_angle *= 3.14f / 360;
 		int X = rand_distance*sin(rand_angle);
 		int Y = rand_distance*cos(rand_angle);
-		App->render->Blit(App->tex->GetTexture(T_FIRE), center.x + X, center.y + Y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+		App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE), center.x + X, center.y + Y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 	}
 */
 }

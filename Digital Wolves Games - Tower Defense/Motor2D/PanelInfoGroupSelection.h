@@ -1,7 +1,7 @@
-#pragma once
+#ifndef _PANELINFO
+#define _PANELINFO
 
 #include "PanelInfoBasicStructure.h"
-
 #include "UIButton.h"
 
 class GroupSelection : public PanelInfo
@@ -31,3 +31,5 @@ public:
 
 	void SetOneEntitySelection(Entity* e_selected);
 };
+
+#endif

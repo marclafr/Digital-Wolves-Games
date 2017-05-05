@@ -197,9 +197,9 @@ void j1EntityManager::BlitEnemyDeathCount()
 
 		time_texture = App->font->Print(time_left);
 
-		App->render->Blit(num_kills_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 5);
-		App->render->Blit(score_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 25);
-		App->render->Blit(time_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 45);
+		App->render->PushUISprite(num_kills_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 5);
+		App->render->PushUISprite(score_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 25);
+		App->render->PushUISprite(time_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 45);
 
 		SDL_DestroyTexture(time_texture);
 	}

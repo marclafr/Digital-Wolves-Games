@@ -5,9 +5,26 @@
 #include "p2Point.h"
 #include "j1Module.h"
 #include <deque>
+#include <vector>
 
 class Entity;
 class Camera;
+
+struct Sprite
+{
+	SDL_Texture* texture;
+	int x;
+	int y;
+	const SDL_Rect* section;
+	SDL_RendererFlip flip;
+	int pivot_x;
+	int pivot_y;
+	float speed;
+	double angle;
+
+	Sprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0);
+	~Sprite();
+};
 
 class j1Render : public j1Module
 {
@@ -26,6 +43,7 @@ public:
 
 	// Called each loop iteration
 	bool PreUpdate();
+
 	bool PostUpdate();
 
 	// Called before quitting
@@ -43,14 +61,30 @@ public:
 	iPoint WorldToScreen(int x, int y) const;
 
 	// Draw & Blit
-	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0, bool not_in_world = false) const;
+	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0, bool not_in_world = false) const;
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool use_camera = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 	bool DrawElipse(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, float angle, Uint8 a = 255, bool use_camera = true) const;
 
-	void PushEntity(Entity* entity);
-	void BlitAllEntities();
+	void PushMapSprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0, bool not_in_world = false);
+	void PushInGameSprite(const Entity* entity);
+	void PushInGameSprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0, bool not_in_world = false);
+	void PushInGameSprite(Sprite* sprite);
+	void PushUISprite(SDL_Texture* texture, int x, int y, const SDL_Rect* section = nullptr, SDL_RendererFlip flip = SDL_FLIP_NONE, int pivot_x = 0, int pivot_y = 0, float speed = 1.0f, double angle = 0);
+	
+	void BlitMap() const;
+	void BlitInGame() const;
+	void BlitSelection() const;
+	void BlitUI() const;
+	
+	void BlitMainMenu();
+	void BlitGameScene();
+	void BlitScoreScene();
+
+	void CleanUpMapVec();
+	void CleanUpInGameSpriteQueue();
+	void CleanUpUISpriteVec();
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
@@ -66,7 +100,9 @@ public:
 	SDL_Color		background;
 
 private:
-	std::deque<Entity*> sprite_queue;
+	std::vector<Sprite*> map_sprite_vec;
+	std::deque<Sprite*> in_game_sprite_queue;
+	std::vector<Sprite*> ui_sprite_vec;
 };
 
 

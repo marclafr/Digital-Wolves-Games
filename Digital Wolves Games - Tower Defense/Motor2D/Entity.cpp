@@ -62,7 +62,7 @@ void Entity::UpdateArrow(int StartHeight, fPoint TargetPos, int CurveHeight, flo
 	pos.x = ((1 - Arrow_pos)*(1 - Arrow_pos)*initial_point.x) + ((2 * Arrow_pos)*(1 - Arrow_pos)*mid_point.x) + ((Arrow_pos*Arrow_pos)*last_point.x);
 	pos.y = ((1 - Arrow_pos)*(1 - Arrow_pos)*initial_point.y) + ((2 * Arrow_pos)*(1 - Arrow_pos)*mid_point.y) + ((Arrow_pos*Arrow_pos)*last_point.y);
 
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), pos.x, pos.y, &rect, SDL_FLIP_NONE, 0, 0, 1, 0, false);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), pos.x, pos.y, &rect, SDL_FLIP_NONE, 0, 0, 1, 0, false);
 	float diferential = 1/ TimeSecs;
 
 	Arrow_pos += diferential;

@@ -128,8 +128,8 @@ void GroupSelection::Draw()
 			uibutton->Set({ 220 + (29 * count++), 666, 29, 29 }, uibutton->GetAtlasRect());
 
 			SDL_Rect mark_btn{ 999, 827, 29, 29 };
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x + 2 - App->render->camera->GetPosition().x, uibutton->GetPosRect().y + 2 - App->render->camera->GetPosition().y, &uibutton->GetAtlasRect(), SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x - App->render->camera->GetPosition().x, uibutton->GetPosRect().y - App->render->camera->GetPosition().y, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x + 2 - App->render->camera->GetPosition().x, uibutton->GetPosRect().y + 2 - App->render->camera->GetPosition().y, &uibutton->GetAtlasRect());
+			App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x - App->render->camera->GetPosition().x, uibutton->GetPosRect().y - App->render->camera->GetPosition().y, &mark_btn);
 
 			int rest_life_bar = 0;
 			int height_correction = 0;
@@ -165,11 +165,11 @@ void GroupSelection::Draw()
 			//Bar life unit
 			SDL_Rect mark_life_bar_red{ 1059, 832, 32, 4 };
 			SDL_Rect mark_life_bar_green{ 1059, 827, rest_life_bar, 4 };
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX() - BAR_LIFE_CENTER, e_selected->GetY() - height_correction, &mark_life_bar_red, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX() - BAR_LIFE_CENTER, e_selected->GetY() - height_correction, &mark_life_bar_green, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, false);
+			App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX() - BAR_LIFE_CENTER, e_selected->GetY() - height_correction, &mark_life_bar_red);
+			App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), e_selected->GetX() - BAR_LIFE_CENTER, e_selected->GetY() - height_correction, &mark_life_bar_green);
 
 			//Down bar_life
-			App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x - App->render->camera->GetPosition().x, uibutton->GetPosRect().y + 25 - App->render->camera->GetPosition().y, &life_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+			App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x - App->render->camera->GetPosition().x, uibutton->GetPosRect().y + 25 - App->render->camera->GetPosition().y, &life_bar);
 		}
 
 		es_item++;

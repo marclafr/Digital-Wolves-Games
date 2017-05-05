@@ -119,7 +119,7 @@ void Resources::AI()
 
 void Resources::Draw()
 {
-	App->render->PushEntity(this);
+	App->render->PushInGameSprite(this);
 }
 
 const RESOURCE_TYPE Resources::GetResourceType() const

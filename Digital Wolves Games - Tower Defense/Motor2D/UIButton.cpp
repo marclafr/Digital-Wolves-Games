@@ -36,20 +36,20 @@ void UIButton::Draw()
 	switch (state)
 	{
 	case BS_NONE:
-		App->render->Blit(atlas, rect.x, rect.y, &GetAtlasRect(), SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->PushUISprite(atlas, rect.x, rect.y, &GetAtlasRect());
 		break;
 	case BS_CLICKED:
-		App->render->Blit(atlas, rect.x, rect.y, &atlas_clicked, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->PushUISprite(atlas, rect.x, rect.y, &atlas_clicked);
 		break;
 	case BS_MOUSE_ON_TOP:
-		App->render->Blit(atlas, rect.x, rect.y, &atlas_mouse_on_top, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->PushUISprite(atlas, rect.x, rect.y, &atlas_mouse_on_top);
 		break;
 	}
 
 	if (is_ui_pannel)
 	{
 		SDL_Rect mark_btn{ 969, 827, 29, 29 };
-		App->render->Blit(atlas, rect.x - UI_PANEL_MARK_MARGIN, rect.y - UI_PANEL_MARK_MARGIN, &mark_btn, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+		App->render->PushUISprite(atlas, rect.x - UI_PANEL_MARK_MARGIN, rect.y - UI_PANEL_MARK_MARGIN, &mark_btn);
 	}
 }
 

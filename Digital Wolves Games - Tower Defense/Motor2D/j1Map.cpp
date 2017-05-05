@@ -189,8 +189,9 @@ void j1Map::Draw()
 					//TODO: this should be temporary until we find out what happens, also,TODO solve InsideRenderTarget: after moving the camera doesnt work.
 					//if (App->render->camera->InsideRenderTarget(pos.x, pos.y))
 						if (tileset->name.compare("Extras") != 0)
-							App->render->Blit(tileset->texture, pos.x - 48 - (data.tile_width * 0.5f), pos.y - 31 + (x + y), &r);
-						else		App->render->Blit(tileset->texture, pos.x - 48 - tileset->tile_width/2, pos.y - 31 + tileset->tile_height, &r);
+							App->render->PushMapSprite(tileset->texture, pos.x - 48 - (data.tile_width * 0.5f), pos.y - 31 + (x + y), &r);
+						else
+							App->render->PushMapSprite(tileset->texture, pos.x - 48 - tileset->tile_width/2, pos.y - 31 + tileset->tile_height, &r);
 				}
 			}
 		}

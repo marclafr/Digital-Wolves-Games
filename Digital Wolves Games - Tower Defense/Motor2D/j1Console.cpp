@@ -3,6 +3,7 @@
 #include "j1Fonts.h"
 #include "Camera.h"
 #include "j1Console.h"
+#include "j1SceneManager.h"
 
 
 bool j1Console::Start()
@@ -23,7 +24,6 @@ bool j1Console::Update(float dt)
 
 bool j1Console::PostUpdate()
 {
-
 	if (on == true)
 	{
 		SDL_RenderDrawRect(App->render->renderer, &rect);
@@ -52,8 +52,15 @@ bool j1Console::PushText(char * text)
 
 void j1Console::BlitText()
 {
-	int x = - App->render->camera->GetPosition().x + 5;
-	int y = - App->render->camera->GetPosition().y + 5;
+	int x = -App->render->camera->GetPosition().x + 5;;
+	int y;
+
+	if (App->scene_manager->GetCurrentScene() == SC_GAME)
+		y = -App->render->camera->GetPosition().y + 20;
+	else
+		y = -App->render->camera->GetPosition().y + 3;
+
+
 	int height = 0;
 	int width = 0;
 	Uint32* format = 0;

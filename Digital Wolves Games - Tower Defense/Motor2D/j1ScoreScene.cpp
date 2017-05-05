@@ -95,9 +95,9 @@ bool j1ScoreScene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
 		App->entity_manager->DecreaseScore();
 
-
 	OptionSelected();
 
+	App->render->BlitScoreScene();
 	return true;
 }
 
@@ -134,7 +134,6 @@ void j1ScoreScene::ActualTrophie()
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
 	else if(true)
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 0, 0, 0 }, { 0, 0, 0, 0 });
-
 }
 
 void j1ScoreScene::CreateAchievements()

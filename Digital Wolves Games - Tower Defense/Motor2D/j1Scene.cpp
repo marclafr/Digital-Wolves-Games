@@ -73,7 +73,6 @@ bool j1Scene::Start()
 	}
 
 	debug_tex = App->tex->Load("maps/path2.png", T_MAP);
-	//wall_tex = 
 
 	CreateSceneUI();
 	//ENTITIES
@@ -125,24 +124,24 @@ bool j1Scene::Update(float dt)
 	iPoint pivot;
 
 	a1->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 0, 300, &rect_test);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 0, 300, &rect_test);
 	a2->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 100, 300, &rect_test);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 100, 300, &rect_test);
 	a3->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 200, 300, &rect_test);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 200, 300, &rect_test);
 	a4->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 300, 300, &rect_test);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 300, 300, &rect_test);
 	a5->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 0, 400, &rect_test);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 0, 400, &rect_test);
 	a6->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 100, 400, &rect_test);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 100, 400, &rect_test);
 	a7->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 200, 400, &rect_test);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 200, 400, &rect_test);
 	a8->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), 300, 400, &rect_test);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 300, 400, &rect_test);
 
 	a_fire->Update(rect_test, pivot);
-	App->render->Blit(App->tex->GetTexture(T_FIRE), 0, 200, &rect_test, SDL_FLIP_NONE, pivot.x, pivot.y);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE), 0, 200, &rect_test, SDL_FLIP_NONE, pivot.x, pivot.y);
 	//--
 
 
@@ -257,7 +256,7 @@ bool j1Scene::Update(float dt)
 		++item)
 	{
 		pos = App->map->MapToWorld(item->x, item->y);
-		App->render->Blit(debug_tex, pos.x - 32, pos.y - 32);
+		App->render->PushInGameSprite(debug_tex, pos.x - 32, pos.y - 32);
 	}
 
 	//SELECTION
@@ -277,8 +276,6 @@ bool j1Scene::Update(float dt)
 
 	//--
 
-	App->render->BlitAllEntities();
-
 	if (placing_basic_tower == true)
 	{
 		PlacingBasicTower();
@@ -290,6 +287,8 @@ bool j1Scene::Update(float dt)
 	if (placing_wall == true) {
 		PlacingWall();
 	}
+
+	App->render->BlitGameScene();
 	return true;
 }
 
@@ -374,6 +373,9 @@ void j1Scene::TrainSoldier()
 
 void j1Scene::PlacingBasicTower()
 {
+	SDL_Texture* tower_tex = App->tex->GetTexture(T_TURRET);
+	SDL_SetTextureAlphaMod(tower_tex, 180);
+
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
@@ -386,13 +388,13 @@ void j1Scene::PlacingBasicTower()
 		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
 		{
 			rect = {411,0,107,208};
-			App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			App->render->PushInGameSprite(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
 		}
 		else
 		{
 			rect = { 521,0,107,208 };
 			//rect = { 610,1,107,206 };
-			App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			App->render->PushInGameSprite(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
@@ -454,6 +456,7 @@ void j1Scene::CheckClick()
 
 void j1Scene::PlacingBombardTower()
 {
+	SDL_Texture* tower_tex = App->tex->GetTexture(T_TURRET);
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
@@ -466,12 +469,12 @@ void j1Scene::PlacingBombardTower()
 		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
 		{
 			rect = {889,0,130,281};
-			App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.902913);
+			App->render->PushInGameSprite(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.902913);
 		}
 		else
 		{
 			rect = { 759,0,130,281};
-			App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.914591);
+			App->render->PushInGameSprite(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.914591);
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
@@ -500,6 +503,9 @@ void j1Scene::PlacingBombardTower()
 
 void j1Scene::PlacingWall()
 {
+	SDL_Texture* wall_tex = App->tex->GetTexture(T_WALL);
+	SDL_SetTextureAlphaMod(wall_tex, 180);
+
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint p = App->render->ScreenToWorld(x, y);
@@ -513,27 +519,37 @@ void j1Scene::PlacingWall()
 
 	if (App->pathfinding->IsConstructible_ally(r) == false && placing_wall_clicked == false)
 	{
-		App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
+		SDL_Rect rect;
+		rect = { 689,122,99,178 };
+		App->render->PushInGameSprite(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
 	}
 	else if (App->pathfinding->IsConstructible_ally(r) == true)
 	{
-		App->render->Blit(App->tex->GetTexture(T_TURRET), p.x, p.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
-	}
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		SDL_Rect rect;
+		rect = { 690,303,99,178 };
+		//rect = { 325,218,99,178 };
+		App->render->PushInGameSprite(wall_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 0.494949 * 99, 178 * 0.865169);
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
 			firstSelectedForWall = r;
 			placing_wall_clicked = true;
 
 		}
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
 		{
 			LastSelectedForWall = r;
-			if (firstSelectedForWall.x == LastSelectedForWall.x && firstSelectedForWall.y > LastSelectedForWall.y)		direction = NORTH;
-			else if (firstSelectedForWall.x == LastSelectedForWall.x && firstSelectedForWall.y < LastSelectedForWall.y)		direction = SOUTH;
-			else if (firstSelectedForWall.x < LastSelectedForWall.x && firstSelectedForWall.y == LastSelectedForWall.y)		direction = EAST;
-			else if (firstSelectedForWall.x > LastSelectedForWall.x && firstSelectedForWall.y == LastSelectedForWall.y)		direction = WEST;
-			else direction = DIAGONAL;
+
+			if (firstSelectedForWall.x == LastSelectedForWall.x && firstSelectedForWall.y > LastSelectedForWall.y)
+				direction = NORTH;
+			else if (firstSelectedForWall.x == LastSelectedForWall.x && firstSelectedForWall.y < LastSelectedForWall.y)
+				direction = SOUTH;
+			else if (firstSelectedForWall.x < LastSelectedForWall.x && firstSelectedForWall.y == LastSelectedForWall.y)
+				direction = EAST;
+			else if (firstSelectedForWall.x > LastSelectedForWall.x && firstSelectedForWall.y == LastSelectedForWall.y)
+				direction = WEST;
+			else
+				direction = DIAGONAL;
+
 			switch (direction)
 			{
 			case NORTH:
@@ -541,10 +557,11 @@ void j1Scene::PlacingWall()
 				{
 					iPoint actualpos = { firstSelectedForWall.x,i };
 					iPoint temp2 = App->map->MapToWorld(LastSelectedForWall.x, i);
-					if (App->pathfinding->IsConstructible_ally(actualpos) == true) {
+
+					if (App->pathfinding->IsConstructible_ally(actualpos) == true)
 						App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
-					}
-					else	App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
+					else
+						App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				}
 				break;
 			case SOUTH:
@@ -552,24 +569,23 @@ void j1Scene::PlacingWall()
 				{
 					iPoint actualpos = { firstSelectedForWall.x,i };
 					iPoint temp2 = App->map->MapToWorld(LastSelectedForWall.x, i);
-					if (App->pathfinding->IsConstructible_ally(actualpos) == true) 
-					{
+
+					if (App->pathfinding->IsConstructible_ally(actualpos) == true)
 						App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
-					}
-					else	App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
+					else
+						App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				}
 				break;
 			case EAST:
 				for (int i = firstSelectedForWall.x; i <= LastSelectedForWall.x; i++)
 				{
-				
 					iPoint actualpos = { i,firstSelectedForWall.y };
 					iPoint temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
+
 					if (App->pathfinding->IsConstructible_ally(actualpos) == true)
-					{
 						App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
-					}
-					else	App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
+					else
+						App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				}
 				break;
 			case WEST:
@@ -577,11 +593,11 @@ void j1Scene::PlacingWall()
 				{
 					iPoint actualpos = { i,firstSelectedForWall.y };
 					iPoint temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
-					if (App->pathfinding->IsConstructible_ally(actualpos) == true) 
-					{
+
+					if (App->pathfinding->IsConstructible_ally(actualpos) == true)
 						App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
-					}
-					else	App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
+					else
+						App->render->Blit(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				}
 				break;
 			default:
@@ -592,18 +608,23 @@ void j1Scene::PlacingWall()
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
 			LastSelectedForWall = r;
-			if (firstSelectedForWall.x == LastSelectedForWall.x && firstSelectedForWall.y > LastSelectedForWall.y)		direction = NORTH;
-			else if (firstSelectedForWall.x == LastSelectedForWall.x && firstSelectedForWall.y < LastSelectedForWall.y)		direction = SOUTH;
-			else if (firstSelectedForWall.x < LastSelectedForWall.x && firstSelectedForWall.y == LastSelectedForWall.y)		direction = EAST;
-			else if (firstSelectedForWall.x > LastSelectedForWall.x && firstSelectedForWall.y == LastSelectedForWall.y)		direction = WEST;
+			if (firstSelectedForWall.x == LastSelectedForWall.x && firstSelectedForWall.y > LastSelectedForWall.y)
+				direction = NORTH;
+			else if (firstSelectedForWall.x == LastSelectedForWall.x && firstSelectedForWall.y < LastSelectedForWall.y)
+				direction = SOUTH;
+			else if (firstSelectedForWall.x < LastSelectedForWall.x && firstSelectedForWall.y == LastSelectedForWall.y)
+				direction = EAST;
+			else if (firstSelectedForWall.x > LastSelectedForWall.x && firstSelectedForWall.y == LastSelectedForWall.y)
+				direction = WEST;
+
 			switch (direction)
 			{
 			case NORTH:
 				for (int i = LastSelectedForWall.y; i <= firstSelectedForWall.y; i++)
 				{
-					iPoint actualpos = {firstSelectedForWall.x,i};
-					if (App->pathfinding->IsConstructible_ally(actualpos) == true) {
-
+					iPoint actualpos = { firstSelectedForWall.x,i };
+					if (App->pathfinding->IsConstructible_ally(actualpos) == true) 
+					{
 						iPoint temp2 = App->map->MapToWorld(LastSelectedForWall.x, i);
 						App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
 					}
@@ -613,8 +634,8 @@ void j1Scene::PlacingWall()
 				for (int i = firstSelectedForWall.y; i <= LastSelectedForWall.y; i++)
 				{
 					iPoint actualpos = { firstSelectedForWall.x,i };
-					if (App->pathfinding->IsConstructible_ally(actualpos) == true) {
-
+					if (App->pathfinding->IsConstructible_ally(actualpos) == true)
+					{
 						iPoint temp2 = App->map->MapToWorld(LastSelectedForWall.x, i);
 						App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
 					}
@@ -624,28 +645,28 @@ void j1Scene::PlacingWall()
 				for (int i = firstSelectedForWall.x; i <= LastSelectedForWall.x; i++)
 				{
 					iPoint actualpos = { i,firstSelectedForWall.y };
-					if (App->pathfinding->IsConstructible_ally(actualpos) == true) {
-
+					if (App->pathfinding->IsConstructible_ally(actualpos) == true)
+					{
 						iPoint temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 						App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
 					}
 				}
-					break;
+				break;
 			case WEST:
 				for (int i = LastSelectedForWall.x; i <= firstSelectedForWall.x; i++)
 				{
 					iPoint actualpos = { i,firstSelectedForWall.y };
-					if (App->pathfinding->IsConstructible_ally(actualpos) == true) {
-
+					if (App->pathfinding->IsConstructible_ally(actualpos) == true)
+					{
 						iPoint temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 						App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
 					}
 				}
 				break;
 			case DIAGONAL:
-				
-				if (App->pathfinding->IsConstructible_ally(LastSelectedForWall) == true) {
 
+				if (App->pathfinding->IsConstructible_ally(LastSelectedForWall) == true) 
+				{
 					iPoint temp2 = App->map->MapToWorld(LastSelectedForWall.x, LastSelectedForWall.y);
 					App->entity_manager->CreateBuilding(B_STONE_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
 				}
@@ -667,10 +688,11 @@ void j1Scene::PlacingWall()
 					}
 			}
 		}*/
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-	{
-		placing_wall = false;
-		placing_wall_clicked = false;
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		{
+			placing_wall = false;
+			placing_wall_clicked = false;
+		}
 	}
 }
 
@@ -751,8 +773,7 @@ void j1Scene::HandleInput( SDL_Event event)
 			placing_bombard_tower = false;
 			}
 			else
-				placing_wall = false;
-				
+				placing_wall = false;	
 		}
 
 		if (event.button.button == SDL_SCANCODE_4)
