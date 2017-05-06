@@ -9,6 +9,7 @@
 #include "Entity.h"
 #include "j1Animation.h"
 #include "Camera.h"
+#include "j1Scene.h"
 
 #define VSYNC true
 
@@ -396,13 +397,20 @@ void j1Render::BlitInGame() const
 
 void j1Render::BlitSelection() const
 {
-	/*//todo selected 
-if (u_sp->GetEntityStatus() == ST_SELECTED)
-App->render->DrawElipse(u_sp->GetX() + camera->GetPosition().x, u_sp->GetY() + camera->GetPosition().y, u_sp->GetUnitRadius(), 255, 255, 255, 20);
+	for (std::vector<Entity*>::iterator it = App->scene->selection.begin(); it != App->scene->selection.end(); ++it)
+	{
+		if ((*it)->GetEntityType() == E_UNIT)
+		{
+			Unit* unit = (Unit*)*it;
+			App->render->DrawElipse(unit->GetX() + camera->GetPosition().x, unit->GetY() + camera->GetPosition().y, unit->GetUnitRadius(), 255, 255, 255, 20);
+		}
 
-if (sp->GetEntityStatus() == ST_SELECTED)
-App->render->DrawCircle(b_sp->GetX() + camera->GetPosition().x, b_sp->GetY() + camera->GetPosition().y, b_sp->GetRange(), 255, 255, 255);
-*/
+		if ((*it)->GetEntityType() == E_BUILDING)
+		{
+			Building* building = (Building*)*it;
+			App->render->DrawCircle(building->GetX() + camera->GetPosition().x, building->GetY() + camera->GetPosition().y, building->GetRange(), 255, 255, 255);
+		}
+	}
 }
 
 void j1Render::BlitUI() const
