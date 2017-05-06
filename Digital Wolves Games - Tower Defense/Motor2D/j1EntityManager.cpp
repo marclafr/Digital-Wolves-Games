@@ -65,44 +65,63 @@ Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos)
 	return new_entity;
 }
 
-void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
+void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Entity*>& selection)
 {
+	bool selecting_units = false;
+	int entity_x = 0;
+	int entity_y = 0;
+
+	selection.clear();
+
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		//TODO: Unselect for only ally selection if (entity_array[i]->GetSide() == ALLY)
+		if (entity_array[i]->GetSide() == S_ALLY && entity_array[i]->GetHp() > 0)
 		{
-			int unit_x = entity_array[i]->GetX();
-			int unit_y = entity_array[i]->GetY();
-			if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
+			entity_x = entity_array[i]->GetX();
+			entity_y = entity_array[i]->GetY();
+
+			if ((entity_x > select_rect.x && entity_x < select_rect.w && entity_y > select_rect.y && entity_y < select_rect.h)
+				|| (entity_x < select_rect.x && entity_x > select_rect.w && entity_y < select_rect.y && entity_y > select_rect.h)
+				|| (entity_x > select_rect.x && entity_x < select_rect.w && entity_y < select_rect.y && entity_y > select_rect.h)
+				|| (entity_x < select_rect.x && entity_x > select_rect.w && entity_y > select_rect.y && entity_y < select_rect.h))
 			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
-			}
-			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
-			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
-			}
-			else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
-			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
-			}
-			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
-			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
+				if (entity_array[i]->GetEntityType() == E_UNIT && selecting_units == false)
+				{
+					selecting_units = true;
+
+					for (std::vector<Entity*>::iterator it = selection.begin(); it != selection.end(); ++it)
+						(*it)->SetEntityStatus(ST_NON_SELECTED);
+
+					selection.clear();
+				}
+
+				if (entity_array[i]->GetEntityType() == E_UNIT)
+				{
+					entity_array[i]->SetEntityStatus(ST_SELECTED);
+					selection.push_back(entity_array[i]);
+				}
+
+				if ((entity_array[i]->GetEntityType() == E_BUILDING || entity_array[i]->GetEntityType() == E_RESOURCE) && selecting_units == false)
+				{					
+					entity_array[i]->SetEntityStatus(ST_SELECTED);
+					selection.push_back(entity_array[i]);
+				}
+
+				if (selection.size() >= 25)
+					break;
 			}
 		}
 	}
 
-	if (App->uimanager->IsSelectionEmptyFromPanelInfo())
-		App->uimanager->DefineSelectionPanelInfo();
+	App->uimanager->CreatePanelInfo(selection);
 }
 
 void j1EntityManager::UnselectEverything()
 {
 	for (int i = 0; i < entity_array.size(); i++)
-	{
 		entity_array[i]->SetEntityStatus(ST_NON_SELECTED);
-	}
-	if (!App->uimanager->IsSelectionEmptyFromPanelInfo())
+
+	if (App->scene->selection.size() == 0)
 		App->uimanager->DeleteSelectionPanelInfo();
 }
 

@@ -26,7 +26,7 @@ GroupSelection::~GroupSelection()
 
 void GroupSelection::Prepare()
 {
-	std::list<Entity*>::iterator check = selection->begin();
+	std::vector<Entity*>::iterator check = App->scene->selection.begin();
 
 	if ((*check)->GetEntityType() == ENTITY_TYPE::E_UNIT)
 		PrepareUnitSelection();
@@ -38,12 +38,12 @@ void GroupSelection::Prepare()
 
 void GroupSelection::PrepareUnitSelection()
 {
-	std::list<Entity*>::iterator u_item = selection->begin();
+	std::vector<Entity*>::iterator u_item = App->scene->selection.begin();
 
-	std::list<Entity*>::iterator last_u_item = selection->end();
+	std::vector<Entity*>::iterator last_u_item = App->scene->selection.end();
 	last_u_item--;
 
-	while (u_item != selection->end())
+	while (u_item != App->scene->selection.end())
 	{
 		entity_selected* add_entity_selected = new entity_selected();
 		Unit* selected = (Unit*)*u_item;
@@ -59,12 +59,12 @@ void GroupSelection::PrepareUnitSelection()
 
 void GroupSelection::PrepareNoUnitSelection()
 {
-	std::list<Entity*>::iterator e_item = selection->begin();
+	std::vector<Entity*>::iterator e_item = App->scene->selection.begin();
 
-	std::list<Entity*>::iterator last_e_item = selection->end();
+	std::vector<Entity*>::iterator last_e_item = App->scene->selection.end();
 	last_e_item--;
 
-	while (e_item != selection->end())
+	while (e_item != App->scene->selection.end())
 	{
 		entity_selected* add_entity_selected = new entity_selected();
 		Building* b_selected = nullptr;

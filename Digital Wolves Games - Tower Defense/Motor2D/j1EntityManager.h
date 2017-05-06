@@ -31,7 +31,7 @@ public:
 	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side);
 	Entity* CreateTower(TOWER_TYPE t_type, fPoint pos);
 	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos);
-	void SelectInQuad(const SDL_Rect& select_rect);
+	void SelectInQuad(const SDL_Rect& select_rect, std::vector<Entity*>& selection);
 	void UnselectEverything();
 
 	void DeleteEntity(Entity* ptr); // will call other delete methods

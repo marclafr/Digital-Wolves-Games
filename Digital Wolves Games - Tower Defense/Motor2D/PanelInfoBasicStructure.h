@@ -17,14 +17,13 @@ public:
 	PANEL_TYPE type = NONE;
 
 protected:
-	std::list<Entity*>* selection;
 
 	bool delete_panel_info = false;
 
 	Entity* e_oneselected = nullptr;
 
 public:
-	PanelInfo(std::list<Entity*>& selection) { this->selection = &selection; };
+	PanelInfo(PANEL_TYPE type): type(type) {};
 
 	virtual ~PanelInfo() {};
 

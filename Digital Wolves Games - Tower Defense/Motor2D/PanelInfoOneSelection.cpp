@@ -10,6 +10,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "Camera.h"
+#include "j1Scene.h"
 
 #include "UIGetEntitiesInfo.h"
 
@@ -30,7 +31,7 @@ void OneSelection::Prepare()
 {
 	life_bar_selected = GREEN_BAR_SELECTED;
 
-	e_ptr = *selection->begin();
+	e_ptr = App->scene->selection.front();
 
 	switch (e_ptr->GetEntityType())
 	{
@@ -164,7 +165,7 @@ void OneSelection::UpdateBuildingPercentageStr()
 
 void OneSelection::Draw()
 {
-	e_ptr = *selection->begin();
+	e_ptr = App->scene->selection.front();
 
 	switch (e_ptr->GetEntityType())
 	{

@@ -76,6 +76,7 @@ public:
 
 	bool win = false;
 	bool lose = false;
+
 private:
 	j1Audio* scene_music;
 	bool selecting = false;
@@ -87,6 +88,7 @@ private:
 	Building* townhall;
 	Building* townhalltower1;
 	Building* townhalltower2;
+
 	std::vector<Entity*> ClickingVector; 
 	iPoint firstSelectedForWall;
 	iPoint LastSelectedForWall;
@@ -95,6 +97,8 @@ private:
 
 public:
 	Resources* GetResource(RESOURCE_TYPE type);
+
+	std::vector<Entity*> selection;
 
 public:
 

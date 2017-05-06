@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include <list>
+#include <vector>
 #include "SDL\include\SDL_rect.h"
 
 struct SDL_Texture;
@@ -75,9 +76,9 @@ public:
 
 	void SetTownHall(Building*);
 	void SetResource(Resources*);
-	void AddEntityToPanelInfo(Entity*);
-	void DefineSelectionPanelInfo();
-	bool IsSelectionEmptyFromPanelInfo();
+	//void AddEntityToPanelInfo(Entity*);
+	void CreatePanelInfo(const std::vector<Entity*>& selection);
+	//bool IsSelectionEmptyFromPanelInfo();
 	void DeleteSelectionPanelInfo();
 	void SetDescriptionHUDDescription(info_button*);
 	void SetInfoUIComponent(UIComponents*);

@@ -257,20 +257,7 @@ bool j1Scene::Update(float dt)
 		App->render->PushInGameSprite(debug_tex, pos.x - 32, pos.y - 32);
 	}
 
-	//SELECTION
-	if (selecting)
-	{
-		select_rect.w = x - App->render->camera->GetPosition().x;
-		select_rect.h = y - App->render->camera->GetPosition().y;
-		App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
-
-
-		if (App->input->GetMouseButtonDown(1) == KEY_UP)
-		{
-			App->entity_manager->SelectInQuad(select_rect);
-			selecting = false;
-		}
-	}
+	
 
 	//--
 
@@ -288,17 +275,31 @@ bool j1Scene::Update(float dt)
 
 	App->render->BlitGameScene();
 
+	//SELECTION
+	if (selecting)
+	{
+		select_rect.w = x - App->render->camera->GetPosition().x;
+		select_rect.h = y - App->render->camera->GetPosition().y;
+		App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
+
+		if (App->input->GetMouseButtonDown(1) == KEY_UP)
+		{
+			App->entity_manager->SelectInQuad(select_rect, selection);
+			selecting = false;
+		}
+	}
+
 	// Camera Movement (has to go after blit so that sprites print in the right camera position)
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)// || ((y < (App->render->camera->GetHeight() / 30) && res.y > -30))
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		App->render->camera->MoveUp(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)//|| ((y > 750) && res.y < 2317)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		App->render->camera->MoveDown(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)// || (x < (App->render->camera->GetWidth() / 70) && res.x > -2400)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		App->render->camera->MoveLeft(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)//|| (x >(((App->render->camera->GetWidth() / 50)*49.8f)) && res.x < 2349)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		App->render->camera->MoveRight(floor(450.0f * dt));
 
 	return true;
@@ -729,7 +730,6 @@ void j1Scene::HandleInput( SDL_Event event)
 		App->input->GetMousePosition(x, y);
 
 		if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
-		{
 			if (event.button.button == MK_LEFT)
 			{
 				App->entity_manager->UnselectEverything();
@@ -741,9 +741,7 @@ void j1Scene::HandleInput( SDL_Event event)
 
 				selecting = true;
 				CheckClick();
-			
 			}
-		}
 		break;
 
 	case SDL_MOUSEBUTTONUP:
