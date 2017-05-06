@@ -65,45 +65,63 @@ Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos)
 	return new_entity;
 }
 
-void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect)
+void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Entity*>& selection)
 {
+	bool selecting_units = false;
+	int entity_x = 0;
+	int entity_y = 0;
+
+	selection.clear();
+
 	for (int i = 0; i < entity_array.size(); i++)
 	{
-		//TODO: Unselect for only ally selection if (entity_array[i]->GetSide() == ALLY)
+		if (entity_array[i]->GetSide() == S_ALLY && entity_array[i]->GetHp() > 0)
 		{
-			int unit_x = entity_array[i]->GetX();
-			int unit_y = entity_array[i]->GetY();
-			if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
+			entity_x = entity_array[i]->GetX();
+			entity_y = entity_array[i]->GetY();
+
+			if ((entity_x > select_rect.x && entity_x < select_rect.w && entity_y > select_rect.y && entity_y < select_rect.h)
+				|| (entity_x < select_rect.x && entity_x > select_rect.w && entity_y < select_rect.y && entity_y > select_rect.h)
+				|| (entity_x > select_rect.x && entity_x < select_rect.w && entity_y < select_rect.y && entity_y > select_rect.h)
+				|| (entity_x < select_rect.x && entity_x > select_rect.w && entity_y > select_rect.y && entity_y < select_rect.h))
 			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
-			}
-			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
-			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
-			}
-			else if (unit_x > select_rect.x && unit_x < select_rect.w && unit_y < select_rect.y && unit_y > select_rect.h)
-			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
-			}
-			else if (unit_x < select_rect.x && unit_x > select_rect.w && unit_y > select_rect.y && unit_y < select_rect.h)
-			{
-				App->uimanager->AddEntityToPanelInfo(entity_array[i]);
+				if (entity_array[i]->GetEntityType() == E_UNIT && selecting_units == false)
+				{
+					selecting_units = true;
+
+					for (std::vector<Entity*>::iterator it = selection.begin(); it != selection.end(); ++it)
+						(*it)->SetEntityStatus(ST_NON_SELECTED);
+
+					selection.clear();
+				}
+
+				if (entity_array[i]->GetEntityType() == E_UNIT)
+				{
+					entity_array[i]->SetEntityStatus(ST_SELECTED);
+					selection.push_back(entity_array[i]);
+				}
+
+				if ((entity_array[i]->GetEntityType() == E_BUILDING || entity_array[i]->GetEntityType() == E_RESOURCE) && selecting_units == false)
+				{					
+					entity_array[i]->SetEntityStatus(ST_SELECTED);
+					selection.push_back(entity_array[i]);
+				}
+
+				if (selection.size() >= 25)
+					break;
 			}
 		}
 	}
 
-	if (App->uimanager->IsSelectionEmptyFromPanelInfo())
-		App->uimanager->DefineSelectionPanelInfo();
-	App->uimanager->DeletePanelButtons();
+	App->uimanager->CreatePanelInfo(selection);
 }
 
 void j1EntityManager::UnselectEverything()
 {
 	for (int i = 0; i < entity_array.size(); i++)
-	{
 		entity_array[i]->SetEntityStatus(ST_NON_SELECTED);
-	}
-	if (!App->uimanager->IsSelectionEmptyFromPanelInfo())
+
+	if (App->scene->selection.size() == 0)
 		App->uimanager->DeleteSelectionPanelInfo();
 }
 
@@ -169,49 +187,6 @@ void j1EntityManager::DeleteResource(Resources* ptr)
 	}
 }
 
-void j1EntityManager::BlitEnemyDeathCount()
-{
-	if (App->scene->active)
-	{
-		uint width = 0;
-		uint height = 0;
-
-		App->win->GetWindowSize(width, height);
-
-		//SDL_Rect rect{ width - 120, 25, 120, 60};
-		
-		sprintf_s(time_left, 256, " Time Left: %d:%d", GetMins(), GetSecs());
-		
-		if (enemy_killed)
-		{
-			SDL_DestroyTexture(num_kills_texture);
-			SDL_DestroyTexture(score_texture);
-
-			sprintf_s(text_num_kills, 256, " Enemies Killed: %d", enemies_killed);
-			sprintf_s(text_score, 256, " Score: %d", score);
-
-			num_kills_texture = App->font->Print(text_num_kills);
-			score_texture = App->font->Print(text_score);
-
-			enemy_killed = false;
-		}
-
-		time_texture = App->font->Print(time_left);
-
-		App->render->Blit(num_kills_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 5);
-		App->render->Blit(score_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 25);
-		App->render->Blit(time_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 45);
-
-		SDL_DestroyTexture(time_texture);
-	}
-}
-
-void j1EntityManager::EnemyDead()
-{
-	enemies_killed++;
-	score += 100;
-	enemy_killed = true;
-}
 
 bool j1EntityManager::Start()
 {
@@ -242,15 +217,8 @@ bool j1EntityManager::Update(float dt)
 bool j1EntityManager::PostUpdate()
 {
 	for (int i = 0; i < entity_array.size(); i++)
-	{
 		if (entity_array[i]->ToDelete() == true)
-		{
 			DeleteEntity(entity_array[i]);
-		}
-	}
-
-	BlitEnemyDeathCount();
-
 	return true;
 }
 
@@ -267,12 +235,10 @@ Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
 				return entity_array[i];
 		}
 		if (entity_array[i]->GetEntityType() == E_UNIT)
-		{
 			if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range &&
 				entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range &&
 				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() > 0)
 				return entity_array[i];
-		}
 	}
 	return nullptr;
 }
@@ -281,23 +247,15 @@ Entity* j1EntityManager::CheckForObjective(iPoint position, int vision_range, Si
 {
 	Entity* ret = nullptr;
 	for (int i = 0; i < entity_array.size(); i++)
-	{
 		if (entity_array[i]->GetX() <= position.x + vision_range && entity_array[i]->GetX() >= position.x - vision_range &&
 			entity_array[i]->GetY() <= position.y + vision_range && entity_array[i]->GetY() >= position.y - vision_range &&
 			side != entity_array[i]->GetSide() && entity_array[i]->GetHp() > 0 && entity_array[i]->GetSide() != S_NEUTRAL
 			&& entity_array[i]->GetEntityType() == E_UNIT)
-		{
 			if(ret == nullptr)
 				ret = entity_array[i];
 			else
-			{
 				if (position.DistanceTo(iPoint(ret->GetX(), ret->GetY())) > position.DistanceTo(iPoint(entity_array[i]->GetX(),entity_array[i]->GetY())))
-				{
-					ret = entity_array[i];
-				}
-			}
-		}			
-	}
+					ret = entity_array[i];			
 	return ret;
 }
 
@@ -309,66 +267,11 @@ std::vector<Entity*> j1EntityManager::GetEntityVector()
 bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
 {
 	for (int i = 0; i < entity_array.size(); i++)
-	{
 		if (entity_array[i]->GetEntityType() == E_UNIT)
-		{
 			if (entity_array[i] != unit)
-			{
 				if (tile == App->map->WorldToMap(entity_array[i]->GetX(), entity_array[i]->GetY()))
 					return true;
-			}
-		}
-	}
-
 	return false;
-}
-
-int j1EntityManager::GetScore()
-{
-	return score;
-}
-
-int j1EntityManager::GetEnemiesKilled()
-{
-	return enemies_killed;
-}
-
-int j1EntityManager::GetMins()
-{
-	int secs = WINNING_TIME - App->scene->game_time.ReadSec();
-	int mins = secs / 60;
-	secs -= mins * 60;
-	return mins;
-}
-
-int j1EntityManager::GetSecs()
-{
-	int secs = WINNING_TIME - App->scene->game_time.ReadSec();
-	int mins = secs / 60;
-	secs -= mins * 60;
-	return secs;
-}
-
-void j1EntityManager::IncreaseScore()
-{
-	score++;
-}
-
-void j1EntityManager::DecreaseScore()
-{
-	score--;
-}
-
-void j1EntityManager::AddScore(int points)
-{
-	score += points;
-}
-
-void j1EntityManager::ResetScores()
-{
-	score = 0;
-	enemies_killed = 0;
-	enemy_killed = true;
 }
 
 void j1EntityManager::LoadAllFx()

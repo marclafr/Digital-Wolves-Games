@@ -99,7 +99,7 @@ void Building::Draw()
 			totally_built = true;
 		}
 	}
-	App->render->PushEntity(this);
+	App->render->PushInGameSprite(this);
 }
 
 const BUILDING_TYPE Building::GetBuildingType() const

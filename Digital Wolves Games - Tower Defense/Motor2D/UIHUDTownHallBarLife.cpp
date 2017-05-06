@@ -51,9 +51,9 @@ bool UIHUDTownHallBarLife::Update()
 
 void UIHUDTownHallBarLife::Draw()
 {
-	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), rect_position.x - App->render->camera->GetPosition().x, rect_position.y - App->render->camera->GetPosition().y, &rect_atlas);
 
-	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), green_bar->GetPosRect().x - App->render->camera->GetPosition().x, green_bar->GetPosRect().y - App->render->camera->GetPosition().y, &rest_green_bar, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), green_bar->GetPosRect().x - App->render->camera->GetPosition().x, green_bar->GetPosRect().y - App->render->camera->GetPosition().y, &rest_green_bar);
 
-	App->render->Blit(life->GetTexture(), life->GetPosRect().x - App->render->camera->GetPosition().x, life->GetPosRect().y - App->render->camera->GetPosition().y, 0, SDL_FLIP_NONE, 0, 0, 1.0f, 0.0, true);
+	App->render->PushUISprite(life->GetTexture(), life->GetPosRect().x - App->render->camera->GetPosition().x, life->GetPosRect().y - App->render->camera->GetPosition().y);
 }

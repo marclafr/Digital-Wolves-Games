@@ -244,19 +244,9 @@ void j1UIManager::SetResource(Resources* res)
 	resources_panel->AddResource(res);
 }
 
-void j1UIManager::AddEntityToPanelInfo(Entity* entity_selected)
+void j1UIManager::CreatePanelInfo(const std::vector<Entity*>& selection)
 {
-	panel_info->AddEntitySelection(entity_selected);
-}
-
-void j1UIManager::DefineSelectionPanelInfo()
-{
-	panel_info->DefineSelection();
-}
-
-bool j1UIManager::IsSelectionEmptyFromPanelInfo()
-{
-	return panel_info->isSelectionEmpty();
+	panel_info->CreatePanel(selection);
 }
 
 void j1UIManager::DeleteSelectionPanelInfo()

@@ -145,6 +145,9 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Score.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -305,6 +308,9 @@
     </ClInclude>
     <ClInclude Include="Task.h">
       <Filter>Usefull</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Score.h">
+      <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

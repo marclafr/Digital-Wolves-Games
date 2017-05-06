@@ -105,7 +105,7 @@ void Projectile::Draw()
 	//alfa = Math.atan2(by - ay, bx - ax);
 	if (arrow_anim != nullptr)
 		arrow_anim->Update(rect, pivot);
-	App->render->Blit(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
 }
 
 int Projectile::GetProjectilePos() const

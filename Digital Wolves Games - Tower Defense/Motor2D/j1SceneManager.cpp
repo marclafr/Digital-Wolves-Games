@@ -47,7 +47,7 @@ bool j1SceneManager::PostUpdate()
 	if (change_to != SC_NO_SCENE)
 	{
 		bool ret = true;
-		j1Module* current = GetCurrentScene();
+		j1Module* current = GetCurrentScenePtr();
 
 		if (current != nullptr)
 			current->Disable();
@@ -91,7 +91,7 @@ void j1SceneManager::ChangeScene(SCENES to)
 	change_to = to;
 }
 
-j1Module * j1SceneManager::GetCurrentScene() const
+j1Module * j1SceneManager::GetCurrentScenePtr() const
 {
 	switch (current_scene)
 	{
@@ -105,4 +105,9 @@ j1Module * j1SceneManager::GetCurrentScene() const
 		return score_scene;
 	}
 	return nullptr;
+}
+
+SCENES j1SceneManager::GetCurrentScene() const
+{
+	return current_scene;
 }

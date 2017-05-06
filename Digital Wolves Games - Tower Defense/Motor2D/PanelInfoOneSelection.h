@@ -23,7 +23,7 @@ private:
 	SDL_Rect life_bar_selected;
 
 public:
-	OneSelection(std::list<Entity*>& selection) : PanelInfo(selection) { type = PANEL_TYPE::ONESELECTION; };
+	OneSelection() : PanelInfo(ONESELECTION) {}
 
 	~OneSelection();
 

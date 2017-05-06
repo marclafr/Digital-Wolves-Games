@@ -1,3 +1,5 @@
+#include <deque>
+
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
@@ -161,17 +163,14 @@ iPoint j1Render::WorldToScreen(int x, int y) const
 bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle, bool not_in_world) const
 {
 	bool ret = true;
-	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)(camera->GetPosition().x * speed) + x * scale;
-	rect.y = (int)(camera->GetPosition().y * speed) + y * scale;
+	rect.x = (int)(camera->GetPosition().x * speed) + x;
+	rect.y = (int)(camera->GetPosition().y * speed) + y;
 
-	iPoint screen_position = App->render->WorldToScreen(x,y);
-
-	if (App->render->camera->InsideRenderTarget(screen_position.x, screen_position.y) || not_in_world)
+	if (App->render->camera->InsideRenderTarget(rect.x, rect.y) || not_in_world)
 	{
-		if (section != NULL)
+		if (section != nullptr)
 		{
 			rect.w = section->w;
 			rect.h = section->h;
@@ -194,31 +193,22 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		}
 
 		else if (flip == SDL_FLIP_NONE)
-		{
+		{		
 			rect.x -= pivot_x;
 			rect.y -= pivot_y;
 		}
 
-		rect.w *= scale;
-		rect.h *= scale;
-
-		SDL_Point* p = NULL;
 		SDL_Point pivot;
 
 		if (pivot_x != INT_MAX && pivot_y != INT_MAX)
 		{
 			pivot.x = pivot_x;
 			pivot.y = pivot_y;
-			p = &pivot;
 		}
 	
-		if (not_in_world == false)
-		{
-			//rect = App->render->camera->GetZoomedRect(SDL_Rect{ screen_position.x,screen_position.y,rect.w,rect.h });
-			//SDL_SetTextureAlphaMod(texture, App->render->camera->GetOpacity());
-		}
+		//SDL_SetTextureAlphaMod(texture, App->render->camera->GetOpacity());
 
-		if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, &pivot, (SDL_RendererFlip)flip) != 0)
+		if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, &pivot, flip) != 0)
 		{
 			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 			ret = false;
@@ -340,60 +330,147 @@ bool j1Render::DrawElipse(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, f
 	return ret;
 }
 
-
-void j1Render::PushEntity(Entity* entity)
+void j1Render::PushMapSprite(SDL_Texture * texture, int x, int y, const SDL_Rect * section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle, bool not_in_world)
 {
-	std::deque<Entity*>::iterator queue_pos = sprite_queue.begin();
-	int i = 0;
-
-	while (i < sprite_queue.size())
-	{		
-		if (entity->GetY() <= sprite_queue[i]->GetY())
-			break;
-		i++;
-	}
-
-	sprite_queue.insert(queue_pos + i, entity);
+	Sprite* map_sprite = new Sprite(texture, x, y, section, flip, pivot_x, pivot_y, speed, angle);
+	map_sprite_vec.push_back(map_sprite);
 }
 
-void j1Render::BlitAllEntities()
+void j1Render::PushInGameSprite(const Entity* entity)
 {
-	Entity* sp = nullptr;
-	Unit* u_sp = nullptr;
-	Building* b_sp = nullptr;
-	for (int i = 0; i < sprite_queue.size(); i++)
+	Sprite* entity_sprite;
+
+	if (entity->GetEntityType() == E_UNIT)
 	{
-		sp = sprite_queue[i];
+		Unit* unit = (Unit*)entity;
 
-		if (sp->GetEntityType() == E_UNIT)
-		{
-			u_sp = (Unit*)sp;
-
-			if (u_sp->GetDir() == D_NORTH_EAST || u_sp->GetDir() == D_EAST || u_sp->GetDir() == D_SOUTH_EAST)
-				Blit(App->tex->GetTexture(sp->GetTextureID()), sp->GetX(), sp->GetY(), &sp->GetRect(), SDL_FLIP_HORIZONTAL, sp->GetPivot().x, sp->GetPivot().y);
-			else
-				Blit(App->tex->GetTexture(sp->GetTextureID()), sp->GetX() - sp->GetPivot().x, sp->GetY() - sp->GetPivot().y, &sp->GetRect());
-
-			//selected should change cus after sprite order implementation it gets printed before the acual unit sprite 
-			
-			if (u_sp->GetEntityStatus() == ST_SELECTED)
-				App->render->DrawElipse(u_sp->GetX() + camera->GetPosition().x, u_sp->GetY() + camera->GetPosition().y, u_sp->GetUnitRadius(), 255, 255, 255, 20);
-
-		}
+		if (unit->GetDir() == D_NORTH_EAST || unit->GetDir() == D_EAST || unit->GetDir() == D_SOUTH_EAST)
+			entity_sprite = new Sprite(App->tex->GetTexture(unit->GetTextureID()), unit->GetX(), unit->GetY(), &unit->GetRect(), SDL_FLIP_HORIZONTAL, unit->GetPivot().x, unit->GetPivot().y);
 		else
-		{	
-			Blit(App->tex->GetTexture(sp->GetTextureID()), sp->GetX(), sp->GetY(), &sp->GetRect(), SDL_FLIP_NONE, sp->GetPivot().x, sp->GetPivot().y);
-			if (sp->GetEntityType() == E_BUILDING)
-			{
-				b_sp = (Building*)sp;
-				if (sp->GetEntityStatus() == ST_SELECTED)
-				{
-					App->render->DrawCircle(b_sp->GetX() + camera->GetPosition().x, b_sp->GetY() + camera->GetPosition().y, b_sp->GetRange(), 255, 255, 255);
-				}
-			}
-			
-		}		
+			entity_sprite = new Sprite(App->tex->GetTexture(unit->GetTextureID()), unit->GetX(), unit->GetY(), &unit->GetRect(), SDL_FLIP_NONE, unit->GetPivot().x, unit->GetPivot().y);
 	}
+	else
+	entity_sprite = new Sprite(App->tex->GetTexture(entity->GetTextureID()), entity->GetX(), entity->GetY(), &entity->GetRect(), SDL_FLIP_NONE, entity->GetPivot().x, entity->GetPivot().y);
 
-	sprite_queue.clear();
+	PushInGameSprite(entity_sprite);
+}
+
+void j1Render::PushInGameSprite(SDL_Texture * texture, int x, int y, const SDL_Rect * section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle, bool not_in_world)
+{
+	Sprite* in_game_sprite = new Sprite(texture, x, y, section, flip, pivot_x, pivot_y, speed, angle);
+	PushInGameSprite(in_game_sprite);
+}
+
+void j1Render::PushInGameSprite(Sprite * sprite)
+{
+	std::deque<Sprite*>::iterator it = in_game_sprite_queue.begin();
+
+	if(in_game_sprite_queue.size() != 0)
+		while (it != in_game_sprite_queue.end())
+		{	
+			if (sprite->y <= (*it)->y)
+				break;
+			it++;
+		}
+	
+	in_game_sprite_queue.insert(it, sprite);
+}
+
+void j1Render::PushUISprite(SDL_Texture * texture, int x, int y, const SDL_Rect * section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle)
+{
+	Sprite* ui_text = new Sprite(texture, x, y, section, flip, pivot_x, pivot_y, speed, angle);
+	ui_sprite_vec.push_back(ui_text);
+}
+
+void j1Render::BlitMap() const
+{
+	for (std::vector<Sprite*>::const_iterator it = map_sprite_vec.begin(); it != map_sprite_vec.end(); ++it)
+		Blit((*it)->texture, (*it)->x, (*it)->y, (*it)->section, (*it)->flip, (*it)->pivot_x, (*it)->pivot_y, (*it)->speed, (*it)->angle);
+}
+
+void j1Render::BlitInGame() const
+{
+	for (std::deque<Sprite*>::const_iterator it = in_game_sprite_queue.begin(); it != in_game_sprite_queue.end(); ++it)
+		Blit((*it)->texture, (*it)->x, (*it)->y, (*it)->section, (*it)->flip, (*it)->pivot_x, (*it)->pivot_y, (*it)->speed, (*it)->angle);
+}
+
+void j1Render::BlitSelection() const
+{
+	/*//todo selected 
+if (u_sp->GetEntityStatus() == ST_SELECTED)
+App->render->DrawElipse(u_sp->GetX() + camera->GetPosition().x, u_sp->GetY() + camera->GetPosition().y, u_sp->GetUnitRadius(), 255, 255, 255, 20);
+
+if (sp->GetEntityStatus() == ST_SELECTED)
+App->render->DrawCircle(b_sp->GetX() + camera->GetPosition().x, b_sp->GetY() + camera->GetPosition().y, b_sp->GetRange(), 255, 255, 255);
+*/
+}
+
+void j1Render::BlitUI() const
+{
+	for (std::vector<Sprite*>::const_iterator it = ui_sprite_vec.begin(); it != ui_sprite_vec.end(); ++it)
+		Blit((*it)->texture, (*it)->x, (*it)->y, (*it)->section, (*it)->flip, (*it)->pivot_x, (*it)->pivot_y, (*it)->speed, (*it)->angle, true);
+}
+
+void j1Render::BlitMainMenu()
+{
+	BlitUI();
+	CleanUpUISpriteVec();
+}
+
+void j1Render::BlitGameScene()
+{
+	BlitMap();
+	BlitInGame();
+	BlitSelection();
+	BlitUI();
+
+	CleanUpMapVec();
+	CleanUpInGameSpriteQueue();
+	CleanUpUISpriteVec();
+}
+
+void j1Render::BlitScoreScene()
+{
+	BlitUI();
+	CleanUpUISpriteVec();
+}
+
+void j1Render::CleanUpMapVec()
+{
+	for (std::vector<Sprite*>::iterator it = map_sprite_vec.begin(); it != map_sprite_vec.end(); ++it)
+		DELETE_PTR((*it));
+
+	map_sprite_vec.clear();
+}
+
+void j1Render::CleanUpInGameSpriteQueue()
+{
+	for (std::deque<Sprite*>::iterator it = in_game_sprite_queue.begin(); it != in_game_sprite_queue.end(); ++it)
+		DELETE_PTR((*it));
+
+	in_game_sprite_queue.clear();
+}
+
+void j1Render::CleanUpUISpriteVec()
+{
+	for (std::vector<Sprite*>::iterator it = ui_sprite_vec.begin(); it != ui_sprite_vec.end(); ++it)
+		DELETE_PTR((*it));
+
+	ui_sprite_vec.clear();
+}
+
+Sprite::Sprite(SDL_Texture * texture, int x, int y, const SDL_Rect * section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle): texture(texture), x(x), y(y), flip(flip), pivot_x(pivot_x), pivot_y(pivot_y), speed(speed), angle(angle)
+{
+	if (section != nullptr)
+	{
+		this->section = new SDL_Rect(*section);
+	}
+	else
+		this->section = nullptr;
+}
+
+Sprite::~Sprite()
+{
+	if(section != nullptr)
+		DELETE_PTR(section);
 }

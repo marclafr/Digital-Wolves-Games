@@ -1,7 +1,7 @@
-#pragma once
+#ifndef _PANELINFO
+#define _PANELINFO
 
 #include "PanelInfoBasicStructure.h"
-
 #include "UIButton.h"
 
 class GroupSelection : public PanelInfo
@@ -18,7 +18,7 @@ private:
 	SDL_Rect life_bar;
 
 public:
-	GroupSelection(std::list<Entity*>& selection) : PanelInfo(selection) { type = PANEL_TYPE::GROUPSELECTION; };
+	GroupSelection() : PanelInfo(GROUPSELECTION) {};
 
 	~GroupSelection();
 
@@ -31,3 +31,5 @@ public:
 
 	void SetOneEntitySelection(Entity* e_selected);
 };
+
+#endif

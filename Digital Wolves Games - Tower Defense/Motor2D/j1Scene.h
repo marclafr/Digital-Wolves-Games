@@ -1,9 +1,8 @@
 #ifndef __j1SCENE_H__
 #define __j1SCENE_H__
 
-#include "j1Module.h"
-//#include <vector.h>
 #include <vector>
+#include "j1Module.h"
 #include "Entity.h"
 
 #define BASIC_TOWER_WOOD_COST 75
@@ -11,7 +10,6 @@
 #define TWOHANDED_WOOD_COST 15
 #define TWOHANDED_STONE_COST 15
 #define BASIC_WALL_STONE_COST 50
-#define WINNING_TIME 600
 
 struct SDL_Texture;
 class Resources;
@@ -78,6 +76,7 @@ public:
 
 	bool win = false;
 	bool lose = false;
+
 private:
 	j1Audio* scene_music;
 	bool selecting = false;
@@ -89,16 +88,19 @@ private:
 	Building* townhall;
 	Building* townhalltower1;
 	Building* townhalltower2;
+
 	std::vector<Entity*> ClickingVector; 
 	iPoint firstSelectedForWall;
 	iPoint LastSelectedForWall;
 	PlacingWallDirection direction;
 	bool placing_wall_clicked = false;
+
 public:
 	Resources* GetResource(RESOURCE_TYPE type);
 
+	std::vector<Entity*> selection;
+
 public:
-	j1Timer game_time;
 
 	//RESOURCES
 	Resources* resource_food;
