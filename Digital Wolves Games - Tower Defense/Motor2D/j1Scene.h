@@ -62,7 +62,7 @@ public:
 	void TrainSoldier();
 
 	void PlacingBasicTower();
-	void CheckClick();
+	void CheckClick(int x, int y);
 	void PlacingBombardTower();
 	
 	void PlacingWall();
@@ -89,7 +89,7 @@ private:
 	Building* townhalltower1;
 	Building* townhalltower2;
 
-	std::vector<Entity*> ClickingVector; 
+	Entity* clicking_entity; 
 	iPoint firstSelectedForWall;
 	iPoint LastSelectedForWall;
 	PlacingWallDirection direction;

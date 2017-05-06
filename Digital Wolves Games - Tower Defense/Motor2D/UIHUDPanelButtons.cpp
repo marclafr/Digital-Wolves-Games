@@ -74,26 +74,28 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 	case B_TURRET:
 		panel_type = BP_TURRET;
 		b_selected = building;
+		CreatePanel();
 		break;
 	case B_CANNON:
 		panel_type = BP_CANNON;
 		b_selected = building;
+		CreatePanel();
 		break;
 	case B_TOWNHALL:
 		panel_type = BP_TOWNHALL;
 		b_selected = building;
+		CreatePanel();
 		break;
 	case B_UNIVERSITY:
 		panel_type = BP_UNIVERSITY;
 		b_selected = building;
+		CreatePanel();
 		break;
 	default:
 		panel_type = BP_NONE;
 		b_selected = nullptr;
 		break;
 	}
-
-	CreatePanel();
 }
 
 bool UIHUDPanelButtons::Update()

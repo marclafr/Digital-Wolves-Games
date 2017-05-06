@@ -444,42 +444,24 @@ void j1Scene::PlacingBasicTower()
 	}
 }
 
-void j1Scene::CheckClick()
+void j1Scene::CheckClick(int x, int y)
 {
-	/*
-	ClickingVector.clear();
-	int x, y;
-	App->input->GetMousePosition(x, y);
+	clicking_entity = nullptr;
 	iPoint res = App->render->ScreenToWorld(x, y);
-
 	std::vector<Entity*> EntityVector = App->entity_manager->GetEntityVector();
-	std::vector<Entity*>::iterator item = EntityVector.begin();
-	for (; item != EntityVector.end(); item++)
+	
+	for (std::vector<Entity*>::iterator item = EntityVector.begin(); item != EntityVector.end(); item++)
 	{
-		if ((*item)->GetEntityType() == E_BUILDING)
+		SDL_Rect rect = (*item)->GetRect();
+		if (res.x >= (*item)->GetX() - rect.w / 2 && res.x <= (*item)->GetX() + rect.w / 2 && res.y >= (*item)->GetY() - (rect.h - 20) && res.y <= (*item)->GetY() + 20)
 		{
-			SDL_Rect rect = (*item)->GetRect();
-			if (res.x >= (*item)->GetX() - rect.w / 2 && res.x <= (*item)->GetX() + rect.w / 2 && res.y >= (*item)->GetY() - (rect.h - 20) && res.y <= (*item)->GetY() + 20)
-			{
-				ClickingVector.push_back((*item));
-				
-				//Send building to panelbuttons - UI
-				App->uimanager->SetPanelButtons((Building*)(*item));
-			}
+			clicking_entity = *item;
+			break;
 		}
 	}
-	if (ClickingVector.size() != 0) 
-	{
-		Entity* selected = ClickingVector.front();
-		std::vector<Entity*>::iterator item2 = ClickingVector.begin();
-		for (; item2 != ClickingVector.end(); item2++)
-		{
-			if (selected->GetY() < (*item2)->GetY())		selected = (*item2);
-		}
-		LOG("selected_pos = %f,%f", selected->GetX(), selected->GetY());
-		//selected es el edificio seleccionado, hace falta ponerlo en la ui
-	}
-	*/
+	
+	if (clicking_entity != nullptr)
+		App->entity_manager->SetOneSelection(clicking_entity, selection);
 }
 
 void j1Scene::PlacingBombardTower()
@@ -746,7 +728,7 @@ void j1Scene::HandleInput( SDL_Event event)
 				select_rect.h = select_rect.y;
 
 				selecting = true;
-				//CheckClick();
+				CheckClick(x,y);
 			}
 		break;
 

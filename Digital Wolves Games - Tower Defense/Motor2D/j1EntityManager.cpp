@@ -120,6 +120,7 @@ void j1EntityManager::SetOneSelection(Entity * entity, std::vector<Entity*>& sel
 {
 	selection.clear();
 	selection.push_back(entity);
+	entity->SetEntityStatus(ST_SELECTED);
 	App->uimanager->CreatePanelInfo(selection);
 }
 

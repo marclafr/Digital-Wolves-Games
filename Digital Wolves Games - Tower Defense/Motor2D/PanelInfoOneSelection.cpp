@@ -38,6 +38,7 @@ void OneSelection::Prepare()
 		break;
 	case E_BUILDING:
 		PrepareBuildInfo();
+		App->uimanager->SetPanelButtons((Building*)e_ptr);
 		break;
 	case E_RESOURCE:
 		PrepareResourceInfo();
