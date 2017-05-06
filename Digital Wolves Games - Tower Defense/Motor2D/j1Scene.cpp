@@ -459,6 +459,7 @@ void j1Scene::CheckClick()
 		{
 			SDL_Rect rect = (*item)->GetRect();
 			if (res.x >= (*item)->GetX() - rect.w / 2 && res.x <= (*item)->GetX() + rect.w / 2 && res.y >= (*item)->GetY() - (rect.h - 20) && res.y <= (*item)->GetY() + 20)
+			{
 				ClickingVector.push_back((*item));
 				
 				//Send building to panelbuttons - UI
@@ -466,7 +467,8 @@ void j1Scene::CheckClick()
 			}
 		}
 	}
-	if (ClickingVector.size() != 0) {
+	if (ClickingVector.size() != 0) 
+	{
 		Entity* selected = ClickingVector.front();
 		std::vector<Entity*>::iterator item2 = ClickingVector.begin();
 		for (; item2 != ClickingVector.end(); item2++)
