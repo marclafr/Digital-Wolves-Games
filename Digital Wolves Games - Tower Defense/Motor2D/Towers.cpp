@@ -87,20 +87,10 @@ void Tower::AI()
 {
 	if (Target == nullptr && AttackTimer.ReadSec() >= rate_of_fire)
 	{
-		std::vector<Entity*> EntityVector = App->entity_manager->GetEntityVector();
-		std::vector<Entity*>::iterator item = EntityVector.begin();
-		for (; item != EntityVector.end(); item++)
-		{
-			if ((*item)->GetEntityType() == E_UNIT)
-			{
-				//TODO:Use a function from entity instead
-				if ((*item)->GetX() >= (GetX() - GetRange()) && (*item)->GetX() < (GetX() + GetRange()) && (*item)->GetY() >= (GetY() - GetRange()) && (*item)->GetY() < (GetY() + GetRange()) && (*item)->GetHp() > 0 && (*item)->GetSide() == S_ENEMY)
-				{
-					Target = *item;
-					attacking = true;
-				}
-			}
-		}
+		iPoint position(GetX(), GetY());
+		Target = App->entity_manager->LookForEnemies(GetRange(), position);
+		if (Target != nullptr)
+			attacking = true;
 	}
 }
 

@@ -62,7 +62,6 @@ public:
 	void TrainSoldier();
 
 	void PlacingBasicTower();
-	void CheckClick(int x, int y);
 	void PlacingBombardTower();
 	
 	void PlacingWall();
@@ -88,8 +87,7 @@ private:
 	Building* townhall;
 	Building* townhalltower1;
 	Building* townhalltower2;
-
-	Entity* clicking_entity; 
+ 
 	iPoint firstSelectedForWall;
 	iPoint LastSelectedForWall;
 	PlacingWallDirection direction;

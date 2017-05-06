@@ -32,8 +32,11 @@ public:
 	Entity* CreateTower(TOWER_TYPE t_type, fPoint pos);
 	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos);
 	void SelectInQuad(const SDL_Rect& select_rect, std::vector<Entity*>& selection);
-	void SetOneSelection(Entity* entity, std::vector<Entity*>& selection);
 	void UnselectEverything();
+	void Select(Entity* select);
+	Entity* LookForEnemies(int range, iPoint pos);
+
+	void CheckClick(int mouse_x, int mouse_y);
 
 	void DeleteEntity(Entity* ptr); // will call other delete methods
 	void DeleteUnit(Unit* ptr);
@@ -42,7 +45,6 @@ public:
 
 	Entity* CheckForCombat(iPoint position, int range, Side side);
 	Entity* CheckForObjective(iPoint position, int vision_range, Side side);
-	std::vector<Entity*> GetEntityVector();
 
 	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;
 	void LoadAllFx();
@@ -50,6 +52,8 @@ public:
 private:
 	//Textura provisional para sprites por si no se cargan en animation
 	//SDL_Texture* sprites;
+
+	friend j1Collision;
 
 	//lista para "almacenar" unidades, puede ser cambiada a array etc.
 	std::vector<Entity*> entity_array;

@@ -444,26 +444,6 @@ void j1Scene::PlacingBasicTower()
 	}
 }
 
-void j1Scene::CheckClick(int x, int y)
-{
-	clicking_entity = nullptr;
-	iPoint res = App->render->ScreenToWorld(x, y);
-	std::vector<Entity*> EntityVector = App->entity_manager->GetEntityVector();
-	
-	for (std::vector<Entity*>::iterator item = EntityVector.begin(); item != EntityVector.end(); item++)
-	{
-		SDL_Rect rect = (*item)->GetRect();
-		if (res.x >= (*item)->GetX() - rect.w / 2 && res.x <= (*item)->GetX() + rect.w / 2 && res.y >= (*item)->GetY() - (rect.h - 20) && res.y <= (*item)->GetY() + 20)
-		{
-			clicking_entity = *item;
-			break;
-		}
-	}
-	
-	if (clicking_entity != nullptr)
-		App->entity_manager->SetOneSelection(clicking_entity, selection);
-}
-
 void j1Scene::PlacingBombardTower()
 {
 	SDL_Texture* tower_tex = App->tex->GetTexture(T_TURRET);
@@ -728,7 +708,7 @@ void j1Scene::HandleInput( SDL_Event event)
 				select_rect.h = select_rect.y;
 
 				selecting = true;
-				CheckClick(x,y);
+				App->entity_manager->CheckClick(x,y);
 			}
 		break;
 

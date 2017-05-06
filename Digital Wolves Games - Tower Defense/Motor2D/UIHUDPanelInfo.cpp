@@ -1,19 +1,15 @@
-#define BLACK {0,0,0,0}
 
-#define BAR_LIFE_CENTER 16
-
-#include "UIHUDPanelInfo.h"
-
+#include "SDL\include\SDL_rect.h"
 #include "j1App.h"
 #include "j1UIManager.h"
 #include "j1EntityManager.h"
-
-#include "SDL\include\SDL_rect.h"
-
 #include "UIGetEntitiesInfo.h"
-
+#include "UIHUDPanelInfo.h"
 #include "PanelInfoGroupSelection.h"
 #include "PanelInfoOneSelection.h"
+
+#define BLACK {0,0,0,0}
+#define BAR_LIFE_CENTER 16
 
 UIHUDPanelInfo::UIHUDPanelInfo(UICOMPONENT_TYPE type) : UIComponents(type)
 {
@@ -48,10 +44,7 @@ bool UIHUDPanelInfo::Update()
 
 		Entity* e_selected = actual_panelinfo->GetEntityForOneSelected();
 		if (e_selected != nullptr && !actual_panelinfo->if_ToDelete())
-		{
-			App->entity_manager->UnselectEverything();
-			App->entity_manager->SetOneSelection(e_selected, App->scene->selection);
-		}
+			App->entity_manager->Select(e_selected);
 
 		if (actual_panelinfo->if_ToDelete())
 			DeletePanelInfo();

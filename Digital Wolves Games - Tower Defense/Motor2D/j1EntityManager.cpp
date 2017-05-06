@@ -116,20 +116,53 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Enti
 	App->uimanager->CreatePanelInfo(selection);
 }
 
-void j1EntityManager::SetOneSelection(Entity * entity, std::vector<Entity*>& selection)
-{
-	selection.clear();
-	selection.push_back(entity);
-	entity->SetEntityStatus(ST_SELECTED);
-	App->uimanager->CreatePanelInfo(selection);
-}
-
 void j1EntityManager::UnselectEverything()
 {
-	for (int i = 0; i < entity_array.size(); i++)
-		entity_array[i]->SetEntityStatus(ST_NON_SELECTED);
+	for (int i = 0; i < App->scene->selection.size(); i++)
+		App->scene->selection[i]->SetEntityStatus(ST_NON_SELECTED);
 
+	App->scene->selection.clear();
 	App->uimanager->DeleteSelectionPanelInfo();
+}
+
+void j1EntityManager::Select(Entity * select)
+{
+	select->SetEntityStatus(ST_SELECTED);
+	App->entity_manager->UnselectEverything();
+	App->scene->selection.push_back(select);
+}
+
+Entity * j1EntityManager::LookForEnemies(int range, iPoint pos)
+{
+	for (std::vector<Entity*>::iterator item = entity_array.begin(); item != entity_array.end(); ++item)
+		if ((*item)->GetEntityType() == E_UNIT)
+			if ((*item)->GetX() >= (pos.x - range) 
+				&& (*item)->GetX() < (pos.x + range) 
+				&& (*item)->GetY() >= (pos.y - range) 
+				&& (*item)->GetY() < (pos.y + range) 
+				&& (*item)->GetHp() > 0 
+				&& (*item)->GetSide() == S_ENEMY)
+				return *item;
+	return nullptr;
+}
+
+void j1EntityManager::CheckClick(int mouse_x, int mouse_y)
+{
+	App->scene->selection.clear();
+
+	iPoint click_point = App->render->ScreenToWorld(mouse_x, mouse_y);
+
+	for (std::vector<Entity*>::iterator item = entity_array.begin(); item != entity_array.end(); ++item)
+	{
+		SDL_Rect rect = (*item)->GetRect();
+		if (click_point.x >= (*item)->GetX() - rect.w / 2 && click_point.x <= (*item)->GetX() + rect.w / 2 && click_point.y >= (*item)->GetY() - (rect.h - 20) && click_point.y <= (*item)->GetY() + 20)
+		{
+			(*item)->SetEntityStatus(ST_SELECTED);
+			App->scene->selection.push_back(*item);
+			App->uimanager->CreatePanelInfo(App->scene->selection);
+			break;
+		}
+	}
 }
 
 void j1EntityManager::DeleteEntity(Entity* ptr)
@@ -145,7 +178,6 @@ void j1EntityManager::DeleteEntity(Entity* ptr)
 		case E_RESOURCE:
 			DeleteResource((Resources*)ptr);
 			break;
-	
 	}
 }
 
@@ -264,11 +296,6 @@ Entity* j1EntityManager::CheckForObjective(iPoint position, int vision_range, Si
 				if (position.DistanceTo(iPoint(ret->GetX(), ret->GetY())) > position.DistanceTo(iPoint(entity_array[i]->GetX(),entity_array[i]->GetY())))
 					ret = entity_array[i];			
 	return ret;
-}
-
-std::vector<Entity*> j1EntityManager::GetEntityVector()
-{
-	return entity_array;
 }
 
 bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
