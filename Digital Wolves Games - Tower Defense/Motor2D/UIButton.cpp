@@ -122,11 +122,6 @@ void UIButton::SetTask(Task* task)
 	this->task = task;
 }
 
-void UIButton::IsUiPanel(bool is_ui_p)
-{
-	is_ui_pannel = is_ui_p;
-}
-
 void UIButton::SetLabel(UILabel * label)
 {
 	title = label;

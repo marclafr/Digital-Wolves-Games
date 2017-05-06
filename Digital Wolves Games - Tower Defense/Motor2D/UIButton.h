@@ -44,7 +44,6 @@ public:
 	void SetMouseOnTopTextRect(const SDL_Rect & rect);
 	void SetClickedTextRect(const SDL_Rect& rect);
 	void SetTask(Task* task);
-	void IsUiPanel(bool);
 	void SetLabel(UILabel*);
 };
 

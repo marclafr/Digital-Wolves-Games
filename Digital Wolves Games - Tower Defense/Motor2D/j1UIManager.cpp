@@ -230,7 +230,7 @@ void j1UIManager::SetAllToDelete()
 {
 	for (std::list<UIComponents*>::iterator it = components.begin(); it != components.end(); ++it)
 	{
-		(*it)->SetToDelete(true);
+		(*it)->SetToDelete();
 	}
 }
 
@@ -277,4 +277,16 @@ void j1UIManager::SetInfoUIComponent(UIComponents* component)
 SDL_Rect j1UIManager::GetPosRectFromInfoUI()
 {
 	return info_ui->GetPosRect();
+}
+
+void j1UIManager::SetPanelButtons(Building* building)
+{
+	if(panel_buttons != nullptr)
+		panel_buttons->SetPanel(building);
+}
+
+void j1UIManager::DeletePanelButtons()
+{
+	if(panel_buttons != nullptr)
+		panel_buttons->DeletePanel();
 }

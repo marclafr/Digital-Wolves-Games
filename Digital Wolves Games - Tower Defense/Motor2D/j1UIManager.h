@@ -82,6 +82,8 @@ public:
 	void SetDescriptionHUDDescription(info_button*);
 	void SetInfoUIComponent(UIComponents*);
 	SDL_Rect GetPosRectFromInfoUI();
+	void SetPanelButtons(Building*);
+	void DeletePanelButtons();
 
 private:
 	std::list<UIComponents*> components;
@@ -93,6 +95,7 @@ private:
 	UIHUDTownHallBarLife* townhall_bar_life;
 	UIHUDResources* resources_panel;
 	UIHUDPanelInfo* panel_info;
+	UIHUDPanelButtons* panel_buttons;
 	UIHUDDescription* hud_description;
 	UIComponents* info_ui;
 };

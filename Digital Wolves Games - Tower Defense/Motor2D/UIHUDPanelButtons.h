@@ -4,52 +4,60 @@
 #include "UIComponents.h"
 #include "UIButton.h"
 
+class Task;
 enum ENTITY_TYPE;
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
 enum TOWER_TYPE;
 enum Side;
 
+enum BUILDING_PANELINFO
+{
+	BP_NONE,
+	BP_TOWNHALL,
+	BP_UNIVERSITY,
+	BP_TURRET,
+	BP_CANNON,
+};
+
 struct info_button
 {
+private:
 	UIButton* btn;
-	uint x;
-	uint y;
+	iPoint position;
+	iPoint atlas;
+	Task* task;
 
-	ENTITY_TYPE e_type;
+public:
+	info_button(iPoint position, iPoint atlas, Task* task) : position(position), atlas(atlas), task(task) {}
 
-	BUILDING_TYPE b_type;
-
-	TOWER_TYPE t_type;
-
-	UNIT_TYPE u_type;
-
-	Side s_type;
-
-	void SetUnit(UNIT_TYPE type, Side side);
-	void SetBuilding(BUILDING_TYPE type);
-	void SetTurret(TOWER_TYPE type);
-
+	void CreateButton();
+	void ButtonToDelete();
+	const UIButton* GetButton() const;
+	const Task* GetTask() const;
 };
 
 class UIHUDPanelButtons : public UIComponents
 {
-public:
-	std::list<info_button*> panel;
-
-	info_button* if_active = nullptr;
+private:
+	std::vector<info_button*> panel_townhall;
+	std::vector<info_button*> panel_university;
+	std::vector<info_button*> panel_turret;
+	std::vector<info_button*> panel_cannon;
+	BUILDING_PANELINFO panel_type = BP_NONE;
+	Building* b_selected = nullptr;
 
 public:
 	UIHUDPanelButtons(UICOMPONENT_TYPE type);
-
 	~UIHUDPanelButtons();
 
+	void SetPanel(Building* building);
 	bool Update();
-
 	//x - 0 to 4 | y - 0 to 2 | Max 15 buttons
-	info_button* AddButton(uint x, uint y, uint atlas_x, uint atlas_y);
+	info_button* AddButton(BUILDING_PANELINFO type,iPoint position, iPoint atlas, Task* task);
 
-	void CreateEntity();
+	void CreatePanel();
+	void DeletePanel();
 };
 
 #endif // __UIHUDPANELBUTTONS_H__

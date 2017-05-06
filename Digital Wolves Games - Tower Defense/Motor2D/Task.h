@@ -125,9 +125,34 @@ public:
 	}
 };
 
-class PlaceBasicTowerTask : public Task
+enum ENTITY_TASKTYPE
+{
+	ET_BASICTOWER,
+	ET_BOMBARDTOWER,
+	ET_WALL,
+	ET_UNIT
+};
+
+class EntityTask : public Task
+{
+private:
+	ENTITY_TASKTYPE type;
+
+public:
+	EntityTask(ENTITY_TASKTYPE type) : type(type) {}
+
+	const ENTITY_TASKTYPE GetEntityType() const
+	{
+		return type;
+	}
+};
+
+
+class PlaceBasicTowerTask : public EntityTask
 {
 public:
+	PlaceBasicTowerTask(ENTITY_TASKTYPE type = ET_BASICTOWER) : EntityTask(type) {}
+
 	bool Execute()
 	{
 		if (App->scene->placing_basic_tower == false)
@@ -142,9 +167,11 @@ public:
 	}
 };
 
-class PlaceBombartTowerTask : public Task
+class PlaceBombardTowerTask : public EntityTask
 {
 public:
+	PlaceBombardTowerTask(ENTITY_TASKTYPE type = ET_BOMBARDTOWER) : EntityTask(type) {}
+
 	bool Execute() 
 	{
 		if (App->scene->placing_bombard_tower == false)
@@ -159,9 +186,11 @@ public:
 	}
 };
 
-class PlaceWallTask : public Task
+class PlaceWallTask : public EntityTask
 {
 public:
+	PlaceWallTask(ENTITY_TASKTYPE type = ET_WALL) : EntityTask(type) {}
+
 	bool Execute()
 	{
 		if (App->scene->placing_wall == false)
@@ -176,12 +205,12 @@ public:
 	}
 };
 
-class TrainUnitTask : public Task
+class TrainUnitTask : public EntityTask
 {
 private:
 	UNIT_TYPE u_type;
 public:
-	TrainUnitTask(UNIT_TYPE u_type) : u_type(u_type) {}
+	TrainUnitTask(UNIT_TYPE u_type, ENTITY_TASKTYPE type = ET_UNIT) : EntityTask(type), u_type(u_type) {}
 
 	bool Execute()
 	{
@@ -192,6 +221,10 @@ public:
 		}
 		return true;
 	}
-};
 
+	const UNIT_TYPE GetUnitType()const
+	{
+		return u_type;
+	}
+};
 #endif
