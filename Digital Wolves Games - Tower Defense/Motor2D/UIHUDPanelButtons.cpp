@@ -1,4 +1,8 @@
-#define LEFT_CLICK 1
+#define ICON_ATLASSIZE 25
+#define ICON_SIZE 29
+#define ICON_SEPARATION 30
+#define PANEL_XPOSITION 26
+#define PANEL_YPOSITION 666
 
 #include "UIHUDPanelButtons.h"
 
@@ -12,6 +16,7 @@
 #include "j1Scene.h"
 #include "SDL\include\SDL_rect.h"
 #include "j1Collision.h"
+#include "Task.h"
 
 #include "UIButton.h"
 #include "UIHUDDescription.h"
@@ -19,6 +24,7 @@
 #include "Entity.h"
 #include "Units.h"
 #include "Buildings.h"
+#include "Towers.h"
 
 UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 {
@@ -27,147 +33,202 @@ UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 
 UIHUDPanelButtons::~UIHUDPanelButtons()
 {
-	std::list<info_button*>::iterator item;
-	item = panel.begin();
-
-	while (item != panel.end())
+	std::vector<info_button*>* panel_active = nullptr;
+	switch (panel_type)
 	{
-		delete	item._Ptr->_Myval;
-		item++;
+	case BP_TOWNHALL:
+		panel_active = &panel_townhall;
+		break;
+	case BP_UNIVERSITY:
+		panel_active = &panel_university;
+		break;
+	case BP_TURRET:
+		panel_active = &panel_turret;
+		break;
+	case BP_CANNON:
+		panel_active = &panel_cannon;
+		break;
 	}
 
-	panel.clear();
+	if(panel_active != nullptr)
+		for (std::vector<info_button*>::iterator ib_item = panel_active->begin(); ib_item == panel_active->end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
+	
+	for (std::vector<info_button*>::iterator ib_item = panel_townhall.begin(); ib_item == panel_townhall.end(); ++ib_item)
+		DELETE_PTR(*ib_item);
+
+	for (std::vector<info_button*>::iterator ib_item = panel_university.begin(); ib_item == panel_university.end(); ++ib_item)
+		DELETE_PTR(*ib_item);
+
+	for (std::vector<info_button*>::iterator ib_item = panel_turret.begin(); ib_item == panel_turret.end(); ++ib_item)
+		DELETE_PTR(*ib_item);
+
+	for (std::vector<info_button*>::iterator ib_item = panel_cannon.begin(); ib_item == panel_cannon.end(); ++ib_item)
+		DELETE_PTR(*ib_item);
+}
+
+void UIHUDPanelButtons::SetPanel(Building* building)
+{
+	switch (building->GetBuildingType())
+	{
+	case B_TURRET:
+		panel_type = BP_TURRET;
+		b_selected = building;
+		break;
+	case B_CANNON:
+		panel_type = BP_CANNON;
+		b_selected = building;
+		break;
+	case B_TOWNHALL:
+		panel_type = BP_TOWNHALL;
+		b_selected = building;
+		break;
+	case B_UNIVERSITY:
+		panel_type = BP_UNIVERSITY;
+		b_selected = building;
+		break;
+	default:
+		panel_type = BP_NONE;
+		b_selected = nullptr;
+		break;
+	}
+
+	CreatePanel();
 }
 
 bool UIHUDPanelButtons::Update()
 {
-	for (std::list<info_button*>::iterator ib_item = panel.begin(); ib_item == panel.end(); ++ib_item)
+	while (b_selected != nullptr)
 	{
-		if ((*ib_item)->btn->IsFocus())
-			App->uimanager->SetDescriptionHUDDescription((*ib_item));
+		std::vector<info_button*>* panel_active = nullptr;
+		switch (panel_type)
+		{
+		case BP_TOWNHALL:
+			panel_active = &panel_townhall;
+			break;
+		case BP_UNIVERSITY:
+			panel_active = &panel_university;
+			break;
+		case BP_TURRET:
+			panel_active = &panel_turret;
+			break;
+		case BP_CANNON:
+			panel_active = &panel_cannon;
+			break;
+		}
 
-		//todo change to tasks
-		if ((*ib_item)->btn->GetStat() == BS_MOUSE_ON_TOP)
-			if_active = (*ib_item);
-
-		ib_item++;
+		if (panel_active != nullptr)
+			for (std::vector<info_button*>::iterator ib_item = panel_active->begin(); ib_item == panel_active->end(); ++ib_item)
+			{
+				if ((*ib_item)->GetButton()->IsFocus())
+				{
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
+					break;
+				}
+			}
 	}
-
-	if (if_active != nullptr)
-		CreateEntity();
-
 	return true;
 }
 
 //x - 0 to 4 | y - 0 to 2 | Max 15 buttons
-info_button* UIHUDPanelButtons::AddButton(uint x, uint y, uint atlas_x, uint atlas_y)
+info_button* UIHUDPanelButtons::AddButton(BUILDING_PANELINFO type, iPoint position, iPoint atlas, Task* task)
 {
-	info_button* new_btn = new info_button();
-	new_btn->x = x;
-	new_btn->y = y;
-	new_btn->btn = App->uimanager->AddButton({ 26 + (30 * (int)x), 666 + (30 * (int)y), 29, 29 }, { (int)atlas_x, (int)atlas_y, 25, 25 });
-	new_btn->btn->IsUiPanel(true);
-	panel.push_back(new_btn);
-	return new_btn;
-}
+	info_button* new_btn = new info_button(position,atlas, task);
 
-void UIHUDPanelButtons::CreateEntity()
-{
-	if (if_active->e_type == E_BUILDING && if_active->b_type == B_TURRET) {
-		if (App->scene->placing_basic_tower == false)
-		{
-			App->scene->placing_basic_tower = true;
-			App->scene->placing_bombard_tower = false;
-			App->scene->placing_wall = false;
-		}
-	}
-	if (if_active->e_type == E_BUILDING && if_active->b_type == B_STONE_WALL) {
-		if (App->scene->placing_wall == false)
-		{
-			App->scene->placing_wall = true;
-			App->scene->placing_bombard_tower = false;
-			App->scene->placing_basic_tower = false;
-		}
-	}
-	if (if_active->e_type == E_UNIT) {
-		if (App->scene->CanTrainSoldier())
-		{
-			App->scene->TrainSoldier();
-			App->entity_manager->CreateUnit(if_active->u_type, fPoint(-480, 552), if_active->s_type);
-		}
-		if_active = nullptr;
-		return;
-	}
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
-		App->scene->placing_basic_tower = false;
-		App->scene->placing_wall = false;
-		App->scene->placing_bombard_tower = false;
-		if_active = nullptr;
-		return;
-	}
-	if (App->input->GetMouseButtonDown(LEFT_CLICK) == KEY_DOWN)
+	switch (type)
 	{
-		int x;
-		int y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-
-		iPoint r = App->map->WorldToMap(p.x, p.y);
-		iPoint s = App->map->MapToWorld(r.x, r.y);
-
-		switch (if_active->e_type)
-		{
-		case ENTITY_TYPE::E_UNIT:
-
-			if (App->scene->CanTrainSoldier())
-			{
-				App->scene->TrainSoldier();
-				App->entity_manager->CreateUnit(if_active->u_type, fPoint(-720, 672), if_active->s_type);
-			}
-			break;
-
-			case ENTITY_TYPE::E_BUILDING:
-				if (App->scene->placing_basic_tower == true) {
-						if (App->collision->AbleToBuild(iPoint(s.x, s.y - 9)))
-						{
-							if (App->scene->CanBuildTower())
-							{
-								if (App->pathfinding->IsConstructible_ally(r) == true)
-								{
-									App->scene->BuildTower();
-									App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(s.x, s.y - 9));
-								}
-								if (App->pathfinding->IsConstructible_neutral(r) == true)
-								{
-									App->scene->BuildTower();
-									App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(s.x, s.y - 9));
-								}
-							}
-					}
-				}
-			break;
-		}
-		if_active = nullptr;
+	case BP_TOWNHALL:
+		panel_townhall.push_back(new_btn);
+		return new_btn;
+		break;
+	case BP_UNIVERSITY:
+		panel_university.push_back(new_btn);
+		return new_btn;
+		break;
+	case BP_TURRET:
+		panel_turret.push_back(new_btn);
+		return new_btn;
+		break;
+	case BP_CANNON:
+		panel_cannon.push_back(new_btn);
+		return new_btn;
+		break;
 	}
+
+	DELETE_PTR(new_btn);
+	return nullptr;
 }
 
-void info_button::SetUnit(UNIT_TYPE type, Side side)
+void UIHUDPanelButtons::CreatePanel()
 {
-	u_type = type;
-	e_type = ENTITY_TYPE::E_UNIT;
-	s_type = side;
+	std::vector<info_button*>* panel_active = nullptr;
+	switch (panel_type)
+	{
+	case BP_TOWNHALL:
+		panel_active = &panel_townhall;
+		break;
+	case BP_UNIVERSITY:
+		panel_active = &panel_university;
+		break;
+	case BP_TURRET:
+		panel_active = &panel_turret;
+		break;
+	case BP_CANNON:
+		panel_active = &panel_cannon;
+		break;
+	}
+
+	if(panel_active != nullptr)
+		for (std::vector<info_button*>::iterator ib_item = panel_active->begin(); ib_item == panel_active->end(); ++ib_item)
+			(*ib_item)->CreateButton();
 }
 
-void info_button::SetBuilding(BUILDING_TYPE type)
+void UIHUDPanelButtons::DeletePanel()
 {
-	b_type = type;
-	e_type = ENTITY_TYPE::E_BUILDING;
+	std::vector<info_button*>* panel_active = nullptr;
+	switch (panel_type)
+	{
+	case BP_TOWNHALL:
+		panel_active = &panel_townhall;
+		break;
+	case BP_UNIVERSITY:
+		panel_active = &panel_university;
+		break;
+	case BP_TURRET:
+		panel_active = &panel_turret;
+		break;
+	case BP_CANNON:
+		panel_active = &panel_cannon;
+		break;
+	}
+
+	if(panel_active != nullptr)
+		for (std::vector<info_button*>::iterator ib_item = panel_active->begin(); ib_item == panel_active->end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
+
+	panel_type = BP_NONE;
+	b_selected = nullptr;
 }
 
-void info_button::SetTurret(TOWER_TYPE type)
+void info_button::CreateButton()
 {
-	t_type = type;
-	e_type = ENTITY_TYPE::E_BUILDING;
+	btn = App->uimanager->AddButton(
+	{ PANEL_XPOSITION + (ICON_SEPARATION * position.x),PANEL_YPOSITION + (ICON_SEPARATION * position.y),ICON_SIZE, ICON_SIZE },
+	{ atlas.x, atlas.y,ICON_ATLASSIZE, ICON_ATLASSIZE }
+	);
 }
 
+void info_button::ButtonToDelete()
+{
+	btn->SetToDelete();
+}
 
+const UIButton* info_button::GetButton() const
+{
+	return btn;
+}
+
+const Task* info_button::GetTask() const
+{
+	return task;
+}

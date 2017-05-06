@@ -282,17 +282,17 @@ void j1ScoreScene::OptionSelected()
 	{
 		if (!components_trophies_deleted)
 		{
-			trophie_wood->SetToDelete(true);
-			trophie_bronze->SetToDelete(true);
-			trophie_silver->SetToDelete(true);
-			trophie_gold->SetToDelete(true);
-			trophie_rubi->SetToDelete(true);;
-			score_bar->SetToDelete(true);
-			title_score->SetToDelete(true);
-			title_enemies_killed->SetToDelete(true);
-			title_time->SetToDelete(true);
-			title_act_rank->SetToDelete(true);
-			actual_trophie->SetToDelete(true);
+			trophie_wood->SetToDelete();
+			trophie_bronze->SetToDelete();
+			trophie_silver->SetToDelete();
+			trophie_gold->SetToDelete();
+			trophie_rubi->SetToDelete();;
+			score_bar->SetToDelete();
+			title_score->SetToDelete();
+			title_enemies_killed->SetToDelete();
+			title_time->SetToDelete();
+			title_act_rank->SetToDelete();
+			actual_trophie->SetToDelete();
 			components_trophies_deleted = true;
 		}
 	}
@@ -306,12 +306,12 @@ void j1ScoreScene::OptionSelected()
 	{
 		if (!components_achievements_deleted)
 		{
-			achievement1->SetToDelete(true);
-			title_achievement1->SetToDelete(true);
-			check_achievement1->SetToDelete(true);
-			achievement2->SetToDelete(true);
-			title_achievement2->SetToDelete(true);
-			check_achievement2->SetToDelete(true);
+			achievement1->SetToDelete();
+			title_achievement1->SetToDelete();
+			check_achievement1->SetToDelete();
+			achievement2->SetToDelete();
+			title_achievement2->SetToDelete();
+			check_achievement2->SetToDelete();
 			components_achievements_deleted = true;
 		}
 	}

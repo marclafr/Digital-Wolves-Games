@@ -15,6 +15,7 @@
 #include "j1Render.h"
 #include "j1UIManager.h"
 #include "Camera.h"
+#include "Task.h"
 
 #include "UIHUDPanelButtons.h"
 #include "UILabel.h"
@@ -26,8 +27,9 @@ UIHUDDescription::UIHUDDescription(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
 
-	unit_desc = UNIT_TYPE::U_NO_UNIT;
-	build_desc = BUILDING_TYPE::B_NO_BUILDING;
+	unit_desc = U_NO_UNIT;
+	build_desc = B_NO_BUILDING;
+	tower_desc = T_NO_TYPE;
 }
 
 void UIHUDDescription::SetEnableButton(UICheckbutton* btn)
@@ -43,7 +45,7 @@ bool UIHUDDescription::Update()
 		enable = false;
 
 	if (enable)
-		if (selected != nullptr && selected->btn->IsFocus() == false)
+		if (selected != nullptr && selected->GetButton()->IsFocus() == false)
 			Clear();
 
 	return true;
@@ -53,7 +55,27 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 {
 	if (enable)
 	{
-		switch (if_btn->e_type)
+		const EntityTask* e_task = (EntityTask*)if_btn->GetTask();
+
+		switch (e_task->GetEntityType())
+		{
+		case ET_BASICTOWER:
+			tower_desc = T_BASIC_TOWER;
+			break;
+		case ET_BOMBARDTOWER:
+			tower_desc = T_BOMBARD_TOWER;
+			break;
+		case ET_WALL:
+			build_desc = B_STONE_WALL;
+			break;
+		case ET_UNIT:
+			TrainUnitTask* u_task = (TrainUnitTask*)e_task;
+			unit_desc = u_task->GetUnitType();
+			break;
+		}
+
+		/*
+		switch (if_btn->GetTask()->)
 		{
 		case E_UNIT:
 			unit_desc = if_btn->u_type;
@@ -67,7 +89,7 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 			SetLabelBuilding();
 			break;
 		}
-
+		*/
 		selected = if_btn;
 	}
 }
@@ -96,12 +118,12 @@ void UIHUDDescription::SetLabelBuilding()
 
 void UIHUDDescription::Clear()
 {
-	unit_desc = UNIT_TYPE::U_NO_UNIT;
-	build_desc = BUILDING_TYPE::B_NO_BUILDING;
-	side_desc = Side::S_NO_SIDE;
-	background_name->SetToDelete(true);
-	description_name->SetToDelete(true);
-	background_price->SetToDelete(true);
-	description_price->SetToDelete(true);
+	unit_desc = U_NO_UNIT;
+	build_desc = B_NO_BUILDING;
+	tower_desc = T_NO_TYPE;
+	background_name->SetToDelete();
+	description_name->SetToDelete();
+	background_price->SetToDelete();
+	description_price->SetToDelete();
 	selected = nullptr;
 }

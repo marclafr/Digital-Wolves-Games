@@ -46,9 +46,9 @@ void UIComponents::SetFrom(UIComponents * from)
 	this->from = from;
 }
 
-void UIComponents::SetToDelete(bool to_delete)
+void UIComponents::SetToDelete()
 {
-	this->to_delete = to_delete;
+	this->to_delete = true;
 }
 
 void UIComponents::SetAtlas(const SDL_Rect & atlas)

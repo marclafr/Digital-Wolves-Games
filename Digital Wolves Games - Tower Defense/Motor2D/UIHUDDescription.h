@@ -26,8 +26,7 @@ public:
 	UNIT_TYPE unit_desc;
 
 	BUILDING_TYPE build_desc;
-
-	Side side_desc;
+	TOWER_TYPE tower_desc;
 
 	info_button* selected = nullptr;
 

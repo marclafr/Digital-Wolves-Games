@@ -8,6 +8,7 @@
 #include "Units.h"
 #include "Buildings.h"
 #include "Resources.h"
+#include "Towers.h"
 
 SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type);
 const char* GetUnitName(const UNIT_TYPE type);

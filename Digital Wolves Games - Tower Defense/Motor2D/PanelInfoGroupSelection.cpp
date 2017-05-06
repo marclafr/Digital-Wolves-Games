@@ -18,7 +18,7 @@ GroupSelection::~GroupSelection()
 {
 	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 	{
-		(*es_item)->btn_selected->SetToDelete(true);
+		(*es_item)->btn_selected->SetToDelete();
 		delete *es_item;
 	}
 	es_selection.clear();
@@ -101,7 +101,7 @@ void GroupSelection::Update()
 
 		if ((*es_item)->pointer_entity->GetHp() <= 0)
 		{
-			(*es_item)->btn_selected->SetToDelete(true);
+			(*es_item)->btn_selected->SetToDelete();
 			delete *es_item;
 			es_selection.erase(es_item);
 		}

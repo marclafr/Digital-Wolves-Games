@@ -24,6 +24,7 @@ SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
 		break;
 
 	case U_CAVALRYARCHER:
+		break;
 	case U_GOD:
 		ret = { 956, 935, 25, 25 };
 		break;

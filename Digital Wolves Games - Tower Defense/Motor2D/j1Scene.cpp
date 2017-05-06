@@ -460,6 +460,10 @@ void j1Scene::CheckClick()
 			SDL_Rect rect = (*item)->GetRect();
 			if (res.x >= (*item)->GetX() - rect.w / 2 && res.x <= (*item)->GetX() + rect.w / 2 && res.y >= (*item)->GetY() - (rect.h - 20) && res.y <= (*item)->GetY() + 20)
 				ClickingVector.push_back((*item));
+				
+				//Send building to panelbuttons - UI
+				App->uimanager->SetPanelButtons((Building*)(*item));
+			}
 		}
 	}
 	if (ClickingVector.size() != 0) {
@@ -859,6 +863,7 @@ void j1Scene::CreateSceneUI()
 	btn_description->SetStat(CB_CHECK);
 
 	//Panel Buttons
+	/*
 	UIHUDPanelButtons* panel = App->uimanager->AddPanelButtons();
 	info_button* panel_btns = panel->AddButton(0, 0, 826, 910);
 	panel_btns->SetBuilding(B_TURRET);
@@ -873,6 +878,7 @@ void j1Scene::CreateSceneUI()
 	panel_btns->btn->SetTask(new TrainUnitTask(U_TWOHANDEDSWORDMAN));
 	panel_btns = panel->AddButton(4, 0, 930, 910);
 	panel_btns->btn->SetTask(new TrainUnitTask(U_PALADIN));
+	*/
 
 	//Panel Info
 	App->uimanager->AddPanelInfo();

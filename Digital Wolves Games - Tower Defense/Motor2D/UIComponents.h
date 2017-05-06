@@ -55,7 +55,7 @@ public:
 	void SetInteractive(bool interactive);
 	void SetIsFocus(bool is_focus);
 	void SetFrom(UIComponents* from);
-	void SetToDelete(bool to_delete);
+	void SetToDelete();
 	void SetAtlas(const SDL_Rect& atlas);
 };
 
