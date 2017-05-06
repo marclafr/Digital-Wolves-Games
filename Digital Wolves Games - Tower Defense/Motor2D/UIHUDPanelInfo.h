@@ -19,7 +19,7 @@ public:
 	~UIHUDPanelInfo();
 
 	//Main Functions of list fill o remove
-	void DeleteSelection();
+	void DeletePanelInfo();
 
 	//Prepare the Panel Info structure
 	void CreatePanel(const std::vector<Entity*>& selection);

@@ -16,15 +16,13 @@
 
 OneSelection::~OneSelection()
 {
-	if (image != nullptr) delete image;
-	if (name != nullptr) delete name;
-	if (life != nullptr) delete life;
-
-	if (damage != nullptr) delete damage;
-	if (armor != nullptr) delete armor;
-	if (range != nullptr) delete range;
-
-	if (building_percentage != nullptr) delete building_percentage;
+	DELETE_PTR(image);
+	DELETE_PTR(name);
+	DELETE_PTR(life);
+	DELETE_PTR(damage);
+	DELETE_PTR(armor);
+	DELETE_PTR(range);
+	DELETE_PTR(building_percentage);
 }
 
 void OneSelection::Prepare()

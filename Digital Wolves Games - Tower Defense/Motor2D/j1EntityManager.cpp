@@ -116,13 +116,19 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Enti
 	App->uimanager->CreatePanelInfo(selection);
 }
 
+void j1EntityManager::SetOneSelection(Entity * entity, std::vector<Entity*>& selection)
+{
+	selection.clear();
+	selection.push_back(entity);
+	App->uimanager->CreatePanelInfo(selection);
+}
+
 void j1EntityManager::UnselectEverything()
 {
 	for (int i = 0; i < entity_array.size(); i++)
 		entity_array[i]->SetEntityStatus(ST_NON_SELECTED);
 
-	if (App->scene->selection.size() == 0)
-		App->uimanager->DeleteSelectionPanelInfo();
+	App->uimanager->DeleteSelectionPanelInfo();
 }
 
 void j1EntityManager::DeleteEntity(Entity* ptr)

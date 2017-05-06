@@ -251,7 +251,7 @@ void j1UIManager::CreatePanelInfo(const std::vector<Entity*>& selection)
 
 void j1UIManager::DeleteSelectionPanelInfo()
 {
-	panel_info->DeleteSelection();
+	panel_info->DeletePanelInfo();
 }
 
 void j1UIManager::SetDescriptionHUDDescription(info_button* infobutton_desc)

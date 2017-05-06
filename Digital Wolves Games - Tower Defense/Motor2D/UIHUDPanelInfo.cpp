@@ -23,10 +23,9 @@ UIHUDPanelInfo::UIHUDPanelInfo(UICOMPONENT_TYPE type) : UIComponents(type)
 UIHUDPanelInfo::~UIHUDPanelInfo()
 {}
 
-void UIHUDPanelInfo::DeleteSelection()
+void UIHUDPanelInfo::DeletePanelInfo()
 {
-	if (actual_panelinfo != nullptr)
-		DELETE_PTR(actual_panelinfo);
+	DELETE_PTR(actual_panelinfo);
 }
 
 void UIHUDPanelInfo::CreatePanel(const std::vector<Entity*>& selection)
@@ -47,13 +46,15 @@ bool UIHUDPanelInfo::Update()
 	{
 		actual_panelinfo->Update();
 
-		if (actual_panelinfo->GetEntityForOneSelected() != nullptr && !actual_panelinfo->if_ToDelete())
+		Entity* e_selected = actual_panelinfo->GetEntityForOneSelected();
+		if (e_selected != nullptr && !actual_panelinfo->if_ToDelete())
 		{
-			//DefineSelection();// (actual_panelinfo->GetEntityForOneSelected());
+			App->entity_manager->UnselectEverything();
+			App->entity_manager->SetOneSelection(e_selected, App->scene->selection);
 		}
 
 		if (actual_panelinfo->if_ToDelete())
-			DeleteSelection();
+			DeletePanelInfo();
 	}
 
 	return true;

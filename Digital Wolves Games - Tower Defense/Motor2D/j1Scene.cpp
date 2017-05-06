@@ -282,7 +282,7 @@ bool j1Scene::Update(float dt)
 		select_rect.h = y - App->render->camera->GetPosition().y;
 		App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
 
-		if (App->input->GetMouseButtonDown(1) == KEY_UP)
+		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
 		{
 			App->entity_manager->SelectInQuad(select_rect, selection);
 			selecting = false;
@@ -446,6 +446,7 @@ void j1Scene::PlacingBasicTower()
 
 void j1Scene::CheckClick()
 {
+	/*
 	ClickingVector.clear();
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -478,6 +479,7 @@ void j1Scene::CheckClick()
 		LOG("selected_pos = %f,%f", selected->GetX(), selected->GetY());
 		//selected es el edificio seleccionado, hace falta ponerlo en la ui
 	}
+	*/
 }
 
 void j1Scene::PlacingBombardTower()
@@ -714,7 +716,7 @@ void j1Scene::PlacingWall()
 					}
 			}
 		}*/
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		if (App->input->GetMouseButtonDown(MK_RIGHT) == KEY_DOWN)
 		{
 			placing_wall = false;
 			placing_wall_clicked = false;
@@ -730,8 +732,7 @@ void j1Scene::HandleInput( SDL_Event event)
 
 	switch (event.type)
 	{
-	case SDL_MOUSEBUTTONDOWN:
-		
+	case SDL_MOUSEBUTTONDOWN:		
 		App->input->GetMousePosition(x, y);
 
 		if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
@@ -745,7 +746,7 @@ void j1Scene::HandleInput( SDL_Event event)
 				select_rect.h = select_rect.y;
 
 				selecting = true;
-				CheckClick();
+				//CheckClick();
 			}
 		break;
 
