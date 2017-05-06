@@ -14,7 +14,7 @@ UIButton::UIButton(UICOMPONENT_TYPE type) : UIComponents(type)
 
 UIButton::~UIButton()
 {
-	if (task != nullptr)
+	if(delete_task)
 		DELETE_PTR(task);
 }
 
@@ -125,4 +125,9 @@ void UIButton::SetTask(Task* task)
 void UIButton::SetLabel(UILabel * label)
 {
 	title = label;
+}
+
+void UIButton::SetNotDeleteTask()
+{
+	delete_task = false;
 }
