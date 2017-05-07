@@ -151,6 +151,9 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Awsome_Game\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="UIHUDMinimap.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -317,6 +320,9 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDMinimap.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
