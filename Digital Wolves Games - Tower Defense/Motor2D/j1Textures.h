@@ -162,9 +162,9 @@ private:
 
 	std::vector<Texture*> textures;
 
-	std::vector<ConstructionRect*> construction_rects;
-	std::vector<TowerRect*> towers_rects;
-	std::vector<BuildingRect*> buildings_rects;
+	std::vector<ConstructionRect> construction_rects;
+	std::vector<TowerRect> towers_rects;
+	std::vector<BuildingRect> buildings_rects;
 
 	uint ConstrString2Uint(const std::string name);
 	TOWER_TYPE TowerString2Enum(const std::string name, BUILDING_TEXTURE_TYPES &color);

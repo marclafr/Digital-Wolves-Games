@@ -116,7 +116,7 @@ bool j1Textures::Start()
 	{
 		std::string const_name = const_node.attribute("n").as_string();
 		uint const_num = ConstrString2Uint(const_name);
-		construction_rects.push_back(new ConstructionRect(const_num, GetTexture(T_TURRET), { const_node.attribute("x").as_int(),const_node.attribute("y").as_int(),const_node.attribute("w").as_int(),const_node.attribute("h").as_int() }, { (int)(const_node.attribute("y").as_int() * const_node.attribute("pX").as_float()), (int)(const_node.attribute("y").as_int() * const_node.attribute("pY").as_float()) }));
+		construction_rects.push_back(ConstructionRect(const_num, GetTexture(T_TURRET), { const_node.attribute("x").as_int(),const_node.attribute("y").as_int(),const_node.attribute("w").as_int(),const_node.attribute("h").as_int() }, { (int)(const_node.attribute("w").as_int() * const_node.attribute("pX").as_float()), (int)(const_node.attribute("h").as_int() * const_node.attribute("pY").as_float()) }));
 		const_node = const_node.next_sibling();
 	}
 
@@ -128,7 +128,7 @@ bool j1Textures::Start()
 		std::string tower_name = tower_node.attribute("n").as_string();
 		BUILDING_TEXTURE_TYPES color;
 		TOWER_TYPE type = TowerString2Enum(tower_name, color);
-		towers_rects.push_back(new TowerRect(type, color, GetTexture(T_TURRET), { tower_node.attribute("x").as_int(),tower_node.attribute("y").as_int(),tower_node.attribute("w").as_int(),tower_node.attribute("h").as_int() }, { (int)(tower_node.attribute("y").as_int() * tower_node.attribute("pX").as_float()), (int)(tower_node.attribute("y").as_int() * tower_node.attribute("pY").as_float()) }));
+		towers_rects.push_back(TowerRect(type, color, GetTexture(T_TURRET), { tower_node.attribute("x").as_int(),tower_node.attribute("y").as_int(),tower_node.attribute("w").as_int(),tower_node.attribute("h").as_int() }, { (int)(tower_node.attribute("w").as_int() * tower_node.attribute("pX").as_float()), (int)(tower_node.attribute("h").as_int() * tower_node.attribute("pY").as_float()) }));
 		tower_node = tower_node.next_sibling();
 	}
 
@@ -156,19 +156,8 @@ bool j1Textures::CleanUp()
 		delete (*item);
 	}
 	textures.clear();
-
-	std::vector<TowerRect*>::iterator item2;
-	for (item2 = towers_rects.begin(); item2 != towers_rects.end(); ++item2)
-	{
-		delete (*item2);
-	}
+	construction_rects.clear();
 	towers_rects.clear();
-
-	std::vector<BuildingRect*>::iterator item3;
-	for (item3 = buildings_rects.begin(); item3 != buildings_rects.end(); ++item3)
-	{
-		delete (*item3);
-	}
 	buildings_rects.clear();
 
 	IMG_Quit();
@@ -311,11 +300,11 @@ void j1Textures::GetConstructionTexture(SDL_Texture *& ptr, SDL_Rect & rect, iPo
 {
 	for (int i = 0; i < construction_rects.size(); i++)
 	{
-		if (construction_rects[i]->construction_num == state_num)
+		if (construction_rects[i].construction_num == state_num)
 		{
-			ptr = construction_rects[i]->tex;
-			rect = construction_rects[i]->rect;
-			pivot = construction_rects[i]->pivot;
+			ptr = construction_rects[i].tex;
+			rect = construction_rects[i].rect;
+			pivot = construction_rects[i].pivot;
 			break;
 		}
 	}
@@ -325,11 +314,11 @@ void j1Textures::GetTowerTexture(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & p
 {
 	for (int i = 0; i < towers_rects.size(); i++)
 	{
-		if (towers_rects[i]->type == tower && towers_rects[i]->build_tex_type == color)
+		if (towers_rects[i].type == tower && towers_rects[i].build_tex_type == color)
 		{
-			ptr = towers_rects[i]->tex;
-			rect = towers_rects[i]->rect;
-			pivot = towers_rects[i]->pivot;
+			ptr = towers_rects[i].tex;
+			rect = towers_rects[i].rect;
+			pivot = towers_rects[i].pivot;
 			break;
 		}
 	}
@@ -339,11 +328,11 @@ void j1Textures::GetBuildingTexture(SDL_Texture *& ptr, SDL_Rect & rect, iPoint 
 {
 	for (int i = 0; i < buildings_rects.size(); i++)
 	{
-		if (buildings_rects[i]->type == building && buildings_rects[i]->build_tex_type == color)
+		if (buildings_rects[i].type == building && buildings_rects[i].build_tex_type == color)
 		{
-			ptr = buildings_rects[i]->tex;
-			rect = buildings_rects[i]->rect;
-			pivot = buildings_rects[i]->pivot;
+			ptr = buildings_rects[i].tex;
+			rect = buildings_rects[i].rect;
+			pivot = buildings_rects[i].pivot;
 			break;
 		}
 	}
