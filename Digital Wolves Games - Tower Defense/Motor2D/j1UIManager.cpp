@@ -180,6 +180,7 @@ UIHUDPanelButtons * j1UIManager::AddPanelButtons()
 {
 	UIHUDPanelButtons* new_panelbuttons;
 	components.push_back(new_panelbuttons = new UIHUDPanelButtons(UIT_UIHUDPANELBUTTONS));
+	panel_buttons = new_panelbuttons;
 	return new_panelbuttons;
 }
 
@@ -273,6 +274,11 @@ void j1UIManager::SetPanelButtons(Building* building)
 {
 	if(panel_buttons != nullptr)
 		panel_buttons->SetPanel(building);
+}
+
+const UIHUDPanelButtons * j1UIManager::GetPanelButtons() const
+{
+	return panel_buttons;
 }
 
 void j1UIManager::DeletePanelButtons()

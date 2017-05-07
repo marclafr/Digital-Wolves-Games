@@ -24,6 +24,7 @@ private:
 	SDL_Rect atlas_clicked = { 0,0,0,0 };
 
 	Task* task = nullptr;
+	bool delete_task = true;
 
 	bool is_ui_pannel = false;
 
@@ -45,6 +46,7 @@ public:
 	void SetClickedTextRect(const SDL_Rect& rect);
 	void SetTask(Task* task);
 	void SetLabel(UILabel*);
+	void SetNotDeleteTask();
 };
 
 #endif // __UIBUTTON_H__

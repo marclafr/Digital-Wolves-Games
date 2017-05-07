@@ -132,6 +132,8 @@ bool j1Scene::Update(float dt)
 	//ANIMATION TEST
 	SDL_Rect rect_test;
 	iPoint pivot;
+	
+	iPoint result = App->map->MapToWorld(49, 73);
 
 	a1->Update(rect_test, pivot);
 	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 0, 300, &rect_test);
@@ -828,22 +830,15 @@ void j1Scene::CreateSceneUI()
 	btn_description->SetStat(CB_CHECK);
 
 	//Panel Buttons
-	/*
 	UIHUDPanelButtons* panel = App->uimanager->AddPanelButtons();
-	info_button* panel_btns = panel->AddButton(0, 0, 826, 910);
-	panel_btns->SetBuilding(B_TURRET);
-	panel_btns->btn->SetTask(new PlaceBasicTowerTask());
-	panel_btns = panel->AddButton(1, 0, 826, 910);	//TODO: CHANGE RECT
-	panel_btns->btn->SetTask(new PlaceBombartTowerTask());
-	panel_btns = panel->AddButton(2, 0, 774, 936);
-	panel_btns->SetBuilding(B_STONE_WALL);
-	panel_btns->btn->SetTask(new PlaceWallTask());
-	panel_btns = panel->AddButton(3, 0, 774, 962);
-	panel_btns->SetUnit(U_TWOHANDEDSWORDMAN, S_ALLY);
-	panel_btns->btn->SetTask(new TrainUnitTask(U_TWOHANDEDSWORDMAN));
-	panel_btns = panel->AddButton(4, 0, 930, 910);
-	panel_btns->btn->SetTask(new TrainUnitTask(U_PALADIN));
-	*/
+		//Buildings
+	panel->AddButton(BP_TOWNHALL, iPoint(0, 0), iPoint(826, 910), new PlaceBasicTowerTask());
+	panel->AddButton(BP_TOWNHALL, iPoint(1, 0), iPoint(826, 910), new PlaceBombardTowerTask());
+	panel->AddButton(BP_TOWNHALL, iPoint(2, 0), iPoint(826, 910), new PlaceWallTask());
+		//Units
+	panel->AddButton(BP_TOWNHALL,iPoint(0, 1), iPoint(826, 910), new TrainUnitTask(U_ARCHER));
+	panel->AddButton(BP_TOWNHALL, iPoint(1, 1), iPoint(826, 910), new TrainUnitTask(U_TWOHANDEDSWORDMAN));
+	panel->AddButton(BP_TOWNHALL, iPoint(2, 1), iPoint(826, 910), new TrainUnitTask(U_KNIGHT));
 
 	//Panel Info
 	App->uimanager->AddPanelInfo();

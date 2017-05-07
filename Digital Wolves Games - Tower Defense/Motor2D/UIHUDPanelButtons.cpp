@@ -33,37 +33,37 @@ UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 
 UIHUDPanelButtons::~UIHUDPanelButtons()
 {
-	std::vector<info_button*>* panel_active = nullptr;
+	std::vector<info_button*>::iterator ib_item;
 	switch (panel_type)
 	{
 	case BP_TOWNHALL:
-		panel_active = &panel_townhall;
+		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
 		break;
 	case BP_UNIVERSITY:
-		panel_active = &panel_university;
+		for (ib_item = panel_university.begin(); ib_item != panel_university.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
 		break;
 	case BP_TURRET:
-		panel_active = &panel_turret;
+		for (ib_item = panel_turret.begin(); ib_item != panel_turret.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
 		break;
 	case BP_CANNON:
-		panel_active = &panel_cannon;
+		for (ib_item = panel_cannon.begin(); ib_item != panel_cannon.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
 		break;
 	}
-
-	if(panel_active != nullptr)
-		for (std::vector<info_button*>::iterator ib_item = panel_active->begin(); ib_item == panel_active->end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
 	
-	for (std::vector<info_button*>::iterator ib_item = panel_townhall.begin(); ib_item == panel_townhall.end(); ++ib_item)
+	for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
 		DELETE_PTR(*ib_item);
 
-	for (std::vector<info_button*>::iterator ib_item = panel_university.begin(); ib_item == panel_university.end(); ++ib_item)
+	for (ib_item = panel_university.begin(); ib_item != panel_university.end(); ++ib_item)
 		DELETE_PTR(*ib_item);
 
-	for (std::vector<info_button*>::iterator ib_item = panel_turret.begin(); ib_item == panel_turret.end(); ++ib_item)
+	for (ib_item = panel_turret.begin(); ib_item != panel_turret.end(); ++ib_item)
 		DELETE_PTR(*ib_item);
 
-	for (std::vector<info_button*>::iterator ib_item = panel_cannon.begin(); ib_item == panel_cannon.end(); ++ib_item)
+	for (ib_item = panel_cannon.begin(); ib_item != panel_cannon.end(); ++ib_item)
 		DELETE_PTR(*ib_item);
 }
 
@@ -100,34 +100,52 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 
 bool UIHUDPanelButtons::Update()
 {
-	while (b_selected != nullptr)
+	if (b_selected != nullptr)
 	{
-		std::vector<info_button*>* panel_active = nullptr;
+		std::vector<info_button*>::iterator ib_item;
 		switch (panel_type)
 		{
 		case BP_TOWNHALL:
-			panel_active = &panel_townhall;
-			break;
-		case BP_UNIVERSITY:
-			panel_active = &panel_university;
-			break;
-		case BP_TURRET:
-			panel_active = &panel_turret;
-			break;
-		case BP_CANNON:
-			panel_active = &panel_cannon;
-			break;
-		}
-
-		if (panel_active != nullptr)
-			for (std::vector<info_button*>::iterator ib_item = panel_active->begin(); ib_item == panel_active->end(); ++ib_item)
+			for (std::vector<info_button*>::iterator ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					App->uimanager->SetDescriptionHUDDescription((*ib_item));
+					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
 					break;
 				}
 			}
+			break;
+		case BP_UNIVERSITY:
+			for (std::vector<info_button*>::iterator ib_item = panel_university.begin(); ib_item != panel_university.end(); ++ib_item)
+			{
+				if ((*ib_item)->GetButton()->IsFocus())
+				{
+					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					break;
+				}
+			}
+			break;
+		case BP_TURRET:
+			for (std::vector<info_button*>::iterator ib_item = panel_turret.begin(); ib_item != panel_turret.end(); ++ib_item)
+			{
+				if ((*ib_item)->GetButton()->IsFocus())
+				{
+					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					break;
+				}
+			}
+			break;
+		case BP_CANNON:
+			for (std::vector<info_button*>::iterator ib_item = panel_cannon.begin(); ib_item != panel_cannon.end(); ++ib_item)
+			{
+				if ((*ib_item)->GetButton()->IsFocus())
+				{
+					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					break;
+				}
+			}
+			break;
+		}
 	}
 	return true;
 }
@@ -163,50 +181,50 @@ info_button* UIHUDPanelButtons::AddButton(BUILDING_PANELINFO type, iPoint positi
 
 void UIHUDPanelButtons::CreatePanel()
 {
-	std::vector<info_button*>* panel_active = nullptr;
+	std::vector<info_button*>::iterator ib_item;
 	switch (panel_type)
 	{
 	case BP_TOWNHALL:
-		panel_active = &panel_townhall;
+		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
+			(*ib_item)->CreateButton();
 		break;
 	case BP_UNIVERSITY:
-		panel_active = &panel_university;
+		for (ib_item = panel_university.begin(); ib_item != panel_university.end(); ++ib_item)
+			(*ib_item)->CreateButton();
 		break;
 	case BP_TURRET:
-		panel_active = &panel_turret;
+		for (ib_item = panel_turret.begin(); ib_item != panel_turret.end(); ++ib_item)
+			(*ib_item)->CreateButton();
 		break;
 	case BP_CANNON:
-		panel_active = &panel_cannon;
+		for (ib_item = panel_cannon.begin(); ib_item != panel_cannon.end(); ++ib_item)
+			(*ib_item)->CreateButton();
 		break;
 	}
-
-	if(panel_active != nullptr)
-		for (std::vector<info_button*>::iterator ib_item = panel_active->begin(); ib_item == panel_active->end(); ++ib_item)
-			(*ib_item)->CreateButton();
 }
 
 void UIHUDPanelButtons::DeletePanel()
 {
-	std::vector<info_button*>* panel_active = nullptr;
+	std::vector<info_button*>::iterator ib_item;
 	switch (panel_type)
 	{
 	case BP_TOWNHALL:
-		panel_active = &panel_townhall;
+		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
 		break;
 	case BP_UNIVERSITY:
-		panel_active = &panel_university;
+		for (ib_item = panel_university.begin(); ib_item != panel_university.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
 		break;
 	case BP_TURRET:
-		panel_active = &panel_turret;
+		for (ib_item = panel_turret.begin(); ib_item != panel_turret.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
 		break;
 	case BP_CANNON:
-		panel_active = &panel_cannon;
+		for (ib_item = panel_cannon.begin(); ib_item != panel_cannon.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
 		break;
 	}
-
-	if(panel_active != nullptr)
-		for (std::vector<info_button*>::iterator ib_item = panel_active->begin(); ib_item == panel_active->end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
 
 	panel_type = BP_NONE;
 	b_selected = nullptr;
@@ -218,6 +236,8 @@ void info_button::CreateButton()
 	{ PANEL_XPOSITION + (ICON_SEPARATION * position.x),PANEL_YPOSITION + (ICON_SEPARATION * position.y),ICON_SIZE, ICON_SIZE },
 	{ atlas.x, atlas.y,ICON_ATLASSIZE, ICON_ATLASSIZE }
 	);
+	btn->SetTask(task);
+	btn->SetNotDeleteTask();
 }
 
 void info_button::ButtonToDelete()

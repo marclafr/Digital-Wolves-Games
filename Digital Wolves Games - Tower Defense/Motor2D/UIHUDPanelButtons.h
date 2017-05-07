@@ -30,6 +30,10 @@ private:
 
 public:
 	info_button(iPoint position, iPoint atlas, Task* task) : position(position), atlas(atlas), task(task) {}
+	~info_button()
+	{
+		DELETE_PTR(task);
+	}
 
 	void CreateButton();
 	void ButtonToDelete();

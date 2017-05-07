@@ -76,14 +76,13 @@ public:
 
 	void SetTownHall(Building*);
 	void SetResource(Resources*);
-	//void AddEntityToPanelInfo(Entity*);
 	void CreatePanelInfo(const std::vector<Entity*>& selection);
-	//bool IsSelectionEmptyFromPanelInfo();
 	void DeleteSelectionPanelInfo();
 	void SetDescriptionHUDDescription(info_button*);
 	void SetInfoUIComponent(UIComponents*);
 	SDL_Rect GetPosRectFromInfoUI();
 	void SetPanelButtons(Building*);
+	const UIHUDPanelButtons* GetPanelButtons() const;
 	void DeletePanelButtons();
 
 private:

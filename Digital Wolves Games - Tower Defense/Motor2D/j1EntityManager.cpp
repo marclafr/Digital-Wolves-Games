@@ -123,6 +123,7 @@ void j1EntityManager::UnselectEverything()
 
 	App->scene->selection.clear();
 	App->uimanager->DeleteSelectionPanelInfo();
+	App->uimanager->DeletePanelButtons();
 }
 
 void j1EntityManager::Select(Entity * select)
