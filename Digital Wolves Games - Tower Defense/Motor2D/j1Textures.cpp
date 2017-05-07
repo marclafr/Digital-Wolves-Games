@@ -307,6 +307,48 @@ SDL_Texture * const j1Textures::LoadSurfaceLabel(SDL_Surface * surface)
 	return texture;
 }
 
+void j1Textures::GetTextureConstructState(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & pivot, BUILD_CONSTRUCTION_NUM state_num)
+{
+	for (int i = 0; i < construction_rects.size(); i++)
+	{
+		if (construction_rects[i]->construction_num == state_num)
+		{
+			ptr = construction_rects[i]->tex;
+			rect = construction_rects[i]->rect;
+			pivot = construction_rects[i]->pivot;
+			break;
+		}
+	}
+}
+
+void j1Textures::GetTextureTower(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & pivot, TOWER_TYPE tower, BUILDING_TEXTURE_TYPES color)
+{
+	for (int i = 0; i < towers_rects.size(); i++)
+	{
+		if (towers_rects[i]->type == tower && towers_rects[i]->build_tex_type == color)
+		{
+			ptr = towers_rects[i]->tex;
+			rect = towers_rects[i]->rect;
+			pivot = towers_rects[i]->pivot;
+			break;
+		}
+	}
+}
+
+void j1Textures::GetTextureBuilding(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & pivot, BUILDING_TYPE building, BUILDING_TEXTURE_TYPES color)
+{
+	for (int i = 0; i < buildings_rects.size(); i++)
+	{
+		if (buildings_rects[i]->type == building && buildings_rects[i]->build_tex_type == color)
+		{
+			ptr = buildings_rects[i]->tex;
+			rect = buildings_rects[i]->rect;
+			pivot = buildings_rects[i]->pivot;
+			break;
+		}
+	}
+}
+
 BUILD_CONSTRUCTION_NUM j1Textures::ConstrString2Enum(const std::string name)
 {
 	if (name == "build_construct_1")

@@ -163,6 +163,9 @@ public:
 	bool UnloadLabel(SDL_Texture* texture);
 	SDL_Texture* const j1Textures::LoadSurfaceLabel(SDL_Surface* surface);
 
+	void GetTextureConstructState(SDL_Texture*& ptr, SDL_Rect& rect, iPoint& pivot, BUILD_CONSTRUCTION_NUM state_num);
+	void GetTextureTower(SDL_Texture*& ptr, SDL_Rect& rect, iPoint& pivot, TOWER_TYPE tower, BUILDING_TEXTURE_TYPES = BTT_NONE);
+	void GetTextureBuilding(SDL_Texture*& ptr, SDL_Rect& rect, iPoint & pivot, BUILDING_TYPE building, BUILDING_TEXTURE_TYPES color = BTT_NONE);
 private:
 
 	std::vector<Texture*> textures;
@@ -173,7 +176,7 @@ private:
 
 	BUILD_CONSTRUCTION_NUM ConstrString2Enum(const std::string name);
 	TOWER_TYPE TowerString2Enum(const std::string name, BUILDING_TEXTURE_TYPES &color);
-	//BUILDING_TYPE BuildingString2Enum(const std::string name);
+	//TODO:BUILDING_TYPE BuildingString2Enum(const std::string name);
 };
 
 
