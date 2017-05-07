@@ -1,5 +1,3 @@
-#define RECT_INGAME_WITHOUT_UI {0, 27, 1360, 624}
-
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
@@ -35,6 +33,8 @@
 #include "j1UIManager.h"
 #include "j1Investigations.h"
 #include "Towers.h"
+
+#define RECT_INGAME_WITHOUT_UI {0, 27, 1360, 624}
 
 j1Scene::j1Scene() : j1Module()
 {
