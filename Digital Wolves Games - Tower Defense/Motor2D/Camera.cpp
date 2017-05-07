@@ -65,6 +65,11 @@ const float Camera::GetOpacity() const
 	return opacity;
 }
 
+void Camera::MouseMove(int x, int y)
+{
+	//TODO 8 opciones de movimiento segun la pose del raton
+}
+
 bool Camera::InsideRenderTarget(int x, int y)
 {
 	x = (x - view_port.w / 2.0f) * (1.0f + (zoom / 100.0f)) + view_port.w / 2.0f;

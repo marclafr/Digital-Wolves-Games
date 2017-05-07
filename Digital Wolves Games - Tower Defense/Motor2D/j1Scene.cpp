@@ -222,6 +222,8 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		App->render->camera->MoveRight(floor(450.0f * dt));
 
+	App->render->camera->MouseMove(x,y);
+
 	return true;
 }
 

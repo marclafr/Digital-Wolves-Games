@@ -154,6 +154,9 @@
     <ClCompile Include="UIHUDMinimap.cpp">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClCompile>
+    <ClCompile Include="QuadTree.cpp">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -323,6 +326,9 @@
     </ClInclude>
     <ClInclude Include="UIHUDMinimap.h">
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>Awsome_Game\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
