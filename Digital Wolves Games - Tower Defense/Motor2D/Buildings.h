@@ -10,6 +10,7 @@
 #include "j1Timer.h"
 #include <vector>
 #include "j1Investigations.h"
+#include "p2Point.h"
 
 enum BUILDING_TYPE
 {
@@ -18,14 +19,14 @@ enum BUILDING_TYPE
 	B_CANNON,
 	B_WOOD_WALL,
 	B_STONE_WALL,
-	B_TOWNHALL,//PER TENIR ALGO
+	B_TOWNHALL,
 	B_UNIVERSITY
 };
 
 class Building : public Entity
 {
 private:
-	enum BUILDING_TYPE building_type;
+	BUILDING_TYPE building_type;
 	j1Timer buildtimer;
 	j1Timer DieTimer;
 	bool alive = true;
