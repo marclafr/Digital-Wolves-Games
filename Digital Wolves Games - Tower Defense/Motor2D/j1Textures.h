@@ -1,9 +1,13 @@
 #ifndef __j1TEXTURES_H__
 #define __j1TEXTURES_H__
 
-#include "j1Module.h"
 #include <vector>
+#include "SDL\include\SDL_rect.h"
+#include "j1Module.h"
+#include "p2Point.h"
 
+enum TOWER_TYPE;
+enum BUILDING_TYPE;
 struct SDL_Texture;
 struct SDL_Surface;
 
@@ -64,6 +68,53 @@ enum TextureID
 	//--
 };
 
+enum BUILDING_TEXTURE_TYPES
+{
+	BTT_NONE = 0,
+	BTT_RED,
+	BTT_GREEN,
+};
+
+enum BUILD_CONSTRUCTION_NUM
+{
+	BCN_NO_NUM,
+	BCN_1,
+	BCN_2,
+	BCN_3
+};
+
+struct ConstructionRect
+{
+	ConstructionRect(BUILD_CONSTRUCTION_NUM const_num, SDL_Texture* texture, SDL_Rect rect, iPoint pt);
+	~ConstructionRect();
+	BUILD_CONSTRUCTION_NUM construction_num;
+	SDL_Texture* tex;
+	SDL_Rect rect;
+	iPoint pivot;
+};
+
+struct TowerRect
+{
+	TowerRect(TOWER_TYPE type, BUILDING_TEXTURE_TYPES build_tex_type, SDL_Texture* texture, SDL_Rect rect, iPoint pt);
+	~TowerRect();
+	TOWER_TYPE type;
+	BUILDING_TEXTURE_TYPES build_tex_type;
+	SDL_Texture* tex;
+	SDL_Rect rect;
+	iPoint pivot;
+};
+
+struct BuildingRect
+{
+	BuildingRect(BUILDING_TYPE type, BUILDING_TEXTURE_TYPES build_tex_type, SDL_Texture* texture, SDL_Rect rect, iPoint pt);
+	~BuildingRect();
+	BUILDING_TYPE type;
+	BUILDING_TEXTURE_TYPES build_tex_type;
+	SDL_Texture* tex;
+	SDL_Rect rect;
+	iPoint pivot;
+};
+
 struct Texture
 {
 private:
@@ -115,6 +166,14 @@ public:
 private:
 
 	std::vector<Texture*> textures;
+
+	std::vector<ConstructionRect*> construction_rects;
+	std::vector<TowerRect*> towers_rects;
+	std::vector<BuildingRect*> buildings_rects;
+
+	BUILD_CONSTRUCTION_NUM ConstrString2Enum(const std::string name);
+	TOWER_TYPE TowerString2Enum(const std::string name, BUILDING_TEXTURE_TYPES &color);
+	//BUILDING_TYPE BuildingString2Enum(const std::string name);
 };
 
 

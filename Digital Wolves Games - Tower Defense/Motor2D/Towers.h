@@ -6,6 +6,7 @@
 #include "Projectile.h"
 #define HEIGHT_BASIC_TOWER 146
 #define ELEMENT_TERRAIN_TIME 3
+class AnimationManager;
 
 enum TOWER_TYPE
 {
@@ -58,6 +59,6 @@ public:
 	const TOWER_TYPE GetTowerType() const;
 	const int GetRange() const;
 	void UpgradeTurret();
-	};
+};
 
 #endif //__TOWERS_

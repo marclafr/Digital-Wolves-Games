@@ -5,6 +5,8 @@
 #include "j1FileSystem.h"
 #include "j1Textures.h"
 #include "Entity.h"
+#include "Towers.h"
+#include "Buildings.h"
 
 #include "SDL_image/include/SDL_image.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
@@ -60,8 +62,8 @@ bool j1Textures::Start()
 	App->tex->Load("animations/Units/SpearmanRed.png", T_ENEMY_SPEARMAN);
 	App->tex->Load("animations/Units/Pikeman.png", T_PIKEMAN);
 	App->tex->Load("animations/Units/PikemanRed.png", T_ENEMY_PIKEMAN);
-	
-		//ARCHERS
+
+	//ARCHERS
 	App->tex->Load("animations/Units/Archer.png", T_ARCHER);
 	App->tex->Load("animations/Units/ArcherRed.png", T_ENEMY_ARCHER);
 	App->tex->Load("animations/Units/Arbalest.png", T_ARBALEST);
@@ -71,7 +73,7 @@ bool j1Textures::Start()
 	App->tex->Load("animations/Units/Heavycavalryarcher.png", T_HEAVYCAVALRYARCHER);
 	App->tex->Load("animations/Units/HeavycavalryarcherRed.png", T_ENEMY_HEAVYCAVALRYARCHER);
 
-		//CAVALRY
+	//CAVALRY
 	App->tex->Load("animations/Units/Knight.png", T_KNIGHT);
 	App->tex->Load("animations/Units/KnightRed.png", T_ENEMY_KNIGHT);
 	App->tex->Load("animations/Units/Cavalier.png", T_CAVALIER);
@@ -79,7 +81,7 @@ bool j1Textures::Start()
 	App->tex->Load("animations/Units/Paladin.png", T_PALADIN);
 	App->tex->Load("animations/Units/PaladinRed.png", T_ENEMY_PALADIN);
 
-		//SIEGE
+	//SIEGE
 	App->tex->Load("animations/Units/Siegeram.png", T_SIEGERAM);
 	App->tex->Load("animations/Units/SiegeramRed.png", T_ENEMY_SIEGERAM);
 	//--
@@ -90,6 +92,57 @@ bool j1Textures::Start()
 	App->tex->Load("animations/ArrowsBombs.png", T_ARROW_BOMB);
 	App->tex->Load("animations/Fire.png", T_FIRE);
 
+	std::string towers_walls_folder = "textures/Towers.xml";
+
+	//Load UNIT animations data from animations folder
+	char* buff = nullptr;
+	int size = App->fs->Load(towers_walls_folder.c_str(), &buff);
+	pugi::xml_document towers_walls_data;
+	pugi::xml_parse_result result = towers_walls_data.load_buffer(buff, size);
+	RELEASE(buff);
+
+	if (result == NULL)
+	{
+		LOG("Error loading TOWERS/WALLS XML data: %s", result.description());
+		return false;
+	}
+
+	//Loading units
+	pugi::xml_node sprite_node = towers_walls_data.child("TextureAtlas").first_child();	
+
+		//CONSTRUCTIONS
+	pugi::xml_node const_node = sprite_node.first_child();
+	while (const_node != NULL)
+	{
+		std::string const_name = const_node.attribute("n").as_string();
+		BUILD_CONSTRUCTION_NUM const_num = ConstrString2Enum(const_name);
+		construction_rects.push_back(new ConstructionRect(const_num, GetTexture(T_TURRET), { const_node.attribute("x").as_int(),const_node.attribute("y").as_int(),const_node.attribute("w").as_int(),const_node.attribute("h").as_int() }, { (int)(const_node.attribute("y").as_int() * const_node.attribute("pX").as_float()), (int)(const_node.attribute("y").as_int() * const_node.attribute("pY").as_float()) }));
+		const_node = const_node.next_sibling();
+	}
+
+		//TOWERS
+	sprite_node = sprite_node.next_sibling();
+	pugi::xml_node tower_node = sprite_node.first_child();
+	while (tower_node != NULL)
+	{
+		std::string tower_name = tower_node.attribute("n").as_string();
+		BUILDING_TEXTURE_TYPES color;
+		TOWER_TYPE type = TowerString2Enum(tower_name, color);
+		towers_rects.push_back(new TowerRect(type, color, GetTexture(T_TURRET), { tower_node.attribute("x").as_int(),tower_node.attribute("y").as_int(),tower_node.attribute("w").as_int(),tower_node.attribute("h").as_int() }, { (int)(tower_node.attribute("y").as_int() * tower_node.attribute("pX").as_float()), (int)(tower_node.attribute("y").as_int() * tower_node.attribute("pY").as_float()) }));
+		tower_node = tower_node.next_sibling();
+	}
+
+		//WALLS
+	sprite_node = sprite_node.next_sibling();
+	pugi::xml_node walls_node = sprite_node.first_child();
+	while (walls_node != NULL)
+	{
+		std::string walls_name = sprite_node.attribute("n").as_string();
+		//TODO: CHARGE WALLS/BUILDINGS RECTS
+
+		walls_node = walls_node.next_sibling();
+	}
+
 	return ret;
 }
 
@@ -98,13 +151,26 @@ bool j1Textures::CleanUp()
 {
 	LOG("Freeing textures and Image library");
 	std::vector<Texture*>::iterator item;
-
 	for (item = textures.begin(); item != textures.end(); ++item)
 	{
 		delete (*item);
 	}
-
 	textures.clear();
+
+	std::vector<TowerRect*>::iterator item2;
+	for (item2 = towers_rects.begin(); item2 != towers_rects.end(); ++item2)
+	{
+		delete (*item2);
+	}
+	towers_rects.clear();
+
+	std::vector<BuildingRect*>::iterator item3;
+	for (item3 = buildings_rects.begin(); item3 != buildings_rects.end(); ++item3)
+	{
+		delete (*item3);
+	}
+	buildings_rects.clear();
+
 	IMG_Quit();
 	return true;
 }
@@ -240,3 +306,87 @@ SDL_Texture * const j1Textures::LoadSurfaceLabel(SDL_Surface * surface)
 
 	return texture;
 }
+
+BUILD_CONSTRUCTION_NUM j1Textures::ConstrString2Enum(const std::string name)
+{
+	if (name == "build_construct_1")
+		return BCN_1;
+
+	else if (name == "build_construct_2")
+		return BCN_2;
+
+	else if (name == "build_construct_3")
+		return BCN_3;
+
+}
+
+TOWER_TYPE j1Textures::TowerString2Enum(const std::string name, BUILDING_TEXTURE_TYPES &btt)
+{
+	btt = BTT_NONE;
+
+	if (name == "Basic_tower")
+		return T_BASIC_TOWER;
+
+	else if (name == "Basic_tower_red")
+	{
+		btt = BTT_RED;
+		return T_BASIC_TOWER;
+	}
+	else if (name == "Basic_tower_green")
+	{
+		btt = BTT_GREEN;
+		return T_BASIC_TOWER;
+	}
+	
+	else if (name == "Bombard_tower")
+		return T_BOMBARD_TOWER;
+
+	else if (name == "Bombard_tower_red")
+	{
+		btt = BTT_RED;
+		return T_BOMBARD_TOWER;
+	}
+	else if (name == "Bombard_tower_green")
+	{
+		btt = BTT_GREEN;
+		return T_BOMBARD_TOWER;
+	}
+
+	else if (name == "Fire_tower")
+		return T_FIRE_TOWER;
+
+	else if (name == "Bombard_fire_tower")
+		return T_BOMBARD_FIRE_TOWER;
+
+	else if (name == "Ice_tower")
+		return T_ICE_TOWER;
+
+	else if (name == "Bombard_ice_tower")
+		return T_BOMBARD_ICE_TOWER;
+
+	else if (name == "Air_tower")
+		return T_AIR_TOWER;
+
+	else if (name == "Bombard_air_tower")
+		return T_BOMBARD_AIR_TOWER;
+
+	return T_NO_TYPE;
+}
+
+BuildingRect::BuildingRect(BUILDING_TYPE type, BUILDING_TEXTURE_TYPES build_tex_type, SDL_Texture * texture, SDL_Rect rect, iPoint pt) : type(type), build_tex_type(build_tex_type), tex(texture), rect(rect), pivot(pt)
+{}
+
+BuildingRect::~BuildingRect()
+{}
+
+TowerRect::TowerRect(TOWER_TYPE type, BUILDING_TEXTURE_TYPES build_tex_type, SDL_Texture * texture, SDL_Rect rect, iPoint pt) : type(type), build_tex_type(build_tex_type), tex(texture), rect(rect), pivot(pt)
+{}
+
+TowerRect::~TowerRect()
+{}
+
+ConstructionRect::ConstructionRect(BUILD_CONSTRUCTION_NUM const_num, SDL_Texture * texture, SDL_Rect rect, iPoint pt) : construction_num(const_num), tex(texture), rect(rect), pivot(pt)
+{}
+
+ConstructionRect::~ConstructionRect()
+{}
