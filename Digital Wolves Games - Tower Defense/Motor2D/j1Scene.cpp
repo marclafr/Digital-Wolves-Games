@@ -132,6 +132,8 @@ bool j1Scene::Update(float dt)
 	//ANIMATION TEST
 	SDL_Rect rect_test;
 	iPoint pivot;
+	
+	iPoint result = App->map->MapToWorld(49, 73);
 
 	a1->Update(rect_test, pivot);
 	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 0, 300, &rect_test);
