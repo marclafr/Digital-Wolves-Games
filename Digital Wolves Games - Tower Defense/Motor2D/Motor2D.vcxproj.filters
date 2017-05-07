@@ -148,6 +148,9 @@
     <ClCompile Include="j1Score.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -311,6 +314,9 @@
     </ClInclude>
     <ClInclude Include="j1Score.h">
       <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Awsome_Game\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

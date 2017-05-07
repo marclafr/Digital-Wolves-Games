@@ -8,6 +8,9 @@
 #include "j1MainMenu.h"
 #include "j1ScoreScene.h"
 #include "UIComponents.h"
+#include "Buildings.h"
+#include "Towers.h"
+#include "Units.h"
 
 class Task
 {
@@ -155,14 +158,8 @@ public:
 
 	bool Execute()
 	{
-		if (App->scene->placing_basic_tower == false)
-		{
-			App->scene->placing_basic_tower = true;
-			App->scene->placing_bombard_tower = false;
-			App->scene->placing_wall = false;
-		}
-		else
-			App->scene->placing_basic_tower = false;
+		App->scene->placing_wall = false;
+		App->scene->placing_tower = T_BASIC_TOWER;
 		return true;
 	}
 };
@@ -174,14 +171,8 @@ public:
 
 	bool Execute() 
 	{
-		if (App->scene->placing_bombard_tower == false)
-		{
-			App->scene->placing_bombard_tower = true;
-			App->scene->placing_basic_tower = false;
-			App->scene->placing_wall = false;
-		}
-		else
-			App->scene->placing_bombard_tower = false;
+		App->scene->placing_wall = false;
+		App->scene->placing_tower = T_BOMBARD_TOWER;
 		return true;
 	}
 };
@@ -193,14 +184,8 @@ public:
 
 	bool Execute()
 	{
-		if (App->scene->placing_wall == false)
-		{
-			App->scene->placing_wall = true;
-			App->scene->placing_basic_tower = false;
-			App->scene->placing_bombard_tower = false;
-		}
-		else
-			App->scene->placing_wall = false;
+		App->scene->placing_wall = true;
+		App->scene->placing_tower = T_NO_TYPE;
 		return true;
 	}
 };
@@ -214,11 +199,8 @@ public:
 
 	bool Execute()
 	{
-		if (App->scene->CanTrainSoldier())
-		{
-			App->scene->TrainSoldier();
-			App->entity_manager->CreateUnit(u_type, fPoint(-480, 552), S_ALLY);
-		}
+		if (App->scene->resources->CanTrainSoldier(U_TWOHANDEDSWORDMAN))
+			App->scene->resources->TrainSoldier(U_TWOHANDEDSWORDMAN);
 		return true;
 	}
 

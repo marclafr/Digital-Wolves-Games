@@ -88,26 +88,12 @@ bool j1Scene::Start()
 	CreateSceneUI();
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
-	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(860, 640));
-	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1040, 775));
-	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1000, 645));
-	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1200, 750));
-	townhalltower1 = (Building*)App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
-	townhalltower2 = (Building*)App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
+	resources = new ResourceManager;
+	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
+	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
 	
 	//Reset scores and timers
 	App->score->Reset();
-
-	//Animation test
-	a1 = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
-	a2 = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_ARROW));
-	a3 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_ARROW));
-	a4 = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_ARROW));
-	a5 = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
-	a6 = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
-	a7 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_BOMB));
-	a8 = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_BOMB));
-	a_fire = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
 	return true;
 }
 
@@ -129,33 +115,6 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	//ANIMATION TEST
-	SDL_Rect rect_test;
-	iPoint pivot;
-	
-	iPoint result = App->map->MapToWorld(49, 73);
-
-	a1->Update(rect_test, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 0, 300, &rect_test);
-	a2->Update(rect_test, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 100, 300, &rect_test);
-	a3->Update(rect_test, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 200, 300, &rect_test);
-	a4->Update(rect_test, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 300, 300, &rect_test);
-	a5->Update(rect_test, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 0, 400, &rect_test);
-	a6->Update(rect_test, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 100, 400, &rect_test);
-	a7->Update(rect_test, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 200, 400, &rect_test);
-	a8->Update(rect_test, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), 300, 400, &rect_test);
-
-	a_fire->Update(rect_test, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE), 0, 200, &rect_test, SDL_FLIP_NONE, pivot.x, pivot.y);
-	//--
-
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
@@ -178,19 +137,6 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_GOD, { -200.0f, 372 }, S_ALLY);
 
-	/*
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_SPEARMAN, { -200.0f, 372 }, S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_HEAVYCAVALRYARCHER, { -200.0f, 372 }, S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_KNIGHT, { -200.0f, 372 }, S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_CAVALIER, { -200.0f, 372 }, S_ALLY);
-	*/
 	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);	
 	//--
@@ -198,50 +144,30 @@ bool j1Scene::Update(float dt)
 	//DEBUG: increase resources
 	if (App->debug_features.add_food)
 	{
-		resource_food->AddResource(1000);
+		resources->AddFood(1000);
 		App->debug_features.add_food = false;
 	}
 	if (App->debug_features.add_wood)
 	{
-		resource_wood->AddResource(1000);
+		resources->AddWood(1000);
 		App->debug_features.add_wood = false;
 	}
 	
 	if (App->debug_features.add_stone)
 	{
-		resource_stone->AddResource(1000);
+		resources->AddStone(1000);
 		App->debug_features.add_stone = false;
 	}
 
 	if (App->debug_features.add_gold)
 	{
-		resource_gold->AddResource(1000);
+		resources->AddGold(1000);
 		App->debug_features.add_gold = false;
 	}
 	//--
 
 	//App->map->Draw();
 
-
-
-	/*
-	if (App->render->camera->GetPosition().x > 2700)
-	{
-		App->render->camera->SetPosition(iPoint(2699, App->render->camera->GetPosition().y));
-	}
-	if (App->render->camera->GetPosition().x < -1200)
-	{
-		App->render->camera->SetPosition(iPoint(-1199, App->render->camera->GetPosition().y));
-	}
-	if (App->render->camera->GetPosition().y > 100)
-	{
-		App->render->camera->SetPosition(iPoint(App->render->camera->GetPosition().x, 100));
-	}
-	if (App->render->camera->GetPosition().y < -1600)
-	{
-		App->render->camera->SetPosition(iPoint(App->render->camera->GetPosition().x, -1600));
-	}
-	*/
 	// Debug pathfinding ------------------------------
 
 	iPoint p = App->render->ScreenToWorld(x, y);
@@ -258,22 +184,14 @@ bool j1Scene::Update(float dt)
 		pos = App->map->MapToWorld(item->x, item->y);
 		App->render->PushInGameSprite(debug_tex, pos.x - 32, pos.y - 32);
 	}
-
-	
-
 	//--
 
-	if (placing_basic_tower == true)
-	{
-		PlacingBasicTower();
-	}
-	if (placing_bombard_tower == true)
-	{
-		PlacingBombardTower();
-	}
-	if (placing_wall == true) {
+	if (placing_tower == T_BASIC_TOWER)
+		PlacingTower(T_BASIC_TOWER);
+	if (placing_tower == T_BOMBARD_TOWER)
+		PlacingTower(T_BOMBARD_TOWER);
+	if (placing_wall == true)
 		PlacingWall();
-	}
 
 	App->render->BlitGameScene();
 
@@ -348,6 +266,8 @@ bool j1Scene::CleanUp()
 {
 	LOG("Freeing scene");
 
+	delete resources;
+
 	App->score->active = false;
 
 	App->investigations->Disable();
@@ -358,95 +278,58 @@ bool j1Scene::CleanUp()
 	App->anim->Disable();
 	App->map->Disable();
 	App->pathfinding->Disable();
-
 	
 	App->uimanager->SetAllToDelete();
 
 	return true;
 }
 
-bool j1Scene::CanBuildTower()
-{
-	return resource_wood->CanUseResource(BASIC_TOWER_WOOD_COST) && resource_stone->CanUseResource(BASIC_TOWER_STONE_COST);
-}
-
-void j1Scene::BuildTower()
-{
-	resource_wood->UseResource(BASIC_TOWER_WOOD_COST);
-	resource_stone->UseResource(BASIC_TOWER_STONE_COST);
-}
-
-bool j1Scene::CanBuildWall()
-{
-	return resource_stone->CanUseResource(BASIC_WALL_STONE_COST);
-}
-
-void j1Scene::BuildWall()
-{
-	resource_stone->UseResource(BASIC_WALL_STONE_COST);
-}
-
-bool j1Scene::CanTrainSoldier()
-{
-	return resource_wood->CanUseResource(TWOHANDED_WOOD_COST) && resource_stone->CanUseResource(TWOHANDED_STONE_COST);
-}
-
-void j1Scene::TrainSoldier()
-{
-	resource_wood->UseResource(TWOHANDED_WOOD_COST);
-	resource_stone->UseResource(TWOHANDED_STONE_COST);
-}
-
-void j1Scene::PlacingBasicTower()
+void j1Scene::PlacingTower(TOWER_TYPE type)
 {
 	SDL_Texture* tower_tex = App->tex->GetTexture(T_TURRET);
-	//SDL_SetTextureAlphaMod(tower_tex, 180);
 
-	int x, y;
+	int x = 0;
+	int y = 0;
 	App->input->GetMousePosition(x, y);
+
+	SDL_Rect rect;
+
 	iPoint p = App->render->ScreenToWorld(x, y);
 	iPoint r = App->map->WorldToMap(p.x, p.y);
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
-	SDL_Rect rect;
-	if (CanBuildTower())
+
+	if (resources->CanBuildTower(type))
 	{
 		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
 		{
-			rect = {411,0,107,208};
+			rect = { 411,0,107,208 }; //texture rect
 			App->render->PushInGameSprite(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
 		}
 		else
 		{
 			rect = { 521,0,107,208 };
-			//rect = { 610,1,107,206 };
 			App->render->PushInGameSprite(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
+				if (App->collision->AbleToBuild(p))
 				{
 					App->audio->PlayFx(App->entity_manager->fx_construction);
+
 					if (App->pathfinding->IsConstructible_neutral(r) == true)
-					{
-						App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
-						BuildTower();
-					}
+						resources->BuildTower(type, p);
 					else if (App->pathfinding->IsConstructible_ally(r) == true)
-					{
-						App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(p.x, p.y - 9));
-						BuildTower();
-					}
+						resources->BuildTower(type, p);
 				}
 			}
 		}
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-	{
-		placing_basic_tower = false;
-	}
+		placing_tower = T_NO_TYPE;
 }
 
-void j1Scene::PlacingBombardTower()
+/*void j1Scene::PlacingBombardTower()
 {
 	SDL_Texture* tower_tex = App->tex->GetTexture(T_TURRET);
 	int x, y;
@@ -491,19 +374,21 @@ void j1Scene::PlacingBombardTower()
 		placing_bombard_tower = false;
 
 	}
-}
+}*/	//SDL_SetTextureAlphaMod(wall_tex, 180);
 
 void j1Scene::PlacingWall()
 {
 	SDL_Texture* wall_tex = App->tex->GetTexture(T_WALL);
-	//SDL_SetTextureAlphaMod(wall_tex, 180);
-
-	int x, y;
+	
+	int x = 0;
+	int y = 0;
 	App->input->GetMousePosition(x, y);
+
 	iPoint p = App->render->ScreenToWorld(x, y);
 	iPoint r = App->map->WorldToMap(p.x, p.y);
 	p = App->map->WorldToMap(p.x, p.y);
 	p = App->map->MapToWorld(p.x, p.y);
+
 	SDL_Rect rectnowalkable;
 	rectnowalkable = { 710,289,100,106 };
 	SDL_Rect rectwalkable;
@@ -728,75 +613,26 @@ void j1Scene::HandleInput( SDL_Event event)
 		if (event.button.button == SDL_SCANCODE_SPACE)
 			App->render->camera->Move(iPoint(1200, -250), 10);
 
+		//building construction
+		placing_wall = false;
+		placing_tower = T_NO_TYPE;
+
 		if (event.button.button == SDL_SCANCODE_1)
-		{
-			if (placing_basic_tower == false) 
-			{
-				placing_basic_tower = true;
-				placing_bombard_tower = false;
-				placing_wall = false;
-			}
-			else
-				placing_basic_tower = false;
-		}
+			placing_tower = T_BASIC_TOWER;	
 
 		if (event.button.button == SDL_SCANCODE_2)
-		{
-			if (placing_bombard_tower == false)
-			{
-				placing_bombard_tower = true;
-				placing_basic_tower = false;
-				placing_wall = false;
-			}
-			else
-				placing_bombard_tower = false;
-		}
+			placing_tower = T_BOMBARD_TOWER;
 
 		if (event.button.button == SDL_SCANCODE_3)
-		{
-			if (placing_wall == false)
-			{
 			placing_wall = true;
-			placing_basic_tower = false;
-			placing_bombard_tower = false;
-			}
-			else
-				placing_wall = false;	
-		}
+		//--
 
 		if (event.button.button == SDL_SCANCODE_4)
-		{
-			if (App->scene->CanTrainSoldier())
-			{
-				App->scene->TrainSoldier();
-				App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(-480, 552), S_ALLY);
-			}
-		}
+			if (App->scene->resources->CanTrainSoldier(U_TWOHANDEDSWORDMAN))
+				App->scene->resources->TrainSoldier(U_TWOHANDEDSWORDMAN);
 		break;
 
 	case SDL_KEYUP:
-		break;
-	}
-}
-
-Resources* j1Scene::GetResource(RESOURCE_TYPE type)
-{
-	switch (type)
-	{
-	case R_FOOD:
-		return resource_food;
-		break;
-	case R_WOOD:
-		return resource_wood;
-		break;
-	case R_GOLD:
-		return resource_gold;
-		break;
-	case R_STONE:
-		return resource_stone;
-		break;
-	default:
-		return nullptr;
 		break;
 	}
 }

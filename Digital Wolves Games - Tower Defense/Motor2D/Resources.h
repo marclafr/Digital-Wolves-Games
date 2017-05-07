@@ -16,13 +16,12 @@ enum RESOURCE_TYPE
 	R_WOOD,
 	R_STONE,
 	R_GOLD,
-	R_FOOD,
+	R_FOOD
 };
 
 class Resources : public Entity
 {
 private:
-	int resource = 100;
 	int amount_collected;
 	enum RESOURCE_TYPE resource_type;
 	float collect_time;
@@ -43,9 +42,6 @@ public:
 	const RESOURCE_TYPE GetResourceType() const;
 	const double GetBuildTime() const;
 	void AddResource(int add);
-	bool CanUseResource(int cost);
-	bool UseResource(int cost);
-	int GetResource();
 	bool ReduceCollectTime(float reduction);
 	void IncreaseResourceAmount(int amount);
 };

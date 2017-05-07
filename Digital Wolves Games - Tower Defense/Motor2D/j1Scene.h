@@ -4,17 +4,15 @@
 #include <vector>
 #include "j1Module.h"
 #include "Entity.h"
-
-#define BASIC_TOWER_WOOD_COST 75
-#define BASIC_TOWER_STONE_COST 25
-#define TWOHANDED_WOOD_COST 15
-#define TWOHANDED_STONE_COST 15
-#define BASIC_WALL_STONE_COST 50
+#include "ResourceManager.h"
+#include "Towers.h"
 
 struct SDL_Texture;
 class Resources;
 class Building;
+enum TOWER_TYPE;
 enum RESOURCE_TYPE;
+enum BUILDING_TYPE;
 class AnimationManager;
 
 enum PlacingWallDirection {
@@ -24,6 +22,7 @@ enum PlacingWallDirection {
 	EAST,
 	DIAGONAL,
 };
+
 class j1Scene : public j1Module
 {
 public:
@@ -54,29 +53,18 @@ public:
 	//Enable Module with submodules
 	void CreateSceneUI();
 	void EnableScene();
-	bool CanBuildTower();
-	void BuildTower();
-	bool CanBuildWall();
-	void BuildWall();
-	bool CanTrainSoldier();
-	void TrainSoldier();
 
-	void PlacingBasicTower();
-	void PlacingBombardTower();
+	void PlacingTower(TOWER_TYPE type);
 	
 	void PlacingWall();
 
 	void HandleInput(SDL_Event event);
 
-	bool placing_basic_tower = false;
-	bool placing_bombard_tower = false;
-	bool placing_wall = false;
+private:
+
+
 	bool game_scene = true;
 
-	bool win = false;
-	bool lose = false;
-
-private:
 	j1Audio* scene_music;
 	bool selecting = false;
 
@@ -85,8 +73,6 @@ private:
 	SDL_Rect select_rect;
 
 	Building* townhall;
-	Building* townhalltower1;
-	Building* townhalltower2;
  
 	iPoint firstSelectedForWall;
 	iPoint LastSelectedForWall;
@@ -94,30 +80,15 @@ private:
 	bool placing_wall_clicked = false;
 
 public:
-	Resources* GetResource(RESOURCE_TYPE type);
+	bool win = false;
+	bool lose = false;
+
+	TOWER_TYPE placing_tower = T_NO_TYPE;
+	bool placing_wall = false;
+
+	ResourceManager* resources = nullptr;
 
 	std::vector<Entity*> selection;
-
-public:
-
-	//RESOURCES
-	Resources* resource_food;
-	Resources* resource_wood;
-	Resources* resource_gold;
-	Resources* resource_stone;
-	//--
-
-	//ANIMATION TEST
-	AnimationManager* a1;
-	AnimationManager* a2;
-	AnimationManager* a3;
-	AnimationManager* a4;
-	AnimationManager* a5;
-	AnimationManager* a6;
-	AnimationManager* a7;
-	AnimationManager* a8;
-	AnimationManager* a_fire;
-	//--
 };
 
 #endif // __j1SCENE_H__
