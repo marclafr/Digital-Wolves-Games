@@ -8,6 +8,13 @@
 #define W_MARGIN 60 //biggest width for culling without popping
 #define FPS 60
 
+//Camera limits
+#define CAMERA_LIMIT_UP 1000
+#define CAMERA_LIMIT_DOWN 0
+#define CAMERA_LIMIT_LEFT 1000
+#define CAMERA_LIMIT_RIGHT 0
+
+
 class Camera
 {
 private:

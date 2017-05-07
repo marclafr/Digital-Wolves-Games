@@ -240,11 +240,6 @@ void j1UIManager::SetTownHall(Building * th)
 	townhall_bar_life->SetTownHall(th);
 }
 
-void j1UIManager::SetResource(Resources* res)
-{
-	resources_panel->AddResource(res);
-}
-
 void j1UIManager::CreatePanelInfo(const std::vector<Entity*>& selection)
 {
 	panel_info->CreatePanel(selection);

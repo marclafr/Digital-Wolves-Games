@@ -107,8 +107,7 @@ bool j1Investigations::DeleteInvestigation(Investigation* ptr)
 
 bool j1Investigations::CanInvestigate(Investigation* investigation)
 {
-	Resources* current_gold = App->scene->GetResource(R_GOLD);
-	if (current_gold->CanUseResource(investigation->cost))
+	if (App->scene->resources->GetGold() > investigation->cost)
 	{
 		investigation->inv_state = INV_S_IN_COURSE;
 		DoInvestigationUpgrade(investigation);
@@ -124,9 +123,7 @@ bool j1Investigations::CanInvestigate(Investigation* investigation)
 
 void j1Investigations::DoInvestigationUpgrade(Investigation* investigation)
 {
-
-	Resources* gold = App->scene->GetResource(R_GOLD);
-	gold->UseResource(investigation->cost);
+	App->scene->resources->UseResource(R_GOLD, investigation->cost);
 
 	if (investigation->has_levels == true)
 		investigation->cost += COST_INCREASE_BY_LVL;
@@ -174,20 +171,20 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 		switch (investigation->investigation_type)
 		{
 		case INV_FOOD:
-			if (!App->scene->resource_food->ReduceCollectTime(2))
-				App->scene->resource_food->IncreaseResourceAmount(25);
+			if (!App->scene->resources->ReduceFoodCollectTime(2.0f))
+				App->scene->resources->IncreaseResourceAmount(R_FOOD, 25.0f);
 			break;
 		case INV_WOOD:
-			if(!App->scene->resource_wood->ReduceCollectTime(2))
-				App->scene->resource_wood->IncreaseResourceAmount(25);
+			if(!App->scene->resources->ReduceWoodCollectTime(2.0f))
+				App->scene->resources->IncreaseResourceAmount(R_WOOD, 25.0f);
 			break;
 		case INV_GOLD:
-			if(!App->scene->resource_gold->ReduceCollectTime(2))
-				App->scene->resource_gold->IncreaseResourceAmount(25);
+			if(!App->scene->resources->ReduceGoldCollectTime(2.0f))
+				App->scene->resources->IncreaseResourceAmount(R_GOLD, 25.0f);
 			break;
 		case INV_STONE:
-			if(!App->scene->resource_stone->ReduceCollectTime(2))
-				App->scene->resource_stone->IncreaseResourceAmount(25);
+			if(!App->scene->resources->ReduceStoneCollectTime(2.0f))
+				App->scene->resources->IncreaseResourceAmount(R_STONE, 25.0f);
 			break;
 		default:
 			break;

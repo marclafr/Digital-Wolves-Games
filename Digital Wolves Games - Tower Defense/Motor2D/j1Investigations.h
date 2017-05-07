@@ -7,6 +7,8 @@
 
 #define COST_INCREASE_BY_LVL 150
 
+class Resource;
+
 enum LEVEL
 {
 	INV_LVL_LOCKED,
@@ -76,6 +78,7 @@ public:
 	bool WantToInvestigate(Investigation* investigation);
 
 private:
+
 	Investigation* CreateInvestigation(INVESTIGATION_TYPE investigation, bool has_lvls, uint cost, float time_to_upgrade);
 	bool DeleteInvestigation(Investigation* ptr);
 

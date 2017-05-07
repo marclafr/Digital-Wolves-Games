@@ -101,22 +101,26 @@ void Camera::Move(iPoint destination, int speed)
 
 void Camera::MoveUp(float amount)
 {
-	view_port.y += floor(amount);
+	if(view_port.y + floor(amount) < CAMERA_LIMIT_UP)
+		view_port.y += floor(amount);
 }
 
 void Camera::MoveLeft(float amount)
 {
-	view_port.x += floor(amount);
+	if(view_port.x + floor(amount) < CAMERA_LIMIT_LEFT)
+		view_port.x += floor(amount);
 }
 
 void Camera::MoveDown(float amount)
 {
-	view_port.y -= floor(amount);
+	if(view_port.y - floor(amount) > CAMERA_LIMIT_DOWN)
+		view_port.y -= floor(amount);
 }
 
 void Camera::MoveRight(float amount)
 {
-	view_port.x -= floor(amount);
+	if(view_port.x - floor(amount) > CAMERA_LIMIT_RIGHT)
+		view_port.x -= floor(amount);
 }
 
 void Camera::SetZoom(float zoom_percentage)
