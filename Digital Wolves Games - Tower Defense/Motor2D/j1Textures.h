@@ -18,7 +18,6 @@ enum TextureID
 	T_WALL,
 	T_TOWNHALL,
 	T_RESOURCE,
-	T_ARROW,
 	T_ARROW_BOMB,
 	T_FIRE,
 

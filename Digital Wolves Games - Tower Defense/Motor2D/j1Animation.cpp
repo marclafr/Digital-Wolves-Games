@@ -12,7 +12,15 @@ j1Animation::j1Animation()
 
 // Destructor
 j1Animation::~j1Animation()
-{}
+{
+	for (int i = 0; i < animation_types.size(); i++)
+	{
+		animation_types[i]->CleanUp();
+		delete animation_types[i];
+	}
+
+	animation_types.clear();
+}
 
 bool j1Animation::Start()
 {
@@ -129,7 +137,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 	}
 
 
-	std::string anim_folder3 = "animations/fire.xml";
+	std::string anim_folder3 = "animations/Fire.xml";
 	buff = nullptr;
 	size = App->fs->Load(anim_folder3.c_str(), &buff);
 	pugi::xml_document anim_data3;
@@ -172,14 +180,6 @@ bool j1Animation::Awake(pugi::xml_node& config)
 
 bool j1Animation::CleanUp()
 {
-	for (int i = 0; i < animation_types.size(); i++)
-	{
-		animation_types[i]->CleanUp();
-		delete animation_types[i];
-	}
-
-	animation_types.clear();
-
 	return true;
 }
 
