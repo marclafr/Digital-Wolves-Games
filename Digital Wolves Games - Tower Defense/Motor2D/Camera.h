@@ -44,6 +44,8 @@ public:
 	const SDL_Rect GetVP() const;
 	const iPoint GetCenter() const;
 	const float GetOpacity() const;
+
+	void MouseMove(int x, int y);
 	
 	bool InsideRenderTarget(int x, int y);
 
