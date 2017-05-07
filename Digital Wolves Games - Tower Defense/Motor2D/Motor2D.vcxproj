@@ -28,7 +28,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -122,6 +122,7 @@
     <ClCompile Include="UICheckbutton.cpp" />
     <ClCompile Include="UIComponents.cpp" />
     <ClCompile Include="UIHUDDescription.cpp" />
+    <ClCompile Include="UIHUDMinimap.cpp" />
     <ClCompile Include="UIHUDPanelButtons.cpp" />
     <ClCompile Include="UIHUDPanelInfo.cpp" />
     <ClCompile Include="UIHUDResources.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="UIComponents.h" />
     <ClInclude Include="UIGetEntitiesInfo.h" />
     <ClInclude Include="UIHUDDescription.h" />
+    <ClInclude Include="UIHUDMinimap.h" />
     <ClInclude Include="UIHUDPanelButtons.h" />
     <ClInclude Include="UIHUDPanelInfo.h" />
     <ClInclude Include="UIHUDResources.h" />
