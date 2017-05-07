@@ -71,8 +71,8 @@ bool j1MainMenu::Start()
 	options->SetInteractive(false);
 
 	//EXIT
-	UIButton* exit = App->uimanager->AddButton({ 174, 667, 200, 91 }, { 149, 755, 200, 91 });
-	exit->SetMouseOnTopTextRect({ 477, 1374, 200, 95 });
+	UIButton* exit = App->uimanager->AddButton({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
+	exit->SetMouseOnTopTextRect({ 477, 1378, 200, 91 });
 	exit->SetTask(new SetPreUpdateFalseTask());
 
 	App->uimanager->AddLabel(265, 708, "Exit");
