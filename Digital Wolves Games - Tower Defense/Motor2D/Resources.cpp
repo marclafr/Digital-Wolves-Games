@@ -17,7 +17,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 	SDL_Rect rect;
 	switch (r_type)
 	{
-	case FOOD:
+	case R_FOOD:
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
@@ -32,7 +32,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		CollectTimer.Start();
 		break;
 
-	case WOOD:
+	case R_WOOD:
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
@@ -47,7 +47,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		CollectTimer.Start();
 		break;
 
-	case GOLD:
+	case R_GOLD:
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
@@ -62,7 +62,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		CollectTimer.Start();
 		break;
 
-	case STONE:
+	case R_STONE:
 		SetSide(S_ALLY);
 		SetHp(10);
 		SetArmor(1);
@@ -79,7 +79,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
-		resource_type = NO_RESOURCE;
+		resource_type = R_NO_RESOURCE;
 		break;
 	}
 	buildtimer.Start();

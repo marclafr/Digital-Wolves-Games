@@ -57,16 +57,16 @@ void UIHUDResources::UpdateResourcesNum()
 		Resources* resource = item._Ptr->_Myval;
 		switch (resource->GetResourceType())
 		{
-		case STONE:
+		case R_STONE:
 			num_stone += resource->GetResource();
 			break;
-		case WOOD:
+		case R_WOOD:
 			num_wood += resource->GetResource();
 			break;
-		case FOOD:
+		case R_FOOD:
 			num_food += resource->GetResource();
 			break;
-		case GOLD:
+		case R_GOLD:
 			num_gold += resource->GetResource();
 			break;
 		}

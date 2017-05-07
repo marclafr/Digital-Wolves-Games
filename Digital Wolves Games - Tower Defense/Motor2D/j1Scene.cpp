@@ -88,10 +88,10 @@ bool j1Scene::Start()
 	CreateSceneUI();
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
-	resource_food = (Resources*)App->entity_manager->CreateResource(FOOD, fPoint(860, 640));
-	resource_wood = (Resources*)App->entity_manager->CreateResource(WOOD, fPoint(1040, 775));
-	resource_gold = (Resources*)App->entity_manager->CreateResource(GOLD, fPoint(1000, 645));
-	resource_stone = (Resources*)App->entity_manager->CreateResource(STONE, fPoint(1200, 750));
+	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(860, 640));
+	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1040, 775));
+	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1000, 645));
+	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1200, 750));
 	townhalltower1 = (Building*)App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
 	townhalltower2 = (Building*)App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
 	
@@ -781,16 +781,16 @@ Resources* j1Scene::GetResource(RESOURCE_TYPE type)
 {
 	switch (type)
 	{
-	case FOOD:
+	case R_FOOD:
 		return resource_food;
 		break;
-	case WOOD:
+	case R_WOOD:
 		return resource_wood;
 		break;
-	case GOLD:
+	case R_GOLD:
 		return resource_gold;
 		break;
-	case STONE:
+	case R_STONE:
 		return resource_stone;
 		break;
 	default:

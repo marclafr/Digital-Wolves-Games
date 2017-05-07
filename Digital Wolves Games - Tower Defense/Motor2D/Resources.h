@@ -12,11 +12,11 @@
 
 enum RESOURCE_TYPE
 {
-	NO_RESOURCE,
-	WOOD,
-	STONE,
-	GOLD,
-	FOOD,
+	R_NO_RESOURCE,
+	R_WOOD,
+	R_STONE,
+	R_GOLD,
+	R_FOOD,
 };
 
 class Resources : public Entity

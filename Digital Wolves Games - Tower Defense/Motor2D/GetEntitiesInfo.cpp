@@ -115,16 +115,16 @@ SDL_Rect GetResourceIconPositionFromAtlas(const RESOURCE_TYPE type)
 
 	switch (type)
 	{
-	case WOOD:
+	case R_WOOD:
 		ret = { 852, 858, 25, 25 };
 		break;
-	case STONE:
+	case R_STONE:
 		ret = { 878, 858, 25, 25 };
 		break;
-	case FOOD:
+	case R_FOOD:
 		ret = { 0, 0, 0, 0 };
 		break;
-	case GOLD:
+	case R_GOLD:
 		ret = { 878, 858, 25, 25 };
 		break;
 	default:
@@ -142,16 +142,16 @@ const char * GetResourceName(const RESOURCE_TYPE type)
 
 	switch (type)
 	{
-	case WOOD:
+	case R_WOOD:
 		ret = "Sawmill";
 		break;
-	case STONE:
+	case R_STONE:
 		ret = "Quarry";
 		break;
-	case FOOD:
+	case R_FOOD:
 		ret = "Mill";
 		break;
-	case GOLD:
+	case R_GOLD:
 		ret = "Gold Mine";
 		break;
 	default:
@@ -346,16 +346,16 @@ int ReturnValueBarHPResource(const RESOURCE_TYPE type, const uint hp, const uint
 
 	switch (type)
 	{
-	case WOOD:
+	case R_WOOD:
 		ret = hp * pixels / RESOURCES_HP;
 		break;
-	case STONE:
+	case R_STONE:
 		ret = hp * pixels / RESOURCES_HP;
 		break;
-	case FOOD:
+	case R_FOOD:
 		ret = hp * pixels / RESOURCES_HP;
 		break;
-	case GOLD:
+	case R_GOLD:
 		ret = hp * pixels / RESOURCES_HP;
 		break;
 	}
@@ -427,16 +427,16 @@ int ReturnValueHeightCorrectionResource(const RESOURCE_TYPE type)
 
 	switch (type)
 	{
-	case WOOD:
+	case R_WOOD:
 		ret = 70;
 		break;
-	case STONE:
+	case R_STONE:
 		ret = 70;
 		break;
-	case FOOD:
+	case R_FOOD:
 		ret = 70;
 		break;
-	case GOLD:
+	case R_GOLD:
 		ret = 70;
 		break;
 	}

@@ -107,7 +107,7 @@ bool j1Investigations::DeleteInvestigation(Investigation* ptr)
 
 bool j1Investigations::CanInvestigate(Investigation* investigation)
 {
-	Resources* current_gold = App->scene->GetResource(GOLD);
+	Resources* current_gold = App->scene->GetResource(R_GOLD);
 	if (current_gold->CanUseResource(investigation->cost))
 	{
 		investigation->inv_state = INV_S_IN_COURSE;
@@ -125,7 +125,7 @@ bool j1Investigations::CanInvestigate(Investigation* investigation)
 void j1Investigations::DoInvestigationUpgrade(Investigation* investigation)
 {
 
-	Resources* gold = App->scene->GetResource(GOLD);
+	Resources* gold = App->scene->GetResource(R_GOLD);
 	gold->UseResource(investigation->cost);
 
 	if (investigation->has_levels == true)
