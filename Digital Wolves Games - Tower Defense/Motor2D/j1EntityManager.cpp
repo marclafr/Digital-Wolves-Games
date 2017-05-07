@@ -61,7 +61,6 @@ Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos)
 {
 	Entity* new_entity = (Entity*) new Resources(r_type, pos);
 	entity_array.push_back(new_entity);
-	App->uimanager->SetResource((Resources*)new_entity);
 	return new_entity;
 }
 

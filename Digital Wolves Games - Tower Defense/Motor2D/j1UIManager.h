@@ -75,7 +75,6 @@ public:
 	void SetAllToDelete();
 
 	void SetTownHall(Building*);
-	void SetResource(Resources*);
 	void CreatePanelInfo(const std::vector<Entity*>& selection);
 	void DeleteSelectionPanelInfo();
 	void SetDescriptionHUDDescription(info_button*);
