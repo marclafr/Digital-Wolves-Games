@@ -115,7 +115,7 @@ bool j1Textures::Start()
 	while (const_node != NULL)
 	{
 		std::string const_name = const_node.attribute("n").as_string();
-		BUILD_CONSTRUCTION_NUM const_num = ConstrString2Enum(const_name);
+		uint const_num = ConstrString2Uint(const_name);
 		construction_rects.push_back(new ConstructionRect(const_num, GetTexture(T_TURRET), { const_node.attribute("x").as_int(),const_node.attribute("y").as_int(),const_node.attribute("w").as_int(),const_node.attribute("h").as_int() }, { (int)(const_node.attribute("y").as_int() * const_node.attribute("pX").as_float()), (int)(const_node.attribute("y").as_int() * const_node.attribute("pY").as_float()) }));
 		const_node = const_node.next_sibling();
 	}
@@ -307,7 +307,7 @@ SDL_Texture * const j1Textures::LoadSurfaceLabel(SDL_Surface * surface)
 	return texture;
 }
 
-void j1Textures::GetTextureConstructState(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & pivot, BUILD_CONSTRUCTION_NUM state_num)
+void j1Textures::GetConstructionTexture(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & pivot, uint state_num)
 {
 	for (int i = 0; i < construction_rects.size(); i++)
 	{
@@ -321,7 +321,7 @@ void j1Textures::GetTextureConstructState(SDL_Texture *& ptr, SDL_Rect & rect, i
 	}
 }
 
-void j1Textures::GetTextureTower(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & pivot, TOWER_TYPE tower, BUILDING_TEXTURE_TYPES color)
+void j1Textures::GetTowerTexture(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & pivot, TOWER_TYPE tower, BUILDING_TEXTURE_TYPES color)
 {
 	for (int i = 0; i < towers_rects.size(); i++)
 	{
@@ -335,7 +335,7 @@ void j1Textures::GetTextureTower(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & p
 	}
 }
 
-void j1Textures::GetTextureBuilding(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & pivot, BUILDING_TYPE building, BUILDING_TEXTURE_TYPES color)
+void j1Textures::GetBuildingTexture(SDL_Texture *& ptr, SDL_Rect & rect, iPoint & pivot, BUILDING_TYPE building, BUILDING_TEXTURE_TYPES color)
 {
 	for (int i = 0; i < buildings_rects.size(); i++)
 	{
@@ -349,16 +349,16 @@ void j1Textures::GetTextureBuilding(SDL_Texture *& ptr, SDL_Rect & rect, iPoint 
 	}
 }
 
-BUILD_CONSTRUCTION_NUM j1Textures::ConstrString2Enum(const std::string name)
+uint j1Textures::ConstrString2Uint(const std::string name)
 {
 	if (name == "build_construct_1")
-		return BCN_1;
+		return 1;
 
 	else if (name == "build_construct_2")
-		return BCN_2;
+		return 2;
 
 	else if (name == "build_construct_3")
-		return BCN_3;
+		return 3;
 
 }
 
@@ -427,7 +427,7 @@ TowerRect::TowerRect(TOWER_TYPE type, BUILDING_TEXTURE_TYPES build_tex_type, SDL
 TowerRect::~TowerRect()
 {}
 
-ConstructionRect::ConstructionRect(BUILD_CONSTRUCTION_NUM const_num, SDL_Texture * texture, SDL_Rect rect, iPoint pt) : construction_num(const_num), tex(texture), rect(rect), pivot(pt)
+ConstructionRect::ConstructionRect(uint const_num, SDL_Texture * texture, SDL_Rect rect, iPoint pt) : construction_num(const_num), tex(texture), rect(rect), pivot(pt)
 {}
 
 ConstructionRect::~ConstructionRect()

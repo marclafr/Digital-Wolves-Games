@@ -75,19 +75,11 @@ enum BUILDING_TEXTURE_TYPES
 	BTT_GREEN,
 };
 
-enum BUILD_CONSTRUCTION_NUM
-{
-	BCN_NO_NUM,
-	BCN_1,
-	BCN_2,
-	BCN_3
-};
-
 struct ConstructionRect
 {
-	ConstructionRect(BUILD_CONSTRUCTION_NUM const_num, SDL_Texture* texture, SDL_Rect rect, iPoint pt);
+	ConstructionRect(uint const_num, SDL_Texture* texture, SDL_Rect rect, iPoint pt);
 	~ConstructionRect();
-	BUILD_CONSTRUCTION_NUM construction_num;
+	uint construction_num;
 	SDL_Texture* tex;
 	SDL_Rect rect;
 	iPoint pivot;
@@ -163,9 +155,9 @@ public:
 	bool UnloadLabel(SDL_Texture* texture);
 	SDL_Texture* const j1Textures::LoadSurfaceLabel(SDL_Surface* surface);
 
-	void GetTextureConstructState(SDL_Texture*& ptr, SDL_Rect& rect, iPoint& pivot, BUILD_CONSTRUCTION_NUM state_num);
-	void GetTextureTower(SDL_Texture*& ptr, SDL_Rect& rect, iPoint& pivot, TOWER_TYPE tower, BUILDING_TEXTURE_TYPES = BTT_NONE);
-	void GetTextureBuilding(SDL_Texture*& ptr, SDL_Rect& rect, iPoint & pivot, BUILDING_TYPE building, BUILDING_TEXTURE_TYPES color = BTT_NONE);
+	void GetConstructionTexture(SDL_Texture*& ptr, SDL_Rect& rect, iPoint& pivot, uint state_num);
+	void GetTowerTexture(SDL_Texture*& ptr, SDL_Rect& rect, iPoint& pivot, TOWER_TYPE tower, BUILDING_TEXTURE_TYPES = BTT_NONE);
+	void GetBuildingTexture(SDL_Texture*& ptr, SDL_Rect& rect, iPoint & pivot, BUILDING_TYPE building, BUILDING_TEXTURE_TYPES color = BTT_NONE);
 private:
 
 	std::vector<Texture*> textures;
@@ -174,7 +166,7 @@ private:
 	std::vector<TowerRect*> towers_rects;
 	std::vector<BuildingRect*> buildings_rects;
 
-	BUILD_CONSTRUCTION_NUM ConstrString2Enum(const std::string name);
+	uint ConstrString2Uint(const std::string name);
 	TOWER_TYPE TowerString2Enum(const std::string name, BUILDING_TEXTURE_TYPES &color);
 	//TODO:BUILDING_TYPE BuildingString2Enum(const std::string name);
 };
