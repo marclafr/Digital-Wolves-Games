@@ -365,7 +365,8 @@ bool j1App::CleanUp()
 
 	while (item != modules.rend() && ret == true)
 	{
-		ret = (*item)->CleanUp();
+		if((*item)->active)
+			ret = (*item)->CleanUp();
 		item++;
 	}
 
