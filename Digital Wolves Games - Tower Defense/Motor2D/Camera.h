@@ -9,10 +9,10 @@
 #define FPS 60
 
 //Camera limits
-#define CAMERA_LIMIT_UP 1000
-#define CAMERA_LIMIT_DOWN 0
-#define CAMERA_LIMIT_LEFT 1000
-#define CAMERA_LIMIT_RIGHT 0
+#define CAMERA_LIMIT_UP 58
+#define CAMERA_LIMIT_DOWN - 2900
+#define CAMERA_LIMIT_LEFT 3602
+#define CAMERA_LIMIT_RIGHT -2142
 
 
 class Camera
