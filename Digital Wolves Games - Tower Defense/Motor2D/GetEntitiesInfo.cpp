@@ -13,6 +13,15 @@
 
 #define ICON_SIZE 25
 
+#define Y_RESOURCES 962
+#define X_WALLS 774
+#define X_PUBLIC_BUILDINGS 800
+#define Y_TOWERS 910
+#define Y_BOMBARDS 936
+
+#define HIGH_TOWERS 180
+#define HIGH_BOMBARDS 200
+
 #include "UIGetEntitiesInfo.h"
 
 SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
@@ -230,16 +239,16 @@ SDL_Rect GetResourceIconPositionFromAtlas(const RESOURCE_TYPE type)
 	switch (type)
 	{
 	case R_WOOD:
-		ret = { 852, 962, ICON_SIZE, ICON_SIZE };
+		ret = { 852, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
 		break;
 	case R_STONE:
-		ret = { 878, 962, ICON_SIZE, ICON_SIZE };
+		ret = { 878, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
 		break;
 	case R_FOOD:
-		ret = { 826, 962, ICON_SIZE, ICON_SIZE };
+		ret = { 826, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
 		break;
 	case R_GOLD:
-		ret = { 904, 962, ICON_SIZE, ICON_SIZE };
+		ret = { 904, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
 		break;
 	default:
 		//LOG("Error Resource TYPE SDL_Rect NULL (UIManager)");
@@ -284,19 +293,19 @@ SDL_Rect GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_WOOD_WALL:
-		ret = { 774, 936, ICON_SIZE, ICON_SIZE };
+		ret = { X_WALLS, 936, ICON_SIZE, ICON_SIZE };
 		break;
 
 	case B_STONE_WALL:
-		ret = { 774, 910, ICON_SIZE, ICON_SIZE };
+		ret = { X_WALLS, 910, ICON_SIZE, ICON_SIZE };
 		break;
 
 	case B_TOWNHALL:
-		ret = { 800, 936, ICON_SIZE, ICON_SIZE };
+		ret = { X_PUBLIC_BUILDINGS, 936, ICON_SIZE, ICON_SIZE };
 		break;
 
 	case B_UNIVERSITY:
-		ret = { 800, 910, ICON_SIZE, ICON_SIZE };
+		ret = { X_PUBLIC_BUILDINGS, 910, ICON_SIZE, ICON_SIZE };
 		break;
 
 	default:
@@ -394,30 +403,31 @@ SDL_Rect GetTowerIconPositionFromAtlas(const TOWER_TYPE type)
 	switch (type)
 	{
 	case T_BASIC_TOWER:
-		ret = { 826,910, ICON_SIZE, ICON_SIZE };
+		ret = { 826,Y_TOWERS, ICON_SIZE, ICON_SIZE };
 		break;
 	case T_FIRE_TOWER:
-		ret = { 852,910, ICON_SIZE, ICON_SIZE };
+		ret = { 852,Y_TOWERS, ICON_SIZE, ICON_SIZE };
 		break;
 	case T_ICE_TOWER:
-		ret = { 878,910, ICON_SIZE, ICON_SIZE };
+		ret = { 878,Y_TOWERS, ICON_SIZE, ICON_SIZE };
 		break;
 	case T_AIR_TOWER:
-		ret = { 904,910, ICON_SIZE, ICON_SIZE };
+		ret = { 904,Y_TOWERS, ICON_SIZE, ICON_SIZE };
 		break;
 	case T_BOMBARD_TOWER:
-		ret = { 826,936, ICON_SIZE, ICON_SIZE };
+		ret = { 826,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
 		break;
 	case T_BOMBARD_FIRE_TOWER:
-		ret = { 852,936, ICON_SIZE, ICON_SIZE };
+		ret = { 852,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
 		break;
 	case T_BOMBARD_ICE_TOWER:
-		ret = { 878,936, ICON_SIZE, ICON_SIZE };
+		ret = { 878,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
 		break;
 	case T_BOMBARD_AIR_TOWER:	
-		ret = { 878,936, ICON_SIZE, ICON_SIZE };
+		ret = { 878,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
 		break;
 	default:
+		ret = { 0,0, 0, 0 };
 		break;
 	}
 
@@ -589,13 +599,16 @@ int ReturnValueHeightCorrectionBuilding(const BUILDING_TYPE type)
 
 	switch (type)
 	{
-	case B_TURRET:
-		ret = 180;
+	case B_WOOD_WALL:
+		ret = 40;
 		break;
 	case B_STONE_WALL:
 		ret = 90;
 		break;
 	case B_TOWNHALL:
+		ret = 210;
+		break;
+	case B_UNIVERSITY:
 		ret = 210;
 		break;
 	default:
@@ -620,12 +633,48 @@ int ReturnValueHeightCorrectionResource(const RESOURCE_TYPE type)
 		ret = 70;
 		break;
 	case R_FOOD:
-		ret = 70;
+		ret = 100;
 		break;
 	case R_GOLD:
 		ret = 70;
 		break;
 	}
+
+	return ret;
+}
+
+int ReturnValueHeightCorrectionTowers(const TOWER_TYPE type)
+{
+	int ret = 0;
+
+	switch (type)
+	{
+	case T_BASIC_TOWER:
+		ret = HIGH_TOWERS;
+		break;
+	case T_FIRE_TOWER:
+		ret = HIGH_TOWERS;
+		break;
+	case T_ICE_TOWER:
+		ret = HIGH_TOWERS;
+		break;
+	case T_AIR_TOWER:
+		ret = HIGH_TOWERS;
+		break;
+	case T_BOMBARD_TOWER:
+		ret = HIGH_BOMBARDS;
+		break;
+	case T_BOMBARD_FIRE_TOWER:
+		ret = HIGH_BOMBARDS;
+		break;
+	case T_BOMBARD_ICE_TOWER:
+		ret = HIGH_BOMBARDS;
+		break;
+	case T_BOMBARD_AIR_TOWER:
+		ret = HIGH_BOMBARDS;
+		break;
+	}
+
 
 	return ret;
 }
