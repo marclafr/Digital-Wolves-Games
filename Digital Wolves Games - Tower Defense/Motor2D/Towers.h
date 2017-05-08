@@ -22,9 +22,10 @@ enum TOWER_TYPE
 
 enum TURRET_UPGRADE
 {
-	FIRE,
-	ICE,
-	AIR
+	TU_NULL = 0,
+	TU_FIRE,
+	TU_ICE,
+	TU_AIR
 };
 
 class Tower : public Building
@@ -44,7 +45,7 @@ public:
 	iPoint arrowpos;
 	Tower(TOWER_TYPE t_type, fPoint pos);
 	~Tower();
-	void UpgradeTurret(TOWER_ELEMENT_TYPE type);
+	void UpgradeTurret(TURRET_UPGRADE type);
 	void Update(); // defines order
 	void AI();
 	void Draw();
