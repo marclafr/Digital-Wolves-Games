@@ -47,7 +47,7 @@ public:
 	const iPoint GetCenter() const;
 	const float GetOpacity() const;
 
-	void MouseMove(int x, int y, float dt);
+	void MouseMove(int x, int y, float dt, SDL_Rect rect);
 	
 	bool InsideRenderTarget(int x, int y);
 

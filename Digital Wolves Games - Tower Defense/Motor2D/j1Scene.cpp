@@ -34,7 +34,7 @@
 #include "j1Investigations.h"
 #include "Towers.h"
 
-#define RECT_INGAME_WITHOUT_UI {0, 27, 1360, 624}
+#define RECT_INGAME_WITHOUT_UI {0, 15, 1360, 620}
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -222,7 +222,10 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		App->render->camera->MoveRight(floor(450.0f * dt));
 
-	App->render->camera->MouseMove(x, y, dt);
+
+	SDL_Rect rect_ingame = RECT_INGAME_WITHOUT_UI;
+
+	App->render->camera->MouseMove(x, y, dt, rect_ingame);
 
 	return true;
 }
