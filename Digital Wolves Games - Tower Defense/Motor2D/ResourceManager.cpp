@@ -177,7 +177,7 @@ bool ResourceManager::CanBuildTower(TOWER_TYPE type)
 		break;
 
 	case T_BOMBARD_TOWER:
-		return false;
+		return wood > BASIC_TOWER_WOOD_COST && stone > BASIC_TOWER_STONE_COST;
 		break;
 
 	case T_BOMBARD_FIRE_TOWER:
@@ -219,6 +219,8 @@ void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos)
 		break;
 
 	case T_BOMBARD_TOWER:
+		wood -= BASIC_TOWER_WOOD_COST;
+		stone -= BASIC_TOWER_STONE_COST;
 		break;
 
 	case T_BOMBARD_FIRE_TOWER:
@@ -239,10 +241,11 @@ bool ResourceManager::CanBuildWall(BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_WOOD_WALL:
-		return true;
-
+		return stone > BASIC_WALL_STONE_COST;
+		break;
 	case B_STONE_WALL:
 		return stone > BASIC_WALL_STONE_COST;
+		break;
 	}
 	return false;
 }
@@ -253,6 +256,7 @@ void ResourceManager::BuildWall(BUILDING_TYPE type, iPoint pos)
 	switch (type)
 	{
 	case B_WOOD_WALL:
+		stone -= BASIC_WALL_STONE_COST;
 		break;
 
 	case B_STONE_WALL:
@@ -281,6 +285,7 @@ bool ResourceManager::CanTrainSoldier(UNIT_TYPE type)
 	case U_TWOHANDEDSWORDMAN:
 		return wood > TWOHANDED_WOOD_COST && stone > TWOHANDED_STONE_COST;
 	case U_CHAMPION:
+		return wood > TWOHANDED_WOOD_COST && stone > TWOHANDED_STONE_COST;
 		return false;
 	case U_SPEARMAN:
 		return false;
@@ -289,16 +294,19 @@ bool ResourceManager::CanTrainSoldier(UNIT_TYPE type)
 	case U_ARCHER:
 		return false;
 	case U_ARBALEST:
+		return wood > TWOHANDED_WOOD_COST && stone > TWOHANDED_STONE_COST;
 		return false;
 	case U_CAVALRYARCHER:
 		return false;
 	case U_HEAVYCAVALRYARCHER:
+		return wood > TWOHANDED_WOOD_COST && stone > TWOHANDED_STONE_COST;
 		return false;
 	case U_KNIGHT:
 		return false;
 	case U_CAVALIER:
 		return false;
 	case U_PALADIN:
+		return wood > TWOHANDED_WOOD_COST && stone > TWOHANDED_STONE_COST;
 		return false;
 	case U_SIEGERAM:
 		return false;
@@ -328,6 +336,8 @@ void ResourceManager::TrainSoldier(UNIT_TYPE type)
 		stone -= TWOHANDED_STONE_COST;
 		break;
 	case U_CHAMPION:
+		wood -= TWOHANDED_WOOD_COST;
+		stone -= TWOHANDED_STONE_COST;
 		break;
 	case U_SPEARMAN:
 		break;
@@ -336,16 +346,22 @@ void ResourceManager::TrainSoldier(UNIT_TYPE type)
 	case U_ARCHER:
 		break;
 	case U_ARBALEST:
+		wood -= TWOHANDED_WOOD_COST;
+		stone -= TWOHANDED_STONE_COST;
 		break;
 	case U_CAVALRYARCHER:
 		break;
 	case U_HEAVYCAVALRYARCHER:
+		wood -= TWOHANDED_WOOD_COST;
+		stone -= TWOHANDED_STONE_COST;
 		break;
 	case U_KNIGHT:
 		break;
 	case U_CAVALIER:
 		break;
 	case U_PALADIN:
+		wood -= TWOHANDED_WOOD_COST;
+		stone -= TWOHANDED_STONE_COST;
 		break;
 	case U_SIEGERAM:
 		break;
