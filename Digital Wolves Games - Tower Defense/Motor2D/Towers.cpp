@@ -56,15 +56,15 @@ void Tower::Update()
 	{
 		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 		{
-			UpgradeTurret(FIRE);
+			UpgradeTurret(TE_FIRE);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
 		{
-			UpgradeTurret(ICE);
+			UpgradeTurret(TE_ICE);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 		{
-			UpgradeTurret(AIR);
+			UpgradeTurret(TE_AIR);
 		}
 	
 	}
@@ -224,7 +224,7 @@ TOWER_ELEMENT_TYPE Tower::GetElementFromTower(TOWER_TYPE tower)
 	return TE_NULL;
 }
 
-void Tower::UpgradeTurret(TURRET_UPGRADE type)
+void Tower::UpgradeTurret(TOWER_ELEMENT_TYPE type)
 {
 	SDL_Rect tower_rect;
 	iPoint pivot;
@@ -233,7 +233,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 	{
 		switch (type)
 		{
-		case FIRE:
+		case TE_FIRE:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_FIRE_TOWER);
@@ -243,7 +243,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				tower_type = T_FIRE_TOWER;
 			}
 			break;
-		case ICE:
+		case TE_ICE:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_ICE_TOWER);
@@ -253,7 +253,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				tower_type = T_ICE_TOWER;
 			}
 			break;
-		case AIR:
+		case TE_AIR:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_AIR_TOWER);
@@ -271,7 +271,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 	{
 		switch (type)
 		{
-		case FIRE:
+		case TE_FIRE:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_FIRE_TOWER);
@@ -281,7 +281,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				tower_type = T_BOMBARD_FIRE_TOWER;
 			}
 			break;
-		case ICE:
+		case TE_ICE:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_ICE_TOWER);
@@ -291,7 +291,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				tower_type = T_BOMBARD_ICE_TOWER;
 			}
 			break;
-		case AIR:
+		case TE_AIR:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_AIR_TOWER);
