@@ -73,6 +73,11 @@ void Tower::Update(float dt)
 		AI();
 	}
 
+	Draw();
+}
+
+void Tower::AI()
+{
 	if (Target != nullptr) {
 		if (Target->GetHp() <= 0)
 		{
@@ -80,17 +85,22 @@ void Tower::Update(float dt)
 			attacking = false;
 		}
 	}
-	else	attacking = false;
+	else
+		attacking = false;
 
-	if (attacking == false && IsBuilt() == true && IsAlive() == true)
-		AI();
+	if (Target == nullptr && AttackTimer.ReadSec() >= rate_of_fire && attacking == false && IsBuilt() == true && IsAlive() == true)
+	{
+		Target = App->entity_manager->LookForEnemies(GetRange(), iPoint(GetX(), GetY()));
+		if (Target != nullptr)
+			attacking = true;
+	}
 
 	if (attacking == true && Target != nullptr && AttackTimer.ReadSec() >= rate_of_fire)
-		{
-			App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), projectile_spd, HEIGHT_BASIC_TOWER, 100, projectile_type);
-			App->audio->PlayFx(App->entity_manager->fx_arrow);
-			AttackTimer.Start();
-		}
+	{
+		App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), projectile_spd, HEIGHT_BASIC_TOWER, 100, projectile_type);
+		App->audio->PlayFx(App->entity_manager->fx_arrow);
+		AttackTimer.Start();
+	}
 
 	if (IsAlive() == true && this->GetHp() <= 0)
 	{
@@ -99,19 +109,6 @@ void Tower::Update(float dt)
 	}
 	if (IsAlive() == false && GetDieTime() >= 2)
 		DestroyBuilding();
-	
-	Draw();
-}
-
-void Tower::AI()
-{
-	if (Target == nullptr && AttackTimer.ReadSec() >= rate_of_fire)
-	{
-		iPoint position(GetX(), GetY());
-		Target = App->entity_manager->LookForEnemies(GetRange(), position);
-		if (Target != nullptr)
-			attacking = true;
-	}
 }
 
 void Tower::Draw()

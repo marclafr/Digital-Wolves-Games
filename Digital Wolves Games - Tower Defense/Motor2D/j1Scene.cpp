@@ -650,6 +650,21 @@ void j1Scene::HandleInput( SDL_Event event)
 			placing_wall = false;
 			placing_tower = T_NO_TYPE;
 		}
+
+		if (App->input->GetMouseButtonDown(3) == KEY_DOWN)
+			if (selection[0]->GetEntityType() == E_UNIT)
+			{
+				iPoint objective;
+				App->input->GetMousePosition(objective.x, objective.y);
+				objective.x -= App->render->camera->GetPosition().x;
+				objective.y -= App->render->camera->GetPosition().y;
+
+				for (std::vector<Entity*>::iterator it = selection.begin(); it != selection.end(); ++it)
+				{
+					Unit* unit = (Unit*)(*it);
+					unit->GoTo(objective);
+				}
+			}
 		break;
 
 	case SDL_MOUSEBUTTONUP:

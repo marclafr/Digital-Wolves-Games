@@ -467,17 +467,6 @@ void Unit::AI()
 			break;
 		}
 
-		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED && this->GetSide() == S_ALLY)
-		{
-			iPoint objective;
-			App->input->GetMousePosition(objective.x, objective.y);
-			objective.x -= App->render->camera->GetPosition().x;
-			objective.y -= App->render->camera->GetPosition().y;
-
-			GoTo(objective);
-			break;
-		}
-
 		if (GetSide() == S_ENEMY)
 			GoTo(TOWN_HALL);
 
@@ -503,17 +492,6 @@ void Unit::AI()
 		if (GetHp() <= 0)
 		{
 			UnitDies();
-			break;
-		}
-
-		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED && this->GetSide() == S_ALLY)
-		{
-			iPoint objective;
-			App->input->GetMousePosition(objective.x, objective.y);
-			objective.x -= App->render->camera->GetPosition().x;
-			objective.y -= App->render->camera->GetPosition().y;
-
-			GoTo(objective);
 			break;
 		}
 
@@ -555,17 +533,6 @@ void Unit::AI()
 			break;
 		}
 
-		if (App->input->GetMouseButtonDown(3) == KEY_DOWN && this->GetEntityStatus() == ST_SELECTED && this->GetSide() == S_ALLY)
-		{
-			iPoint objective;
-			App->input->GetMousePosition(objective.x, objective.y);
-			objective.x -= App->render->camera->GetPosition().x;
-			objective.y -= App->render->camera->GetPosition().y;
-
-			GoTo(objective);
-			break;
-		}
-
 		if (attacking != nullptr)
 		{
 			if (animation->Finished())
@@ -586,11 +553,7 @@ void Unit::AI()
 			if (attacking == nullptr)
 			{
 				if (GetSide() == S_ENEMY)
-				{
-					this->action = A_WALK;
 					GoTo(TOWN_HALL);
-					changed = true;
-				}
 				else
 				{
 					this->action = A_IDLE;
