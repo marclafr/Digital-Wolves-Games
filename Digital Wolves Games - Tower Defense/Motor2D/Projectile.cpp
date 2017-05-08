@@ -12,45 +12,48 @@ Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float Tim
 	switch (type)
 	{
 	case P_BASIC_ARROW:
-		//arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
-		SetRect({ 0,0,36,5 });
-		pivot = { 18, 2 };
+		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
+		//SetRect({ 0,0,36,5 });
+		//pivot = { 18, 2 };
 		break;
 	case P_FIRE_ARROW:
-		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_ARROW));
+		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_ARROW));
 		break;
 	case P_ICE_ARROW:
-		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_ARROW));
+		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_ARROW));
 		//pivot = { 18, 7 };
 		break;
 	case P_AIR_ARROW:
-		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_ARROW));
+		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_ARROW));
 		//pivot = { 18, 7 };
 		break;
 	case P_CANNONBALL:
-		//arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
-		SetRect({ 0,54,10,10 }); 
-		pivot = { 5, 5 };
+		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
+		//SetRect({ 0,54,10,10 }); 
+		//pivot = { 5, 5 };
 		break;
 	case P_FIRE_CANNONBALL:
-		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
+		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
 		break; 
 	case P_ICE_CANNONBALL:
-		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_BOMB));
+		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_BOMB));
 		break;
 	case P_AIR_CANNONBALL:
-		arrow_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_BOMB));
+		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_BOMB));
 		break;
 	default:
-		arrow_anim = nullptr;
+		projectile_anim = nullptr;
 		break;
 	}
+
+	//anim_fire_try = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
+	//TODO: anim_ice_floor = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
 }
 
 Projectile::~Projectile()
 {
-	if (arrow_anim != nullptr)
-		delete arrow_anim;
+	if (projectile_anim != nullptr)
+		delete projectile_anim;
 }
 
 void Projectile::Update()
@@ -74,8 +77,6 @@ void Projectile::Update()
 	ProjectilePos += Diferential;
 	if (ProjectilePos > 1) ProjectilePos = 1;
 
-	Draw();
-	
 	if (Target != nullptr && ProjectilePos == 1)
 	{
 		switch (projectile_type)
@@ -92,19 +93,30 @@ void Projectile::Update()
 		case P_AIR_CANNONBALL:
 			Target->Damaged(Damage);
 			AreaDamage(Damage, Target->GetPosition(), AREA_DMG_RADIUS);
+			element_terrain_pos = Target->GetPosition();
+			delete projectile_anim;
+			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
+			dest_reached = true;
+			PrintElementTerrainTimer.Start();
 			break;
 		default:
 			break;
 		}
 	}
 
+	Draw();
 }
 
 void Projectile::Draw()
 {
+	float pett = PrintElementTerrainTimer.ReadMs() / 1000.0f;
+	if (pett < ELEMENT_TERRAIN_TIME && dest_reached == true)
+		PrintElementTerrain(projectile_type, element_terrain_pos);
+	
+
 	//alfa = Math.atan2(by - ay, bx - ax);
-	if (arrow_anim != nullptr)
-		arrow_anim->Update(rect, pivot);
+	if (projectile_anim != nullptr)
+		projectile_anim->Update(rect, pivot);
 	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
 }
 
@@ -123,8 +135,42 @@ void Projectile::SetRect(SDL_Rect rect)
 	this->rect = rect;
 }
 
+AnimationManager * Projectile::GetProjectileAnim()
+{
+	return projectile_anim;
+}
+
 void Projectile::AreaDamage(int damage, fPoint center, int radius)
 {
 	//TODO: Create elipse and check if any unit is inside, if so, damage them.
 
+}
+
+void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)
+{
+	SDL_Rect rect;
+	iPoint pivot;
+	projectile_anim->Update(rect, pivot);
+	switch (element)
+	{
+	//TODO: REMOVE CANNONBALL
+	case P_CANNONBALL:
+	case P_FIRE_CANNONBALL:
+		App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+		break;
+	case P_ICE_CANNONBALL:
+		//App->render->PushInGameSprite(App->tex->GetTexture(T_ICE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+		break;
+	}
+	/*
+	for (int i = 0; i < 3; i++)
+	{
+	int rand_distance = rand() % radius;
+	float rand_angle = rand() % 360;
+	rand_angle *= 3.14f / 360;
+	int X = rand_distance*sin(rand_angle);
+	int Y = rand_distance*cos(rand_angle);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE), center.x + X, center.y + Y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+	}
+	*/
 }

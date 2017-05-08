@@ -1,6 +1,8 @@
 #include "ProjectileManager.h"
 #include "Projectile.h"
 #include "p2Defs.h"
+#include "j1Animation.h"
+
 bool ProjectileManager::Start()
 {
 	return true;
@@ -21,7 +23,7 @@ bool ProjectileManager::PostUpdate()
 	int size = projectile_vector.size();
 	for (int i = 0; i < size; i++)
 	{
-		if (projectile_vector[i]->GetProjectilePos() == 1)
+		if (projectile_vector[i]->GetProjectilePos() == 1 && projectile_vector[i]->GetProjectileAnim()->Finished() == true)
 			DeleteProjectile(projectile_vector[i]);
 	}
 	return true;
