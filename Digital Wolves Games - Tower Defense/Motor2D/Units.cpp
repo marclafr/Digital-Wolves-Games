@@ -339,9 +339,15 @@ Unit::~Unit()
 		delete animation;
 }
 
-void Unit::Update()
+void Unit::Update(float dt)
 {
-	AI();
+	DT(dt);
+
+	if (GetAIDT() >= dt * 3)
+	{
+		ResetDT();
+		AI();
+	}
 
 	if (changed == true)
 	{

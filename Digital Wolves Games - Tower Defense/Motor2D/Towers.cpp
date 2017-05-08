@@ -47,7 +47,7 @@ Tower::~Tower()
 {
 }
 
-void Tower::Update()
+void Tower::Update(float dt)
 {
 	if(GetEntityStatus() == ST_SELECTED)
 	{
@@ -63,11 +63,19 @@ void Tower::Update()
 		{
 			UpgradeTurret(TU_AIR);
 		}
-	
+	}
+
+	DT(dt);
+
+	if (GetAIDT() >= dt * 3)
+	{
+		ResetDT();
+		AI();
 	}
 
 	if (Target != nullptr) {
-		if (Target->GetHp() <= 0) {
+		if (Target->GetHp() <= 0)
+		{
 			Target = nullptr;
 			attacking = false;
 		}

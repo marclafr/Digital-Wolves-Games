@@ -39,7 +39,7 @@ public:
 	Building(BUILDING_TYPE b_type, fPoint pos, Side side);
 	~Building();
 
-	virtual void Update(); // defines order
+	virtual void Update(float dt); // defines order
 	virtual void AI();
 	virtual void Draw();
 	const BUILDING_TYPE GetBuildingType() const;

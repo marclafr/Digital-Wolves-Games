@@ -10,9 +10,6 @@
 #include "j1Pathfinding.h"
 #include "j1Scene.h"
 
-
-
-
 Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos, S_ALLY), resource_type(r_type)
 {
 	SDL_Rect rect;
@@ -96,7 +93,7 @@ Resources::~Resources()
 {
 }
 
-void Resources::Update()
+void Resources::Update(float dt)
 {
 	if (GetHp() <= 0) 
 	{

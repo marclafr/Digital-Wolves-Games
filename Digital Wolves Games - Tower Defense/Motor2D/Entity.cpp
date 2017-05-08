@@ -14,6 +14,16 @@ void Entity::Die()
 	to_delete = true;
 }
 
+void Entity::DT(float dt)
+{
+	ai_dt += dt;
+}
+
+void Entity::ResetDT()
+{
+	ai_dt = 0.0f;
+}
+
 bool Entity::ToDelete() const
 {
 	return to_delete;
@@ -117,6 +127,11 @@ const TextureID Entity::GetTextureID() const
 const Side Entity::GetSide() const
 {
 	return side;
+}
+
+const float Entity::GetAIDT() const
+{
+	return ai_dt;
 }
 
 void Entity::SetArmor(int new_armor)
