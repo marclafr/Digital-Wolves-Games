@@ -37,8 +37,11 @@ class j1ScoreScene;
 struct DebugFeatures
 {
 public:
-	DebugFeatures() : debug_mode(false), print_walkability_map(false), add_wood(false), add_stone(false){}
+	DebugFeatures() : debug_mode(false), print_walkability_map(false), add_wood(false), add_stone(false), add_food(false), add_gold(false), pf(false)
+	{}
 	~DebugFeatures(){}
+
+	void UpdateDebug();
 
 public:
 	bool debug_mode;
@@ -47,6 +50,7 @@ public:
 	bool add_wood;
 	bool add_stone;
 	bool add_gold;
+	bool pf;
 };
 
 class j1App
@@ -124,7 +128,7 @@ public:
 	j1Animation*		anim = nullptr;
 	j1UIManager*		uimanager = nullptr;
 	j1EntityManager*    entity_manager = nullptr;
-	ProjectileManager*   projectile_manager = nullptr;
+	ProjectileManager*  projectile_manager = nullptr;
 	j1Collision*		collision = nullptr;
 	j1SceneManager*		scene_manager = nullptr;
 	j1WaveManager*		wave_manager = nullptr;

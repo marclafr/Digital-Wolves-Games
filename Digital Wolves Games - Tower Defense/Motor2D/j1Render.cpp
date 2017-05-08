@@ -74,6 +74,8 @@ bool j1Render::PreUpdate()
 
 bool j1Render::PostUpdate()
 {
+	camera->UpdateTransitions();
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 	return true;

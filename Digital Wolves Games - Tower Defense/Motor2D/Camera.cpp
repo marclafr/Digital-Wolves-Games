@@ -1,13 +1,13 @@
 
 #include "j1App.h"
-
+#include "j1Input.h"
 #include "j1Render.h"
 #include "j1Map.h"
 #include "Camera.h"
 #include "p2Log.h"
 
 
-Camera::Camera(Camera & copy) : moving(false), destination(iPoint(0,0)), speed(0), x_movement(0), y_movement(0), zoom(0.0f), opacity(255), frames_to_black(0), frames_in_black(0), frames_to_light(0), opacity_delta(0)
+Camera::Camera(Camera & copy) : moving(false), destination(iPoint(0,0)), speed(0), x_movement(0), y_movement(0), zoom(0.0f), transitioning(false), alpha(0), wait(0), alpha_delta(0)
 {
 	view_port.x = copy.view_port.x;
 	view_port.y = copy.view_port.y;
@@ -15,7 +15,7 @@ Camera::Camera(Camera & copy) : moving(false), destination(iPoint(0,0)), speed(0
 	view_port.h = copy.view_port.h;
 }
 
-Camera::Camera(SDL_Rect & rect) : moving (false), destination(iPoint(0, 0)), speed(0), x_movement(0), y_movement(0), zoom(0.0f), opacity(255), frames_to_black(0), frames_in_black(0), frames_to_light(0), opacity_delta(0)
+Camera::Camera(SDL_Rect & rect) : moving(false), destination(iPoint(0, 0)), speed(0), x_movement(0), y_movement(0), zoom(0.0f), transitioning(false), alpha(0), wait(0), alpha_delta(0)
 {
 	view_port.x = rect.x;
 	view_port.y = rect.y;
@@ -60,9 +60,24 @@ const iPoint Camera::GetCenter() const
 	return iPoint((view_port.x + view_port.w / 2), (view_port.y + view_port.h / 2));
 }
 
-const float Camera::GetOpacity() const
+const float Camera::GetAlpha() const
 {
-	return opacity;
+	return alpha;
+}
+
+void Camera::KeyboardMove(float dt)
+{
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		App->render->camera->MoveUp(floor(450.0f * dt));
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		App->render->camera->MoveDown(floor(450.0f * dt));
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		App->render->camera->MoveLeft(floor(450.0f * dt));
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		App->render->camera->MoveRight(floor(450.0f * dt));
 }
 
 void Camera::MouseMove(int x, int y, float dt)
@@ -165,12 +180,19 @@ SDL_Rect Camera::GetZoomedRect(const SDL_Rect &starting_rect) const
 	return rect;
 }
 
-void Camera::FadeToBlack(float secs_to_black, int wait, int secs_to_light)
+void Camera::FadeToBlack(float secs_to_black, int wait_secs)
 {
-	frames_to_black = secs_to_black * FPS;
-	frames_in_black = wait * FPS;
-	frames_to_light = secs_to_light * FPS;
-	opacity_delta = 255 / frames_to_black;
+	alpha = 0;
+	wait = wait_secs * FPS;
+	alpha_delta = 255 / (secs_to_black * FPS);
+	transitioning = true;
+}
+
+void Camera::FadeToLight(float secs_to_light)
+{
+	alpha = 255;
+	alpha_delta = 255 / (secs_to_light * FPS);
+	transitioning = true;
 }
 
 void Camera::UpdateCamera()
@@ -228,20 +250,41 @@ void Camera::UpdateCamera()
 			}
 		}
 	}
+}
 
-	if (frames_to_black > 0)
+void Camera::UpdateTransitions()
+{
+	if (transitioning == true)
 	{
-		frames_to_black--;
-		opacity -= opacity_delta;
-		if (frames_to_black == 0)
-			opacity_delta = 255 / frames_to_light;
-	}
-	else if (frames_in_black > 0)
-		frames_in_black--;
-	else if (frames_to_light > 0)
-	{
-		opacity += opacity_delta;
-		frames_to_light--;
-	}
+		if (alpha < 255)
+		{
+			alpha += alpha_delta;
+			if (alpha >= 255 && wait == 0)
+			{
+				transitioning = false;
+				alpha = 255;
+			}
+		}
 
+		if (alpha == 255 && wait != 0)
+		{
+			wait--;
+			if (wait == 0)
+				transitioning = false;
+		}
+
+		if (alpha > 0)
+		{
+			alpha -= alpha_delta;
+			if (alpha <= 0)
+			{
+				transitioning = false;
+				alpha = 0;
+			}
+		}
+
+		SDL_RenderDrawRect(App->render->renderer, nullptr);
+		SDL_SetRenderDrawColor(App->render->renderer, 0, 0, 0, alpha);
+		SDL_RenderFillRect(App->render->renderer, nullptr);
+	}
 }

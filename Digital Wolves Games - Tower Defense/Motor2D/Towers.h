@@ -44,7 +44,7 @@ public:
 	iPoint arrowpos;
 	Tower(TOWER_TYPE t_type, fPoint pos);
 	~Tower();
-	void UpgradeTurret(TURRET_UPGRADE type);
+	void UpgradeTurret(TOWER_ELEMENT_TYPE type);
 	void Update(); // defines order
 	void AI();
 	void Draw();

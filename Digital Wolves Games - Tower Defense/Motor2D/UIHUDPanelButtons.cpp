@@ -197,7 +197,11 @@ void UIHUDPanelButtons::CreatePanel()
 		break;
 	case BP_TURRET:
 		for (ib_item = panel_turret.begin(); ib_item != panel_turret.end(); ++ib_item)
+		{
 			(*ib_item)->CreateButton();
+			UpgradeTowerTask* upgrade_task = (UpgradeTowerTask*)(*ib_item)->GetTask();
+			upgrade_task->SetTower((Tower*)b_selected);
+		}
 		break;
 	case BP_CANNON:
 		for (ib_item = panel_cannon.begin(); ib_item != panel_cannon.end(); ++ib_item)

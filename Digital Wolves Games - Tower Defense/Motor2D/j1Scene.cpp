@@ -59,7 +59,7 @@ bool j1Scene::Start()
 	App->collision->Enable();
 	App->entity_manager->Enable();
 	App->projectile_manager->Enable();
-	App->wave_manager->Enable();
+	App->wave_manager->Enable();//TODO put after tutorial 
 	App->investigations->Enable();
 	App->score->Enable();
 
@@ -78,8 +78,6 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data2);
 		RELEASE_ARRAY(data);
 	}
-
-	debug_tex = App->tex->Load("maps/path2.png", T_MAP);
 
 	CreateSceneUI();
 	//ENTITIES
@@ -115,19 +113,9 @@ bool j1Scene::Update(float dt)
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
 
-	//TEST INVESTIGATIONS
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_WOOD));
-
-	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
-		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_STONE));
-
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_CAVALRY_ATTACK));
-
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)
-		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_CAVALRY_DEFENSE));
-	//--
+	//Test fade to black
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+		App->render->camera->FadeToBlack(3, 2);
 
 	//CREATE UNITS
 	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
@@ -137,51 +125,6 @@ bool j1Scene::Update(float dt)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);	
 	//--
 
-	//DEBUG: increase resources
-	if (App->debug_features.add_food)
-	{
-		resources->AddFood(1000);
-		App->debug_features.add_food = false;
-	}
-	if (App->debug_features.add_wood)
-	{
-		resources->AddWood(1000);
-		App->debug_features.add_wood = false;
-	}
-	
-	if (App->debug_features.add_stone)
-	{
-		resources->AddStone(1000);
-		App->debug_features.add_stone = false;
-	}
-
-	if (App->debug_features.add_gold)
-	{
-		resources->AddGold(1000);
-		App->debug_features.add_gold = false;
-	}
-	//--
-
-	//App->map->Draw();
-
-	// Debug pathfinding ------------------------------
-
-	iPoint p = App->render->ScreenToWorld(x, y);
-	iPoint r = App->map->WorldToMap(p.x, p.y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-
-	iPoint pos;
-
-	for(std::vector<iPoint>::const_iterator item = App->pathfinding->GetLastPath().begin();
-		item != App->pathfinding->GetLastPath().end();
-		++item)
-	{
-		pos = App->map->MapToWorld(item->x, item->y);
-		App->render->PushInGameSprite(debug_tex, pos.x - 32, pos.y - 32);
-	}
-	//--
-
 	if (placing_tower == T_BASIC_TOWER)
 		PlacingTower(T_BASIC_TOWER);
 	if (placing_tower == T_BOMBARD_TOWER)
@@ -189,35 +132,28 @@ bool j1Scene::Update(float dt)
 	if (placing_wall == true)
 		PlacingWall();
 
-	App->render->BlitGameScene();
-
 	//SELECTION
-	if (selecting)
-	{
-		select_rect.w = x - App->render->camera->GetPosition().x;
-		select_rect.h = y - App->render->camera->GetPosition().y;
-		App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
-
+	if(selecting)
 		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
 		{
 			App->entity_manager->SelectInQuad(select_rect, selection);
 			selecting = false;
 		}
+
+	App->debug_features.UpdateDebug();
+
+	App->render->BlitGameScene();
+
+	//Selection quad
+	if (selecting)
+	{
+		select_rect.w = x - App->render->camera->GetPosition().x;
+		select_rect.h = y - App->render->camera->GetPosition().y;
+		App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
 	}
 
 	// Camera Movement (has to go after blit so that sprites print in the right camera position)
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		App->render->camera->MoveUp(floor(450.0f * dt));
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		App->render->camera->MoveDown(floor(450.0f * dt));
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		App->render->camera->MoveLeft(floor(450.0f * dt));
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-		App->render->camera->MoveRight(floor(450.0f * dt));
-
+	App->render->camera->KeyboardMove(dt);
 	App->render->camera->MouseMove(x, y, dt);
 
 	return true;
@@ -795,9 +731,9 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TOWNHALL, iPoint(2, 0), GetBuildingIconPositionFromAtlas(B_WOOD_WALL), new PlaceWallTask());
 	
 		//Turrets
-	panel->AddButton(BP_TURRET, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_FIRE_TOWER), new UpgradeFireTurretTask());
-	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeIceTurretTask());
-	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeAirTurretTask());
+	panel->AddButton(BP_TURRET, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_FIRE_TOWER), new UpgradeTowerTask(TE_FIRE));
+	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(TE_ICE));
+	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeTowerTask(TE_AIR));
 	
 	//Units
 	panel->AddButton(BP_TOWNHALL, iPoint(0, 1), GetUnitIconPositionFromAtlas(U_CHAMPION), new TrainUnitTask(U_CHAMPION));
