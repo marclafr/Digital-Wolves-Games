@@ -65,15 +65,15 @@ const float Camera::GetOpacity() const
 	return opacity;
 }
 
-void Camera::MouseMove(int x, int y, float dt, SDL_Rect rect)
+void Camera::MouseMove(int x, int y, float dt)
 {
-	if (x  > rect.x && x < (rect.x + MARGIN))
+	if (x < MARGIN)
 		MoveLeft(450.0f * dt);
-	if (y > rect.y && y < (rect.y + MARGIN))
+	if (y < MARGIN)
 		MoveUp(450.0f * dt);
-	if (x < rect.x + rect.w && x > rect.w - MARGIN)
+	if (x > view_port.w - MARGIN)
 		MoveRight(450.0f * dt);
-	if (y < rect.y + rect.h && y > rect.h - MARGIN)
+	if (y > view_port.h - MARGIN)
 		MoveDown(450.0f * dt);
 }
 

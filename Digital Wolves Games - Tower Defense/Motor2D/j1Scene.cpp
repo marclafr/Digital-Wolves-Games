@@ -218,10 +218,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		App->render->camera->MoveRight(floor(450.0f * dt));
 
-
-	SDL_Rect rect_ingame = RECT_INGAME_WITHOUT_UI;
-
-	App->render->camera->MouseMove(x, y, dt, rect_ingame);
+	App->render->camera->MouseMove(x, y, dt);
 
 	return true;
 }

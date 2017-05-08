@@ -14,7 +14,7 @@
 #define CAMERA_LIMIT_LEFT 3602
 #define CAMERA_LIMIT_RIGHT -2142
 
-#define MARGIN 100
+#define MARGIN 25
 
 
 class Camera
@@ -47,7 +47,7 @@ public:
 	const iPoint GetCenter() const;
 	const float GetOpacity() const;
 
-	void MouseMove(int x, int y, float dt, SDL_Rect rect);
+	void MouseMove(int x, int y, float dt);
 	
 	bool InsideRenderTarget(int x, int y);
 
