@@ -10,9 +10,6 @@
 
 Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
-	anim_fire_try = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
-	//TODO: anim_ice_floor = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
-
 	switch (t_type)
 	{
 	case T_BASIC_TOWER:
@@ -56,15 +53,15 @@ void Tower::Update(float dt)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 		{
-			UpgradeTurret(TE_FIRE);
+			UpgradeTurret(TU_FIRE);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
 		{
-			UpgradeTurret(TE_ICE);
+			UpgradeTurret(TU_ICE);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 		{
-			UpgradeTurret(TE_AIR);
+			UpgradeTurret(TU_AIR);
 		}
 	}
 
@@ -93,8 +90,6 @@ void Tower::Update(float dt)
 			App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), projectile_spd, HEIGHT_BASIC_TOWER, 100, projectile_type);
 			App->audio->PlayFx(App->entity_manager->fx_arrow);
 			AttackTimer.Start();
-			element_terrain_pos = Target->GetPosition();
-			PrintElementTerrainTimer.Start();
 		}
 
 	if (IsAlive() == true && this->GetHp() <= 0)
@@ -121,10 +116,6 @@ void Tower::AI()
 
 void Tower::Draw()
 {
-	if (PrintElementTerrainTimer.ReadSec() <= ELEMENT_TERRAIN_TIME)
-		PrintElementTerrain(GetElementFromTower(tower_type), element_terrain_pos, 100);
-	
-
 	if (IsBuilt())
 		App->render->PushInGameSprite(this);
 
@@ -185,54 +176,7 @@ const int Tower::GetRange() const
 	return range;
 }
 
-
-void Tower::PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int radius)
-{
-	SDL_Rect rect;
-	iPoint pivot;
-	anim_fire_try->Update(rect, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
-
-/*
-	for (int i = 0; i < 3; i++)
-	{
-		int rand_distance = rand() % radius;
-		float rand_angle = rand() % 360;
-		rand_angle *= 3.14f / 360;
-		int X = rand_distance*sin(rand_angle);
-		int Y = rand_distance*cos(rand_angle);
-		App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE), center.x + X, center.y + Y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
-	}
-*/
-}
-
-TOWER_ELEMENT_TYPE Tower::GetElementFromTower(TOWER_TYPE tower)
-{
-	switch (tower)
-	{
-	case T_BASIC_TOWER:
-	case T_BOMBARD_TOWER:
-		return TE_NO_ELEMENT;
-		break;
-	case T_FIRE_TOWER:
-	case T_BOMBARD_FIRE_TOWER:
-		return TE_FIRE;
-		break;
-	case T_ICE_TOWER:
-	case T_BOMBARD_ICE_TOWER:
-		return TE_ICE;
-		break;
-	case T_AIR_TOWER:
-	case T_BOMBARD_AIR_TOWER:
-		return TE_AIR;
-		break;
-	default:
-		break;
-	}
-	return TE_NULL;
-}
-
-void Tower::UpgradeTurret(TOWER_ELEMENT_TYPE type)
+void Tower::UpgradeTurret(TURRET_UPGRADE type)
 {
 	SDL_Rect tower_rect;
 	iPoint pivot;
@@ -241,7 +185,7 @@ void Tower::UpgradeTurret(TOWER_ELEMENT_TYPE type)
 	{
 		switch (type)
 		{
-		case TE_FIRE:
+		case TU_FIRE:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_FIRE_TOWER);
@@ -251,7 +195,7 @@ void Tower::UpgradeTurret(TOWER_ELEMENT_TYPE type)
 				tower_type = T_FIRE_TOWER;
 			}
 			break;
-		case TE_ICE:
+		case TU_ICE:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_ICE_TOWER);
@@ -261,7 +205,7 @@ void Tower::UpgradeTurret(TOWER_ELEMENT_TYPE type)
 				tower_type = T_ICE_TOWER;
 			}
 			break;
-		case TE_AIR:
+		case TU_AIR:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_AIR_TOWER);
@@ -279,7 +223,7 @@ void Tower::UpgradeTurret(TOWER_ELEMENT_TYPE type)
 	{
 		switch (type)
 		{
-		case TE_FIRE:
+		case TU_FIRE:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_FIRE_TOWER);
@@ -289,7 +233,7 @@ void Tower::UpgradeTurret(TOWER_ELEMENT_TYPE type)
 				tower_type = T_BOMBARD_FIRE_TOWER;
 			}
 			break;
-		case TE_ICE:
+		case TU_ICE:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_ICE_TOWER);
@@ -299,7 +243,7 @@ void Tower::UpgradeTurret(TOWER_ELEMENT_TYPE type)
 				tower_type = T_BOMBARD_ICE_TOWER;
 			}
 			break;
-		case TE_AIR:
+		case TU_AIR:
 			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
 			{
 				App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_AIR_TOWER);

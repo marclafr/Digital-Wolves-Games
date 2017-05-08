@@ -5,7 +5,6 @@
 #include "j1Timer.h"
 #include "Projectile.h"
 #define HEIGHT_BASIC_TOWER 146
-#define ELEMENT_TERRAIN_TIME 3
 class AnimationManager;
 
 enum TOWER_TYPE
@@ -21,13 +20,12 @@ enum TOWER_TYPE
 	T_BOMBARD_AIR_TOWER
 };
 
-enum TOWER_ELEMENT_TYPE
+enum TURRET_UPGRADE
 {
-	TE_NULL = 0,
-	TE_NO_ELEMENT,
-	TE_FIRE,
-	TE_ICE,
-	TE_AIR
+	TU_NULL = 0,
+	TU_FIRE,
+	TU_ICE,
+	TU_AIR
 };
 
 class Tower : public Building
@@ -41,20 +39,14 @@ private:
 	float range;
 	j1Timer AttackTimer;
 	Entity* Target = nullptr;
-	j1Timer PrintElementTerrainTimer;
-	fPoint element_terrain_pos;
 	AnimationManager* anim_fire = nullptr;
-	AnimationManager* anim_ice_floor = nullptr;
-	AnimationManager* anim_fire_try = nullptr;
-	void PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int radius);
-	TOWER_ELEMENT_TYPE GetElementFromTower(TOWER_TYPE tower);
 
 public:
 	iPoint arrowpos;
 	Tower(TOWER_TYPE t_type, fPoint pos);
 	~Tower();
-	void UpgradeTurret(TOWER_ELEMENT_TYPE type);
-	void Update(float dt); // defines order
+	void UpgradeTurret(TURRET_UPGRADE type);
+	void Update(); // defines order
 	void AI();
 	void Draw();
 	bool attacking = false;

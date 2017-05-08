@@ -2,6 +2,7 @@
 #define _PROJECTILE
 
 #define AREA_DMG_RADIUS 30
+#define ELEMENT_TERRAIN_TIME 1.0f
 
 #include "j1App.h"
 #include "j1Module.h"
@@ -10,6 +11,7 @@
 #include "Entity.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "j1PerfTimer.h"
 
 class AnimationManager;
 
@@ -42,9 +44,17 @@ private:
 	int angle = 0;
 	int StartHeight;
 	int CurveHeight;
-	AnimationManager* arrow_anim = nullptr;
+	AnimationManager* projectile_anim = nullptr;
 
 	void AreaDamage(int damage, fPoint center, int radius);
+
+	AnimationManager* anim_ice_floor = nullptr;
+	AnimationManager* anim_fire_try = nullptr;
+	j1PerfTimer PrintElementTerrainTimer;
+	bool dest_reached = false;
+	fPoint element_terrain_pos;
+	void PrintElementTerrain(PROJECTILE_TYPE element, fPoint center);
+
 public:
 
 	Projectile(fPoint initialpos, Entity* target, int damage, float TimeInSecs,int Startheight, int Curveheight, PROJECTILE_TYPE type);
@@ -56,6 +66,7 @@ public:
 	int GetProjectilePos() const;
 	int GetDamage() const;
 	void SetRect(SDL_Rect rect);
+	AnimationManager* GetProjectileAnim();
 };
 
 #endif

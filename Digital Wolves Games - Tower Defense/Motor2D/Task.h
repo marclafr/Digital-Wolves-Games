@@ -181,10 +181,10 @@ class UpgradeTowerTask : public Task
 {
 private:
 	Tower* tower = nullptr;
-	TOWER_ELEMENT_TYPE type = TE_NULL;
+	TURRET_UPGRADE type = TU_NULL;
 
 public:
-	UpgradeTowerTask(TOWER_ELEMENT_TYPE type) : type(type) {}
+	UpgradeTowerTask(TURRET_UPGRADE type) : type(type) {}
 
 	void SetTower(Tower* tower)
 	{
