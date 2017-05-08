@@ -130,6 +130,7 @@ public:
 	bool GetPath(iPoint dest);
 	const int GetAttack() const;
 	const int GetRange() const;
+	const Circle GetUnitCircle() const;
 	const int GetVisionRange() const;
 	const bool IsMoving() const;
 

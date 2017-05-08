@@ -30,6 +30,13 @@ enum TOWER_ELEMENT_TYPE
 	TE_AIR
 };
 
+enum TURRET_UPGRADE
+{
+	FIRE,
+	ICE,
+	AIR
+};
+
 class Tower : public Building
 {
 private:
@@ -45,6 +52,7 @@ private:
 	fPoint element_terrain_pos;
 	AnimationManager* anim_fire = nullptr;
 	AnimationManager* anim_ice_floor = nullptr;
+	AnimationManager* anim_fire_try = nullptr;
 	void PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int radius);
 	TOWER_ELEMENT_TYPE GetElementFromTower(TOWER_TYPE tower);
 
@@ -52,14 +60,13 @@ public:
 	iPoint arrowpos;
 	Tower(TOWER_TYPE t_type, fPoint pos);
 	~Tower();
-
+	void UpgradeTurret(TURRET_UPGRADE type);
 	void Update(); // defines order
 	void AI();
 	void Draw();
 	bool attacking = false;
 	const TOWER_TYPE GetTowerType() const;
 	const int GetRange() const;
-	void UpgradeTurret();
 };
 
 #endif //__TOWERS_

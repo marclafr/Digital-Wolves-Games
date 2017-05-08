@@ -6,10 +6,11 @@
 #include "j1EntityManager.h"
 #include "ProjectileManager.h"
 #include "j1Animation.h"
+#include "j1Input.h"
 
 Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
-	anim_fire = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
+	anim_fire_try = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
 	//TODO: anim_ice_floor = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
 
 	switch (t_type)
@@ -51,6 +52,22 @@ Tower::~Tower()
 
 void Tower::Update()
 {
+	if(GetEntityStatus() == ST_SELECTED)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+		{
+			UpgradeTurret(FIRE);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		{
+			UpgradeTurret(ICE);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+		{
+			UpgradeTurret(AIR);
+		}
+	
+	}
 
 	if (Target != nullptr) {
 		if (Target->GetHp() <= 0) {
@@ -160,36 +177,13 @@ const int Tower::GetRange() const
 	return range;
 }
 
-void Tower::UpgradeTurret()
-{
-	/*SDL_Rect rect;
-	switch (this->lvl)
-	{
-	case INV_LVL_1:
-		rect = { 110,284,104,253 };
-		SetRect(rect);
-		this->SetAttack(200);
-		SetPivot(0.519231 * 104, 0.905138 * 253);
-		lvl = INV_LVL_2;
-		break;
-	case INV_LVL_2:
-		rect = { 216,284,119,226 };
-		SetRect(rect);
-		SetPivot(0.504202 * 119, 0.893805 * 226);
-		lvl = INV_LVL_3;
-		break;
-	case INV_LVL_3:
-		//maxlvl¿?¿?¿?
-		break;
-	}*/
-}
 
 void Tower::PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int radius)
 {
 	SDL_Rect rect;
 	iPoint pivot;
-	anim_fire->Update(rect, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+	anim_fire_try->Update(rect, pivot);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 
 /*
 	for (int i = 0; i < 3; i++)
@@ -228,4 +222,87 @@ TOWER_ELEMENT_TYPE Tower::GetElementFromTower(TOWER_TYPE tower)
 		break;
 	}
 	return TE_NULL;
+}
+
+void Tower::UpgradeTurret(TURRET_UPGRADE type)
+{
+	SDL_Rect tower_rect;
+	iPoint pivot;
+	SDL_Texture* text;
+	if (GetTowerType() == T_BASIC_TOWER)
+	{
+		switch (type)
+		{
+		case FIRE:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
+			{
+				App->tex->GetTowerTexture(text, tower_rect, pivot, T_FIRE_TOWER);
+				SetRect(tower_rect);
+				SetPivot(pivot.x, pivot.y);
+				projectile_type = P_FIRE_ARROW;
+				tower_type = T_FIRE_TOWER;
+			}
+			break;
+		case ICE:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
+			{
+				App->tex->GetTowerTexture(text, tower_rect, pivot, T_ICE_TOWER);
+				SetRect(tower_rect);
+				SetPivot(pivot.x, pivot.y);
+				projectile_type = P_ICE_ARROW;
+				tower_type = T_ICE_TOWER;
+			}
+			break;
+		case AIR:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
+			{
+				App->tex->GetTowerTexture(text, tower_rect, pivot, T_AIR_TOWER);
+				SetRect(tower_rect);
+				SetPivot(pivot.x, pivot.y);
+				projectile_type = P_AIR_ARROW;
+				tower_type = T_AIR_TOWER;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+	else if (GetTowerType() == T_BOMBARD_TOWER)
+	{
+		switch (type)
+		{
+		case FIRE:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
+			{
+				App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_FIRE_TOWER);
+				SetRect(tower_rect);
+				SetPivot(pivot.x, pivot.y);
+				projectile_type = P_FIRE_CANNONBALL;
+				tower_type = T_BOMBARD_FIRE_TOWER;
+			}
+			break;
+		case ICE:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
+			{
+				App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_ICE_TOWER);
+				SetRect(tower_rect);
+				SetPivot(pivot.x, pivot.y);
+				projectile_type = P_ICE_CANNONBALL;
+				tower_type = T_BOMBARD_ICE_TOWER;
+			}
+			break;
+		case AIR:
+			if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_LOCKED)
+			{
+				App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_AIR_TOWER);
+				SetRect(tower_rect);
+				SetPivot(pivot.x, pivot.y);
+				projectile_type = P_AIR_CANNONBALL;
+				tower_type = T_BOMBARD_AIR_TOWER;
+			}
+			break;
+		default:
+			break;
+		}
+	}
 }

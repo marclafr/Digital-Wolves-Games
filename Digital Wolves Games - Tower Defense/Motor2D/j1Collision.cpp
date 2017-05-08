@@ -21,7 +21,7 @@ bool j1Collision::Update(float dt)
 			
 			//Check colisions between units
 			for (int j = 0; j < App->entity_manager->entity_array.size(); j++)
-				if (App->entity_manager->entity_array[i] != App->entity_manager->entity_array[j])
+				if (App->entity_manager->entity_array[i] != App->entity_manager->entity_array[j] && App->entity_manager->entity_array[j]->GetEntityType() == E_UNIT)
 					if (DoUnitsIntersect((Unit*)App->entity_manager->entity_array[i], (Unit*)App->entity_manager->entity_array[j]) == true)
 					{
 						//Collision detected
@@ -46,10 +46,10 @@ bool j1Collision::AbleToBuild(iPoint pos)
 
 bool j1Collision::DoUnitsIntersect(Unit* unit1, Unit* unit2)
 {
-	float distance_x = unit1->GetX() - unit2->GetX();
-	float distance_y = unit1->GetY() - unit2->GetY();
-	return (sqrt(distance_x * distance_x + distance_y * distance_y) < unit1->GetUnitRadius() + unit2->GetUnitRadius());
-	//return unit1->unit_circle.Intersects(&unit2->unit_circle);
+	//float distance_x = unit1->GetX() - unit2->GetX();
+	//float distance_y = unit1->GetY() - unit2->GetY();
+	//return (sqrt(distance_x * distance_x + distance_y * distance_y) < unit1->GetUnitRadius() + unit2->GetUnitRadius());
+	return unit1->GetUnitCircle().Overlap(&unit2->GetUnitCircle());
 }
 
 iPoint j1Collision::FindClosestWalkable(Unit* unit)
