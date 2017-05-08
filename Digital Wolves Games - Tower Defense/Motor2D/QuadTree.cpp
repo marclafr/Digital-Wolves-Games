@@ -79,7 +79,7 @@ void QuadTreeNode::PushToCorrectChild(Entity * entity)
 {
 	for (int i = 0; i < 4; i++)
 		if (childs[i]->Inside(entity))
-			AddEntity(entity);
+			childs[i]->AddEntity(entity);
 }
 
 void QuadTreeNode::SubDivide(Entity * entity)
