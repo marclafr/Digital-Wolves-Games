@@ -50,7 +50,7 @@ public:
 	~j1PathFinding();
 
 	//Awake
-	bool Awake();
+	bool Start();
 
 	// Called before quitting
 	bool CleanUp();

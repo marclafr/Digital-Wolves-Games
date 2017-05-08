@@ -18,7 +18,7 @@ j1PathFinding::~j1PathFinding()
 	RELEASE_ARRAY(map);
 }
 
-bool j1PathFinding::Awake()
+bool j1PathFinding::Start()
 {
 	debug_tex = App->tex->Load("maps/path2.png", T_MAP);
 	return true;
@@ -829,7 +829,7 @@ void j1PathFinding::Debug()
 		++item)
 	{
 		pos = App->map->MapToWorld(item->x, item->y);
-		App->render->PushInGameSprite(debug_tex, pos.x - 32, pos.y - 32);
+		App->render->PushInGameSprite(debug_tex, pos.x, pos.y);
 	}
 }
 
