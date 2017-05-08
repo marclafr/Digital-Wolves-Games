@@ -1,9 +1,10 @@
 #ifndef _UNITS
 #define _UNITS
 
+#include <vector>
 #include "Entity.h"
 #include "j1Timer.h"
-#include <vector>
+#include "IsoPrimitives.h"
 
 #define XY_TILES_RELATION 2
 #define TOWN_HALL iPoint(-720,672) //TODO final townhall destination;, 
@@ -87,11 +88,11 @@ private:
 	int vision_range;
 	float speed;
 	float rate_of_fire;
-	int unit_radius;
 	iPoint destination;
 	iPoint path_objective;
 	fPoint move_vector;
 	float angle;
+	Circle unit_circle;
 	UNIT_CLASS unit_class;
 	int rand_num;
 	AnimationManager* animation;
@@ -137,7 +138,6 @@ public:
 
 	//TODO:this should be private?
 	bool GetNextTile();
-
 
 	void LookAt(iPoint pos);
 	bool GoTo(iPoint destination);

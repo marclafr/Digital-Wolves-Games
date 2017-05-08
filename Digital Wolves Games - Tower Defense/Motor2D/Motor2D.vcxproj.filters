@@ -22,9 +22,6 @@
     <ClCompile Include="j1Textures.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="p2Log.cpp">
-      <Filter>Usefull</Filter>
-    </ClCompile>
     <ClCompile Include="j1Scene.cpp">
       <Filter>Awsome_Game\Scenes</Filter>
     </ClCompile>
@@ -157,6 +154,12 @@
     <ClCompile Include="QuadTree.cpp">
       <Filter>Awsome_Game\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="p2Log.cpp">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="IsoPrimitives.cpp">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -179,15 +182,6 @@
     </ClInclude>
     <ClInclude Include="j1Textures.h">
       <Filter>Awsome_Game\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Defs.h">
-      <Filter>Usefull</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Log.h">
-      <Filter>Usefull</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Point.h">
-      <Filter>Usefull</Filter>
     </ClInclude>
     <ClInclude Include="j1Scene.h">
       <Filter>Awsome_Game\Scenes</Filter>
@@ -315,9 +309,6 @@
     <ClInclude Include="Projectile.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Task.h">
-      <Filter>Usefull</Filter>
-    </ClInclude>
     <ClInclude Include="j1Score.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
@@ -328,6 +319,21 @@
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
     <ClInclude Include="QuadTree.h">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Defs.h">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Log.h">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Point.h">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="IsoPrimitives.h">
       <Filter>Awsome_Game\Tools</Filter>
     </ClInclude>
   </ItemGroup>
@@ -364,9 +370,6 @@
     </Filter>
     <Filter Include="Awsome_Game\UIComponents\HUD\UIHUDPanelInfo">
       <UniqueIdentifier>{06f88748-2ca2-4806-b68a-c3480589e69f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Usefull">
-      <UniqueIdentifier>{a8bfab6a-5472-4969-943e-861a8b493f08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

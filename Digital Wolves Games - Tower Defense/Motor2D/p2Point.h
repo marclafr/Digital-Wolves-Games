@@ -50,7 +50,7 @@ public:
 
 	p2Point operator -(const p2Point &v) const
 	{
-		p2Vector2 r;
+		p2Point r;
 
 		r.x = x - v.x;
 		r.y = y - v.y;
@@ -60,7 +60,7 @@ public:
 
 	p2Point operator + (const p2Point &v) const
 	{
-		p2Vector2 r;
+		p2Point r;
 
 		r.x = x + v.x;
 		r.y = y + v.y;
@@ -143,6 +143,13 @@ public:
 		int dy = abs(v.y - y);
 		int res =(dx + dy);
 		return res;
+	}
+
+	void Norm()
+	{
+		float len = sqrt(x*x + y*y);
+		x /= len;
+		y /= len;
 	}
 };
 
