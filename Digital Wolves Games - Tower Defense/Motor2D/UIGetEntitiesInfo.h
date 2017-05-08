@@ -11,17 +11,6 @@
 #include "Towers.h"
 #include "j1Investigations.h"
 
-struct PriceEntity
-{
-private:
-	uint gold;
-	uint rock;
-	uint food;
-	uint wood;
-public:
-	PriceEntity(uint g, uint r, uint f, uint w) : gold(g), rock(r), food(f), wood(w) {}
-};
-
 SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type);
 const char* GetUnitName(const UNIT_TYPE type);
 const char* GetUnitPrice(const UNIT_TYPE type);
@@ -39,8 +28,11 @@ const bool isBuilded(const Entity* build);
 
 SDL_Rect GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type);
 const uint GetInvestigationPercentage(const Investigation* type);
-const uint GetInvestigationName(const INVESTIGATION_TYPE type);
+const char* GetInvestigationName(const INVESTIGATION_TYPE type);
 const char* GetInvestigationPrice(const INVESTIGATION_TYPE type);
+
+const char* GetTowerName(const TOWER_TYPE type);
+const char* GetTowerElementName(const TOWER_ELEMENT_TYPE type);
 
 const char* GetSideName(const Side type);
 

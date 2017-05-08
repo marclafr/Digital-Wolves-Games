@@ -45,8 +45,7 @@ bool UIHUDPanelInfo::Update()
 		Entity* e_selected = actual_panelinfo->GetEntityForOneSelected();
 		if (e_selected != nullptr && !actual_panelinfo->if_ToDelete())
 			App->entity_manager->Select(e_selected);
-
-		if (actual_panelinfo->if_ToDelete())
+		else if (actual_panelinfo->if_ToDelete())
 			DeletePanelInfo();
 	}
 

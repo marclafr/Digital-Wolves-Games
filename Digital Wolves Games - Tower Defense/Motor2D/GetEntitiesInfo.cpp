@@ -51,31 +51,70 @@ const char* GetUnitName(const UNIT_TYPE type)
 
 	switch (type)
 	{
-	case U_TWOHANDEDSWORDMAN:
-		ret = "Two Handed Sword Man";
-		break;
-
-	case U_CAVALRYARCHER:
-		ret = "Cavalry Archer";
-		break;
-
-	case U_SIEGERAM:
-		ret = "Siege Ram";
+			//Infantry
+	case U_MILITIA:
+		ret = "Militia";
 		break;
 
 	case U_MANATARMS:
 		ret = "Man at Arms";
 		break;
 
+	case U_LONGSWORDMAN:
+		ret = "Long Swordman";
+		break;
+
+	case U_TWOHANDEDSWORDMAN:
+		ret = "Two-Handed Swordman";
+		break;
+
+	case U_CHAMPION:
+		ret = "Champion";
+		break;
+
+	case U_SPEARMAN:
+		ret = "Spearman";
+		break;
+		
+		//Archers
+	case U_ARCHER:
+		ret = "Archer";
+		break;
+
+	case U_ARBALEST:
+		ret = "Arbalest";
+		break;
+
+	case U_CAVALRYARCHER:
+		ret = "Cavalry Archer";
+		break;
+
+	case U_HEAVYCAVALRYARCHER:
+		ret = "Heavy Calvalry Archer";
+		break;
+		
+		//Cavalry
+	case U_KNIGHT:
+		ret = "Knight";
+		break;
+
+	case U_CAVALIER:
+		ret = "Cavalier";
+		break;
+
 	case U_PALADIN:
 		ret = "Paladin";
 		break;
+		
+		//Siege
+	case U_SIEGERAM:
+		ret = "Siege Ram";
+		break;
 
+		//Dev Units
 	case U_GOD:
 		ret = "GOD";
 		break;
-
-		//TODO: ADD UNIT
 
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
@@ -86,23 +125,85 @@ const char* GetUnitName(const UNIT_TYPE type)
 	return ret;
 }
 
-const char * GetUnitPrice(const UNIT_TYPE type)
+const char* GetUnitPrice(const UNIT_TYPE type)
 {
 	char* ret;
 
 	switch (type)
 	{
+		//Infantry
+		/*
+	case U_MILITIA:
+		ret = "Food: 60 Gold: 20";
+		break;
+
+	case U_MANATARMS:
+		ret = "Food: 60 Gold: 20";
+		break;
+
+	case U_LONGSWORDMAN:
+		ret = "Food: 60 Gold: 20";
+		break;
+
 	case U_TWOHANDEDSWORDMAN:
-		ret = "Wood:15 Stone:15";
+		ret = "Food: 60 Gold: 20";
+		break;
+		*/
+	case U_CHAMPION:
+		ret = "Food: 60 Gold: 20";
 		break;
 
+		/*
+	case U_SPEARMAN:
+		ret = "Food: 60 Wood: 20";
+		break;
+		*/
+		//Archers
+		/*
+	case U_ARCHER:
+		ret = "Wood: 60 Gold: 20";
+		break;
+		*/
+	case U_ARBALEST:
+		ret = "Wood: 60 Gold: 20";
+		break;
+		/*
+	case U_CAVALRYARCHER:
+		ret = "Wood: 60 Gold: 20";
+		break;
+		*/
+	case U_HEAVYCAVALRYARCHER:
+		ret = "Wood: 60 Gold: 20";
+		break;
+
+		//Cavalry
+		/*
+	case U_KNIGHT:
+		ret = "Food: 60 Gold: 20";
+
+	case U_CAVALIER:
+		ret = "Food: 60 Gold: 20";
+		break;
+		*/
 	case U_PALADIN:
-		ret = "Wood:15 Stone:15";
+		ret = "Food: 60 Gold: 20";
 		break;
 
+		//Siege
+		/*
+	case U_SIEGERAM:
+		ret = "Wood: 60 Gold: 20 Ram";
+		break;
+		*/
+		//Dev Units
+		/*
+	case U_GOD:
+		ret = "Better than others, because I'M FREE!";
+		break;
+		*/
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
-		ret = "Error Unit Price";
+		ret = "Error Unit";
 		break;
 	}
 
@@ -203,6 +304,9 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	case B_TURRET:
 		ret = "Basic Tower";
 		break;
+	case B_CANNON:
+		ret = "Bombard Tower";
+		break;
 	case B_WOOD_WALL:
 		ret = "Wood Wall";
 		break;
@@ -212,12 +316,37 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	case B_TOWNHALL:
 		ret = "Town Hall";
 		break;
+	case B_UNIVERSITY:
+		ret = "University";
+		break;
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
 		ret = "Error Building";
 		break;
 	}
 
+	return ret;
+}
+
+const char * GetBuildingPriceChar(const BUILDING_TYPE type)
+{
+	char* ret;
+
+	switch (type)
+	{
+	case B_TURRET:
+		ret = "";
+		break;
+	case B_CANNON:
+		ret = "Bombard Tower";
+		break;
+	case B_WOOD_WALL:
+		ret = "Wood Wall";
+		break;
+	case B_STONE_WALL:
+		ret = "Stone Wall";
+		break;
+	}
 	return ret;
 }
 
@@ -241,6 +370,20 @@ const char * GetBuildingPrice(const BUILDING_TYPE type)
 		ret = "Error Building Price";
 		break;
 	}
+
+	return ret;
+}
+
+const char * GetTowerName(const TOWER_TYPE type)
+{
+	char* ret;
+
+	return ret;
+}
+
+const char * GetTowerElementName(const TOWER_ELEMENT_TYPE type)
+{
+	char* ret;
 
 	return ret;
 }
@@ -493,4 +636,34 @@ const bool isBuilded(const Entity * build)
 		return true;
 
 	return false;
+}
+
+SDL_Rect GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type)
+{
+	SDL_Rect ret;
+
+
+	return ret;
+}
+
+const uint GetInvestigationPercentage(const Investigation * type)
+{
+	uint ret;
+
+
+	return ret;
+}
+
+const char* GetInvestigationName(const INVESTIGATION_TYPE type)
+{
+	char* ret;
+
+	return ret;
+}
+
+const char * GetInvestigationPriceChar(const INVESTIGATION_TYPE type)
+{
+	char* ret;
+
+	return ret;
 }
