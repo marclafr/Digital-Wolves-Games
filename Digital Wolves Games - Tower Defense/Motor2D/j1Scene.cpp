@@ -222,6 +222,8 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		App->render->camera->MoveRight(floor(450.0f * dt));
 
+	App->render->camera->MouseMove(x, y, dt);
+
 	return true;
 }
 
@@ -286,41 +288,41 @@ bool j1Scene::CleanUp()
 
 void j1Scene::PlacingTower(TOWER_TYPE type)
 {
-	SDL_Texture* tower_tex = App->tex->GetTexture(T_TURRET);
+	SDL_Texture* tower_tex;
+	SDL_Rect rect;
+	iPoint pivot;
 
 	int x = 0;
 	int y = 0;
 	App->input->GetMousePosition(x, y);
 
-	SDL_Rect rect;
-
-	iPoint p = App->render->ScreenToWorld(x, y);
-	iPoint r = App->map->WorldToMap(p.x, p.y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
+	iPoint pos = App->render->ScreenToWorld(x, y);
+	iPoint tile_pos = App->map->WorldToMap(pos.x, pos.y);
+	pos = App->map->WorldToMap(pos.x, pos.y);
+	pos = App->map->MapToWorld(pos.x, pos.y);
 
 	if (resources->CanBuildTower(type))
 	{
-		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
+		if (App->pathfinding->IsConstructible_neutral(tile_pos) == false && App->pathfinding->IsConstructible_ally(tile_pos) == false)
 		{
-			rect = { 411,0,107,208 }; //texture rect
-			App->render->PushInGameSprite(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			App->tex->GetTowerTexture(tower_tex, rect, pivot, type, BTT_RED); //texture rect
+			App->render->PushInGameSprite(tower_tex, pos.x, pos.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 		}
 		else
 		{
-			rect = { 521,0,107,208 };
-			App->render->PushInGameSprite(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 107 * 0.5, 206 * 0.902913);
+			App->tex->GetTowerTexture(tower_tex, rect, pivot, type, BTT_GREEN);
+			App->render->PushInGameSprite(tower_tex, pos.x, pos.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				if (App->collision->AbleToBuild(p))
+				if (App->collision->AbleToBuild(pos))
 				{
 					App->audio->PlayFx(App->entity_manager->fx_construction);
 
-					if (App->pathfinding->IsConstructible_neutral(r) == true)
-						resources->BuildTower(type, p);
-					else if (App->pathfinding->IsConstructible_ally(r) == true)
-						resources->BuildTower(type, p);
+					if (App->pathfinding->IsConstructible_neutral(tile_pos) == true)
+						resources->BuildTower(type, pos);
+					else if (App->pathfinding->IsConstructible_ally(tile_pos) == true)
+						resources->BuildTower(type, pos);
 				}
 			}
 		}
@@ -328,53 +330,7 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		placing_tower = T_NO_TYPE;
 }
-
-/*void j1Scene::PlacingBombardTower()
-{
-	SDL_Texture* tower_tex = App->tex->GetTexture(T_TURRET);
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	iPoint r = App->map->WorldToMap(p.x, p.y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-	SDL_Rect rect;
-	if (CanBuildTower())
-	{
-		if (App->pathfinding->IsConstructible_neutral(r) == false && App->pathfinding->IsConstructible_ally(r) == false)
-		{
-			rect = {889,0,130,281};
-			App->render->PushInGameSprite(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.902913);
-		}
-		else
-		{
-			rect = { 759,0,130,281};
-			App->render->PushInGameSprite(tower_tex, p.x, p.y, &rect, SDL_FLIP_NONE, 130 * 0.5, 281 * 0.914591);
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
-			{
-				if (App->collision->AbleToBuild(iPoint(p.x, p.y - 9)))
-				{
-					App->audio->PlayFx(App->entity_manager->fx_construction);
-					if (App->pathfinding->IsConstructible_neutral(r) == true)
-					{
-						App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(p.x, p.y - 9));
-						BuildTower();
-					}
-					else if (App->pathfinding->IsConstructible_ally(r) == true)
-					{
-						App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(p.x, p.y - 9));
-						BuildTower();
-					}
-				}
-			}
-		}
-	}
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-	{
-		placing_bombard_tower = false;
-
-	}
-}*/	//SDL_SetTextureAlphaMod(wall_tex, 180);
+//SDL_SetTextureAlphaMod(wall_tex, 180);
 
 void j1Scene::PlacingWall()
 {
@@ -597,6 +553,12 @@ void j1Scene::HandleInput( SDL_Event event)
 				selecting = true;
 				App->entity_manager->CheckClick(x,y);
 			}
+
+		if (event.button.button == MK_RIGHT)
+		{
+			placing_wall = false;
+			placing_tower = T_NO_TYPE;
+		}
 		break;
 
 	case SDL_MOUSEBUTTONUP:
@@ -614,8 +576,13 @@ void j1Scene::HandleInput( SDL_Event event)
 			App->render->camera->Move(iPoint(1200, -250), 10);
 
 		//building construction
-		placing_wall = false;
-		placing_tower = T_NO_TYPE;
+		if (event.button.button == SDL_SCANCODE_1
+			|| event.button.button == SDL_SCANCODE_2
+			|| event.button.button == SDL_SCANCODE_3)
+		{
+			placing_wall = false;
+			placing_tower = T_NO_TYPE;
+		}
 
 		if (event.button.button == SDL_SCANCODE_1)
 			placing_tower = T_BASIC_TOWER;	

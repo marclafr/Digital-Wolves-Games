@@ -208,12 +208,12 @@ void j1ScoreScene::CreateAllButtons()
 	UILabel* label;
 	//BACK_MENU
 	btn = App->uimanager->AddButton({ 1014, 638, 129, 36 }, { 1234, 1432, 129, 36 });
-	btn->SetMouseOnTopTextRect({ 1226, 1386, 137, 42 });
+	btn->SetMouseOnTopTextRect({ 1226, 1386, 137, 42 }, 2);
 	btn->SetTask(new ChangeScoreSceneToTask(SC_MAIN_MENU));
 
 	//PLAY AGAIN
 	btn = App->uimanager->AddButton({ 846, 637, 129, 37 }, { 1102, 1431, 129, 37 });
-	btn->SetMouseOnTopTextRect({ 1085, 1385, 137, 43 });
+	btn->SetMouseOnTopTextRect({ 1085, 1385, 137, 43 }, 2);
 	btn->SetTask(new ChangeScoreSceneToTask(SC_GAME));
 
 	//SCORE

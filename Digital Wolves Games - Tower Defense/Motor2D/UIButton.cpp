@@ -39,10 +39,10 @@ void UIButton::Draw()
 		App->render->PushUISprite(atlas, rect.x, rect.y, &GetAtlasRect());
 		break;
 	case BS_CLICKED:
-		App->render->PushUISprite(atlas, rect.x, rect.y, &atlas_clicked);
+		App->render->PushUISprite(atlas, rect.x - displacement, rect.y - displacement, &atlas_clicked);
 		break;
 	case BS_MOUSE_ON_TOP:
-		App->render->PushUISprite(atlas, rect.x, rect.y, &atlas_mouse_on_top);
+		App->render->PushUISprite(atlas, rect.x - displacement, rect.y - displacement, &atlas_mouse_on_top);
 		break;
 	}
 
@@ -107,9 +107,10 @@ const BUTTON_STAT UIButton::GetStat() const
 	return state;
 }
 
-void UIButton::SetMouseOnTopTextRect(const SDL_Rect & rect)
+void UIButton::SetMouseOnTopTextRect(const SDL_Rect & rect, int displacement)
 {
 	atlas_mouse_on_top = rect;
+	this->displacement = displacement;
 }
 
 void UIButton::SetClickedTextRect(const SDL_Rect & rect)

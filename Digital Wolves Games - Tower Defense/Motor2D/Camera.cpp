@@ -65,6 +65,18 @@ const float Camera::GetOpacity() const
 	return opacity;
 }
 
+void Camera::MouseMove(int x, int y, float dt)
+{
+	if (x - view_port.x < MARGIN)
+		MoveLeft(450.0f * dt);
+	if (abs(x - (view_port.x + view_port.w)) < MARGIN)
+		MoveRight(450.0f * dt);
+	if (abs(y - view_port.y) < MARGIN)
+		MoveUp(450.0f * dt);
+	if (abs(y - (view_port.y + view_port.h)) < MARGIN)
+		MoveDown(450.0f * dt);
+}
+
 bool Camera::InsideRenderTarget(int x, int y)
 {
 	x = (x - view_port.w / 2.0f) * (1.0f + (zoom / 100.0f)) + view_port.w / 2.0f;
