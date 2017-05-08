@@ -120,9 +120,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		break;
 
 	case U_CHAMPION:
-		SetHp(100);
-		attack = 8;
-		SetArmor(1);
+		SetHp(150);
+		attack = 15;
+		SetArmor(3);
 		speed = 1.0f;
 		rate_of_fire = 100.0f;
 		range = 30;
@@ -193,7 +193,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 
 	case U_ARBALEST:
 		SetHp(100);
-		attack = 8;
+		attack = 10;
 		SetArmor(1);
 		speed = 1.0f;
 		rate_of_fire = 100.0f;
@@ -209,8 +209,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		break;
 
 	case U_CAVALRYARCHER:
-		SetHp(50);
-		attack = 6;
+		SetHp(100);
+		attack = 8;
 		SetArmor(1);
 		speed = 1.4f;
 		rate_of_fire = 100.0f;
@@ -370,7 +370,7 @@ void Unit::Update()
 
 	Draw();
 
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == ST_SELECTED)
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == ST_SELECTED && GetSide() == S_ALLY)
 	{
 		SetHp(0);
 	}

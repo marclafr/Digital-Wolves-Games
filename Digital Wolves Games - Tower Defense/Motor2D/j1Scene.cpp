@@ -84,7 +84,7 @@ bool j1Scene::Start()
 	CreateSceneUI();
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
-	resources = new ResourceManager;
+	resources = new ResourceManager();
 	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
 	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
 	

@@ -9,10 +9,10 @@
 
 ResourceManager::ResourceManager(): wood(STARTING_WOOD), food (STARTING_FOOD), gold (STARTING_GOLD), stone (STARTING_STONE)
 {
-	Resources* resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(860, 640));
-	Resources* resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1040, 775));
-	Resources* resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1000, 645));
-	Resources* resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1200, 750));	
+	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(860, 640));
+	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1040, 775));
+	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1000, 645));
+	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1200, 750));	
 }
 
 void ResourceManager::SetWood(Resources * wood)
@@ -62,17 +62,17 @@ bool ResourceManager::ReduceWoodCollectTime(float amount) const
 
 bool ResourceManager::ReduceFoodCollectTime(float amount) const
 {
-	return resource_food->ReduceCollectTime(amount);;
+	return resource_food->ReduceCollectTime(amount);
 }
 
 bool ResourceManager::ReduceGoldCollectTime(float amount) const
 {
-	return resource_gold->ReduceCollectTime(amount);;
+	return resource_gold->ReduceCollectTime(amount);
 }
 
 bool ResourceManager::ReduceStoneCollectTime(float amount) const
 {
-	return resource_stone->ReduceCollectTime(amount);;
+	return resource_stone->ReduceCollectTime(amount);
 }
 
 void ResourceManager::IncreaseResourceAmount(RESOURCE_TYPE type, float amount) const
