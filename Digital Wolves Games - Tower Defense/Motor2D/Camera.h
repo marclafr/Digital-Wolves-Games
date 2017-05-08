@@ -13,9 +13,8 @@
 #define CAMERA_LIMIT_DOWN - 2900
 #define CAMERA_LIMIT_LEFT 3602
 #define CAMERA_LIMIT_RIGHT -2142
-#define CAMERA_WEIGHT 1920
-#define CAMERA_HEIGHT 1080
-#define MARGIN 50
+
+#define MARGIN 100
 
 
 class Camera

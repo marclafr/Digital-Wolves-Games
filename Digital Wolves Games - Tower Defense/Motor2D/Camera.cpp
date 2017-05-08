@@ -67,24 +67,14 @@ const float Camera::GetOpacity() const
 
 void Camera::MouseMove(int x, int y, float dt)
 {
-	// We pass the map coordinates to camera coordinates
-	int view_x = 0, view_y, view_w, view_h;
-	view_x = view_port.x / CAMERA_WEIGHT;
-	view_y = view_port.y / CAMERA_HEIGHT;
-	view_w = view_port.w / CAMERA_HEIGHT*CAMERA_WEIGHT;
-	view_h = view_port.h / CAMERA_HEIGHT *CAMERA_WEIGHT;
-	
-
-	if ((x - view_x) < (view_x + MARGIN))
+	if (x  <  MARGIN)
 		MoveLeft(450.0f * dt);
-	if ((y - view_y) < (view_y + MARGIN))
+	if (y < MARGIN)
 		MoveUp(450.0f * dt);
-	/*if (x > x - ((view_w - view_x) - MARGIN))
+	if (x > view_port.w - MARGIN)
 		MoveRight(450.0f * dt);
-	if ((y -  view_h) < view_h - MARGIN)
-		MoveDown(450.0f * dt);*/
-
-
+	if (y > view_port.h - MARGIN)
+		MoveDown(450.0f * dt);
 }
 
 bool Camera::InsideRenderTarget(int x, int y)
