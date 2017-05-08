@@ -132,6 +132,8 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		}
 
 		new_anim2->speed = 75.0f; 
+		if (new_anim2->name == ANIM_FIRE_FLOOR)
+			new_anim2->loop = false;
 		animation_types.push_back(new_anim2);
 		arrows_bombs_node = arrows_bombs_node.next_sibling();
 	}
