@@ -47,6 +47,7 @@ private:
 	AnimationManager* anim_ice_floor = nullptr;
 	void PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int radius);
 	TOWER_ELEMENT_TYPE GetElementFromTower(TOWER_TYPE tower);
+
 public:
 	iPoint arrowpos;
 	Tower(TOWER_TYPE t_type, fPoint pos);

@@ -69,6 +69,9 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 
 void UIHUDPanelButtons::SetPanel(Building* building)
 {
+	if (b_selected != nullptr)
+		DeletePanel();
+
 	switch (building->GetBuildingType())
 	{
 	case B_TURRET:

@@ -11,6 +11,17 @@
 
 #define RESOURCES_HP 10
 
+#define ICON_SIZE 25
+
+#define Y_RESOURCES 962
+#define X_WALLS 774
+#define X_PUBLIC_BUILDINGS 800
+#define Y_TOWERS 910
+#define Y_BOMBARDS 936
+
+#define HIGH_TOWERS 180
+#define HIGH_BOMBARDS 200
+
 #include "UIGetEntitiesInfo.h"
 
 SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
@@ -20,22 +31,33 @@ SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
 	switch (type)
 	{
 	case U_TWOHANDEDSWORDMAN:
-		ret = { 774, 962, 25, 25 };
+		ret = { 774, 962, ICON_SIZE, ICON_SIZE };
 		break;
 
-	case U_CAVALRYARCHER:
+	case U_HEAVYCAVALRYARCHER:
+		ret = { 956, 936, ICON_SIZE, ICON_SIZE };
 		break;
+
 	case U_GOD:
-		ret = { 956, 935, 25, 25 };
+		ret = { 956, 936, ICON_SIZE, ICON_SIZE };
 		break;
 
 	case U_SIEGERAM:
-		ret = { 748, 962, 25, 25 };
+		ret = { 748, 962, ICON_SIZE, ICON_SIZE };
 		break;
 
 	case U_PALADIN:
-		ret = { 930, 910, 25, 25 };
+		ret = { 930, 910, ICON_SIZE, ICON_SIZE };
 		break;
+
+	case U_ARBALEST:
+		ret = { 930,936, ICON_SIZE, ICON_SIZE };
+		break;
+
+	case U_CHAMPION:
+		ret = { 982,936, ICON_SIZE,ICON_SIZE };
+		break;
+
 	default:
 		//LOG("Error UNIT TYPE SDL_Rect NULL (UIManager)");
 		ret = { 0, 0, 0, 0 };
@@ -51,31 +73,70 @@ const char* GetUnitName(const UNIT_TYPE type)
 
 	switch (type)
 	{
-	case U_TWOHANDEDSWORDMAN:
-		ret = "Two Handed Sword Man";
-		break;
-
-	case U_CAVALRYARCHER:
-		ret = "Cavalry Archer";
-		break;
-
-	case U_SIEGERAM:
-		ret = "Siege Ram";
+			//Infantry
+	case U_MILITIA:
+		ret = "Militia";
 		break;
 
 	case U_MANATARMS:
 		ret = "Man at Arms";
 		break;
 
+	case U_LONGSWORDMAN:
+		ret = "Long Swordman";
+		break;
+
+	case U_TWOHANDEDSWORDMAN:
+		ret = "Two-Handed Swordman";
+		break;
+
+	case U_CHAMPION:
+		ret = "Champion";
+		break;
+
+	case U_SPEARMAN:
+		ret = "Spearman";
+		break;
+		
+		//Archers
+	case U_ARCHER:
+		ret = "Archer";
+		break;
+
+	case U_ARBALEST:
+		ret = "Arbalest";
+		break;
+
+	case U_CAVALRYARCHER:
+		ret = "Cavalry Archer";
+		break;
+
+	case U_HEAVYCAVALRYARCHER:
+		ret = "Heavy Calvalry Archer";
+		break;
+		
+		//Cavalry
+	case U_KNIGHT:
+		ret = "Knight";
+		break;
+
+	case U_CAVALIER:
+		ret = "Cavalier";
+		break;
+
 	case U_PALADIN:
 		ret = "Paladin";
 		break;
+		
+		//Siege
+	case U_SIEGERAM:
+		ret = "Siege Ram";
+		break;
 
+		//Dev Units
 	case U_GOD:
 		ret = "GOD";
 		break;
-
-		//TODO: ADD UNIT
 
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
@@ -86,23 +147,85 @@ const char* GetUnitName(const UNIT_TYPE type)
 	return ret;
 }
 
-const char * GetUnitPrice(const UNIT_TYPE type)
+const char* GetUnitPrice(const UNIT_TYPE type)
 {
 	char* ret;
 
 	switch (type)
 	{
+		//Infantry
+		/*
+	case U_MILITIA:
+		ret = "Food: 60 Gold: 20";
+		break;
+
+	case U_MANATARMS:
+		ret = "Food: 60 Gold: 20";
+		break;
+
+	case U_LONGSWORDMAN:
+		ret = "Food: 60 Gold: 20";
+		break;
+
 	case U_TWOHANDEDSWORDMAN:
-		ret = "Wood:15 Stone:15";
+		ret = "Food: 60 Gold: 20";
+		break;
+		*/
+	case U_CHAMPION:
+		ret = "Food: 60 Gold: 20";
 		break;
 
+		/*
+	case U_SPEARMAN:
+		ret = "Food: 60 Wood: 20";
+		break;
+		*/
+		//Archers
+		/*
+	case U_ARCHER:
+		ret = "Wood: 60 Gold: 20";
+		break;
+		*/
+	case U_ARBALEST:
+		ret = "Wood: 60 Gold: 20";
+		break;
+		/*
+	case U_CAVALRYARCHER:
+		ret = "Wood: 60 Gold: 20";
+		break;
+		*/
+	case U_HEAVYCAVALRYARCHER:
+		ret = "Wood: 60 Gold: 20";
+		break;
+
+		//Cavalry
+		/*
+	case U_KNIGHT:
+		ret = "Food: 60 Gold: 20";
+
+	case U_CAVALIER:
+		ret = "Food: 60 Gold: 20";
+		break;
+		*/
 	case U_PALADIN:
-		ret = "Wood:15 Stone:15";
+		ret = "Food: 60 Gold: 20";
 		break;
 
+		//Siege
+		/*
+	case U_SIEGERAM:
+		ret = "Wood: 60 Gold: 20 Ram";
+		break;
+		*/
+		//Dev Units
+		/*
+	case U_GOD:
+		ret = "Better than others, because I'M FREE!";
+		break;
+		*/
 	default:
 		//LOG("Error UNIT TYPE NAME NULL (UIManager)");
-		ret = "Error Unit Price";
+		ret = "Error Unit";
 		break;
 	}
 
@@ -116,16 +239,16 @@ SDL_Rect GetResourceIconPositionFromAtlas(const RESOURCE_TYPE type)
 	switch (type)
 	{
 	case R_WOOD:
-		ret = { 852, 858, 25, 25 };
+		ret = { 852, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
 		break;
 	case R_STONE:
-		ret = { 878, 858, 25, 25 };
+		ret = { 878, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
 		break;
 	case R_FOOD:
-		ret = { 0, 0, 0, 0 };
+		ret = { 826, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
 		break;
 	case R_GOLD:
-		ret = { 878, 858, 25, 25 };
+		ret = { 904, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
 		break;
 	default:
 		//LOG("Error Resource TYPE SDL_Rect NULL (UIManager)");
@@ -169,20 +292,20 @@ SDL_Rect GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
 
 	switch (type)
 	{
-	case B_TURRET:
-		ret = { 826, 910, 25, 25 };
-		break;
-
 	case B_WOOD_WALL:
-		ret = { 774, 936, 25, 25 };
+		ret = { X_WALLS, 936, ICON_SIZE, ICON_SIZE };
 		break;
 
 	case B_STONE_WALL:
-		ret = { 774, 910, 25, 25 };
+		ret = { X_WALLS, 910, ICON_SIZE, ICON_SIZE };
 		break;
 
 	case B_TOWNHALL:
-		ret = { 800, 936, 25, 25 };
+		ret = { X_PUBLIC_BUILDINGS, 936, ICON_SIZE, ICON_SIZE };
+		break;
+
+	case B_UNIVERSITY:
+		ret = { X_PUBLIC_BUILDINGS, 910, ICON_SIZE, ICON_SIZE };
 		break;
 
 	default:
@@ -203,6 +326,9 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	case B_TURRET:
 		ret = "Basic Tower";
 		break;
+	case B_CANNON:
+		ret = "Bombard Tower";
+		break;
 	case B_WOOD_WALL:
 		ret = "Wood Wall";
 		break;
@@ -211,6 +337,9 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 		break;
 	case B_TOWNHALL:
 		ret = "Town Hall";
+		break;
+	case B_UNIVERSITY:
+		ret = "University";
 		break;
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
@@ -221,9 +350,31 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	return ret;
 }
 
+const char * GetBuildingPriceChar(const BUILDING_TYPE type)
+{
+	char* ret = nullptr;
+
+	switch (type)
+	{
+	case B_TURRET:
+		ret = "";
+		break;
+	case B_CANNON:
+		ret = "Bombard Tower";
+		break;
+	case B_WOOD_WALL:
+		ret = "Wood Wall";
+		break;
+	case B_STONE_WALL:
+		ret = "Stone Wall";
+		break;
+	}
+	return ret;
+}
+
 const char * GetBuildingPrice(const BUILDING_TYPE type)
 {
-	char* ret;
+	char* ret = nullptr;
 
 	switch (type)
 	{
@@ -245,9 +396,54 @@ const char * GetBuildingPrice(const BUILDING_TYPE type)
 	return ret;
 }
 
+SDL_Rect GetTowerIconPositionFromAtlas(const TOWER_TYPE type)
+{
+	SDL_Rect ret{ 0,0,0,0 };
+
+	switch (type)
+	{
+	case T_BASIC_TOWER:
+		ret = { 826,Y_TOWERS, ICON_SIZE, ICON_SIZE };
+		break;
+	case T_FIRE_TOWER:
+		ret = { 852,Y_TOWERS, ICON_SIZE, ICON_SIZE };
+		break;
+	case T_ICE_TOWER:
+		ret = { 878,Y_TOWERS, ICON_SIZE, ICON_SIZE };
+		break;
+	case T_AIR_TOWER:
+		ret = { 904,Y_TOWERS, ICON_SIZE, ICON_SIZE };
+		break;
+	case T_BOMBARD_TOWER:
+		ret = { 826,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
+		break;
+	case T_BOMBARD_FIRE_TOWER:
+		ret = { 852,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
+		break;
+	case T_BOMBARD_ICE_TOWER:
+		ret = { 878,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
+		break;
+	case T_BOMBARD_AIR_TOWER:	
+		ret = { 878,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
+		break;
+	default:
+		ret = { 0,0, 0, 0 };
+		break;
+	}
+
+	return ret;
+}
+
+const char* GetTowerName(const TOWER_TYPE type)
+{
+	char* ret = nullptr;
+
+	return ret;
+}
+
 const char* GetSideName(const Side type)
 {
-	char* ret;
+	char* ret = nullptr;
 
 	switch (type)
 	{
@@ -403,13 +599,16 @@ int ReturnValueHeightCorrectionBuilding(const BUILDING_TYPE type)
 
 	switch (type)
 	{
-	case B_TURRET:
-		ret = 180;
+	case B_WOOD_WALL:
+		ret = 40;
 		break;
 	case B_STONE_WALL:
 		ret = 90;
 		break;
 	case B_TOWNHALL:
+		ret = 210;
+		break;
+	case B_UNIVERSITY:
 		ret = 210;
 		break;
 	default:
@@ -434,12 +633,48 @@ int ReturnValueHeightCorrectionResource(const RESOURCE_TYPE type)
 		ret = 70;
 		break;
 	case R_FOOD:
-		ret = 70;
+		ret = 100;
 		break;
 	case R_GOLD:
 		ret = 70;
 		break;
 	}
+
+	return ret;
+}
+
+int ReturnValueHeightCorrectionTowers(const TOWER_TYPE type)
+{
+	int ret = 0;
+
+	switch (type)
+	{
+	case T_BASIC_TOWER:
+		ret = HIGH_TOWERS;
+		break;
+	case T_FIRE_TOWER:
+		ret = HIGH_TOWERS;
+		break;
+	case T_ICE_TOWER:
+		ret = HIGH_TOWERS;
+		break;
+	case T_AIR_TOWER:
+		ret = HIGH_TOWERS;
+		break;
+	case T_BOMBARD_TOWER:
+		ret = HIGH_BOMBARDS;
+		break;
+	case T_BOMBARD_FIRE_TOWER:
+		ret = HIGH_BOMBARDS;
+		break;
+	case T_BOMBARD_ICE_TOWER:
+		ret = HIGH_BOMBARDS;
+		break;
+	case T_BOMBARD_AIR_TOWER:
+		ret = HIGH_BOMBARDS;
+		break;
+	}
+
 
 	return ret;
 }
@@ -460,7 +695,7 @@ const uint GetBuildingPercentage(const Entity * build)
 
 const double GetBuildTotalTime(const BUILDING_TYPE type)
 {
-	double ret;
+	double ret = 0;
 
 	switch (type)
 	{
@@ -493,4 +728,34 @@ const bool isBuilded(const Entity * build)
 		return true;
 
 	return false;
+}
+
+SDL_Rect GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type)
+{
+	SDL_Rect ret{ 0,0,0,0 };
+
+
+	return ret;
+}
+
+const uint GetInvestigationPercentage(const Investigation * type)
+{
+	uint ret = 0;
+
+
+	return ret;
+}
+
+const char* GetInvestigationName(const INVESTIGATION_TYPE type)
+{
+	char* ret = nullptr;
+
+	return ret;
+}
+
+const char * GetInvestigationPrice(const INVESTIGATION_TYPE type)
+{
+	char* ret = nullptr;
+
+	return ret;
 }

@@ -127,9 +127,10 @@ void j1EntityManager::UnselectEverything()
 
 void j1EntityManager::Select(Entity * select)
 {
-	select->SetEntityStatus(ST_SELECTED);
 	App->entity_manager->UnselectEverything();
+	select->SetEntityStatus(ST_SELECTED);
 	App->scene->selection.push_back(select);
+	App->uimanager->CreatePanelInfo(App->scene->selection);
 }
 
 Entity * j1EntityManager::LookForEnemies(int range, iPoint pos)
