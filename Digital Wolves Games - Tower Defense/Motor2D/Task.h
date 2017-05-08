@@ -176,45 +176,28 @@ public:
 		return true;
 	}
 };
-class UpgradeFireTurretTask : public EntityTask
+
+class UpgradeTowerTask : public Task
 {
 private:
-	//basicament necesito un punter a la torreta seleccionada per fer l'upgrade.
+	Tower* tower = nullptr;
+	TOWER_ELEMENT_TYPE type = TE_NULL;
+
 public:
-	UpgradeFireTurretTask(ENTITY_TASKTYPE type = ET_BASICTOWER): EntityTask(type) {}
+	UpgradeTowerTask(TOWER_ELEMENT_TYPE type) : type(type) {}
+
+	void SetTower(Tower* tower)
+	{
+		this->tower = tower;
+	}
 
 	bool Execute()
 	{
-		//turret->UpgradeTurret(FIRE);
+		tower->UpgradeTurret(type);
 		return true;
 	}
 };
-class UpgradeIceTurretTask : public EntityTask
-{
-private:
 
-public:
-	UpgradeIceTurretTask(ENTITY_TASKTYPE type = ET_BASICTOWER) : EntityTask(type) {}
-
-	bool Execute()
-	{
-		//turret->UpgradeTurret(FIRE);
-		return true;
-	}
-};
-class UpgradeAirTurretTask : public EntityTask
-{
-private:
-	
-public:
-	UpgradeAirTurretTask(ENTITY_TASKTYPE type = ET_BASICTOWER) :  EntityTask(type) {}
-
-	bool Execute()
-	{
-		//turret->UpgradeTurret(FIRE);
-		return true;
-	}
-};
 class PlaceWallTask : public EntityTask
 {
 public:
