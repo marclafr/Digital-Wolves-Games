@@ -139,9 +139,6 @@
     <ClCompile Include="ProjectileManager.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Awsome_Game\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Score.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
@@ -158,6 +155,9 @@
       <Filter>Awsome_Game\Tools</Filter>
     </ClCompile>
     <ClCompile Include="IsoPrimitives.cpp">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
       <Filter>Awsome_Game\Tools</Filter>
     </ClCompile>
   </ItemGroup>
@@ -306,9 +306,6 @@
     <ClInclude Include="ProjectileManager.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Awsome_Game\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="j1Score.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
@@ -334,6 +331,9 @@
       <Filter>Awsome_Game\Tools</Filter>
     </ClInclude>
     <ClInclude Include="IsoPrimitives.h">
+      <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
       <Filter>Awsome_Game\Tools</Filter>
     </ClInclude>
   </ItemGroup>

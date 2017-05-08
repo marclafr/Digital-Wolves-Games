@@ -115,6 +115,10 @@ bool j1Scene::Update(float dt)
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
 
+	//Test fade to black
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+		App->render->camera->FadeToBlack(3, 2);
+
 	//TEST INVESTIGATIONS
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
 		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(INV_WOOD));
@@ -189,6 +193,7 @@ bool j1Scene::Update(float dt)
 	if (placing_wall == true)
 		PlacingWall();
 
+	UpdateSelection();
 	App->render->BlitGameScene();
 
 	//SELECTION
@@ -598,6 +603,13 @@ void j1Scene::HandleInput( SDL_Event event)
 	case SDL_KEYUP:
 		break;
 	}
+}
+
+void j1Scene::UpdateSelection()
+{ 
+	for (std::vector<Entity*>::iterator it = selection.begin(); it != selection.end(); ++it)
+		if ((*it)->GetHp() <= 0)
+			selection.erase(it);
 }
 
 void j1Scene::CreateSceneUI()

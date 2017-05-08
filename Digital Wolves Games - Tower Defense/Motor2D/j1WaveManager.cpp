@@ -5,6 +5,7 @@
 #include "j1Map.h"
 #include "Units.h"
 #include "j1Pathfinding.h"
+#include "p2Log.h"
 
 j1WaveManager::j1WaveManager() : j1Module()
 {
@@ -15,110 +16,48 @@ j1WaveManager::~j1WaveManager() {}
 
 bool j1WaveManager::Start()
 {
-	wave_timer.Start();
-	wave_timer2.Start();
-	wave_time_order.Start();
-	totaltimer.Start();
-	wave_timer5.Start();
-	wave_timer6.Start();
-	wavetime.Start();
-	creation_pos_x1 = ENEMY_CREATION_POS_X1;
-	creation_pos_y1 = ENEMY_CREATION_POS_Y1;
-	creation_pos_x2 = ENEMY_CREATION_POS_X2;
-	creation_pos_y2 = ENEMY_CREATION_POS_Y2;
+	//TODO create waves in grups
+	Wave wave1;
+	UnitGroup group1(U_TWOHANDEDSWORDMAN, 5, LEFT_UP);
+	wave1.PushBack(group1);
+	
+	timer.Start();
+
 	return true;
 }
 
 bool j1WaveManager::Update(float dt)
 {
-	Entity* hey = nullptr;
-	if (totaltimer.ReadSec() > 10) {
-		if (wave_timer.ReadSec() >= WAVE_TIMER)
+	if (timer.ReadSec() >= TIME_BETWEEN_WAVES)
+	{
+		timer.Start();
+		wave_num++;
+		group_num = 0;
+		unit_num = 0;
+		spawning = true;
+	}
+
+	if(spawning)
+	{
+		if (delay_timer.ReadSec() >= TIME_BETWEEN_UNITS)
 		{
-				App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-				App->entity_manager->CreateUnit(U_MILITIA, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-				App->map->WorldToMap(creation_pos_x2, creation_pos_y2);
-				App->entity_manager->CreateUnit(U_MANATARMS, fPoint(creation_pos_x2, creation_pos_y2), S_ENEMY);
-				wave_timer.Start();
-		}
-		if (wave_timer2.ReadSec() >= 2.5)
-		{
-	
-				App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-				App->entity_manager->CreateUnit(U_LONGSWORDMAN, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-				App->map->WorldToMap(creation_pos_x2, creation_pos_y2);
-				App->entity_manager->CreateUnit(U_CHAMPION, fPoint(creation_pos_x2, creation_pos_y2), S_ENEMY);
-				
-				//TESTING
-				App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-				hey = App->entity_manager->CreateUnit(U_CAVALRYARCHER, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-				App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-				hey = App->entity_manager->CreateUnit(U_HEAVYCAVALRYARCHER, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-				App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-				hey = App->entity_manager->CreateUnit(U_KNIGHT, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-				App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-				hey = App->entity_manager->CreateUnit(U_CAVALIER, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-				App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-				hey = App->entity_manager->CreateUnit(U_PALADIN, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-				App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-				hey = App->entity_manager->CreateUnit(U_SIEGERAM, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-				//--
-				wave_timer2.Start();
-	
-		}
-		if (wave_timer2.ReadSec() >= 2)
-		{
-				App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-				hey = App->entity_manager->CreateUnit(U_SPEARMAN, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-				App->map->WorldToMap(creation_pos_x2, creation_pos_y2);
-				hey = App->entity_manager->CreateUnit(U_PIKEMAN, fPoint(creation_pos_x2, creation_pos_y2), S_ENEMY);
-				wave_timer2.Start();
-			
-		
-		}
-		if (totaltimer.ReadSec() > 150 && wave_timer3.ReadSec() >= 1.5)
-		{
-
-			App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-			hey = App->entity_manager->CreateUnit(U_ARCHER, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-			
-			App->map->WorldToMap(creation_pos_x2, creation_pos_y2);
-			hey = App->entity_manager->CreateUnit(U_ARBALEST, fPoint(creation_pos_x2, creation_pos_y2), S_ENEMY);
-		
-			wave_timer3.Start();
-		}
-		if (totaltimer.ReadSec() > 300 && wave_timer5.ReadSec() >= 1.2)
-		{
-
-			App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-
-			App->map->WorldToMap(creation_pos_x2, creation_pos_y2);
-			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x2, creation_pos_y2), S_ENEMY);
-
-			wave_timer5.Start();
-		}
-		if (totaltimer.ReadSec() > 500 && wave_timer4.ReadSec() >= 1)
-		{
-
-			App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-
-			App->map->WorldToMap(creation_pos_x2, creation_pos_y2);
-			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x2, creation_pos_y2), S_ENEMY);
-
-			wave_timer4.Start();
-		}
-		if (totaltimer.ReadSec() > 800 && wave_timer6.ReadSec() >= 0.9)
-		{
-
-			App->map->WorldToMap(creation_pos_x1, creation_pos_y1);
-			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x1, creation_pos_y1), S_ENEMY);
-
-			App->map->WorldToMap(creation_pos_x2, creation_pos_y2);
-			hey = App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x2, creation_pos_y2), S_ENEMY);
-
-			wave_timer6.Start();
+			delay_timer.Start();
+			if (wave_num <= waves.size())
+			{
+				if (unit_num < waves[wave_num].units_vec[group_num].amount)
+				{
+					waves[wave_num].units_vec[group_num].Create();
+					unit_num++;
+				}
+				else
+				{
+					group_num++;
+					waves[wave_num].units_vec[group_num].Create();
+					unit_num = 1;
+				}
+			}
+			else
+				spawning = false;
 		}
 	}
 	return true;
@@ -127,28 +66,40 @@ bool j1WaveManager::Update(float dt)
 bool j1WaveManager::CleanUp()
 {
 	wave_num = 0;
-
+	waves.clear();
 	return true;
 }
 
-int j1WaveManager::CreateWave(int wave, int time)
-{/*
- int row_num = 1;
+Wave::~Wave()
+{
+	units_vec.clear();
+}
 
- if (time > oldtime + 200) {
- App->map->WorldToMap(creation_pos_x, creation_pos_y)
- }
- App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x, creation_pos_y), S_ENEMY);
- }
- for (int i = 0; i < (wave * 5); i++)
- {
- creation_pos_x += space_between_x;
- creation_pos_y += space_between_y;
+void Wave::PushBack(UnitGroup unit_group)
+{
+	units_vec.push_back(unit_group);
+}
 
+fPoint UnitGroup::GetStartingPos(STARTING_ENEMY_POS pos) const
+{
+	//TODO rellenar posiciones
+	switch (pos)
+	{
+	case LEFT_UP:
+		return fPoint(0, 0);
+	case LEFT_DOWN:
+		return fPoint(0, 0);
+	case RIGHT_UP:
+		return fPoint(0, 0);
+	case RIGHT_DOWN:
+		return fPoint(0, 0);
+	}
+}
 
- App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, fPoint(creation_pos_x, creation_pos_y), S_ENEMY);
+UnitGroup::UnitGroup(UNIT_TYPE type, int amount, STARTING_ENEMY_POS start_pos): type(type), amount(amount), start_pos(start_pos)
+{}
 
- }
- */
-	return 1;
+void UnitGroup::Create() const
+{
+	App->entity_manager->CreateUnit(type, GetStartingPos(start_pos), S_ENEMY);
 }

@@ -60,6 +60,8 @@ public:
 
 	void HandleInput(SDL_Event event);
 
+	void UpdateSelection();
+
 private:
 
 

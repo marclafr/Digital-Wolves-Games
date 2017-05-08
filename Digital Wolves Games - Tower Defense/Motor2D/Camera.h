@@ -27,11 +27,12 @@ private:
 	int x_movement;
 	int y_movement;
 	float zoom;
-	int opacity;
-	int frames_to_black;
-	int frames_in_black;
-	int frames_to_light;
-	int opacity_delta;
+
+	//fade to black
+	bool transitioning;
+	float alpha;
+	float wait;
+	float alpha_delta;
 
 public:
 	Camera(Camera& copy);
@@ -45,7 +46,7 @@ public:
 	const int GetHeight() const;
 	const SDL_Rect GetVP() const;
 	const iPoint GetCenter() const;
-	const float GetOpacity() const;
+	const float GetAlpha() const;
 
 	void MouseMove(int x, int y, float dt);
 	
@@ -64,9 +65,13 @@ public:
 
 	SDL_Rect GetZoomedRect(const SDL_Rect &rect) const;
 
-	void FadeToBlack(float secs_to_black, int wait, int secs_to_light);// secs at 60fps
+	void FadeToBlack(float secs_to_black, int wait_secs = 0);// secs at 60fps
+
+	void FadeToLight(float secs_to_light);
 
 	void UpdateCamera();
+
+	void UpdateTransitions();
 };
 
 
