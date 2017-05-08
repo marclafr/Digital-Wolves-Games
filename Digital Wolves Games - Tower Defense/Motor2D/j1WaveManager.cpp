@@ -22,6 +22,7 @@ bool j1WaveManager::Start()
 	wave1.PushBack(group1);
 	
 	timer.Start();
+	spawning = true;
 
 	return true;
 }
@@ -42,7 +43,7 @@ bool j1WaveManager::Update(float dt)
 		if (delay_timer.ReadSec() >= TIME_BETWEEN_UNITS)
 		{
 			delay_timer.Start();
-			if (wave_num <= waves.size())
+			if (wave_num < waves.size())
 			{
 				if (unit_num < waves[wave_num].units_vec[group_num].amount)
 				{

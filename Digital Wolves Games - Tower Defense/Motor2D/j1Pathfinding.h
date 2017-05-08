@@ -49,6 +49,9 @@ public:
 	// Destructor
 	~j1PathFinding();
 
+	//Awake
+	bool Awake();
+
 	// Called before quitting
 	bool CleanUp();
 	void CleanUpJPS();
@@ -81,6 +84,8 @@ public:
 	uchar GetTileAtConstructible_neutral(const iPoint& pos) const;
 
 	PathNode* GetPathNode(int x, int y);
+
+	void Debug();
 
 	//JPS
 
@@ -135,7 +140,6 @@ private:
 	
 	//Chech if pointers are in the list & delete them if not	
 	void DeleteIfNotPushed(PathNode*& ptr);
-
 	//JPS end
 
 private:
@@ -159,6 +163,8 @@ private:
 	PathNode* destination = nullptr;
 	std::list<ForcedNeighbour> frontier;
 	std::vector<PathNode*> visited;
+
+	SDL_Texture* debug_tex;
 };
 
 // ---------------------------------------------------------------------

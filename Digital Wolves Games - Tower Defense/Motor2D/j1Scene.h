@@ -63,8 +63,6 @@ public:
 
 	void HandleInput(SDL_Event event);
 
-	void UpdateSelection();
-
 private:
 
 
@@ -72,8 +70,6 @@ private:
 
 	j1Audio* scene_music;
 	bool selecting = false;
-
-	SDL_Texture* debug_tex;
 
 	SDL_Rect select_rect;
 

@@ -516,3 +516,33 @@ bool j1App::SavegameNow() const
 	want_to_save = false;
 	return ret;
 }
+
+void DebugFeatures::UpdateDebug()
+{
+	if (add_food)
+	{
+		App->scene->resources->AddFood(1000);
+		App->debug_features.add_food = false;
+	}
+	if (add_wood)
+	{
+		App->scene->resources->AddWood(1000);
+		App->debug_features.add_wood = false;
+	}
+
+	if (add_stone)
+	{
+		App->scene->resources->AddStone(1000);
+		App->debug_features.add_stone = false;
+	}
+
+	if (add_gold)
+	{
+		App->scene->resources->AddGold(1000);
+		App->debug_features.add_gold = false;
+	}
+
+	if (pf)
+		App->pathfinding->Debug();
+
+}

@@ -1,6 +1,6 @@
 
 #include "j1App.h"
-
+#include "j1Input.h"
 #include "j1Render.h"
 #include "j1Map.h"
 #include "Camera.h"
@@ -63,6 +63,21 @@ const iPoint Camera::GetCenter() const
 const float Camera::GetAlpha() const
 {
 	return alpha;
+}
+
+void Camera::KeyboardMove(float dt)
+{
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		App->render->camera->MoveUp(floor(450.0f * dt));
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		App->render->camera->MoveDown(floor(450.0f * dt));
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		App->render->camera->MoveLeft(floor(450.0f * dt));
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		App->render->camera->MoveRight(floor(450.0f * dt));
 }
 
 void Camera::MouseMove(int x, int y, float dt)

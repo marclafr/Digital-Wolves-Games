@@ -1,10 +1,11 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "j1App.h"
-#include "j1PathFinding.h"
+#include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Input.h"
 #include "j1Map.h"
+#include "j1PathFinding.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
@@ -15,6 +16,12 @@ j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_L
 j1PathFinding::~j1PathFinding()
 {
 	RELEASE_ARRAY(map);
+}
+
+bool j1PathFinding::Awake()
+{
+	debug_tex = App->tex->Load("maps/path2.png", T_MAP);
+	return true;
 }
 
 // Called before quitting
@@ -810,6 +817,19 @@ void j1PathFinding::DeleteIfNotPushed(PathNode *& ptr)
 	{
 		delete ptr;
 		ptr = nullptr;
+	}
+}
+
+void j1PathFinding::Debug()
+{
+	iPoint pos;
+
+	for (std::vector<iPoint>::const_iterator item = last_path.begin();
+		item != last_path.end();
+		++item)
+	{
+		pos = App->map->MapToWorld(item->x, item->y);
+		App->render->PushInGameSprite(debug_tex, pos.x - 32, pos.y - 32);
 	}
 }
 

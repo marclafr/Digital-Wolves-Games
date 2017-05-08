@@ -48,6 +48,7 @@ public:
 	const iPoint GetCenter() const;
 	const float GetAlpha() const;
 
+	void KeyboardMove(float dt);
 	void MouseMove(int x, int y, float dt);
 	
 	bool InsideRenderTarget(int x, int y);
