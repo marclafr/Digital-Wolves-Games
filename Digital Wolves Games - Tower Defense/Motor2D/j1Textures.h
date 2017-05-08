@@ -24,6 +24,7 @@ enum TextureID
 	T_RESOURCE,
 	T_ARROW_BOMB,
 	T_FIRE,
+	T_FIRE_FLOOR,
 
 	//Units:
 	T_VILLAGER,

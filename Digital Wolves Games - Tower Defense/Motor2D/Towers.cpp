@@ -9,7 +9,7 @@
 
 Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
-	anim_fire = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
+	anim_fire_try = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
 	//TODO: anim_ice_floor = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
 
 	switch (t_type)
@@ -188,8 +188,8 @@ void Tower::PrintElementTerrain(TOWER_ELEMENT_TYPE element, fPoint center, int r
 {
 	SDL_Rect rect;
 	iPoint pivot;
-	anim_fire->Update(rect, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+	anim_fire_try->Update(rect, pivot);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 
 /*
 	for (int i = 0; i < 3; i++)
