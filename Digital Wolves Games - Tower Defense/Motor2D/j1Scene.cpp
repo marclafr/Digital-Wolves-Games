@@ -222,7 +222,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		App->render->camera->MoveRight(floor(450.0f * dt));
 
-	App->render->camera->MouseMove(x,y);
+	App->render->camera->MouseMove(x, y, dt);
 
 	return true;
 }
@@ -553,6 +553,12 @@ void j1Scene::HandleInput( SDL_Event event)
 				selecting = true;
 				App->entity_manager->CheckClick(x,y);
 			}
+
+		if (event.button.button == MK_RIGHT)
+		{
+			placing_wall = false;
+			placing_tower = T_NO_TYPE;
+		}
 		break;
 
 	case SDL_MOUSEBUTTONUP:
@@ -570,8 +576,13 @@ void j1Scene::HandleInput( SDL_Event event)
 			App->render->camera->Move(iPoint(1200, -250), 10);
 
 		//building construction
-		placing_wall = false;
-		placing_tower = T_NO_TYPE;
+		if (event.button.button == SDL_SCANCODE_1
+			|| event.button.button == SDL_SCANCODE_2
+			|| event.button.button == SDL_SCANCODE_3)
+		{
+			placing_wall = false;
+			placing_tower = T_NO_TYPE;
+		}
 
 		if (event.button.button == SDL_SCANCODE_1)
 			placing_tower = T_BASIC_TOWER;	

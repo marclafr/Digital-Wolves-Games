@@ -65,9 +65,16 @@ const float Camera::GetOpacity() const
 	return opacity;
 }
 
-void Camera::MouseMove(int x, int y)
+void Camera::MouseMove(int x, int y, float dt)
 {
-	//TODO 8 opciones de movimiento segun la pose del raton
+	if (x - view_port.x < MARGIN)
+		MoveLeft(450.0f * dt);
+	if (abs(x - (view_port.x + view_port.w)) < MARGIN)
+		MoveRight(450.0f * dt);
+	if (abs(y - view_port.y) < MARGIN)
+		MoveUp(450.0f * dt);
+	if (abs(y - (view_port.y + view_port.h)) < MARGIN)
+		MoveDown(450.0f * dt);
 }
 
 bool Camera::InsideRenderTarget(int x, int y)

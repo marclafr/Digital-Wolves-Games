@@ -1,5 +1,5 @@
 #include "QuadTree.h"
-
+/*
 void QuadTreeEndNode::AddEntity(Entity * entity)
 {
 	for (int i = 0; i < END_NODE_SIZE; i++)
@@ -12,14 +12,22 @@ void QuadTreeEndNode::AddEntity(Entity * entity)
 
 		if (i == (END_NODE_SIZE - 1))
 		{
-			//SubDivide();
+			SubDivide();
 		}
 	}
 }
 
 void QuadTreeEndNode::SubDivide()
 {
+	
 }
 
-QuadTreeNode::QuadTreeNode(SDL_Rect area, QuadTreeNode* parent): area(area), parent()
+QuadTreeNodeBaseClass::QuadTreeNodeBaseClass(SDL_Rect area, QuadTreeNodeBaseClass* parent): area(area), parent(parent)
 {}
+
+QuadTreeBranchNode::QuadTreeBranchNode(SDL_Rect area, QuadTreeNodeBaseClass * parent) : QuadTreeBranchNode(area, parent)
+{
+	for (int i = 0; i < 4; i++)
+		childs[i] = nullptr;
+}
+*/

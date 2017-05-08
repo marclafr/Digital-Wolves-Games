@@ -10,20 +10,14 @@ class QuadTreeNode
 {
 private:
 	QuadTreeNode* parent = nullptr;
+	QuadTreeNode* childs[4];
 	SDL_Rect area;
-public:
-	QuadTreeNode(SDL_Rect area, QuadTreeNode* parent);
-
-};
-
-class QuadTreeEndNode : public QuadTreeNode
-{
-private:
 	Entity* entities[END_NODE_SIZE];
 
 public:
+	QuadTreeNode(SDL_Rect area, QuadTreeNode* parent);
+	
 	void AddEntity(Entity* entity);
-	void SubDivide();
 };
 
 class QuadTree
