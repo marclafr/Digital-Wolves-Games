@@ -1,9 +1,3 @@
-#define MARK_BTN { 220, 666, 29, 29 }
-#define BAR_LIFE_CENTER 16
-
-#define BAR_LIFE_PIXELS 29
-#define BAR_LIFE { 999, 861, 29, 4 }
-
 #include "PanelInfoGroupSelection.h"
 
 #include "j1App.h"
@@ -13,6 +7,12 @@
 #include "Camera.h"
 
 #include "UIGetEntitiesInfo.h"
+
+#define MARK_BTN { 220, 666, 29, 29 }
+#define BAR_LIFE_CENTER 16
+
+#define BAR_LIFE_PIXELS 29
+#define BAR_LIFE { 999, 861, 29, 4 }
 
 GroupSelection::~GroupSelection()
 {
@@ -48,7 +48,8 @@ void GroupSelection::PrepareUnitSelection()
 		entity_selected* add_entity_selected = new entity_selected();
 		Unit* selected = (Unit*)*u_item;
 
-		UIButton* new_btn = App->uimanager->AddButton(MARK_BTN, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
+		iPoint u_position(GetUnitIconPositionFromAtlas(selected->GetUnitType()));
+		UIButton* new_btn = App->uimanager->AddButton(MARK_BTN, {u_position.x,u_position.y, ICON_SIZE, ICON_SIZE});
 		add_entity_selected->btn_selected = new_btn;
 		add_entity_selected->pointer_entity = (Entity*)selected;
 		es_selection.push_back(add_entity_selected);
@@ -69,18 +70,37 @@ void GroupSelection::PrepareNoUnitSelection()
 		entity_selected* add_entity_selected = new entity_selected();
 		Building* b_selected = nullptr;
 		Resources* r_selected = nullptr;
+		Tower* t_selected = nullptr;
 
 		UIButton* new_btn = nullptr;
+		iPoint atlas_icon{0,0};
 		switch ((*e_item)->GetEntityType())
 		{
 		case E_BUILDING:
 			b_selected = (Building*)*e_item;
-			new_btn = App->uimanager->AddButton(MARK_BTN, GetBuildingIconPositionFromAtlas(b_selected->GetBuildingType()));
-			break;
 
+			switch (b_selected->GetBuildingType())
+			{
+			case B_TURRET:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_CANNON:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			default:
+				atlas_icon = GetBuildingIconPositionFromAtlas(b_selected->GetBuildingType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			}
+			break;
 		case E_RESOURCE:
 			r_selected = (Resources*)*e_item;
-			new_btn = App->uimanager->AddButton(MARK_BTN, GetResourceIconPositionFromAtlas(r_selected->GetResourceType()));
+			atlas_icon = GetResourceIconPositionFromAtlas(r_selected->GetResourceType());
+			new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
 			break;
 		}
 		add_entity_selected->btn_selected = new_btn;

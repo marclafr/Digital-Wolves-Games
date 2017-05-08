@@ -16,8 +16,6 @@
 #include "j1Collision.h"
 #include "j1Score.h"
 #include "ProjectileManager.h"
-#include "Units.h"
-#include "Resources.h"
 #include "j1SceneManager.h"
 #include "j1MainMenu.h"
 #include "j1ScoreScene.h"
@@ -29,10 +27,8 @@
 #include "UIHUDResources.h"
 #include "UIHUDTownHallBarLife.h"
 #include "UICheckbutton.h"
-#include "UIGetEntitiesInfo.h"
 #include "j1UIManager.h"
-#include "j1Investigations.h"
-#include "Towers.h"
+#include "UIGetEntitiesInfo.h"
 
 #define RECT_INGAME_WITHOUT_UI {0, 27, 1360, 624}
 
@@ -635,13 +631,15 @@ void j1Scene::CreateSceneUI()
 	//Panel Buttons
 	UIHUDPanelButtons* panel = App->uimanager->AddPanelButtons();
 		//Buildings
-	panel->AddButton(BP_TOWNHALL, iPoint(0, 0), iPoint(826, 910), new PlaceBasicTowerTask());
-	panel->AddButton(BP_TOWNHALL, iPoint(1, 0), iPoint(826, 910), new PlaceBombardTowerTask());
-	panel->AddButton(BP_TOWNHALL, iPoint(2, 0), iPoint(826, 910), new PlaceWallTask());
+	panel->AddButton(BP_TOWNHALL, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BASIC_TOWER), new PlaceBasicTowerTask());
+	panel->AddButton(BP_TOWNHALL, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_TOWER), new PlaceBombardTowerTask());
+	panel->AddButton(BP_TOWNHALL, iPoint(2, 0), GetBuildingIconPositionFromAtlas(B_WOOD_WALL), new PlaceWallTask());
 		//Units
-	panel->AddButton(BP_TOWNHALL,iPoint(0, 1), iPoint(826, 910), new TrainUnitTask(U_ARCHER));
-	panel->AddButton(BP_TOWNHALL, iPoint(1, 1), iPoint(826, 910), new TrainUnitTask(U_TWOHANDEDSWORDMAN));
-	panel->AddButton(BP_TOWNHALL, iPoint(2, 1), iPoint(826, 910), new TrainUnitTask(U_KNIGHT));
+	panel->AddButton(BP_TOWNHALL, iPoint(0, 1), GetUnitIconPositionFromAtlas(U_CHAMPION), new TrainUnitTask(U_CHAMPION));
+	panel->AddButton(BP_TOWNHALL, iPoint(1, 1), GetUnitIconPositionFromAtlas(U_HEAVYCAVALRYARCHER), new TrainUnitTask(U_HEAVYCAVALRYARCHER));
+	panel->AddButton(BP_TOWNHALL, iPoint(2, 1), GetUnitIconPositionFromAtlas(U_PALADIN), new TrainUnitTask(U_PALADIN));
+	panel->AddButton(BP_TOWNHALL,iPoint(3, 1), GetUnitIconPositionFromAtlas(U_ARBALEST), new TrainUnitTask(U_ARBALEST));
+	panel->AddButton(BP_TOWNHALL, iPoint(3, 1), GetUnitIconPositionFromAtlas(U_TWOHANDEDSWORDMAN), new TrainUnitTask(U_TWOHANDEDSWORDMAN));
 
 	//Panel Info
 	App->uimanager->AddPanelInfo();
