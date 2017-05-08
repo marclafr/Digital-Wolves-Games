@@ -45,9 +45,6 @@ Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float Tim
 		projectile_anim = nullptr;
 		break;
 	}
-
-	//anim_fire_try = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
-	//TODO: anim_ice_floor = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
 }
 
 Projectile::~Projectile()
@@ -78,7 +75,7 @@ void Projectile::Update()
 	if (ProjectilePos > 1)
 		ProjectilePos = 1;
 
-	if (Target != nullptr && ProjectilePos == 1)
+	if (Target != nullptr && ProjectilePos == 1 && dest_reached == false)
 	{
 		switch (projectile_type)
 		{
@@ -118,7 +115,8 @@ void Projectile::Draw()
 	//alfa = Math.atan2(by - ay, bx - ax);
 	if (projectile_anim != nullptr)
 		projectile_anim->Update(rect, pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
+	if (dest_reached == false)
+		App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
 }
 
 int Projectile::GetProjectilePos() const
@@ -154,24 +152,16 @@ void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)
 	projectile_anim->Update(rect, pivot);
 	switch (element)
 	{
-	//TODO: REMOVE CANNONBALL
 	case P_CANNONBALL:
 	case P_FIRE_CANNONBALL:
+	case P_ICE_CANNONBALL:
+	case P_AIR_CANNONBALL:
 		App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 		break;
-	case P_ICE_CANNONBALL:
-		//App->render->PushInGameSprite(App->tex->GetTexture(T_ICE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+	default:
 		break;
 	}
-	/*
-	for (int i = 0; i < 3; i++)
-	{
-	int rand_distance = rand() % radius;
-	float rand_angle = rand() % 360;
-	rand_angle *= 3.14f / 360;
-	int X = rand_distance*sin(rand_angle);
-	int Y = rand_distance*cos(rand_angle);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE), center.x + X, center.y + Y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
-	}
-	*/
+
+	//TODO: if (element == P_ICE_CANNONBALL)
+		//App->render->PushInGameSprite(App->tex->GetTexture(T_ICE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 }

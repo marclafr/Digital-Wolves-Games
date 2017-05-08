@@ -20,7 +20,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 300;
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;
-		projectile_spd = 50;
+		projectile_spd = 60;
 		break;
 
 	case T_BOMBARD_TOWER:
@@ -31,7 +31,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 300;
 		tower_type = T_BOMBARD_TOWER;
 		projectile_type = P_CANNONBALL;
-		projectile_spd = 150;
+		projectile_spd = 75;
 		break;
 
 	default:
