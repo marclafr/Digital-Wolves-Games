@@ -133,9 +133,7 @@ bool Circle::Overlap(const Circle* target) const
 	int deltaX = position.x - target->GetPosition().x;
 	int deltaY = position.y - target->GetPosition().y;
 
-	bool ret = abs(deltaX) < radius && abs(deltaY) < radius*sin(x_angle);
-
-	return ret;
+	return (abs(deltaX) < radius && abs(deltaY) < radius*sin(x_angle));
 }
 bool Circle::Intersects(const Rectng * target) const
 {

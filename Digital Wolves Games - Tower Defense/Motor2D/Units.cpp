@@ -38,8 +38,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 350;
 		vision_range = 350;
 		unit_class = C_ARCHER;
-		//unit_circle = Circle(GetPosition(), 25);
-		unit_circle.SetRad(25);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_HEAVYCAVALRYARCHER);
 		else
@@ -59,7 +58,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle.SetRad(10);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_MILITIA);
 		else
@@ -77,7 +76,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle.SetRad(10);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_MANATARMS);
 		else
@@ -94,7 +93,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle.SetRad(10);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_LONGSWORDMAN);
 		else
@@ -111,7 +110,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle.SetRad(10);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_TWOHANDEDSWORDMAN);
 		else
@@ -128,7 +127,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle.SetRad(10);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_CHAMPION);
 		else
@@ -145,7 +144,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle.SetRad(10);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_SPEARMAN);
 		else
@@ -162,7 +161,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle.SetRad(10);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_PIKEMAN);
 		else
@@ -182,7 +181,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 150;
 		vision_range = 300;
 		unit_class = C_ARCHER;
-		unit_circle.SetRad(10);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_ARCHER);
 		else
@@ -200,7 +199,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 150;
 		vision_range = 300;
 		unit_class = C_ARCHER;
-		unit_circle.SetRad(10);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_ARBALEST);
 		else
@@ -217,7 +216,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 200;
 		vision_range = 250;
 		unit_class = C_ARCHER;
-		unit_circle.SetRad(25);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_CAVALRYARCHER);
 		else
@@ -234,7 +233,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 200;
 		vision_range = 250;
 		unit_class = C_ARCHER;
-		unit_circle.SetRad(25);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_HEAVYCAVALRYARCHER);
 		else
@@ -254,7 +253,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
-		unit_circle.SetRad(25);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_PALADIN);
 		else
@@ -271,7 +270,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
-		unit_circle.SetRad(25);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_KNIGHT);
 		else
@@ -288,7 +287,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
-		unit_circle.SetRad(25);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_CAVALIER);
 		else
@@ -308,7 +307,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		range = 30;
 		vision_range = 100;
 		unit_class = C_SIEGE;
-		unit_circle.SetRad(35);
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 30);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_SIEGERAM);
 		else
@@ -379,7 +378,7 @@ void Unit::Update()
 bool Unit::Move()
 {
 	this->SetPosition(GetX() + move_vector.x*speed, GetY() + move_vector.y*speed);
-
+	this->unit_circle.SetPosition({ (int)GetX(), (int)GetY() });
 	if (path_objective.DistanceTo(iPoint(GetX(), GetY())) < 3)
 	{
 		//center the unit to the tile
@@ -684,6 +683,11 @@ const int Unit::GetAttack() const
 const int Unit::GetRange() const
 {
 	return range;
+}
+
+const Circle Unit::GetUnitCircle() const
+{
+	return unit_circle;
 }
 
 const int Unit::GetVisionRange() const
