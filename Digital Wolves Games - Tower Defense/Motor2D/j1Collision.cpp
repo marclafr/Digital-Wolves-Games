@@ -49,6 +49,7 @@ bool j1Collision::DoUnitsIntersect(Unit* unit1, Unit* unit2)
 	float distance_x = unit1->GetX() - unit2->GetX();
 	float distance_y = unit1->GetY() - unit2->GetY();
 	return (sqrt(distance_x * distance_x + distance_y * distance_y) < unit1->GetUnitRadius() + unit2->GetUnitRadius());
+	//return unit1->unit_circle.Intersects(&unit2->unit_circle);
 }
 
 iPoint j1Collision::FindClosestWalkable(Unit* unit)
