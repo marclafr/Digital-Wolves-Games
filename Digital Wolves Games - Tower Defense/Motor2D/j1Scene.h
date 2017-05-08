@@ -20,7 +20,10 @@ enum PlacingWallDirection {
 	SOUTH,
 	WEST,
 	EAST,
-	DIAGONAL,
+	NORTH_WEST,
+	NORTH_EAST,
+	SOUTH_WEST,
+	SOUTH_EAST
 };
 
 class j1Scene : public j1Module
