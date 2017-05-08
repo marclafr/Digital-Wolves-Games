@@ -1,6 +1,7 @@
+#include <math.h>
 #include "Projectile.h"
 #include "j1Animation.h"
-#include <math.h>
+#include "IsoPrimitives.h"
 
 
 Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float TimeInSecs, int Startheight, int Curveheight, PROJECTILE_TYPE type) : StartPos(initialpos), Damage(damage), Target(target), StartHeight(Startheight), CurveHeight(Curveheight), projectile_type(type)
@@ -90,7 +91,7 @@ void Projectile::Update()
 		case P_ICE_CANNONBALL:
 		case P_AIR_CANNONBALL:
 			Target->Damaged(Damage);
-			AreaDamage(Damage, Target->GetPosition(), AREA_DMG_RADIUS);
+			AreaDamage(Damage, { (int)Target->GetX(), (int)Target->GetY() }, AREA_DMG_RADIUS);
 			element_terrain_pos = Target->GetPosition();
 			delete projectile_anim;
 			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
@@ -100,6 +101,8 @@ void Projectile::Update()
 		default:
 			break;
 		}
+		//TODO:if (projectile_type == P_ICE_ARROW)
+			//Target->SlowUnit();
 	}
 
 	Draw();
@@ -139,10 +142,10 @@ AnimationManager * Projectile::GetProjectileAnim()
 	return projectile_anim;
 }
 
-void Projectile::AreaDamage(int damage, fPoint center, int radius)
+void Projectile::AreaDamage(int damage, iPoint center, int radius)
 {
-	//TODO: Create elipse and check if any unit is inside, if so, damage them.
-
+	Circle circle(center, radius);
+	//TODO: when quadrtree is finished
 }
 
 void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)

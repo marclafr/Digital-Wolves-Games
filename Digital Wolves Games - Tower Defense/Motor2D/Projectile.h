@@ -46,7 +46,7 @@ private:
 	int CurveHeight;
 	AnimationManager* projectile_anim = nullptr;
 
-	void AreaDamage(int damage, fPoint center, int radius);
+	void AreaDamage(int damage, iPoint center, int radius);
 
 	AnimationManager* anim_ice_floor = nullptr;
 	AnimationManager* anim_fire_try = nullptr;
