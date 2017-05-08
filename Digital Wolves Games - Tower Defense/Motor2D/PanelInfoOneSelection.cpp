@@ -51,7 +51,8 @@ void OneSelection::PrepareUnitInfo()
 	Unit* selected = (Unit*)e_ptr;
 
 	image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	image->Set({ 231, 667, 29, 33 }, GetUnitIconPositionFromAtlas(selected->GetUnitType()));
+	iPoint u_position(GetUnitIconPositionFromAtlas(selected->GetUnitType()));
+	image->Set({ 231, 667, 29, 33 }, { u_position.x,u_position.y, ICON_SIZE, ICON_SIZE });
 
 	name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	name->Set(231, 653, GetUnitName(selected->GetUnitType()), BLACK);
@@ -78,25 +79,59 @@ void OneSelection::PrepareUnitInfo()
 
 void OneSelection::PrepareBuildInfo()
 {
-	Building* selected = (Building*)e_ptr;
+	Building* b_selected = (Building*)e_ptr;
+	Tower* t_selected = nullptr;
+	iPoint atlas_position{ 0,0 };
+	std::string stats;
 
-	BUILDING_TYPE b_type_selected = selected->GetBuildingType();
-
-	image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	image->Set({ 231, 667, 29, 33 }, GetBuildingIconPositionFromAtlas(b_type_selected));
-
-	name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
-	name->Set(231, 653, GetBuildingName(b_type_selected), BLACK);
-
-	std::string stats = std::to_string(selected->GetHp());
-	life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
-	life->Set(262, 690, stats.c_str(), BLACK);
-
-	if (selected->GetBuildingType() == b_type_selected)
+	switch (b_selected->GetBuildingType())
 	{
-		stats = std::to_string(selected->GetRange());
+	case B_TURRET:
+		t_selected = (Tower*)e_ptr;
+		image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
+		atlas_position = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+		image->Set({ 231, 667, 29, 33 }, { atlas_position.x, atlas_position.y, ICON_SIZE, ICON_SIZE });
+
+		name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		name->Set(231, 653, GetTowerName(t_selected->GetTowerType()), BLACK);
+
+		stats = std::to_string(t_selected->GetHp());
+		life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		life->Set(262, 690, stats.c_str(), BLACK);
+
+		stats = std::to_string(t_selected->GetRange());
 		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 		range->Set(272, 710, stats.c_str(), BLACK);
+		break;
+	case B_CANNON:
+		t_selected = (Tower*)e_ptr;
+		image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
+		atlas_position = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+		image->Set({ 231, 667, 29, 33 }, { atlas_position.x, atlas_position.y, ICON_SIZE, ICON_SIZE });
+
+		name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		name->Set(231, 653, GetTowerName(t_selected->GetTowerType()), BLACK);
+
+		stats = std::to_string(t_selected->GetHp());
+		life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		life->Set(262, 690, stats.c_str(), BLACK);
+
+		stats = std::to_string(t_selected->GetRange());
+		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		range->Set(272, 710, stats.c_str(), BLACK);
+		break;
+	default:
+		image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
+		atlas_position = GetBuildingIconPositionFromAtlas(b_selected->GetBuildingType());
+		image->Set({ 231, 667, 29, 33 }, { atlas_position.x, atlas_position.y, ICON_SIZE, ICON_SIZE });
+
+		name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		name->Set(231, 653, GetBuildingName(b_selected->GetBuildingType()), BLACK);
+
+		stats = std::to_string(b_selected->GetHp());
+		life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		life->Set(262, 690, stats.c_str(), BLACK);
+		break;
 	}
 }
 
@@ -116,8 +151,9 @@ void OneSelection::PrepareResourceInfo()
 
 	RESOURCE_TYPE r_type_selected = selected->GetResourceType();
 
-	image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
-	image->Set({ 231, 667, 29, 33 }, GetResourceIconPositionFromAtlas(r_type_selected));
+	image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);			
+	iPoint e_position(GetResourceIconPositionFromAtlas(selected->GetResourceType()));
+	image->Set({ 231, 667, 29, 33 }, { e_position.x, e_position.y, ICON_SIZE, ICON_SIZE });
 
 	name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 	name->Set(231, 653, GetResourceName(r_type_selected), BLACK);

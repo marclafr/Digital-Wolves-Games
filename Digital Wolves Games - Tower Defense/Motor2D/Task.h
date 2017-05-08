@@ -199,8 +199,8 @@ public:
 
 	bool Execute()
 	{
-		if (App->scene->resources->CanTrainSoldier(U_TWOHANDEDSWORDMAN))
-			App->scene->resources->TrainSoldier(U_TWOHANDEDSWORDMAN);
+		if (App->scene->resources->CanTrainSoldier(u_type))
+			App->scene->resources->TrainSoldier(u_type);
 		return true;
 	}
 

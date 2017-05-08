@@ -11,8 +11,6 @@
 
 #define RESOURCES_HP 10
 
-#define ICON_SIZE 25
-
 #define Y_RESOURCES 962
 #define X_WALLS 774
 #define X_PUBLIC_BUILDINGS 800
@@ -24,43 +22,43 @@
 
 #include "UIGetEntitiesInfo.h"
 
-SDL_Rect GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
+iPoint GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
 {
-	SDL_Rect ret;
+	iPoint ret{0,0};
 
 	switch (type)
 	{
 	case U_TWOHANDEDSWORDMAN:
-		ret = { 774, 962, ICON_SIZE, ICON_SIZE };
+		ret = { 774, 962 };
 		break;
 
 	case U_HEAVYCAVALRYARCHER:
-		ret = { 956, 936, ICON_SIZE, ICON_SIZE };
+		ret = { 956, 936};
 		break;
 
 	case U_GOD:
-		ret = { 956, 936, ICON_SIZE, ICON_SIZE };
+		ret = { 956, 936};
 		break;
 
 	case U_SIEGERAM:
-		ret = { 748, 962, ICON_SIZE, ICON_SIZE };
+		ret = { 748, 962};
 		break;
 
 	case U_PALADIN:
-		ret = { 930, 910, ICON_SIZE, ICON_SIZE };
+		ret = { 930, 910};
 		break;
 
 	case U_ARBALEST:
-		ret = { 930,936, ICON_SIZE, ICON_SIZE };
+		ret = { 930,936};
 		break;
 
 	case U_CHAMPION:
-		ret = { 982,936, ICON_SIZE,ICON_SIZE };
+		ret = { 982,936};
 		break;
 
 	default:
 		//LOG("Error UNIT TYPE SDL_Rect NULL (UIManager)");
-		ret = { 0, 0, 0, 0 };
+		ret = { 0, 0};
 		break;
 	}
 
@@ -232,27 +230,27 @@ const char* GetUnitPrice(const UNIT_TYPE type)
 	return ret;
 }
 
-SDL_Rect GetResourceIconPositionFromAtlas(const RESOURCE_TYPE type)
+iPoint GetResourceIconPositionFromAtlas(const RESOURCE_TYPE type)
 {
-	SDL_Rect ret;
+	iPoint ret{0,0};
 
 	switch (type)
 	{
 	case R_WOOD:
-		ret = { 852, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
+		ret = { 852, Y_RESOURCES};
 		break;
 	case R_STONE:
-		ret = { 878, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
+		ret = { 878, Y_RESOURCES};
 		break;
 	case R_FOOD:
-		ret = { 826, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
+		ret = { 826, Y_RESOURCES};
 		break;
 	case R_GOLD:
-		ret = { 904, Y_RESOURCES, ICON_SIZE, ICON_SIZE };
+		ret = { 904, Y_RESOURCES};
 		break;
 	default:
 		//LOG("Error Resource TYPE SDL_Rect NULL (UIManager)");
-		ret = { 0, 0, 0, 0 };
+		ret = { 0, 0};
 		break;
 	}
 
@@ -286,31 +284,31 @@ const char * GetResourceName(const RESOURCE_TYPE type)
 	return ret;
 }
 
-SDL_Rect GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
+iPoint GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
 {
-	SDL_Rect ret;
+	iPoint ret;
 
 	switch (type)
 	{
 	case B_WOOD_WALL:
-		ret = { X_WALLS, 936, ICON_SIZE, ICON_SIZE };
+		ret = { X_WALLS, 936};
 		break;
 
 	case B_STONE_WALL:
-		ret = { X_WALLS, 910, ICON_SIZE, ICON_SIZE };
+		ret = { X_WALLS, 910};
 		break;
 
 	case B_TOWNHALL:
-		ret = { X_PUBLIC_BUILDINGS, 936, ICON_SIZE, ICON_SIZE };
+		ret = { X_PUBLIC_BUILDINGS, 936};
 		break;
 
 	case B_UNIVERSITY:
-		ret = { X_PUBLIC_BUILDINGS, 910, ICON_SIZE, ICON_SIZE };
+		ret = { X_PUBLIC_BUILDINGS, 910};
 		break;
 
 	default:
 		//LOG("Error BUilding TYPE SDL_Rect NULL (UIManager)");
-		ret = { 0, 0, 0, 0 };
+		ret = { 0, 0};
 		break;
 	}
 
@@ -396,38 +394,38 @@ const char * GetBuildingPrice(const BUILDING_TYPE type)
 	return ret;
 }
 
-SDL_Rect GetTowerIconPositionFromAtlas(const TOWER_TYPE type)
+iPoint GetTowerIconPositionFromAtlas(const TOWER_TYPE type)
 {
-	SDL_Rect ret{ 0,0,0,0 };
+	iPoint ret{ 0,0};
 
 	switch (type)
 	{
 	case T_BASIC_TOWER:
-		ret = { 826,Y_TOWERS, ICON_SIZE, ICON_SIZE };
+		ret = { 826,Y_TOWERS};
 		break;
 	case T_FIRE_TOWER:
-		ret = { 852,Y_TOWERS, ICON_SIZE, ICON_SIZE };
+		ret = { 852,Y_TOWERS};
 		break;
 	case T_ICE_TOWER:
-		ret = { 878,Y_TOWERS, ICON_SIZE, ICON_SIZE };
+		ret = { 878,Y_TOWERS};
 		break;
 	case T_AIR_TOWER:
-		ret = { 904,Y_TOWERS, ICON_SIZE, ICON_SIZE };
+		ret = { 904,Y_TOWERS};
 		break;
 	case T_BOMBARD_TOWER:
-		ret = { 826,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
+		ret = { 826,Y_BOMBARDS};
 		break;
 	case T_BOMBARD_FIRE_TOWER:
-		ret = { 852,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
+		ret = { 852,Y_BOMBARDS};
 		break;
 	case T_BOMBARD_ICE_TOWER:
-		ret = { 878,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
+		ret = { 878,Y_BOMBARDS};
 		break;
 	case T_BOMBARD_AIR_TOWER:	
-		ret = { 878,Y_BOMBARDS, ICON_SIZE, ICON_SIZE };
+		ret = { 878,Y_BOMBARDS};
 		break;
 	default:
-		ret = { 0,0, 0, 0 };
+		ret = { 0,0};
 		break;
 	}
 
@@ -437,6 +435,19 @@ SDL_Rect GetTowerIconPositionFromAtlas(const TOWER_TYPE type)
 const char* GetTowerName(const TOWER_TYPE type)
 {
 	char* ret = nullptr;
+
+	switch (type)
+	{
+	case T_BASIC_TOWER:
+		ret = "Basic Tower";
+		break;
+	case T_BOMBARD_TOWER:
+		ret = "Bombard Tower";
+		break;
+	default:
+		ret = "Turret Error";
+		break;
+	}
 
 	return ret;
 }
@@ -448,7 +459,7 @@ const char* GetSideName(const Side type)
 	switch (type)
 	{
 	case S_ALLY:
-		ret = "";
+		ret = "Ally";
 		break;
 	case S_ENEMY:
 		ret = "Enemy";
@@ -730,9 +741,9 @@ const bool isBuilded(const Entity * build)
 	return false;
 }
 
-SDL_Rect GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type)
+iPoint GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type)
 {
-	SDL_Rect ret{ 0,0,0,0 };
+	iPoint ret{ 0,0};
 
 
 	return ret;
