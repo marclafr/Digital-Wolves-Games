@@ -54,7 +54,7 @@ public:
 	Tower(TOWER_TYPE t_type, fPoint pos);
 	~Tower();
 	void UpgradeTurret(TOWER_ELEMENT_TYPE type);
-	void Update(); // defines order
+	void Update(float dt); // defines order
 	void AI();
 	void Draw();
 	bool attacking = false;

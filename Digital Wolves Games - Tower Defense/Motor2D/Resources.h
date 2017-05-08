@@ -34,7 +34,7 @@ public:
 	Resources(RESOURCE_TYPE b_type, fPoint pos);
 	~Resources();
 
-	void Update(); // defines order
+	void Update(float dt); // defines order
 
 	virtual void AI();
 	virtual void Draw();

@@ -240,7 +240,7 @@ bool j1EntityManager::Update(float dt)
 	int size = entity_array.size(); //error de compilador o algo, si es posa entity_array.size() dins el for canvia els valors dels rects de textures
 	for (int i = 0; i < size; i++)
 	{
-		entity_array[i]->Update();
+		entity_array[i]->Update(dt);
 	}
 	
 	//a través de la lista donde 

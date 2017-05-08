@@ -43,18 +43,20 @@ private:
 	enum TextureID texture_id;
 	enum Side side;
 	float Arrow_pos = 0; //It goes from 0 to 1
+	float ai_dt = 0;
 public:
 	Entity(ENTITY_TYPE entity_type, fPoint pos, Side side);
 
 	~Entity();
 
-	virtual void Update() = 0;
+	virtual void Update(float dt) = 0;
 	virtual void AI() = 0;
 	virtual void Draw() = 0;
 
-
 	virtual void Die();//to_delete = true
 
+	void DT(float dt);
+	void ResetDT();
 
 	//Geters
 	bool ToDelete() const;
@@ -64,6 +66,7 @@ public:
 	float GetArrowPos() const;
 	void ResetArrowPos();
 	void UpdateArrow(int StartHeight, fPoint TargetPos, int CurveHeight, float TimeSecs);
+
 	ENTITY_TYPE GetEntityType() const;
 	ENTITY_STATUS GetEntityStatus();
 	const int GetHp() const;
@@ -77,6 +80,8 @@ public:
 	const SDL_Rect GetRect() const;
 	const TextureID GetTextureID() const;
 	const Side GetSide() const;
+	const float GetAIDT() const;
+
 	void Attack(Entity*);
 	void Damaged(int dmg);
 	void UpgradeUnit(int plushealth);

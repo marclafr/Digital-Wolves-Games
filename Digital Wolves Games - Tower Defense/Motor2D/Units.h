@@ -116,7 +116,7 @@ public:
 	Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority);
 	~Unit();
 	
-	void Update(); // defines order
+	void Update( float dt); // defines order
 
 	bool Move();
 	void AI();

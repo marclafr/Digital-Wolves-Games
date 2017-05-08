@@ -67,7 +67,7 @@ Building::~Building()
 {
 }
 
-void Building::Update()
+void Building::Update(float dt)
 {
 	Draw();
 
