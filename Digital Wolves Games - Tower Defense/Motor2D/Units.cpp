@@ -33,7 +33,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(1000);
 		attack = 100;
 		SetArmor(50);
-		speed = 5.0f;
+		speed = 15.0f;
 		rate_of_fire = 15.0f;
 		range = 350;
 		vision_range = 350;
@@ -53,7 +53,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(100);
 		attack = 8;
 		SetArmor(1);
-		speed = 1.0f;
+		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -71,7 +71,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(100);
 		attack = 8;
 		SetArmor(1);
-		speed = 1.0f;
+		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -88,7 +88,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(100);
 		attack = 8;
 		SetArmor(1);
-		speed = 1.0f;
+		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -105,7 +105,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(170);
 		attack = 12;
 		SetArmor(1);
-		speed = 1.0f;
+		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -122,7 +122,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(150);
 		attack = 15;
 		SetArmor(3);
-		speed = 1.0f;
+		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -139,7 +139,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(100);
 		attack = 8;
 		SetArmor(1);
-		speed = 1.0f;
+		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -156,7 +156,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(100);
 		attack = 8;
 		SetArmor(1);
-		speed = 1.0f;
+		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -176,7 +176,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(100);
 		attack = 8;
 		SetArmor(1);
-		speed = 1.0f;
+		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 150;
 		vision_range = 300;
@@ -194,7 +194,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(100);
 		attack = 10;
 		SetArmor(1);
-		speed = 1.0f;
+		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 150;
 		vision_range = 300;
@@ -211,7 +211,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(100);
 		attack = 8;
 		SetArmor(1);
-		speed = 1.4f;
+		speed = 4.2f;
 		rate_of_fire = 100.0f;
 		range = 200;
 		vision_range = 250;
@@ -228,7 +228,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(50);
 		attack = 6;
 		SetArmor(1);
-		speed = 1.4f;
+		speed = 4.2f;
 		rate_of_fire = 100.0f;
 		range = 200;
 		vision_range = 250;
@@ -248,7 +248,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(200);
 		attack = 15;
 		SetArmor(3);
-		speed = 1.4f;
+		speed = 4.2f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
@@ -265,7 +265,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(50);
 		attack = 6;
 		SetArmor(1);
-		speed = 1.4f;
+		speed = 4.2f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
@@ -282,7 +282,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(50);
 		attack = 6;
 		SetArmor(1);
-		speed = 1.4f;
+		speed = 4.2f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
@@ -302,7 +302,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(270);
 		attack = 4;
 		SetArmor(-5);
-		speed = 0.6f;
+		speed = 1.8f;
 		rate_of_fire = 250.0f;
 		range = 30;
 		vision_range = 100;
@@ -386,11 +386,8 @@ bool Unit::Move()
 	this->SetPosition(GetX() + move_vector.x*speed, GetY() + move_vector.y*speed);
 	this->unit_circle.SetPosition({ (int)GetX(), (int)GetY() });
 	if (path_objective.DistanceTo(iPoint(GetX(), GetY())) < 3)
-	{
-		//center the unit to the tile
 		if (!GetNextTile())
 			return false;
-	}
 
 	return true;
 }
