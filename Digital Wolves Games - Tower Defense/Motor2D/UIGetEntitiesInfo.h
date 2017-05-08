@@ -31,8 +31,8 @@ const uint GetInvestigationPercentage(const Investigation* type);
 const char* GetInvestigationName(const INVESTIGATION_TYPE type);
 const char* GetInvestigationPrice(const INVESTIGATION_TYPE type);
 
+SDL_Rect GetTowerIconPositionFromAtlas(const TOWER_TYPE type);
 const char* GetTowerName(const TOWER_TYPE type);
-const char* GetTowerElementName(const TOWER_ELEMENT_TYPE type);
 
 const char* GetSideName(const Side type);
 
