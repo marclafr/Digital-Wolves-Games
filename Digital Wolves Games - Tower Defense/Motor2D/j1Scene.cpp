@@ -66,7 +66,7 @@ bool j1Scene::Start()
 
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
-	App->render->camera->SetPosition(iPoint(2300, -800));
+	App->render->camera->SetPosition(iPoint(1700, -2400));
 	if(App->map->Load("AlphaOne.tmx") == true)
 	{
 		int w, h;
@@ -396,9 +396,22 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
 	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
 	panel->AddButton(BP_TURRET, iPoint(4, 2), {930,962}, new DeleteTowerTask());
+
+	panel->AddButton(BP_CANNON, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_FIRE_TOWER), new UpgradeTowerTask(TU_FIRE));
+	panel->AddButton(BP_CANNON, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
+	panel->AddButton(BP_CANNON, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
+	panel->AddButton(BP_CANNON, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
+
+	panel->AddButton(BP_TURRET_UPGRADED, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
 		
 		//Walls
-	panel->AddButton(BP_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+	panel->AddButton(BP_WOOD_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_STONE_WALL));
+	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+
+	panel->AddButton(BP_STONE_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_BRICK_WALL));
+	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+
+	panel->AddButton(BP_BRICK_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
 	//Units
 	panel->AddButton(BP_TOWNHALL, iPoint(0, 1), GetUnitIconPositionFromAtlas(U_CHAMPION), new TrainUnitTask(U_CHAMPION));
 	panel->AddButton(BP_TOWNHALL, iPoint(1, 1), GetUnitIconPositionFromAtlas(U_HEAVYCAVALRYARCHER), new TrainUnitTask(U_HEAVYCAVALRYARCHER));
@@ -666,7 +679,7 @@ void j1Scene::PlacingWall()
 			}
 			break;
 		case EAST:
-			for (int i = firstSelectedForWall.x; i >= LastSelectedForWall.x; i--)
+			for (int i = firstSelectedForWall.x; i <= LastSelectedForWall.x; i++)
 			{
 				actualpos = { i,firstSelectedForWall.y };
 				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
@@ -676,9 +689,8 @@ void j1Scene::PlacingWall()
 					resources->BuildWall(B_WOOD_WALL);
 				}
 			}
-			break;
 		case WEST:
-			for (int i = firstSelectedForWall.x; i <= LastSelectedForWall.x; i++)
+			for (int i = firstSelectedForWall.x; i >= LastSelectedForWall.x; i--)
 			{
 				actualpos = { i,firstSelectedForWall.y };
 				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))

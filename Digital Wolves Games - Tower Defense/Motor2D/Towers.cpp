@@ -32,6 +32,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 300;
 		tower_type = T_BOMBARD_TOWER;
 		projectile_type = P_CANNONBALL;
+		SetBuildingType(B_CANNON);
 		projectile_spd = 75;
 		break;
 
@@ -193,6 +194,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_FIRE_ARROW;
 					tower_type = T_FIRE_TOWER;
+					SetBuildingType(B_TURRET_UPGRADED);
 				}
 				break;
 			case TU_ICE:
@@ -203,6 +205,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_ICE_ARROW;
 					tower_type = T_ICE_TOWER;
+					SetBuildingType(B_TURRET_UPGRADED);
 				}
 				break;
 			case TU_AIR:
@@ -213,6 +216,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_AIR_ARROW;
 					tower_type = T_AIR_TOWER;
+					SetBuildingType(B_TURRET_UPGRADED);
 				}
 				break;
 			default:
@@ -231,6 +235,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_FIRE_CANNONBALL;
 					tower_type = T_BOMBARD_FIRE_TOWER;
+					SetBuildingType(B_CANNON_UPGRADED);
 				}
 				break;
 			case TU_ICE:
@@ -241,6 +246,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_ICE_CANNONBALL;
 					tower_type = T_BOMBARD_ICE_TOWER;
+					SetBuildingType(B_CANNON_UPGRADED);
 				}
 				break;
 			case TU_AIR:
@@ -251,6 +257,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_AIR_CANNONBALL;
 					tower_type = T_BOMBARD_AIR_TOWER;
+					SetBuildingType(B_CANNON_UPGRADED);
 				}
 				break;
 			default:

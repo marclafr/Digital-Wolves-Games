@@ -239,7 +239,25 @@ public:
 		return true;
 	}
 };
+class UpgradeWallTask : public Task
+{
+private:
+	Building* wall = nullptr;
+	BUILDING_TYPE type;
+public:
+	UpgradeWallTask(BUILDING_TYPE type) : type(type) {}
 
+	void SetWall(Building* wall)
+	{
+		this->wall = wall;
+	}
+
+	bool Execute()
+	{
+		if (wall->IsAlive())	wall->UpgradeWall(type);
+		return true;
+	}
+};
 class PlaceWallTask : public EntityTask
 {
 public:
@@ -299,6 +317,16 @@ public:
 	bool Execute()
 	{
 		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/wiki", NULL, NULL, SW_SHOWMAXIMIZED);
+		return true;
+	}
+};
+
+class ChangeToBugs : public Task
+{
+public:
+	bool Execute()
+	{
+		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/issues", NULL, NULL, SW_SHOWMAXIMIZED);
 		return true;
 	}
 };

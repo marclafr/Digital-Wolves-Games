@@ -118,6 +118,7 @@
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="SceneTutorial.cpp" />
     <ClCompile Include="Towers.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UICheckbutton.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Resources.h" />
+    <ClInclude Include="SceneTutorial.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Towers.h" />
     <ClInclude Include="UIButton.h" />
