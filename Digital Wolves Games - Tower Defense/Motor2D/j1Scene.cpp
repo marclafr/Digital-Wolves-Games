@@ -298,7 +298,7 @@ void j1Scene::HandleInput( SDL_Event event)
 		}
 
 		if (App->input->GetMouseButtonDown(3) == KEY_DOWN)
-		if (selection[0]->GetEntityType() == E_UNIT)
+		if (selection.size() > 0 && selection[0]->GetEntityType() == E_UNIT)
 			{
 				iPoint objective;
 				App->input->GetMousePosition(objective.x, objective.y);

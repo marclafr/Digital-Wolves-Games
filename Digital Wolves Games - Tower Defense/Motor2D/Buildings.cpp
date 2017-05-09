@@ -152,6 +152,7 @@ void Building::ConvertToRubble()
 	SetRect(rect);
 	SetPivot(0.362637 * 91, 0.431373 * 51);
 	DieTimer.Start();
+	SetHp(0);
 	alive = false;
 	totally_built = true;
 }
