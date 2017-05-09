@@ -241,16 +241,22 @@ bool ResourceManager::CanBuildWall(BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_WOOD_WALL:
-		return stone > BASIC_WALL_STONE_COST;
+		return stone >= BASIC_WALL_STONE_COST;
 		break;
 	case B_STONE_WALL:
-		return stone > BASIC_WALL_STONE_COST;
+		return stone >= BASIC_WALL_STONE_COST;
 		break;
 	}
 	return false;
 }
 
-void ResourceManager::BuildWall(BUILDING_TYPE type, iPoint pos)
+bool ResourceManager::CanBuildAmountOfWalls(int number_of_walls)
+{
+	return stone >= BASIC_WALL_STONE_COST*number_of_walls;
+	return false;
+}
+
+void ResourceManager::BuildWall(BUILDING_TYPE type)
 {
 	//TODO create defines and fill cases for all walls && all creates here. use this funct with a task
 	switch (type)

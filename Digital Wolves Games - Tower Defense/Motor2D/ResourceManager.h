@@ -66,7 +66,8 @@ public:
 	bool CanBuildTower(TOWER_TYPE type);
 	void BuildTower(TOWER_TYPE type, iPoint pos);
 	bool CanBuildWall(BUILDING_TYPE type);
-	void BuildWall(BUILDING_TYPE type, iPoint pos);
+	bool CanBuildAmountOfWalls(int number_of_walls);
+	void BuildWall(BUILDING_TYPE type);
 	bool CanTrainSoldier(UNIT_TYPE type);
 	void TrainSoldier(UNIT_TYPE type);
 };
