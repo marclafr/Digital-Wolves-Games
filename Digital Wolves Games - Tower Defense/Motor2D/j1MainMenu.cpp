@@ -79,6 +79,8 @@ bool j1MainMenu::Start()
 	twitter->SetTask(new ChangeToTwitter());
 	UIButton* github = App->uimanager->AddButton({ 759, 720, 37, 37 }, { 1157, 869, 37, 37 });
 	github->SetTask(new ChangeToGithub());
+	UIButton* bugs = App->uimanager->AddButton({ 798, 720, 37, 37 }, { 1195, 869, 37, 37 });
+	bugs->SetTask(new ChangeToBugs());
 
 	//EXIT
 	UIButton* exit = App->uimanager->AddButton({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });

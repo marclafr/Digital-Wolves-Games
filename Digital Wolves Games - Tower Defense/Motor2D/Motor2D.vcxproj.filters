@@ -160,6 +160,9 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Awsome_Game\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="SceneTutorial.cpp">
+      <Filter>Awsome_Game\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -335,6 +338,9 @@
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Awsome_Game\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTutorial.h">
+      <Filter>Awsome_Game\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

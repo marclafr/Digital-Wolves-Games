@@ -321,5 +321,15 @@ public:
 	}
 };
 
+class ChangeToBugs : public Task
+{
+public:
+	bool Execute()
+	{
+		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/issues", NULL, NULL, SW_SHOWMAXIMIZED);
+		return true;
+	}
+};
+
 
 #endif
