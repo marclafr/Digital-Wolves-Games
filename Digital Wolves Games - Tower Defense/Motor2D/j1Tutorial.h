@@ -36,6 +36,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void TutorialsProgression();
+
 	bool tutorial = false;
 	UIComponents* tutorial1;
 	UILabel* text_tutorial1;
@@ -46,7 +48,7 @@ public:
 
 
 private:
-	
+	bool tutorial1_completed = false;
 };
 
 #endif // __j1MAINMENU_H__
