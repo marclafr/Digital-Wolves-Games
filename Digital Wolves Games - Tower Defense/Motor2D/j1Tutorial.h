@@ -52,6 +52,8 @@ public:
 
 	UIComponents* tutorial2;
 	UILabel* text_tutorial2;
+	UILabel* text1_tutorial2;
+	UILabel* text2_tutorial2;
 
 
 private:
@@ -62,6 +64,7 @@ private:
 	bool tutorial1_part4 = false;
 
 	bool tutorial2_completed = false;
+	bool tutorial2_part1 = false;
 
 };
 

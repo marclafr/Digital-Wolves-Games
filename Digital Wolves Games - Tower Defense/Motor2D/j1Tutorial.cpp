@@ -53,6 +53,7 @@ bool j1Tutorial::PreUpdate()
 bool j1Tutorial::Update(float dt)
 {
 	Tutorial1();
+	Tutorial2();
 
 	if (tutorial1_part1 && tutorial1_part2 && tutorial1_part3 && tutorial1_part4)
 	{
@@ -91,6 +92,14 @@ void j1Tutorial::TutorialsProgression()
 		text3_tutorial1->SetToDelete();
 		text4_tutorial1->SetToDelete();
 	}
+
+	if (tutorial2_completed)
+	{
+		tutorial2->SetToDelete();
+		text_tutorial2->SetToDelete();
+		text1_tutorial2->SetToDelete();
+		text2_tutorial2->SetToDelete();
+	}
 }
 
 void j1Tutorial::TutorialReset()
@@ -100,6 +109,8 @@ void j1Tutorial::TutorialReset()
 	tutorial1_part2 = false;
 	tutorial1_part3 = false;
 	tutorial1_part4 = false;
+	tutorial2_completed = false;
+	tutorial2_part1 = false;
 }
 
 void j1Tutorial::Tutorial1()
@@ -131,5 +142,19 @@ void j1Tutorial::Tutorial1()
 	if (tutorial1_part4)
 	{
 		text4_tutorial1->ChangeColor({ 255,255,255,0 });
+	}
+}
+
+void j1Tutorial::Tutorial2()
+{
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+		tutorial2_part1 = true;
+	}
+	if (tutorial2_part1)
+	{
+		text_tutorial2->ChangeColor({ 255,255,255,0 });
+	}
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+		tutorial2_completed = true;
 	}
 }
