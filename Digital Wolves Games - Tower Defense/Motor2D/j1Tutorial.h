@@ -61,7 +61,7 @@ private:
 	bool tutorial1_part3 = false;
 	bool tutorial1_part4 = false;
 
-	tutorial2_completed = false;
+	bool tutorial2_completed = false;
 
 };
 
