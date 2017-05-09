@@ -384,6 +384,9 @@ void j1Scene::CreateSceneUI()
 
 	//Down_HUD
 	App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 643, 1366, 125 }, { 0, 1036, 1366, 125 });
+	
+	//Minimap
+	App->uimanager->AddMinimap();
 
 	//Button Description
 	UICheckbutton* btn_description = App->uimanager->AddCheckButton({ 1316, 653, 19, 17 }, { 1347, 1163, 19, 17 }, { 1347, 1163, 19, 17 });
