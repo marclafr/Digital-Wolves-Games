@@ -38,6 +38,10 @@ public:
 
 	void TutorialsProgression();
 
+	void TutorialReset();
+	void Tutorial1();
+	void Tutorial2();
+
 	bool tutorial = false;
 	UIComponents* tutorial1;
 	UILabel* text_tutorial1;
@@ -46,9 +50,19 @@ public:
 	UILabel* text3_tutorial1;
 	UILabel* text4_tutorial1;
 
+	UIComponents* tutorial2;
+	UILabel* text_tutorial2;
+
 
 private:
 	bool tutorial1_completed = false;
+	bool tutorial1_part1 = false;
+	bool tutorial1_part2 = false;
+	bool tutorial1_part3 = false;
+	bool tutorial1_part4 = false;
+
+	tutorial2_completed = false;
+
 };
 
 #endif // __j1MAINMENU_H__

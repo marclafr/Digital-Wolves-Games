@@ -90,6 +90,7 @@ public:
 			App->scene->win = false;
 			App->scene->lose = false;
 			App->tutorial->tutorial = true;
+			App->tutorial->Enable();
 		}
 		return true;
 	}

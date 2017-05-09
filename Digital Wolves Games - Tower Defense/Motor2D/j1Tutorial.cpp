@@ -39,7 +39,6 @@ bool j1Tutorial::Awake()
 // Called before the first frame
 bool j1Tutorial::Start()
 {
-	
 
 	return true;
 }
@@ -53,7 +52,12 @@ bool j1Tutorial::PreUpdate()
 // Called each loop iteration
 bool j1Tutorial::Update(float dt)
 {
+	Tutorial1();
 
+	if (tutorial1_part1 && tutorial1_part2 && tutorial1_part3 && tutorial1_part4)
+	{
+		tutorial1_completed = true;
+	}
 
 
 	TutorialsProgression();
@@ -75,7 +79,7 @@ bool j1Tutorial::CleanUp()
 	return true;
 }
 
-// Called each loop iteration
+
 void j1Tutorial::TutorialsProgression()
 {
 	if (tutorial1_completed)
@@ -86,5 +90,46 @@ void j1Tutorial::TutorialsProgression()
 		text2_tutorial1->SetToDelete();
 		text3_tutorial1->SetToDelete();
 		text4_tutorial1->SetToDelete();
+	}
+}
+
+void j1Tutorial::TutorialReset()
+{
+	tutorial1_completed = false;
+	tutorial1_part1 = false;
+	tutorial1_part2 = false;
+	tutorial1_part3 = false;
+	tutorial1_part4 = false;
+}
+
+void j1Tutorial::Tutorial1()
+{
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+		tutorial1_part1 = true;
+	}
+	if (tutorial1_part1)
+	{
+		text1_tutorial1->ChangeColor({ 255,255,255,0 });
+	}
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+		tutorial1_part2 = true;
+	}
+	if (tutorial1_part2)
+	{
+		text2_tutorial1->ChangeColor({ 255,255,255,0 });
+	}
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
+		tutorial1_part3 = true;
+	}
+	if (tutorial1_part3)
+	{
+		text3_tutorial1->ChangeColor({ 255,255,255,0 });
+	}
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN) {
+		tutorial1_part4 = true;
+	}
+	if (tutorial1_part4)
+	{
+		text4_tutorial1->ChangeColor({ 255,255,255,0 });
 	}
 }

@@ -92,6 +92,7 @@ bool j1Scene::Start()
 	App->score->Reset();
 	if (App->tutorial->tutorial)
 	{
+		App->tutorial->TutorialReset();
 		TutorialTrue();
 	}
 	return true;
@@ -218,6 +219,7 @@ bool j1Scene::CleanUp()
 	App->anim->Disable();
 	App->map->Disable();
 	App->pathfinding->Disable();
+	App->tutorial->Disable();
 	
 	App->uimanager->SetAllToDelete();
 
