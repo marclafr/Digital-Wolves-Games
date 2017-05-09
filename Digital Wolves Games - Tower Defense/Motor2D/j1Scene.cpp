@@ -679,7 +679,7 @@ void j1Scene::PlacingWall()
 			}
 			break;
 		case EAST:
-			for (int i = firstSelectedForWall.x; i >= LastSelectedForWall.x; i--)
+			for (int i = firstSelectedForWall.x; i <= LastSelectedForWall.x; i++)
 			{
 				actualpos = { i,firstSelectedForWall.y };
 				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
@@ -689,9 +689,8 @@ void j1Scene::PlacingWall()
 					resources->BuildWall(B_WOOD_WALL);
 				}
 			}
-			break;
 		case WEST:
-			for (int i = firstSelectedForWall.x; i <= LastSelectedForWall.x; i++)
+			for (int i = firstSelectedForWall.x; i >= LastSelectedForWall.x; i--)
 			{
 				actualpos = { i,firstSelectedForWall.y };
 				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
