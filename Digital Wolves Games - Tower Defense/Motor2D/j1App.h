@@ -27,6 +27,7 @@ class j1WaveManager;
 class j1Console;
 class j1Investigations;
 class j1Score;
+class j1Tutorial;
 
 	//Scenes
 class j1MainMenu;
@@ -135,6 +136,7 @@ public:
 	j1Console*			console = nullptr;
 	j1Investigations*	investigations = nullptr;
 	j1Score*			score = nullptr;
+	j1Tutorial*			tutorial = nullptr;
 
 		//Scenesko
 	j1MainMenu*			main_menu = nullptr;

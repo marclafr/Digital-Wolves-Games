@@ -30,6 +30,7 @@
 #include "j1UIManager.h"
 #include "ResourceManager.h"
 #include "UIGetEntitiesInfo.h"
+#include "j1Tutorial.h"
 
 #define RECT_INGAME_WITHOUT_UI {0, 15, 1360, 620}
 
@@ -82,13 +83,17 @@ bool j1Scene::Start()
 
 	CreateSceneUI();
 	//ENTITIES
-	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
+	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-75, 272), S_ALLY);
 	resources = new ResourceManager();
-	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
-	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
+	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-300, 370));
+	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370));
 	
 	//Reset scores and timers
 	App->score->Reset();
+	if (App->tutorial->tutorial)
+	{
+		TutorialTrue();
+	}
 	return true;
 }
 
@@ -800,4 +805,20 @@ void j1Scene::PlacingWall()
 		placing_wall = false;
 		placing_wall_clicked = false;
 	}
+}
+
+void j1Scene::TutorialTrue()
+{
+
+	App->render->camera->SetPosition(iPoint(700, 20));
+
+	App->tutorial->tutorial1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
+	App->tutorial->text_tutorial1 = App->uimanager->AddLabel(1130, 290, "This is your Town Hall. Protect it!", { 0,0,0,0 });
+	App->tutorial->text1_tutorial1 = App->uimanager->AddLabel(1130, 310, "Press 1 to build a Simple Tower", { 0,0,0,0 });
+	App->tutorial->text2_tutorial1 = App->uimanager->AddLabel(1130, 330, "Press 2 to build a Bombard Tower", { 0,0,0,0 });
+	App->tutorial->text3_tutorial1 = App->uimanager->AddLabel(1130, 350, "Press 3 to build a Wall", { 0,0,0,0 });
+	App->tutorial->text4_tutorial1 = App->uimanager->AddLabel(1130, 370, "Press 4 to create a Soldier", { 0,0,0,0 });
+
+
+	App->tutorial->tutorial = false;
 }

@@ -12,6 +12,7 @@
 #include "Towers.h"
 #include "Units.h"
 #include "p2Log.h"
+#include "j1Tutorial.h"
 
 class Task
 {
@@ -67,6 +68,28 @@ public:
 		{
 			App->scene->win = false;
 			App->scene->lose = false;
+		}
+		return true;
+	}
+};
+
+class ChangeMainMenuSceneToTutorial : public Task
+{
+private:
+	SCENES to_scene = SC_NO_SCENE;
+
+public:
+	ChangeMainMenuSceneToTutorial(SCENES to_scene) : to_scene(to_scene) {}
+
+	bool Execute()
+	{
+		App->scene_manager->ChangeScene(to_scene);
+
+		if (to_scene == SC_GAME)
+		{
+			App->scene->win = false;
+			App->scene->lose = false;
+			App->tutorial->tutorial = true;
 		}
 		return true;
 	}

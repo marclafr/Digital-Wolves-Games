@@ -12,7 +12,7 @@
 #define TWOHANDED_STONE_COST 15
 #define BASIC_WALL_STONE_COST 50
 
-#define STARTING_POS fPoint(-480, 552)
+#define STARTING_POS fPoint(-70, 420)
 
 class Resources;
 enum BUILDING_TYPE;

@@ -94,6 +94,7 @@
     <ClCompile Include="j1SceneManager.cpp" />
     <ClCompile Include="j1Score.cpp" />
     <ClCompile Include="j1ScoreScene.cpp" />
+    <ClCompile Include="j1Tutorial.cpp" />
     <ClCompile Include="j1UIManager.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
@@ -118,7 +119,6 @@
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Resources.cpp" />
-    <ClCompile Include="SceneTutorial.cpp" />
     <ClCompile Include="Towers.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UICheckbutton.cpp" />
@@ -149,6 +149,7 @@
     <ClInclude Include="j1SceneManager.h" />
     <ClInclude Include="j1Score.h" />
     <ClInclude Include="j1ScoreScene.h" />
+    <ClInclude Include="j1Tutorial.h" />
     <ClInclude Include="j1UIManager.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
@@ -177,7 +178,6 @@
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Resources.h" />
-    <ClInclude Include="SceneTutorial.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Towers.h" />
     <ClInclude Include="UIButton.h" />

@@ -160,8 +160,8 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>Awsome_Game\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="SceneTutorial.cpp">
-      <Filter>Awsome_Game\Scenes</Filter>
+    <ClCompile Include="j1Tutorial.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -339,8 +339,8 @@
     <ClInclude Include="Projectile.h">
       <Filter>Awsome_Game\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="SceneTutorial.h">
-      <Filter>Awsome_Game\Scenes</Filter>
+    <ClInclude Include="j1Tutorial.h">
+      <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

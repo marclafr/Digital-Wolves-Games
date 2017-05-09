@@ -63,6 +63,8 @@ public:
 
 	void HandleInput(SDL_Event event);
 
+	void TutorialTrue();
+
 private:
 
 
