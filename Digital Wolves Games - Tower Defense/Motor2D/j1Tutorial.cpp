@@ -54,6 +54,10 @@ bool j1Tutorial::PreUpdate()
 bool j1Tutorial::Update(float dt)
 {
 
+
+
+	TutorialsProgression();
+
 	return true;
 }
 
@@ -69,4 +73,18 @@ bool j1Tutorial::CleanUp()
 	LOG("Freeing  MainMenu");
 	App->uimanager->SetAllToDelete();
 	return true;
+}
+
+// Called each loop iteration
+void j1Tutorial::TutorialsProgression()
+{
+	if (tutorial1_completed)
+	{
+		tutorial1->SetToDelete();
+		text_tutorial1->SetToDelete();
+		text1_tutorial1->SetToDelete();
+		text2_tutorial1->SetToDelete();
+		text3_tutorial1->SetToDelete();
+		text4_tutorial1->SetToDelete();
+	}
 }
