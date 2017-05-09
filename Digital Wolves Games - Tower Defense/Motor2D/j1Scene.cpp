@@ -396,7 +396,9 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
 	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
 	panel->AddButton(BP_TURRET, iPoint(4, 2), {930,962}, new DeleteTowerTask());
-	
+		
+		//Walls
+	panel->AddButton(BP_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
 	//Units
 	panel->AddButton(BP_TOWNHALL, iPoint(0, 1), GetUnitIconPositionFromAtlas(U_CHAMPION), new TrainUnitTask(U_CHAMPION));
 	panel->AddButton(BP_TOWNHALL, iPoint(1, 1), GetUnitIconPositionFromAtlas(U_HEAVYCAVALRYARCHER), new TrainUnitTask(U_HEAVYCAVALRYARCHER));

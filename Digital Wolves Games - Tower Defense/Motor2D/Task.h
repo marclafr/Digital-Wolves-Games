@@ -219,6 +219,26 @@ public:
 	}
 };
 
+class DeleteWallTask : public Task
+{
+private:
+	Building* wall = nullptr;
+
+public:
+	DeleteWallTask() {}
+
+	void SetWall(Building* wall)
+	{
+		this->wall = wall;
+	}
+
+	bool Execute()
+	{
+		if (wall->IsAlive())	wall->ConvertToRubble();
+		return true;
+	}
+};
+
 class PlaceWallTask : public EntityTask
 {
 public:
