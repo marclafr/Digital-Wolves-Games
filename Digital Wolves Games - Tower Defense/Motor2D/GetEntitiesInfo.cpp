@@ -422,7 +422,7 @@ iPoint GetTowerIconPositionFromAtlas(const TOWER_TYPE type)
 		ret = { 878,Y_BOMBARDS};
 		break;
 	case T_BOMBARD_AIR_TOWER:	
-		ret = { 878,Y_BOMBARDS};
+		ret = { 904,Y_BOMBARDS};
 		break;
 	default:
 		ret = { 0,0};

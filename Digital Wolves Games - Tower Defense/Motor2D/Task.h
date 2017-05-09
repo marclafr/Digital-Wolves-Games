@@ -239,7 +239,25 @@ public:
 		return true;
 	}
 };
+class UpgradeWallTask : public Task
+{
+private:
+	Building* wall = nullptr;
+	BUILDING_TYPE type;
+public:
+	UpgradeWallTask(BUILDING_TYPE type) : type(type) {}
 
+	void SetWall(Building* wall)
+	{
+		this->wall = wall;
+	}
+
+	bool Execute()
+	{
+		if (wall->IsAlive())	wall->UpgradeWall(type);
+		return true;
+	}
+};
 class PlaceWallTask : public EntityTask
 {
 public:

@@ -17,8 +17,11 @@ enum BUILDING_TYPE
 	B_NO_BUILDING = 0,
 	B_TURRET,
 	B_CANNON,
+	B_TURRET_UPGRADED,
+	B_CANNON_UPGRADED,
 	B_WOOD_WALL,
 	B_STONE_WALL,
+	B_BRICK_WALL,
 	B_TOWNHALL,
 	B_UNIVERSITY
 };
@@ -43,7 +46,8 @@ public:
 	virtual void AI();
 	virtual void Draw();
 	const BUILDING_TYPE GetBuildingType() const;
-	void UpgradeWall();
+	void SetBuildingType(BUILDING_TYPE type);
+	void UpgradeWall(BUILDING_TYPE type);
 	const double GetBuildTime() const;
 	const double GetDieTime() const;
 	const int GetHeight() const;

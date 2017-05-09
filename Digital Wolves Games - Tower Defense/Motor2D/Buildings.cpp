@@ -110,6 +110,33 @@ const BUILDING_TYPE Building::GetBuildingType() const
 	return building_type;
 }
 
+void Building::SetBuildingType(BUILDING_TYPE type)
+{
+	building_type = type;
+}
+
+void Building::UpgradeWall(BUILDING_TYPE type)
+{
+	if (this->IsBuilt())
+	{
+		switch (type)
+		{
+		case B_STONE_WALL:
+			SetRect({ 1020,12,99,178});
+			SetPivot(0.494949 * 99, 178 * 0.865169);
+			building_type = B_STONE_WALL;
+			break;
+		case B_BRICK_WALL:
+			SetRect({0,66,95,169});
+			SetPivot(0.454211*96,169*0.899822);
+			building_type = B_BRICK_WALL;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
 const double Building::GetBuildTime() const
 {
 	return buildtimer.ReadSec();
