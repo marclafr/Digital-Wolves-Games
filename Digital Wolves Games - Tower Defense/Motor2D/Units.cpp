@@ -1,4 +1,3 @@
-
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
@@ -347,6 +346,13 @@ void Unit::Update(float dt)
 	{
 		ResetDT();
 		AI();
+	}
+
+	if (slowed == true && slow_timer.ReadSec() >= SLOW_TIME)
+	{
+		this->speed *= SLOW_PROPORTION;
+		this->animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), rate_of_fire / SLOW_PROPORTION);
+		slowed = false;
 	}
 
 	if (changed == true)
@@ -835,6 +841,17 @@ void Unit::PlayAttackSound() const
 			App->audio->PlayFx(App->entity_manager->fx_attack03);
 			break;
 		}
+	}
+}
+
+void Unit::SlowUnit()
+{
+	if (slowed == false)
+	{
+		this->speed /= SLOW_PROPORTION;
+		this->animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), rate_of_fire * SLOW_PROPORTION);
+		slowed = true;
+		slow_timer.Start();
 	}
 }
 

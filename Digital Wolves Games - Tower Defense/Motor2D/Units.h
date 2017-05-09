@@ -8,6 +8,8 @@
 
 #define XY_TILES_RELATION 2
 #define TOWN_HALL iPoint(-720,672) //TODO final townhall destination;, 
+#define SLOW_TIME 2.0f
+#define SLOW_PROPORTION 1.4f
 
 class AnimationManager;
 struct PathList;
@@ -103,6 +105,8 @@ private:
 
 	std::vector<iPoint> path_vec;
 
+	bool slowed = false;
+	j1Timer slow_timer;
 	int priority;
 
 	//Investigations bonuses:
@@ -145,6 +149,8 @@ public:
 	bool ChangeDirection(iPoint destination);
 	void PlayDeathSound() const;
 	void PlayAttackSound() const;
+
+	void SlowUnit();
 };
 
 #endif

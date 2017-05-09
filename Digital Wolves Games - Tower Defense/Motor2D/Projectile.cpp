@@ -85,6 +85,7 @@ void Projectile::Update()
 		case P_ICE_ARROW:
 		case P_AIR_ARROW:
 			Target->Damaged(Damage);
+			dest_reached = true;
 			break;
 		case P_CANNONBALL:
 		case P_FIRE_CANNONBALL:
@@ -101,8 +102,11 @@ void Projectile::Update()
 		default:
 			break;
 		}
-		//TODO:if (projectile_type == P_ICE_ARROW)
-			//Target->SlowUnit();
+		if (projectile_type == P_ICE_ARROW)
+		{
+			Unit* unit_target = (Unit*)Target; 
+			unit_target->SlowUnit();
+		}
 	}
 
 	Draw();
@@ -146,6 +150,13 @@ void Projectile::AreaDamage(int damage, iPoint center, int radius)
 {
 	Circle circle(center, radius);
 	//TODO: when quadrtree is finished
+	/*
+	if (projectile_type == P_ICE_CANNONBALL)
+	{
+		Unit* target_unit = (Unit*)Target;
+		target_unit->SlowUnit();
+	}
+	*/
 }
 
 void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)
