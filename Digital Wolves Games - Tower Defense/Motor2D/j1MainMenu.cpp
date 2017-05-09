@@ -70,6 +70,14 @@ bool j1MainMenu::Start()
 	UIButton* options = App->uimanager->AddButton({ 300, 448, 125, 122 }, { 288, 862, 125, 123 });
 	options->SetInteractive(false);
 
+	//SOCIALMEDIA
+	UIButton* facebook = App->uimanager->AddButton({ 681, 720, 37, 37 }, { 1077, 869, 37, 37 });
+	facebook->SetTask(new ChangeToFacebook());
+	UIButton* twitter = App->uimanager->AddButton({ 720, 720, 37, 37 }, { 1117, 869, 37, 37 });
+	twitter->SetTask(new ChangeToTwitter());
+	UIButton* github = App->uimanager->AddButton({ 759, 720, 37, 37 }, { 1157, 869, 37, 37 });
+	github->SetTask(new ChangeToGithub());
+
 	//EXIT
 	UIButton* exit = App->uimanager->AddButton({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });
 	exit->SetMouseOnTopTextRect({ 477, 1378, 200, 91 });

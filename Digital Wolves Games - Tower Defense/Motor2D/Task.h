@@ -11,6 +11,7 @@
 #include "Buildings.h"
 #include "Towers.h"
 #include "Units.h"
+#include "p2Log.h"
 
 class Task
 {
@@ -271,4 +272,36 @@ public:
 		return u_type;
 	}
 };
+
+class ChangeToFacebook : public Task
+{
+public:
+	bool Execute()
+	{
+		ShellExecute(NULL, "open", "https://www.facebook.com/Digital-Wolves-Games-233798633695568/?ref=bookmarks", NULL, NULL, SW_SHOWMAXIMIZED);
+		return true;
+	}
+};
+
+class ChangeToTwitter : public Task
+{
+public:
+	bool Execute()
+	{
+		ShellExecute(NULL, "open", "https://twitter.com/DigitalWolvesG", NULL, NULL, SW_SHOWMAXIMIZED);
+		return true;
+	}
+};
+
+class ChangeToGithub : public Task
+{
+public:
+	bool Execute()
+	{
+		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/wiki", NULL, NULL, SW_SHOWMAXIMIZED);
+		return true;
+	}
+};
+
+
 #endif
