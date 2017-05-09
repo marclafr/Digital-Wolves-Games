@@ -76,24 +76,25 @@ bool j1WaveManager::Start()
 	UnitGroup group24(U_HEAVYCAVALRYARCHER, 19, LEFT_UP);
 	UnitGroup group25(U_KNIGHT, 18, LEFT_UP);
 	UnitGroup group26(U_PALADIN, 13, LEFT_UP);
-	UnitGroup group26(U_CHAMPION, 18, LEFT_UP);
+	UnitGroup group27(U_CHAMPION, 18, LEFT_UP);
 	wave6.PushBack(group21);
 	wave6.PushBack(group22);
 	wave6.PushBack(group23);
 	wave6.PushBack(group24);
 	wave6.PushBack(group25);
 	wave6.PushBack(group26);
-
+	wave6.PushBack(group27);
 
 	Wave wave7;
-	UnitGroup group27(U_TWOHANDEDSWORDMAN, 52, LEFT_UP);
-	UnitGroup group28(U_LONGSWORDMAN, 40, LEFT_UP);
-	UnitGroup group29(U_CAVALRYARCHER, 19, LEFT_UP);
+	UnitGroup group28(U_TWOHANDEDSWORDMAN, 52, LEFT_UP);
+	UnitGroup group29(U_LONGSWORDMAN, 40, LEFT_UP);
+	UnitGroup group(U_CAVALRYARCHER, 19, LEFT_UP);
 	UnitGroup group30(U_HEAVYCAVALRYARCHER, 25, LEFT_UP);
 	UnitGroup group31(U_KNIGHT, 28, LEFT_UP);
 	UnitGroup group32(U_PALADIN, 33, LEFT_UP);
 	UnitGroup group33(U_CHAMPION, 29, LEFT_UP);
 	UnitGroup group34(U_SIEGERAM, 10, LEFT_UP);
+	UnitGroup group35(U_CAVALRYARCHER, 19, LEFT_UP);
 	wave7.PushBack(group27);
 	wave7.PushBack(group28);
 	wave7.PushBack(group29);
@@ -102,10 +103,11 @@ bool j1WaveManager::Start()
 	wave7.PushBack(group32);
 	wave7.PushBack(group33);
 	wave7.PushBack(group34);
+	wave7.PushBack(group35);
 
 
 	Wave wave8;
-	UnitGroup group35(U_TWOHANDEDSWORDMAN, 65, LEFT_UP);
+	
 	UnitGroup group36(U_LONGSWORDMAN, 51, LEFT_UP);
 	UnitGroup group37(U_CAVALRYARCHER, 26, LEFT_UP);
 	UnitGroup group38(U_HEAVYCAVALRYARCHER, 30, LEFT_UP);
@@ -114,7 +116,8 @@ bool j1WaveManager::Start()
 	UnitGroup group41(U_CHAMPION, 29, LEFT_UP);
 	UnitGroup group42(U_MILITIA, 18, LEFT_UP);
 	UnitGroup group43(U_SIEGERAM, 10, LEFT_UP);
-	wave8.PushBack(group35);
+	UnitGroup group44(U_TWOHANDEDSWORDMAN, 65, LEFT_UP);
+	
 	wave8.PushBack(group36);
 	wave8.PushBack(group37);
 	wave8.PushBack(group38);
@@ -123,6 +126,16 @@ bool j1WaveManager::Start()
 	wave8.PushBack(group41);
 	wave8.PushBack(group42);
 	wave8.PushBack(group43);
+	wave8.PushBack(group44);
+
+	waves.push_back(wave1);
+	waves.push_back(wave2);
+	waves.push_back(wave3);
+	waves.push_back(wave4);
+	waves.push_back(wave5);
+	waves.push_back(wave6);
+	waves.push_back(wave7);
+	waves.push_back(wave8);
 	timer.Start();
 	spawning = true;
 
