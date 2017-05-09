@@ -193,7 +193,28 @@ public:
 
 	bool Execute()
 	{
-		tower->UpgradeTurret(type);
+		if (tower->IsAlive()) tower->UpgradeTurret(type);
+		return true;
+	}
+};
+
+class DeleteTowerTask : public Task
+{
+private:
+	Tower* tower = nullptr;
+	TURRET_UPGRADE type = TU_NULL;
+
+public:
+	DeleteTowerTask() {}
+
+	void SetTower(Tower* tower)
+	{
+		this->tower = tower;
+	}
+
+	bool Execute()
+	{
+		if(tower->IsAlive())	tower->ConvertToRubble();
 		return true;
 	}
 };

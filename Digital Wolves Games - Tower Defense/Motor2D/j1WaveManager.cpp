@@ -144,7 +144,7 @@ bool j1WaveManager::Start()
 
 bool j1WaveManager::Update(float dt)
 {
-	if (timer.ReadSec() >= TIME_BETWEEN_WAVES)
+	/*if (timer.ReadSec() >= TIME_BETWEEN_WAVES)
 	{
 		timer.Start();
 		wave_num++;
@@ -175,7 +175,7 @@ bool j1WaveManager::Update(float dt)
 			else
 				spawning = false;
 		}
-	}
+	}*/
 	return true;
 }
 
