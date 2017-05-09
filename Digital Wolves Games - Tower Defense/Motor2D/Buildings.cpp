@@ -19,8 +19,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	{
 	case B_TURRET:
 		SetSide(side);
-		base_height = 25;
-		base_width = 25;
+		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 96, 47,	GetPivot());
 		break;
 
 	case B_WOOD_WALL:
@@ -28,8 +27,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetHp(500);
 		SetAttack(0);
 		SetArmor(8);
-		base_height = 25;
-		base_width = 25;
+		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 96, 47, GetPivot());
 		break;
 
 	case B_TOWNHALL:
@@ -39,11 +37,10 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetArmor(8);
 		rect = { 836,1,366,317 };
 		SetRect(rect);
-		SetPivot(0.52459 * 366, 0.72555 * 317);//
+		SetPivot(0.52459 * 366, 0.72555 * 317);
 		SetTextureID(T_TOWNHALL);
 		totally_built = true;
-		base_height = 125;
-		base_width = 125;
+		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 375, 170, {0,0});
 		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
@@ -87,7 +84,8 @@ void Building::AI()
 
 void Building::Draw()
 {
-	if (totally_built != true) {
+	if (totally_built != true)
+	{
 		if (buildtimer.ReadSec() <= 6)
 		{
 			SetRect({98,0,100,75});
@@ -102,12 +100,17 @@ void Building::Draw()
 		}
 	}
 	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
-	App->render->PushInGameSprite(this);
+		App->render->PushInGameSprite(this);
 }
 
 const BUILDING_TYPE Building::GetBuildingType() const
 {
 	return building_type;
+}
+
+Rectng Building::GetBuildRectangle()
+{
+	return build_rect;
 }
 
 const double Building::GetBuildTime() const
@@ -118,16 +121,6 @@ const double Building::GetBuildTime() const
 const double Building::GetDieTime() const
 {
 	return DieTimer.ReadSec();
-}
-
-const int Building::GetHeight() const
-{
-	return base_height;
-}
-
-const int Building::GetWidth()const
-{
-	return base_width;
 }
 
 bool Building::IsBuilt() const

@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "j1Map.h"
 #include "j1Audio.h"
+#include "IsoPrimitives.h"
 
 j1EntityManager::j1EntityManager() : j1Module()
 {
@@ -269,16 +270,19 @@ Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side)
 		if (entity_array[i]->GetEntityType() == E_BUILDING)
 		{
 			Building* building = (Building*)entity_array[i];
-			if (entity_array[i]->GetX() <= position.x + range + building->GetWidth() && entity_array[i]->GetX() >= position.x - range - building->GetWidth() &&
-				entity_array[i]->GetY() <= position.y + range + building->GetHeight() && entity_array[i]->GetY() >= position.y - range - building->GetHeight() &&
+			//TODO: USE ISO RECT
+			if (entity_array[i]->GetX() <= position.x + range + building->GetBuildRectangle().GetWidth() && entity_array[i]->GetX() >= position.x - range - building->GetBuildRectangle().GetWidth() &&
+				entity_array[i]->GetY() <= position.y + range + building->GetBuildRectangle().GetHeight() && entity_array[i]->GetY() >= position.y - range - building->GetBuildRectangle().GetHeight() &&
 				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() > 0)
 				return entity_array[i];
 		}
 		if (entity_array[i]->GetEntityType() == E_UNIT)
-			if (entity_array[i]->GetX() <= position.x + range && entity_array[i]->GetX() >= position.x - range &&
-				entity_array[i]->GetY() <= position.y + range && entity_array[i]->GetY() >= position.y - range &&
-				side != entity_array[i]->GetSide() && entity_array[i]->GetHp() > 0)
+		{
+			Unit* unit = (Unit*)entity_array[i];
+			Circle  unit_view(position, range);
+			if (unit->GetUnitCircle().Overlap(&unit_view) == true &&	side != entity_array[i]->GetSide() && entity_array[i]->GetHp() > 0)
 				return entity_array[i];
+		}
 	}
 	return nullptr;
 }

@@ -178,7 +178,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 150;
-		vision_range = 300;
+		vision_range = 150;
 		unit_class = C_ARCHER;
 		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
@@ -196,7 +196,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		speed = 3.0f;
 		rate_of_fire = 100.0f;
 		range = 150;
-		vision_range = 300;
+		vision_range = 150;
 		unit_class = C_ARCHER;
 		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
@@ -213,7 +213,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		speed = 4.2f;
 		rate_of_fire = 100.0f;
 		range = 200;
-		vision_range = 250;
+		vision_range = 200;
 		unit_class = C_ARCHER;
 		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 18);
 		if (side == S_ENEMY)
@@ -230,7 +230,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		speed = 4.2f;
 		rate_of_fire = 100.0f;
 		range = 200;
-		vision_range = 250;
+		vision_range = 200;
 		unit_class = C_ARCHER;
 		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 18);
 		if (side == S_ENEMY)

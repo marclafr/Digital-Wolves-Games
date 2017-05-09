@@ -410,7 +410,7 @@ void j1Render::BlitSelection() const
 		if ((*it)->GetEntityType() == E_BUILDING)
 		{
 			Building* building = (Building*)*it;
-			App->render->DrawCircle(building->GetX() + camera->GetPosition().x, building->GetY() + camera->GetPosition().y, building->GetRange(), 255, 255, 255);
+			building->GetBuildRectangle().Draw();
 		}
 	}
 }

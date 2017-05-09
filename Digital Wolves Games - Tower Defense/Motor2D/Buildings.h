@@ -31,8 +31,7 @@ private:
 	j1Timer DieTimer;
 	bool alive = true;
 	bool totally_built = false;
-	int base_height = 0;
-	int base_width = 0;
+	Rectng build_rect;
 
 public:
 	iPoint arrowpos;
@@ -43,11 +42,10 @@ public:
 	virtual void AI();
 	virtual void Draw();
 	const BUILDING_TYPE GetBuildingType() const;
+	Rectng GetBuildRectangle();
 	void UpgradeWall();
 	const double GetBuildTime() const;
 	const double GetDieTime() const;
-	const int GetHeight() const;
-	const int GetWidth() const;
 	bool IsBuilt() const;
 	void BuildingComplete();
 	bool IsAlive() const;
