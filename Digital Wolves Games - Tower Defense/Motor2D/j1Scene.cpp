@@ -66,7 +66,7 @@ bool j1Scene::Start()
 
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
-	App->render->camera->SetPosition(iPoint(2300, -800));
+	App->render->camera->SetPosition(iPoint(1700, -2400));
 	if(App->map->Load("AlphaOne.tmx") == true)
 	{
 		int w, h;

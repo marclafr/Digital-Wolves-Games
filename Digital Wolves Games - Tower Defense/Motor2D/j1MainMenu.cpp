@@ -53,7 +53,9 @@ bool j1MainMenu::Start()
 
 	//TUTORIAL
 	UIButton* tutorial = App->uimanager->AddButton({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
-	tutorial->SetInteractive(false);
+	tutorial->SetMouseOnTopTextRect({ 719, 2572, 200, 237 },3);
+
+	App->uimanager->AddLabel(218, 23, "Tutorial");
 
 	//HISTORY
 	UIButton* history = App->uimanager->AddButton({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
