@@ -598,17 +598,20 @@ void Unit::Draw()
 
 		SetPivot(pivot.x, pivot.y);
 		SetRect(rect);
-		if (direction == D_NORTH_EAST || direction == D_EAST || direction == D_SOUTH_EAST)
-			App->render->PushInGameSprite(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_HORIZONTAL, GetPivot().x, GetPivot().y);
-		else
-			App->render->PushInGameSprite(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_NONE, GetPivot().x, GetPivot().y);
+		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
+		{
+			if (direction == D_NORTH_EAST || direction == D_EAST || direction == D_SOUTH_EAST)
+				App->render->PushInGameSprite(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_HORIZONTAL, GetPivot().x, GetPivot().y);
+			else
+				App->render->PushInGameSprite(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_NONE, GetPivot().x, GetPivot().y);
+		}
 	}
 
 	animation->Update(rect, pivot);
 	
 	SetPivot(pivot.x, pivot.y);
 	SetRect(rect);
-
+	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
 	App->render->PushInGameSprite(this);
 
 }

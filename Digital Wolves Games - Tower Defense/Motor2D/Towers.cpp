@@ -7,6 +7,7 @@
 #include "ProjectileManager.h"
 #include "j1Animation.h"
 #include "j1Input.h"
+#include "Camera.h"
 
 Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
@@ -113,54 +114,54 @@ void Tower::AI()
 
 void Tower::Draw()
 {
-	if (IsBuilt())
-		App->render->PushInGameSprite(this);
-
-	else
+	if (IsBuilt()) 
 	{
-		if (GetBuildTime() <= 3)
-		{
-			SDL_Rect rect = { 0,0,96,65 };
-			SetRect(rect);
-			SetPivot(0.53125 * 96, 0.59375 * 65);
-
-		}
-		else if (GetBuildTime() > 3 && GetBuildTime() <= 6)
-		{
-			SDL_Rect rect = { 98,0,100,75 };
-			SetRect(rect);
-			SetPivot(0.55 * 100, 0.643836 * 75);
-
-		}
-		else if (GetBuildTime() > 6 && GetBuildTime() <= 9)
-		{
-			SDL_Rect rect = { 202,0,100,75 };
-			SetRect(rect);
-			SetPivot(0.55 * 100, 0.643836 * 75);
-		}
-		else if (GetBuildTime() > 9)
-		{
-			switch (tower_type)
-			{
-			case T_BASIC_TOWER:
-				SetRect({ 302,0,107,208 });
-				SetPivot(0.504673 * 107, 0.902913 * 208);
-				break;
-
-			case T_BOMBARD_TOWER:
-				SetRect({ 629,0,130,281 });
-				SetPivot(0.5 * 130, 0.914591 * 281);
-				break;
-
-			default:
-				break;
-			}
-			BuildingComplete();
-			AttackTimer.Start();
-		}
-
-		App->render->PushInGameSprite(this);
+		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY())) App->render->PushInGameSprite(this);
 	}
+	else
+		{
+			if (GetBuildTime() <= 3)
+			{
+				SDL_Rect rect = { 0,0,96,65 };
+				SetRect(rect);
+				SetPivot(0.53125 * 96, 0.59375 * 65);
+
+			}
+			else if (GetBuildTime() > 3 && GetBuildTime() <= 6)
+			{
+				SDL_Rect rect = { 98,0,100,75 };
+				SetRect(rect);
+				SetPivot(0.55 * 100, 0.643836 * 75);
+
+			}
+			else if (GetBuildTime() > 6 && GetBuildTime() <= 9)
+			{
+				SDL_Rect rect = { 202,0,100,75 };
+				SetRect(rect);
+				SetPivot(0.55 * 100, 0.643836 * 75);
+			}
+			else if (GetBuildTime() > 9)
+			{
+				switch (tower_type)
+				{
+				case T_BASIC_TOWER:
+					SetRect({ 302,0,107,208 });
+					SetPivot(0.504673 * 107, 0.902913 * 208);
+					break;
+
+				case T_BOMBARD_TOWER:
+					SetRect({ 629,0,130,281 });
+					SetPivot(0.5 * 130, 0.914591 * 281);
+					break;
+
+				default:
+					break;
+				}
+				BuildingComplete();
+				AttackTimer.Start();
+			}
+			if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))   App->render->PushInGameSprite(this);
+		}
 }
 
 const TOWER_TYPE Tower::GetTowerType() const

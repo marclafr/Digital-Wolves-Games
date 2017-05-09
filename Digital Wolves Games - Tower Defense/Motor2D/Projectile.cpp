@@ -2,7 +2,8 @@
 #include "Projectile.h"
 #include "j1Animation.h"
 #include "IsoPrimitives.h"
-
+#include "Camera.h"
+#include "j1Render.h"
 
 Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float TimeInSecs, int Startheight, int Curveheight, PROJECTILE_TYPE type) : StartPos(initialpos), Damage(damage), Target(target), StartHeight(Startheight), CurveHeight(Curveheight), projectile_type(type)
 {
@@ -123,6 +124,7 @@ void Projectile::Draw()
 	if (projectile_anim != nullptr)
 		projectile_anim->Update(rect, pivot);
 	if (dest_reached == false)
+		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + ActualPos.x, App->render->camera->GetPosition().y + ActualPos.y))
 		App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
 }
 
@@ -164,18 +166,17 @@ void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)
 	SDL_Rect rect;
 	iPoint pivot;
 	projectile_anim->Update(rect, pivot);
-	switch (element)
-	{
-	case P_CANNONBALL:
-	case P_FIRE_CANNONBALL:
-	case P_ICE_CANNONBALL:
-	case P_AIR_CANNONBALL:
-		App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
-		break;
-	default:
-		break;
+	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + ActualPos.x, App->render->camera->GetPosition().y + ActualPos.y)) {
+		switch (element)
+		{
+		case P_CANNONBALL:
+		case P_FIRE_CANNONBALL:
+		case P_ICE_CANNONBALL:
+		case P_AIR_CANNONBALL:
+			App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+			break;
+		default:
+			break;
+		}
 	}
-
-	//TODO: if (element == P_ICE_CANNONBALL)
-		//App->render->PushInGameSprite(App->tex->GetTexture(T_ICE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 }

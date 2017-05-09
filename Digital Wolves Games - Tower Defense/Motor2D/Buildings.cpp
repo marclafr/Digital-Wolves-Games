@@ -8,6 +8,8 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "j1Audio.h"
+#include "Camera.h"
+
 
 Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILDING, pos, side), building_type(b_type)
 {
@@ -99,6 +101,7 @@ void Building::Draw()
 			totally_built = true;
 		}
 	}
+	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
 	App->render->PushInGameSprite(this);
 }
 
