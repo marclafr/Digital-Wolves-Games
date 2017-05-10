@@ -394,6 +394,12 @@ bool Unit::Move()
 
 void Unit::AI()
 {
+	if (slowed == true && slow_timer.ReadSec() >= SLOW_TIME)
+	{
+		this->speed *= SLOW_PROPORTION;
+		slowed = false;
+	}
+
 	//Investigations bonuses
 		//Bonus attack
 	if (bonus_attack == false)
@@ -862,7 +868,6 @@ void Unit::SlowUnit()
 	if (slowed == false)
 	{
 		this->speed /= SLOW_PROPORTION;
-		this->animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), rate_of_fire * SLOW_PROPORTION);
 		slowed = true;
 		slow_timer.Start();
 	}
