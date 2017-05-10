@@ -141,7 +141,7 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 		panel_type = BP_TOWNHALL;
 		b_selected = building;
 		CreatePanel();
-		if (App->tutorial->tutorial) App->tutorial->TownHallSelected = true;
+		if (App->tutorial->tutorial1_completed) App->tutorial->TownHallSelected = true;
 		break;
 	case B_UNIVERSITY:
 		panel_type = BP_UNIVERSITY;

@@ -60,6 +60,10 @@ bool j1Tutorial::Update(float dt)
 		if (tutorial2_completed)
 		{
 			Tutorial3();
+			if (tutorial3_completed)
+			{
+				Tutorial4();
+			}
 		}
 		
 	}
@@ -91,6 +95,7 @@ bool j1Tutorial::CleanUp()
 {
 	LOG("Freeing  MainMenu");
 	App->uimanager->SetAllToDelete();
+	tutorial = false;
 	return true;
 }
 
@@ -183,11 +188,11 @@ void j1Tutorial::Tutorial1()
 
 void j1Tutorial::Tutorial2()
 {
-	if (App->input->GetKey(SDL_BUTTON_LEFT) == KEY_DOWN) {
+	if (TownHallSelected) {
 		tutorial2_part1 = true;
 	}
 
-	if (App->input->GetKey(SDL_BUTTON_RIGHT) == KEY_DOWN) {
+	if (PanelSelected) {
 		tutorial2_completed = true;
 	}
 
@@ -237,4 +242,14 @@ void j1Tutorial::Tutorial3()
 			text4_tutorial3->ChangeColor({ 255,255,255,0 });
 		}
 	}
+}
+
+void j1Tutorial::Tutorial4()
+{
+	if(!tutorial4_part1)
+	{
+		App->render->camera->SetPosition(iPoint(100 , -500));
+		tutorial4_part1 = true;
+	}
+	
 }

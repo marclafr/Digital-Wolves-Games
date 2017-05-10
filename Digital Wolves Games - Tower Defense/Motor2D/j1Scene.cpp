@@ -93,7 +93,7 @@ bool j1Scene::Start()
 	if (App->tutorial->tutorial)
 	{
 		App->tutorial->TutorialReset();
-		TutorialTrue();
+		TutorialUI();
 	}
 	return true;
 }
@@ -812,7 +812,7 @@ void j1Scene::PlacingWall()
 	}
 }
 
-void j1Scene::TutorialTrue()
+void j1Scene::TutorialUI()
 {
 
 	App->render->camera->SetPosition(iPoint(700, 20));
@@ -836,8 +836,5 @@ void j1Scene::TutorialTrue()
 	App->tutorial->text3_tutorial1 = App->uimanager->AddLabel(1130, 350, "Press 3 to build a Wall", { 0,0,0,0 });
 	App->tutorial->text4_tutorial1 = App->uimanager->AddLabel(1130, 370, "Press 4 to create a Soldier", { 0,0,0,0 });
 
-	
 
-
-	App->tutorial->tutorial = false;
 }

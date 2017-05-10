@@ -185,6 +185,7 @@ public:
 	{
 		App->scene->placing_wall = false;
 		App->scene->placing_tower = T_BASIC_TOWER;
+		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
 		return true;
 	}
 };
@@ -198,6 +199,7 @@ public:
 	{
 		App->scene->placing_wall = false;
 		App->scene->placing_tower = T_BOMBARD_TOWER;
+		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
 		return true;
 	}
 };
@@ -291,6 +293,7 @@ public:
 	{
 		App->scene->placing_wall = true;
 		App->scene->placing_tower = T_NO_TYPE;
+		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
 		return true;
 	}
 };
@@ -306,6 +309,7 @@ public:
 	{
 		if (App->scene->resources->CanTrainSoldier(u_type))
 			App->scene->resources->TrainSoldier(u_type);
+		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
 		return true;
 	}
 

@@ -42,6 +42,7 @@ public:
 	void Tutorial1();
 	void Tutorial2();
 	void Tutorial3();
+	void Tutorial4();
 
 	bool tutorial = false;
 	UIComponents* tutorial1;
@@ -63,24 +64,32 @@ public:
 	UILabel* text3_tutorial3;
 	UILabel* text4_tutorial3;
 
+	UIComponents* tutorial4;
+	UILabel* text_tutorial4;
+
 	bool TownHallSelected = false;
+	bool PanelSelected = false;
+	bool tutorial1_completed = false;
+	bool tutorial2_completed = false;
+	bool tutorial3_completed = false;
+
 private:
 	int count = 0;
 
-	bool tutorial1_completed = false;
+	
 	bool tutorial1_part1 = false;
 	bool tutorial1_part2 = false;
 	bool tutorial1_part3 = false;
 	bool tutorial1_part4 = false;
 
-	bool tutorial2_completed = false;
 	bool tutorial2_part1 = false;
 
-	bool tutorial3_completed = false;
 	bool tutorial3_part1 = false;
 	bool tutorial3_part2 = false;
 	bool tutorial3_part3 = false;
 	bool tutorial3_part4 = false;
+
+	bool tutorial4_part1 = false;
 
 };
 
