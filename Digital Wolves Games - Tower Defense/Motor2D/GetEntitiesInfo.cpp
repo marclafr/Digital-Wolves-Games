@@ -131,6 +131,10 @@ const char* GetUnitName(const UNIT_TYPE type)
 		ret = "Siege Ram";
 		break;
 
+	case U_MANGONEL:
+		ret = "Mangonel";
+		break;
+
 		//Dev Units
 	case U_GOD:
 		ret = "GOD";

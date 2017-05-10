@@ -407,6 +407,9 @@ void Animation::SetUnit(const pugi::xml_node node)
 		//SIEGE
 	else if (strcmp(node.name(), "siegeram") == 0)
 		unit_type = U_SIEGERAM;
+
+	else if (strcmp(node.name(), "mangonel") == 0)
+		unit_type = U_MANGONEL;
 	//-------
 
 	//TODO: ADD UNIT

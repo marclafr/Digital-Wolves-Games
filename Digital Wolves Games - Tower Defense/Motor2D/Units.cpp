@@ -298,7 +298,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 			//SIEGE
 
 	case U_SIEGERAM:
-		SetHp(270);
+		SetHp(500);
 		attack = 4;
 		SetArmor(-5);
 		speed = 1.8f;
@@ -311,6 +311,20 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 			SetTextureID(T_ENEMY_SIEGERAM);
 		else
 			SetTextureID(T_SIEGERAM);
+		priority = 1;
+		break;
+
+	case U_MANGONEL:
+		SetHp(300);
+		attack = 100;
+		SetArmor(-5);
+		speed = 1.8f;
+		rate_of_fire = 250.0f;
+		range = 250;
+		vision_range = 250;
+		unit_class = C_SIEGE;
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 30);
+		SetTextureID(T_MANGONEL);
 		priority = 1;
 		break;
 
@@ -547,6 +561,9 @@ void Unit::AI()
 					else
 						App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 15, 20, 0, P_BASIC_ARROW);
 				}
+				else if(unit_type == U_MANGONEL)
+					App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 50, 20, 100, P_CANNONBALL);
+
 				else
 					attacking->Damaged(attack);
 

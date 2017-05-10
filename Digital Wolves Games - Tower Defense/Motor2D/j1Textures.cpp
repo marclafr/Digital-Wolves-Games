@@ -84,6 +84,7 @@ bool j1Textures::Start()
 	//SIEGE
 	App->tex->Load("animations/Units/Siegeram.png", T_SIEGERAM);
 	App->tex->Load("animations/Units/SiegeramRed.png", T_ENEMY_SIEGERAM);
+	App->tex->Load("animations/Units/Mangonel.png", T_MANGONEL);
 	//--
 	App->tex->Load("textures/Towers.png", T_TURRET);
 	App->tex->Load("animations/StoneWall.png", T_WALL);

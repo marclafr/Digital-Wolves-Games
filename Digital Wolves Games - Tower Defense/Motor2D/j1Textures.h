@@ -65,7 +65,8 @@ enum TextureID
 		
 		//SIEGE
 	T_SIEGERAM,
-	T_ENEMY_SIEGERAM
+	T_ENEMY_SIEGERAM,
+	T_MANGONEL
 	//--
 };
 

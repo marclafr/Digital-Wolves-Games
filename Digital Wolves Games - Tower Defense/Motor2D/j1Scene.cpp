@@ -141,6 +141,12 @@ bool j1Scene::Update(float dt)
 	App->render->PushInGameSprite(App->tex->GetTexture(T_EXPLOSIONS_AND_FLOOR), 500, 1000, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 	//--
 
+	if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
+		App->entity_manager->CreateUnit(U_MANGONEL, { -200, 575 }, S_ALLY);
+
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+		App->entity_manager->CreateUnit(U_MANGONEL, { -200, 575 }, S_ENEMY);
+
 	//Test fade to black
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 		App->render->camera->FadeToBlack(3, 2);
