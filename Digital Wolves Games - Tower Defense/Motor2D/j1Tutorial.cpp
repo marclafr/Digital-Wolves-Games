@@ -118,30 +118,37 @@ void j1Tutorial::Tutorial1()
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 		tutorial1_part1 = true;
 	}
-	if (tutorial1_part1)
-	{
-		text1_tutorial1->ChangeColor({ 255,255,255,0 });
-	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
 		tutorial1_part2 = true;
 	}
-	if (tutorial1_part2)
-	{
-		text2_tutorial1->ChangeColor({ 255,255,255,0 });
-	}
+
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
 		tutorial1_part3 = true;
 	}
-	if (tutorial1_part3)
-	{
-		text3_tutorial1->ChangeColor({ 255,255,255,0 });
-	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN) {
 		tutorial1_part4 = true;
 	}
-	if (tutorial1_part4)
+
+	if (!tutorial1_completed)
 	{
-		text4_tutorial1->ChangeColor({ 255,255,255,0 });
+		if (tutorial1_part1)
+			{
+				text1_tutorial1->ChangeColor({ 255,255,255,0 });
+			}	
+		if (tutorial1_part2)
+			{
+				text2_tutorial1->ChangeColor({ 255,255,255,0 });
+			}
+		if (tutorial1_part3)
+			{
+				text3_tutorial1->ChangeColor({ 255,255,255,0 });
+			}
+		if (tutorial1_part4)
+			{
+				text4_tutorial1->ChangeColor({ 255,255,255,0 });
+			}
 	}
 }
 
@@ -150,11 +157,16 @@ void j1Tutorial::Tutorial2()
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
 		tutorial2_part1 = true;
 	}
-	if (tutorial2_part1)
-	{
-		text_tutorial2->ChangeColor({ 255,255,255,0 });
-	}
+
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
 		tutorial2_completed = true;
+	}
+
+	if (!tutorial2_completed)
+	{
+		if (tutorial2_part1)
+		{
+			text_tutorial2->ChangeColor({ 255,255,255,0 });
+		}
 	}
 }
