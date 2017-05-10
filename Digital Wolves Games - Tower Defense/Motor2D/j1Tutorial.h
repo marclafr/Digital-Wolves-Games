@@ -66,12 +66,14 @@ public:
 
 	UIComponents* tutorial4;
 	UILabel* text_tutorial4;
+	UILabel* text1_tutorial4;
 
 	bool TownHallSelected = false;
 	bool PanelSelected = false;
 	bool tutorial1_completed = false;
 	bool tutorial2_completed = false;
 	bool tutorial3_completed = false;
+	bool tutorial4_completed = false;
 
 private:
 	int count = 0;

@@ -129,6 +129,14 @@ void j1Tutorial::TutorialsProgression()
 		text3_tutorial3->SetToDelete();
 		text4_tutorial3->SetToDelete();
 	}
+
+	if (tutorial4_completed)
+	{
+		tutorial4->SetToDelete();
+		text_tutorial4->SetToDelete();
+		text1_tutorial4->SetToDelete();
+
+	}
 }
 
 void j1Tutorial::TutorialReset()
