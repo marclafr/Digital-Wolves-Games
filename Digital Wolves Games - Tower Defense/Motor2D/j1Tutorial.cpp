@@ -52,12 +52,28 @@ bool j1Tutorial::PreUpdate()
 // Called each loop iteration
 bool j1Tutorial::Update(float dt)
 {
+
 	Tutorial1();
-	Tutorial2();
+	if (tutorial1_completed)
+	{
+		Tutorial2();
+		if (tutorial2_completed)
+		{
+			Tutorial3();
+		}
+		
+	}
+	
+	
 
 	if (tutorial1_part1 && tutorial1_part2 && tutorial1_part3 && tutorial1_part4)
 	{
 		tutorial1_completed = true;
+	}
+
+	if (tutorial3_part1 && tutorial3_part2 && tutorial3_part3 && tutorial3_part4)
+	{
+		tutorial3_completed = true;
 	}
 
 
@@ -100,6 +116,16 @@ void j1Tutorial::TutorialsProgression()
 		text1_tutorial2->SetToDelete();
 		text2_tutorial2->SetToDelete();
 	}
+
+	if (tutorial3_completed)
+	{
+		tutorial3->SetToDelete();
+		text_tutorial3->SetToDelete();
+		text1_tutorial3->SetToDelete();
+		text2_tutorial3->SetToDelete();
+		text3_tutorial3->SetToDelete();
+		text4_tutorial3->SetToDelete();
+	}
 }
 
 void j1Tutorial::TutorialReset()
@@ -111,6 +137,11 @@ void j1Tutorial::TutorialReset()
 	tutorial1_part4 = false;
 	tutorial2_completed = false;
 	tutorial2_part1 = false;
+	tutorial3_completed = false;
+	tutorial3_part1 = false;
+	tutorial3_part2 = false;
+	tutorial3_part3 = false;
+	tutorial3_part4 = false;
 }
 
 void j1Tutorial::Tutorial1()
@@ -167,6 +198,45 @@ void j1Tutorial::Tutorial2()
 		if (tutorial2_part1)
 		{
 			text_tutorial2->ChangeColor({ 255,255,255,0 });
+		}
+	}
+}
+
+void j1Tutorial::Tutorial3()
+{
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
+		tutorial3_part1 = true;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) {
+		tutorial3_part2 = true;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
+		tutorial3_part3 = true;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
+		tutorial3_part4 = true;
+	}
+
+	if (!tutorial3_completed)
+	{
+		if (tutorial3_part1)
+		{
+			text1_tutorial3->ChangeColor({ 255,255,255,0 });
+		}
+		if (tutorial3_part2)
+		{
+			text2_tutorial3->ChangeColor({ 255,255,255,0 });
+		}
+		if (tutorial3_part3)
+		{
+			text3_tutorial3->ChangeColor({ 255,255,255,0 });
+		}
+		if (tutorial3_part4)
+		{
+			text4_tutorial3->ChangeColor({ 255,255,255,0 });
 		}
 	}
 }
