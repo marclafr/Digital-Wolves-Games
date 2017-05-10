@@ -74,13 +74,13 @@ bool j1MainMenu::Start()
 	options->SetInteractive(false);
 
 	//SOCIALMEDIA
-	UIButton* facebook = App->uimanager->AddButton({ 681, 720, 37, 37 }, { 1077, 869, 37, 37 });
+	UIButton* facebook = App->uimanager->AddButton({ 681, 720, 37, 37 }, { 1310, 769, 37, 37 });
 	facebook->SetTask(new ChangeToFacebook());
-	UIButton* twitter = App->uimanager->AddButton({ 720, 720, 37, 37 }, { 1117, 869, 37, 37 });
+	UIButton* twitter = App->uimanager->AddButton({ 720, 720, 37, 37 }, { 1310, 807, 37, 37 });
 	twitter->SetTask(new ChangeToTwitter());
-	UIButton* github = App->uimanager->AddButton({ 759, 720, 37, 37 }, { 1157, 869, 37, 37 });
+	UIButton* github = App->uimanager->AddButton({ 759, 720, 37, 37 }, { 1310, 845, 37, 37 });
 	github->SetTask(new ChangeToGithub());
-	UIButton* bugs = App->uimanager->AddButton({ 798, 720, 37, 37 }, { 1195, 869, 37, 37 });
+	UIButton* bugs = App->uimanager->AddButton({ 798, 720, 37, 37 }, { 1310, 883, 37, 37 });
 	bugs->SetTask(new ChangeToBugs());
 
 	//EXIT

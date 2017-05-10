@@ -64,8 +64,6 @@ bool j1Tutorial::Update(float dt)
 		
 	}
 	
-	
-
 	if (tutorial1_part1 && tutorial1_part2 && tutorial1_part3 && tutorial1_part4)
 	{
 		tutorial1_completed = true;
@@ -185,11 +183,11 @@ void j1Tutorial::Tutorial1()
 
 void j1Tutorial::Tutorial2()
 {
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_BUTTON_LEFT) == KEY_DOWN) {
 		tutorial2_part1 = true;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_BUTTON_RIGHT) == KEY_DOWN) {
 		tutorial2_completed = true;
 	}
 
