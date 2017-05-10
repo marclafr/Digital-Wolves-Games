@@ -119,6 +119,7 @@
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="theoraplay.c" />
     <ClCompile Include="Towers.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UICheckbutton.cpp" />
@@ -133,6 +134,7 @@
     <ClCompile Include="UILabel.cpp" />
     <ClCompile Include="UISelectOption.cpp" />
     <ClCompile Include="Units.cpp" />
+    <ClCompile Include="Video.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buildings.h" />
@@ -179,6 +181,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Task.h" />
+    <ClInclude Include="theoraplay.h" />
     <ClInclude Include="Towers.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UICheckbutton.h" />
@@ -194,6 +197,7 @@
     <ClInclude Include="UILabel.h" />
     <ClInclude Include="UISelectOption.h" />
     <ClInclude Include="Units.h" />
+    <ClInclude Include="Video.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

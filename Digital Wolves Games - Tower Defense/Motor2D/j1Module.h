@@ -7,7 +7,7 @@
 #define __j1MODULE_H__
 
 #include "PugiXml\src\pugixml.hpp"
-
+#include "SDL\include\SDL.h"
 class j1App;
 
 class j1Module
