@@ -92,6 +92,13 @@ public:
 	ResourceManager* resources = nullptr;
 
 	std::vector<Entity*> selection;
+
+	//TEST FOR SAMPER: TODO delete this and all related
+	AnimationManager* anim_test2;
+	AnimationManager* anim_test3;
+	AnimationManager* anim_test4;
+	AnimationManager* anim_test5;
+	//--
 };
 
 #endif // __j1SCENE_H__

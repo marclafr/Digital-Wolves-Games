@@ -90,13 +90,21 @@ void Projectile::Update()
 			break;
 		case P_CANNONBALL:
 		case P_FIRE_CANNONBALL:
-		case P_ICE_CANNONBALL:
 		case P_AIR_CANNONBALL:
 			Target->Damaged(Damage);
 			AreaDamage(Damage, { (int)Target->GetX(), (int)Target->GetY() }, AREA_DMG_RADIUS);
 			element_terrain_pos = Target->GetPosition();
 			delete projectile_anim;
-			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
+			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_EXPLOSION));
+			dest_reached = true;
+			PrintElementTerrainTimer.Start();
+			break;
+		case P_ICE_CANNONBALL:
+			Target->Damaged(Damage);
+			AreaDamage(Damage, { (int)Target->GetX(), (int)Target->GetY() }, AREA_DMG_RADIUS);
+			element_terrain_pos = Target->GetPosition();
+			delete projectile_anim;
+			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_EXPLOSION));
 			dest_reached = true;
 			PrintElementTerrainTimer.Start();
 			break;
@@ -173,7 +181,7 @@ void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)
 		case P_FIRE_CANNONBALL:
 		case P_ICE_CANNONBALL:
 		case P_AIR_CANNONBALL:
-			App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+			App->render->PushInGameSprite(App->tex->GetTexture(T_EXPLOSIONS_AND_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 			break;
 		default:
 			break;

@@ -95,6 +95,14 @@ bool j1Scene::Start()
 		App->tutorial->TutorialReset();
 		TutorialUI();
 	}
+
+	//TEST FOR SAMPER: TODO delete this and all related
+	anim_test2 = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_EXPLOSION));
+	anim_test3 = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
+	anim_test4 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_EXPLOSION));
+	anim_test5 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
+	//--
+
 	return true;
 }
 
@@ -119,6 +127,19 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
+
+	//TEST FOR SAMPER: TODO delete this and all related
+	SDL_Rect rect;
+	iPoint pivot;
+	anim_test2->Update(rect, pivot);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_EXPLOSIONS_AND_FLOOR), 300, 800, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+	anim_test3->Update(rect, pivot);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_EXPLOSIONS_AND_FLOOR), 500, 800, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+	anim_test4->Update(rect, pivot);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_EXPLOSIONS_AND_FLOOR), 300, 1000, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+	anim_test5->Update(rect, pivot);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_EXPLOSIONS_AND_FLOOR), 500, 1000, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+	//--
 
 	//Test fade to black
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)

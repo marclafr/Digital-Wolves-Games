@@ -90,8 +90,8 @@ bool j1Textures::Start()
 	App->tex->Load("textures/Extras.png", T_TOWNHALL);
 	App->tex->Load("textures/Resouces.png", T_RESOURCE);
 	App->tex->Load("animations/ArrowsBombs.png", T_ARROW_BOMB);
-	App->tex->Load("animations/Fire.png", T_FIRE);
-	App->tex->Load("animations/Fire_floor.png", T_FIRE_FLOOR);
+	App->tex->Load("animations/BuildingsFire.png", T_BUILDINGS_FIRE);
+	App->tex->Load("animations/ExplosionsAndFloor.png", T_EXPLOSIONS_AND_FLOOR);
 
 	std::string towers_walls_folder = "textures/Towers.xml";
 

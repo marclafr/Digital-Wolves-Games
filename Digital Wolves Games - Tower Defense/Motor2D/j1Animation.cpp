@@ -99,12 +99,12 @@ bool j1Animation::Awake(pugi::xml_node& config)
 	}
 
 	//Load ARROW/BOMBS animations data from animations folder
-	std::string anim_folder2 = "animations/ArrowsBombs.xml";
+	std::string anim_folder2 = "animations/AnimationSprites.xml";
 
 	buff = nullptr;
 	size = App->fs->Load(anim_folder2.c_str(), &buff);
-	pugi::xml_document anim_data2;
-	result = anim_data2.load_buffer(buff, size);
+	pugi::xml_document anim_sprites_data;
+	result = anim_sprites_data.load_buffer(buff, size);
 	RELEASE(buff);
 
 	if (result == NULL)
@@ -113,67 +113,29 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		return false;
 	}
 
-	pugi::xml_node arrows_bombs_node = anim_data2.child("TextureAtlas").first_child();
-	while (arrows_bombs_node != NULL)
+	pugi::xml_node anim_sprites_node = anim_sprites_data.child("TextureAtlas").first_child();
+	while (anim_sprites_node != NULL)
 	{
-		std::string anim_name = arrows_bombs_node.attribute("anim_name").as_string();
-		Animation* new_anim2 = new Animation(AnimString2Enum(anim_name));
+		std::string anim_name = anim_sprites_node.attribute("anim_name").as_string();
+		Animation* new_sprites_anim = new Animation(AnimString2Enum(anim_name));
 
-		pugi::xml_node sprite_node2 = arrows_bombs_node.first_child();
+		pugi::xml_node anim_sprite_node = anim_sprites_node.first_child();
 
-		while (sprite_node2 != NULL)
+		while (anim_sprite_node != NULL)
 		{
-			new_anim2->frames.push_back({ sprite_node2.attribute("x").as_int(),sprite_node2.attribute("y").as_int(), sprite_node2.attribute("w").as_int(),sprite_node2.attribute("h").as_int() });
+			new_sprites_anim->frames.push_back({ anim_sprite_node.attribute("x").as_int(), anim_sprite_node.attribute("y").as_int(), anim_sprite_node.attribute("w").as_int(), anim_sprite_node.attribute("h").as_int() });
 
-			int pX = sprite_node2.attribute("pX").as_float();
-			int pY =  sprite_node2.attribute("pY").as_float();
-			new_anim2->pivot_points.push_back({ pX, pY });
-			sprite_node2 = sprite_node2.next_sibling();
+			int pX = anim_sprite_node.attribute("pX").as_float();
+			int pY = anim_sprite_node.attribute("pY").as_float();
+			new_sprites_anim->pivot_points.push_back({ pX, pY });
+			anim_sprite_node = anim_sprite_node.next_sibling();
 		}
 
-		new_anim2->speed = 75.0f; 
-		if (new_anim2->name == ANIM_FIRE_FLOOR)
-			new_anim2->loop = false;
-		animation_types.push_back(new_anim2);
-		arrows_bombs_node = arrows_bombs_node.next_sibling();
-	}
-
-
-	std::string anim_folder3 = "animations/Fire.xml";
-	buff = nullptr;
-	size = App->fs->Load(anim_folder3.c_str(), &buff);
-	pugi::xml_document anim_data3;
-	result = anim_data3.load_buffer(buff, size);
-	RELEASE(buff);
-
-	if (result == NULL)
-	{
-		LOG("Error loading ARROW and BOMBS animations data: %s", result.description());
-		return false;
-	}
-
-	pugi::xml_node fire_node = anim_data3.child("Sprites").first_child();
-
-	while (fire_node != NULL)
-	{
-		std::string anim_name = fire_node.attribute("anim_name").as_string();
-		Animation* new_anim3 = new Animation(AnimString2Enum(anim_name));
-
-		pugi::xml_node sprite_node3 = fire_node.first_child();
-
-		while (sprite_node3 != NULL)
-		{
-			new_anim3->frames.push_back({ sprite_node3.attribute("x").as_int(),sprite_node3.attribute("y").as_int(), sprite_node3.attribute("w").as_int(),sprite_node3.attribute("h").as_int() });
-
-			int pX = sprite_node3.attribute("pX").as_int();
-			int pY = sprite_node3.attribute("pY").as_int();
-			new_anim3->pivot_points.push_back({ (int)pX, (int)pY });
-			sprite_node3 = sprite_node3.next_sibling();
-		}
-
-		new_anim3->speed = 75.0f;
-		animation_types.push_back(new_anim3);
-		fire_node = fire_node.next_sibling();
+		new_sprites_anim->speed = 75.0f;
+		//TODO UNCOMMENT WHEN RECTS ARE CORRECT if (new_sprites_anim->name == ANIM_FIRE_EXPLOSION || new_sprites_anim->name == ANIM_ICE_EXPLOSION)
+		//	new_sprites_anim->loop = false;
+		animation_types.push_back(new_sprites_anim);
+		anim_sprites_node = anim_sprites_node.next_sibling();
 	}
 
 	return ret;
@@ -531,8 +493,20 @@ ANIMATION_NAME j1Animation::AnimString2Enum(const std::string name)
 	else if (name == "air_bomb")
 		return ANIM_AIR_BOMB;
 
+	else if (name == "buildings_fire")
+		return ANIM_BUILDINGS_FIRE;
+
+	else if (name == "fire_explosion")
+		return ANIM_FIRE_EXPLOSION;
+
 	else if (name == "fire_floor")
 		return ANIM_FIRE_FLOOR;
+
+	else if (name == "ice_explosion")
+		return ANIM_ICE_EXPLOSION;
+
+	else if (name == "ice_floor")
+		return ANIM_ICE_FLOOR;
 
 	return NO_ANIM_NAME;
 }
