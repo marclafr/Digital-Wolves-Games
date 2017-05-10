@@ -28,7 +28,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -94,6 +94,7 @@
     <ClCompile Include="j1SceneManager.cpp" />
     <ClCompile Include="j1Score.cpp" />
     <ClCompile Include="j1ScoreScene.cpp" />
+    <ClCompile Include="j1Tutorial.cpp" />
     <ClCompile Include="j1UIManager.cpp" />
     <ClCompile Include="j1Main.cpp" />
     <ClCompile Include="j1App.cpp" />
@@ -118,6 +119,7 @@
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="theoraplay.c" />
     <ClCompile Include="Towers.cpp" />
     <ClCompile Include="UIButton.cpp" />
     <ClCompile Include="UICheckbutton.cpp" />
@@ -132,6 +134,7 @@
     <ClCompile Include="UILabel.cpp" />
     <ClCompile Include="UISelectOption.cpp" />
     <ClCompile Include="Units.cpp" />
+    <ClCompile Include="Video.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buildings.h" />
@@ -148,6 +151,7 @@
     <ClInclude Include="j1SceneManager.h" />
     <ClInclude Include="j1Score.h" />
     <ClInclude Include="j1ScoreScene.h" />
+    <ClInclude Include="j1Tutorial.h" />
     <ClInclude Include="j1UIManager.h" />
     <ClInclude Include="j1Map.h" />
     <ClInclude Include="j1Pathfinding.h" />
@@ -177,6 +181,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Task.h" />
+    <ClInclude Include="theoraplay.h" />
     <ClInclude Include="Towers.h" />
     <ClInclude Include="UIButton.h" />
     <ClInclude Include="UICheckbutton.h" />
@@ -192,6 +197,7 @@
     <ClInclude Include="UILabel.h" />
     <ClInclude Include="UISelectOption.h" />
     <ClInclude Include="Units.h" />
+    <ClInclude Include="Video.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

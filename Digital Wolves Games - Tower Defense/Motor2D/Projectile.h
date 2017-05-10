@@ -46,7 +46,7 @@ private:
 	int CurveHeight;
 	AnimationManager* projectile_anim = nullptr;
 
-	void AreaDamage(int damage, fPoint center, int radius);
+	void AreaDamage(int damage, iPoint center, int radius);
 
 	AnimationManager* anim_ice_floor = nullptr;
 	AnimationManager* anim_fire_try = nullptr;
@@ -63,6 +63,7 @@ public:
 	void Update();
 	void Draw();
 
+	bool floor_effect = false;
 	int GetProjectilePos() const;
 	int GetDamage() const;
 	void SetRect(SDL_Rect rect);

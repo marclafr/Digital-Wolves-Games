@@ -11,6 +11,8 @@
 #include "Buildings.h"
 #include "Towers.h"
 #include "Units.h"
+#include "p2Log.h"
+#include "j1Tutorial.h"
 
 class Task
 {
@@ -66,6 +68,28 @@ public:
 		{
 			App->scene->win = false;
 			App->scene->lose = false;
+		}
+		return true;
+	}
+};
+
+class ChangeMainMenuSceneToTutorial : public Task
+{
+private:
+	SCENES to_scene = SC_NO_SCENE;
+
+public:
+	ChangeMainMenuSceneToTutorial(SCENES to_scene) : to_scene(to_scene) {}
+
+	bool Execute()
+	{
+		App->scene_manager->ChangeScene(to_scene);
+
+		if (to_scene == SC_GAME)
+		{
+			App->scene->win = false;
+			App->scene->lose = false;
+			App->tutorial->tutorial = true;
 		}
 		return true;
 	}
@@ -160,6 +184,7 @@ public:
 	{
 		App->scene->placing_wall = false;
 		App->scene->placing_tower = T_BASIC_TOWER;
+		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
 		return true;
 	}
 };
@@ -173,6 +198,7 @@ public:
 	{
 		App->scene->placing_wall = false;
 		App->scene->placing_tower = T_BOMBARD_TOWER;
+		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
 		return true;
 	}
 };
@@ -193,7 +219,82 @@ public:
 
 	bool Execute()
 	{
-		tower->UpgradeTurret(type);
+		if (tower->IsAlive()) tower->UpgradeTurret(type);
+		return true;
+	}
+};
+
+class DeleteTowerTask : public Task
+{
+private:
+	Tower* tower = nullptr;
+	TURRET_UPGRADE type = TU_NULL;
+
+public:
+	DeleteTowerTask() {}
+
+	void SetTower(Tower* tower)
+	{
+		this->tower = tower;
+	}
+
+	bool Execute()
+	{
+		if(tower->IsAlive())	tower->ConvertToRubble();
+		return true;
+	}
+};
+
+class DeleteWallTask : public Task
+{
+private:
+	Building* wall = nullptr;
+
+public:
+	DeleteWallTask() {}
+
+	void SetWall(Building* wall)
+	{
+		this->wall = wall;
+	}
+
+	bool Execute()
+	{
+		if (wall->IsAlive())	wall->ConvertToRubble();
+		return true;
+	}
+};
+class UpgradeWallTask : public Task
+{
+private:
+	Building* wall = nullptr;
+	BUILDING_TYPE type;
+public:
+	UpgradeWallTask(BUILDING_TYPE type) : type(type) {}
+
+	void SetWall(Building* wall)
+	{
+		this->wall = wall;
+	}
+
+	bool Execute()
+	{
+		if (wall->IsAlive())	wall->UpgradeWall(type);
+		return true;
+	}
+};
+
+class DoInvestigation : public Task
+{
+private:
+	
+	INVESTIGATION_TYPE type;
+public:
+	DoInvestigation(INVESTIGATION_TYPE type) : type(type) {}
+
+	bool Execute()
+	{
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(type));
 		return true;
 	}
 };
@@ -207,6 +308,7 @@ public:
 	{
 		App->scene->placing_wall = true;
 		App->scene->placing_tower = T_NO_TYPE;
+		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
 		return true;
 	}
 };
@@ -221,7 +323,11 @@ public:
 	bool Execute()
 	{
 		if (App->scene->resources->CanTrainSoldier(u_type))
+		{
 			App->scene->resources->TrainSoldier(u_type);
+		}
+			
+		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
 		return true;
 	}
 
@@ -230,4 +336,46 @@ public:
 		return u_type;
 	}
 };
+
+class ChangeToFacebook : public Task
+{
+public:
+	bool Execute()
+	{
+		ShellExecute(NULL, "open", "https://www.facebook.com/Digital-Wolves-Games-233798633695568/?ref=bookmarks", NULL, NULL, SW_SHOWMAXIMIZED);
+		return true;
+	}
+};
+
+class ChangeToTwitter : public Task
+{
+public:
+	bool Execute()
+	{
+		ShellExecute(NULL, "open", "https://twitter.com/DigitalWolvesG", NULL, NULL, SW_SHOWMAXIMIZED);
+		return true;
+	}
+};
+
+class ChangeToGithub : public Task
+{
+public:
+	bool Execute()
+	{
+		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/wiki", NULL, NULL, SW_SHOWMAXIMIZED);
+		return true;
+	}
+};
+
+class ChangeToBugs : public Task
+{
+public:
+	bool Execute()
+	{
+		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/issues", NULL, NULL, SW_SHOWMAXIMIZED);
+		return true;
+	}
+};
+
+
 #endif

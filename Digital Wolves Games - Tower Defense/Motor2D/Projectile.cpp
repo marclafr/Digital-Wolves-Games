@@ -1,7 +1,9 @@
+#include <math.h>
 #include "Projectile.h"
 #include "j1Animation.h"
-#include <math.h>
-
+#include "IsoPrimitives.h"
+#include "Camera.h"
+#include "j1Render.h"
 
 Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float TimeInSecs, int Startheight, int Curveheight, PROJECTILE_TYPE type) : StartPos(initialpos), Damage(damage), Target(target), StartHeight(Startheight), CurveHeight(Curveheight), projectile_type(type)
 {
@@ -13,30 +15,26 @@ Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float Tim
 	{
 	case P_BASIC_ARROW:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
-		//SetRect({ 0,0,36,5 });
-		//pivot = { 18, 2 };
 		break;
 	case P_FIRE_ARROW:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_ARROW));
 		break;
 	case P_ICE_ARROW:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_ARROW));
-		//pivot = { 18, 7 };
 		break;
 	case P_AIR_ARROW:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_ARROW));
-		//pivot = { 18, 7 };
 		break;
 	case P_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
-		//SetRect({ 0,54,10,10 }); 
-		//pivot = { 5, 5 };
 		break;
 	case P_FIRE_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
+		floor_effect = true;
 		break; 
 	case P_ICE_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_BOMB));
+		floor_effect = true;
 		break;
 	case P_AIR_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_BOMB));
@@ -84,21 +82,35 @@ void Projectile::Update()
 		case P_ICE_ARROW:
 		case P_AIR_ARROW:
 			Target->Damaged(Damage);
+			dest_reached = true;
 			break;
 		case P_CANNONBALL:
 		case P_FIRE_CANNONBALL:
-		case P_ICE_CANNONBALL:
 		case P_AIR_CANNONBALL:
 			Target->Damaged(Damage);
-			AreaDamage(Damage, Target->GetPosition(), AREA_DMG_RADIUS);
+			AreaDamage(Damage, { (int)Target->GetX(), (int)Target->GetY() }, AREA_DMG_RADIUS);
 			element_terrain_pos = Target->GetPosition();
 			delete projectile_anim;
-			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
+			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_EXPLOSION));
+			dest_reached = true;
+			PrintElementTerrainTimer.Start();
+			break;
+		case P_ICE_CANNONBALL:
+			Target->Damaged(Damage);
+			AreaDamage(Damage, { (int)Target->GetX(), (int)Target->GetY() }, AREA_DMG_RADIUS);
+			element_terrain_pos = Target->GetPosition();
+			delete projectile_anim;
+			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_EXPLOSION));
 			dest_reached = true;
 			PrintElementTerrainTimer.Start();
 			break;
 		default:
 			break;
+		}
+		if (projectile_type == P_ICE_ARROW)
+		{
+			Unit* unit_target = (Unit*)Target; 
+			unit_target->SlowUnit();
 		}
 	}
 
@@ -116,7 +128,8 @@ void Projectile::Draw()
 	if (projectile_anim != nullptr)
 		projectile_anim->Update(rect, pivot);
 	if (dest_reached == false)
-		App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
+		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + ActualPos.x, App->render->camera->GetPosition().y + ActualPos.y))
+			App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
 }
 
 int Projectile::GetProjectilePos() const
@@ -139,29 +152,53 @@ AnimationManager * Projectile::GetProjectileAnim()
 	return projectile_anim;
 }
 
-void Projectile::AreaDamage(int damage, fPoint center, int radius)
+void Projectile::AreaDamage(int damage, iPoint center, int radius)
 {
-	//TODO: Create elipse and check if any unit is inside, if so, damage them.
-
+	Circle circle(center, radius);
+	//TODO: when quadtree is finished
+	/*
+	if (projectile_type == P_ICE_CANNONBALL)
+	{
+		Unit* target_unit = (Unit*)Target;
+		target_unit->SlowUnit();
+	}
+	*/
 }
 
 void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)
 {
+	if (floor_effect == true && projectile_anim->Finished() == true)
+	{
+		switch (projectile_type)
+		{
+		case P_FIRE_CANNONBALL:
+			delete projectile_anim;
+			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
+			break;
+		case P_ICE_CANNONBALL:
+			delete projectile_anim;
+			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
+			break;
+		default:
+			break;
+		}
+		floor_effect = false;
+	}
 	SDL_Rect rect;
 	iPoint pivot;
 	projectile_anim->Update(rect, pivot);
-	switch (element)
+	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + ActualPos.x, App->render->camera->GetPosition().y + ActualPos.y))
 	{
-	case P_CANNONBALL:
-	case P_FIRE_CANNONBALL:
-	case P_ICE_CANNONBALL:
-	case P_AIR_CANNONBALL:
-		App->render->PushInGameSprite(App->tex->GetTexture(T_FIRE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
-		break;
-	default:
-		break;
+		switch (element)
+		{
+		case P_CANNONBALL:
+		case P_FIRE_CANNONBALL:
+		case P_ICE_CANNONBALL:
+		case P_AIR_CANNONBALL:
+			App->render->PushInGameSprite(App->tex->GetTexture(T_EXPLOSIONS_AND_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
+			break;
+		default:
+			break;
+		}
 	}
-
-	//TODO: if (element == P_ICE_CANNONBALL)
-		//App->render->PushInGameSprite(App->tex->GetTexture(T_ICE_FLOOR), center.x, center.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 }

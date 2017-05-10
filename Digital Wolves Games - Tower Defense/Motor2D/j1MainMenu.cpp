@@ -54,7 +54,10 @@ bool j1MainMenu::Start()
 
 	//TUTORIAL
 	UIButton* tutorial = App->uimanager->AddButton({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
-	tutorial->SetInteractive(false);
+	tutorial->SetMouseOnTopTextRect({ 719, 2572, 200, 237 },3);
+	tutorial->SetTask(new ChangeMainMenuSceneToTutorial(SC_GAME));
+
+	App->uimanager->AddLabel(218, 23, "Tutorial");
 
 	//HISTORY
 	UIButton* history = App->uimanager->AddButton({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
@@ -70,6 +73,16 @@ bool j1MainMenu::Start()
 	//OPTIONS
 	UIButton* options = App->uimanager->AddButton({ 300, 448, 125, 122 }, { 288, 862, 125, 123 });
 	options->SetInteractive(false);
+
+	//SOCIALMEDIA
+	UIButton* facebook = App->uimanager->AddButton({ 681, 720, 37, 37 }, { 1310, 769, 37, 37 });
+	facebook->SetTask(new ChangeToFacebook());
+	UIButton* twitter = App->uimanager->AddButton({ 720, 720, 37, 37 }, { 1310, 807, 37, 37 });
+	twitter->SetTask(new ChangeToTwitter());
+	UIButton* github = App->uimanager->AddButton({ 759, 720, 37, 37 }, { 1310, 845, 37, 37 });
+	github->SetTask(new ChangeToGithub());
+	UIButton* bugs = App->uimanager->AddButton({ 798, 720, 37, 37 }, { 1310, 883, 37, 37 });
+	bugs->SetTask(new ChangeToBugs());
 
 	//EXIT
 	UIButton* exit = App->uimanager->AddButton({ 174, 677, 200, 91 }, { 149, 770, 200, 91 });

@@ -23,6 +23,7 @@
 #include "UIHUDResources.h"
 #include "UIHUDTownHallBarLife.h"
 #include "UIHUDScoreBar.h"
+#include "UIHUDMinimap.h"
 
 j1UIManager::j1UIManager() : j1Module()
 {
@@ -203,6 +204,12 @@ void j1UIManager::AddTownHallBarLife()
 	UIHUDTownHallBarLife* new_thbarlife;
 	components.push_back(new_thbarlife = new UIHUDTownHallBarLife(UICOMPONENT_TYPE::UIT_UIHUDTOWNHALLBARLIFE));
 	townhall_bar_life = new_thbarlife;
+}
+
+void j1UIManager::AddMinimap()
+{
+	UIHUDMinimap* new_minimap;
+	components.push_back(new_minimap = new UIHUDMinimap());
 }
 
 // const getter for atlas

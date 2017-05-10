@@ -1,13 +1,3 @@
-#define BACKGROUND_POSITION_NAME {1, 593, 194, 15}
-#define BACKGROUND_POSITION_PRICE {1, 608, 194, 15}
-
-#define ATLAS_BACKGROUND {1, 995, 194, 15}
-
-#define X_LABEL_NAME 3
-#define Y_LABEL_NAME 593
-#define X_LABEL_PRICE 3
-#define Y_LABEL_PRICE 608
-
 #include "UIHUDDescription.h"
 
 #include "j1App.h"
@@ -22,6 +12,16 @@
 #include "UICheckbutton.h"
 
 #include "UIGetEntitiesInfo.h"
+
+#define BACKGROUND_POSITION_NAME {1, 593, 194, 15}
+#define BACKGROUND_POSITION_PRICE {1, 608, 194, 15}
+
+#define ATLAS_BACKGROUND {1, 995, 194, 15}
+
+#define X_LABEL_NAME 3
+#define Y_LABEL_NAME 593
+#define X_LABEL_PRICE 3
+#define Y_LABEL_PRICE 608
 
 UIHUDDescription::UIHUDDescription(UICOMPONENT_TYPE type) : UIComponents(type)
 {

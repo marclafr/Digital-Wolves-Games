@@ -20,6 +20,7 @@
 #include "j1Scene.h"
 #include "j1MainMenu.h"
 #include "j1ScoreScene.h"
+#include "Video.h"
 #include "j1App.h"
 #include "j1Collision.h"
 #include "j1SceneManager.h"
@@ -28,6 +29,7 @@
 #include "ProjectileManager.h"
 #include "j1Investigations.h"
 #include "j1Score.h"
+#include "j1Tutorial.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -56,7 +58,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	console = new j1Console();
 	investigations = new j1Investigations();
 	score = new j1Score();
-
+	tutorial = new j1Tutorial();
+	video = new Video();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 
@@ -70,7 +73,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(uimanager);
 	AddModule(console);
 	AddModule(scene_manager);
-
+	AddModule(video);
 	//Not-Active at start
 	AddModule(pathfinding, false);
 	AddModule(map, false);
@@ -81,6 +84,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(wave_manager, false);
 	AddModule(investigations, false);
 	AddModule(score, false);
+	AddModule(tutorial, false);
 
 	// Scenes	
 	AddModule(main_menu);

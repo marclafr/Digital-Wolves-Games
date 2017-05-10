@@ -8,6 +8,8 @@
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
 #include "j1Audio.h"
+#include "Camera.h"
+
 
 Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILDING, pos, side), building_type(b_type)
 {
@@ -17,8 +19,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	{
 	case B_TURRET:
 		SetSide(side);
-		base_height = 25;
-		base_width = 25;
+		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 96, 47,	GetPivot());
 		break;
 
 	case B_WOOD_WALL:
@@ -26,8 +27,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetHp(500);
 		SetAttack(0);
 		SetArmor(8);
-		base_height = 25;
-		base_width = 25;
+		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 96, 47, GetPivot());
 		break;
 
 	case B_TOWNHALL:
@@ -35,13 +35,24 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetHp(1500);
 		SetAttack(0);
 		SetArmor(8);
-		rect = { 836,1,366,317 };
+		rect = { 477,0,366,317 };
 		SetRect(rect);
-		SetPivot(0.52459 * 366, 0.72555 * 317);//
+		SetPivot(0.52459 * 366, 0.72555 * 317);
 		SetTextureID(T_TOWNHALL);
 		totally_built = true;
-		base_height = 125;
-		base_width = 125;
+		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 375, 170, {0,0});
+		break;
+	case B_UNIVERSITY:
+		SetSide(side);
+		SetHp(1500);
+		SetAttack(0);
+		SetArmor(8);
+		rect = {0,158,483,291};
+		SetRect(rect);
+		SetPivot(0.509317*483, 0.726923*291);
+		SetTextureID(T_TOWNHALL);
+		totally_built = true;
+		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 483, 210, {0,-20});
 		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
@@ -51,7 +62,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	buildtimer.Start();
 	iPoint p = App->map->WorldToMap(pos.x, pos.y);
 
-	if (App->pathfinding->IsWalkable(p) == true && (building_type == B_TURRET || building_type == B_STONE_WALL))
+	if (App->pathfinding->IsWalkable(p) == true && (building_type == B_TURRET || building_type == B_WOOD_WALL))
 	{
 		App->pathfinding->MakeNoWalkable(p);
 	}
@@ -85,7 +96,8 @@ void Building::AI()
 
 void Building::Draw()
 {
-	if (totally_built != true) {
+	if (totally_built != true)
+	{
 		if (buildtimer.ReadSec() <= 6)
 		{
 			SetRect({98,0,100,75});
@@ -99,12 +111,45 @@ void Building::Draw()
 			totally_built = true;
 		}
 	}
-	App->render->PushInGameSprite(this);
+	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
+		App->render->PushInGameSprite(this);
 }
 
 const BUILDING_TYPE Building::GetBuildingType() const
 {
 	return building_type;
+}
+
+void Building::SetBuildingType(BUILDING_TYPE type)
+{
+	building_type = type;
+}
+
+void Building::UpgradeWall(BUILDING_TYPE type)
+{
+	if (this->IsBuilt())
+	{
+		switch (type)
+		{
+		case B_STONE_WALL:
+			SetRect({ 1020,12,99,178});
+			SetPivot(0.494949 * 99, 178 * 0.865169);
+			building_type = B_STONE_WALL;
+			break;
+		case B_BRICK_WALL:
+			SetRect({0,66,95,169});
+			SetPivot(0.454211*96,169*0.899822);
+			building_type = B_BRICK_WALL;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+Rectng Building::GetBuildRectangle()
+{
+	return build_rect;
 }
 
 const double Building::GetBuildTime() const
@@ -115,16 +160,6 @@ const double Building::GetBuildTime() const
 const double Building::GetDieTime() const
 {
 	return DieTimer.ReadSec();
-}
-
-const int Building::GetHeight() const
-{
-	return base_height;
-}
-
-const int Building::GetWidth()const
-{
-	return base_width;
 }
 
 bool Building::IsBuilt() const
@@ -145,13 +180,15 @@ bool Building::IsAlive() const
 void Building::ConvertToRubble()
 {
 	//TODO: If townhall, change the rect
-	App->audio->PlayFx(App->entity_manager->fx_building_destroyed);
+	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY())) App->audio->PlayFx(App->entity_manager->fx_building_destroyed);
+	
 	SetTextureID(T_TOWNHALL);
 	SDL_Rect rect;
 	rect = { 313, 1, 91, 51 };
 	SetRect(rect);
 	SetPivot(0.362637 * 91, 0.431373 * 51);
 	DieTimer.Start();
+	SetHp(0);
 	alive = false;
 	totally_built = true;
 }

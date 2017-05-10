@@ -23,7 +23,7 @@ bool ProjectileManager::PostUpdate()
 	int size = projectile_vector.size();
 	for (int i = 0; i < size; i++)
 	{
-		if (projectile_vector[i]->GetProjectilePos() == 1 && projectile_vector[i]->GetProjectileAnim()->Finished() == true)
+		if (projectile_vector[i]->GetProjectilePos() == 1 && projectile_vector[i]->GetProjectileAnim()->Finished() == true && projectile_vector[i]->floor_effect == false)
 			DeleteProjectile(projectile_vector[i]);
 	}
 	return true;

@@ -68,6 +68,7 @@ public:
 	void AddResourcesPanel();
 	UIHUDScoreBar* AddScoreBar();
 	void AddTownHallBarLife();
+	void AddMinimap();
 
 	const SDL_Texture* GetAtlas() const;
 	const std::list<UIComponents*>::iterator GetLastComponent();

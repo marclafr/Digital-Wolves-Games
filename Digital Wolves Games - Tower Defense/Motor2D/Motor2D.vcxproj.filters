@@ -86,7 +86,7 @@
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClCompile>
     <ClCompile Include="GetEntitiesInfo.cpp">
-      <Filter>Awsome_Game\UIComponents\GetInfo</Filter>
+      <Filter>Awsome_Game\Tools\GetInfo</Filter>
     </ClCompile>
     <ClCompile Include="UIButton.cpp">
       <Filter>Awsome_Game\UIComponents\Components</Filter>
@@ -159,6 +159,15 @@
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
       <Filter>Awsome_Game\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Tutorial.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Video.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="theoraplay.c">
+      <Filter>Awsome_Game\Theoraplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,7 +259,7 @@
       <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
     <ClInclude Include="UIGetEntitiesInfo.h">
-      <Filter>Awsome_Game\UIComponents\GetInfo</Filter>
+      <Filter>Awsome_Game\Tools\GetInfo</Filter>
     </ClInclude>
     <ClInclude Include="UIButton.h">
       <Filter>Awsome_Game\UIComponents\Components</Filter>
@@ -336,6 +345,15 @@
     <ClInclude Include="Projectile.h">
       <Filter>Awsome_Game\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="j1Tutorial.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Video.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="theoraplay.h">
+      <Filter>Awsome_Game\Theoraplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Awsome_Game">
@@ -365,11 +383,14 @@
     <Filter Include="Awsome_Game\UIComponents\Components">
       <UniqueIdentifier>{415db45d-c97a-4034-bbaa-e0764d7de3a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Awsome_Game\UIComponents\GetInfo">
-      <UniqueIdentifier>{1e8d9cd4-3e8d-4f18-9f90-7062b7cb007f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Awsome_Game\UIComponents\HUD\UIHUDPanelInfo">
       <UniqueIdentifier>{06f88748-2ca2-4806-b68a-c3480589e69f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\Tools\GetInfo">
+      <UniqueIdentifier>{1e8d9cd4-3e8d-4f18-9f90-7062b7cb007f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Awsome_Game\Theoraplay">
+      <UniqueIdentifier>{d1858504-6974-4960-b1aa-747cce6928de}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

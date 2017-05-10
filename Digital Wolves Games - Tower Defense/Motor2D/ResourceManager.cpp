@@ -9,10 +9,10 @@
 
 ResourceManager::ResourceManager(): wood(STARTING_WOOD), food (STARTING_FOOD), gold (STARTING_GOLD), stone (STARTING_STONE)
 {
-	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(860, 640));
-	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1040, 775));
-	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1000, 645));
-	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1200, 750));	
+	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(1392, 858));
+	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1240, 979));
+	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1588, 952));
+	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1419, 1031));	
 }
 
 void ResourceManager::SetWood(Resources * wood)
@@ -241,16 +241,22 @@ bool ResourceManager::CanBuildWall(BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_WOOD_WALL:
-		return stone > BASIC_WALL_STONE_COST;
+		return stone >= BASIC_WALL_STONE_COST;
 		break;
 	case B_STONE_WALL:
-		return stone > BASIC_WALL_STONE_COST;
+		return stone >= BASIC_WALL_STONE_COST;
 		break;
 	}
 	return false;
 }
 
-void ResourceManager::BuildWall(BUILDING_TYPE type, iPoint pos)
+bool ResourceManager::CanBuildAmountOfWalls(int number_of_walls)
+{
+	return stone >= BASIC_WALL_STONE_COST*number_of_walls;
+	return false;
+}
+
+void ResourceManager::BuildWall(BUILDING_TYPE type)
 {
 	//TODO create defines and fill cases for all walls && all creates here. use this funct with a task
 	switch (type)

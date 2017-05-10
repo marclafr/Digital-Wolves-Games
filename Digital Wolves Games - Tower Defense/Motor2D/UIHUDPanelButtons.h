@@ -18,6 +18,10 @@ enum BUILDING_PANELINFO
 	BP_UNIVERSITY,
 	BP_TURRET,
 	BP_CANNON,
+	BP_TURRET_UPGRADED,
+	BP_WOOD_WALL,
+	BP_STONE_WALL,
+	BP_BRICK_WALL
 };
 
 struct info_button
@@ -48,6 +52,10 @@ private:
 	std::vector<info_button*> panel_university;
 	std::vector<info_button*> panel_turret;
 	std::vector<info_button*> panel_cannon;
+	std::vector<info_button*> panel_turret_upgraded;
+	std::vector<info_button*> panel_wood_wall;
+	std::vector<info_button*> panel_stone_wall;
+	std::vector<info_button*> panel_brick_wall;
 	BUILDING_PANELINFO panel_type = BP_NONE;
 	Building* b_selected = nullptr;
 
