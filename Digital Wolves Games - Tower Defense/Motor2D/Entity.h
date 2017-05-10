@@ -58,6 +58,8 @@ public:
 	void DT(float dt);
 	void ResetDT();
 
+	bool Inside(SDL_Rect rect) const;
+
 	//Geters
 	bool ToDelete() const;
 

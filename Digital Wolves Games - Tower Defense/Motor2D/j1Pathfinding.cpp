@@ -6,6 +6,9 @@
 #include "j1Input.h"
 #include "j1Map.h"
 #include "j1PathFinding.h"
+#include "j1EntityManager.h"
+#include "QuadTree.h"
+#include "Entity.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
@@ -829,8 +832,32 @@ void j1PathFinding::Debug()
 		++item)
 	{
 		pos = App->map->MapToWorld(item->x, item->y);
-		App->render->PushInGameSprite(debug_tex, pos.x, pos.y);
+		App->render->PushInGameSprite(debug_tex, pos.x - 32, pos.y - 32);
 	}
+}
+
+//TODO both functs
+bool j1PathFinding::FindEmptyAttackPos(const Entity * entity, iPoint & pos) const
+{
+	iPoint entity_tile = App->map->WorldToMap(entity->GetX(), entity->GetX());
+	
+	if (IsWalkable(iPoint(entity_tile.x, entity_tile.y)))
+	{
+		/*iPoint tile_pos = App->map->MapToWorld(entity_tile.x, entity_tile.y);
+		SDL_Rect tile_rect {tile_pos.x, tile_pos.y, App->map->data.tile_width, App->map->data.tile_height};
+		if (App->entity_manager->entity_quadtree->SearchFirst(tile_rect) == nullptr)
+		{
+			pos.x = tile_pos.x + App->map->data.tile_width / 2;
+			pos.y = tile_pos.y + App->map->data.tile_height / 2;
+			return true;
+		}*/
+	}
+	return false;
+}
+
+bool j1PathFinding::FindNearestUnocupied(iPoint & pos) const
+{
+	return false;
 }
 
 

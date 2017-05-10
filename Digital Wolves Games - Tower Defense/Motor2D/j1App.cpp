@@ -50,7 +50,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	main_menu = new j1MainMenu();
 	scene = new j1Scene();
 	score_scene = new j1ScoreScene();
-	collision = new j1Collision();
+	//collision = new j1Collision();
 	scene_manager = new j1SceneManager();
 	wave_manager = new j1WaveManager();
 	console = new j1Console();
@@ -75,7 +75,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding, false);
 	AddModule(map, false);
 	AddModule(anim, false);
-	AddModule(collision, false);
+	//AddModule(collision, false);
 	AddModule(entity_manager, false);
 	AddModule(projectile_manager, false);
 	AddModule(wave_manager, false);

@@ -24,6 +24,16 @@ void Entity::ResetDT()
 	ai_dt = 0.0f;
 }
 
+bool Entity::Inside(SDL_Rect rect) const
+{
+	if (rect.x > position.x
+		&& rect.x + rect.w < position.x
+		&& rect.y > position.y
+		&& rect.y + rect.h < position.y)
+		return true;
+	return false;
+}
+
 bool Entity::ToDelete() const
 {
 	return to_delete;
@@ -143,11 +153,12 @@ void Entity::SetHp(int new_hp)
 {
 	hp = new_hp;
 }
-const int Entity::GetAttack() const {
 
+const int Entity::GetAttack() const 
+{
 	return attack;
-
 }
+
 void Entity::SetPivot(int x, int y)
 {
 	pivot.x = x;

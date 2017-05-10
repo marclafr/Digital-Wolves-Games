@@ -134,6 +134,8 @@ public:
 	const int GetVisionRange() const;
 	const bool IsMoving() const;
 
+	void CheckCollisions() const;
+
 	const int GetPriority() const;
 	void SetAction(const ACTION action);
 
@@ -145,6 +147,8 @@ public:
 	bool ChangeDirection(iPoint destination);
 	void PlayDeathSound() const;
 	void PlayAttackSound() const;
+
+	bool FindEmptyAttackPos(iPoint& pos) const;
 };
 
 #endif

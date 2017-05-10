@@ -509,7 +509,6 @@ void Unit::AI()
 				break;
 			}
 
-
 			if (target != App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide()))
 			{
 				target = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide());
@@ -666,6 +665,11 @@ const bool Unit::IsMoving() const
 	if (action == A_WALK)
 		return true;
 	return false;
+}
+
+void Unit::CheckCollisions() const
+{
+	App->entity_manager->CheckUnitCollisions(this);
 }
 
 const int Unit::GetPriority() const
@@ -836,6 +840,11 @@ void Unit::PlayAttackSound() const
 			break;
 		}
 	}
+}
+
+bool Unit::FindEmptyAttackPos(iPoint & pos) const
+{
+	return App->pathfinding->FindEmptyAttackPos(attacking, pos);
 }
 
 void Unit::UnitDies()

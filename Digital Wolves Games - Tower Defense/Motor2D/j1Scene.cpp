@@ -56,7 +56,7 @@ bool j1Scene::Start()
 	App->pathfinding->Enable();
 	App->map->Enable();
 	App->anim->Enable();
-	App->collision->Enable();
+	//App->collision->Enable();
 	App->entity_manager->Enable();
 	App->projectile_manager->Enable();
 	App->wave_manager->Enable();//TODO put after tutorial 
@@ -66,18 +66,6 @@ bool j1Scene::Start()
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
 	App->render->camera->SetPosition(iPoint(2300, -800));
-	if(App->map->Load("AlphaOne.tmx") == true)
-	{
-		int w, h;
-		uchar* data = NULL;
-		uchar* data2 = NULL;
-		if(App->map->CreateWalkabilityMap(w, h, &data))
-			App->pathfinding->SetMap(w, h, data);
-		if (App->map->CreateConstructibleMap1(w, h, &data) && App->map->CreateConstructibleMap2(w,h,&data2))
-			App->pathfinding->SetConstructibleMaps(w, h, data, data2);
-		RELEASE_ARRAY(data2);
-		RELEASE_ARRAY(data);
-	}
 
 	CreateSceneUI();
 	//ENTITIES
@@ -85,7 +73,8 @@ bool j1Scene::Start()
 	resources = new ResourceManager();
 	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
 	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
-	
+	//--
+
 	//Reset scores and timers
 	App->score->Reset();
 	return true;
@@ -94,7 +83,6 @@ bool j1Scene::Start()
 // Called each loop iteration
 bool j1Scene::PreUpdate()
 {
-
 	// debug pathfing ------------------
 	int x, y;
 	App->input->GetMousePosition(x, y);
@@ -208,7 +196,7 @@ bool j1Scene::CleanUp()
 	App->wave_manager->Disable();
 	App->projectile_manager->Disable();
 	App->entity_manager->Disable();
-	App->collision->Disable();
+	//App->collision->Disable();
 	App->anim->Disable();
 	App->map->Disable();
 	App->pathfinding->Disable();
@@ -247,15 +235,15 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				if (App->collision->AbleToBuild(pos))
-				{
+				//if (App->collision->AbleToBuild(pos))
+				//{
 					App->audio->PlayFx(App->entity_manager->fx_construction);
 
 					if (App->pathfinding->IsConstructible_neutral(tile_pos) == true)
 						resources->BuildTower(type, pos);
 					else if (App->pathfinding->IsConstructible_ally(tile_pos) == true)
 						resources->BuildTower(type, pos);
-				}
+				//}
 			}
 		}
 	}

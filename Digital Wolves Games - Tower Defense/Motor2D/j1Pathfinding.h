@@ -25,6 +25,7 @@
 
 struct PathNode;
 struct ForcedNeighbour;
+class Entity;
 
 enum X_DIRECTION
 {
@@ -86,6 +87,9 @@ public:
 	PathNode* GetPathNode(int x, int y);
 
 	void Debug();
+
+	bool FindEmptyAttackPos(const Entity* entity, iPoint& pos) const;
+	bool FindNearestUnocupied(iPoint& pos) const;
 
 	//JPS
 

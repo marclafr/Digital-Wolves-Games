@@ -1,6 +1,7 @@
 #ifndef __j1MAP_H__
 #define __j1MAP_H__
 
+#include <vector>
 #include "PugiXml/src/pugixml.hpp"
 #include "p2Point.h"
 #include "j1Module.h"
@@ -85,14 +86,14 @@ enum MapTypes
 // ----------------------------------------------------
 struct MapData
 {
-	int					width;
-	int					height;
-	int					tile_width;
-	int					tile_height;
-	SDL_Color			background_color;
-	MapTypes			type;
-	std::list<TileSet*>	tilesets;
-	std::list<MapLayer*>	layers;
+	int						width;
+	int						height;
+	int						tile_width;
+	int						tile_height;
+	SDL_Color				background_color;
+	MapTypes				type;
+	std::vector<TileSet*>	tilesets;
+	std::vector<MapLayer*>	layers;
 };
 
 // ----------------------------------------------------
@@ -107,6 +108,8 @@ public:
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
+
+	bool Start();
 
 	// Called each loop iteration
 	void Draw();
@@ -138,7 +141,6 @@ public:
 	MapData data;
 
 private:
-
 	pugi::xml_document	map_file;
 	std::string			folder;
 	bool				map_loaded;

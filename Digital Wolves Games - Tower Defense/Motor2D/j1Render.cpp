@@ -8,6 +8,7 @@
 #include "j1Map.h"
 #include "Entity.h"
 #include "j1Animation.h"
+#include "j1EntityManager.h"
 #include "Camera.h"
 #include "j1Scene.h"
 
@@ -433,6 +434,8 @@ void j1Render::BlitGameScene()
 	BlitInGame();
 	BlitSelection();
 	BlitUI();
+	
+	App->entity_manager->DrawQuadTree();
 
 	CleanUpMapVec();
 	CleanUpInGameSpriteQueue();
