@@ -18,9 +18,10 @@ bool j1WaveManager::Start()
 {
 	//TODO create waves in grups
 	Wave wave1;
+	//UnitGroup group20(U_SIEGERAM, 3, LEFT_UP);
 	UnitGroup group1(U_TWOHANDEDSWORDMAN, 15, LEFT_UP);
+	//wave1.PushBack(group20);
 	wave1.PushBack(group1);
-	
 	Wave wave2;
 	UnitGroup group2(U_TWOHANDEDSWORDMAN, 10, LEFT_UP);
 	UnitGroup group3(U_LONGSWORDMAN, 7, LEFT_UP);
