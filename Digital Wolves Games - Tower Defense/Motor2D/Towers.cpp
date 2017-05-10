@@ -100,7 +100,7 @@ void Tower::AI()
 	if (attacking == true && Target != nullptr && AttackTimer.ReadSec() >= rate_of_fire)
 	{
 		App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), projectile_spd, HEIGHT_BASIC_TOWER, 100, projectile_type);
-		App->audio->PlayFx(App->entity_manager->fx_arrow);
+		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY())) App->audio->PlayFx(App->entity_manager->fx_arrow);
 		AttackTimer.Start();
 	}
 
