@@ -283,6 +283,22 @@ public:
 		return true;
 	}
 };
+
+class DoInvestigation : public Task
+{
+private:
+	
+	INVESTIGATION_TYPE type;
+public:
+	DoInvestigation(INVESTIGATION_TYPE type) : type(type) {}
+
+	bool Execute()
+	{
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(type));
+		return true;
+	}
+};
+
 class PlaceWallTask : public EntityTask
 {
 public:

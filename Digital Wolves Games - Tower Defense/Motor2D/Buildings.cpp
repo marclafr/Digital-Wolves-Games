@@ -35,7 +35,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetHp(1500);
 		SetAttack(0);
 		SetArmor(8);
-		rect = { 836,1,366,317 };
+		rect = { 477,0,366,317 };
 		SetRect(rect);
 		SetPivot(0.52459 * 366, 0.72555 * 317);
 		SetTextureID(T_TOWNHALL);
@@ -47,7 +47,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetHp(1500);
 		SetAttack(0);
 		SetArmor(8);
-		rect = { 478,320,483,291};
+		rect = {0,158,483,291};
 		SetRect(rect);
 		SetPivot(0.509317*483, 0.726923*291);
 		SetTextureID(T_TOWNHALL);
