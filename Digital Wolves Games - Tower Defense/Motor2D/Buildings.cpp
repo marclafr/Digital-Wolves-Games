@@ -19,7 +19,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	{
 	case B_TURRET:
 		SetSide(side);
-		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 96, 47,	GetPivot());
+		build_rect = IsoRect({ (int)GetX(), (int)GetY() }, 96, 47,	GetPivot());
 		break;
 
 	case B_WOOD_WALL:
@@ -27,7 +27,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetHp(500);
 		SetAttack(0);
 		SetArmor(8);
-		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 96, 47, GetPivot());
+		build_rect = IsoRect({ (int)GetX(), (int)GetY() }, 96, 47, GetPivot());
 		break;
 
 	case B_TOWNHALL:
@@ -40,7 +40,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetPivot(0.52459 * 366, 0.72555 * 317);
 		SetTextureID(T_TOWNHALL);
 		totally_built = true;
-		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 375, 170, {0,0});
+		build_rect = IsoRect({ (int)GetX(), (int)GetY() }, 375, 170, {0,0});
 		break;
 	case B_UNIVERSITY:
 		SetSide(side);
@@ -52,7 +52,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetPivot(0.509317*483, 0.726923*291);
 		SetTextureID(T_TOWNHALL);
 		totally_built = true;
-		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 483, 210, {0,-20});
+		build_rect = IsoRect({ (int)GetX(), (int)GetY() }, 483, 210, {0,-20});
 		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
@@ -147,7 +147,7 @@ void Building::UpgradeWall(BUILDING_TYPE type)
 	}
 }
 
-Rectng Building::GetBuildRectangle()
+IsoRect Building::GetBuildRectangle()
 {
 	return build_rect;
 }

@@ -856,3 +856,14 @@ void Unit::UnitDies()
 	changed = true;
 	PlayDeathSound();
 }
+
+void Unit::SlowUnit()
+{
+	if (slowed == false)
+	{
+		this->speed /= SLOW_PROPORTION;
+		this->animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), rate_of_fire * SLOW_PROPORTION);
+		slowed = true;
+		slow_timer.Start();
+	}
+}

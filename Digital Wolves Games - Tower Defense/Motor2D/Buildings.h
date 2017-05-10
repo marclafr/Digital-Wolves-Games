@@ -34,7 +34,7 @@ private:
 	j1Timer DieTimer;
 	bool alive = true;
 	bool totally_built = false;
-	Rectng build_rect;
+	IsoRect build_rect;
 
 public:
 	iPoint arrowpos;
@@ -45,7 +45,7 @@ public:
 	virtual void AI();
 	virtual void Draw();
 	const BUILDING_TYPE GetBuildingType() const;
-	Rectng GetBuildRectangle();
+	IsoRect GetBuildRectangle();
 	void SetBuildingType(BUILDING_TYPE type);
 	void UpgradeWall(BUILDING_TYPE type);
 	const double GetBuildTime() const;

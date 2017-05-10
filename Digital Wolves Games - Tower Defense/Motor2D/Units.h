@@ -7,7 +7,8 @@
 #include "IsoPrimitives.h"
 
 #define XY_TILES_RELATION 2
-#define TOWN_HALL iPoint(-720,672) //TODO final townhall destination;, 
+#define TOWN_HALL iPoint(-720,672) //TODO final townhall destination;
+#define SLOW_PROPORTION 1.4f
 
 class AnimationManager;
 struct PathList;
@@ -38,7 +39,8 @@ enum UNIT_TYPE
 	U_CAVALIER,
 	U_PALADIN,
 		//SIEGE
-	U_SIEGERAM
+	U_SIEGERAM,
+	U_MANGONEL
 
 	//TODO: ADD UNIT
 };
@@ -104,6 +106,8 @@ private:
 	std::vector<iPoint> path_vec;
 
 	int priority;
+	bool slowed = false;
+	j1Timer slow_timer;
 
 	//Investigations bonuses:
 	bool bonus_attack = false;
@@ -149,6 +153,8 @@ public:
 	void PlayAttackSound() const;
 
 	bool FindEmptyAttackPos(iPoint& pos) const;
+
+	void SlowUnit();
 };
 
 #endif
