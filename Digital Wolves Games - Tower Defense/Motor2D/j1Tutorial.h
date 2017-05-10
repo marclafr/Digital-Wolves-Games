@@ -63,7 +63,7 @@ public:
 	UILabel* text3_tutorial3;
 	UILabel* text4_tutorial3;
 
-
+	bool TownHallSelected = false;
 private:
 	int count = 0;
 

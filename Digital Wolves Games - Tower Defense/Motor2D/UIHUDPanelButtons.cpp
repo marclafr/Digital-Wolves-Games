@@ -20,7 +20,7 @@
 
 #include "UIButton.h"
 #include "UIHUDDescription.h"
-
+#include "j1Tutorial.h"
 #include "Entity.h"
 #include "Units.h"
 #include "Buildings.h"
@@ -141,6 +141,7 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 		panel_type = BP_TOWNHALL;
 		b_selected = building;
 		CreatePanel();
+		if (App->tutorial->tutorial) App->tutorial->TownHallSelected = true;
 		break;
 	case B_UNIVERSITY:
 		panel_type = BP_UNIVERSITY;
