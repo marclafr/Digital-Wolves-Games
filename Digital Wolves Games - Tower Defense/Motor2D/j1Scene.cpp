@@ -31,6 +31,7 @@
 #include "ResourceManager.h"
 #include "UIGetEntitiesInfo.h"
 #include "j1Tutorial.h"
+#include "Video.h"
 
 #define RECT_INGAME_WITHOUT_UI {0, 15, 1360, 620}
 
@@ -104,6 +105,10 @@ bool j1Scene::Start()
 	anim_test4 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_EXPLOSION));
 	anim_test5 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
 	//--
+	//uint w, h;
+	//App->win->GetWindowSize(w,h);
+	//SDL_Rect r = {0,0,w,h};
+	//App->video->PlayVideo("introplz.ogv", r);
 
 	return true;
 }
