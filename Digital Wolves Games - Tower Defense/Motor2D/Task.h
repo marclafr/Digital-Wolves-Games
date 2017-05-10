@@ -308,7 +308,10 @@ public:
 	bool Execute()
 	{
 		if (App->scene->resources->CanTrainSoldier(u_type))
+		{
 			App->scene->resources->TrainSoldier(u_type);
+		}
+			
 		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
 		return true;
 	}

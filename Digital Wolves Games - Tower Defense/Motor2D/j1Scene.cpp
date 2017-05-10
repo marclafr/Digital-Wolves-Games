@@ -817,6 +817,9 @@ void j1Scene::TutorialUI()
 
 	App->render->camera->SetPosition(iPoint(700, 20));
 
+	App->tutorial->tutorial4 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2737, 418, 130 });
+	App->tutorial->text_tutorial4 = App->uimanager->AddLabel(1130, 290, "Here is the resource zone", { 0,0,0,0 });
+
 	App->tutorial->tutorial3 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
 	App->tutorial->text_tutorial3 = App->uimanager->AddLabel(1130, 290, "Move around using keys or mouse:", { 0,0,0,0 });
 	App->tutorial->text1_tutorial3 = App->uimanager->AddLabel(1130, 310, "W", { 0,0,0,0 });
