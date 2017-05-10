@@ -42,6 +42,17 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		totally_built = true;
 		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 375, 170, {0,0});
 		break;
+	case B_UNIVERSITY:
+		SetSide(side);
+		SetHp(1500);
+		SetAttack(0);
+		SetArmor(8);
+		rect = { 478,320,483,291};
+		SetRect(rect);
+		SetPivot(0.509317*483, 0.726923*291);
+		SetTextureID(T_TOWNHALL);
+		totally_built = true;
+		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 483, 210, {0,-20});
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
 		building_type = B_NO_BUILDING;

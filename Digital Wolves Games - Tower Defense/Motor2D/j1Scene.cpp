@@ -87,6 +87,7 @@ bool j1Scene::Start()
 	resources = new ResourceManager();
 	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-300, 370));
 	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370));
+	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073,799), S_ALLY);
 	
 	//Reset scores and timers
 	App->score->Reset();
@@ -115,9 +116,9 @@ bool j1Scene::PreUpdate()
 	App->input->GetMousePosition(x, y);
 	
 	iPoint p = App->render->ScreenToWorld(x, y);
-	
+	LOG("%d, %d", p.x, p.y);
 	p = App->map->WorldToMap(p.x, p.y);
-
+	
 	return true;
 }
 

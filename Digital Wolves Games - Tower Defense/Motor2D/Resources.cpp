@@ -24,7 +24,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		build_time = 7.0f;
 		rect = { 203, 0, 222, 217 };
 		SetRect(rect);
-		SetPivot(0, 0);
+		SetPivot(0.51818*222,217*0.76279);
 		SetTextureID(T_RESOURCE);
 		totallybuilded = true;
 		CollectTimer.Start();
@@ -39,7 +39,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		build_time = 7.0f;
 		rect = { 638, 0, 208, 175 };
 		SetRect(rect);
-		SetPivot(0, 0);
+		SetPivot(0.48538*208,175* 0.97030);
 		SetTextureID(T_RESOURCE);
 		totallybuilded = true;
 		CollectTimer.Start();
@@ -54,7 +54,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		build_time = 7.0f;
 		rect = { 638, 316, 213, 130 };	//TODO CHANGE RECT/PIVOT : SPRITE?????
 		SetRect(rect);
-		SetPivot(0, 0);
+		SetPivot(0.49123 * 213, 0.65347 * 130);
 		SetTextureID(T_RESOURCE);
 		totallybuilded = true;
 		CollectTimer.Start();
@@ -69,7 +69,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		build_time = 7.0f;
 		rect = { 638, 183, 213, 130 };
 		SetRect(rect);
-		SetPivot(0, 0);
+		SetPivot(0.49123*213, 0.65347*130);
 		SetTextureID(T_RESOURCE);
 		totallybuilded = true;
 		CollectTimer.Start();
