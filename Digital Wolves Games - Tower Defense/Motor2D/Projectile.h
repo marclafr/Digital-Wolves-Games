@@ -63,6 +63,7 @@ public:
 	void Update();
 	void Draw();
 
+	bool floor_effect = false;
 	int GetProjectilePos() const;
 	int GetDamage() const;
 	void SetRect(SDL_Rect rect);

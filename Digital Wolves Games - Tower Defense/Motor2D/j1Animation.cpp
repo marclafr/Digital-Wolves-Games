@@ -98,7 +98,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		unit_node = unit_node.next_sibling();
 	}
 
-	//Load ARROW/BOMBS animations data from animations folder
+	//Load REST OF SPRITES animations data from animations/AnimationSprites.xml folder
 	std::string anim_folder2 = "animations/AnimationSprites.xml";
 
 	buff = nullptr;
@@ -132,8 +132,17 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		}
 
 		new_sprites_anim->speed = 75.0f;
-		//TODO UNCOMMENT WHEN RECTS ARE CORRECT if (new_sprites_anim->name == ANIM_FIRE_EXPLOSION || new_sprites_anim->name == ANIM_ICE_EXPLOSION)
-		//	new_sprites_anim->loop = false;
+		//TODO UNCOMMENT WHEN RECTS ARE CORRECT 
+		/*
+		if (new_sprites_anim->name == ANIM_FIRE_EXPLOSION || new_sprites_anim->name == ANIM_ICE_EXPLOSION)
+			new_sprites_anim->loop = false;
+		if(new_sprites_anim->name == ANIM_FIRE_FLOOR || new_sprites_anim->name == ANIM_ICE_FLOOR)
+		{
+			new_sprites_anim->loop = false;
+			new_sprites_anim->speed= (IDK 500.0f???);
+		}
+		*/
+		
 		animation_types.push_back(new_sprites_anim);
 		anim_sprites_node = anim_sprites_node.next_sibling();
 	}

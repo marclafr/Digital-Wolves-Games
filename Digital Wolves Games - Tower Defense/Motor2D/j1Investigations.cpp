@@ -22,13 +22,13 @@ bool j1Investigations::Start()
 	CreateInvestigation(INV_GOLD, true, 300, 1.0);
 	CreateInvestigation(INV_STONE, true, 300, 1.0);
 	//TROPS
-	CreateInvestigation(INV_CAVALRY_UNLOCK, false, 150, 15.0);
+//	CreateInvestigation(INV_CAVALRY_UNLOCK, false, 150, 15.0);
 	CreateInvestigation(INV_CAVALRY_ATTACK, false, 300, 30.0);
 	CreateInvestigation(INV_CAVALRY_DEFENSE, false, 300, 25.0);
-	CreateInvestigation(INV_ARCHERS_UNLOCK, false, 150, 15.0);
+//	CreateInvestigation(INV_ARCHERS_UNLOCK, false, 150, 15.0);
 	CreateInvestigation(INV_ARCHERS_ATTACK, false, 300, 30.0);
 	CreateInvestigation(INV_ARCHERS_DEFENSE, false, 300, 25.0);
-	CreateInvestigation(INV_INFANTRY_UNLOCK, false, 100, 15.0);
+//	CreateInvestigation(INV_INFANTRY_UNLOCK, false, 100, 15.0);
 	CreateInvestigation(INV_INFANTRY_ATTACK, false, 300, 30.0);
 	CreateInvestigation(INV_INFANTRY_DEFENSE, false, 300, 25.0);
 	//TOWERS

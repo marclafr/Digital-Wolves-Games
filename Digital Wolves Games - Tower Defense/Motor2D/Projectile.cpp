@@ -15,30 +15,26 @@ Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float Tim
 	{
 	case P_BASIC_ARROW:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_ARROW));
-		//SetRect({ 0,0,36,5 });
-		//pivot = { 18, 2 };
 		break;
 	case P_FIRE_ARROW:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_ARROW));
 		break;
 	case P_ICE_ARROW:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_ARROW));
-		//pivot = { 18, 7 };
 		break;
 	case P_AIR_ARROW:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_ARROW));
-		//pivot = { 18, 7 };
 		break;
 	case P_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
-		//SetRect({ 0,54,10,10 }); 
-		//pivot = { 5, 5 };
 		break;
 	case P_FIRE_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
+		floor_effect = true;
 		break; 
 	case P_ICE_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_BOMB));
+		floor_effect = true;
 		break;
 	case P_AIR_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_BOMB));
@@ -133,7 +129,7 @@ void Projectile::Draw()
 		projectile_anim->Update(rect, pivot);
 	if (dest_reached == false)
 		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + ActualPos.x, App->render->camera->GetPosition().y + ActualPos.y))
-		App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
+			App->render->PushInGameSprite(App->tex->GetTexture(T_ARROW_BOMB), ActualPos.x, ActualPos.y, &rect, SDL_FLIP_HORIZONTAL, pivot.x, pivot.y, 1, angle, false);
 }
 
 int Projectile::GetProjectilePos() const
@@ -159,7 +155,7 @@ AnimationManager * Projectile::GetProjectileAnim()
 void Projectile::AreaDamage(int damage, iPoint center, int radius)
 {
 	Circle circle(center, radius);
-	//TODO: when quadrtree is finished
+	//TODO: when quadtree is finished
 	/*
 	if (projectile_type == P_ICE_CANNONBALL)
 	{
@@ -171,10 +167,28 @@ void Projectile::AreaDamage(int damage, iPoint center, int radius)
 
 void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)
 {
+	if (floor_effect == true && projectile_anim->Finished() == true)
+	{
+		switch (projectile_type)
+		{
+		case P_FIRE_CANNONBALL:
+			delete projectile_anim;
+			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_FLOOR));
+			break;
+		case P_ICE_CANNONBALL:
+			delete projectile_anim;
+			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
+			break;
+		default:
+			break;
+		}
+		floor_effect = false;
+	}
 	SDL_Rect rect;
 	iPoint pivot;
 	projectile_anim->Update(rect, pivot);
-	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + ActualPos.x, App->render->camera->GetPosition().y + ActualPos.y)) {
+	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + ActualPos.x, App->render->camera->GetPosition().y + ActualPos.y))
+	{
 		switch (element)
 		{
 		case P_CANNONBALL:
