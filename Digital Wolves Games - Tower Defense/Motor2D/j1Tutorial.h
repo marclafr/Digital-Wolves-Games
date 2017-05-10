@@ -67,9 +67,12 @@ public:
 	UIComponents* tutorial4;
 	UILabel* text_tutorial4;
 	UILabel* text1_tutorial4;
+	UILabel* text2_tutorial4;
 
 	bool TownHallSelected = false;
 	bool PanelSelected = false;
+	bool UniversitySelected = false;
+
 	bool tutorial1_completed = false;
 	bool tutorial2_completed = false;
 	bool tutorial3_completed = false;
@@ -92,6 +95,7 @@ private:
 	bool tutorial3_part4 = false;
 
 	bool tutorial4_part1 = false;
+	bool tutorial4_part2 = false;
 
 };
 

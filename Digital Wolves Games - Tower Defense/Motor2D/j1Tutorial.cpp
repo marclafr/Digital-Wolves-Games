@@ -148,11 +148,14 @@ void j1Tutorial::TutorialReset()
 	tutorial1_part4 = false;
 	tutorial2_completed = false;
 	tutorial2_part1 = false;
+	TownHallSelected = false;
+	PanelSelected = false;
 	tutorial3_completed = false;
 	tutorial3_part1 = false;
 	tutorial3_part2 = false;
 	tutorial3_part3 = false;
 	tutorial3_part4 = false;
+	UniversitySelected = false;
 }
 
 void j1Tutorial::Tutorial1()
@@ -256,8 +259,17 @@ void j1Tutorial::Tutorial4()
 {
 	if(!tutorial4_part1)
 	{
-		App->render->camera->SetPosition(iPoint(100 , -500));
+		App->render->camera->SetPosition(iPoint(-800 , -500));
 		tutorial4_part1 = true;
 	}
-	
+	if (UniversitySelected) {
+		tutorial4_part2 = true;
+	}
+	if (!tutorial4_completed)
+	{
+		if (tutorial4_part2)
+		{
+			text1_tutorial4->ChangeColor({ 255,255,255,0 });
+		}
+	}
 }
