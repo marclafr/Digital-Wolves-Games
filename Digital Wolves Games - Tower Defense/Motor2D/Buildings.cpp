@@ -53,6 +53,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		SetTextureID(T_TOWNHALL);
 		totally_built = true;
 		build_rect = Rectng({ (int)GetX(), (int)GetY() }, 483, 210, {0,-20});
+		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
 		building_type = B_NO_BUILDING;
