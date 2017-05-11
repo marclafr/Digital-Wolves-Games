@@ -52,10 +52,12 @@ iPoint Primitive::GetPosition() const
 {
 	return position;
 }
+
 iPoint Primitive::GetDisplacement() const
 {
 	return displacement;
 }
+
 float Primitive::GetXAngle() const
 {
 	return x_angle;

@@ -188,22 +188,24 @@ void j1Map::Draw()
 			if (App->debug_features.debug_mode == false || App->debug_features.print_walkability_map == false)
 				continue;
 
-		for (int y = 0; y < data.height; ++y)
-			for (int x = 0; x < data.width; ++x)
+		for (int y = 0; y < data.height; y++)
+			for (int x = 0; x < data.width; x++)
 			{
 				int tile_id = layer->Get(x, y);
+
 				if (tile_id > 0)
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
 					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorldPrintMap(x, y);
+					iPoint pos = MapToWorld(x, y);
 
-					//TODO: this should be temporary until we find out what happens, also,TODO solve InsideRenderTarget: after moving the camera doesnt work.
-					//if (App->render->camera->InsideRenderTarget(pos.x, pos.y))
-						if (tileset->name.compare("Extras") != 0)
-							App->render->PushMapSprite(tileset->texture, pos.x - 48 - (data.tile_width * 0.5f), pos.y - 31 + (x + y), &r);
-						else
-							App->render->PushMapSprite(tileset->texture, pos.x - 48 - tileset->tile_width/2, pos.y - 31 + tileset->tile_height, &r);
+					App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
+
+					/*if (tileset->name.compare("Extras") != 0)
+						App->render->PushMapSprite(tileset->texture, pos.x - 48 - (data.tile_width * 0.5f), pos.y - 31 + (x + y), &r);
+					else*/
+					/*if (tileset->name.compare("Extras") == 0)
+						App->render->PushMapSprite(tileset->texture, pos.x - tileset->tile_width/2, pos.y + tileset->tile_height, &r);*/
 				}
 			}
 	}
@@ -227,14 +229,19 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
 	TileSet* set = nullptr;
 
-	for (std::vector<TileSet*>::const_iterator item = data.tilesets.begin(); item != data.tilesets.end(); ++item)
+	for (int i = 0; i < data.tilesets.size(); i++) // item = data.tilesets.begin(); item != data.tilesets.end(); ++item)
 	{
-		if (id < (*item)->firstgid)
+		if (i + 1 == data.tilesets.size())
 		{
-			set = *item;
+			set = data.tilesets[i];
 			break;
 		}
-		set = *item;
+
+		if (id > data.tilesets[i]->firstgid && id < data.tilesets[i + 1]->firstgid)
+		{
+			set = data.tilesets[i];
+			break;
+		}
 	}
 
 	return set;
