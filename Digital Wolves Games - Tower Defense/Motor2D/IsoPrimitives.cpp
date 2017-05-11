@@ -251,6 +251,45 @@ bool IsoRect::Inside(const iPoint pos) const
 		return true;
 	return false;
 }
+bool IsoRect::Overlaps(SDL_Rect rect) const
+{
+	//check if SDL_Rect vertices are inside IsoRect
+	if (Inside(iPoint(rect.x, rect.y)))
+		return true;
+	if(Inside(iPoint(rect.x + rect.w, rect.y)))
+		return true;
+	if(Inside(iPoint(rect.x, rect.y + rect.h)))
+		return true;
+	if(Inside(iPoint(rect.x + rect.w, rect.y + rect.h)))
+		return true;
+
+	//check if IsoRect vertices are inside SDL_Rect 
+	iPoint up(position.x, position.y - height / 2);
+	if (up.x > rect.x && up.x < rect.x + rect.w
+		&& up.y > rect.y && up.y < rect.y + rect.h)
+		return true;
+
+	iPoint left(position.x - width / 2, position.y);
+	if (left.x > rect.x && left.x < rect.x + rect.w
+		&& left.y > rect.y && left.y < rect.y + rect.h)
+		return true;
+
+	iPoint right(position.x + width / 2, position.y);
+	if (right.x > rect.x && right.x < rect.x + rect.w
+		&& right.y > rect.y && right.y < rect.y + rect.h)
+		return true;
+
+	iPoint down(position.x, position.y + height / 2);
+	if (down.x > rect.x && down.x < rect.x + rect.w
+		&& down.y > rect.y && down.y < rect.y + rect.h)
+		return true;
+
+	return false;
+}
+bool IsoRect::Overlaps(Circle circle) const
+{
+	return circle.Intersects(this);
+}
 /// ---------------------------------------------
 
 ///Class PivotedRect ----------------------------

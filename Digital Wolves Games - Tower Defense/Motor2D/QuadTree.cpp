@@ -27,7 +27,7 @@ QuadTreeNode::~QuadTreeNode()
 	for (int i = 0; i < NODE_ENTITIES; i++)
 		if(entities[i] != nullptr)
 		{
-			//DELETE_PTR(entities[i]);
+			//DELETE_PTR(entities[i]); TODO
 		}
 		else
 			break;
@@ -89,10 +89,7 @@ Entity * QuadTreeNode::SearchFirst(const SDL_Rect rect) const
 	}
 	else
 		for (int i = 0; i < 4; i++)
-			if (((rect.x > childs[i]->area.GetPosition().x && rect.x < childs[i]->area.GetPosition().x + childs[i]->area.GetWidth())
-				|| (rect.x + rect.w > childs[i]->area.GetPosition().x && rect.x + rect.w < childs[i]->area.GetPosition().x + childs[i]->area.GetWidth()))
-				&& ((rect.y > childs[i]->area.GetPosition().y && rect.y < childs[i]->area.GetPosition().y + childs[i]->area.GetHeight())
-					|| (rect.y + rect.h > childs[i]->area.GetPosition().y && rect.y + rect.h < childs[i]->area.GetPosition().y + childs[i]->area.GetHeight())))
+			if (childs[i]->area.Overlaps(rect))
 				return childs[i]->SearchFirst(rect);
 	return nullptr;
 }
@@ -144,10 +141,7 @@ void QuadTreeNode::Search(const SDL_Rect rect, std::vector<Entity*>& vec) const
 	}
 	else
 		for (int i = 0; i < 4; i++)
-			if (((rect.x > childs[i]->area.GetPosition().x && rect.x < childs[i]->area.GetPosition().x + childs[i]->area.GetWidth())
-					|| (rect.x + rect.w > childs[i]->area.GetPosition().x && rect.x + rect.w < childs[i]->area.GetPosition().x + childs[i]->area.GetWidth()))
-				&& ((rect.y > childs[i]->area.GetPosition().y && rect.y < childs[i]->area.GetPosition().y + childs[i]->area.GetHeight())
-					|| (rect.y + rect.h > childs[i]->area.GetPosition().y && rect.y + rect.h < childs[i]->area.GetPosition().y + childs[i]->area.GetHeight())))
+			if (childs[i]->area.Overlaps(rect))
 				childs[i]->Search(rect, vec);
 }
 

@@ -104,6 +104,11 @@ const fPoint Entity::GetPosition() const
 	return position;
 }
 
+const iPoint Entity::GetIPos() const
+{
+	return iPoint(position.x, position.y);
+}
+
 const int Entity::GetHp() const
 {
 	return hp;
