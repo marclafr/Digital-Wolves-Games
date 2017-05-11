@@ -197,15 +197,11 @@ void j1Map::Draw()
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
 					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorld(x, y);
-
+					iPoint pos = MapToWorldPrintMap(x,y,tileset->tile_width, tileset->tile_height); 
+				
 					App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
 
-					/*if (tileset->name.compare("Extras") != 0)
-						App->render->PushMapSprite(tileset->texture, pos.x - 48 - (data.tile_width * 0.5f), pos.y - 31 + (x + y), &r);
-					else*/
-					/*if (tileset->name.compare("Extras") == 0)
-						App->render->PushMapSprite(tileset->texture, pos.x - tileset->tile_width/2, pos.y + tileset->tile_height, &r);*/
+					
 				}
 			}
 	}
@@ -256,6 +252,8 @@ iPoint j1Map::MapToWorld(int x, int y) const
 		ret.x = (x - y) * (int)(data.tile_width * 0.5f) - data.tile_width * 0.5f;
 		ret.y = (x + y) * (int)(data.tile_height * 0.5f) + (x + y);
 	}
+	//screen.x = map.x * TILE_WIDTH_HALF - map.y * TILE_WIDTH_HALF;
+	//screen.y = map.x * TILE_HEIGHT_HALF + map.y * TILE_HEIGHT_HALF;
 	else
 	{
 		LOG("Unknown map type");
@@ -265,14 +263,14 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	return ret;
 }
 
-iPoint j1Map::MapToWorldPrintMap(int x, int y) const
+iPoint j1Map::MapToWorldPrintMap(int x, int y, int tilewidth, int tileheight) const
 {
 	iPoint ret;
 
 	if (data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.x = (x - y) * (int)(data.tile_width * 0.5f);
-		ret.y = (x + y) * (int)(data.tile_height * 0.5f);
+		ret.x = (x * (tilewidth / 2) - y*(tilewidth / 2) ) - tilewidth/2;
+		ret.y = (x * (tileheight / 2) + y*(tileheight / 2));
 	}
 	else
 	{

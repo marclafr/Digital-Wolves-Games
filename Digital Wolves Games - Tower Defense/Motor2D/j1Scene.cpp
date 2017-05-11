@@ -75,9 +75,9 @@ bool j1Scene::Start()
 	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
 	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
 	//--
-	uint w, h;
-	App->win->GetWindowSize(w, h);
-	SDL_Rect r = { 0,0,w,h };
+	//uint w, h;
+	//App->win->GetWindowSize(w, h);
+	//SDL_Rect r = { 0,0,w,h };
 	//App->video->PlayVideo("introdw.ogv",r);
 	//Reset scores and timers
 	App->score->Reset();
