@@ -120,7 +120,7 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
-	iPoint MapToWorld(int x, int y) const;
+	iPoint MapToWorld(int x, int y, int tile_width = 0, int tile_height = 0) const;
 	iPoint WorldToMap(int x, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);
 	bool CreateConstructibleMap1(int& width, int & height, uchar** buffer);
