@@ -13,7 +13,7 @@
 #define ENEMY_CREATION_POS_X2 -1200
 #define ENEMY_CREATION_POS_Y2 2928
 
-#define TIME_BETWEEN_WAVES 60 //seconds
+#define TIME_BETWEEN_WAVES 30 //seconds
 #define TIME_BETWEEN_UNITS 1 //seconds
 
 enum UNIT_TYPE;
@@ -39,11 +39,14 @@ struct UnitGroup
 
 struct Wave
 {
-	std::vector<UnitGroup> units_vec;
+	std::vector<UnitGroup> units_vec_left_up;
+	std::vector<UnitGroup> units_vec_left_down;
+	std::vector<UnitGroup> units_vec_right_up;
+	std::vector<UnitGroup> units_vec_right_down;
 
 	~Wave();
-	
-	void PushBack(UnitGroup unit_group);
+
+	void PushBack(UnitGroup unit_group, STARTING_ENEMY_POS start_pos);
 
 };
 
@@ -60,7 +63,7 @@ public:
 private:
 	j1Timer timer;
 	j1Timer delay_timer;
-	int wave_num = 0;
+	int wave_num = -1;
 	int group_num = 0;
 	int unit_num = 0;
 	bool spawning = false;
@@ -76,6 +79,14 @@ private:
 	int space_between_y = -14;
 
 	std::vector<Wave> waves;
+
+	bool wave_ended = true;
+	bool left_up_finished = false;
+	bool left_down_finished = false;
+	bool right_up_finished = false;
+	bool right_down_finished = false;
+
+	bool all_waves_ended = false;
 };
 
 #endif // __j1WAVE_MANAGER_H__
