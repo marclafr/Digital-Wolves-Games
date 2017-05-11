@@ -28,6 +28,7 @@
 #include "UIHUDTownHallBarLife.h"
 #include "UICheckbutton.h"
 #include "j1UIManager.h"
+#include "Video.h"
 #include "UIGetEntitiesInfo.h"
 
 #define RECT_INGAME_WITHOUT_UI {0, 15, 1360, 620}
@@ -74,7 +75,10 @@ bool j1Scene::Start()
 	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
 	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
 	//--
-
+	uint w, h;
+	App->win->GetWindowSize(w, h);
+	SDL_Rect r = { 0,0,w,h };
+	//App->video->PlayVideo("introdw.ogv",r);
 	//Reset scores and timers
 	App->score->Reset();
 	return true;
@@ -640,7 +644,7 @@ void j1Scene::HandleInput( SDL_Event event)
 		}
 
 		if (App->input->GetMouseButtonDown(3) == KEY_DOWN)
-			if (selection[0]->GetEntityType() == E_UNIT)
+			if (selection.size() > 0 && selection[0]->GetEntityType() == E_UNIT)
 			{
 				iPoint objective;
 				App->input->GetMousePosition(objective.x, objective.y);
