@@ -70,10 +70,11 @@ bool j1Scene::Start()
 
 	CreateSceneUI();
 	//ENTITIES
-	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-720, 672), S_ALLY);
+	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-75, 272), S_ALLY);
 	resources = new ResourceManager();
-	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-624, 528));
-	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(-432, 624));
+	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-300, 370));
+	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370));
+	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
 	//--
 	//uint w, h;
 	//App->win->GetWindowSize(w, h);

@@ -315,6 +315,20 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		priority = 1;
 		break;
 
+	case U_MANGONEL:
+		SetHp(300);
+		attack = 100;
+		SetArmor(-1);
+		speed = 1.8f;
+		rate_of_fire = 250.0f;
+		range = 250;
+		vision_range = 250;
+		unit_class = C_SIEGE;
+		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 30);
+		SetTextureID(T_MANGONEL);
+		priority = 1;
+		break;
+
 		//TODO: ADD UNIT
 
 	default:
