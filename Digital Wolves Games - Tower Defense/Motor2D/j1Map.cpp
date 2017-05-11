@@ -298,13 +298,13 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		float det = cos(TILE_ANGLE) * sin(TILE_ANGLE + PI / 2.0f) - sin(TILE_ANGLE) * cos(TILE_ANGLE + PI / 2.0f);
 
 		fPoint iso_pos;
-		iso_pos.x = (x * cos(TILE_ANGLE) + y * cos(TILE_ANGLE + PI / 2.0f)) / det;
-		iso_pos.y = (x * sin(TILE_ANGLE) + y * sin(TILE_ANGLE + PI / 2.0f)) / det;
+		iso_pos.x = (x * (-sin(TILE_ANGLE)) + y * cos(TILE_ANGLE)) / det;
+		iso_pos.y = (x * sin(TILE_ANGLE) + y * cos(TILE_ANGLE)) / det;
 		
-		//float tile_diagonal = sqrtf((data.tile_height/2)*(data.tile_height/2) + (data.tile_width/2)*(data.tile_width/2));
+		float tile_diagonal = sqrtf((data.tile_height/2)*(data.tile_height/2) + (data.tile_width/2)*(data.tile_width/2));
 
-		ret.x = iso_pos.x; // tile_diagonal;
-		ret.y = iso_pos.y; // tile_diagonal;
+		ret.x = iso_pos.x / tile_diagonal;
+		ret.y = iso_pos.y / tile_diagonal;
 
 		/*
 		int m = x / data.tile_width;
