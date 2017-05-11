@@ -29,6 +29,7 @@ private:
 
 	iPoint quad_minimap_position;
 
+	SDL_Rect rect_map;
 	SDL_Rect quad_atlas;
 
 public:
@@ -39,8 +40,8 @@ public:
 
 	void Draw();
 
-	iPoint MinimapToWorld(iPoint minimap_position);
-	iPoint WorldToMinimap(iPoint world_position);
+	iPoint TransformPointFromMap(iPoint point);
+	iPoint TransformPointFromMinimap(iPoint point);
 };
 
 #endif // __UIHUDMINIMAP_H__
