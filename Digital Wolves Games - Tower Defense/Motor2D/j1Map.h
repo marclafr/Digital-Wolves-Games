@@ -6,6 +6,8 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
+#define TILE_ANGLE (26.08559977f / 360.0f * PI * 2.0f)
+
 // ----------------------------------------------------
 struct Properties
 {
@@ -120,12 +122,11 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
-	iPoint MapToWorld(int x, int y, int tile_width = 0, int tile_height = 0) const;
+	iPoint MapToWorld(int x, int y, TileSet* tileset = nullptr) const;
 	iPoint WorldToMap(int x, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);
 	bool CreateConstructibleMap1(int& width, int & height, uchar** buffer);
 	bool CreateConstructibleMap2(int& width, int & height, uchar** buffer);
-	iPoint MapToWorldPrintMap(int x, int y, int tileheight, int tilewidth) const;
 	TileSet* GetTilesetFromTileId(int id) const;
 
 private:

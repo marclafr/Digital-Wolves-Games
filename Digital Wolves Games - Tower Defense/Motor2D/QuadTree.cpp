@@ -27,7 +27,7 @@ QuadTreeNode::~QuadTreeNode()
 	for (int i = 0; i < NODE_ENTITIES; i++)
 		if(entities[i] != nullptr)
 		{
-			DELETE_PTR(entities[i]);
+			//DELETE_PTR(entities[i]);
 		}
 		else
 			break;

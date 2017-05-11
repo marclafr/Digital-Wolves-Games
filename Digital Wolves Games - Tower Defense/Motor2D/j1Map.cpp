@@ -197,15 +197,9 @@ void j1Map::Draw()
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
 					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorld(x, y, tileset->tile_width, tileset->tile_height);
+					iPoint pos = MapToWorld(x, y, tileset);
 
 					App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
-
-					/*if (tileset->name.compare("Extras") != 0)
-						App->render->PushMapSprite(tileset->texture, pos.x - 48 - (data.tile_width * 0.5f), pos.y - 31 + (x + y), &r);
-					else*/
-					/*if (tileset->name.compare("Extras") == 0)
-						App->render->PushMapSprite(tileset->texture, pos.x - tileset->tile_width/2, pos.y + tileset->tile_height, &r);*/
 				}
 			}
 	}
@@ -229,7 +223,7 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
 	TileSet* set = nullptr;
 
-	for (int i = 0; i < data.tilesets.size(); i++) // item = data.tilesets.begin(); item != data.tilesets.end(); ++item)
+	for (int i = 0; i < data.tilesets.size(); i++)
 	{
 		if (i + 1 == data.tilesets.size())
 		{
@@ -247,38 +241,30 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	return set;
 }
 
-iPoint j1Map::MapToWorld(int x, int y, int tile_width, int tile_height) const
+iPoint j1Map::MapToWorld(int x, int y, TileSet* tileset) const
 {
 	iPoint ret;
+	int tile_height = 0;
+	int tile_width = 0;
 
-	if (tile_height == 0 && tile_width == 0)
+	if (tileset == nullptr)
 	{
-		tile_height = data.tile_height;
+		tile_height = data.tile_height + x + y;
 		tile_width = data.tile_width;
+	}
+	else
+	{
+		tile_height = tileset->tile_height;
+		tile_width = tileset->tile_width;
 	}
 
 	if (data.type == MAPTYPE_ISOMETRIC)
 	{
 		ret.x = (x - y) * (int)(tile_width * 0.5f) - tile_width * 0.5f;
-		ret.y = (x + y) * (int)(tile_height * 0.5f);
-	}
-	else
-	{
-		LOG("Unknown map type");
-		ret.x = x; ret.y = y;
-	}
+		ret.y = (x + y) * (int)(tile_height * 0.5f) + (x + y);
 
-	return ret;
-}
-
-iPoint j1Map::MapToWorldPrintMap(int x, int y) const
-{
-	iPoint ret;
-
-	if (data.type == MAPTYPE_ISOMETRIC)
-	{
-		ret.x = (x - y) * (int)(data.tile_width * 0.5f);
-		ret.y = (x + y) * (int)(data.tile_height * 0.5f);
+		if (tileset != nullptr && tileset->name.compare("Extras") == 0)
+			ret.y = (x + y) * (int)(tile_height * 0.5f);
 	}
 	else
 	{
@@ -295,8 +281,8 @@ iPoint j1Map::WorldToMap(int x, int y) const
 
 	if (data.type == MAPTYPE_ISOMETRIC)
 	{
-		float half_width = data.tile_width * 0.5f;
-		float half_height = (data.tile_height + 1) * 0.5f;
+		/*float half_width = data.tile_width * 0.5f;
+		float half_height = data.tile_height * 0.5f;
 
 		float pX = (((ret.x / half_width) + (ret.y / half_height)) * 0.5f);
 		float pY = (((ret.y / half_height) - (ret.x / half_width)) * 0.5f);
@@ -307,7 +293,80 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		if (ret.x <= 0)ret.x = 0;
 		else if (ret.x >= 120)ret.x = 120;
 		if (ret.y <= 0)ret.y = 0;
-		else if (ret.y >= 120)ret.y = 120;
+		else if (ret.y >= 120)ret.y = 120;*/
+		
+		float det = cos(TILE_ANGLE) * sin(TILE_ANGLE + PI / 2.0f) - sin(TILE_ANGLE) * cos(TILE_ANGLE + PI / 2.0f);
+
+		fPoint iso_pos;
+		iso_pos.x = (x * cos(TILE_ANGLE) + y * cos(TILE_ANGLE + PI / 2.0f)) / det;
+		iso_pos.y = (x * sin(TILE_ANGLE) + y * sin(TILE_ANGLE + PI / 2.0f)) / det;
+		
+		//float tile_diagonal = sqrtf((data.tile_height/2)*(data.tile_height/2) + (data.tile_width/2)*(data.tile_width/2));
+
+		ret.x = iso_pos.x; // tile_diagonal;
+		ret.y = iso_pos.y; // tile_diagonal;
+
+		/*
+		int m = x / data.tile_width;
+		int n = y / data.tile_height;
+		
+		int x_square = x % data.tile_width;
+		int y_square = y % data.tile_height;
+
+		int center_x = data.tile_width / 2;
+		int center_y = data.tile_height / 2;
+
+		int square_x_relative_to_center = x_square - center_x;
+		int square_y_relative_to_center = y_square - center_y;
+
+		if (square_x_relative_to_center >= 0 && square_y_relative_to_center >= 0)
+			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
+			{
+				ret.x = m;
+				ret.y = n;
+			}
+			else
+			{
+				ret.x = m;
+				ret.y = n - 1;
+			}
+
+		if (square_x_relative_to_center < 0 && square_y_relative_to_center >= 0)
+			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
+			{
+				ret.x = m;
+				ret.y = n;
+			}
+			else
+			{
+				ret.x = m + 1;
+				ret.y = n;
+			}
+
+		if (square_x_relative_to_center >= 0 && square_y_relative_to_center < 0)
+			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
+			{
+				ret.x = m;
+				ret.y = n;
+			}
+			else
+			{
+				ret.x = m - 1;
+				ret.y = n;
+			}
+
+		if (square_x_relative_to_center < 0 && square_y_relative_to_center < 0)
+			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
+			{
+				ret.x = m;
+				ret.y = n;
+			}
+			else
+			{
+				ret.x = m + 1;
+				ret.y = n - 1;
+			}*/
+
 	}
 	else
 	{

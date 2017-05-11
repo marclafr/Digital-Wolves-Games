@@ -22,7 +22,7 @@ protected:
 
 	iPoint		position = { 0,0 };
 	iPoint		displacement = { 0,0 };
-	float		x_angle =  (30.0f / 360.0f * PI * 2.0f);//0.54f;// 30 deg to rad
+	float		x_angle =  (26.08559977f / 360.0f * PI * 2.0f);//0.54f;// 30 deg to rad tile width and tile height to get tan
 	SDL_Color	color = { 0,0,0,255 };
 
 public:

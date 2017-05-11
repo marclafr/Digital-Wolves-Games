@@ -145,7 +145,7 @@ bool j1WaveManager::Start()
 
 bool j1WaveManager::Update(float dt)
 {
-	/*if (timer.ReadSec() >= TIME_BETWEEN_WAVES)
+	if (timer.ReadSec() >= TIME_BETWEEN_WAVES)
 	{
 		timer.Start();
 		wave_num++;
@@ -159,6 +159,7 @@ bool j1WaveManager::Update(float dt)
 		if (delay_timer.ReadSec() >= TIME_BETWEEN_UNITS)
 		{
 			delay_timer.Start();
+
 			if (wave_num < waves.size())
 			{
 				if (unit_num < waves[wave_num].units_vec[group_num].amount)
@@ -176,7 +177,7 @@ bool j1WaveManager::Update(float dt)
 			else
 				spawning = false;
 		}
-	}*/
+	}
 	return true;
 }
 
