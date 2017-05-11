@@ -163,9 +163,9 @@ void QuadTreeNode::SubDivide(Entity * entity)
 	float half_w = area.GetWidth() / 2.0f;
 	float half_h = area.GetHeight() / 2.0f;
 
-	IsoRect first(iPoint(area.GetPosition().x, area.GetPosition().y - half_h / 2.0f-1), half_w, half_h);
+	IsoRect first(iPoint(area.GetPosition().x, area.GetPosition().y - half_h / 2.0f), half_w, half_h);
 	IsoRect second(iPoint(area.GetPosition().x - half_w / 2.0f, area.GetPosition().y), half_w, half_h);
-	IsoRect third(iPoint(area.GetPosition().x, area.GetPosition().y + half_h / 2.0f+1), half_w, half_h);
+	IsoRect third(iPoint(area.GetPosition().x, area.GetPosition().y + half_h / 2.0f), half_w, half_h);
 	IsoRect forth(iPoint(area.GetPosition().x + half_w / 2.0f, area.GetPosition().y), half_w, half_h);
 
 	childs[0] = new QuadTreeNode(first, this);
