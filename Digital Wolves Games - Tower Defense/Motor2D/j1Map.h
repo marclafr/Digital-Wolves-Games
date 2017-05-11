@@ -6,7 +6,7 @@
 #include "p2Point.h"
 #include "j1Module.h"
 
-#define TILE_ANGLE (26.08559977f / 360.0f * PI * 2.0f)
+#define TILE_ANGLE (25.62199594f / 360.0f * PI * 2.0f)
 
 // ----------------------------------------------------
 struct Properties
