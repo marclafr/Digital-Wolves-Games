@@ -128,11 +128,11 @@ bool j1EntityManager::Start()
 	float m = App->map->data.height;
 	float n = App->map->data.width;
 
-	float map_h = (m + n) * 0.5f * App->map->data.tile_height;
+	float map_h = (m + n) * 0.5f * App->map->data.tile_height + 75;//75 1 4 each tile
 	float map_w = (m + n) * 0.5f * App->map->data.tile_width;
 
 	float map_x = (m - n) * 0.5f * 0.5f * App->map->data.tile_width;
-	float map_y = (m + n) * 0.5f * 0.5f * App->map->data.tile_height;
+	float map_y = (m + n) * 0.5f * 0.5f * App->map->data.tile_height + 75 / 2; //75 1 4 each tile
 
 	//IsoRect map(iPoint(map_x, map_y), map_w, map_h);
 	IsoRect map(iPoint(map_x, map_y), map_w, map_h);
