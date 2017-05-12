@@ -28,10 +28,9 @@ class j1Console;
 class j1Investigations;
 class j1Score;
 class j1Tutorial;
-class j1Video;
+class Video;
 
 	//Scenes
-//class j1Intro;
 class j1MainMenu;
 class j1Scene;
 class j1ScoreScene;
@@ -40,8 +39,9 @@ class j1ScoreScene;
 struct DebugFeatures
 {
 public:
-	DebugFeatures() : debug_mode(false), print_walkability_map(false), add_wood(false), add_stone(false), add_food(false), add_gold(false), pf(false)
+	DebugFeatures() : debug_mode(false), print_walkability_map(false), add_wood(false), add_stone(false), add_food(false), add_gold(false), pf(false), quadtree(false)
 	{}
+
 	~DebugFeatures(){}
 
 	void UpdateDebug();
@@ -54,6 +54,7 @@ public:
 	bool add_stone;
 	bool add_gold;
 	bool pf;
+	bool quadtree;
 };
 
 class j1App
@@ -139,9 +140,8 @@ public:
 	j1Investigations*	investigations = nullptr;
 	j1Score*			score = nullptr;
 	j1Tutorial*			tutorial = nullptr;
-	j1Video*			video = nullptr;
+	Video*				video = nullptr;
 		//Scenesko
-	//j1Intro*            intro = nullptr;
 	j1MainMenu*			main_menu = nullptr;
 	j1Scene*			scene = nullptr;
 	j1ScoreScene*		score_scene = nullptr;

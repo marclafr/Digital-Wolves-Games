@@ -58,6 +58,8 @@ public:
 	void DT(float dt);
 	void ResetDT();
 
+	bool Inside(SDL_Rect rect) const;
+
 	//Geters
 	bool ToDelete() const;
 
@@ -75,6 +77,7 @@ public:
 	const float GetX() const;
 	const float GetY() const;
 	const fPoint GetPosition() const;
+	const iPoint GetIPos() const;
 	const int GetAttack() const;
 	const iPoint GetPivot() const;
 	const SDL_Rect GetRect() const;

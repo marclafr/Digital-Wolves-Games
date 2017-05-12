@@ -35,6 +35,7 @@ private:
 
 public:
 	ResourceManager();
+	~ResourceManager();
 
 	void SetWood(Resources* wood);
 	void SetGold(Resources* gold);

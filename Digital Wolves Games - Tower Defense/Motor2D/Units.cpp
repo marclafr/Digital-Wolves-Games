@@ -1,3 +1,4 @@
+
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
@@ -13,7 +14,7 @@
 #include "j1Score.h"
 #include "j1Scene.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), attacking(nullptr), target (nullptr), priority(priority)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), attacking(nullptr), target(nullptr), priority(priority)
 {
 	if (side == S_ENEMY)
 	{
@@ -24,7 +25,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 
 	switch (u_type)
 	{
-	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
+		//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
 		//TODO: ALL UNITS VALUES MUST BE CHANGED
 		//TODO: CHANGE/QUIT PRIORITY
 
@@ -62,7 +63,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 			SetTextureID(T_ENEMY_MILITIA);
 		else
 			SetTextureID(T_MILITIA);
-		
+
 		priority = 1;
 		break;
 
@@ -168,8 +169,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		priority = 1;
 		break;
 
-			//---
-			//ARCHERS
+		//---
+		//ARCHERS
 
 	case U_ARCHER:
 		SetHp(40);
@@ -240,8 +241,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		priority = 2;
 		break;
 
-			//---
-			//CAVALRY
+		//---
+		//CAVALRY
 
 	case U_PALADIN:
 		SetHp(165);
@@ -294,8 +295,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		priority = 2;
 		break;
 
-			//---
-			//SIEGE
+		//---
+		//SIEGE
 
 	case U_SIEGERAM:
 		SetHp(270);
@@ -341,7 +342,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 	else
 		animation = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
 
-	if(unit_class == C_SIEGE)
+	if (unit_class == C_SIEGE)
 		idle_siege = new AnimationManager(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));
 
 }
@@ -356,17 +357,10 @@ void Unit::Update(float dt)
 {
 	DT(dt);
 
-	if (GetAIDT() >= dt * 1)
+	if (GetAIDT() >= dt * 3)
 	{
 		ResetDT();
 		AI();
-	}
-
-	if (slowed == true && slow_timer.ReadSec() >= SLOW_TIME)
-	{
-		this->speed *= SLOW_PROPORTION;
-		this->animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), rate_of_fire / SLOW_PROPORTION);
-		slowed = false;
 	}
 
 	if (changed == true)
@@ -414,6 +408,12 @@ bool Unit::Move()
 
 void Unit::AI()
 {
+	if (slowed == true && slow_timer.ReadSec() >= SLOW_TIME)
+	{
+		this->speed *= SLOW_PROPORTION;
+		slowed = false;
+	}
+
 	//Investigations bonuses
 		//Bonus attack
 	if (bonus_attack == false)
@@ -529,7 +529,6 @@ void Unit::AI()
 				break;
 			}
 
-
 			if (target != App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide()))
 			{
 				target = App->entity_manager->CheckForObjective(iPoint(GetX(), GetY()), vision_range, GetSide());
@@ -561,9 +560,6 @@ void Unit::AI()
 					else
 						App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 15, 20, 0, P_BASIC_ARROW);
 				}
-				else if(unit_type == U_MANGONEL)
-					App->projectile_manager->CreateProjectile(GetPosition(), attacking, attack, 50, 20, 100, P_CANNONBALL);
-
 				else
 					attacking->Damaged(attack);
 
@@ -615,20 +611,17 @@ void Unit::Draw()
 
 		SetPivot(pivot.x, pivot.y);
 		SetRect(rect);
-		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
-		{
-			if (direction == D_NORTH_EAST || direction == D_EAST || direction == D_SOUTH_EAST)
-				App->render->PushInGameSprite(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_HORIZONTAL, GetPivot().x, GetPivot().y);
-			else
-				App->render->PushInGameSprite(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_NONE, GetPivot().x, GetPivot().y);
-		}
+		if (direction == D_NORTH_EAST || direction == D_EAST || direction == D_SOUTH_EAST)
+			App->render->PushInGameSprite(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_HORIZONTAL, GetPivot().x, GetPivot().y);
+		else
+			App->render->PushInGameSprite(App->tex->GetTexture(GetTextureID()), GetX(), GetY(), &GetRect(), SDL_FLIP_NONE, GetPivot().x, GetPivot().y);
 	}
 
 	animation->Update(rect, pivot);
 	
 	SetPivot(pivot.x, pivot.y);
 	SetRect(rect);
-	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
+
 	App->render->PushInGameSprite(this);
 
 }
@@ -692,6 +685,11 @@ const bool Unit::IsMoving() const
 	if (action == A_WALK)
 		return true;
 	return false;
+}
+
+void Unit::CheckCollisions() const
+{
+	App->entity_manager->CheckUnitCollisions(this);
 }
 
 const int Unit::GetPriority() const
@@ -864,15 +862,9 @@ void Unit::PlayAttackSound() const
 	}
 }
 
-void Unit::SlowUnit()
+bool Unit::FindEmptyAttackPos(iPoint & pos) const
 {
-	if (slowed == false)
-	{
-		this->speed /= SLOW_PROPORTION;
-		this->animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), rate_of_fire * SLOW_PROPORTION);
-		slowed = true;
-		slow_timer.Start();
-	}
+	return App->pathfinding->FindEmptyAttackPos(attacking, pos);
 }
 
 void Unit::UnitDies()
@@ -883,4 +875,14 @@ void Unit::UnitDies()
 		App->score->EnemyKilled();
 	changed = true;
 	PlayDeathSound();
+}
+
+void Unit::SlowUnit()
+{
+	if (slowed == false)
+	{
+		this->speed /= SLOW_PROPORTION;
+		slowed = true;
+		slow_timer.Start();
+	}
 }

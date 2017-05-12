@@ -13,7 +13,7 @@
 #define ENEMY_CREATION_POS_X2 -1200
 #define ENEMY_CREATION_POS_Y2 2928
 
-#define TIME_BETWEEN_WAVES 45 //seconds
+#define TIME_BETWEEN_WAVES 30 //seconds
 #define TIME_BETWEEN_UNITS 1 //seconds
 
 enum UNIT_TYPE;
@@ -45,7 +45,7 @@ struct Wave
 	std::vector<UnitGroup> units_vec_right_down;
 
 	~Wave();
-	
+
 	void PushBack(UnitGroup unit_group, STARTING_ENEMY_POS start_pos);
 
 };

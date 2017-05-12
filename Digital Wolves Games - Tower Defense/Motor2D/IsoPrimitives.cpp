@@ -52,10 +52,12 @@ iPoint Primitive::GetPosition() const
 {
 	return position;
 }
+
 iPoint Primitive::GetDisplacement() const
 {
 	return displacement;
 }
+
 float Primitive::GetXAngle() const
 {
 	return x_angle;
@@ -135,6 +137,7 @@ bool Circle::Overlap(const Circle* target) const
 
 	return (abs(deltaX) < radius && abs(deltaY) < radius*sin(x_angle));
 }
+
 bool Circle::Intersects(const IsoRect * target) const
 {
 	if (target == nullptr)return false;
@@ -235,7 +238,7 @@ uint IsoRect::GetHeight() const
 
 bool IsoRect::Inside(const iPoint pos) const
 {
-	/*int delta_x = abs(pos.x - position.x);
+	int delta_x = abs(pos.x - position.x);
 	if (delta_x > width / 2)
 		return false;
 
@@ -244,15 +247,8 @@ bool IsoRect::Inside(const iPoint pos) const
 	result = result / width;
 	result += height * sin(x_angle);
 
-	if (delta_y < result)
+	if(delta_y < result)
 		return true;
-	return false;
-	*/
-	float dx = abs(pos.x - position.x);
-	float dy = abs(pos.y - position.y);
-	if (dx / width + dy / height <= 1)
-		return true;
-
 	return false;
 }
 bool IsoRect::Overlaps(SDL_Rect rect) const
@@ -260,11 +256,11 @@ bool IsoRect::Overlaps(SDL_Rect rect) const
 	//check if SDL_Rect vertices are inside IsoRect
 	if (Inside(iPoint(rect.x, rect.y)))
 		return true;
-	if (Inside(iPoint(rect.x + rect.w, rect.y)))
+	if(Inside(iPoint(rect.x + rect.w, rect.y)))
 		return true;
-	if (Inside(iPoint(rect.x, rect.y + rect.h)))
+	if(Inside(iPoint(rect.x, rect.y + rect.h)))
 		return true;
-	if (Inside(iPoint(rect.x + rect.w, rect.y + rect.h)))
+	if(Inside(iPoint(rect.x + rect.w, rect.y + rect.h)))
 		return true;
 
 	//check if IsoRect vertices are inside SDL_Rect 

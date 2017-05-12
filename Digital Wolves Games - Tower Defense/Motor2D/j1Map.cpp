@@ -5,6 +5,7 @@
 #include "j1Render.h"
 #include "j1FileSystem.h"
 #include "j1Textures.h"
+#include "j1Pathfinding.h"
 #include "j1Map.h"
 #include <math.h>
 #include "Camera.h"
@@ -27,18 +28,38 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	return ret;
 }
-bool j1Map::Update(float dt) {
+bool j1Map::Start()
+{
+	//TODO check if it should be unloaded
+	//load map
+	if (App->map->Load("AlphaOne.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+		uchar* data2 = NULL;
+		if (CreateWalkabilityMap(w, h, &data))
+			App->pathfinding->SetMap(w, h, data);
+		if (CreateConstructibleMap1(w, h, &data) && App->map->CreateConstructibleMap2(w, h, &data2))
+			App->pathfinding->SetConstructibleMaps(w, h, data, data2);
+		RELEASE_ARRAY(data2);
+		RELEASE_ARRAY(data);
+	}
+	return false;
+}
 
+bool j1Map::Update(float dt)
+{
 	Draw();
 	return true;
 }
+
 bool j1Map::CreateWalkabilityMap(int& width, int & height, uchar** buffer) {
 
 	bool ret = false;
-	std::list<MapLayer*>::iterator item;
-	for (item = data.layers.begin(); item._Ptr->_Myval != NULL; item++)
+
+	for (std::vector<MapLayer*>::iterator item = data.layers.begin(); item != data.layers.end(); ++item)
 	{
-		MapLayer* layer = item._Ptr->_Myval;
+		MapLayer* layer = *item;
 
 		if (layer->properties.Get("Navigation") == false)
 			continue;
@@ -76,10 +97,9 @@ bool j1Map::CreateWalkabilityMap(int& width, int & height, uchar** buffer) {
 bool j1Map::CreateConstructibleMap1(int& width, int & height, uchar** buffer) {
 
 	bool ret = false;
-	std::list<MapLayer*>::iterator item;
-	for (item = data.layers.begin(); item._Ptr->_Myval != NULL; item++)
+	for (std::vector<MapLayer*>::iterator item = data.layers.begin(); item != data.layers.end(); ++item)
 	{
-		MapLayer* layer = item._Ptr->_Myval;
+		MapLayer* layer = *item;
 
 		if (layer->name.compare("ConstructibleAlly") != 0)
 			continue;
@@ -116,10 +136,10 @@ bool j1Map::CreateConstructibleMap1(int& width, int & height, uchar** buffer) {
 bool j1Map::CreateConstructibleMap2(int& width, int & height, uchar** buffer) {
 
 	bool ret = false;
-	std::list<MapLayer*>::iterator item;
-	for (item = data.layers.begin(); item._Ptr->_Myval != NULL; item++)
+
+	for (std::vector<MapLayer*>::iterator item = data.layers.begin(); item != data.layers.end(); ++item)
 	{
-		MapLayer* layer = item._Ptr->_Myval;
+		MapLayer* layer = *item;
 
 		if (layer->name.compare("ConstructibleNeutral") != 0)
 			continue;
@@ -154,48 +174,34 @@ bool j1Map::CreateConstructibleMap2(int& width, int & height, uchar** buffer) {
 	return ret;
 
 }
+
 void j1Map::Draw()
 {
 	if (map_loaded == false)
 		return;
 
-	std::list<MapLayer*>::iterator item = data.layers.begin();
-	std::list<MapLayer*>::iterator end = data.layers.end();
-
-	while (item != end)
+	for (std::vector<MapLayer*>::iterator item = data.layers.begin(); item != data.layers.end(); ++item)
 	{
-		MapLayer* layer = item._Ptr->_Myval;
+		MapLayer* layer = *item;
 
 		if (layer->properties.Get("Nodraw") == true)
-		{
 			if (App->debug_features.debug_mode == false || App->debug_features.print_walkability_map == false)
-			{
-				item++;
 				continue;
-			}
-		}
-		for (int y = 0; y < data.height; ++y)
-		{
-			for (int x = 0; x < data.width; ++x)
+
+		for (int y = 0; y < data.height; y++)
+			for (int x = 0; x < data.width; x++)
 			{
 				int tile_id = layer->Get(x, y);
+
 				if (tile_id > 0)
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
-
 					SDL_Rect r = tileset->GetTileRect(tile_id);
-					iPoint pos = MapToWorldPrintMap(x, y, tileset);
+					iPoint pos = MapToWorld(x, y, tileset);
 
-					//TODO: this should be temporary until we find out what happens, also,TODO solve InsideRenderTarget: after moving the camera doesnt work.
-					//if (App->render->camera->InsideRenderTarget(pos.x, pos.y))
-						if (tileset->name.compare("Extras") != 0)
-							App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
-						else
-							App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
+					App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
 				}
 			}
-		}
-		item++;
 	}
 }
 
@@ -215,18 +221,21 @@ int Properties::Get(const char* value, bool default_value) const
 
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
-	std::list<TileSet*>::const_iterator item = data.tilesets.begin();
-	TileSet* set = item._Ptr->_Myval;
+	TileSet* set = nullptr;
 
-	while (item != data.tilesets.end())
+	for (int i = 0; i < data.tilesets.size(); i++)
 	{
-		if (id < item._Ptr->_Myval->firstgid)
+		if (i + 1 == data.tilesets.size())
 		{
-			set = item._Ptr->_Prev->_Myval;
+			set = data.tilesets[i];
 			break;
 		}
-		set = item._Ptr->_Myval;
-		item++;
+
+		if (id > data.tilesets[i]->firstgid && id < data.tilesets[i + 1]->firstgid)
+		{
+			set = data.tilesets[i];
+			break;
+		}
 	}
 
 	return set;
@@ -244,46 +253,7 @@ iPoint j1Map::MapToWorld(int x, int y, TileSet* tileset) const
 			ret.y = (x + y) * (int)(data.tile_height * 0.5f) + (x + y) + data.tile_height * 0.5f;
 			return ret;
 		}
-
-		int tile_height = 0;
-		int tile_width = 0;
-
-		tile_height = tileset->tile_height;
-		tile_width = tileset->tile_width;
-
-		if (tileset->name.compare("Extras") == 0)
-		{
-			ret.x = (x - y) * (int)(tile_width * 0.5f) - tile_width * 0.5f;
-			ret.y = (x + y) * (int)(tile_height * 0.5f) + tile_height;
-		}
-		else
-		{
-			ret.x = (x - y) * (int)(tile_width * 0.5f) - tile_width * 0.5f;
-			ret.y = (x + y) * (int)(tile_height * 0.5f) + (x + y);
-		}
-	}
-	else
-	{
-		LOG("Unknown map type");
-		ret.x = x; ret.y = y;
-	}
-
-	return ret;
-}
-
-iPoint j1Map::MapToWorldPrintMap(int x, int y, TileSet* tileset) const
-{
-	iPoint ret;
-
-	if (data.type == MAPTYPE_ISOMETRIC)
-	{
-		if (tileset == nullptr)
-		{
-			ret.x = (x - y) * (int)(data.tile_width * 0.5f);
-			ret.y = (x + y) * (int)(data.tile_height * 0.5f) + (x + y) + data.tile_height * 0.5f;
-			return ret;
-		}
-
+		
 		int tile_height = 0;
 		int tile_width = 0;
 
@@ -329,17 +299,17 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		else if (ret.x >= 120)ret.x = 120;
 		if (ret.y <= 0)ret.y = 0;
 		else if (ret.y >= 120)ret.y = 120;*/
-
+		
 		//float det = cos(TILE_ANGLE) * sin(TILE_ANGLE + PI / 2.0f) - sin(TILE_ANGLE) * cos(TILE_ANGLE + PI / 2.0f);
-		float det = 2 * sin(TILE_ANGLE)*cos(TILE_ANGLE);
+		float det = 2*sin(TILE_ANGLE)*cos(TILE_ANGLE);
 
 		if (det != 1.0f)
 			LOG("A");
 		fPoint iso_pos;
 		iso_pos.x = (x * (-sin(TILE_ANGLE)) + y * cos(TILE_ANGLE)) / det;
 		iso_pos.y = (x * sin(TILE_ANGLE) + y * cos(TILE_ANGLE)) / det;
-
-		float tile_diagonal = sqrtf(((data.tile_height) / 2)*((data.tile_height) / 2) + ((data.tile_width) / 2)*((data.tile_width) / 2));
+		
+		float tile_diagonal = sqrtf(((data.tile_height)/2)*((data.tile_height)/2) + ((data.tile_width)/2)*((data.tile_width )/2));
 
 		ret.y = iso_pos.x / tile_diagonal;
 		ret.x = iso_pos.y / tile_diagonal;
@@ -347,7 +317,7 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		/*
 		int m = x / data.tile_width;
 		int n = y / data.tile_height;
-
+		
 		int x_square = x % data.tile_width;
 		int y_square = y % data.tile_height;
 
@@ -358,52 +328,52 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		int square_y_relative_to_center = y_square - center_y;
 
 		if (square_x_relative_to_center >= 0 && square_y_relative_to_center >= 0)
-		if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
-		{
-		ret.x = m;
-		ret.y = n;
-		}
-		else
-		{
-		ret.x = m;
-		ret.y = n - 1;
-		}
+			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
+			{
+				ret.x = m;
+				ret.y = n;
+			}
+			else
+			{
+				ret.x = m;
+				ret.y = n - 1;
+			}
 
 		if (square_x_relative_to_center < 0 && square_y_relative_to_center >= 0)
-		if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
-		{
-		ret.x = m;
-		ret.y = n;
-		}
-		else
-		{
-		ret.x = m + 1;
-		ret.y = n;
-		}
+			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
+			{
+				ret.x = m;
+				ret.y = n;
+			}
+			else
+			{
+				ret.x = m + 1;
+				ret.y = n;
+			}
 
 		if (square_x_relative_to_center >= 0 && square_y_relative_to_center < 0)
-		if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
-		{
-		ret.x = m;
-		ret.y = n;
-		}
-		else
-		{
-		ret.x = m - 1;
-		ret.y = n;
-		}
+			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
+			{
+				ret.x = m;
+				ret.y = n;
+			}
+			else
+			{
+				ret.x = m - 1;
+				ret.y = n;
+			}
 
 		if (square_x_relative_to_center < 0 && square_y_relative_to_center < 0)
-		if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
-		{
-		ret.x = m;
-		ret.y = n;
-		}
-		else
-		{
-		ret.x = m + 1;
-		ret.y = n - 1;
-		}*/
+			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
+			{
+				ret.x = m;
+				ret.y = n;
+			}
+			else
+			{
+				ret.x = m + 1;
+				ret.y = n - 1;
+			}*/
 
 	}
 	else
@@ -431,22 +401,16 @@ bool j1Map::CleanUp()
 	LOG("Unloading map");
 
 	// Remove all tilesets
-	std::list<TileSet*>::iterator item = data.tilesets.begin();
-
-	while (item != data.tilesets.end())
+	for (std::vector<TileSet*>::iterator item = data.tilesets.begin(); item != data.tilesets.end(); ++item)
 	{
 		RELEASE(*item);
-		item++;
 	}
 	data.tilesets.clear();
 
 	// Remove all layers
-	std::list<MapLayer*>::iterator item2 = data.layers.begin();
-
-	while (item2 != data.layers.end())
+	for (std::vector<MapLayer*>::iterator item = data.layers.begin(); item != data.layers.end(); ++item)
 	{
-		RELEASE(*item2);
-		item2++;
+		RELEASE(*item);
 	}
 	data.layers.clear();
 
@@ -516,26 +480,22 @@ bool j1Map::Load(const char* file_name)
 		LOG("Successfully parsed map XML file: %s", file_name);
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
-
-		std::list<TileSet*>::iterator item = data.tilesets.begin();
-		while (item != data.tilesets.end())
+	
+		for (std::vector<TileSet*>::iterator item = data.tilesets.begin(); item != data.tilesets.end(); ++item)
 		{
-			TileSet* s = item._Ptr->_Myval;
+			TileSet* tile_set = *item;
 			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", s->name.c_str(), s->firstgid);
-			LOG("tile width: %d tile height: %d", s->tile_width, s->tile_height);
-			LOG("spacing: %d margin: %d", s->spacing, s->margin);
-			item++;
+			LOG("name: %s firstgid: %d", tile_set->name.c_str(), tile_set->firstgid);
+			LOG("tile width: %d tile height: %d", tile_set->tile_width, tile_set->tile_height);
+			LOG("spacing: %d margin: %d", tile_set->spacing, tile_set->margin);
 		}
 
-		std::list<MapLayer*>::iterator item_layer = data.layers.begin();
-		while (item_layer != data.layers.end())
+		for (std::vector<MapLayer*>::iterator item = data.layers.begin(); item != data.layers.end(); ++item)
 		{
-			MapLayer* l = item_layer._Ptr->_Myval;
+			MapLayer* layer = *item;
 			LOG("Layer ----");
-			LOG("name: %s", l->name.c_str());
-			LOG("tile width: %d tile height: %d", l->width, l->height);
-			item_layer++;
+			LOG("name: %s", layer->name.c_str());
+			LOG("tile width: %d tile height: %d", layer->width, layer->height);
 		}
 	}
 

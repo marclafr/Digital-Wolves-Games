@@ -67,7 +67,6 @@ public:
 
 private:
 
-
 	bool game_scene = true;
 
 	j1Audio* scene_music;

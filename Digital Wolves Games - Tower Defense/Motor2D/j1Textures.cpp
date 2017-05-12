@@ -205,21 +205,6 @@ bool j1Textures::UnLoad(Texture* texture)
 	return false;
 }
 
-bool j1Textures::UnLoad(SDL_Texture * texture)
-{
-	for (int i = 0; i < textures.size(); i++)
-	{
-		if (texture == textures[i]->GetTexture())
-		{
-			UnLoad(textures[i]);
-			return true;
-		}
-	}
-
-	return false;
-	return false;
-}
-
 bool j1Textures::UnLoad(TextureID id)
 {
 	std::vector<Texture*>::iterator item;
