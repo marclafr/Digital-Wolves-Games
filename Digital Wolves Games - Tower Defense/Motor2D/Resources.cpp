@@ -35,7 +35,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetHp(10);
 		SetArmor(1);
 		collect_time = 11.0f;
-		amount_collected = 100;
+		amount_collected = 140;
 		build_time = 7.0f;
 		rect = { 222, 0, 208, 175 };
 		SetRect(rect);
@@ -50,7 +50,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetHp(10);
 		SetArmor(1);
 		collect_time = 11.0f;
-		amount_collected = 100;
+		amount_collected = 60;
 		build_time = 7.0f;
 		rect = { 0, 217, 212, 130 };	//TODO CHANGE RECT/PIVOT : SPRITE?????
 		SetRect(rect);
@@ -65,7 +65,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		SetHp(10);
 		SetArmor(1);
 		collect_time = 11.0f;
-		amount_collected = 50;
+		amount_collected = 150;
 		build_time = 7.0f;
 		rect = { 212, 217, 212, 130 };
 		SetRect(rect);
