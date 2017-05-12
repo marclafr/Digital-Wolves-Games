@@ -211,3 +211,11 @@ const int Building::GetRange() const
 	//TODO
 	return 250;
 }
+
+void Building::SaveBuilding(pugi::xml_node &data)
+{
+	pugi::xml_node ActualBuilding = data.append_child("building");
+	ActualBuilding.append_attribute("building_type") = GetBuildingType();
+	ActualBuilding.append_attribute("posx") = GetX();
+	ActualBuilding.append_attribute("posy") = GetY();
+}

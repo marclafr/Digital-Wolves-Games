@@ -87,5 +87,7 @@ private:
 	void DoInvestigationUpgrade(Investigation* investigation);
 	bool UpgradeInvestigation(Investigation* investigation);
 
+	int fx_inv_completed = 0;
+
 };
 #endif //_j1Investigations_

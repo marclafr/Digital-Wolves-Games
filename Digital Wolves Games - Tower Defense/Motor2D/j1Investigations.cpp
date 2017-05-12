@@ -2,6 +2,7 @@
 #include "j1App.h"
 #include "Resources.h"
 #include "j1Scene.h"
+#include "j1Audio.h"
 
 j1Investigations::j1Investigations()
 {
@@ -16,11 +17,15 @@ bool j1Investigations::Start()
 {
 	bool ret = true;
 
+	//SOUNDS
+	fx_inv_completed = App->audio->LoadFx("audio/fx/Investigation.wav");
+	//--
+
 	//RESOURCES
-	CreateInvestigation(INV_FOOD, true, 300, 1.0);
-	CreateInvestigation(INV_WOOD, true, 300, 1.0);
-	CreateInvestigation(INV_GOLD, true, 300, 1.0);
-	CreateInvestigation(INV_STONE, true, 300, 1.0);
+	CreateInvestigation(INV_FOOD, true, 300, 5.0);
+	CreateInvestigation(INV_WOOD, true, 300, 5.0);
+	CreateInvestigation(INV_GOLD, true, 300, 5.0);
+	CreateInvestigation(INV_STONE, true, 300, 5.0);
 	//TROPS
 //	CreateInvestigation(INV_CAVALRY_UNLOCK, false, 150, 15.0);
 	CreateInvestigation(INV_CAVALRY_ATTACK, false, 300, 30.0);
@@ -111,6 +116,8 @@ bool j1Investigations::CanInvestigate(Investigation* investigation)
 	{
 		investigation->inv_state = INV_S_IN_COURSE;
 		DoInvestigationUpgrade(investigation);
+		//TODO: If there is a visual feedback when you click an investigation delete the fx line
+		App->audio->PlayFx(fx_inv_completed);
 		return true;
 	}
 
@@ -161,6 +168,7 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 	if (investigation->upgrade_timer.ReadSec() >= investigation->time_to_upgrade)
 	{
 		investigation->inv_state = INV_S_COMPLETED;
+		App->audio->PlayFx(fx_inv_completed);
 
 		if (investigation->has_levels == false)
 		{

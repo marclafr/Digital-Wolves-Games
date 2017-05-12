@@ -171,6 +171,10 @@ bool j1Scene::PostUpdate()
 		App->scene_manager->ChangeScene(SC_SCORE);
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		App->SaveGame("Gamefile.xml");
+
+
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		App->scene_manager->ChangeScene(SC_SCORE);
 
