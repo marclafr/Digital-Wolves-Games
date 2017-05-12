@@ -212,13 +212,25 @@ bool QuadTreeNode::Empty() const
 	return ret;
 }
 
-void QuadTreeNode::Update(float dt) const
+void QuadTreeNode::Update(float dt)
 {
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
 			if (entities[i] != nullptr)
-				entities[i]->Update(dt);
+				{
+					entities[i]->Update(dt);
+
+					if (!area.Inside(entities[i]->GetIPos()))
+					{
+						AddEntity(entities[i]);
+						entities[i] = nullptr;
+						Reorganise();
+					}
+						
+
+				}
+				
 			else
 				break;
 	}

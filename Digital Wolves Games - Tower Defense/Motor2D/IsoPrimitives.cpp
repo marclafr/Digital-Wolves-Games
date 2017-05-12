@@ -239,18 +239,13 @@ uint IsoRect::GetHeight() const
 bool IsoRect::Inside(const iPoint pos) const
 {
 	int delta_x = abs(pos.x - position.x);
-	if (delta_x > width / 2)
-		return false;
-
 	int delta_y = abs(pos.y - position.y);
-	int result = delta_x * (2 * height * sin(x_angle));
-	result = result / width;
-	result += height * sin(x_angle);
-
-	if(delta_y < result)
+	
+	if (delta_y < -(height / width) * delta_x + height / 2)
 		return true;
 	return false;
 }
+
 bool IsoRect::Overlaps(SDL_Rect rect) const
 {
 	//check if SDL_Rect vertices are inside IsoRect

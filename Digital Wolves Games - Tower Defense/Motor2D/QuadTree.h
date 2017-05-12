@@ -30,7 +30,7 @@ public:
 	Entity* SearchFirstEnemy(int pixel_range, const iPoint from, const Side side) const;
 	void Search(int pixel_range, const iPoint from, std::vector<Entity*>& vec) const;
 	void Search(const SDL_Rect rect, std::vector<Entity*>& vec) const;
-	void Update(float dt) const;
+	void Update(float dt);
 	void DeleteEntities();
 	void CheckCollision() const;
 	void CheckUnitCollisions(const Unit* ptr) const;
