@@ -177,8 +177,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetArmor(1);
 		speed = 1.16f;
 		rate_of_fire = 90.0f;
-		range = 160;
-		vision_range = 150;
+		range = 250;
+		vision_range = 250;
 		unit_class = C_ARCHER;
 		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 10);
 		if (side == S_ENEMY)
@@ -212,8 +212,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetArmor(1);
 		speed = 1.4f;
 		rate_of_fire = 100.0f;
-		range = 160;
-		vision_range = 200;
+		range = 250;
+		vision_range = 250;
 		unit_class = C_ARCHER;
 		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 18);
 		if (side == S_ENEMY)
@@ -229,8 +229,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetArmor(1);
 		speed = 1.4f;
 		rate_of_fire = 100.0f;
-		range = 160;
-		vision_range = 200;
+		range = 250;
+		vision_range = 250;
 		unit_class = C_ARCHER;
 		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 18);
 		if (side == S_ENEMY)
@@ -320,8 +320,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetArmor(-1);
 		speed = 0.8f;
 		rate_of_fire = 250.0f;
-		range = 180;
-		vision_range = 250;
+		range = 300 ;
+		vision_range = 300;
 		unit_class = C_SIEGE;
 		unit_circle = Circle({ (int)GetX(), (int)GetY() }, 30);
 		SetTextureID(T_MANGONEL);

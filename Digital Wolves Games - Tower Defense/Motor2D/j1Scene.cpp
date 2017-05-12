@@ -104,7 +104,10 @@ bool j1Scene::Start()
 	anim_test4 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_EXPLOSION));
 	anim_test5 = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_FLOOR));
 	//--
-	
+	/*iPoint un=App->map->MapToWorld(48, 73);
+	iPoint un2 = App->map->MapToWorld(50, 73);
+	iPoint un3 = App->map->MapToWorld(65, 73);
+	iPoint un4 = App->map->MapToWorld(67, 73);*/
 
 	return true;
 }
