@@ -352,6 +352,7 @@ bool j1WaveManager::Update(float dt)
 			unit_num = 0;
 			spawning = true;
 			wave_ended = false;
+			can_bring_next_wave = false;
 		}
 
 		if (spawning)
@@ -453,6 +454,7 @@ bool j1WaveManager::Update(float dt)
 						spawning = false;
 						wave_ended = true;
 						timer.Start();
+						can_bring_next_wave = true;
 					}
 				}
 				//--
@@ -467,6 +469,16 @@ bool j1WaveManager::CleanUp()
 	wave_num = -1;
 	waves.clear();
 	return true;
+}
+
+bool j1WaveManager::BringNextWave()
+{
+	if (can_bring_next_wave == true)
+	{
+		timer.SetTicks(timer.Read() + (TIME_BETWEEN_WAVES * 1000));
+		return true;
+	}
+	return false;
 }
 
 Wave::~Wave()

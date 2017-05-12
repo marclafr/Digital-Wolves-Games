@@ -60,6 +60,8 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 
+	bool BringNextWave();
+
 private:
 	j1Timer timer;
 	j1Timer delay_timer;
@@ -87,6 +89,7 @@ private:
 	bool right_down_finished = false;
 
 	bool all_waves_ended = false;
+	bool can_bring_next_wave = true;
 };
 
 #endif // __j1WAVE_MANAGER_H__
