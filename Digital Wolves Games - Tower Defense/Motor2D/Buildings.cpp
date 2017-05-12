@@ -11,19 +11,19 @@
 #include "Camera.h"
 
 
-Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILDING, pos, side), building_type(b_type)
+Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BUILDING, pos, S_ALLY), building_type(b_type)
 {
 	SDL_Rect rect;
 	SetTextureID(T_TURRET);
 	switch (b_type)
 	{
 	case B_TURRET:
-		SetSide(side);
+		SetSide(S_ALLY);
 		build_rect = IsoRect({ (int)GetX(), (int)GetY() }, 96, 47,	GetPivot());
 		break;
 
 	case B_WOOD_WALL:
-		SetSide(side);
+		SetSide(S_ALLY);
 		SetHp(500);
 		SetAttack(0);
 		SetArmor(8);
@@ -31,7 +31,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		break;
 
 	case B_TOWNHALL:
-		SetSide(side);
+		SetSide(S_ALLY);
 		SetHp(1500);
 		SetAttack(0);
 		SetArmor(8);
@@ -43,7 +43,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		build_rect = IsoRect({ (int)GetX(), (int)GetY() }, 375, 170, {0,0});
 		break;
 	case B_UNIVERSITY:
-		SetSide(side);
+		SetSide(S_ALLY);
 		SetHp(1500);
 		SetAttack(0);
 		SetArmor(8);
@@ -66,10 +66,10 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	{
 		App->pathfinding->MakeNoWalkable(p);
 	}
-	if (side == S_NEUTRAL) {
+	if (S_ALLY == S_NEUTRAL) {
 		App->pathfinding->MakeNoConstruible_neutral(p);
 	}
-	if (side == S_ALLY) {
+	if (S_ALLY == S_ALLY) {
 		App->pathfinding->MakeNoConstruible_ally(p);
 	}
 }

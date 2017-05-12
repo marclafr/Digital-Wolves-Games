@@ -7,8 +7,11 @@
 #include "j1Render.h"
 #include "j1Fonts.h"
 #include "j1Window.h"
+#include "p2Log.h"
+#include "Resources.h"
 #include "Camera.h"
 #include "j1Map.h"
+#include "ResourceManager.h"
 #include "j1Audio.h"
 #include "IsoPrimitives.h"
 
@@ -42,9 +45,9 @@ Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)
 	return new_entity;
 }
 
-Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side)
+Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos,bool builded)
 {
-	Entity* new_entity = (Entity*) new Building(b_type, pos, side);
+	Entity* new_entity = (Entity*) new Building(b_type, pos, builded);
 	entity_array.push_back(new_entity);
 	if (b_type == B_TOWNHALL)
 		App->uimanager->SetTownHall((Building*)new_entity);
@@ -54,6 +57,13 @@ Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side 
 Entity * j1EntityManager::CreateTower(TOWER_TYPE t_type, fPoint pos)
 {
 	Entity* new_entity = (Entity*) new Tower(t_type, pos);
+	entity_array.push_back(new_entity);
+	return new_entity;
+}
+
+Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos, int amount_collect, int time)
+{
+	Entity* new_entity = (Entity*) new Resources(r_type, pos, amount_collect,time);
 	entity_array.push_back(new_entity);
 	return new_entity;
 }
@@ -335,9 +345,11 @@ void j1EntityManager::LoadAllFx()
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
 	App->entity_manager->CleanUp();
+	
 	pugi::xml_node Buildingsload = data.child("buildings").first_child();
 	pugi::xml_node Unitsload = data.child("units").first_child();
 	pugi::xml_node Turretsload = data.child("turrets").first_child();
+	pugi::xml_node Resourcesload = data.child("resources").first_child();
 	
 	while (Buildingsload != NULL)
 	{
@@ -357,14 +369,48 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 		Turretsload = Turretsload.next_sibling();
 	}
 
+	while (Resourcesload != NULL)
+	{
+		LoadResource(Resourcesload);
+		Resourcesload = Resourcesload.next_sibling();
+	}
+
+
+	pugi::xml_node AmountOfResources = data.child("resources_amount").first_child();
+
+	App->scene->resources->LoadResourcesAmount(AmountOfResources);
+
+
 	return true;
+}
+
+void j1EntityManager::LoadResource(pugi::xml_node& data)
+{
+	pugi::xml_node actualresource = data;
+	fPoint pos(actualresource.attribute("posx").as_int(), actualresource.attribute("posy").as_int());
+	Resources* actualres = (Resources*)App->entity_manager->CreateResource(RESOURCE_TYPE(actualresource.attribute("resource_type").as_int()), pos, actualresource.attribute("amount_collected").as_int(), actualresource.attribute("collect_time").as_int());
+	switch (actualres->GetResourceType())
+	{
+	case R_WOOD:
+		App->scene->resources->SetWood(actualres);
+		break;
+	case R_FOOD:
+		App->scene->resources->SetFood(actualres);
+		break;
+	case R_GOLD:
+		App->scene->resources->SetGold(actualres);
+		break;
+	case R_STONE:
+		App->scene->resources->SetStone(actualres);
+		break;
+	}
 }
 
 void j1EntityManager::LoadBuilding(pugi::xml_node& data)
 {
 	pugi::xml_node Actualbuilding = data;
 	fPoint pos(Actualbuilding.attribute("posx").as_int(), Actualbuilding.attribute("posy").as_int());
-	Building* actualbuild = (Building*)App->entity_manager->CreateBuilding(BUILDING_TYPE(Actualbuilding.attribute("building_type").as_int()), pos, S_ALLY);
+	Building* actualbuild = (Building*)App->entity_manager->CreateBuilding(BUILDING_TYPE(Actualbuilding.attribute("building_type").as_int()), pos, true);
 	actualbuild->SetHp(Actualbuilding.attribute("hp").as_int());
 }
 
@@ -389,6 +435,7 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	pugi::xml_node Buildings = data.append_child("buildings");
 	pugi::xml_node Units = data.append_child("units");
 	pugi::xml_node Turrets = data.append_child("turrets");
+	pugi::xml_node Resourcess = data.append_child("resources");
 
 	for (int k = 0; k <entity_array.size(); k++) {
 		if (entity_array[k]->GetEntityType() == E_BUILDING)
@@ -406,8 +453,17 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 			Unit* unit = (Unit*)entity_array[k];
 			unit->SaveUnit(Units);
 		}
+		else if (entity_array[k]->GetEntityType() == E_RESOURCE)
+		{
+			Resources* rest = (Resources*)entity_array[k];
+			rest->SaveResource(Resourcess);
+		}
 	}
 
+
+	pugi::xml_node AmountOfResources = data.append_child("resources_amount");
+
+	App->scene->resources->SaveResourcesAmount(AmountOfResources);
 
 	return true;
 }

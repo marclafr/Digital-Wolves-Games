@@ -38,7 +38,7 @@ private:
 
 public:
 	iPoint arrowpos;
-	Building(BUILDING_TYPE b_type, fPoint pos, Side side);
+	Building(BUILDING_TYPE b_type, fPoint pos, bool side);
 	~Building();
 
 	virtual void Update(float dt); // defines order

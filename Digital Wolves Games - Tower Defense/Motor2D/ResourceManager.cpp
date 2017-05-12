@@ -9,10 +9,10 @@
 
 ResourceManager::ResourceManager(): wood(STARTING_WOOD), food (STARTING_FOOD), gold (STARTING_GOLD), stone (STARTING_STONE)
 {
-	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(1392, 858));
-	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1240, 979));
-	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1588, 952));
-	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1419, 1031));	
+	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(1392, 858),300,2);
+	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1240, 979),300, 2);
+	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1588, 952),300, 2);
+	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1419, 1031),300, 2);
 }
 
 void ResourceManager::SetWood(Resources * wood)
@@ -373,4 +373,21 @@ void ResourceManager::TrainSoldier(UNIT_TYPE type)
 		break;
 	}
 	App->entity_manager->CreateUnit(type, STARTING_POS, S_ALLY);
+}
+
+void ResourceManager::SaveResourcesAmount(pugi::xml_node &data)
+{
+	pugi::xml_node actualresource = data.append_child("ResourcesAmount");
+	actualresource.append_attribute("wood") = GetWood();
+	actualresource.append_attribute("stone") = GetStone();
+	actualresource.append_attribute("gold") = GetGold();
+	actualresource.append_attribute("food") = GetFood();
+}
+
+void ResourceManager::LoadResourcesAmount(pugi::xml_node &data)
+{
+	wood = data.attribute("wood").as_int();
+	gold = data.attribute("gold").as_int();
+	stone = data.attribute("stone").as_int();
+	food = data.attribute("food").as_int();
 }

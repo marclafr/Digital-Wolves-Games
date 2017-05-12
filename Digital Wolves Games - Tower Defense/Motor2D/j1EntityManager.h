@@ -28,9 +28,10 @@ public:
 	bool CleanUp();
 
 	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side);
-	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side);
+	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, bool builded);
 	Entity* CreateTower(TOWER_TYPE t_type, fPoint pos);
 	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos);
+	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos, int amount_collected, int time);
 	void SelectInQuad(const SDL_Rect& select_rect, std::vector<Entity*>& selection);
 	void UnselectEverything();
 	void Select(Entity* select);
@@ -53,6 +54,8 @@ public:
 	void LoadBuilding(pugi::xml_node&);
 	void LoadUnit(pugi::xml_node&);
 	void LoadTurret(pugi::xml_node&);
+	void LoadResource(pugi::xml_node&);
+
 	bool Save(pugi::xml_node&) const;
 private:
 	//Textura provisional para sprites por si no se cargan en animation

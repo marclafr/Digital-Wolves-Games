@@ -143,7 +143,6 @@ bool j1Scene::Update(float dt)
 	anim_test5->Update(rect, pivot);
 	App->render->PushInGameSprite(App->tex->GetTexture(T_EXPLOSIONS_AND_FLOOR), 500, 1000, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 	//--
-
 	if (App->input->GetKey(SDL_SCANCODE_7) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_MANGONEL, { -200, 575 }, S_ALLY);
 
@@ -162,8 +161,9 @@ bool j1Scene::Update(float dt)
 		App->SaveGame("prove.xml");
 
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
 		App->LoadGame("prove.xml");
-
+	}
 	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);	
 	//--

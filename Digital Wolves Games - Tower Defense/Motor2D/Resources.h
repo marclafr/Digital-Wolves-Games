@@ -31,7 +31,7 @@ private:
 	bool totallybuilded = false;
 public:
 
-	Resources(RESOURCE_TYPE b_type, fPoint pos);
+	Resources(RESOURCE_TYPE b_type, fPoint pos,int collected = 100, float col_time = 11.0f);
 	~Resources();
 
 	void Update(float dt); // defines order
@@ -44,6 +44,9 @@ public:
 	void AddResource(int add);
 	bool ReduceCollectTime(float reduction);
 	void IncreaseResourceAmount(int amount);
+	int GetResource();
+
+	void SaveResource(pugi::xml_node&);
 };
 
 #endif
