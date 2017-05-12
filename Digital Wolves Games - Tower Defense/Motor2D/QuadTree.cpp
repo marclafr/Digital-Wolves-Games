@@ -324,6 +324,24 @@ void QuadTreeNode::DrawArea()
 	area.Draw();
 }
 
+void QuadTreeNode::SaveAll(pugi::xml_node &data)
+{
+	pugi::xml_node Buildings = data.append_child("buildings");
+	pugi::xml_node Units = data.append_child("units");
+	pugi::xml_node Turrets = data.append_child("turrets");
+	//simular for
+
+	//if( entity_type == E_BUILDING)
+	//	if(building_type == B_TURRET)
+	//		SaveTurret(Turrets)
+	//	else 
+	//		SaveBuilding(Buildings);
+
+	//else if (entity_type == E_UNIT)
+
+	//SaveUnit(Units)
+}
+
 QuadTree::QuadTree(IsoRect area)
 {
 	origin = new QuadTreeNode(area, nullptr);
