@@ -21,6 +21,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 300;
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;
+		SetBuildingType(B_TURRET);
 		projectile_spd = 60;
 		break;
 
@@ -173,6 +174,15 @@ const TOWER_TYPE Tower::GetTowerType() const
 const int Tower::GetRange() const
 {
 	return range;
+}
+
+void Tower::SaveTurret(pugi::xml_node &data)
+{
+	pugi::xml_node ActualTurret = data.append_child("turret");
+	ActualTurret.append_attribute("tower_type") = GetTowerType();
+	ActualTurret.append_attribute("posx") = GetX();
+	ActualTurret.append_attribute("posy") = GetY();
+	ActualTurret.append_attribute("hp") = GetHp();
 }
 
 void Tower::UpgradeTurret(TURRET_UPGRADE type)

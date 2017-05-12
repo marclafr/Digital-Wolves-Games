@@ -331,3 +331,83 @@ void j1EntityManager::LoadAllFx()
 	fx_arrow = App->audio->LoadFx("audio/fx/Arrow01.wav");
 	fx_construction = App->audio->LoadFx("audio/fx/Construction01.wav");
 }
+
+bool j1EntityManager::Load(pugi::xml_node& data)
+{
+	App->entity_manager->CleanUp();
+	pugi::xml_node Buildingsload = data.child("buildings").first_child();
+	pugi::xml_node Unitsload = data.child("units").first_child();
+	pugi::xml_node Turretsload = data.child("turrets").first_child();
+	
+	while (Buildingsload != NULL)
+	{
+		LoadBuilding(Buildingsload);
+		Buildingsload = Buildingsload.next_sibling();
+	}
+
+	while (Unitsload != NULL)
+	{
+		LoadUnit(Unitsload);
+		Unitsload = Unitsload.next_sibling();
+	}
+
+	while (Turretsload != NULL)
+	{
+		LoadTurret(Turretsload);
+		Turretsload = Turretsload.next_sibling();
+	}
+
+	return true;
+}
+
+void j1EntityManager::LoadBuilding(pugi::xml_node& data)
+{
+	pugi::xml_node Actualbuilding = data;
+	fPoint pos(Actualbuilding.attribute("posx").as_int(), Actualbuilding.attribute("posy").as_int());
+	Building* actualbuild = (Building*)App->entity_manager->CreateBuilding(BUILDING_TYPE(Actualbuilding.attribute("building_type").as_int()), pos, S_ALLY);
+	actualbuild->SetHp(Actualbuilding.attribute("hp").as_int());
+}
+
+void j1EntityManager::LoadUnit(pugi::xml_node& data)
+{
+	pugi::xml_node Actualunit = data;
+	fPoint pos(Actualunit.attribute("posx").as_int(), Actualunit.attribute("posy").as_int());
+	Unit* actualunit = (Unit*)App->entity_manager->CreateUnit(UNIT_TYPE(Actualunit.attribute("unit_type").as_int()), pos, S_ALLY);
+	actualunit->SetHp(Actualunit.attribute("hp").as_int());
+}
+
+void j1EntityManager::LoadTurret(pugi::xml_node& data)
+{
+	pugi::xml_node Actualturret = data;
+	fPoint pos(Actualturret.attribute("posx").as_int(), Actualturret.attribute("posy").as_int());
+	Tower* actualturret = (Tower*)App->entity_manager->CreateTower(TOWER_TYPE(Actualturret.attribute("tower_type").as_int()), pos);
+	actualturret->SetHp(Actualturret.attribute("hp").as_int());
+}
+
+bool j1EntityManager::Save(pugi::xml_node &data) const
+{
+	pugi::xml_node Buildings = data.append_child("buildings");
+	pugi::xml_node Units = data.append_child("units");
+	pugi::xml_node Turrets = data.append_child("turrets");
+
+	for (int k = 0; k <entity_array.size(); k++) {
+		if (entity_array[k]->GetEntityType() == E_BUILDING)
+		{
+			Building* buildingptr = (Building*)entity_array[k];
+			if (buildingptr->GetBuildingType() == B_TURRET || buildingptr->GetBuildingType() == B_CANNON)
+			{
+				Tower* towerptr = (Tower*)buildingptr;
+				towerptr->SaveTurret(Turrets);
+			}
+			else buildingptr->SaveBuilding(Buildings);
+		}
+		else if (entity_array[k]->GetEntityType() == E_UNIT)
+		{
+			Unit* unit = (Unit*)entity_array[k];
+			unit->SaveUnit(Units);
+		}
+	}
+
+
+	return true;
+}

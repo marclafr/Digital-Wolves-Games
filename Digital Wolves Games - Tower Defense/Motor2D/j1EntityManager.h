@@ -49,6 +49,11 @@ public:
 	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;
 	void LoadAllFx();
 
+	bool Load(pugi::xml_node&);
+	void LoadBuilding(pugi::xml_node&);
+	void LoadUnit(pugi::xml_node&);
+	void LoadTurret(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 private:
 	//Textura provisional para sprites por si no se cargan en animation
 	//SDL_Texture* sprites;

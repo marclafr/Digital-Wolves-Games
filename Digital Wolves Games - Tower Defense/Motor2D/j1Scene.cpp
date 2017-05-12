@@ -158,6 +158,12 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_GOD, { -200.0f, 372 }, S_ALLY);
 
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		App->SaveGame("prove.xml");
+
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+		App->LoadGame("prove.xml");
+
 	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);	
 	//--

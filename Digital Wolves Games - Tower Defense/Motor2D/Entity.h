@@ -81,14 +81,14 @@ public:
 	const TextureID GetTextureID() const;
 	const Side GetSide() const;
 	const float GetAIDT() const;
-
+	void SetHp(int new_hp);
 	void Attack(Entity*);
 	void Damaged(int dmg);
 	void UpgradeUnit(int plushealth);
 protected:
 	//Seters
 	void SetArmor(int new_armor);
-	void SetHp(int new_hp);
+
 	void SetAttack(int new_attack);
 	void SetPivot(int x, int y);
 	void SetRect(SDL_Rect rect);

@@ -57,6 +57,11 @@ public:
 	void DestroyBuilding();
 	const int GetRange() const;
 
+	void SaveBuilding(pugi::xml_node&);
+	
+
+
+
 };
 
 #endif

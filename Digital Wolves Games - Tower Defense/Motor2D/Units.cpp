@@ -875,6 +875,20 @@ void Unit::SlowUnit()
 	}
 }
 
+void Unit::LoadUnit(pugi::xml_node &data)
+{
+	pugi::xml_node ActualUnit = data.child("unit");
+}
+
+void Unit::SaveUnit(pugi::xml_node &data)
+{
+	pugi::xml_node ActualUnit = data.append_child("unit");
+	ActualUnit.append_attribute("unit_type") = GetUnitType();
+	ActualUnit.append_attribute("posx") = GetX();
+	ActualUnit.append_attribute("posy") = GetY();
+	ActualUnit.append_attribute("hp") = GetHp();
+}
+
 void Unit::UnitDies()
 {
 	this->action = A_DIE;
