@@ -14,7 +14,7 @@ class Primitive
 public:
 
 	Primitive();
-	Primitive(const iPoint& position, const iPoint& displacement = { 0,0 }, const SDL_Color& color = { 0,0,0,255 });
+	Primitive(const iPoint& position, const iPoint& displacement = { 0,0 }, const SDL_Color& color = { 255, 255, 255, 255 });
 	Primitive(const Primitive& copy);
 	~Primitive();
 
@@ -22,8 +22,8 @@ protected:
 
 	iPoint		position = { 0,0 };
 	iPoint		displacement = { 0,0 };
-	float		x_angle =  (30.0f / 360.0f * PI * 2.0f);
-	SDL_Color	color = { 0,0,0,255 };
+	float		x_angle = 0.54f;
+	SDL_Color	color = { 255,255,255,255 };
 
 public:
 

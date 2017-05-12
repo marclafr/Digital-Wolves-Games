@@ -15,9 +15,6 @@ ResourceManager::ResourceManager(): wood(STARTING_WOOD), food (STARTING_FOOD), g
 	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1419, 1031));	
 }
 
-ResourceManager::~ResourceManager()
-{}
-
 void ResourceManager::SetWood(Resources * wood)
 {
 	resource_wood = wood;

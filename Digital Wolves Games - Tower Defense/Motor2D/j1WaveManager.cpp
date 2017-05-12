@@ -29,12 +29,12 @@ bool j1WaveManager::Start()
 	wave1.PushBack(group3, RIGHT_UP);
 	wave1.PushBack(group4, RIGHT_DOWN);
 	Wave wave2;
-
-	UnitGroup group5(U_MANATARMS, 30, LEFT_UP);
+	
+	UnitGroup group5(U_MANATARMS, 30, LEFT_UP);	
 	UnitGroup group6(U_MANATARMS, 30, LEFT_DOWN);
 	UnitGroup group7(U_MANATARMS, 30, RIGHT_UP);
 	UnitGroup group8(U_MANATARMS, 30, RIGHT_DOWN);
-
+	
 	wave2.PushBack(group5, LEFT_UP);
 	wave2.PushBack(group6, LEFT_DOWN);
 	wave2.PushBack(group7, RIGHT_UP);
@@ -53,7 +53,7 @@ bool j1WaveManager::Start()
 	UnitGroup group18(U_LONGSWORDMAN, 20, LEFT_DOWN);
 	UnitGroup group19(U_LONGSWORDMAN, 20, RIGHT_UP);
 	UnitGroup group20(U_LONGSWORDMAN, 20, RIGHT_DOWN);
-
+	
 	wave3.PushBack(group9, LEFT_UP);
 	wave3.PushBack(group10, LEFT_DOWN);
 	wave3.PushBack(group11, RIGHT_UP);
@@ -66,7 +66,7 @@ bool j1WaveManager::Start()
 	wave3.PushBack(group18, LEFT_DOWN);
 	wave3.PushBack(group19, RIGHT_UP);
 	wave3.PushBack(group20, RIGHT_DOWN);
-
+		
 
 	Wave wave4;
 	UnitGroup group21(U_TWOHANDEDSWORDMAN, 30, LEFT_UP);
@@ -93,7 +93,7 @@ bool j1WaveManager::Start()
 	wave4.PushBack(group30, LEFT_DOWN);
 	wave4.PushBack(group31, RIGHT_UP);
 	wave4.PushBack(group32, RIGHT_DOWN);
-
+	
 	Wave wave5;
 	UnitGroup group33(U_CHAMPION, 35, LEFT_UP);
 	UnitGroup group34(U_CHAMPION, 35, LEFT_DOWN);
@@ -119,7 +119,7 @@ bool j1WaveManager::Start()
 	wave5.PushBack(group42, LEFT_DOWN);
 	wave5.PushBack(group43, RIGHT_UP);
 	wave5.PushBack(group44, RIGHT_DOWN);
-
+	
 	Wave wave6;
 	UnitGroup group45(U_CHAMPION, 40, LEFT_UP);
 	UnitGroup group46(U_CHAMPION, 40, LEFT_DOWN);
@@ -290,7 +290,7 @@ bool j1WaveManager::Start()
 
 
 	Wave wave8;
-
+	
 	UnitGroup group36(U_LONGSWORDMAN, 51, LEFT_UP);
 	UnitGroup group37(U_CAVALRYARCHER, 26, LEFT_UP);
 	UnitGroup group38(U_HEAVYCAVALRYARCHER, 30, LEFT_UP);
@@ -300,7 +300,7 @@ bool j1WaveManager::Start()
 	UnitGroup group42(U_MILITIA, 18, LEFT_UP);
 	UnitGroup group43(U_SIEGERAM, 10, LEFT_UP);
 	UnitGroup group44(U_TWOHANDEDSWORDMAN, 65, LEFT_UP);
-
+	
 	wave8.PushBack(group36);
 	wave8.PushBack(group37);
 	wave8.PushBack(group38);
@@ -320,7 +320,7 @@ bool j1WaveManager::Start()
 	waves.push_back(wave7);
 	waves.push_back(wave8);
 	waves.push_back(wave9);
-
+	
 	timer.Start();
 	spawning = true;
 
@@ -336,7 +336,7 @@ bool j1WaveManager::Update(float dt)
 			timer.Start();
 			wave_num++;
 
-			if (waves[wave_num].units_vec_left_up.size() <= 0)
+ 			if (waves[wave_num].units_vec_left_up.size() <= 0)
 				left_up_finished = true;
 
 			if (waves[wave_num].units_vec_left_down.size() <= 0)
@@ -444,7 +444,7 @@ bool j1WaveManager::Update(float dt)
 				{
 					if (wave_num > waves.size())
 						all_waves_ended = true;
-					else
+					else 
 					{
 						left_up_finished = false;
 						left_down_finished = false;
@@ -502,7 +502,7 @@ fPoint UnitGroup::GetStartingPos(STARTING_ENEMY_POS pos) const
 	switch (pos)
 	{
 	case LEFT_UP:
-		return fPoint(-1296, 2880);//2880 1032
+		return fPoint(-1082, 2799);//2880 1032
 		break;
 	case LEFT_DOWN:
 		return fPoint(-1020, 2900);
@@ -518,7 +518,7 @@ fPoint UnitGroup::GetStartingPos(STARTING_ENEMY_POS pos) const
 	}
 }
 
-UnitGroup::UnitGroup(UNIT_TYPE type, int amount, STARTING_ENEMY_POS start_pos) : type(type), amount(amount), start_pos(start_pos)
+UnitGroup::UnitGroup(UNIT_TYPE type, int amount, STARTING_ENEMY_POS start_pos): type(type), amount(amount), start_pos(start_pos)
 {}
 
 void UnitGroup::Create() const

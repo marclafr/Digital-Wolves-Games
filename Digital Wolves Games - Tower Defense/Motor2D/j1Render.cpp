@@ -8,7 +8,6 @@
 #include "j1Map.h"
 #include "Entity.h"
 #include "j1Animation.h"
-#include "j1EntityManager.h"
 #include "Camera.h"
 #include "j1Scene.h"
 
@@ -172,48 +171,51 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	rect.x = (int)(camera->GetPosition().x * speed) + x;
 	rect.y = (int)(camera->GetPosition().y * speed) + y;
 
-	if (section != nullptr)
+	if (App->render->camera->InsideRenderTarget(rect.x, rect.y) || not_in_world)
 	{
-		rect.w = section->w;
-		rect.h = section->h;
-	}
-	else
-	{
-		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
-	}
+		if (section != nullptr)
+		{
+			rect.w = section->w;
+			rect.h = section->h;
+		}
+		else
+		{
+			SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+		}
 
-	if (flip == SDL_FLIP_HORIZONTAL)
-	{
-		rect.x -= (rect.w - pivot_x);
-		rect.y -= pivot_y;
-	}
+		if (flip == SDL_FLIP_HORIZONTAL)
+		{
+			rect.x -= (rect.w - pivot_x);
+			rect.y -= pivot_y;
+		}
 
-	else if (flip == SDL_FLIP_VERTICAL)
-	{
-		rect.x -= pivot_x;
-		rect.y -= (rect.h - pivot_y);
-	}
+		else if (flip == SDL_FLIP_VERTICAL)
+		{
+			rect.x -= pivot_x;
+			rect.y -= (rect.h - pivot_y);
+		}
 
-	else if (flip == SDL_FLIP_NONE)
-	{		
-		rect.x -= pivot_x;
-		rect.y -= pivot_y;
-	}
+		else if (flip == SDL_FLIP_NONE)
+		{		
+			rect.x -= pivot_x;
+			rect.y -= pivot_y;
+		}
 
-	SDL_Point pivot;
+		SDL_Point pivot;
 
-	if (pivot_x != INT_MAX && pivot_y != INT_MAX)
-	{
-		pivot.x = pivot_x;
-		pivot.y = pivot_y;
-	}
+		if (pivot_x != INT_MAX && pivot_y != INT_MAX)
+		{
+			pivot.x = pivot_x;
+			pivot.y = pivot_y;
+		}
 	
-	//SDL_SetTextureAlphaMod(texture, App->render->camera->GetOpacity());
+		//SDL_SetTextureAlphaMod(texture, App->render->camera->GetOpacity());
 
-	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, &pivot, flip) != 0)
-	{
-		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-		ret = false;
+		if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, &pivot, flip) != 0)
+		{
+			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			ret = false;
+		}
 	}
 
 	return ret;
@@ -333,89 +335,54 @@ bool j1Render::DrawElipse(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, f
 
 void j1Render::PushMapSprite(SDL_Texture * texture, int x, int y, const SDL_Rect * section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle, bool not_in_world)
 {
-	iPoint in_camera_pos;
-	in_camera_pos.x = (int)(camera->GetPosition().x * speed) + x;
-	in_camera_pos.y = (int)(camera->GetPosition().y * speed) + y;
-
-	if (camera->InsideRenderTarget(in_camera_pos.x, in_camera_pos.y))
-	{
-		Sprite* map_sprite = new Sprite(texture, x, y, section, flip, pivot_x, pivot_y, speed, angle);
-		map_sprite_vec.push_back(map_sprite);
-	}
+	Sprite* map_sprite = new Sprite(texture, x, y, section, flip, pivot_x, pivot_y, speed, angle);
+	map_sprite_vec.push_back(map_sprite);
 }
 
 void j1Render::PushInGameSprite(const Entity* entity)
 {
-	iPoint in_camera_pos;
-	in_camera_pos.x = (int)(camera->GetPosition().x) + entity->GetPosition().x;
-	in_camera_pos.y = (int)(camera->GetPosition().y) + entity->GetPosition().y;
+	Sprite* entity_sprite;
 
-	if (camera->InsideRenderTarget(in_camera_pos.x, in_camera_pos.y))
+	if (entity->GetEntityType() == E_UNIT)
 	{
-		Sprite* entity_sprite;
+		Unit* unit = (Unit*)entity;
 
-		if (entity->GetEntityType() == E_UNIT)
-		{
-			Unit* unit = (Unit*)entity;
-
-			if (unit->GetDir() == D_NORTH_EAST || unit->GetDir() == D_EAST || unit->GetDir() == D_SOUTH_EAST)
-				entity_sprite = new Sprite(App->tex->GetTexture(unit->GetTextureID()), unit->GetX(), unit->GetY(), &unit->GetRect(), SDL_FLIP_HORIZONTAL, unit->GetPivot().x, unit->GetPivot().y);
-			else
-				entity_sprite = new Sprite(App->tex->GetTexture(unit->GetTextureID()), unit->GetX(), unit->GetY(), &unit->GetRect(), SDL_FLIP_NONE, unit->GetPivot().x, unit->GetPivot().y);
-		}
+		if (unit->GetDir() == D_NORTH_EAST || unit->GetDir() == D_EAST || unit->GetDir() == D_SOUTH_EAST)
+			entity_sprite = new Sprite(App->tex->GetTexture(unit->GetTextureID()), unit->GetX(), unit->GetY(), &unit->GetRect(), SDL_FLIP_HORIZONTAL, unit->GetPivot().x, unit->GetPivot().y);
 		else
-			entity_sprite = new Sprite(App->tex->GetTexture(entity->GetTextureID()), entity->GetX(), entity->GetY(), &entity->GetRect(), SDL_FLIP_NONE, entity->GetPivot().x, entity->GetPivot().y);
-
-		PushInGameSprite(entity_sprite);
+			entity_sprite = new Sprite(App->tex->GetTexture(unit->GetTextureID()), unit->GetX(), unit->GetY(), &unit->GetRect(), SDL_FLIP_NONE, unit->GetPivot().x, unit->GetPivot().y);
 	}
+	else
+	entity_sprite = new Sprite(App->tex->GetTexture(entity->GetTextureID()), entity->GetX(), entity->GetY(), &entity->GetRect(), SDL_FLIP_NONE, entity->GetPivot().x, entity->GetPivot().y);
+
+	PushInGameSprite(entity_sprite);
 }
 
 void j1Render::PushInGameSprite(SDL_Texture * texture, int x, int y, const SDL_Rect * section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle, bool not_in_world)
 {
-	iPoint in_camera_pos;
-	in_camera_pos.x = (int)(camera->GetPosition().x * speed) + x;
-	in_camera_pos.y = (int)(camera->GetPosition().y * speed) + y;
-
-	if (camera->InsideRenderTarget(in_camera_pos.x, in_camera_pos.y))
-	{
-		Sprite* in_game_sprite = new Sprite(texture, x, y, section, flip, pivot_x, pivot_y, speed, angle);
-		PushInGameSprite(in_game_sprite);
-	}
+	Sprite* in_game_sprite = new Sprite(texture, x, y, section, flip, pivot_x, pivot_y, speed, angle);
+	PushInGameSprite(in_game_sprite);
 }
 
 void j1Render::PushInGameSprite(Sprite * sprite)
 {
-	iPoint in_camera_pos;
-	in_camera_pos.x = (int)(camera->GetPosition().x * sprite->speed) + sprite->x;
-	in_camera_pos.y = (int)(camera->GetPosition().y * sprite->speed) + sprite->y;
+	std::deque<Sprite*>::iterator it = in_game_sprite_queue.begin();
 
-	if (camera->InsideRenderTarget(in_camera_pos.x, in_camera_pos.y))
-	{
-		std::deque<Sprite*>::iterator it = in_game_sprite_queue.begin();
-
-		if (in_game_sprite_queue.size() != 0)
-			while (it != in_game_sprite_queue.end())
-			{
-				if (sprite->y <= (*it)->y)
-					break;
-				it++;
-			}
-
-		in_game_sprite_queue.insert(it, sprite);
-	}
+	if(in_game_sprite_queue.size() != 0)
+		while (it != in_game_sprite_queue.end())
+		{	
+			if (sprite->y <= (*it)->y)
+				break;
+			it++;
+		}
+	
+	in_game_sprite_queue.insert(it, sprite);
 }
 
 void j1Render::PushUISprite(SDL_Texture * texture, int x, int y, const SDL_Rect * section, SDL_RendererFlip flip, int pivot_x, int pivot_y, float speed, double angle)
 {
-	iPoint in_camera_pos;
-	in_camera_pos.x = (int)(camera->GetPosition().x * speed) + x;
-	in_camera_pos.y = (int)(camera->GetPosition().y * speed) + y;
-
-	if (camera->InsideRenderTarget(in_camera_pos.x, in_camera_pos.y))
-	{
-		Sprite* ui_text = new Sprite(texture, x, y, section, flip, pivot_x, pivot_y, speed, angle);
-		ui_sprite_vec.push_back(ui_text);
-	}
+	Sprite* ui_text = new Sprite(texture, x, y, section, flip, pivot_x, pivot_y, speed, angle);
+	ui_sprite_vec.push_back(ui_text);
 }
 
 void j1Render::BlitMap() const
@@ -465,13 +432,7 @@ void j1Render::BlitGameScene()
 	BlitMap();
 	BlitInGame();
 	BlitSelection();
-
-	if(App->debug_features.quadtree)
-		App->entity_manager->DrawQuadTree();
-
 	BlitUI();
-	
-
 
 	CleanUpMapVec();
 	CleanUpInGameSpriteQueue();

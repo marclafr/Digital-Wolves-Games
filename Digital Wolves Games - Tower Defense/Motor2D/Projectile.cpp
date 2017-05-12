@@ -98,11 +98,6 @@ void Projectile::Update()
 		case P_ICE_CANNONBALL:
 			Target->Damaged(Damage);
 			AreaDamage(Damage, { (int)Target->GetX(), (int)Target->GetY() }, AREA_DMG_RADIUS);
-			/*
-			TODO:
-			Unit* target_unit = (Unit*)Target;
-			target_unit->SlowUnit();
-			*/
 			element_terrain_pos = Target->GetPosition();
 			delete projectile_anim;
 			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_EXPLOSION));
@@ -114,7 +109,7 @@ void Projectile::Update()
 		}
 		if (projectile_type == P_ICE_ARROW)
 		{
-			Unit* unit_target = (Unit*)Target;
+			Unit* unit_target = (Unit*)Target; 
 			unit_target->SlowUnit();
 		}
 	}

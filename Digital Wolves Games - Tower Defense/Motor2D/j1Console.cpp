@@ -18,6 +18,7 @@ bool j1Console::PreUpdate()
 
 bool j1Console::Update(float dt)
 {
+	
 	return true;
 }
 

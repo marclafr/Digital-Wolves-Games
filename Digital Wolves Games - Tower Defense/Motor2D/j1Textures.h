@@ -66,8 +66,9 @@ enum TextureID
 		//SIEGE
 	T_SIEGERAM,
 	T_ENEMY_SIEGERAM,
-	T_MANGONEL
+	T_MANGONEL,
 	//--
+	T_INTRO
 };
 
 enum BUILDING_TEXTURE_TYPES
@@ -147,8 +148,9 @@ public:
 	// Load Texture
 	SDL_Texture* const	Load(const char* path, TextureID id);
 	bool UnLoad(Texture* texture);
+	bool UnLoad(SDL_Texture* texture);
 	bool UnLoad(TextureID id);
-	SDL_Texture* const	LoadSurface(SDL_Surface* surface, TextureID id);
+	SDL_Texture* const	LoadSurface(SDL_Surface* surface, TextureID id = T_INTRO);
 
 	void GetSize(const SDL_Texture* texture, uint& width, uint& height) const;
 	SDL_Texture* GetTexture(const TextureID id) const;
@@ -163,7 +165,6 @@ public:
 private:
 
 	std::vector<Texture*> textures;
-
 	std::vector<ConstructionRect> construction_rects;
 	std::vector<TowerRect> towers_rects;
 	std::vector<BuildingRect> buildings_rects;

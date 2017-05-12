@@ -163,11 +163,14 @@
     <ClCompile Include="j1Tutorial.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Video.cpp">
-      <Filter>Awsome_Game\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="theoraplay.c">
       <Filter>Awsome_Game\Theoraplay</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Video.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro.cpp">
+      <Filter>Awsome_Game\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -348,11 +351,14 @@
     <ClInclude Include="j1Tutorial.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Video.h">
-      <Filter>Awsome_Game\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="theoraplay.h">
       <Filter>Awsome_Game\Theoraplay</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Video.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro.h">
+      <Filter>Awsome_Game\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

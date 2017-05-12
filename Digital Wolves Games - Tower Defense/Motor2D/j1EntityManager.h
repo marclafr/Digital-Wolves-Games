@@ -9,7 +9,7 @@
 #include "Resources.h"
 #include "Buildings.h"
 #include "Towers.h"
-#include "QuadTree.h"
+#include <vector>
 #include "SDL/include/SDL_rect.h"
 
 class UILabel;
@@ -27,26 +27,27 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side);//TODO make const if we can take priority out
-	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side) const;
-	Entity* CreateTower(TOWER_TYPE t_type, fPoint pos) const;
-	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos) const;
+	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side);
+	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side);
+	Entity* CreateTower(TOWER_TYPE t_type, fPoint pos);
+	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos);
+	void SelectInQuad(const SDL_Rect& select_rect, std::vector<Entity*>& selection);
+	void UnselectEverything();
+	void Select(Entity* select);
+	Entity* LookForEnemies(int range, iPoint pos);
 
-	void SelectInQuad(const SDL_Rect& select_rect, std::vector<Entity*>& selection) const;
-	void UnselectEverything() const;
-	void Select(Entity* select) const;
-	void CheckClick(int mouse_x, int mouse_y)  const;
+	void CheckClick(int mouse_x, int mouse_y);
 
-	Entity* LookForEnemies(int range, iPoint pos) const;
-	
-	Entity* CheckForCombat(iPoint position, int range, Side side) const;
-	Entity* CheckForObjective(iPoint position, int vision_range, Side side) const;
-	void CheckUnitCollisions(const Unit* ptr) const;
+	void DeleteEntity(Entity* ptr); // will call other delete methods
+	void DeleteUnit(Unit* ptr);
+	void DeleteBuilding(Building* ptr);
+	void DeleteResource(Resources* ptr);
 
-	bool IsUnitInTile(const Unit* unit, const iPoint tile) const;
+	Entity* CheckForCombat(iPoint position, int range, Side side);
+	Entity* CheckForObjective(iPoint position, int vision_range, Side side);
+
+	bool IsUnitInTile(const Unit* unit, const iPoint tile)const;
 	void LoadAllFx();
-
-	void DrawQuadTree() const;
 
 private:
 	//Textura provisional para sprites por si no se cargan en animation
@@ -55,7 +56,7 @@ private:
 	friend j1Collision;
 
 	//lista para "almacenar" unidades, puede ser cambiada a array etc.
-	QuadTree* entity_quadtree;
+	std::vector<Entity*> entity_array;
 
 	//TODO:Must change this
 	int priority = 0;
@@ -75,6 +76,7 @@ public: //TODO: should be protected
 	unsigned int fx_building_destroyed;
 	unsigned int fx_arrow;
 	unsigned int fx_construction;
+
 };
 #endif //_j1EntityManager_
 

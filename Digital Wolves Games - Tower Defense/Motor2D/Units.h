@@ -7,7 +7,7 @@
 #include "IsoPrimitives.h"
 
 #define XY_TILES_RELATION 2
-#define TOWN_HALL iPoint(-720,672) //TODO final townhall destination;
+#define TOWN_HALL iPoint(-75, 272) //TODO final townhall destination;
 #define SLOW_PROPORTION 1.4f
 #define SLOW_TIME 2.0f
 
@@ -21,7 +21,7 @@ enum UNIT_TYPE
 	U_VILLAGER,
 	U_GOD,
 
-		//INFANTRY
+	//INFANTRY
 	U_MILITIA,
 	U_MANATARMS,
 	U_LONGSWORDMAN,
@@ -30,16 +30,16 @@ enum UNIT_TYPE
 
 	U_SPEARMAN,
 	U_PIKEMAN,
-		//ARCHERS
+	//ARCHERS
 	U_ARCHER,
 	U_ARBALEST,
 	U_CAVALRYARCHER,
 	U_HEAVYCAVALRYARCHER,
-		//CAVALRY
+	//CAVALRY
 	U_KNIGHT,
 	U_CAVALIER,
 	U_PALADIN,
-		//SIEGE
+	//SIEGE
 	U_SIEGERAM,
 	U_MANGONEL
 
@@ -120,8 +120,8 @@ public:
 
 	Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority);
 	~Unit();
-	
-	void Update( float dt); // defines order
+
+	void Update(float dt); // defines order
 
 	bool Move();
 	void AI();
@@ -158,5 +158,7 @@ public:
 	void SlowUnit();
 };
 
+
 #endif
+
 

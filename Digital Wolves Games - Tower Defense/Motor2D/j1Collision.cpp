@@ -1,5 +1,3 @@
-/*
-
 #include "j1App.h"
 #include "j1EntityManager.h"
 #include "j1Pathfinding.h"
@@ -15,7 +13,6 @@ j1Collision::~j1Collision() {}
 
 bool j1Collision::Update(float dt)
 {	
-	//TODO create a funct in quadtree to check circles (check all like update and use something like search returning bool and taking a circle)
 	for (int i = 0; i < App->entity_manager->entity_array.size(); i++)
 		if (App->entity_manager->entity_array[i]->GetEntityType() == E_UNIT)
 		{
@@ -142,4 +139,3 @@ void j1Collision::SplitUnits(Unit * unit1)
 {
 	unit1->GoTo(FindClosestWalkable(unit1));
 }
-*/

@@ -158,7 +158,7 @@ bool j1Input::Update(float dt)
 		App->console->TurnOnOff();
 
 	if (GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		App->debug_features.quadtree = !App->debug_features.quadtree;
+		ShellExecute(NULL, "open", "https://twitter.com/DigitalWolvesG", NULL, NULL, SW_SHOWMAXIMIZED);
 
 	if (GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		ShellExecute(NULL, "open", "https://www.facebook.com/Digital-Wolves-Games-233798633695568/?ref=bookmarks", NULL, NULL, SW_SHOWMAXIMIZED);

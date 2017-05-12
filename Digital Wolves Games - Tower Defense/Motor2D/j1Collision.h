@@ -1,4 +1,4 @@
-/*#ifndef _j1Collision_
+#ifndef _j1Collision_
 #define _j1Collision_
 
 #include "j1Module.h"
@@ -21,4 +21,4 @@ private:
 	iPoint FindClosestWalkable(Unit* unit);
 	void SplitUnits(Unit* unit1);
 };
-#endif //_j1Collision_*/
+#endif //_j1Collision_

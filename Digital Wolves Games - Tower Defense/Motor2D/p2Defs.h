@@ -10,15 +10,15 @@
 #undef NULL
 #endif
 #define NULL  0
-#define PI 3.14159265f
+#define PI 3.14159265
 // Deletes a buffer
-#define RELEASE( x )	\
-    {                   \
-    if( x != NULL )     \
-	    {               \
-      delete x;         \
-	  x = NULL;         \
-	    }               \
+#define RELEASE( x ) \
+    {                        \
+    if( x != NULL )        \
+	    {                      \
+      delete x;            \
+	  x = NULL;              \
+	    }                      \
     }
 
 // Deletes an array of buffers
