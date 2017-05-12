@@ -14,10 +14,10 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 	switch (t_type)
 	{
 	case T_BASIC_TOWER:
-		SetHp(250);
-		SetAttack(30);
+		SetHp(150);
+		SetAttack(15);
 		SetArmor(1);
-		rate_of_fire = 0.5f;	//time between each attack in seconds
+		rate_of_fire = 1.0f;	//time between each attack in seconds
 		range = 300;
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;
@@ -25,7 +25,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		break;
 
 	case T_BOMBARD_TOWER:
-		SetHp(250);
+		SetHp(175);
 		SetAttack(30);
 		SetArmor(1);
 		rate_of_fire = 2.0f;
