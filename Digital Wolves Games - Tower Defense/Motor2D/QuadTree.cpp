@@ -46,7 +46,6 @@ void QuadTreeNode::AddEntity(Entity * entity)
 					entities[i] = entity;
 					break;
 				}
-
 	}
 	else
 		PushToCorrectChild(entity);
@@ -65,8 +64,9 @@ Entity * QuadTreeNode::SearchFirst(int pixel_range, const iPoint from) const
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
-			if (circle.Intersects(&iPoint(entities[i]->GetX(), entities[i]->GetY())))
-				return entities[i];
+			if (entities[i] != nullptr)
+				if (circle.Intersects(&iPoint(entities[i]->GetX(), entities[i]->GetY())))
+					return entities[i];
 	}
 	else
 		for(int i = 0; i < 4; i++)
@@ -82,9 +82,10 @@ Entity * QuadTreeNode::SearchFirst(const SDL_Rect rect) const
 		for (int i = 0; i < NODE_ENTITIES; i++)
 		{
 			iPoint entity_pos(entities[i]->GetX(), entities[i]->GetY());
-			if(rect.x < entity_pos.x && rect.x + rect.w > entity_pos.x
-				&& rect.y < entity_pos.y && rect.y + rect.h > entity_pos.y)
-				return entities[i];
+			if (entities[i] != nullptr)
+				if(rect.x < entity_pos.x && rect.x + rect.w > entity_pos.x
+					&& rect.y < entity_pos.y && rect.y + rect.h > entity_pos.y)
+					return entities[i];
 		}
 	}
 	else
@@ -101,9 +102,10 @@ Entity * QuadTreeNode::SearchFirstEnemy(int pixel_range, const iPoint from, cons
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
-			if (circle.Intersects(&iPoint(entities[i]->GetX(), entities[i]->GetY())))
-				if(entities[i]->GetSide() != side && entities[i]->GetHp() > 0)
-					return entities[i];
+			if (entities[i] != nullptr)
+				if (circle.Intersects(&iPoint(entities[i]->GetX(), entities[i]->GetY())))
+					if(entities[i]->GetSide() != side && entities[i]->GetHp() > 0)
+						return entities[i];
 	}
 	else
 		for (int i = 0; i < 4; i++)
@@ -120,8 +122,9 @@ void QuadTreeNode::Search(int pixel_range, const iPoint from, std::vector<Entity
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
-			if (circle.Intersects(&iPoint(entities[i]->GetX(), entities[i]->GetY())))
-				vec.push_back(entities[i]);
+			if (entities[i] != nullptr)
+				if (circle.Intersects(&iPoint(entities[i]->GetX(), entities[i]->GetY())))
+					vec.push_back(entities[i]);
 	}
 	else
 		for (int i = 0; i < 4; i++)
@@ -136,8 +139,9 @@ void QuadTreeNode::Search(const SDL_Rect rect, std::vector<Entity*>& vec) const
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
-			if (entities[i]->Inside(rect))
-				vec.push_back(entities[i]);
+			if(entities[i] != nullptr)
+				if (entities[i]->Inside(rect))
+					vec.push_back(entities[i]);
 	}
 	else
 		for (int i = 0; i < 4; i++)
@@ -282,23 +286,26 @@ void QuadTreeNode::CheckUnitCollisions(const Unit * ptr) const
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
 		{
-			if (entities[i]->GetEntityType() == E_UNIT)
+			if (entities[i] != nullptr)
 			{
-				Unit* unit = (Unit*)entities[i];
-				if (ptr->GetUnitCircle().Overlap(&unit->GetUnitCircle()))
-					if (unit->GetAction() == A_IDLE)
-					{
-						iPoint destination;
-						if (App->pathfinding->FindNearestUnocupied(destination))
-							unit->GoTo(destination);
-					}
-					else if (unit->GetAction() == A_ATTACK)
-					{
-						iPoint destination;
-						if (unit->FindEmptyAttackPos(destination))
-							unit->GoTo(destination);
-					}
-			}		
+				if (entities[i]->GetEntityType() == E_UNIT)
+				{
+					Unit* unit = (Unit*)entities[i];
+					if (ptr->GetUnitCircle().Overlap(&unit->GetUnitCircle()))
+						if (unit->GetAction() == A_IDLE)
+						{
+							iPoint destination;
+							if (App->pathfinding->FindNearestUnocupied(destination))
+								unit->GoTo(destination);
+						}
+						else if (unit->GetAction() == A_ATTACK)
+						{
+							iPoint destination;
+							if (unit->FindEmptyAttackPos(destination))
+								unit->GoTo(destination);
+						}
+				}
+			}
 		}
 	}
 	else

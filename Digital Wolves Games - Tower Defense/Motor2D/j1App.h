@@ -39,8 +39,9 @@ class j1ScoreScene;
 struct DebugFeatures
 {
 public:
-	DebugFeatures() : debug_mode(false), print_walkability_map(false), add_wood(false), add_stone(false), add_food(false), add_gold(false), pf(false)
+	DebugFeatures() : debug_mode(false), print_walkability_map(false), add_wood(false), add_stone(false), add_food(false), add_gold(false), pf(false), quadtree(false)
 	{}
+
 	~DebugFeatures(){}
 
 	void UpdateDebug();
@@ -53,6 +54,7 @@ public:
 	bool add_stone;
 	bool add_gold;
 	bool pf;
+	bool quadtree;
 };
 
 class j1App

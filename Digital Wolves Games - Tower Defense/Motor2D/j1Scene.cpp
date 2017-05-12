@@ -221,14 +221,12 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 	int y = 0;
 	App->input->GetMousePosition(x, y);
 
-	iPoint pos = App->render->ScreenToWorld(x, y);
-	iPoint tile_pos = App->map->WorldToMap(pos.x, pos.y);
-	pos = App->map->WorldToMap(pos.x, pos.y);
-	pos = App->map->MapToWorld(pos.x, pos.y);
+	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
+	iPoint pos = App->map->MapToWorld(map_coordinates.x, map_coordinates.y);
 
 	if (resources->CanBuildTower(type))
 	{
-		if (App->pathfinding->IsConstructible_neutral(tile_pos) == false && App->pathfinding->IsConstructible_ally(tile_pos) == false)
+		if (App->pathfinding->IsConstructible_neutral(map_coordinates) == false && App->pathfinding->IsConstructible_ally(map_coordinates) == false)
 		{
 			App->tex->GetTowerTexture(tower_tex, rect, pivot, type, BTT_RED); //texture rect
 			App->render->PushInGameSprite(tower_tex, pos.x, pos.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
@@ -244,9 +242,9 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 				//{
 					App->audio->PlayFx(App->entity_manager->fx_construction);
 
-					if (App->pathfinding->IsConstructible_neutral(tile_pos) == true)
+					if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true)
 						resources->BuildTower(type, pos);
-					else if (App->pathfinding->IsConstructible_ally(tile_pos) == true)
+					else if (App->pathfinding->IsConstructible_ally(map_coordinates) == true)
 						resources->BuildTower(type, pos);
 				//}
 			}

@@ -465,9 +465,13 @@ void j1Render::BlitGameScene()
 	BlitMap();
 	BlitInGame();
 	BlitSelection();
+
+	if(App->debug_features.quadtree)
+		App->entity_manager->DrawQuadTree();
+
 	BlitUI();
 	
-	App->entity_manager->DrawQuadTree();
+
 
 	CleanUpMapVec();
 	CleanUpInGameSpriteQueue();

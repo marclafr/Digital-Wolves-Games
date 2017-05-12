@@ -244,27 +244,32 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 iPoint j1Map::MapToWorld(int x, int y, TileSet* tileset) const
 {
 	iPoint ret;
-	int tile_height = 0;
-	int tile_width = 0;
-
-	if (tileset == nullptr)
-	{
-		tile_height = data.tile_height + x + y;
-		tile_width = data.tile_width;
-	}
-	else
-	{
-		tile_height = tileset->tile_height;
-		tile_width = tileset->tile_width;
-	}
 
 	if (data.type == MAPTYPE_ISOMETRIC)
 	{
-		ret.x = (x - y) * (int)(tile_width * 0.5f) - tile_width * 0.5f;
-		ret.y = (x + y) * (int)(tile_height * 0.5f) + (x + y);
+		if (tileset == nullptr)
+		{
+			ret.x = (x - y) * (int)(data.tile_width * 0.5f);
+			ret.y = (x + y) * (int)(data.tile_height * 0.5f) + (x + y) + data.tile_height * 0.5f;
+			return ret;
+		}
+		
+		int tile_height = 0;
+		int tile_width = 0;
 
-		if (tileset != nullptr && tileset->name.compare("Extras") == 0)
-			ret.y = (x + y) * (int)(tile_height * 0.5f);
+		tile_height = tileset->tile_height;
+		tile_width = tileset->tile_width;
+
+		if (tileset->name.compare("Extras") == 0)
+		{
+			ret.x = (x - y) * (int)(tile_width * 0.5f) - tile_width * 0.5f;
+			ret.y = (x + y) * (int)(tile_height * 0.5f) + tile_height;
+		}
+		else
+		{
+			ret.x = (x - y) * (int)(tile_width * 0.5f) - tile_width * 0.5f;
+			ret.y = (x + y) * (int)(tile_height * 0.5f) + (x + y);
+		}
 	}
 	else
 	{
