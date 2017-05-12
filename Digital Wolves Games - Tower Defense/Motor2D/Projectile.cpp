@@ -4,6 +4,8 @@
 #include "IsoPrimitives.h"
 #include "Camera.h"
 #include "j1Render.h"
+#include "j1Audio.h"
+#include "ProjectileManager.h"
 
 Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float TimeInSecs, int Startheight, int Curveheight, PROJECTILE_TYPE type) : StartPos(initialpos), Damage(damage), Target(target), StartHeight(Startheight), CurveHeight(Curveheight), projectile_type(type)
 {
@@ -27,17 +29,21 @@ Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float Tim
 		break;
 	case P_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_SIMPLE_BOMB));
+		App->audio->PlayFx(App->projectile_manager->fx_cannon_shoot);
 		break;
 	case P_FIRE_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_BOMB));
+		App->audio->PlayFx(App->projectile_manager->fx_cannon_shoot);
 		floor_effect = true;
 		break; 
 	case P_ICE_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_BOMB));
+		App->audio->PlayFx(App->projectile_manager->fx_cannon_shoot);
 		floor_effect = true;
 		break;
 	case P_AIR_CANNONBALL:
 		projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_AIR_BOMB));
+		App->audio->PlayFx(App->projectile_manager->fx_cannon_shoot);
 		break;
 	default:
 		projectile_anim = nullptr;
@@ -94,6 +100,7 @@ void Projectile::Update()
 			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_EXPLOSION));
 			dest_reached = true;
 			PrintElementTerrainTimer.Start();
+			App->audio->PlayFx(App->projectile_manager->fx_explosion);
 			break;
 		case P_ICE_CANNONBALL:
 			Target->Damaged(Damage);
@@ -108,6 +115,7 @@ void Projectile::Update()
 			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_EXPLOSION));
 			dest_reached = true;
 			PrintElementTerrainTimer.Start();
+			App->audio->PlayFx(App->projectile_manager->fx_explosion);
 			break;
 		default:
 			break;

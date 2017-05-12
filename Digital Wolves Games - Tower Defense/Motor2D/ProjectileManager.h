@@ -8,12 +8,14 @@
 #include "p2Point.h"
 #include <vector>
 #include "SDL/include/SDL_rect.h"
+#include "j1Audio.h"
 
 
 class ProjectileManager : public j1Module
 {
 private:
 	std::vector<Projectile*> projectile_vector;
+
 public:
 
 	bool Start();
@@ -22,6 +24,10 @@ public:
 	bool CleanUp();
 	Projectile* CreateProjectile(fPoint initialpos, Entity * target, int damage, float TimeInSecs, int Startheight, int Curveheight, PROJECTILE_TYPE type);
 	void DeleteProjectile(Projectile* projectile);
+
+	int fx_cannon_shoot;
+	int fx_explosion;
+
 };
 
 #endif
