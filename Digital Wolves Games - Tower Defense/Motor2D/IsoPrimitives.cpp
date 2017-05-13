@@ -10,7 +10,7 @@
 Primitive::Primitive()
 {}
 
-Primitive::Primitive(const iPoint& position, const iPoint& displacement, const SDL_Color& color) :position(position), displacement(displacement), color(color)
+Primitive::Primitive(const fPoint& position, const iPoint& displacement, const SDL_Color& color) :position(position), displacement(displacement), color(color)
 {}
 
 Primitive::Primitive(const Primitive& copy) : position(copy.position), displacement(copy.displacement), color(copy.color), x_angle(copy.x_angle)
@@ -28,7 +28,7 @@ bool Primitive::Draw()
 	return true;
 }
 
-void Primitive::SetPosition(const iPoint & pos)
+void Primitive::SetPosition(const fPoint & pos)
 {
 	position = pos;
 }
@@ -48,7 +48,7 @@ void Primitive::SetColor(const SDL_Color & rgba)
 	color = rgba;
 }
 
-iPoint Primitive::GetPosition() const
+fPoint Primitive::GetPosition() const
 {
 	return position;
 }
@@ -71,7 +71,7 @@ SDL_Color Primitive::GetColor() const
 
 ///Class Circle ---------------------------------
 //Constructors ==============
-Circle::Circle(const iPoint& position, uint rad, const iPoint& desplacement) :Primitive(position, desplacement), rad(rad)
+Circle::Circle(const fPoint& position, uint rad, const iPoint& desplacement) :Primitive(position, desplacement), rad(rad)
 {}
 
 Circle::Circle(const Circle & copy) : Primitive(copy), rad(copy.rad)
@@ -141,7 +141,7 @@ bool Circle::Overlap(const Circle* target) const
 bool Circle::Intersects(const IsoRect * target) const
 {
 	if (target == nullptr)return false;
-	iPoint vec = (target->GetPosition() + target->GetDisplacement()) - position;
+	iPoint vec = (iPoint(target->GetPosition().x, target->GetPosition().y) + target->GetDisplacement()) - iPoint(position.x,position.y);
 	fPoint norm(vec.x, vec.y);
 	norm.Norm();
 	vec.x -= ceil((target->GetWidth() * 0.5) * norm.x);
@@ -170,7 +170,7 @@ iPoint Circle::NearestPoint(const Circle* target) const
 
 iPoint Circle::NearestPoint(const IsoRect* target) const
 {
-	iPoint vec = (target->GetPosition() + target->GetDisplacement()) - position;
+	iPoint vec = (iPoint(target->GetPosition().x, target->GetPosition().y) + target->GetDisplacement()) - iPoint(position.x, position.y);
 	fPoint norm(vec.x, vec.y);
 	norm.Norm();
 	vec.x -= ceil((target->GetWidth() * 0.5) * norm.x);
@@ -192,7 +192,7 @@ uint Circle::GetRad() const
 
 ///Class Rectangle ------------------------------
 //Constructors ==============
-IsoRect::IsoRect(const iPoint& position, float width, float height, const iPoint& desplacement) :Primitive(position, desplacement), width(width), height(height)
+IsoRect::IsoRect(const fPoint& position, float width, float height, const iPoint& desplacement) :Primitive(position, desplacement), width(width), height(height)
 {}
 
 IsoRect::IsoRect(const IsoRect& copy) : Primitive(copy), width(copy.width), height(copy.height)
@@ -236,50 +236,47 @@ uint IsoRect::GetHeight() const
 	return height;
 }
 
-bool IsoRect::Inside(const iPoint pos) const
+bool IsoRect::Inside(const fPoint pos) const
 {
-	int delta_x = abs(pos.x - position.x);
-	if (delta_x > width / 2)
+	float delta_x = abs(pos.x - position.x);
+	if (delta_x > width / 2.0f)
 		return false;
 
-	int delta_y = abs(pos.y - position.y);
-	int result = delta_x * (2 * height * sin(x_angle));
-	result = result / width;
-	result += height * sin(x_angle);
+	float delta_y = abs(pos.y - position.y);
 
-	if(delta_y < result)
+	if(height / 2.0f - height / width * delta_x - delta_y >= -2.5f)
 		return true;
 	return false;
 }
 bool IsoRect::Overlaps(SDL_Rect rect) const
 {
 	//check if SDL_Rect vertices are inside IsoRect
-	if (Inside(iPoint(rect.x, rect.y)))
+	if (Inside(fPoint(rect.x, rect.y)))
 		return true;
-	if(Inside(iPoint(rect.x + rect.w, rect.y)))
+	if(Inside(fPoint(rect.x + rect.w, rect.y)))
 		return true;
-	if(Inside(iPoint(rect.x, rect.y + rect.h)))
+	if(Inside(fPoint(rect.x, rect.y + rect.h)))
 		return true;
-	if(Inside(iPoint(rect.x + rect.w, rect.y + rect.h)))
+	if(Inside(fPoint(rect.x + rect.w, rect.y + rect.h)))
 		return true;
 
 	//check if IsoRect vertices are inside SDL_Rect 
-	iPoint up(position.x, position.y - height / 2);
+	fPoint up(position.x, position.y - height / 2);
 	if (up.x > rect.x && up.x < rect.x + rect.w
 		&& up.y > rect.y && up.y < rect.y + rect.h)
 		return true;
 
-	iPoint left(position.x - width / 2, position.y);
+	fPoint left(position.x - width / 2, position.y);
 	if (left.x > rect.x && left.x < rect.x + rect.w
 		&& left.y > rect.y && left.y < rect.y + rect.h)
 		return true;
 
-	iPoint right(position.x + width / 2, position.y);
+	fPoint right(position.x + width / 2, position.y);
 	if (right.x > rect.x && right.x < rect.x + rect.w
 		&& right.y > rect.y && right.y < rect.y + rect.h)
 		return true;
 
-	iPoint down(position.x, position.y + height / 2);
+	fPoint down(position.x, position.y + height / 2);
 	if (down.x > rect.x && down.x < rect.x + rect.w
 		&& down.y > rect.y && down.y < rect.y + rect.h)
 		return true;
@@ -294,7 +291,7 @@ bool IsoRect::Overlaps(Circle circle) const
 
 ///Class PivotedRect ----------------------------
 //Constructors ==============
-PivotedRect::PivotedRect(const iPoint & origin, const iPoint & goal, uint width, uint height) :Primitive(origin), goal(goal), width(width), height(height)
+PivotedRect::PivotedRect(const fPoint & origin, const iPoint & goal, uint width, uint height) :Primitive(origin), goal(goal), width(width), height(height)
 {
 
 }
@@ -372,7 +369,7 @@ void PivotedRect::CalculateVertex()
 	side_vec.x = width * -dir_vector.y;
 	side_vec.y = width * dir_vector.x * sin(x_angle);
 
-	iPoint M_point = position;
+	iPoint M_point = iPoint(position.x, position.y);
 	M_point.x += pivot_distance * dir_vector.x;
 	M_point.y += pivot_distance * dir_vector.y * sin(x_angle);
 
@@ -442,7 +439,7 @@ uint PivotedRect::GetPivotDistance() const
 /// ---------------------------------------------
 ///Class Line -----------------------------------
 //Constructors ==============
-Line::Line(const iPoint & position, const iPoint & position_2, const SDL_Color& color, const iPoint& desplacement) :Primitive(position, desplacement, color), position_2(position_2)
+Line::Line(const fPoint & position, const iPoint & position_2, const SDL_Color& color, const iPoint& desplacement) :Primitive(position, desplacement, color), position_2(position_2)
 {
 
 }
@@ -462,7 +459,7 @@ bool Line::Draw()
 	return App->render->DrawLine(position.x + displacement.x, position.y + displacement.y, position_2.x, position_2.y, color.r, color.g, color.b, color.a);
 }
 
-void Line::SetP1(const iPoint & p1)
+void Line::SetP1(const fPoint & p1)
 {
 	position = p1;
 }
@@ -472,7 +469,7 @@ void Line::SetP2(const iPoint & p2)
 	position_2 = p2;
 }
 
-const iPoint& Line::GetP1() const
+const fPoint& Line::GetP1() const
 {
 	return position;
 }

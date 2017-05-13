@@ -92,7 +92,7 @@ void Tower::AI()
 
 	if (Target == nullptr && AttackTimer.ReadSec() >= rate_of_fire && attacking == false && IsBuilt() == true && IsAlive() == true)
 	{
-		Target = App->entity_manager->LookForEnemies(GetRange(), iPoint(GetX(), GetY()));
+		Target = App->entity_manager->LookForEnemies(GetRange(), GetPosition());
 		if (Target != nullptr)
 			attacking = true;
 	}

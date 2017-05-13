@@ -14,13 +14,13 @@ class Primitive
 public:
 
 	Primitive();
-	Primitive(const iPoint& position, const iPoint& displacement = { 0,0 }, const SDL_Color& color = { 0,0,0,255 });
+	Primitive(const fPoint& position, const iPoint& displacement = { 0,0 }, const SDL_Color& color = { 0,0,0,255 });
 	Primitive(const Primitive& copy);
 	~Primitive();
 
 protected:
 
-	iPoint		position = { 0,0 };
+	fPoint		position = { 0,0 };
 	iPoint		displacement = { 0,0 };
 	float		x_angle =  (30.0f / 360.0f * PI * 2.0f);
 	SDL_Color	color = { 0,0,0,255 };
@@ -31,12 +31,12 @@ public:
 	//Draw
 	virtual bool	Draw();
 	//Set Methods
-	void			SetPosition(const iPoint& pos);
+	void			SetPosition(const fPoint& pos);
 	void			SetDisplacement(const iPoint& desp);
 	void			SetXAngle(float angle);
 	void			SetColor(const SDL_Color& rgba);
 	//Get Methods
-	iPoint			GetPosition()const;
+	fPoint			GetPosition()const;
 	iPoint			GetDisplacement()const;
 	float			GetXAngle()const;
 	SDL_Color		GetColor()const;
@@ -50,7 +50,7 @@ class Circle : public Primitive
 {
 public:
 
-	Circle(const iPoint& position = { 0,0 }, uint rad = 0, const iPoint& displacement = { 0,0 });
+	Circle(const fPoint& position = { 0,0 }, uint rad = 0, const iPoint& displacement = { 0,0 });
 	Circle(const Circle& copy);
 	~Circle();
 
@@ -86,7 +86,7 @@ public:
 class IsoRect : public Primitive
 {
 public:
-	IsoRect(const iPoint& position = { 0,0 }, float width = 0, float height = 0, const iPoint& displacement = { 0,0 });
+	IsoRect(const fPoint& position = { 0,0 }, float width = 0, float height = 0, const iPoint& displacement = { 0,0 });
 	IsoRect(const IsoRect& copy);
 	~IsoRect();
 
@@ -106,7 +106,7 @@ public:
 	uint	GetWidth()const;
 	uint	GetHeight()const;
 
-	bool Inside(const iPoint pos) const;
+	bool Inside(const fPoint pos) const;
 	bool Overlaps(SDL_Rect rect) const;
 	bool Overlaps(Circle circle) const;
 };
@@ -117,7 +117,7 @@ class PivotedRect : public Primitive
 {
 public:
 
-	PivotedRect(const iPoint& origin = { 0,0 }, const iPoint& goal = { 0,0 }, uint width = 0, uint height = 0);
+	PivotedRect(const fPoint& origin = { 0,0 }, const iPoint& goal = { 0,0 }, uint width = 0, uint height = 0);
 	PivotedRect(const PivotedRect& copy);
 	~PivotedRect();
 
@@ -159,7 +159,7 @@ class Line : public Primitive
 {
 public:
 
-	Line(const iPoint& position, const iPoint& position_2, const SDL_Color& color, const iPoint& displacement = { 0,0 });
+	Line(const fPoint& position, const iPoint& position_2, const SDL_Color& color, const iPoint& displacement = { 0,0 });
 	Line(const IsoRect& copy);
 	~Line();
 
@@ -173,10 +173,10 @@ public:
 	//Draw
 	bool	Draw();
 	//Set Methods
-	void			SetP1(const iPoint& p1);
+	void			SetP1(const fPoint& p1);
 	void			SetP2(const iPoint& p2);
 	//Get Methods
-	const iPoint&	GetP1()const;
+	const fPoint&	GetP1()const;
 	const iPoint& 	GetP2()const;
 };
 /// ---------------------------------------------

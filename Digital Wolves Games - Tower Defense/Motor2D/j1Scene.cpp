@@ -60,7 +60,7 @@ bool j1Scene::Start()
 	//App->collision->Enable();
 	App->entity_manager->Enable();
 	App->projectile_manager->Enable();
-	App->wave_manager->Enable();//TODO put after tutorial 
+	//App->wave_manager->Enable();//TODO put after tutorial 
 	App->investigations->Enable();
 	App->score->Enable();
 
@@ -76,6 +76,7 @@ bool j1Scene::Start()
 	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370));
 	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
 	//--
+
 	//uint w, h;
 	//App->win->GetWindowSize(w, h);
 	//SDL_Rect r = { 0,0,w,h };
@@ -185,6 +186,16 @@ bool j1Scene::PostUpdate()
 		lose = true;
 		App->scene_manager->ChangeScene(SC_SCORE);
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		int x = 0;
+		int y = 0;
+		App->input->GetMousePosition(x, y);
+		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
+		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, pos, S_ENEMY);
+	}
+
 	return ret;
 }
 

@@ -107,7 +107,7 @@ void j1EntityManager::Select(Entity * select) const
 	App->uimanager->CreatePanelInfo(App->scene->selection);
 }
 
-Entity * j1EntityManager::LookForEnemies(int range, iPoint pos) const
+Entity * j1EntityManager::LookForEnemies(int range, fPoint pos) const
 {
 	return entity_quadtree->SearchFirst(range, pos);
 }
@@ -116,7 +116,7 @@ void j1EntityManager::CheckClick(int mouse_x, int mouse_y) const
 {
 	App->scene->selection.clear();
 	iPoint click_point = App->render->ScreenToWorld(mouse_x, mouse_y);
-	Entity* clicked = entity_quadtree->SearchFirst(1, click_point);
+	Entity* clicked = entity_quadtree->SearchFirst(1, fPoint(click_point.x,click_point.y));
 	if(clicked != nullptr)
 		App->scene->selection.push_back(clicked);
 }
@@ -135,7 +135,7 @@ bool j1EntityManager::Start()
 	float map_y = (m + n) * 0.5f * 0.5f * App->map->data.tile_height + 75 / 2; //75 1 4 each tile
 
 	//IsoRect map(iPoint(map_x, map_y), map_w, map_h);
-	IsoRect map(iPoint(map_x, map_y), map_w, map_h);
+	IsoRect map(fPoint(map_x, map_y), map_w, map_h);
 	entity_quadtree = new QuadTree(map);
 
 	return true;
@@ -153,12 +153,12 @@ bool j1EntityManager::PostUpdate()
 	return true;
 }
 
-Entity * j1EntityManager::CheckForCombat(iPoint position, int range, Side side) const
+Entity * j1EntityManager::CheckForCombat(fPoint position, int range, Side side) const
 {
 	return entity_quadtree->SearchFirstEnemy(range, position, side);
 }
 
-Entity* j1EntityManager::CheckForObjective(iPoint position, int vision_range, Side side) const
+Entity* j1EntityManager::CheckForObjective(fPoint position, int vision_range, Side side) const
 {
 	return entity_quadtree->SearchFirstEnemy(vision_range, position, side);
 }
