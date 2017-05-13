@@ -7,6 +7,8 @@
 #include "j1Render.h"
 #include "j1Fonts.h"
 #include "j1Window.h"
+#include "j1Score.h"
+#include "j1WaveManager.h"
 #include "Camera.h"
 #include "j1Map.h"
 #include "j1Audio.h"
@@ -200,8 +202,46 @@ void j1EntityManager::DrawQuadTree() const
 
 bool j1EntityManager::Save(pugi::xml_node &data) const
 {
-	pugi::xml_node Buildings = data.append_child("building");
+	pugi::xml_node Buildings = data.append_child("buildings");
+	pugi::xml_node Units = data.append_child("units");
+	pugi::xml_node Turrets = data.append_child("turrets");
+	pugi::xml_node Resourcess = data.append_child("resources");
+
+	/*for (int k = 0; k <entity_array.size(); k++) {
+		if (entity_array[k]->GetEntityType() == E_BUILDING)
+		{
+			Building* buildingptr = (Building*)entity_array[k];
+			if (buildingptr->GetBuildingType() == B_TURRET || buildingptr->GetBuildingType() == B_CANNON)
+			{
+				Tower* towerptr = (Tower*)buildingptr;
+				towerptr->SaveTurret(Turrets);
+			}
+			else buildingptr->SaveBuilding(Buildings);
+		}
+		else if (entity_array[k]->GetEntityType() == E_UNIT)
+		{
+			Unit* unit = (Unit*)entity_array[k];
+			if (unit->GetSide() == S_ALLY)	unit->SaveUnit(Units);
+		}
+		else if (entity_array[k]->GetEntityType() == E_RESOURCE)
+		{
+			Resources* rest = (Resources*)entity_array[k];
+			rest->SaveResource(Resourcess);
+		}
+	}
+	*/
 
 
+	pugi::xml_node AmountOfResources = data.append_child("resources_amount");
+
+	App->scene->resources->SaveResourcesAmount(AmountOfResources);
+
+	pugi::xml_node Score = data.append_child("score");
+
+	Score.append_attribute("points") = App->score->GetScore();
+	Score.append_attribute("enemies_killeds") = App->score->GetEnemiesKilled();
+	Score.append_attribute("time_passed") = App->score->GetTime();
+	Score.append_attribute("wave_num") = App->wave_manager->GetWaveNum();
+	return true;
 	return true;
 }

@@ -896,3 +896,13 @@ void Unit::SlowUnit()
 		slow_timer.Start();
 	}
 }
+
+void Unit::SaveUnit(pugi::xml_node &data)
+{
+	pugi::xml_node ActualUnit = data.append_child("unit");
+	ActualUnit.append_attribute("unit_type") = GetUnitType();
+	ActualUnit.append_attribute("posx") = GetX();
+	ActualUnit.append_attribute("posy") = GetY();
+	ActualUnit.append_attribute("hp") = GetHp();
+	ActualUnit.append_attribute("side") = GetSide();
+}

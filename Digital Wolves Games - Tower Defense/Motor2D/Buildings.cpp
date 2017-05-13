@@ -218,4 +218,5 @@ void Building::SaveBuilding(pugi::xml_node &data)
 	ActualBuilding.append_attribute("building_type") = GetBuildingType();
 	ActualBuilding.append_attribute("posx") = GetX();
 	ActualBuilding.append_attribute("posy") = GetY();
+	ActualBuilding.append_attribute("hp") = GetHp();
 }

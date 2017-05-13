@@ -71,6 +71,12 @@ public:
 	void BuildWall(BUILDING_TYPE type);
 	bool CanTrainSoldier(UNIT_TYPE type);
 	void TrainSoldier(UNIT_TYPE type);
+
+
+	void SaveResourcesAmount(pugi::xml_node&);
+
+	void LoadResourcesAmount(pugi::xml_node&);
+
 };
 
 
