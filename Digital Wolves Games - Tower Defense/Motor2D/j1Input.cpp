@@ -37,6 +37,37 @@ bool j1Input::Awake(pugi::xml_node& config)
 		ret = false;
 	}
 
+	pugi::xml_node buttons = config.child("buttons");
+	std::string button_string;
+	button_string = buttons.attribute("move_up").as_string();
+	move_up = SDL_GetScancodeFromName(button_string.c_str());
+
+	button_string = buttons.attribute("move_down").as_string();
+	move_down = SDL_GetScancodeFromName(button_string.c_str());
+
+	button_string = buttons.attribute("move_left").as_string();
+	move_left = SDL_GetScancodeFromName(button_string.c_str());
+
+	button_string = buttons.attribute("move_right").as_string();
+	move_right = SDL_GetScancodeFromName(button_string.c_str());
+
+	button_string = buttons.attribute("build_tower").as_string();
+	build_turret = SDL_GetScancodeFromName(button_string.c_str());
+
+	button_string = buttons.attribute("build_bombard_tower").as_string();
+	build_bombard_turret = SDL_GetScancodeFromName(button_string.c_str());
+
+	button_string = buttons.attribute("build_walls").as_string();
+	build_walls = SDL_GetScancodeFromName(button_string.c_str());
+
+	button_string = buttons.attribute("menu").as_string();
+	menu = SDL_GetScancodeFromName(button_string.c_str());
+
+	std::string button_string2;
+
+	button_string2 = buttons.attribute("center_to_townhall").as_string();
+	center_to_townhall = SDL_GetScancodeFromName(button_string2.c_str());
+
 	return ret;
 }
 

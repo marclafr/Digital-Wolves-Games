@@ -182,20 +182,6 @@ bool j1Scene::PostUpdate()
 		App->SaveGame("Gamefile.xml");
 
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		App->scene_manager->ChangeScene(SC_SCORE);
-
-
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
-		win = true;
-		App->scene_manager->ChangeScene(SC_SCORE);
-
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
-		lose = true;
-		App->scene_manager->ChangeScene(SC_SCORE);
-	}
 
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
@@ -690,27 +676,32 @@ void j1Scene::HandleInput( SDL_Event event)
 		if (event.button.button == SDL_SCANCODE_S)
 			App->SaveGame("save_game.xml");
 
-		if (event.button.button == SDL_SCANCODE_SPACE)
-			App->render->camera->Move(iPoint(1200, -250), 10);
-
+		if (event.button.button == App->input->center_to_townhall)
+		{
+			iPoint pos(-75 + App->render->camera->GetWidth()/2, 0);
+			App->render->camera->SetPosition(pos);
+		}
 		//building construction
-		if (event.button.button == SDL_SCANCODE_1
-			|| event.button.button == SDL_SCANCODE_2
-			|| event.button.button == SDL_SCANCODE_3)
+		if (event.button.button == App->input->build_turret
+			|| event.button.button == App->input->build_bombard_turret
+			|| event.button.button == App->input->build_walls)
 		{
 			placing_wall = false;
 			placing_tower = T_NO_TYPE;
 		}
 
-		if (event.button.button == SDL_SCANCODE_1)
+		if (event.button.button == App->input->build_turret)
 			placing_tower = T_BASIC_TOWER;	
 
-		if (event.button.button == SDL_SCANCODE_2)
+		if (event.button.button == App->input->build_bombard_turret)
 			placing_tower = T_BOMBARD_TOWER;
 
-		if (event.button.button == SDL_SCANCODE_3)
+		if (event.button.button == App->input->build_walls)
 			placing_wall = true;
 		//--
+
+		if (event.button.button == App->input->menu)
+			App->scene_manager->ChangeScene(SC_SCORE);
 
 		if (event.button.button == SDL_SCANCODE_4)
 			if (App->scene->resources->CanTrainSoldier(U_TWOHANDEDSWORDMAN))

@@ -67,16 +67,16 @@ const float Camera::GetAlpha() const
 
 void Camera::KeyboardMove(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (App->input->GetKey(App->input->move_up) == KEY_REPEAT)
 		App->render->camera->MoveUp(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (App->input->GetKey(App->input->move_down) == KEY_REPEAT)
 		App->render->camera->MoveDown(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(App->input->move_left) == KEY_REPEAT)
 		App->render->camera->MoveLeft(floor(450.0f * dt));
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (App->input->GetKey(App->input->move_right) == KEY_REPEAT)
 		App->render->camera->MoveRight(floor(450.0f * dt));
 }
 
