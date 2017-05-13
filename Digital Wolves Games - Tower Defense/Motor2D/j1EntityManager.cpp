@@ -344,6 +344,7 @@ void j1EntityManager::LoadAllFx()
 	fx_arrow = App->audio->LoadFx("audio/fx/Arrow01.wav");
 	fx_cannon = App->audio->LoadFx("audio/fx/Cannon01.wav");
 	fx_construction = App->audio->LoadFx("audio/fx/Construction01.wav");
+	fx_university = App->audio->LoadFx("audio/fx/University.wav");
 }
 
 bool j1EntityManager::Load(pugi::xml_node& data)

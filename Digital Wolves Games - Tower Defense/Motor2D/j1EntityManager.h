@@ -86,6 +86,9 @@ public: //TODO: should be protected
 	unsigned int fx_cannon;
 	unsigned int fx_construction;
 
+	//FX UNIVERSITY
+	unsigned int fx_university;
+
 };
 #endif //_j1EntityManager_
 

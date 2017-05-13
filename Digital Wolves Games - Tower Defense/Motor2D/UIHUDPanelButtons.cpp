@@ -17,7 +17,7 @@
 #include "SDL\include\SDL_rect.h"
 #include "j1Collision.h"
 #include "Task.h"
-
+#include "j1Audio.h"
 #include "UIButton.h"
 #include "UIHUDDescription.h"
 #include "j1Tutorial.h"
@@ -147,6 +147,7 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 		panel_type = BP_UNIVERSITY;
 		b_selected = building;
 		CreatePanel();
+		App->audio->PlayFx(App->entity_manager->fx_university);
 		if (App->tutorial->tutorial3_completed) App->tutorial->UniversitySelected = true;
 		break;
 	default:

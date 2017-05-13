@@ -145,25 +145,9 @@ Tower::~Tower()
 
 void Tower::Update(float dt)
 {
-	if (GetEntityStatus() == ST_SELECTED)
-	{
-		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-		{
-			UpgradeTurret(TU_FIRE);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-		{
-			UpgradeTurret(TU_ICE);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-		{
-			UpgradeTurret(TU_AIR);
-		}
-	}
-
 	DT(dt);
 
-	if (GetAIDT() >= dt * 3)
+	if (GetAIDT() >= dt * 15)
 	{
 		ResetDT();
 		AI();
@@ -174,16 +158,20 @@ void Tower::Update(float dt)
 
 void Tower::AI()
 {
-	if (Target != nullptr) {
-		if (Target->GetHp() <= 0)
+	if (Target != nullptr) 
+	{
+		if (Target->GetX() < (GetX() - range) || Target->GetX() > (GetX() + range) || Target->GetY() < (GetY() - range) || Target->GetY() > (GetY() + range))
+			Target = nullptr;
+		if (Target != nullptr && Target->GetHp() <= 0)
 		{
 			Target = nullptr;
 			attacking = false;
 		}
+	
 	}
 	else
 		attacking = false;
-
+	
 	if (Target == nullptr && AttackTimer.ReadSec() >= rate_of_fire && attacking == false && IsBuilt() == true && IsAlive() == true)
 	{
 		Target = App->entity_manager->LookForEnemies(GetRange(), iPoint(GetX(), GetY()));
