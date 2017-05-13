@@ -13,6 +13,7 @@
 #include "Units.h"
 #include "p2Log.h"
 #include "j1Tutorial.h"
+#include "j1WaveManager.h"
 
 class Task
 {
@@ -377,5 +378,14 @@ public:
 	}
 };
 
+class BringNextWave : public Task
+{
+public:
+	bool Execute()
+	{
+		App->wave_manager->BringNextWave();
+		return true;
+	}
+};
 
 #endif
