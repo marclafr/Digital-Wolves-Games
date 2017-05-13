@@ -29,6 +29,7 @@
 UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
+	panel_type = BP_NO_SELECTION;
 }
 
 UIHUDPanelButtons::~UIHUDPanelButtons()
@@ -36,6 +37,10 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 	std::vector<info_button*>::iterator ib_item;
 	switch (panel_type)
 	{
+	case BP_NO_SELECTION:
+		for (ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
+		break;
 	case BP_TOWNHALL:
 		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
 			(*ib_item)->ButtonToDelete();
@@ -69,6 +74,9 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 			(*ib_item)->ButtonToDelete();
 		break;
 	}
+
+	for (ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
+		DELETE_PTR(*ib_item);
 	
 	for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
 		DELETE_PTR(*ib_item);
@@ -97,8 +105,14 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 
 void UIHUDPanelButtons::SetPanel(Building* building)
 {
-	if (b_selected != nullptr)
-		DeletePanel();
+	DeletePanel();
+
+	if (building == nullptr)
+	{
+		panel_type = BP_NO_SELECTION;
+		b_selected = nullptr;
+		CreatePanel();
+	}
 
 	switch (building->GetBuildingType())
 	{
@@ -160,7 +174,6 @@ bool UIHUDPanelButtons::Update()
 {
 	if (b_selected != nullptr)
 	{
-		std::vector<info_button*>::iterator ib_item;
 		switch (panel_type)
 		{
 		case BP_TOWNHALL:
@@ -245,7 +258,22 @@ bool UIHUDPanelButtons::Update()
 			break;
 		}
 	}
-	return true;
+	else if (b_selected == nullptr)
+	{
+	
+		if(panel_type == BP_NO_SELECTION)
+		{
+			for (std::vector<info_button*>::iterator ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
+			{
+				if ((*ib_item)->GetButton()->IsFocus())
+				{
+					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					break;
+				}
+			}
+		}
+		return true;
+	}
 }
 
 //x - 0 to 4 | y - 0 to 2 | Max 15 buttons
@@ -255,6 +283,10 @@ info_button* UIHUDPanelButtons::AddButton(BUILDING_PANELINFO type, iPoint positi
 
 	switch (type)
 	{
+	case BP_NO_SELECTION:
+		panel_no_selection.push_back(new_btn);
+		return new_btn;
+		break;
 	case BP_TOWNHALL:
 		panel_townhall.push_back(new_btn);
 		return new_btn;
@@ -298,6 +330,10 @@ void UIHUDPanelButtons::CreatePanel()
 	std::vector<info_button*>::iterator ib_item;
 	switch (panel_type)
 	{
+	case BP_NO_SELECTION:
+		for (ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
+			(*ib_item)->CreateButton();
+		break;
 	case BP_TOWNHALL:
 		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
 			(*ib_item)->CreateButton();
@@ -362,6 +398,10 @@ void UIHUDPanelButtons::DeletePanel()
 	std::vector<info_button*>::iterator ib_item;
 	switch (panel_type)
 	{
+	case BP_NO_SELECTION:
+		for (ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
+		break;
 	case BP_TOWNHALL:
 		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
 			(*ib_item)->ButtonToDelete();

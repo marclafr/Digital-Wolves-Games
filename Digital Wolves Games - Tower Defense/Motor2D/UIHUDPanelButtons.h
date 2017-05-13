@@ -14,6 +14,7 @@ enum Side;
 enum BUILDING_PANELINFO
 {
 	BP_NONE,
+	BP_NO_SELECTION,
 	BP_TOWNHALL,
 	BP_UNIVERSITY,
 	BP_TURRET,
@@ -48,6 +49,7 @@ public:
 class UIHUDPanelButtons : public UIComponents
 {
 private:
+	std::vector<info_button*> panel_no_selection;
 	std::vector<info_button*> panel_townhall;
 	std::vector<info_button*> panel_university;
 	std::vector<info_button*> panel_turret;

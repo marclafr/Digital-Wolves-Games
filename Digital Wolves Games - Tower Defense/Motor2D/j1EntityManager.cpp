@@ -96,7 +96,7 @@ void j1EntityManager::UnselectEverything() const
 
 	App->scene->selection.clear();
 	App->uimanager->DeleteSelectionPanelInfo();
-	App->uimanager->DeletePanelButtons();
+	App->uimanager->SetPanelButtons(nullptr);
 }
 
 void j1EntityManager::Select(Entity * select) const
