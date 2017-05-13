@@ -348,8 +348,14 @@ bool j1WaveManager::Update(float dt)
 			if (waves[wave_num].units_vec_right_down.size() <= 0)
 				right_down_finished = true;
 
-			group_num = 0;
-			unit_num = 0;
+			group_num_lu = 0;
+			group_num_ld = 0;
+			group_num_ru = 0;
+			group_num_rd = 0;
+			unit_num_lu = 0;
+			unit_num_ld = 0;
+			unit_num_ru = 0;
+			unit_num_rd = 0;
 			spawning = true;
 			wave_ended = false;
 			can_bring_next_wave = false;
@@ -363,17 +369,17 @@ bool j1WaveManager::Update(float dt)
 				//LEFT_UP
 				if (wave_num < waves.size() && left_up_finished == false && waves[wave_num].units_vec_left_up.size() > 0)
 				{
-					if (unit_num < waves[wave_num].units_vec_left_up[group_num].amount)
+					if (unit_num_lu < waves[wave_num].units_vec_left_up[group_num_lu].amount)
 					{
-						waves[wave_num].units_vec_left_up[group_num].Create();
-						unit_num++;
+						waves[wave_num].units_vec_left_up[group_num_lu].Create();
+						unit_num_lu++;
 					}
 					else
 					{
-						if (group_num < waves[wave_num].units_vec_left_up.size() - 1)
+						if (group_num_lu < waves[wave_num].units_vec_left_up.size() - 1)
 						{
-							group_num++;
-							unit_num = 0;
+							group_num_lu++;
+							unit_num_lu = 0;
 						}
 						else
 							left_up_finished = true;
@@ -383,17 +389,17 @@ bool j1WaveManager::Update(float dt)
 				//LEFT_DOWN
 				if (wave_num < waves.size() && left_down_finished == false && waves[wave_num].units_vec_left_down.size() > 0)
 				{
-					if (unit_num < waves[wave_num].units_vec_left_down[group_num].amount)
+					if (unit_num_ld < waves[wave_num].units_vec_left_down[group_num_ld].amount)
 					{
-						waves[wave_num].units_vec_left_down[group_num].Create();
-						unit_num++;
+						waves[wave_num].units_vec_left_down[group_num_ld].Create();
+						unit_num_ld++;
 					}
 					else
 					{
-						if (group_num < waves[wave_num].units_vec_left_down.size() - 1)
+						if (group_num_ld < waves[wave_num].units_vec_left_down.size() - 1)
 						{
-							group_num++;
-							unit_num = 0;
+							group_num_ld++;
+							unit_num_ld = 0;
 						}
 						else
 							left_down_finished = true;
@@ -403,17 +409,17 @@ bool j1WaveManager::Update(float dt)
 				//RIGHT_UP
 				if (wave_num < waves.size() && right_up_finished == false && waves[wave_num].units_vec_right_up.size() > 0)
 				{
-					if (unit_num < waves[wave_num].units_vec_right_up[group_num].amount)
+					if (unit_num_ru < waves[wave_num].units_vec_right_up[group_num_ru].amount)
 					{
-						waves[wave_num].units_vec_right_up[group_num].Create();
-						unit_num++;
+						waves[wave_num].units_vec_right_up[group_num_ru].Create();
+						unit_num_ru++;
 					}
 					else
 					{
-						if (group_num < waves[wave_num].units_vec_right_up.size() - 1)
+						if (group_num_ru < waves[wave_num].units_vec_right_up.size() - 1)
 						{
-							group_num++;
-							unit_num = 0;
+							group_num_ru++;
+							unit_num_ru = 0;
 						}
 						else
 							right_up_finished = true;
@@ -423,17 +429,17 @@ bool j1WaveManager::Update(float dt)
 				//RIGHT_DOWN
 				if (wave_num < waves.size() && right_down_finished == false && waves[wave_num].units_vec_right_down.size() > 0)
 				{
-					if (unit_num < waves[wave_num].units_vec_right_down[group_num].amount)
+					if (unit_num_rd < waves[wave_num].units_vec_right_down[group_num_rd].amount)
 					{
-						waves[wave_num].units_vec_right_down[group_num].Create();
-						unit_num++;
+						waves[wave_num].units_vec_right_down[group_num_rd].Create();
+						unit_num_rd++;
 					}
 					else
 					{
-						if (group_num < waves[wave_num].units_vec_right_down.size() - 1)
+						if (group_num_rd < waves[wave_num].units_vec_right_down.size() - 1)
 						{
-							group_num++;
-							unit_num = 0;
+							group_num_rd++;
+							unit_num_rd = 0;
 						}
 						else
 							right_down_finished = true;
