@@ -21,7 +21,7 @@ UIHUDMinimap::UIHUDMinimap(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	this->Set(MINIMAP_POSITION, MINIMAP_ATLAS);
 
-	minimap = new IsoRect(iPoint(ISOMINIMAP_POSITIOIN), MINIMAP_WIDTH, MINIMAP_HEIGHT);
+	minimap = new IsoRect(fPoint(ISOMINIMAP_POSITIOIN), MINIMAP_WIDTH, MINIMAP_HEIGHT);
 
 	int map_x = -(App->map->data.width * App->map->data.tile_width / 2.0f);
 	int map_y = 0;
@@ -43,7 +43,7 @@ bool UIHUDMinimap::Update()
 	App->input->GetMousePosition(x, y);
 	fPoint mouse_pos(x,y);
 
-	if (minimap->Inside(iPoint(x,y)))
+	if (minimap->Inside(fPoint(x,y)))
 	{
 		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
 		{
