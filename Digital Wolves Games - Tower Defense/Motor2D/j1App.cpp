@@ -25,6 +25,7 @@
 #include "j1Collision.h"
 #include "j1SceneManager.h"
 #include "j1Console.h"
+#include "Intro.h"
 #include "j1WaveManager.h"
 #include "ProjectileManager.h"
 #include "j1Investigations.h"
@@ -51,6 +52,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	map = new j1Map();
 	uimanager = new j1UIManager();
 	//intro = new j1Intro();
+	intro = new j1Intro();
 	main_menu = new j1MainMenu();
 	scene = new j1Scene();
 	score_scene = new j1ScoreScene();

@@ -887,6 +887,7 @@ void Unit::SaveUnit(pugi::xml_node &data)
 	ActualUnit.append_attribute("posx") = GetX();
 	ActualUnit.append_attribute("posy") = GetY();
 	ActualUnit.append_attribute("hp") = GetHp();
+	ActualUnit.append_attribute("side") = GetSide();
 }
 
 void Unit::UnitDies()

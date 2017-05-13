@@ -41,6 +41,7 @@ bool j1EntityManager::CleanUp() { // not done
 
 Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)
 {
+
 	Entity* new_entity = (Entity*) new Unit(u_type, pos, side, priority);
 	entity_array.push_back(new_entity);
 	priority++;
@@ -425,9 +426,9 @@ void j1EntityManager::LoadBuilding(pugi::xml_node& data)
 void j1EntityManager::LoadUnit(pugi::xml_node& data)
 {
 	pugi::xml_node Actualunit = data;
-	fPoint pos(Actualunit.attribute("posx").as_int(), Actualunit.attribute("posy").as_int());
-	Unit* actualunit = (Unit*)App->entity_manager->CreateUnit(UNIT_TYPE(Actualunit.attribute("unit_type").as_int()), pos, S_ALLY);
-	actualunit->SetHp(Actualunit.attribute("hp").as_int());
+		fPoint pos(Actualunit.attribute("posx").as_int(), Actualunit.attribute("posy").as_int());
+		Unit* actualunit = (Unit*)App->entity_manager->CreateUnit(UNIT_TYPE(Actualunit.attribute("unit_type").as_int()), pos, Side(Actualunit.attribute("side").as_int()));
+		actualunit->SetHp(Actualunit.attribute("hp").as_int());
 }
 
 void j1EntityManager::LoadTurret(pugi::xml_node& data)

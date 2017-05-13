@@ -28,6 +28,7 @@ class j1Console;
 class j1Investigations;
 class j1Score;
 class j1Tutorial;
+class j1Intro;
 class j1Video;
 
 	//Scenes
@@ -140,6 +141,7 @@ public:
 	j1Score*			score = nullptr;
 	j1Tutorial*			tutorial = nullptr;
 	j1Video*			video = nullptr;
+	j1Intro*            intro = nullptr;
 		//Scenesko
 	//j1Intro*            intro = nullptr;
 	j1MainMenu*			main_menu = nullptr;

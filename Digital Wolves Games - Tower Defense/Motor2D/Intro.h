@@ -1,7 +1,13 @@
-#ifndef _INTRO_
-#define _INTRO_
+#ifndef __j1INTRO__
+#define __j1INTRO__
 
 #include "j1Module.h"
+
+struct SDL_Texture;
+class UILabel;
+class UIComponents;
+class UIButton;
+
 
 class j1Intro : public j1Module
 {
@@ -29,5 +35,16 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
-}
-#endif _INTRO_
+
+	//Enable Module with submodules
+	void EnableScene();
+
+	bool game_scene = true;
+
+	void SetRetPreUpdate(bool ret);
+
+private:
+	bool ret_preupdate = true;
+};
+
+#endif // __j1MAINMENU_H__

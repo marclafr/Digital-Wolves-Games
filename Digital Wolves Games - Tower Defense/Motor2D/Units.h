@@ -92,7 +92,7 @@ private:
 	int vision_range;
 	float speed;
 	float rate_of_fire;
-	iPoint destination;
+	iPoint destination = {-75, 272};
 	iPoint path_objective;
 	fPoint move_vector;
 	float angle;
@@ -105,7 +105,6 @@ private:
 	Entity* target;
 	Entity* attacking;
 
-	std::vector<iPoint> path_vec;
 
 	int priority;
 	bool slowed = false;
@@ -139,6 +138,7 @@ public:
 	const Circle GetUnitCircle() const;
 	const int GetVisionRange() const;
 	const bool IsMoving() const;
+	std::vector<iPoint> path_vec;
 
 	void CheckCollisions() const;
 
