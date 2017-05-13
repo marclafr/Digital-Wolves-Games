@@ -185,13 +185,10 @@ void j1Map::Draw()
 
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorldPrintMap(x, y, tileset);
-
-					//TODO: this should be temporary until we find out what happens, also,TODO solve InsideRenderTarget: after moving the camera doesnt work.
-					//if (App->render->camera->InsideRenderTarget(pos.x, pos.y))
-						if (tileset->name.compare("Extras") != 0)
-							App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
-						else
-							App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
+					iPoint ret = App->render->WorldToScreen(pos.x, pos.y);
+				
+					if(App->render->camera->InsideRenderTarget(ret.x,ret.y))
+					App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
 				}
 			}
 		}
