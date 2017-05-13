@@ -20,28 +20,28 @@ bool j1WaveManager::Start()
 	//TODO create waves in grups
 	Wave wave1;
 	//UnitGroup group20(U_SIEGERAM, 3, LEFT_UP);
-	UnitGroup group1(U_MILITIA, 3, LEFT_UP);
-	//UnitGroup group2(U_MILITIA, 20, LEFT_DOWN);
-	//UnitGroup group3(U_MILITIA, 20, RIGHT_UP);
-//	UnitGroup group4(U_MILITIA, 20, RIGHT_DOWN);
+	UnitGroup group1(U_MILITIA, 15, LEFT_UP);
+	UnitGroup group2(U_MILITIA, 15, LEFT_DOWN);
+	UnitGroup group3(U_MILITIA, 15, RIGHT_UP);
+	UnitGroup group4(U_MILITIA, 15, RIGHT_DOWN);
 	//wave1.PushBack(group20);
 	wave1.PushBack(group1, LEFT_UP);
-	//wave1.PushBack(group2, LEFT_DOWN);
-	//wave1.PushBack(group3, RIGHT_UP);
-	//wave1.PushBack(group4, RIGHT_DOWN);
-	wave1.total_wave_units = 3;
+	wave1.PushBack(group2, LEFT_DOWN);
+	wave1.PushBack(group3, RIGHT_UP);
+	wave1.PushBack(group4, RIGHT_DOWN);
+	wave1.total_wave_units = 60;
 	Wave wave2;
-	
-	UnitGroup group5(U_MANATARMS, 3, LEFT_UP);	
-	//UnitGroup group6(U_MANATARMS, 30, LEFT_DOWN);
-	//UnitGroup group7(U_MANATARMS, 30, RIGHT_UP);
-	//UnitGroup group8(U_MANATARMS, 30, RIGHT_DOWN);
-	
+
+	UnitGroup group5(U_MANATARMS, 30, LEFT_UP);
+	UnitGroup group6(U_MANATARMS, 30, LEFT_DOWN);
+	UnitGroup group7(U_MANATARMS, 30, RIGHT_UP);
+	UnitGroup group8(U_MANATARMS, 30, RIGHT_DOWN);
+
 	wave2.PushBack(group5, LEFT_UP);
-	//wave2.PushBack(group6, LEFT_DOWN);
-	//wave2.PushBack(group7, RIGHT_UP);
-	//wave2.PushBack(group8, RIGHT_DOWN);
-	wave2.total_wave_units = 3;
+	wave2.PushBack(group6, LEFT_DOWN);
+	wave2.PushBack(group7, RIGHT_UP);
+	wave2.PushBack(group8, RIGHT_DOWN);
+	wave2.total_wave_units = 120;
 
 	Wave wave3;
 	UnitGroup group9(U_LONGSWORDMAN, 20, LEFT_UP);
@@ -56,7 +56,7 @@ bool j1WaveManager::Start()
 	UnitGroup group18(U_LONGSWORDMAN, 20, LEFT_DOWN);
 	UnitGroup group19(U_LONGSWORDMAN, 20, RIGHT_UP);
 	UnitGroup group20(U_LONGSWORDMAN, 20, RIGHT_DOWN);
-	
+
 	wave3.PushBack(group9, LEFT_UP);
 	wave3.PushBack(group10, LEFT_DOWN);
 	wave3.PushBack(group11, RIGHT_UP);
@@ -277,7 +277,7 @@ bool j1WaveManager::Start()
 	wave9.PushBack(group111, RIGHT_UP);
 	wave9.PushBack(group112, RIGHT_DOWN);
 	wave9.total_wave_units = 360;
-	
+
 	/*
 	Wave wave7;
 	UnitGroup group28(U_TWOHANDEDSWORDMAN, 52, LEFT_UP);
@@ -301,7 +301,7 @@ bool j1WaveManager::Start()
 
 
 	Wave wave8;
-	
+
 	UnitGroup group36(U_LONGSWORDMAN, 51, LEFT_UP);
 	UnitGroup group37(U_CAVALRYARCHER, 26, LEFT_UP);
 	UnitGroup group38(U_HEAVYCAVALRYARCHER, 30, LEFT_UP);
@@ -311,7 +311,7 @@ bool j1WaveManager::Start()
 	UnitGroup group42(U_MILITIA, 18, LEFT_UP);
 	UnitGroup group43(U_SIEGERAM, 10, LEFT_UP);
 	UnitGroup group44(U_TWOHANDEDSWORDMAN, 65, LEFT_UP);
-	
+
 	wave8.PushBack(group36);
 	wave8.PushBack(group37);
 	wave8.PushBack(group38);
@@ -331,7 +331,7 @@ bool j1WaveManager::Start()
 	waves.push_back(wave7);
 	waves.push_back(wave8);
 	waves.push_back(wave9);
-	
+
 	timer.Start();
 	spawning = true;
 	group_num_lu = 0;

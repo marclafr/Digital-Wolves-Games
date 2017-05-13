@@ -20,7 +20,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetHp(150);
 		SetAttack(15);
 		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
+		rate_of_fire = 0.90f;	//time between each attack in seconds
 		range = 300;
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;

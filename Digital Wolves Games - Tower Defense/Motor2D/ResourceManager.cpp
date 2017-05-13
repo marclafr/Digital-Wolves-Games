@@ -9,10 +9,10 @@
 
 ResourceManager::ResourceManager(): wood(STARTING_WOOD), food (STARTING_FOOD), gold (STARTING_GOLD), stone (STARTING_STONE)
 {
-	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(1392, 858),300,2);
-	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1240, 979),300, 2);
-	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1588, 952),300, 2);
-	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1419, 1031),300, 2);
+	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(1392, 858),10,10);
+	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1240, 979),290, 11);
+	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1588, 952),160, 10);
+	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1419, 1031),185, 11);
 }
 
 void ResourceManager::SetWood(Resources * wood)
@@ -219,8 +219,8 @@ void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos)
 		break;
 
 	case T_BOMBARD_TOWER:
-		wood -= BASIC_TOWER_WOOD_COST;
-		stone -= BASIC_TOWER_STONE_COST;
+		wood -= BASIC_BOMBARD_TOWER_WOOD_COST;
+		stone -= BASIC_BOMBARD_TOWER_STONE_COST;
 		break;
 
 	case T_BOMBARD_FIRE_TOWER:
