@@ -422,6 +422,7 @@ void j1EntityManager::LoadBuilding(pugi::xml_node& data)
 	fPoint pos(Actualbuilding.attribute("posx").as_int(), Actualbuilding.attribute("posy").as_int());
 	Building* actualbuild = (Building*)App->entity_manager->CreateBuilding(BUILDING_TYPE(Actualbuilding.attribute("building_type").as_int()), pos, true);
 	actualbuild->SetHp(Actualbuilding.attribute("hp").as_int());
+	actualbuild->BuildingComplete();
 }
 
 void j1EntityManager::LoadUnit(pugi::xml_node& data)
@@ -438,6 +439,7 @@ void j1EntityManager::LoadTurret(pugi::xml_node& data)
 	fPoint pos(Actualturret.attribute("posx").as_int(), Actualturret.attribute("posy").as_int());
 	Tower* actualturret = (Tower*)App->entity_manager->CreateTower(TOWER_TYPE(Actualturret.attribute("tower_type").as_int()), pos);
 	actualturret->SetHp(Actualturret.attribute("hp").as_int());
+	actualturret->BuildingComplete();
 }
 
 bool j1EntityManager::Save(pugi::xml_node &data) const

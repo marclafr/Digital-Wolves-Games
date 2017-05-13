@@ -580,7 +580,7 @@ bool j1WaveManager::BringNextWave()
 {
 	if (can_bring_next_wave == true)
 	{
-		timer.SetTicks(timer.Read() + (TIME_BETWEEN_WAVES * 1000));
+		timer.SetTicks(timer.Read() + (TIME_BETWEEN_WAVES * 2000));
 		return true;
 	}
 	return false;
@@ -600,4 +600,5 @@ void j1WaveManager::ResetWave()
 	all_waves_ended = false;
 	can_bring_next_wave = true;
 	wave_ended = true;
+	timer.Start();
 }
