@@ -66,8 +66,15 @@ private:
 	j1Timer timer;
 	j1Timer delay_timer;
 	int wave_num = -1;
-	int group_num = 0;
-	int unit_num = 0;
+	//l = left; u = up; r = right; d = down;
+	int group_num_lu = 0;
+	int group_num_ld = 0;
+	int group_num_ru = 0;
+	int group_num_rd = 0;
+	int unit_num_lu = 0;
+	int unit_num_ld = 0;
+	int unit_num_ru = 0;
+	int unit_num_rd = 0;
 	bool spawning = false;
 
 	//Creation place
