@@ -329,22 +329,7 @@ bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
 
 void j1EntityManager::LoadAllFx()
 {
-	//UNITS
-	fx_twohanded_die01 = App->audio->LoadFx("audio/fx/Male_Death01.wav");
-	fx_twohanded_die02 = App->audio->LoadFx("audio/fx/Male_Death02.wav");
-	fx_twohanded_die03 = App->audio->LoadFx("audio/fx/Male_Death03.wav");
-	fx_twohanded_die04 = App->audio->LoadFx("audio/fx/Male_Death04.wav");
-	fx_twohanded_die05 = App->audio->LoadFx("audio/fx/Male_Death05.wav");
-	fx_attack01 = App->audio->LoadFx("audio/fx/Swordfight01.wav");
-	fx_attack02 = App->audio->LoadFx("audio/fx/Swordfight02.wav");
-	fx_attack03 = App->audio->LoadFx("audio/fx/Swordfight03.wav");
 
-	//BUILDINGS
-	fx_building_destroyed = App->audio->LoadFx("audio/fx/Building_destroyed01.wav");
-	fx_arrow = App->audio->LoadFx("audio/fx/Arrow01.wav");
-	fx_cannon = App->audio->LoadFx("audio/fx/Cannon01.wav");
-	fx_construction = App->audio->LoadFx("audio/fx/Construction01.wav");
-	fx_university = App->audio->LoadFx("audio/fx/University.wav");
 }
 
 bool j1EntityManager::Load(pugi::xml_node& data)

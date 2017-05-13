@@ -800,19 +800,19 @@ void Unit::PlayDeathSound() const
 	switch (rand_num)
 	{
 	case 0:
-		App->audio->PlayFx(App->entity_manager->fx_twohanded_die01);
+		App->audio->PlayFx(App->audio->fx_twohanded_die01);
 		break;
 	case 1:
-		App->audio->PlayFx(App->entity_manager->fx_twohanded_die02);
+		App->audio->PlayFx(App->audio->fx_twohanded_die02);
 		break;
 	case 2:
-		App->audio->PlayFx(App->entity_manager->fx_twohanded_die03);
+		App->audio->PlayFx(App->audio->fx_twohanded_die03);
 		break;
 	case 3:
-		App->audio->PlayFx(App->entity_manager->fx_twohanded_die04);
+		App->audio->PlayFx(App->audio->fx_twohanded_die04);
 		break;
 	case 4:
-		App->audio->PlayFx(App->entity_manager->fx_twohanded_die05);
+		App->audio->PlayFx(App->audio->fx_twohanded_die05);
 		break;
 	}	
 }
@@ -843,7 +843,7 @@ bool Unit::GetNextTile()
 void Unit::PlayAttackSound() const
 {
 	if(unit_class == C_ARCHER)
-		App->audio->PlayFx(App->entity_manager->fx_arrow);
+		App->audio->PlayFx(App->audio->fx_arrow);
 
 	else
 	{
@@ -852,13 +852,13 @@ void Unit::PlayAttackSound() const
 		switch (rand_num)
 		{
 		case 0:
-			App->audio->PlayFx(App->entity_manager->fx_attack01);
+			App->audio->PlayFx(App->audio->fx_attack01);
 			break;
 		case 1:
-			App->audio->PlayFx(App->entity_manager->fx_attack02);
+			App->audio->PlayFx(App->audio->fx_attack02);
 			break;
 		case 2:
-			App->audio->PlayFx(App->entity_manager->fx_attack03);
+			App->audio->PlayFx(App->audio->fx_attack03);
 			break;
 		}
 	}

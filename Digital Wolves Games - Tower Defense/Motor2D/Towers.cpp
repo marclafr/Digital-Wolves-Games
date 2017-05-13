@@ -185,9 +185,9 @@ void Tower::AI()
 		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
 		{
 			if(tower_type == T_BASIC_TOWER || tower_type == T_ICE_TOWER || tower_type == T_AIR_TOWER || tower_type == T_FIRE_TOWER)
-			App->audio->PlayFx(App->entity_manager->fx_arrow);
+			App->audio->PlayFx(App->audio->fx_arrow);
 			else 
-			App->audio->PlayFx(App->entity_manager->fx_cannon);
+			App->audio->PlayFx(App->audio->fx_cannon);
 		}
 		AttackTimer.Start();
 	}

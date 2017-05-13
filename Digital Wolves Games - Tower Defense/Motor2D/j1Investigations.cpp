@@ -2,6 +2,7 @@
 #include "j1App.h"
 #include "Resources.h"
 #include "j1Scene.h"
+#include "j1Audio.h"
 
 j1Investigations::j1Investigations()
 {
@@ -110,6 +111,7 @@ bool j1Investigations::CanInvestigate(Investigation* investigation)
 	if (App->scene->resources->GetGold() > investigation->cost)
 	{
 		investigation->inv_state = INV_S_IN_COURSE;
+		App->audio->PlayFx(App->audio->fx_investigation);
 		DoInvestigationUpgrade(investigation);
 		return true;
 	}
@@ -161,7 +163,7 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 	if (investigation->upgrade_timer.ReadSec() >= investigation->time_to_upgrade)
 	{
 		investigation->inv_state = INV_S_COMPLETED;
-
+		App->audio->PlayFx(App->audio->fx_investigation);
 		if (investigation->has_levels == false)
 		{
 			investigation->investigation_level = INV_LVL_UNLOCKED;

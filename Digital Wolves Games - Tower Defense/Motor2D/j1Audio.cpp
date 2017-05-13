@@ -50,7 +50,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		active = false;
 		ret = true;
 	}
-
+	LoadAllFx();
 	return ret;
 }
 
@@ -173,4 +173,28 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+
+void j1Audio::LoadAllFx()
+{
+	//UNITS
+	fx_twohanded_die01 = LoadFx("audio/fx/Male_Death01.wav");
+	fx_twohanded_die02 = LoadFx("audio/fx/Male_Death02.wav");
+	fx_twohanded_die03 = LoadFx("audio/fx/Male_Death03.wav");
+	fx_twohanded_die04 = LoadFx("audio/fx/Male_Death04.wav");
+	fx_twohanded_die05 = LoadFx("audio/fx/Male_Death05.wav");
+	fx_attack01 = LoadFx("audio/fx/Swordfight01.wav");
+	fx_attack02 = LoadFx("audio/fx/Swordfight02.wav");
+	fx_attack03 = LoadFx("audio/fx/Swordfight03.wav");
+
+	//BUILDINGS
+	fx_building_destroyed = LoadFx("audio/fx/Building_destroyed01.wav");
+	fx_arrow = LoadFx("audio/fx/Arrow01.wav");
+	fx_cannon = LoadFx("audio/fx/Cannon01.wav");
+	fx_construction = LoadFx("audio/fx/Construction01.wav");
+
+	fx_university = LoadFx("audio/fx/University.wav");
+	fx_investigation = LoadFx("audio/fx/Investigation.wav");
+
+
 }

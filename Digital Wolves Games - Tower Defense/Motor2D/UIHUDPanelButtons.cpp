@@ -147,7 +147,7 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 		panel_type = BP_UNIVERSITY;
 		b_selected = building;
 		CreatePanel();
-		App->audio->PlayFx(App->entity_manager->fx_university);
+		App->audio->PlayFx(App->audio->fx_university);
 		if (App->tutorial->tutorial3_completed) App->tutorial->UniversitySelected = true;
 		break;
 	default:
