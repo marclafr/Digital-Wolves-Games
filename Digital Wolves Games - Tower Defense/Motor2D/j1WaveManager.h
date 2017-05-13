@@ -43,6 +43,7 @@ struct Wave
 	std::vector<UnitGroup> units_vec_left_down;
 	std::vector<UnitGroup> units_vec_right_up;
 	std::vector<UnitGroup> units_vec_right_down;
+	uint total_wave_units = 0;
 
 	~Wave();
 
@@ -95,6 +96,7 @@ private:
 	bool right_up_finished = false;
 	bool right_down_finished = false;
 
+	uint kills_for_next_wave = 0;
 	bool all_waves_ended = false;
 	bool can_bring_next_wave = true;
 };
