@@ -126,17 +126,18 @@ bool j1ScoreScene::CleanUp()
 
 void j1ScoreScene::ActualTrophie()
 {
-	if (App->score->GetScore() > 560)
-		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 850, 410, 87, 98 }, { 677, 1370, 87, 98 });
-	else if (App->score->GetScore() > 1830)
-		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 845, 410, 97, 113 }, { 765, 1355, 97, 113 });
-	else if (App->score->GetScore() > 3220)
-		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 837, 410, 113, 129 }, { 941, 1162, 113, 129 });
+
+	if (App->score->GetScore() > 6250)
+		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
 	else if (App->score->GetScore() > 4680)
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 833, 410, 119, 139 }, { 1058, 1162, 119, 139 });
-	else if (App->score->GetScore() > 6250)
-		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
-	else if(true)
+	else if (App->score->GetScore() > 3220)
+		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 837, 410, 113, 129 }, { 941, 1162, 113, 129 });
+	else if (App->score->GetScore() > 1830)
+		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 845, 410, 97, 113 }, { 765, 1355, 97, 113 });
+	else if (App->score->GetScore() > 560)
+		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 850, 410, 87, 98 }, { 677, 1370, 87, 98 });
+	else if (App->score->GetScore() <= 560)
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 0, 0, 0 }, { 0, 0, 0, 0 });
 }
 
