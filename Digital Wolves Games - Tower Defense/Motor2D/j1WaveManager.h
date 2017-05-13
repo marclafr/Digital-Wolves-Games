@@ -43,6 +43,7 @@ struct Wave
 	std::vector<UnitGroup> units_vec_left_down;
 	std::vector<UnitGroup> units_vec_right_up;
 	std::vector<UnitGroup> units_vec_right_down;
+	uint total_wave_units = 0;
 
 	~Wave();
 
@@ -60,12 +61,21 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 
+	bool BringNextWave();
+
 private:
 	j1Timer timer;
 	j1Timer delay_timer;
 	int wave_num = -1;
-	int group_num = 0;
-	int unit_num = 0;
+	//l = left; u = up; r = right; d = down;
+	int group_num_lu = 0;
+	int group_num_ld = 0;
+	int group_num_ru = 0;
+	int group_num_rd = 0;
+	int unit_num_lu = 0;
+	int unit_num_ld = 0;
+	int unit_num_ru = 0;
+	int unit_num_rd = 0;
 	bool spawning = false;
 
 	//Creation place
@@ -86,7 +96,9 @@ private:
 	bool right_up_finished = false;
 	bool right_down_finished = false;
 
+	uint kills_for_next_wave = 0;
 	bool all_waves_ended = false;
+	bool can_bring_next_wave = true;
 };
 
 #endif // __j1WAVE_MANAGER_H__

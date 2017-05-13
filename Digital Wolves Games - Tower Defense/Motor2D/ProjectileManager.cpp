@@ -5,6 +5,8 @@
 
 bool ProjectileManager::Start()
 {
+	fx_cannon_shoot = App->audio->LoadFx("audio/fx/Cannon01.wav");
+	fx_explosion = App->audio->LoadFx("audio/fx/Explosion.wav");
 	return true;
 }
 

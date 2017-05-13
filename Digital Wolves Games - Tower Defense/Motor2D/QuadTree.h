@@ -35,7 +35,7 @@ public:
 	void CheckCollision() const;
 	void CheckUnitCollisions(const Unit* ptr) const;
 	void DrawArea();
-
+	void SaveAll(pugi::xml_node&);
 private:
 	bool PushToCorrectChild(Entity* entity);
 	bool SubDivide(Entity* entity);

@@ -197,3 +197,11 @@ void j1EntityManager::DrawQuadTree() const
 {
 	entity_quadtree->DrawRects();
 }
+
+bool j1EntityManager::Save(pugi::xml_node &data) const
+{
+	pugi::xml_node Buildings = data.append_child("building");
+
+
+	return true;
+}

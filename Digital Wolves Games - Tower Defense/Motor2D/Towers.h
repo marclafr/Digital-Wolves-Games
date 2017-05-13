@@ -52,6 +52,7 @@ public:
 	bool attacking = false;
 	const TOWER_TYPE GetTowerType() const;
 	const int GetRange() const;
+	void SaveTurret(pugi::xml_node&);
 };
 
 #endif //__TOWERS_

@@ -6,6 +6,7 @@
 #include "Units.h"
 #include "j1Pathfinding.h"
 #include "p2Log.h"
+#include "j1Score.h"
 
 j1WaveManager::j1WaveManager() : j1Module()
 {
@@ -28,6 +29,7 @@ bool j1WaveManager::Start()
 	wave1.PushBack(group2, LEFT_DOWN);
 	wave1.PushBack(group3, RIGHT_UP);
 	wave1.PushBack(group4, RIGHT_DOWN);
+	wave1.total_wave_units = 80;
 	Wave wave2;
 
 	UnitGroup group5(U_MANATARMS, 30, LEFT_UP);
@@ -39,6 +41,7 @@ bool j1WaveManager::Start()
 	wave2.PushBack(group6, LEFT_DOWN);
 	wave2.PushBack(group7, RIGHT_UP);
 	wave2.PushBack(group8, RIGHT_DOWN);
+	wave2.total_wave_units = 120;
 
 	Wave wave3;
 	UnitGroup group9(U_LONGSWORDMAN, 20, LEFT_UP);
@@ -66,6 +69,7 @@ bool j1WaveManager::Start()
 	wave3.PushBack(group18, LEFT_DOWN);
 	wave3.PushBack(group19, RIGHT_UP);
 	wave3.PushBack(group20, RIGHT_DOWN);
+	wave3.total_wave_units = 240;
 
 
 	Wave wave4;
@@ -93,6 +97,7 @@ bool j1WaveManager::Start()
 	wave4.PushBack(group30, LEFT_DOWN);
 	wave4.PushBack(group31, RIGHT_UP);
 	wave4.PushBack(group32, RIGHT_DOWN);
+	wave4.total_wave_units = 300;
 
 	Wave wave5;
 	UnitGroup group33(U_CHAMPION, 35, LEFT_UP);
@@ -119,6 +124,7 @@ bool j1WaveManager::Start()
 	wave5.PushBack(group42, LEFT_DOWN);
 	wave5.PushBack(group43, RIGHT_UP);
 	wave5.PushBack(group44, RIGHT_DOWN);
+	wave5.total_wave_units = 320;
 
 	Wave wave6;
 	UnitGroup group45(U_CHAMPION, 40, LEFT_UP);
@@ -145,6 +151,7 @@ bool j1WaveManager::Start()
 	wave6.PushBack(group54, LEFT_DOWN);
 	wave6.PushBack(group55, RIGHT_UP);
 	wave6.PushBack(group56, RIGHT_DOWN);
+	wave6.total_wave_units = 380;
 
 	Wave wave7;
 	UnitGroup group57(U_PALADIN, 12, LEFT_UP);
@@ -180,6 +187,7 @@ bool j1WaveManager::Start()
 	wave7.PushBack(group70, LEFT_DOWN);
 	wave7.PushBack(group71, RIGHT_UP);
 	wave7.PushBack(group72, RIGHT_DOWN);
+	wave7.total_wave_units = 348;
 
 
 	Wave wave8;
@@ -224,6 +232,7 @@ bool j1WaveManager::Start()
 	wave8.PushBack(group90, LEFT_DOWN);
 	wave8.PushBack(group91, RIGHT_UP);
 	wave8.PushBack(group92, RIGHT_DOWN);
+	wave8.total_wave_units = 360;
 
 	Wave wave9;
 	UnitGroup group93(U_MANGONEL, 16, LEFT_UP);
@@ -267,6 +276,8 @@ bool j1WaveManager::Start()
 	wave9.PushBack(group110, LEFT_DOWN);
 	wave9.PushBack(group111, RIGHT_UP);
 	wave9.PushBack(group112, RIGHT_DOWN);
+	wave9.total_wave_units = 360;
+
 	/*
 	Wave wave7;
 	UnitGroup group28(U_TWOHANDEDSWORDMAN, 52, LEFT_UP);
@@ -287,8 +298,6 @@ bool j1WaveManager::Start()
 	wave7.PushBack(group33);
 	wave7.PushBack(group34);
 	wave7.PushBack(group35);
-
-
 	Wave wave8;
 
 	UnitGroup group36(U_LONGSWORDMAN, 51, LEFT_UP);
@@ -331,7 +340,7 @@ bool j1WaveManager::Update(float dt)
 {
 	if (all_waves_ended == false)
 	{
-		if (timer.ReadSec() >= TIME_BETWEEN_WAVES && wave_ended == true)
+		if (timer.ReadSec() >= TIME_BETWEEN_WAVES && wave_ended == true && can_bring_next_wave == true)
 		{
 			timer.Start();
 			wave_num++;
@@ -348,10 +357,18 @@ bool j1WaveManager::Update(float dt)
 			if (waves[wave_num].units_vec_right_down.size() <= 0)
 				right_down_finished = true;
 
-			group_num = 0;
-			unit_num = 0;
+			group_num_lu = 0;
+			group_num_ld = 0;
+			group_num_ru = 0;
+			group_num_rd = 0;
+			unit_num_lu = 0;
+			unit_num_ld = 0;
+			unit_num_ru = 0;
+			unit_num_rd = 0;
 			spawning = true;
 			wave_ended = false;
+			can_bring_next_wave = false;
+			kills_for_next_wave += waves[wave_num].total_wave_units;
 		}
 
 		if (spawning)
@@ -362,17 +379,17 @@ bool j1WaveManager::Update(float dt)
 				//LEFT_UP
 				if (wave_num < waves.size() && left_up_finished == false && waves[wave_num].units_vec_left_up.size() > 0)
 				{
-					if (unit_num < waves[wave_num].units_vec_left_up[group_num].amount)
+					if (unit_num_lu < waves[wave_num].units_vec_left_up[group_num_lu].amount)
 					{
-						waves[wave_num].units_vec_left_up[group_num].Create();
-						unit_num++;
+						waves[wave_num].units_vec_left_up[group_num_lu].Create();
+						unit_num_lu++;
 					}
 					else
 					{
-						if (group_num < waves[wave_num].units_vec_left_up.size() - 1)
+						if (group_num_lu < waves[wave_num].units_vec_left_up.size() - 1)
 						{
-							group_num++;
-							unit_num = 0;
+							group_num_lu++;
+							unit_num_lu = 0;
 						}
 						else
 							left_up_finished = true;
@@ -382,17 +399,17 @@ bool j1WaveManager::Update(float dt)
 				//LEFT_DOWN
 				if (wave_num < waves.size() && left_down_finished == false && waves[wave_num].units_vec_left_down.size() > 0)
 				{
-					if (unit_num < waves[wave_num].units_vec_left_down[group_num].amount)
+					if (unit_num_ld < waves[wave_num].units_vec_left_down[group_num_ld].amount)
 					{
-						waves[wave_num].units_vec_left_down[group_num].Create();
-						unit_num++;
+						waves[wave_num].units_vec_left_down[group_num_ld].Create();
+						unit_num_ld++;
 					}
 					else
 					{
-						if (group_num < waves[wave_num].units_vec_left_down.size() - 1)
+						if (group_num_ld < waves[wave_num].units_vec_left_down.size() - 1)
 						{
-							group_num++;
-							unit_num = 0;
+							group_num_ld++;
+							unit_num_ld = 0;
 						}
 						else
 							left_down_finished = true;
@@ -402,17 +419,17 @@ bool j1WaveManager::Update(float dt)
 				//RIGHT_UP
 				if (wave_num < waves.size() && right_up_finished == false && waves[wave_num].units_vec_right_up.size() > 0)
 				{
-					if (unit_num < waves[wave_num].units_vec_right_up[group_num].amount)
+					if (unit_num_ru < waves[wave_num].units_vec_right_up[group_num_ru].amount)
 					{
-						waves[wave_num].units_vec_right_up[group_num].Create();
-						unit_num++;
+						waves[wave_num].units_vec_right_up[group_num_ru].Create();
+						unit_num_ru++;
 					}
 					else
 					{
-						if (group_num < waves[wave_num].units_vec_right_up.size() - 1)
+						if (group_num_ru < waves[wave_num].units_vec_right_up.size() - 1)
 						{
-							group_num++;
-							unit_num = 0;
+							group_num_ru++;
+							unit_num_ru = 0;
 						}
 						else
 							right_up_finished = true;
@@ -422,17 +439,17 @@ bool j1WaveManager::Update(float dt)
 				//RIGHT_DOWN
 				if (wave_num < waves.size() && right_down_finished == false && waves[wave_num].units_vec_right_down.size() > 0)
 				{
-					if (unit_num < waves[wave_num].units_vec_right_down[group_num].amount)
+					if (unit_num_rd < waves[wave_num].units_vec_right_down[group_num_rd].amount)
 					{
-						waves[wave_num].units_vec_right_down[group_num].Create();
-						unit_num++;
+						waves[wave_num].units_vec_right_down[group_num_rd].Create();
+						unit_num_rd++;
 					}
 					else
 					{
-						if (group_num < waves[wave_num].units_vec_right_down.size() - 1)
+						if (group_num_rd < waves[wave_num].units_vec_right_down.size() - 1)
 						{
-							group_num++;
-							unit_num = 0;
+							group_num_rd++;
+							unit_num_rd = 0;
 						}
 						else
 							right_down_finished = true;
@@ -452,10 +469,18 @@ bool j1WaveManager::Update(float dt)
 						right_down_finished = false;
 						spawning = false;
 						wave_ended = true;
-						timer.Start();
 					}
 				}
 				//--
+			}
+		}
+		else
+		{
+			if (App->score->GetEnemiesKilled() >= kills_for_next_wave && can_bring_next_wave == false)
+			{
+				//TODO: SAVE GAME HERE DANI
+				timer.Start();
+				can_bring_next_wave = true;
 			}
 		}
 	}
@@ -467,6 +492,16 @@ bool j1WaveManager::CleanUp()
 	wave_num = -1;
 	waves.clear();
 	return true;
+}
+
+bool j1WaveManager::BringNextWave()
+{
+	if (can_bring_next_wave == true)
+	{
+		timer.SetTicks(timer.Read() + (TIME_BETWEEN_WAVES * 1000));
+		return true;
+	}
+	return false;
 }
 
 Wave::~Wave()

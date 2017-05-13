@@ -13,6 +13,7 @@
 #include "Units.h"
 #include "p2Log.h"
 #include "j1Tutorial.h"
+#include "j1WaveManager.h"
 
 class Task
 {
@@ -373,6 +374,16 @@ public:
 	bool Execute()
 	{
 		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/issues", NULL, NULL, SW_SHOWMAXIMIZED);
+		return true;
+	}
+};
+
+class BringNextWave : public Task
+{
+public:
+	bool Execute()
+	{
+		App->wave_manager->BringNextWave();
 		return true;
 	}
 };

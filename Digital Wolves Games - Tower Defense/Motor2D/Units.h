@@ -1,6 +1,7 @@
 #ifndef _UNITS
 #define _UNITS
 
+#include "PugiXml\src\pugixml.hpp"
 #include <vector>
 #include "Entity.h"
 #include "j1Timer.h"
@@ -156,6 +157,8 @@ public:
 	bool FindEmptyAttackPos(iPoint& pos) const;
 
 	void SlowUnit();
+
+	void SaveUnit(pugi::xml_node& );
 };
 
 #endif

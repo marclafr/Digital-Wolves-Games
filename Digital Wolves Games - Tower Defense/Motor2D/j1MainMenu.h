@@ -1,7 +1,11 @@
 #ifndef __j1MAINMENU_H__
 #define __j1MAINMENU_H__
 
+
 #include "j1Module.h"
+#include "j1App.h"
+#include "j1Render.h"
+#include "Camera.h"
 
 struct SDL_Texture;
 class UILabel;
@@ -45,6 +49,7 @@ public:
 
 private:
 	bool ret_preupdate = true;
+	IsoRect rect;
 };
 
 #endif // __j1MAINMENU_H__

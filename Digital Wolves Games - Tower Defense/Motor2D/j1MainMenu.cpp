@@ -103,7 +103,17 @@ bool j1MainMenu::PreUpdate()
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
-	App->render->BlitMainMenu();
+	int x = 0;
+	int y = 0;
+	App->input->GetMousePosition(x,y);
+	iPoint mouse_pos(x,y);
+	rect = IsoRect(App->render->camera->GetCenter(), 300, 300);
+	rect.SetColor(SDL_Color{ 255,255,255,255 });
+
+	if(rect.Inside(mouse_pos))
+		App->render->BlitMainMenu();
+
+	rect.Draw();
 	return true;
 }
 

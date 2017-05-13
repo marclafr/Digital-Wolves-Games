@@ -172,6 +172,10 @@ bool j1Scene::PostUpdate()
 		App->scene_manager->ChangeScene(SC_SCORE);
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+		App->SaveGame("Gamefile.xml");
+
+
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		App->scene_manager->ChangeScene(SC_SCORE);
 
@@ -772,6 +776,7 @@ void j1Scene::CreateSceneUI()
 	UIButton* new_wave_button = App->uimanager->AddButton({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
 	new_wave_button->SetClickedTextRect({ 687, 1227, 104, 104 });
 	new_wave_button->SetMouseOnTopTextRect({ 580, 1226, 104, 104 });
+	new_wave_button->SetTask(new BringNextWave());
 
 	//INFO SCORE, TIME, ENEMIES LEFT
 	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 405, 1162, 130, 65 });
