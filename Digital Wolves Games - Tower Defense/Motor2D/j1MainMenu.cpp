@@ -106,8 +106,8 @@ bool j1MainMenu::Update(float dt)
 	int x = 0;
 	int y = 0;
 	App->input->GetMousePosition(x,y);
-	iPoint mouse_pos(x,y);
-	rect = IsoRect(App->render->camera->GetCenter(), 300, 300);
+	fPoint mouse_pos(x,y);
+	rect = IsoRect(fPoint(App->render->camera->GetCenter().x, App->render->camera->GetCenter().y), 300, 300);
 	rect.SetColor(SDL_Color{ 255,255,255,255 });
 
 	if(rect.Inside(mouse_pos))
