@@ -17,7 +17,7 @@ private:
 	SDL_Texture* num_kills_texture = nullptr;
 	SDL_Texture* score_texture = nullptr;
 	SDL_Texture* time_texture = nullptr;
-
+	float Time_passed = 0;
 	j1Timer game_time;
 
 public:
@@ -28,8 +28,11 @@ public:
 	void GetTimer(int& mins, int& secs) const;
 	void EnemyKilled();
 	void AddScore(int score);
+	void SetScore(int score);
+	void SetEnemiesKilleds(int enemies);
 	void Reset();
 	int  GetScore() const;
+	void SetTimePassed(float time);
 	void IncreaseScore();
 	void DecreaseScore();
 	int  GetEnemiesKilled() const;

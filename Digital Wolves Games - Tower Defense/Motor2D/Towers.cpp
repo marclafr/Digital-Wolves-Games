@@ -205,6 +205,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_FIRE_ARROW;
 					tower_type = T_FIRE_TOWER;
 					SetBuildingType(B_TURRET_UPGRADED);
+					
 				}
 				break;
 			case TU_ICE:

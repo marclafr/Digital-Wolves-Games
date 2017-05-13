@@ -8,7 +8,9 @@
 #include "j1Fonts.h"
 #include "j1Window.h"
 #include "p2Log.h"
+#include "j1WaveManager.h"
 #include "Resources.h"
+#include "j1Score.h"
 #include "Camera.h"
 #include "j1Map.h"
 #include "ResourceManager.h"
@@ -380,7 +382,13 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 
 	App->scene->resources->LoadResourcesAmount(AmountOfResources);
 
+	pugi::xml_node Score = data.child("score");
 
+	App->score->Reset();
+	App->score->SetScore(Score.attribute("points").as_int());
+	App->score->SetEnemiesKilleds(Score.attribute("enemies_killeds").as_int());
+	App->score->SetTimePassed(Score.attribute("time_passed").as_int());
+	App->wave_manager->SetWaveNum(Score.attribute("wave_num").as_int());
 	return true;
 }
 
@@ -465,5 +473,11 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 
 	App->scene->resources->SaveResourcesAmount(AmountOfResources);
 
+	pugi::xml_node Score = data.append_child("score");
+
+	Score.append_attribute("points") = App->score->GetScore();
+	Score.append_attribute("enemies_killeds") = App->score->GetEnemiesKilled();
+	Score.append_attribute("time_passed") = App->score->GetTime();
+	Score.append_attribute("wave_num") = App->wave_manager->GetWaveNum();
 	return true;
 }

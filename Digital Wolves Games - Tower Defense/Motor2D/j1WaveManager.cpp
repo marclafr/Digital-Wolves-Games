@@ -469,6 +469,17 @@ bool j1WaveManager::CleanUp()
 	return true;
 }
 
+int j1WaveManager::GetWaveNum()
+{
+	return wave_num;
+}
+
+void j1WaveManager::SetWaveNum(int wave)
+{
+	wave_num = wave;
+	timer.Start();
+}
+
 Wave::~Wave()
 {
 	units_vec_left_up.clear();

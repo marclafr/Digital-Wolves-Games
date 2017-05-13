@@ -15,7 +15,7 @@ bool j1Score::SecChange() const
 
 int j1Score::GetTime() const
 {
-	return game_time.ReadSec();
+	return game_time.ReadSec() - Time_passed;
 }
 
 void j1Score::GetTimer(int & mins, int & secs) const
@@ -75,16 +75,33 @@ void j1Score::AddScore(int score)
 	this->score += score;
 }
 
+void j1Score::SetScore(int score)
+{
+	this->score = score;
+}
+
+void j1Score::SetEnemiesKilleds(int enemies)
+{
+	enemies_killed = enemies;
+}
+
 void j1Score::Reset()
 {
 	game_time.Start();
 	enemies_killed = 0;
 	score = 0;
+	Time_passed = 0;
+	enemy_killed = true;
 }
 
 int j1Score::GetScore() const
 {
 	return score;
+}
+
+void j1Score::SetTimePassed(float time)
+{
+	Time_passed = time/1000.0f;
 }
 
 void j1Score::IncreaseScore()
