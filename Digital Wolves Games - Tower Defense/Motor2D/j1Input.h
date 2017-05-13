@@ -81,6 +81,8 @@ public:
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
 
+	SDL_Scancode move_up, move_down, move_right, move_left, build_turret,build_bombard_turret,build_walls, menu, center_to_townhall;
+
 private:
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;

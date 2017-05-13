@@ -130,6 +130,11 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
+	std::string hello("left");
+	
+	std::string hey;
+	hey = SDL_GetScancodeName(SDL_SCANCODE_SPACE);
+	//App->input->center_to_townhall = SDL_GetScancodeFromName(hey.c_str());
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
@@ -360,25 +365,25 @@ void j1Scene::HandleInput( SDL_Event event)
 		if (event.button.button == SDL_SCANCODE_K)
 			App->LoadGame("save_game.xml");
 
-		if (event.button.button == SDL_SCANCODE_SPACE)
+		if (event.button.button == App->input->center_to_townhall)
 			App->render->camera->Move(iPoint(1200, -250), 10);
 
 		//building construction
-		if (event.button.button == SDL_SCANCODE_1
-			|| event.button.button == SDL_SCANCODE_2
-			|| event.button.button == SDL_SCANCODE_3)
+		if (event.button.button == App->input->build_turret
+			|| event.button.button == App->input->build_bombard_turret
+			|| event.button.button == App->input->build_walls)
 		{
 			placing_wall = false;
 			placing_tower = T_NO_TYPE;
 		}
 
-		if (event.button.button == SDL_SCANCODE_1)
+		if (event.button.button == App->input->build_turret)
 			placing_tower = T_BASIC_TOWER;	
 
-		if (event.button.button == SDL_SCANCODE_2)
+		if (event.button.button == App->input->build_bombard_turret)
 			placing_tower = T_BOMBARD_TOWER;
 
-		if (event.button.button == SDL_SCANCODE_3)
+		if (event.button.button == App->input->build_walls)
 			placing_wall = true;
 		//--
 

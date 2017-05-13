@@ -30,5 +30,10 @@
   <map>
     <folder>maps/</folder>
   </map>
+ 
+  <input>
+<!-- special keys are - escape, space, return(enter), tab, backspace, (arrows) left, right, up, down -->
+<buttons move_up="w" move_down="s" move_left="a" move_right="d" build_tower="1" build_bombard_tower="2" build_walls="3" menu="escape" center_to_townhall="Space"/> 
 
+  </input>
 </config>
