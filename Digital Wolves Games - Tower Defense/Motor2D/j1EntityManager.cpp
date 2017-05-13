@@ -389,6 +389,7 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 	App->score->SetScore(Score.attribute("points").as_int());
 	App->score->SetEnemiesKilleds(Score.attribute("enemies_killeds").as_int());
 	App->score->SetTimePassed(Score.attribute("time_passed").as_int());
+	App->wave_manager->ResetWave();
 	App->wave_manager->SetWaveNum(Score.attribute("wave_num").as_int());
 	return true;
 }
@@ -460,7 +461,7 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 		else if (entity_array[k]->GetEntityType() == E_UNIT)
 		{
 			Unit* unit = (Unit*)entity_array[k];
-			unit->SaveUnit(Units);
+			if(unit->GetSide() == S_ALLY)	unit->SaveUnit(Units);
 		}
 		else if (entity_array[k]->GetEntityType() == E_RESOURCE)
 		{

@@ -15,12 +15,12 @@ bool j1Score::SecChange() const
 
 int j1Score::GetTime() const
 {
-	return game_time.ReadSec() - Time_passed;
+	return game_time.ReadSec() + Time_passed;
 }
 
 void j1Score::GetTimer(int & mins, int & secs) const
 {
-	secs = WINNING_TIME - game_time.ReadSec();
+	secs = WINNING_TIME - game_time.ReadSec() - Time_passed;
 	mins = secs / 60;
 	secs -= mins * 60;
 }
@@ -101,7 +101,7 @@ int j1Score::GetScore() const
 
 void j1Score::SetTimePassed(float time)
 {
-	Time_passed = time/1000.0f;
+	Time_passed = time;
 }
 
 void j1Score::IncreaseScore()

@@ -63,7 +63,7 @@ public:
 	int GetWaveNum();
 	void SetWaveNum(int wave);
 	bool BringNextWave();
-
+	void ResetWave();
 private:
 	j1Timer timer;
 	j1Timer delay_timer;
@@ -100,6 +100,8 @@ private:
 	uint kills_for_next_wave = 0;
 	bool all_waves_ended = false;
 	bool can_bring_next_wave = true;
+
+
 };
 
 #endif // __j1WAVE_MANAGER_H__

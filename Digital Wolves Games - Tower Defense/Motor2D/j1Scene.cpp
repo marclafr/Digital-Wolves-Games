@@ -160,13 +160,6 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_GOD, { -200.0f, 372 }, S_ALLY);
 
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-		App->SaveGame("prove.xml");
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
-		App->LoadGame("prove.xml");
-	}
 	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);	
 	//--
@@ -364,11 +357,8 @@ void j1Scene::HandleInput( SDL_Event event)
 
 	case SDL_KEYDOWN:
 
-		if (event.button.button == SDL_SCANCODE_L)
+		if (event.button.button == SDL_SCANCODE_K)
 			App->LoadGame("save_game.xml");
-
-		if (event.button.button == SDL_SCANCODE_S)
-			App->SaveGame("save_game.xml");
 
 		if (event.button.button == SDL_SCANCODE_SPACE)
 			App->render->camera->Move(iPoint(1200, -250), 10);

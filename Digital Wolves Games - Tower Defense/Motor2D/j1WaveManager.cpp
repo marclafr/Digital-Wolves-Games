@@ -20,28 +20,28 @@ bool j1WaveManager::Start()
 	//TODO create waves in grups
 	Wave wave1;
 	//UnitGroup group20(U_SIEGERAM, 3, LEFT_UP);
-	UnitGroup group1(U_MILITIA, 20, LEFT_UP);
-	UnitGroup group2(U_MILITIA, 20, LEFT_DOWN);
-	UnitGroup group3(U_MILITIA, 20, RIGHT_UP);
-	UnitGroup group4(U_MILITIA, 20, RIGHT_DOWN);
+	UnitGroup group1(U_MILITIA, 3, LEFT_UP);
+	//UnitGroup group2(U_MILITIA, 20, LEFT_DOWN);
+	//UnitGroup group3(U_MILITIA, 20, RIGHT_UP);
+//	UnitGroup group4(U_MILITIA, 20, RIGHT_DOWN);
 	//wave1.PushBack(group20);
 	wave1.PushBack(group1, LEFT_UP);
-	wave1.PushBack(group2, LEFT_DOWN);
-	wave1.PushBack(group3, RIGHT_UP);
-	wave1.PushBack(group4, RIGHT_DOWN);
-	wave1.total_wave_units = 80;
+	//wave1.PushBack(group2, LEFT_DOWN);
+	//wave1.PushBack(group3, RIGHT_UP);
+	//wave1.PushBack(group4, RIGHT_DOWN);
+	wave1.total_wave_units = 3;
 	Wave wave2;
 	
-	UnitGroup group5(U_MANATARMS, 30, LEFT_UP);	
-	UnitGroup group6(U_MANATARMS, 30, LEFT_DOWN);
-	UnitGroup group7(U_MANATARMS, 30, RIGHT_UP);
-	UnitGroup group8(U_MANATARMS, 30, RIGHT_DOWN);
+	UnitGroup group5(U_MANATARMS, 3, LEFT_UP);	
+	//UnitGroup group6(U_MANATARMS, 30, LEFT_DOWN);
+	//UnitGroup group7(U_MANATARMS, 30, RIGHT_UP);
+	//UnitGroup group8(U_MANATARMS, 30, RIGHT_DOWN);
 	
 	wave2.PushBack(group5, LEFT_UP);
-	wave2.PushBack(group6, LEFT_DOWN);
-	wave2.PushBack(group7, RIGHT_UP);
-	wave2.PushBack(group8, RIGHT_DOWN);
-	wave2.total_wave_units = 120;
+	//wave2.PushBack(group6, LEFT_DOWN);
+	//wave2.PushBack(group7, RIGHT_UP);
+	//wave2.PushBack(group8, RIGHT_DOWN);
+	wave2.total_wave_units = 3;
 
 	Wave wave3;
 	UnitGroup group9(U_LONGSWORDMAN, 20, LEFT_UP);
@@ -334,7 +334,18 @@ bool j1WaveManager::Start()
 	
 	timer.Start();
 	spawning = true;
-
+	group_num_lu = 0;
+	group_num_ld = 0;
+	group_num_ru = 0;
+	group_num_rd = 0;
+	unit_num_lu = 0;
+	unit_num_ld = 0;
+	unit_num_ru = 0;
+	unit_num_rd = 0;
+	kills_for_next_wave = 0;
+	all_waves_ended = false;
+	can_bring_next_wave = true;
+	wave_ended = true;
 	return true;
 }
 
@@ -480,6 +491,7 @@ bool j1WaveManager::Update(float dt)
 		{
 			if (App->score->GetEnemiesKilled() >= kills_for_next_wave && can_bring_next_wave == false)
 			{
+				App->SaveGame("save_game.xml");
 				//TODO: SAVE GAME HERE DANI
 				timer.Start();
 				can_bring_next_wave = true;
@@ -572,4 +584,20 @@ bool j1WaveManager::BringNextWave()
 		return true;
 	}
 	return false;
+}
+
+void j1WaveManager::ResetWave()
+{
+	group_num_lu = 0;
+	group_num_ld = 0;
+	group_num_ru = 0;
+	group_num_rd = 0;
+	unit_num_lu = 0;
+	unit_num_ld = 0;
+	unit_num_ru = 0;
+	unit_num_rd = 0;
+	kills_for_next_wave = 0;
+	all_waves_ended = false;
+	can_bring_next_wave = true;
+	wave_ended = true;
 }
