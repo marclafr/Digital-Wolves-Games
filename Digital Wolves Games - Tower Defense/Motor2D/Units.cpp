@@ -566,7 +566,7 @@ void Unit::AI()
 
 				else
 					attacking->Damaged(attack);
-
+				if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
 				PlayAttackSound();
 				attacking = App->entity_manager->CheckForCombat(iPoint(GetX(), GetY()), range, GetSide());
 			}
@@ -897,5 +897,6 @@ void Unit::UnitDies()
 	if (GetSide() == S_ENEMY)
 		App->score->EnemyKilled();
 	changed = true;
+	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
 	PlayDeathSound();
 }
