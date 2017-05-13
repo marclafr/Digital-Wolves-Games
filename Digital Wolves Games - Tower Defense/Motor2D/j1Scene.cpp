@@ -138,6 +138,12 @@ bool j1Scene::Update(float dt)
 
 	App->render->BlitGameScene();
 
+	if (move_camera)
+	{
+		App->render->camera->SetPosition(camera_new_position);
+		move_camera = false;
+	}
+
 	//Selection quad
 	if (selecting)
 	{
@@ -738,6 +744,10 @@ void j1Scene::CreateSceneUI()
 	App->uimanager->AddLabel(685, 3, "AoE 2: Defenders");
 
 	//Down_HUD
+		//Minimap
+	App->uimanager->AddMinimap();
+
+		//Image
 	App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 643, 1366, 125 }, { 0, 1036, 1366, 125 });
 
 	//Button Description

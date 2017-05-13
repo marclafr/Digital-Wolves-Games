@@ -5,77 +5,104 @@
 #include "j1Map.h"
 #include "j1Window.h"
 #include "j1UIManager.h"
+#include "j1EntityManager.h"
+#include "IsoPrimitives.h"
+#include "j1Scene.h"
 #include "UIHUDMinimap.h"
 
-#define MINIMAP_WIDTH 237
-#define MINIMAP_HEIGHT 164
-#define MINIMAP_POSITIOIN {1584,911,MINIMAP_WIDTH,MINIMAP_HEIGHT}
-#define LT {1584,992}
-#define RT {1909,992}
-#define TT {1746,911}
-#define LD {1909,993}
-#define RD {1584,993}
-#define TD {1747,1074}
+#define MINIMAP_WIDTH 236
+#define MINIMAP_HEIGHT 119
+#define ISOMINIMAP_POSITIOIN {1243,706}
+#define MINIMAP_POSITION {1126, 647, MINIMAP_WIDTH, MINIMAP_HEIGHT}
+#define MINIMAP_ATLAS {926,2572,MINIMAP_WIDTH,MINIMAP_HEIGHT}
+#define RED_POINT_ATLAS {1164, 2572,2,2}
 
 UIHUDMinimap::UIHUDMinimap(UICOMPONENT_TYPE type) : UIComponents(type)
 {
-	this->Set(MINIMAP_POSITIOIN, {0,0,0,0});
-	rect_map = { (App->map->data.width * App->map->data.tile_width) / 2, (App->map->data.height * App->map->data.tile_height) /2 , App->map->data.width * App->map->data.tile_width,  App->map->data.height * App->map->data.tile_height };
-	quad_minimap_position = TransformPointFromMap(App->render->camera->GetCenter());
-	t_top.SetPoints(LT, RT, TT);
-	t_down.SetPoints(LD, RD, TD);
-	quad_atlas = { 200, 300, 10, 10 };
+	this->Set(MINIMAP_POSITION, MINIMAP_ATLAS);
+
+	minimap = new IsoRect(iPoint(ISOMINIMAP_POSITIOIN), MINIMAP_WIDTH, MINIMAP_HEIGHT);
+
+	int map_x = -(App->map->data.width * App->map->data.tile_width / 2.0f);
+	int map_y = 0;
+	int map_w = App->map->data.width * App->map->data.tile_width;
+	int map_h = App->map->data.height * App->map->data.tile_height + 75;
+	rect_map = { map_x, map_y , map_w , map_h };
+	
+	quad_atlas = { 0, 0, 50, 28 };
 }
 
 UIHUDMinimap::~UIHUDMinimap()
 {
-	DELETE_PTR(minimap_image);
+	DELETE_PTR(minimap);
 }
 
 bool UIHUDMinimap::Update()
 {
-	iPoint mouse_pos;
-	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
-	mouse_pos = App->render->ScreenToWorld(mouse_pos.x, mouse_pos.y);
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	fPoint mouse_pos(x,y);
 
-	if (t_top.PointInTriangle(mouse_pos) || t_down.PointInTriangle(mouse_pos))
+	if (minimap->Inside(iPoint(x,y)))
 	{
-		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN || App->input->GetMouseButtonDown(MK_LEFT) == KEY_REPEAT)
-			App->render->camera->SetPosition(TransformPointFromMinimap(mouse_pos));
+		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
+		{
+			mouse_pos.x -= GetPosRect().x;
+			mouse_pos.y -= GetPosRect().y;
+			iPoint new_camera_pos(MinimapToWorld(mouse_pos));
+			new_camera_pos.x += App->render->camera->GetWidth()/2;
+			new_camera_pos.y += App->render->camera->GetHeight()/2;
+			App->scene->move_camera = true;
+			App->scene->camera_new_position = new_camera_pos;
+		}
 	}
 	else
 	{
-		iPoint minimap_point = TransformPointFromMap(App->render->camera->GetCenter());
-		if (minimap_point != quad_minimap_position)
-			quad_minimap_position = minimap_point;
+		mouse_pos.x -= App->render->camera->GetPosition().x;
+		mouse_pos.y -= App->render->camera->GetPosition().y;
+		quad_minimap_position = WorldToMinimap(mouse_pos);
+		quad_atlas = { quad_minimap_position.x, quad_minimap_position.y, 100, 56 };
 	}
+
 	Draw();
 	return true;
 }
 
 void UIHUDMinimap::Draw()
 {
-	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), quad_minimap_position.x, quad_minimap_position.y, &quad_atlas);
+	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), GetPosRect().x - App->render->camera->GetPosition().x, GetPosRect().y - App->render->camera->GetPosition().y, &GetAtlasRect());
+
+	//Test unit print pos
+	fPoint unit_pos(0,1000);
+	unit_pos.x += 3600; // Iso To Rect
+	//unit_pos.x -= App->render->camera->GetPosition().x;
+	//unit_pos.y -= App->render->camera->GetPosition().y;
+	iPoint unit_minimap_pos = WorldToMinimap(unit_pos);
+	SDL_Rect red_point = RED_POINT_ATLAS;
+	//Draw enemy units points
+	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), unit_minimap_pos.x - App->render->camera->GetPosition().x, unit_minimap_pos.y - App->render->camera->GetPosition().y, &red_point);
 }
 
-iPoint UIHUDMinimap::TransformPointFromMap(iPoint map_point)
+iPoint UIHUDMinimap::WorldToMinimap(fPoint world_point)
 {
-	iPoint minimap_point;
-	float xi = GetPosRect().w*((float)(map_point.x  - rect_map.x) / (float)rect_map.w);
-	minimap_point.x = GetPosRect().x + xi;
-	float yi = GetPosRect().h*((((float)rect_map.y - map_point.y) / (float)rect_map.w));
-	minimap_point.y = GetPosRect().y - yi;
-	return minimap_point;
+	fPoint minimap_point;
+	minimap_point.x = world_point.x / rect_map.w * GetPosRect().w;
+	minimap_point.y = world_point.y / rect_map.h * GetPosRect().h;
+	minimap_point.x += GetPosRect().x;
+	minimap_point.y += GetPosRect().y;
+	return iPoint(minimap_point.x, minimap_point.y);
 }
-iPoint UIHUDMinimap::TransformPointFromMinimap(iPoint minimap_point)
+
+iPoint UIHUDMinimap::MinimapToWorld(fPoint minimap_point)
 {
-	iPoint map_point;
-	float xi = rect_map.w*((float)(minimap_point.x - GetPosRect().x) / (float)GetPosRect().w);
-	map_point.x = rect_map.x + xi;
-	float yi = rect_map.h*((float)(GetPosRect().y - minimap_point.y) / (float)GetPosRect().h);
-	map_point.y = rect_map.y - yi;
-	return map_point;
+	fPoint world_point;
+	minimap_point.x -= GetPosRect().w / 2.0f;
+	world_point.x = minimap_point.x / GetPosRect().w * rect_map.w * -1;
+	world_point.y = minimap_point.y / GetPosRect().h * rect_map.h * -1;
+	return iPoint(world_point.x, world_point.y);
 }
+
+/*
 void MinimapTriangle::SetPoints(iPoint left, iPoint right, iPoint top)
 {
 	this->left = left;
@@ -98,3 +125,4 @@ bool MinimapTriangle::PointInTriangle(iPoint pt)
 
 	return ((b1 == b2) && (b2 == b3));
 }
+*/

@@ -84,6 +84,10 @@ private:
 public:
 	bool win = false;
 	bool lose = false;
+	
+	//Minimap, when click move the camera
+	bool move_camera = false;
+	iPoint camera_new_position;
 
 	TOWER_TYPE placing_tower = T_NO_TYPE;
 	bool placing_wall = false;
