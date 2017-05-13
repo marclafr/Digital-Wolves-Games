@@ -42,7 +42,7 @@ public:
 	bool game_scene = true;
 
 	void SetRetPreUpdate(bool ret);
-
+	j1Timer time;
 private:
 	bool ret_preupdate = true;
 };

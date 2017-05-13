@@ -217,7 +217,6 @@ bool j1Textures::UnLoad(SDL_Texture * texture)
 	}
 
 	return false;
-	return false;
 }
 
 bool j1Textures::UnLoad(TextureID id)
@@ -234,6 +233,7 @@ bool j1Textures::UnLoad(TextureID id)
 			return true;
 		}
 	}
+
 
 	return false;
 }
@@ -254,6 +254,41 @@ SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface, TextureID id)
 	}
 
 	return texture;
+}
+
+SDL_Texture* const j1Textures::LoadSurfaceVideo(SDL_Surface* surface)
+{
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
+
+	if (texture == NULL)
+	{
+		LOG("Unable to create texture for video!! SDL Error: %s\n", SDL_GetError());
+	}
+	else
+	{
+		texturesVideo.push_back(texture);
+	}
+	
+	return texture;
+}
+
+bool j1Textures::UnloadVideo(SDL_Texture* image)
+{
+	
+
+	for (std::vector<SDL_Texture*>::iterator item = texturesVideo.begin(); item != texturesVideo.end(); ++item)
+	{
+	
+		if (image == (*item))
+		{
+			texturesVideo.erase(item);
+			SDL_DestroyTexture(*item);
+			return true;
+		}
+	}
+
+
+	return false;
 }
 
 // Retrieve size of a texture

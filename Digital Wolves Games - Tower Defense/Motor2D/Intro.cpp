@@ -1,7 +1,9 @@
+#include "j1App.h"
 #include "Intro.h"
 #include "j1Video.h"
 #include "j1Audio.h"
-
+#include "j1SceneManager.h"
+#include "j1MainMenu.h"
 j1Intro::j1Intro() : j1Module()
 {
 	name.assign("intro");
@@ -24,11 +26,10 @@ bool j1Intro::Awake()
 // Called before the first frame
 bool j1Intro::Start()
 {
-
 	//TODO 1 Initialize the video - Just call the function
-	//App->video->Initialize("final_logo_anim(1).avi");
-	//App->audio->PlayMusic("audio/music/logo_anim_audio.ogg", 0.0f);//------
-
+	App->video->Initialize("final_logo_anim (1).avi");
+	App->audio->PlayMusic("audio/music/logo_anim_audio.ogg", 0.0f);
+	time.Start();
 	return true;
 }
 
@@ -42,9 +43,14 @@ bool j1Intro::PreUpdate()
 bool j1Intro::Update(float dt)
 {
 	//TODO 2 Every frame you should take one frame of the video
-
-	//App->video->GrabAVIFrame();
-
+	if (time.ReadSec() < 5.2)
+	{
+		App->video->GrabAVIFrame();
+	}
+	if (time.ReadSec() >= 5.2)
+	{
+		App->scene_manager->ChangeScene(SC_MAIN_MENU);
+	}
 	//-------
 	return true;
 }
@@ -61,9 +67,7 @@ bool j1Intro::PostUpdate()
 bool j1Intro::CleanUp()
 {
 	//TODO 6 Clean the Avi files used
-	//App->video->CloseAVI();
-
-
+	App->video->CloseAVI();
 	return true;
 }
 

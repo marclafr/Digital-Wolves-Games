@@ -4,8 +4,6 @@
 #include "j1Module.h"
 #include "SDL\include\SDL.h"
 
-
-// TODO 0 INCLUDE LIBRARIES AND HEADERS
 #include <dshow.h>
 #include <Vfw.h>
 

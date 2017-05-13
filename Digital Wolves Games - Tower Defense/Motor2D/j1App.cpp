@@ -92,7 +92,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// Scenes
 	//AddModule(intro);
-	AddModule(main_menu);
+	AddModule(intro);
+	AddModule(main_menu,false);
 	AddModule(scene, false);
 	AddModule(score_scene, false);	
 

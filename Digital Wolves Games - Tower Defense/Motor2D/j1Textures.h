@@ -150,7 +150,9 @@ public:
 	bool UnLoad(Texture* texture);
 	bool UnLoad(SDL_Texture* texture);
 	bool UnLoad(TextureID id);
+	bool UnloadVideo(SDL_Texture* texture);
 	SDL_Texture* const	LoadSurface(SDL_Surface* surface, TextureID id = T_INTRO);
+	SDL_Texture* const LoadSurfaceVideo(SDL_Surface* surface);
 
 	void GetSize(const SDL_Texture* texture, uint& width, uint& height) const;
 	SDL_Texture* GetTexture(const TextureID id) const;
@@ -168,6 +170,8 @@ private:
 	std::vector<ConstructionRect> construction_rects;
 	std::vector<TowerRect> towers_rects;
 	std::vector<BuildingRect> buildings_rects;
+
+	std::vector<SDL_Texture*> texturesVideo;
 
 	uint ConstrString2Uint(const std::string name);
 	TOWER_TYPE TowerString2Enum(const std::string name, BUILDING_TEXTURE_TYPES &color);

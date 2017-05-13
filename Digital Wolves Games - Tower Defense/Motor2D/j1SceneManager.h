@@ -9,6 +9,7 @@ enum SCENES
 	SC_NO_SCENE,
 	SC_SCORE,
 	SC_MAIN_MENU,
+	SC_INTRO,
 	SC_GAME
 };
 
@@ -44,7 +45,7 @@ private:
 	j1Module* main_menu = nullptr;
 	j1Module* game_scene = nullptr;
 	j1Module* score_scene = nullptr;
-
+	j1Module* intro = nullptr;
 	SCENES current_scene = SC_NO_SCENE;
 
 };
