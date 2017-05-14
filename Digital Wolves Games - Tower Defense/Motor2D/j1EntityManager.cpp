@@ -37,9 +37,9 @@ Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)//T
 	return new_entity;
 }
 
-Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side) const
+Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, bool builded) const
 {
-	Entity* new_entity = (Entity*) new Building(b_type, pos, side);
+	Entity* new_entity = (Entity*) new Building(b_type, pos, builded);
 	entity_quadtree->PushBack(new_entity);
 	if (b_type == B_TOWNHALL)
 		App->uimanager->SetTownHall((Building*)new_entity);
@@ -266,9 +266,9 @@ void j1EntityManager::LoadResource(pugi::xml_node& data)
 {
 	pugi::xml_node actualresource = data;
 	fPoint pos(actualresource.attribute("posx").as_int(), actualresource.attribute("posy").as_int());
-	//Resources* actualres = (Resources*)App->entity_manager->CreateResource(RESOURCE_TYPE(actualresource.attribute("resource_type").as_int()), pos, actualresource.attribute("amount_collected").as_int(), actualresource.attribute("collect_time").as_int());
+	Resources* actualres = (Resources*)App->entity_manager->CreateResource(RESOURCE_TYPE(actualresource.attribute("resource_type").as_int()), pos, actualresource.attribute("amount_collected").as_int(), actualresource.attribute("collect_time").as_int());
 	
-	/*switch (actualres->GetResourceType())
+	switch (actualres->GetResourceType())
 	{
 	case R_WOOD:
 		App->scene->resources->SetWood(actualres);
@@ -283,21 +283,20 @@ void j1EntityManager::LoadResource(pugi::xml_node& data)
 		App->scene->resources->SetStone(actualres);
 		break;
 	}
-	*/
 }
 
 void j1EntityManager::LoadBuilding(pugi::xml_node& data)
 {
 	pugi::xml_node Actualbuilding = data;
 	fPoint pos(Actualbuilding.attribute("posx").as_int(), Actualbuilding.attribute("posy").as_int());
-	//Building* actualbuild = (Building*)App->entity_manager->CreateBuilding(BUILDING_TYPE(Actualbuilding.attribute("building_type").as_int()), pos, true);
-	//actualbuild->SetHp(Actualbuilding.attribute("hp").as_int());
-	//actualbuild->BuildingComplete();
-	/*if (actualbuild->GetBuildingType() == B_TOWNHALL)
+	Building* actualbuild = (Building*)App->entity_manager->CreateBuilding(BUILDING_TYPE(Actualbuilding.attribute("building_type").as_int()), pos, true);
+	actualbuild->SetHp(Actualbuilding.attribute("hp").as_int());
+	actualbuild->BuildingComplete();
+	if (actualbuild->GetBuildingType() == B_TOWNHALL)
 	{
 		App->scene->townhall = actualbuild;
 	}
-	*/
+	
 }
 
 void j1EntityManager::LoadUnit(pugi::xml_node& data)

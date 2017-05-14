@@ -11,27 +11,31 @@
 #include "Camera.h"
 
 
-Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILDING, pos, side), building_type(b_type)
+Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BUILDING, pos, S_ALLY), building_type(b_type)
 {
 	SDL_Rect rect;
 	SetTextureID(T_TURRET);
+	if (builded == true)
+		totally_built = true;
 	switch (b_type)
 	{
 	case B_TURRET:
-		SetSide(side);
+		SetSide(S_ALLY);
 		build_rect = IsoRect({ GetX(), GetY() }, 96, 47,	GetPivot());
 		break;
 
 	case B_WOOD_WALL:
-		SetSide(side);
+		SetSide(S_ALLY);
 		SetHp(500);
 		SetAttack(0);
+		SetRect({ 610,289,100,106 });
+		SetPivot(0.49 * 100, 106 * 0.754717);
 		SetArmor(8);
 		build_rect = IsoRect({ GetX(), GetY() }, 96, 47, GetPivot());
 		break;
 
 	case B_TOWNHALL:
-		SetSide(side);
+		SetSide(S_ALLY);
 		SetHp(1500);
 		SetAttack(0);
 		SetArmor(8);
@@ -43,7 +47,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		build_rect = IsoRect({ GetX(), GetY() }, 375, 170, {0,0});
 		break;
 	case B_UNIVERSITY:
-		SetSide(side);
+		SetSide(S_ALLY);
 		SetHp(1500);
 		SetAttack(0);
 		SetArmor(8);
