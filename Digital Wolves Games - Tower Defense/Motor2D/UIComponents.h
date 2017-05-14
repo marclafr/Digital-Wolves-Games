@@ -59,6 +59,7 @@ public:
 	void SetFrom(UIComponents* from);
 	void SetToDelete();
 	void SetAtlas(const SDL_Rect& atlas);
+	void SetPos(const SDL_Rect& pos);
 };
 
 #endif // __UICOMPONENTS_H__
