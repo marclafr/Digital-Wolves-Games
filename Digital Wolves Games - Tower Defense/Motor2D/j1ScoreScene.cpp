@@ -114,7 +114,6 @@ bool j1ScoreScene::Update(float dt)
 //		App->score->DecreaseScore();
 
 	OptionSelected();
-	ActualTrophie();
 	App->render->BlitScoreScene();
 	return true;
 }
