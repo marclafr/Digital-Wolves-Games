@@ -196,10 +196,6 @@ bool j1Scene::PostUpdate()
 		App->scene_manager->ChangeScene(SC_SCORE);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-		App->SaveGame("Gamefile.xml");
-
-
 
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
@@ -730,7 +726,7 @@ void j1Scene::HandleInput( SDL_Event event)
 		//--
 
 		if (event.button.button == App->input->menu)
-			App->scene_manager->ChangeScene(SC_SCORE);
+			App->uimanager->ShowInGameMenu();
 
 		if (event.button.button == SDL_SCANCODE_4)
 			if (App->scene->resources->CanTrainSoldier(U_TWOHANDEDSWORDMAN))

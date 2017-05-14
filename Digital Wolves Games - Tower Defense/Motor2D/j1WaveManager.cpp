@@ -20,28 +20,28 @@ bool j1WaveManager::Start()
 	//TODO create waves in grups
 	Wave wave1;
 	//UnitGroup group20(U_SIEGERAM, 3, LEFT_UP);
-	UnitGroup group1(U_MILITIA, 10, LEFT_UP);
-	UnitGroup group2(U_MILITIA, 10, LEFT_DOWN);
-	UnitGroup group3(U_MILITIA, 10, RIGHT_UP);
-	UnitGroup group4(U_MILITIA, 10, RIGHT_DOWN);
+	UnitGroup group1(U_MILITIA, 5, LEFT_UP);
+	UnitGroup group2(U_MILITIA, 5, LEFT_DOWN);
+	UnitGroup group3(U_MILITIA, 5, RIGHT_UP);
+	UnitGroup group4(U_MILITIA, 5, RIGHT_DOWN);
 	//wave1.PushBack(group20);
 	wave1.PushBack(group1, LEFT_UP);
 	wave1.PushBack(group2, LEFT_DOWN);
 	wave1.PushBack(group3, RIGHT_UP);
 	wave1.PushBack(group4, RIGHT_DOWN);
-	wave1.total_wave_units = 40;
+	wave1.total_wave_units = 20;
 	Wave wave2;
 
-	UnitGroup group5(U_MANATARMS, 20, LEFT_UP);
-	UnitGroup group6(U_MANATARMS, 20, LEFT_DOWN);
-	UnitGroup group7(U_MANATARMS, 20, RIGHT_UP);
-	UnitGroup group8(U_MANATARMS, 20, RIGHT_DOWN);
+	UnitGroup group5(U_MANATARMS, 10, LEFT_UP);
+	UnitGroup group6(U_MANATARMS, 10, LEFT_DOWN);
+	UnitGroup group7(U_MANATARMS, 10, RIGHT_UP);
+	UnitGroup group8(U_MANATARMS, 10, RIGHT_DOWN);
 
 	wave2.PushBack(group5, LEFT_UP);
 	wave2.PushBack(group6, LEFT_DOWN);
 	wave2.PushBack(group7, RIGHT_UP);
 	wave2.PushBack(group8, RIGHT_DOWN);
-	wave2.total_wave_units = 80;
+	wave2.total_wave_units = 40;
 
 	Wave wave3;
 	UnitGroup group9(U_LONGSWORDMAN, 15, LEFT_UP);
