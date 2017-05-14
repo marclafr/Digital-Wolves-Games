@@ -24,9 +24,9 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 
 	case B_WOOD_WALL:
 		SetSide(S_ALLY);
-		SetHp(500);
+		SetHp(200);
 		SetAttack(0);
-		SetArmor(8);
+		SetArmor(7);
 		SetRect({ 610,289,100,106 });
 		SetPivot(0.49 * 100, 106 * 0.754717);
 		build_rect = IsoRect({ (int)GetX(), (int)GetY() }, 96, 47, GetPivot());

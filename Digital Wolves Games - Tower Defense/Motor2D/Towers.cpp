@@ -21,7 +21,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetAttack(15);
 		SetArmor(1);
 		rate_of_fire = 0.85f;	//time between each attack in seconds
-		range = 300;
+		range = 290;
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;
 		SetBuildingType(B_TURRET);
@@ -33,7 +33,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 
 	case T_BOMBARD_TOWER:
 		SetHp(175);
-		SetAttack(35);
+		SetAttack(26);
 		SetArmor(10);
 		rate_of_fire = 1.95f;
 		range = 300;
@@ -47,11 +47,11 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		break;
 
 	case T_FIRE_TOWER:
-		SetHp(150);
-		SetAttack(150);
+		SetHp(195);
+		SetAttack(2);
 		SetArmor(1);
 		rate_of_fire = 1.0f;	//time between each attack in seconds
-		range = 300;
+		range = 250;
 		tower_type = T_FIRE_TOWER;
 		projectile_type = P_FIRE_ARROW;
 		SetBuildingType(B_TURRET);
@@ -61,8 +61,8 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetPivot(pivot.x, pivot.y);
 		break;
 	case T_ICE_TOWER:
-		SetHp(150);
-		SetAttack(15);
+		SetHp(175);
+		SetAttack(20);
 		SetArmor(1);
 		rate_of_fire = 1.0f;	//time between each attack in seconds
 		range = 300;
@@ -75,11 +75,11 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetPivot(pivot.x, pivot.y);
 		break;
 	case T_AIR_TOWER:
-		SetHp(150);
-		SetAttack(15);
+		SetHp(165);
+		SetAttack(12);
 		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
-		range = 300;
+		rate_of_fire = 0.5f;	//time between each attack in seconds
+		range = 350;
 		tower_type = T_AIR_TOWER;
 		projectile_type = P_AIR_ARROW;
 		SetBuildingType(B_TURRET);
@@ -310,7 +310,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_FIRE_ARROW;
 					tower_type = T_FIRE_TOWER;
 					SetBuildingType(B_TURRET_UPGRADED);
-					SetRange(- 0.5f);
+					SetRange(- 50);
 					SetAttack(GetAttack() + 13);
 					SetHp(GetHp() + 45);
 
@@ -339,7 +339,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					tower_type = T_AIR_TOWER;
 					SetBuildingType(B_TURRET_UPGRADED);
 					SetSpeed(0.5f);
-					SetRange(2.0f);
+					SetRange(50);
 					SetAttack(GetAttack() + 2);
 					SetHp(GetHp() + 15);
 
@@ -388,7 +388,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					tower_type = T_BOMBARD_AIR_TOWER;
 					SetBuildingType(B_CANNON_UPGRADED);
 					SetSpeed(0.6f);
-					SetRange(1.5f);
+					SetRange(40);
 				}
 				break;
 			default:

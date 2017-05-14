@@ -70,7 +70,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(58);
 		attack = 7;
 		SetArmor(3);
-		speed = 1.25f;
+		speed = 1.28f;
 		rate_of_fire = 150.0f;
 		range = 30;
 		vision_range = 300;
@@ -85,9 +85,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 
 	case U_LONGSWORDMAN:
 		SetHp(118);
-		attack = 9;
-		SetArmor(1);
-		speed = 1.25f;
+		attack = 10;
+		SetArmor(4);
+		speed = 1.30f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -102,9 +102,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 
 	case U_TWOHANDEDSWORDMAN:
 		SetHp(95);
-		attack = 12;
-		SetArmor(1);
-		speed = 1.25f;
+		attack = 13;
+		SetArmor(5);
+		speed = 1.30f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -119,9 +119,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 
 	case U_CHAMPION:
 		SetHp(152);
-		attack = 13;
-		SetArmor(2);
-		speed = 1.25f;
+		attack = 14;
+		SetArmor(6);
+		speed = 1.30f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -138,7 +138,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(55);
 		attack = 4;
 		SetArmor(1);
-		speed = 1.25f;
+		speed = 1.29f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -155,7 +155,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(65);
 		attack = 5;
 		SetArmor(1);
-		speed = 1.25f;
+		speed = 1.29f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -175,7 +175,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(41);
 		attack = 5;
 		SetArmor(1);
-		speed = 1.26f;
+		speed = 1.29f;
 		rate_of_fire = 90.0f;
 		range = 250;
 		vision_range = 250;
@@ -193,7 +193,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(50);
 		attack = 7;
 		SetArmor(1);
-		speed = 1.16f;
+		speed = 1.19f;
 		rate_of_fire = 100.0f;
 		range = 200;
 		vision_range = 150;
@@ -227,7 +227,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(81);
 		attack = 8;
 		SetArmor(1);
-		speed = 1.4f;
+		speed = 1.45f;
 		rate_of_fire = 100.0f;
 		range = 250;
 		vision_range = 250;
@@ -245,9 +245,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 
 	case U_PALADIN:
 		SetHp(167);
-		attack = 15;
-		SetArmor(3);
-		speed = 1.50f;
+		attack = 16;
+		SetArmor(6);
+		speed = 1.55f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
@@ -261,10 +261,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		break;
 
 	case U_KNIGHT:
-		SetHp(135);
+		SetHp(137);
 		attack = 12;
-		SetArmor(1);
-		speed = 1.55f;
+		SetArmor(5);
+		speed = 1.6f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
@@ -278,10 +278,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		break;
 
 	case U_CAVALIER:
-		SetHp(115);
+		SetHp(125);
 		attack = 13;
-		SetArmor(1);
-		speed = 1.50f;
+		SetArmor(3);
+		speed = 1.55f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
@@ -298,10 +298,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		//SIEGE
 
 	case U_SIEGERAM:
-		SetHp(400);
+		SetHp(600);
 		attack = 110;
-		SetArmor(-3);
-		speed = 0.7f;
+		SetArmor(3);
+		speed = 0.95f;
 		rate_of_fire = 250.0f;
 		range = 25;
 		vision_range = 100;
@@ -315,10 +315,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		break;
 
 	case U_MANGONEL:
-		SetHp(350);
-		attack = 100;
-		SetArmor(-1);
-		speed = 0.8f;
+		SetHp(500);
+		attack = 80;
+		SetArmor(-6);
+		speed = 0.95f;
 		rate_of_fire = 250.0f;
 		range = 300;
 		vision_range = 300;

@@ -105,9 +105,9 @@ bool j1WaveManager::Start()
 	UnitGroup group35(U_CHAMPION, 30, RIGHT_UP);
 	UnitGroup group36(U_CHAMPION, 30, RIGHT_DOWN);
 	UnitGroup group37(U_MANGONEL, 6, LEFT_UP);
-	UnitGroup group38(U_MANGONEL, 6, LEFT_DOWN);
+	UnitGroup group38(U_SIEGERAM, 6, LEFT_DOWN);
 	UnitGroup group39(U_MANGONEL, 6, RIGHT_UP);
-	UnitGroup group40(U_MANGONEL, 6, RIGHT_DOWN);
+	UnitGroup group40(U_SIEGERAM, 6, RIGHT_DOWN);
 	UnitGroup group41(U_CHAMPION, 30, LEFT_UP);
 	UnitGroup group42(U_CHAMPION, 30, LEFT_DOWN);
 	UnitGroup group43(U_CHAMPION, 30, RIGHT_UP);
@@ -207,9 +207,9 @@ bool j1WaveManager::Start()
 	UnitGroup group86(U_CHAMPION, 20, LEFT_DOWN);
 	UnitGroup group87(U_CHAMPION, 20, RIGHT_UP);
 	UnitGroup group88(U_CHAMPION, 20, RIGHT_DOWN);
-	UnitGroup group89(U_MANGONEL, 10, LEFT_UP);
+	UnitGroup group89(U_SIEGERAM, 10, LEFT_UP);
 	UnitGroup group90(U_MANGONEL, 10, LEFT_DOWN);
-	UnitGroup group91(U_MANGONEL, 10, RIGHT_UP);
+	UnitGroup group91(U_SIEGERAM, 10, RIGHT_UP);
 	UnitGroup group92(U_MANGONEL, 10, RIGHT_DOWN);
 
 	wave8.PushBack(group73, LEFT_UP);
@@ -235,25 +235,25 @@ bool j1WaveManager::Start()
 	wave8.total_wave_units = 320;
 
 	Wave wave9;
-	UnitGroup group93(U_MANGONEL, 10, LEFT_UP);
+	UnitGroup group93(U_SIEGERAM, 10, LEFT_UP);
 	UnitGroup group94(U_MANGONEL, 10, LEFT_DOWN);
 	UnitGroup group95(U_MANGONEL, 10, RIGHT_UP);
-	UnitGroup group96(U_MANGONEL, 10, RIGHT_DOWN);
+	UnitGroup group96(U_SIEGERAM, 10, RIGHT_DOWN);
 	UnitGroup group97(U_CAVALRYARCHER, 15, LEFT_UP);
 	UnitGroup group98(U_CAVALRYARCHER, 15, LEFT_DOWN);
 	UnitGroup group99(U_CAVALRYARCHER, 15, RIGHT_UP);
 	UnitGroup group100(U_CAVALRYARCHER, 15, RIGHT_DOWN);
 	UnitGroup group101(U_MANGONEL, 15, LEFT_UP);
-	UnitGroup group102(U_MANGONEL, 15, LEFT_DOWN);
-	UnitGroup group103(U_MANGONEL, 15, RIGHT_UP);
+	UnitGroup group102(U_SIEGERAM, 15, LEFT_DOWN);
+	UnitGroup group103(U_SIEGERAM, 15, RIGHT_UP);
 	UnitGroup group104(U_MANGONEL, 15, RIGHT_DOWN);
 	UnitGroup group105(U_HEAVYCAVALRYARCHER, 20, LEFT_UP);
 	UnitGroup group106(U_HEAVYCAVALRYARCHER, 20, LEFT_DOWN);
 	UnitGroup group107(U_HEAVYCAVALRYARCHER, 20, RIGHT_UP);
 	UnitGroup group108(U_HEAVYCAVALRYARCHER, 20, RIGHT_DOWN);
 	UnitGroup group109(U_MANGONEL, 15, LEFT_UP);
-	UnitGroup group110(U_MANGONEL, 15, LEFT_DOWN);
-	UnitGroup group111(U_MANGONEL, 15, RIGHT_UP);
+	UnitGroup group110(U_SIEGERAM, 15, LEFT_DOWN);
+	UnitGroup group111(U_SIEGERAM, 15, RIGHT_UP);
 	UnitGroup group112(U_MANGONEL, 15, RIGHT_DOWN);
 
 	wave9.PushBack(group93, LEFT_UP);

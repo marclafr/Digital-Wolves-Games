@@ -9,10 +9,10 @@
 
 ResourceManager::ResourceManager(): wood(STARTING_WOOD), food (STARTING_FOOD), gold (STARTING_GOLD), stone (STARTING_STONE)
 {
-	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(1392, 858),10,10);
-	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1240, 979),145, 6);
-	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1588, 952),160, 10);
-	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1419, 1031),92, 6);
+	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(1392, 858),30,5);
+	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1240, 979),75, 6);
+	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1588, 952),65, 5);
+	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1419, 1031),62, 6);
 }
 
 void ResourceManager::SetWood(Resources * wood)

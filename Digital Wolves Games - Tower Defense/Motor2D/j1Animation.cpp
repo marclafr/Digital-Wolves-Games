@@ -237,6 +237,9 @@ const SDL_Rect Animation::GetFrame(int frame_num) const
 
 const iPoint Animation::GetPivot(int frame_num) const
 {
+	if (frame_num >= frames.size())
+		frame_num = 0;
+
 	return pivot_points[frame_num];
 }
 
