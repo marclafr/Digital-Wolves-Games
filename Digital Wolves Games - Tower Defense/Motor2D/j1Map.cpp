@@ -314,67 +314,10 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		ret.y = iso_pos.x / tile_diagonal;
 		ret.x = iso_pos.y / tile_diagonal;
 
-		/*
-		int m = x / data.tile_width;
-		int n = y / data.tile_height;
-		
-		int x_square = x % data.tile_width;
-		int y_square = y % data.tile_height;
-
-		int center_x = data.tile_width / 2;
-		int center_y = data.tile_height / 2;
-
-		int square_x_relative_to_center = x_square - center_x;
-		int square_y_relative_to_center = y_square - center_y;
-
-		if (square_x_relative_to_center >= 0 && square_y_relative_to_center >= 0)
-			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
-			{
-				ret.x = m;
-				ret.y = n;
-			}
-			else
-			{
-				ret.x = m;
-				ret.y = n - 1;
-			}
-
-		if (square_x_relative_to_center < 0 && square_y_relative_to_center >= 0)
-			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
-			{
-				ret.x = m;
-				ret.y = n;
-			}
-			else
-			{
-				ret.x = m + 1;
-				ret.y = n;
-			}
-
-		if (square_x_relative_to_center >= 0 && square_y_relative_to_center < 0)
-			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
-			{
-				ret.x = m;
-				ret.y = n;
-			}
-			else
-			{
-				ret.x = m - 1;
-				ret.y = n;
-			}
-
-		if (square_x_relative_to_center < 0 && square_y_relative_to_center < 0)
-			if (square_y_relative_to_center < square_x_relative_to_center * sin(TILE_ANGLE) + data.tile_height / 2)
-			{
-				ret.x = m;
-				ret.y = n;
-			}
-			else
-			{
-				ret.x = m + 1;
-				ret.y = n - 1;
-			}*/
-
+		if (ret.x < 0) ret.x = 0;
+		if (ret.y < 0) ret.y = 0;
+		if (ret.x > 74) ret.x = 74;
+		if (ret.y > 74) ret.y = 74;
 	}
 	else
 	{
