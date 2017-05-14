@@ -96,23 +96,29 @@ void Building::AI()
 
 void Building::Draw()
 {
-	if (totally_built != true)
+	if (totally_built == true)
+	{
+		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
+			App->render->PushInGameSprite(this);
+	}
+	else
 	{
 		if (buildtimer.ReadSec() <= 6)
 		{
-			SetRect({98,0,100,75});
-			SetPivot(0.55 * 100, 75*0.643836);
+			SetRect({ 98,0,100,75 });
+			SetPivot(0.55 * 100, 75 * 0.643836);
 		}
-		
+
 		else
 		{
 			SetRect({ 610,289,100,106 });
 			SetPivot(0.49 * 100, 106 * 0.754717);
 			totally_built = true;
 		}
+
+		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
+			App->render->PushInGameSprite(this);
 	}
-	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
-		App->render->PushInGameSprite(this);
 }
 
 const BUILDING_TYPE Building::GetBuildingType() const
