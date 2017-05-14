@@ -18,8 +18,9 @@
 #define MANGONEL_HP 500
 
 #define TURRET_HP 250
-#define WOODWALL_HP 500
+#define WOODWALL_HP 250
 #define STONEWALL_HP 500
+#define BRICKWALL_HP 750
 #define TOWNHALL_HP 1500
 
 #define RESOURCES_HP 10
@@ -497,13 +498,13 @@ const char * GetTowerUpgradePrice(const TURRET_UPGRADE type)
 	switch (type)
 	{
 	case TU_FIRE:
-		ret = "???????????";
+		ret = "125 Gold";
 		break;
 	case TU_ICE:
-		ret = "???????????";
+		ret = "150 Gold";
 		break;
 	case TU_AIR:
-		ret = "???????????";
+		ret = "100 Gold";
 		break;
 	default:
 		ret = "Error tower upgrade";
@@ -542,10 +543,10 @@ const char * GetWallUpgradePrice(const BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_WOOD_WALL:
-		ret = "???????????"; // PRICE stone wall
+		ret = "75 Stone"; // PRICE stone wall
 		break;
 	case B_STONE_WALL:
-		ret = "???????????"; // PRICE brick wall
+		ret = "100 Stone"; // PRICE brick wall
 		break;
 	default:
 		ret = "Error wall upgrade";
@@ -677,6 +678,9 @@ int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp, const uint
 		break;
 	case B_STONE_WALL:
 		ret = hp * pixels / STONEWALL_HP;
+		break;
+	case B_BRICK_WALL:
+		ret = hp * pixels / BRICKWALL_HP;
 		break;
 	case B_TOWNHALL:
 		ret = hp * pixels / TOWNHALL_HP;

@@ -8,11 +8,17 @@
 
 #define BASIC_TOWER_WOOD_COST 115
 #define BASIC_TOWER_STONE_COST 50
-#define BASIC_BOMBARD_TOWER_WOOD_COST 135
-#define BASIC_BOMBARD_TOWER_STONE_COST 80
-#define TWOHANDED_WOOD_COST 60
-#define TWOHANDED_STONE_COST 40
-#define BASIC_WALL_STONE_COST 55
+#define BOMBARD_TOWER_WOOD_COST 135
+#define BOMBARD_TOWER_STONE_COST 80
+
+#define TU_FIRE_GOLD_COST 125
+#define TU_ICE_GOLD_COST 150
+#define TU_AIR_GOLD_COST 100
+
+//TODO ADD PRICES 
+#define BASIC_WALL_STONE_COST 50
+#define UPGRADED_WALL_STONE_COST 75
+#define UPGRADED_WALL_BRICK_COST 100
 
 #define CHAMPION_FOOD_COST 100
 #define ARBALEST_FOOD_COST 125
@@ -78,6 +84,10 @@ public:
 	void BuildWall(BUILDING_TYPE type);
 	bool CanTrainSoldier(UNIT_TYPE type);
 	void TrainSoldier(UNIT_TYPE type);
+	bool CanUpgradeTower(TOWER_TYPE type);
+	void UpgradeTower(TOWER_TYPE type);
+	bool CanUpgradeWall(BUILDING_TYPE type);
+	void UpgradeWall(BUILDING_TYPE type);
 
 
 	void SaveResourcesAmount(pugi::xml_node&);

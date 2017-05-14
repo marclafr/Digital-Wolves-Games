@@ -55,6 +55,9 @@ public:
 
 	bool Save(pugi::xml_node&)const;
 
+	void j1EntityManager::BlitMinimap() const;
+	bool j1EntityManager::AbleToBuild(iPoint pos);
+
 	void GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entity*>& vec) const;
 
 private:
