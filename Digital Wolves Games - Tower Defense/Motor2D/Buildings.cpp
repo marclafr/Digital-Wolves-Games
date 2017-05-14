@@ -224,10 +224,11 @@ const int Building::GetRange() const
 
 void Building::Save(pugi::xml_node &data)
 {
-	pugi::xml_node build = data.child("buildings");
-	pugi::xml_node ActualBuilding = build.append_child("building");
-	ActualBuilding.append_attribute("building_type") = GetBuildingType();
-	ActualBuilding.append_attribute("posx") = GetX();
-	ActualBuilding.append_attribute("posy") = GetY();
-	ActualBuilding.append_attribute("hp") = GetHp();
+		pugi::xml_node build = data.child("buildings");
+		pugi::xml_node ActualBuilding = build.append_child("building");
+		ActualBuilding.append_attribute("building_type") = GetBuildingType();
+		ActualBuilding.append_attribute("posx") = GetX();
+		ActualBuilding.append_attribute("posy") = GetY();
+		ActualBuilding.append_attribute("hp") = GetHp();
+
 }
