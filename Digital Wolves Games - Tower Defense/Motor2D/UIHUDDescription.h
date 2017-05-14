@@ -42,6 +42,7 @@ public:
 	void SetLabelTowerUpgrade();
 	void SetLabelWallUpgrade();
 	void SetLabelInvestigations();
+	void SetLabelDestruction();
 
 	void Clear();
 };

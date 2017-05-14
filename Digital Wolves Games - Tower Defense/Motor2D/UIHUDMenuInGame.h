@@ -41,7 +41,7 @@ private:
 	bool deleted = true;
 
 public:
-	UIHUDMenuInGame(UICOMPONENT_TYPE type = UIT_UIHUDMENUINGAME) : UIComponents(type) {}
+	UIHUDMenuInGame(UICOMPONENT_TYPE type = UIT_UIHUDMENUINGAME) : UIComponents(type) { SetInteractive(false); }
 	~UIHUDMenuInGame();
 
 	void SetEnableButton(UICheckbutton* enable);

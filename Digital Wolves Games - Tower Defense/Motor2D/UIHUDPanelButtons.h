@@ -32,9 +32,10 @@ private:
 	iPoint position;
 	iPoint atlas;
 	Task* task;
+	bool delete_entity;
 
 public:
-	info_button(iPoint position, iPoint atlas, Task* task) : position(position), atlas(atlas), task(task) {}
+	info_button(iPoint position, iPoint atlas, Task* task, bool delete_entity) : position(position), atlas(atlas), task(task), delete_entity(delete_entity) {}
 	~info_button()
 	{
 		DELETE_PTR(task);
@@ -44,6 +45,7 @@ public:
 	void ButtonToDelete();
 	const UIButton* GetButton() const;
 	const Task* GetTask() const;
+	bool IsForDelete();
 };
 
 class UIHUDPanelButtons : public UIComponents
@@ -68,7 +70,7 @@ public:
 	void SetPanel(Building* building);
 	bool Update();
 	//x - 0 to 4 | y - 0 to 2 | Max 15 buttons
-	info_button* AddButton(BUILDING_PANELINFO type,iPoint position, iPoint atlas, Task* task);
+	info_button* AddButton(BUILDING_PANELINFO type,iPoint position, iPoint atlas, Task* task, bool delete_button = false);
 
 	void CreatePanel();
 	void DeletePanel();

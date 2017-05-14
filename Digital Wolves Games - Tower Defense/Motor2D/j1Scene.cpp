@@ -646,7 +646,7 @@ void j1Scene::HandleInput( SDL_Event event)
 
 	switch (event.type)
 	{
-	case SDL_MOUSEBUTTONDOWN:		
+	case SDL_MOUSEBUTTONDOWN:
 		App->input->GetMousePosition(x, y);
 
 		if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
@@ -660,7 +660,7 @@ void j1Scene::HandleInput( SDL_Event event)
 				select_rect.h = select_rect.y;
 
 				selecting = true;
-				App->entity_manager->CheckClick(x,y);
+				//App->entity_manager->CheckClick(x,y);
 			}
 
 		if (event.button.button == MK_RIGHT)
@@ -698,7 +698,7 @@ void j1Scene::HandleInput( SDL_Event event)
 
 		if (event.button.button == App->input->center_to_townhall)
 		{
-			iPoint pos(-75 + App->render->camera->GetWidth()/2, 0);
+			iPoint pos(-75 + App->render->camera->GetWidth() / 2, 0);
 			App->render->camera->SetPosition(pos);
 		}
 		//building construction
@@ -711,7 +711,7 @@ void j1Scene::HandleInput( SDL_Event event)
 		}
 
 		if (event.button.button == App->input->build_turret)
-			placing_tower = T_BASIC_TOWER;	
+			placing_tower = T_BASIC_TOWER;
 
 		if (event.button.button == App->input->build_bombard_turret)
 			placing_tower = T_BOMBARD_TOWER;
@@ -784,21 +784,21 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TURRET, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_FIRE_TOWER), new UpgradeTowerTask(TU_FIRE));
 	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
 	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
-	panel->AddButton(BP_TURRET, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
+	panel->AddButton(BP_TURRET, iPoint(4, 2), { 930,962 }, new DeleteTowerTask(), true);
 
 	panel->AddButton(BP_CANNON, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_FIRE_TOWER), new UpgradeTowerTask(TU_FIRE));
 	panel->AddButton(BP_CANNON, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
 	panel->AddButton(BP_CANNON, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
-	panel->AddButton(BP_CANNON, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
+	panel->AddButton(BP_CANNON, iPoint(4, 2), { 930,962 }, new DeleteTowerTask(), true);
 
 	panel->AddButton(BP_TURRET_UPGRADED, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
 
 	//Walls
 	panel->AddButton(BP_WOOD_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_STONE_WALL));
-	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask(), true);
 
 	panel->AddButton(BP_STONE_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_BRICK_WALL));
-	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask(), true);
 
 	panel->AddButton(BP_BRICK_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
 
