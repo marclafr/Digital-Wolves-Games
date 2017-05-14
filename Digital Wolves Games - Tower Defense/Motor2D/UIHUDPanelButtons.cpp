@@ -347,7 +347,9 @@ void UIHUDPanelButtons::CreatePanel()
 		{
 			(*ib_item)->CreateButton();
 			UpgradeTowerTask* upgrade_task = (UpgradeTowerTask*)(*ib_item)->GetTask();
+			DeleteTowerTask* delete_task = (DeleteTowerTask*)(*ib_item)->GetTask();
 			upgrade_task->SetTower((Tower*)b_selected);
+			delete_task->SetTower((Tower*)b_selected);
 		}
 		break;
 	case BP_CANNON:
@@ -371,6 +373,8 @@ void UIHUDPanelButtons::CreatePanel()
 		{
 			(*ib_item)->CreateButton();
 			DeleteWallTask* delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
+			UpgradeWallTask* upgrade_w_task = (UpgradeWallTask*)(*ib_item)->GetTask();
+			upgrade_w_task->SetWall((Building*)b_selected);
 			delete_w_task->SetWall((Building*)b_selected);
 		}
 		break;
@@ -379,6 +383,8 @@ void UIHUDPanelButtons::CreatePanel()
 		{
 			(*ib_item)->CreateButton();
 			DeleteWallTask* delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
+			UpgradeWallTask* upgrade_w_task = (UpgradeWallTask*)(*ib_item)->GetTask();
+			upgrade_w_task->SetWall((Building*)b_selected);
 			delete_w_task->SetWall((Building*)b_selected);
 		}
 		break;

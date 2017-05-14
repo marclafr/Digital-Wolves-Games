@@ -171,9 +171,13 @@ void UIHUDDescription::Clear()
 	tower_desc = T_NO_TYPE;
 	tower_upgrade_desc = TU_NULL;
 	investigation_desc = INV_NONE;
+	if(background_name != nullptr)
 	background_name->SetToDelete();
+	if (description_name != nullptr)
 	description_name->SetToDelete();
+	if (background_price != nullptr)
 	background_price->SetToDelete();
+	if (description_price != nullptr)
 	description_price->SetToDelete();
 	selected = nullptr;
 	created = false;

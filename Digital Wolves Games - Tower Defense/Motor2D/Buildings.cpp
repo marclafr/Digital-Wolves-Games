@@ -137,12 +137,12 @@ void Building::UpgradeWall(BUILDING_TYPE type)
 	{
 		switch (type)
 		{
-		case B_STONE_WALL:
+		case B_WOOD_WALL:
 			SetRect({ 1020,12,99,178});
 			SetPivot(0.494949 * 99, 178 * 0.865169);
 			building_type = B_STONE_WALL;
 			break;
-		case B_BRICK_WALL:
+		case B_STONE_WALL:
 			SetRect({0,66,95,169});
 			SetPivot(0.454211*96,169*0.899822);
 			building_type = B_BRICK_WALL;
