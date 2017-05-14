@@ -8,8 +8,9 @@
 #include "Towers.h"
 #include "j1Investigations.h"
 
-#define TURRET_BUILD 11000
-#define STONEWALL_BUILD 11000
+#define TURRET_BUILD 11
+#define CANNON_BUILD 11
+#define WOODWALL_BUILD 6
 
 #define ICON_SIZE 25
 
@@ -31,10 +32,17 @@ const bool isBuilded(const Entity* build);
 iPoint GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type);
 const uint GetInvestigationPercentage(const Investigation* type);
 const char* GetInvestigationName(const INVESTIGATION_TYPE type);
-const char* GetInvestigationPrice(const INVESTIGATION_TYPE type);
+void GetInvestigationPrice(const INVESTIGATION_TYPE type, std::string & price);
+
 
 iPoint GetTowerIconPositionFromAtlas(const TOWER_TYPE type);
 const char* GetTowerName(const TOWER_TYPE type);
+const char* GetTowerPrice(const TOWER_TYPE type);
+const char* GetTowerUpgradeName(const TURRET_UPGRADE type);
+const char* GetTowerUpgradePrice(const TURRET_UPGRADE type);
+
+const char* GetWallUpgradeName(const BUILDING_TYPE type);
+const char* GetWallUpgradePrice(const BUILDING_TYPE type);
 
 const char* GetSideName(const Side type);
 

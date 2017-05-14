@@ -161,6 +161,11 @@ bool j1Investigations::WantToInvestigate(Investigation * investigation)
 	return false;
 }
 
+int j1Investigations::GetInvestigationCost(Investigation * investigation)
+{
+	return investigation->cost;
+}
+
 bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 {
 	if (investigation->upgrade_timer.ReadSec() >= investigation->time_to_upgrade)
