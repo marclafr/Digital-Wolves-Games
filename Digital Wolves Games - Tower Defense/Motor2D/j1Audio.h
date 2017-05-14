@@ -33,6 +33,23 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
+	void LoadAllFX();
+
+	//FX UNITS
+	unsigned int fx_twohanded_die01;
+	unsigned int fx_twohanded_die02;
+	unsigned int fx_twohanded_die03;
+	unsigned int fx_twohanded_die04;
+	unsigned int fx_twohanded_die05;
+	unsigned int fx_attack01;
+	unsigned int fx_attack02;
+	unsigned int fx_attack03;
+
+	//FX BUILDING
+	unsigned int fx_building_destroyed;
+	unsigned int fx_arrow;
+	unsigned int fx_cannon;
+	unsigned int fx_construction;
 private:
 
 	_Mix_Music*				music = NULL;

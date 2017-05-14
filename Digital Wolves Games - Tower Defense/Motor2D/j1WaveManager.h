@@ -62,7 +62,7 @@ public:
 	bool CleanUp();
 
 	bool BringNextWave();
-
+	int GetWaveNum();
 private:
 	j1Timer timer;
 	j1Timer delay_timer;

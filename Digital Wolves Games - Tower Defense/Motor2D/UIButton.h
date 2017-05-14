@@ -50,6 +50,7 @@ public:
 	void SetTask(Task* task);
 	void SetLabel(UILabel*);
 	void SetNotDeleteTask();
+	UILabel* GetLabel() const;
 };
 
 #endif // __UIBUTTON_H__

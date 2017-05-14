@@ -125,6 +125,7 @@
     <ClCompile Include="UICheckbutton.cpp" />
     <ClCompile Include="UIComponents.cpp" />
     <ClCompile Include="UIHUDDescription.cpp" />
+    <ClCompile Include="UIHUDMenuInGame.cpp" />
     <ClCompile Include="UIHUDMinimap.cpp" />
     <ClCompile Include="UIHUDPanelButtons.cpp" />
     <ClCompile Include="UIHUDPanelInfo.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="UIComponents.h" />
     <ClInclude Include="UIGetEntitiesInfo.h" />
     <ClInclude Include="UIHUDDescription.h" />
+    <ClInclude Include="UIHUDMenuInGame.h" />
     <ClInclude Include="UIHUDMinimap.h" />
     <ClInclude Include="UIHUDPanelButtons.h" />
     <ClInclude Include="UIHUDPanelInfo.h" />

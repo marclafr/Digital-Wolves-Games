@@ -169,6 +169,9 @@
     <ClCompile Include="theoraplay.c">
       <Filter>Awsome_Game\Theoraplay</Filter>
     </ClCompile>
+    <ClCompile Include="UIHUDMenuInGame.cpp">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -353,6 +356,9 @@
     </ClInclude>
     <ClInclude Include="theoraplay.h">
       <Filter>Awsome_Game\Theoraplay</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHUDMenuInGame.h">
+      <Filter>Awsome_Game\UIComponents\HUD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

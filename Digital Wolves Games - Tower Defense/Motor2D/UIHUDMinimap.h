@@ -6,21 +6,6 @@
 #include "UIComponents.h"
 #include "p2Point.h"
 
-/*
-struct MinimapTriangle
-{
-private:
-	iPoint left;
-	iPoint right;
-	iPoint top;
-
-public:
-	void SetPoints(iPoint left, iPoint right, iPoint top);
-	float sign(iPoint p1, iPoint p2, iPoint p3);
-	bool PointInTriangle(iPoint pt);
-};
-*/
-
 class IsoRect;
 
 class UIHUDMinimap : public UIComponents

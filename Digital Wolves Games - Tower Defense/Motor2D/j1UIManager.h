@@ -20,6 +20,7 @@ class UIHUDResources;
 class UIHUDPanelInfo;
 class UIHUDDescription;
 class UIHUDScoreBar;
+class UIHUDMenuInGame;
 struct info_button;
 class Building;
 class Resources;
@@ -69,6 +70,7 @@ public:
 	UIHUDScoreBar* AddScoreBar();
 	void AddTownHallBarLife();
 	void AddMinimap();
+	UIHUDMenuInGame* AddMenuInGame();
 
 	const SDL_Texture* GetAtlas() const;
 	const std::list<UIComponents*>::iterator GetLastComponent();

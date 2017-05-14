@@ -47,9 +47,9 @@ bool UICheckbutton::Update()
 	if (IsFocus())
 		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
 			if (cb_stat == CB_CHECK)
-				cb_stat == CB_UNCHECK;
+				cb_stat = CB_UNCHECK;
 			else
-				cb_stat == CB_CHECK;
+				cb_stat = CB_CHECK;
 
 	Draw();
 	return true;

@@ -377,3 +377,20 @@ void ResourceManager::TrainSoldier(UNIT_TYPE type)
 	}
 	App->entity_manager->CreateUnit(type, STARTING_POS, S_ALLY);
 }
+
+void ResourceManager::SaveResourcesAmount(pugi::xml_node &data)
+{
+	pugi::xml_node actualresource = data.append_child("ResourcesAmount");
+	actualresource.append_attribute("wood") = GetWood();
+	actualresource.append_attribute("stone") = GetStone();
+	actualresource.append_attribute("gold") = GetGold();
+	actualresource.append_attribute("food") = GetFood();
+}
+
+void ResourceManager::LoadResourcesAmount(pugi::xml_node &data)
+{
+	wood = data.attribute("wood").as_int();
+	gold = data.attribute("gold").as_int();
+	stone = data.attribute("stone").as_int();
+	food = data.attribute("food").as_int();
+}
