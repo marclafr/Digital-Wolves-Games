@@ -8,6 +8,7 @@
 #include "j1MainMenu.h"
 #include "j1ScoreScene.h"
 #include "UIComponents.h"
+#include "UIHUDMenuInGame.h"
 #include "Buildings.h"
 #include "Towers.h"
 #include "Units.h"
@@ -388,5 +389,50 @@ public:
 	}
 };
 
+class Surrender : public Task
+{
+public:
+	bool Execute()
+	{
+		App->scene->lose = true;
+		App->scene_manager->ChangeScene(SC_SCORE);
+		return true;
+	}
+};
+
+class ReturnToGame : public Task
+{
+private:
+	UIHUDMenuInGame* menu_ingame;
+
+public:
+	ReturnToGame(UIHUDMenuInGame* menu_ingame) : menu_ingame(menu_ingame) {}
+
+	bool Execute()
+	{
+		menu_ingame->DeletePanel();
+		return true;
+	}
+};
+
+class LoadLastChackpoint : public Task
+{
+public:
+	bool Execute()
+	{
+
+		return true;
+	}
+};
+
+class InGameToMainMenuScene : public Task
+{
+public:
+	bool Execute()
+	{
+		App->scene_manager->ChangeScene(SC_MAIN_MENU);
+		return true;
+	}
+};
 
 #endif

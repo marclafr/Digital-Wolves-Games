@@ -101,28 +101,3 @@ iPoint UIHUDMinimap::MinimapToWorld(fPoint minimap_point)
 	world_point.y = minimap_point.y / GetPosRect().h * rect_map.h * -1;
 	return iPoint(world_point.x, world_point.y);
 }
-
-/*
-void MinimapTriangle::SetPoints(iPoint left, iPoint right, iPoint top)
-{
-	this->left = left;
-	this->right = right;
-	this->top = top;
-}
-
-float MinimapTriangle::sign(iPoint p1, iPoint p2, iPoint p3)
-{
-	return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y);
-}
-
-bool MinimapTriangle::PointInTriangle(iPoint pt)
-{
-	bool b1, b2, b3;
-
-	b1 = sign(pt, left, right) < 0.0f;
-	b2 = sign(pt, right, top) < 0.0f;
-	b3 = sign(pt, top, left) < 0.0f;
-
-	return ((b1 == b2) && (b2 == b3));
-}
-*/
