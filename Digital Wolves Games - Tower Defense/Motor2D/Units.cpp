@@ -70,7 +70,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(58);
 		attack = 7;
 		SetArmor(3);
-		speed = 1.2f;
+		speed = 1.25f;
 		rate_of_fire = 150.0f;
 		range = 30;
 		vision_range = 300;
@@ -87,7 +87,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(118);
 		attack = 9;
 		SetArmor(1);
-		speed = 1.2f;
+		speed = 1.25f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -104,7 +104,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(95);
 		attack = 12;
 		SetArmor(1);
-		speed = 1.2f;
+		speed = 1.25f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -121,7 +121,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(152);
 		attack = 13;
 		SetArmor(2);
-		speed = 1.2f;
+		speed = 1.25f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -138,7 +138,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(55);
 		attack = 4;
 		SetArmor(1);
-		speed = 1.16f;
+		speed = 1.25f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -155,7 +155,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(65);
 		attack = 5;
 		SetArmor(1);
-		speed = 1.16f;
+		speed = 1.25f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -247,7 +247,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(167);
 		attack = 15;
 		SetArmor(3);
-		speed = 1.45f;
+		speed = 1.50f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
@@ -264,7 +264,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(135);
 		attack = 12;
 		SetArmor(1);
-		speed = 1.50f;
+		speed = 1.55f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
@@ -281,7 +281,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		SetHp(115);
 		attack = 13;
 		SetArmor(1);
-		speed = 1.45f;
+		speed = 1.50f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
