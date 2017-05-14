@@ -811,8 +811,8 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_UNIVERSITY, iPoint(1, 1), { 748,910 }, new DoInvestigation(INV_INFANTRY_DEFENSE));
 	panel->AddButton(BP_UNIVERSITY, iPoint(0, 2), { 800,858 }, new DoInvestigation(INV_CAVALRY_ATTACK));
 	panel->AddButton(BP_UNIVERSITY, iPoint(1, 2), { 748,884 }, new DoInvestigation(INV_CAVALRY_DEFENSE));
-	panel->AddButton(BP_UNIVERSITY, iPoint(2, 2), { 800,884 }, new DoInvestigation(INV_ARCHERS_ATTACK));
-	panel->AddButton(BP_UNIVERSITY, iPoint(3, 2), { 748,936 }, new DoInvestigation(INV_ARCHERS_DEFENSE));
+	panel->AddButton(BP_UNIVERSITY, iPoint(2, 2), { 748,936 }, new DoInvestigation(INV_ARCHERS_ATTACK));
+	panel->AddButton(BP_UNIVERSITY, iPoint(3, 2), { 800,884 }, new DoInvestigation(INV_ARCHERS_DEFENSE));
 	//Panel Info
 	App->uimanager->AddPanelInfo();
 

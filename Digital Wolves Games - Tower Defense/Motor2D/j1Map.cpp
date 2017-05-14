@@ -198,8 +198,10 @@ void j1Map::Draw()
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
 					SDL_Rect r = tileset->GetTileRect(tile_id);
 					iPoint pos = MapToWorld(x, y, tileset);
+					iPoint ret = App->render->WorldToScreen(pos.x, pos.y);
 
-					App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
+					if (App->render->camera->InsideRenderTarget(ret.x, ret.y))
+						App->render->PushMapSprite(tileset->texture, pos.x, pos.y, &r);
 				}
 			}
 	}
