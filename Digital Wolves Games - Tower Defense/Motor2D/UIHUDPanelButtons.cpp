@@ -106,6 +106,7 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 		panel_type = BP_TURRET;
 		b_selected = building;
 		CreatePanel();
+		if (App->tutorial->tutorial4_completed) App->tutorial->TowerSelected = true;
 		break;
 	case B_CANNON:
 		panel_type = BP_CANNON;

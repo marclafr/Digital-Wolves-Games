@@ -873,9 +873,26 @@ void j1Scene::TutorialUI()
 
 	App->render->camera->SetPosition(iPoint(700, 20));
 
+	App->tutorial->tutorial7 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
+	App->tutorial->text_tutorial7 = App->uimanager->AddLabel(1130, 290, "Enjoy The Game!", { 0,0,0,0 });
+	App->tutorial->text1_tutorial7 = App->uimanager->AddLabel(1130, 330, "Click 1, 2 or 3 to end the tutorial", { 0,0,0,0 });
+
+	App->tutorial->tutorial6 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2737, 418, 130 });
+	App->tutorial->text_tutorial6 = App->uimanager->AddLabel(1130, 290, "Here where the enemies appear", { 0,0,0,0 });
+	App->tutorial->text1_tutorial6 = App->uimanager->AddLabel(1130, 310, "Build a tower on the highground", { 0,0,0,0 });
+	App->tutorial->text2_tutorial6 = App->uimanager->AddLabel(1130, 330, "When you clear the wave you can", { 0,0,0,0 });
+	App->tutorial->text3_tutorial6 = App->uimanager->AddLabel(1130, 350, "click next wave button (big red button)", { 0,0,0,0 });
+
+	App->tutorial->tutorial5 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
+	App->tutorial->text_tutorial5 = App->uimanager->AddLabel(1130, 290, "Click one tower", { 0,0,0,0 });
+	App->tutorial->text1_tutorial5 = App->uimanager->AddLabel(1130, 330, "Click the fire upgrade icon", { 0,0,0,0 });
+	App->tutorial->text2_tutorial5 = App->uimanager->AddLabel(1130, 310, "Fire=+dmg / Ice=slow / Air=faster shot", { 0,0,0,0 });
+
 	App->tutorial->tutorial4 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2737, 418, 130 });
 	App->tutorial->text_tutorial4 = App->uimanager->AddLabel(1130, 290, "Here is the resource and investigation zone", { 0,0,0,0 });
 	App->tutorial->text1_tutorial4 = App->uimanager->AddLabel(1130, 310, "Select the University", { 0,0,0,0 });
+	App->tutorial->text3_tutorial4 = App->uimanager->AddLabel(1130, 330, "You can upgrade towers, resources, units", { 0,0,0,0 });
+	App->tutorial->text2_tutorial4 = App->uimanager->AddLabel(1130, 350, "Click the fire upgrade on the panel", { 0,0,0,0 });
 
 	App->tutorial->tutorial3 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
 	App->tutorial->text_tutorial3 = App->uimanager->AddLabel(1130, 290, "Move around using keys or mouse:", { 0,0,0,0 });
@@ -887,14 +904,11 @@ void j1Scene::TutorialUI()
 	App->tutorial->tutorial2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2737, 418, 130 });
 	App->tutorial->text_tutorial2 = App->uimanager->AddLabel(1130, 290, "Click on the Town Hall", { 0,0,0,0 });
 	App->tutorial->text1_tutorial2 = App->uimanager->AddLabel(1130, 310, "On the left-bottom Corner you can create", { 0,0,0,0 });
-	App->tutorial->text2_tutorial2 = App->uimanager->AddLabel(1130, 330, "towers, walls and more soldiers", { 0,0,0,0 });
+	App->tutorial->text2_tutorial2 = App->uimanager->AddLabel(1130, 330, "towers, walls and soldiers", { 0,0,0,0 });
 
 	App->tutorial->tutorial1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
 	App->tutorial->text_tutorial1 = App->uimanager->AddLabel(1130, 290, "This is your Town Hall. Protect it!", { 0,0,0,0 });
 	App->tutorial->text1_tutorial1 = App->uimanager->AddLabel(1130, 310, "Press 1 to build a Simple Tower", { 0,0,0,0 });
 	App->tutorial->text2_tutorial1 = App->uimanager->AddLabel(1130, 330, "Press 2 to build a Bombard Tower", { 0,0,0,0 });
 	App->tutorial->text3_tutorial1 = App->uimanager->AddLabel(1130, 350, "Press 3 to build a Wall", { 0,0,0,0 });
-	App->tutorial->text4_tutorial1 = App->uimanager->AddLabel(1130, 370, "Press 4 to create a Soldier", { 0,0,0,0 });
-
-
 }

@@ -3,6 +3,7 @@
 #include "Resources.h"
 #include "j1Scene.h"
 #include "j1Audio.h"
+#include "j1Tutorial.h"
 
 j1Investigations::j1Investigations()
 {
@@ -112,6 +113,7 @@ bool j1Investigations::CanInvestigate(Investigation* investigation)
 	{
 		investigation->inv_state = INV_S_IN_COURSE;
 		App->audio->PlayFx(App->audio->fx_investigation);
+		if (App->tutorial->tutorial3_completed && investigation->investigation_type == INV_FIRE_TOWER) App->tutorial->InvestigationDone = true;
 		DoInvestigationUpgrade(investigation);
 		return true;
 	}

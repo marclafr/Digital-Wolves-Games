@@ -220,7 +220,15 @@ public:
 
 	bool Execute()
 	{
-		if (tower->IsAlive()) tower->UpgradeTurret(type);
+		if (tower->IsAlive())
+		{
+			tower->UpgradeTurret(type);
+
+			if (App->tutorial->tutorial4_completed)
+			{
+				App->tutorial->TowerUpgradeSelected = true;
+			}
+		}
 		return true;
 	}
 };

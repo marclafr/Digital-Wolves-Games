@@ -43,6 +43,9 @@ public:
 	void Tutorial2();
 	void Tutorial3();
 	void Tutorial4();
+	void Tutorial5();
+	void Tutorial6();
+	void Tutorial7();
 
 	bool tutorial = false;
 	UIComponents* tutorial1;
@@ -50,7 +53,6 @@ public:
 	UILabel* text1_tutorial1;
 	UILabel* text2_tutorial1;
 	UILabel* text3_tutorial1;
-	UILabel* text4_tutorial1;
 
 	UIComponents* tutorial2;
 	UILabel* text_tutorial2;
@@ -68,24 +70,43 @@ public:
 	UILabel* text_tutorial4;
 	UILabel* text1_tutorial4;
 	UILabel* text2_tutorial4;
+	UILabel* text3_tutorial4;
+
+	UIComponents* tutorial5;
+	UILabel* text_tutorial5;
+	UILabel* text1_tutorial5;
+	UILabel* text2_tutorial5;
+
+	UIComponents* tutorial6;
+	UILabel* text_tutorial6;
+	UILabel* text1_tutorial6;
+	UILabel* text2_tutorial6;
+	UILabel* text3_tutorial6;
+
+	UIComponents* tutorial7;
+	UILabel* text_tutorial7;
+	UILabel* text1_tutorial7;
 
 	bool TownHallSelected = false;
 	bool PanelSelected = false;
 	bool UniversitySelected = false;
+	bool TowerSelected = false;
+	bool InvestigationDone = false;
+	bool TowerUpgradeSelected = false;
+	bool NextWaveButtonSelected = false;
 
 	bool tutorial1_completed = false;
 	bool tutorial2_completed = false;
 	bool tutorial3_completed = false;
 	bool tutorial4_completed = false;
+	bool tutorial5_completed = false;
+	bool tutorial6_completed = false;
+	bool tutorial7_completed = false;
 
 private:
-	int count = 0;
-
-	
 	bool tutorial1_part1 = false;
 	bool tutorial1_part2 = false;
 	bool tutorial1_part3 = false;
-	bool tutorial1_part4 = false;
 
 	bool tutorial2_part1 = false;
 
@@ -96,7 +117,16 @@ private:
 
 	bool tutorial4_part1 = false;
 	bool tutorial4_part2 = false;
+	bool tutorial4_part3 = false;
+
+	bool tutorial5_part1 = false;
+	bool tutorial5_part2 = false;
+	bool tutorial5_part3 = false;
+
+	bool tutorial6_part1 = false;
+	bool tutorial6_part2 = false;
+	bool tutorial6_part3 = false;
 
 };
 
-#endif // __j1MAINMENU_H__
+#endif // __j1TUTORIAL_H__
