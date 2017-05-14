@@ -589,6 +589,17 @@ void Unit::AI()
 			break;
 		}
 
+		collision = App->entity_manager->CheckUnitCollisions(this);
+		if (collision != nullptr && collided == false)
+		{
+			new_pos = App->pathfinding->FindEmptyTile(App->map->WorldToMap(GetX(), GetY()), collision->GetUnitCircle());
+			if (new_pos.x != -1)
+				GoTo(App->map->MapToWorld(new_pos.x, new_pos.y));
+			collided = true;
+			collision->collided = true;
+			collision = nullptr;
+		}
+
 		if (attacking != nullptr)
 		{
 			if (animation->Finished())

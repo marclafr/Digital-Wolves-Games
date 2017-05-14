@@ -163,8 +163,13 @@ iPoint j1PathFinding::FindEmptyAttackPos(iPoint from, int range)
 		while (phi < 2.0f * PI)
 		{
 			iPoint pos(from.x + range * cos(phi), from.y + range * sin(phi));
-			if (IsWalkable(App->map->WorldToMap(pos.x,pos.y)) && App->entity_manager->AbleToBuild(pos))
+			if (IsWalkable(App->map->WorldToMap(pos.x, pos.y)) && App->entity_manager->AbleToBuild(pos))
+			{
+				iPoint ret = App->map->WorldToMap(pos.x, pos.y);
+				iPoint pos = App->map->MapToWorld(ret.x, ret.y);
 				return pos;
+			}
+				
 			phi += atan(App->map->data.tile_height / 2.0f / range);
 		}
 		range -= App->map->data.tile_height / 2.0f;
