@@ -107,7 +107,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(1);
 		speed = 1.1f;
 		rate_of_fire = 100.0f;
-		range = 30;
+		range = 50;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -124,7 +124,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(2);
 		speed = 1.1f;
 		rate_of_fire = 100.0f;
-		range = 30;
+		range = 50;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -354,14 +354,8 @@ Unit::~Unit()
 }
 
 void Unit::Update(float dt)
-{
-	DT(dt);
-
-	if (GetAIDT() >= dt * 3)
-	{
-		ResetDT();
-		AI();
-	}
+{	
+	AI();
 
 	if (changed == true)
 	{
@@ -473,6 +467,8 @@ void Unit::AI()
 		}
 	}
 	//----------------------
+	Unit* collision = nullptr;
+	iPoint new_pos;
 
 	switch (action)
 	{
@@ -484,10 +480,9 @@ void Unit::AI()
 			break;
 		}
 
-		if (GetSide() == S_ENEMY)
-			GoTo(TOWN_HALL);
-
-		attacking = App->entity_manager->CheckForCombat(GetPosition(), range, GetSide());
+		attacking = App->entity_manager->LookForEnemies(range, GetPosition(), GetSide(), E_UNIT);
+		if(attacking == nullptr)
+			attacking = App->entity_manager->LookForEnemies(range, GetPosition(), GetSide());
 		if (attacking != nullptr)
 		{
 			this->action = A_ATTACK;
@@ -496,11 +491,34 @@ void Unit::AI()
 			break;
 		}
 
-		target = App->entity_manager->CheckForObjective(GetPosition(), vision_range, GetSide());
+		target = App->entity_manager->LookForEnemies(vision_range, GetPosition(), GetSide(), E_UNIT);
+		if(target == nullptr)
+			target = App->entity_manager->LookForEnemies(vision_range, GetPosition(), GetSide());
 		if (target != nullptr)
 		{
 			GoTo(iPoint(target->GetX(), target->GetY()));
+			break;
 		}
+
+		if (GetSide() == S_ENEMY)
+		{
+			GoTo(TOWN_HALL);
+			break;
+		}
+
+		collision = App->entity_manager->CheckUnitCollisions(this);
+		if (collision != nullptr && collided == false)
+		{
+			new_pos = App->pathfinding->FindEmptyTile(App->map->WorldToMap(GetX(), GetY()), collision->GetUnitCircle());
+			if (new_pos.x != -1)
+				GoTo(App->map->MapToWorld(new_pos.x, new_pos.y));	
+			collided = true;
+			collision->collided = true;
+			collision = nullptr;
+		}
+
+		if (collision == nullptr)
+			collided = false;
 		
 		break;
 
@@ -514,31 +532,33 @@ void Unit::AI()
 
 		if (Move() == false)
 		{
-			this->action = A_IDLE;
+			action = A_IDLE;
 			changed = true;
 		}
-		
-		if (GetSide() == S_ENEMY)
-		{
-			attacking = App->entity_manager->CheckForCombat(GetPosition(), range, GetSide());
-			if (attacking != nullptr)
-			{
-				this->action = A_ATTACK;
-				this->LookAt(iPoint(attacking->GetX(), attacking->GetY()));
-				changed = true;
-				break;
-			}
 
-			if (target != App->entity_manager->CheckForObjective(GetPosition(), vision_range, GetSide()))
-			{
-				target = App->entity_manager->CheckForObjective(GetPosition(), vision_range, GetSide());
-			}
-			if (target != nullptr && animation->Finished())
-			{
-				ChangeDirection(iPoint(target->GetX(), target->GetY()));
-			}
+		if (target != nullptr && animation->Finished())
+			ChangeDirection(iPoint(target->GetX(), target->GetY()));
+		
+		attacking = App->entity_manager->LookForEnemies(range, GetPosition(), GetSide(), E_UNIT);
+		if (attacking == nullptr)
+			attacking = App->entity_manager->LookForEnemies(range, GetPosition(), GetSide());
+
+		if (attacking != nullptr)
+		{
+			action = A_ATTACK;
+			LookAt(iPoint(attacking->GetX(), attacking->GetY()));
+			changed = true;
+			break;
 		}
 
+		target = App->entity_manager->LookForEnemies(vision_range, GetPosition(), GetSide(), E_UNIT);
+		if (target == nullptr)
+			target = App->entity_manager->LookForEnemies(vision_range, GetPosition(), GetSide());
+		if (target != nullptr)
+		{
+			GoTo(iPoint(target->GetX(), target->GetY()));
+			break;
+		}
 		break;
 
 	case A_ATTACK:
@@ -564,8 +584,10 @@ void Unit::AI()
 					attacking->Damaged(attack);
 
 				PlayAttackSound();
-				attacking = App->entity_manager->CheckForCombat(GetPosition(), range, GetSide());
+				if(attacking->GetHp() <= 0.0f)
+					attacking = App->entity_manager->CheckForCombat(GetPosition(), range, GetSide());
 			}
+
 			if (attacking == nullptr)
 			{
 				if (GetSide() == S_ENEMY)
@@ -770,10 +792,10 @@ bool Unit::GoTo( iPoint destination)
 	if (this->GetPath({ destination.x, destination.y }) != false)
 	{
 		GetNextTile();
-		this->action = A_WALK;
+		action = A_WALK;
 		changed = true;
-		this->destination.x = destination.x;
-		this->destination.y = destination.y;
+		destination.x = destination.x;
+		destination.y = destination.y;
 		return true;
 	}
 	return false;
@@ -781,6 +803,9 @@ bool Unit::GoTo( iPoint destination)
 
 bool Unit::ChangeDirection(iPoint destination)
 {
+	if (GetSide() == S_ENEMY && abs(destination.x - GetX()) < App->map->data.tile_width / 2.0f && abs(destination.y - GetY()) < App->map->data.tile_height / 2.0f)
+		return true;
+
 	if (this->GetPath(destination) != true)
 	{
 		GetNextTile();

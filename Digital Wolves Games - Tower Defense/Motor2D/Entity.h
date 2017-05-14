@@ -88,6 +88,8 @@ public:
 	void Attack(Entity*);
 	void Damaged(int dmg);
 	void UpgradeUnit(int plushealth);
+
+
 protected:
 	//Seters
 	void SetArmor(int new_armor);

@@ -125,10 +125,10 @@ void j1EntityManager::Select(Entity * select) const
 	App->uimanager->CreatePanelInfo(App->scene->selection);
 }
 
-Entity * j1EntityManager::LookForEnemies(int range, fPoint pos, Side side) const
+Entity * j1EntityManager::LookForEnemies(int range, fPoint pos, Side side, ENTITY_TYPE entity_type) const
 {
 	IsoRect rect(pos,range * 2.0f, range*2.0f);
-	return entity_quadtree->SearchFirstEnemy(rect, side);
+	return entity_quadtree->SearchFirstEnemy(rect, side, entity_type);
 }
 
 void j1EntityManager::CheckClick(int mouse_x, int mouse_y) const
@@ -181,9 +181,9 @@ Entity* j1EntityManager::CheckForObjective(fPoint position, int vision_range, Si
 	return entity_quadtree->SearchFirstEnemy(vision_range, position, side);
 }
 
-void j1EntityManager::CheckUnitCollisions(const Unit * ptr) const
+Unit* j1EntityManager::CheckUnitCollisions(const Unit * ptr) const
 {
-	entity_quadtree->CheckUnitCollisions(ptr);
+	return entity_quadtree->CheckCollisions(ptr->GetUnitCircle());
 }
 
 bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const

@@ -145,14 +145,7 @@ Tower::~Tower()
 
 void Tower::Update(float dt)
 {
-	DT(dt);
-
-	if (GetAIDT() >= dt * 5)
-	{
-		ResetDT();
-		AI();
-	}
-
+	AI();
 	Draw();
 }
 

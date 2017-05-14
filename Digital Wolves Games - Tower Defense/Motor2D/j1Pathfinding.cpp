@@ -1,4 +1,5 @@
 #include "p2Defs.h"
+#include "IsoPrimitives.h"
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Textures.h"
@@ -129,6 +130,29 @@ void j1PathFinding::MakeNoWalkable(const iPoint& pos)
 void j1PathFinding::MakeWalkable(const iPoint& pos)
 {
 	map[pos.y*width + pos.x] = 34;
+}
+
+iPoint j1PathFinding::FindEmptyTile(iPoint from, Elipse collision) const
+{
+	IsoRect tile;
+	iPoint start(from.x - 1, from.y - 1);
+	iPoint pos;
+	fPoint rect_center;
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+		{
+			pos = iPoint(start.x + i, start.y + j);
+			if (IsWalkable(pos))
+			{
+				rect_center = fPoint(App->map->MapToWorld(pos.x, pos.y).x, App->map->MapToWorld(pos.x, pos.y).y);
+				rect_center.x += App->map->data.tile_width / 2.0f;
+				rect_center.x += App->map->data.tile_height / 2.0f;
+				tile = IsoRect(rect_center, App->map->data.tile_width, App->map->data.tile_height);
+				if (!tile.Overlaps(collision))
+					return pos;
+			}
+		}		 
+	return iPoint(-1,-1);
 }
 
 // Utility: return the walkability value of a tile

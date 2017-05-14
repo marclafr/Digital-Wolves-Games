@@ -139,14 +139,14 @@ Entity * QuadTreeNode::SearchFirstEnemy(int pixel_range, const fPoint from, cons
 	return nullptr;
 }
 
-Entity * QuadTreeNode::SearchFirstEnemy(IsoRect rect, const Side side) const
+Entity * QuadTreeNode::SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TYPE entity_type) const
 {
 	Entity* ret = nullptr;
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
 			if (entities[i] != nullptr)
-				if (rect.Inside(entities[i]->GetPosition()))
+				if (rect.Inside(entities[i]->GetPosition()) && (entity_type == E_NO_ENTITY || entity_type == entities[i]->GetEntityType()))
 					if(entities[i]->GetSide() != side && entities[i]->GetHp() >= 0)
 						ret = entities[i];
 	}
@@ -154,7 +154,7 @@ Entity * QuadTreeNode::SearchFirstEnemy(IsoRect rect, const Side side) const
 		for (int i = 0; i < 4; i++)
 			if (rect.Overlaps(childs[i]->area))
 			{
-				ret = childs[i]->SearchFirstEnemy(rect, side);
+				ret = childs[i]->SearchFirstEnemy(rect, side, entity_type);
 				if (ret != nullptr)
 					break;
 			}
@@ -403,7 +403,7 @@ void QuadTreeNode::DeleteEntities()
 	}
 }
 
-void QuadTreeNode::CheckCollision() const
+Unit* QuadTreeNode::CheckCollision(Elipse elipse) const
 {
 	if (childs[0] == nullptr)
 	{
@@ -411,7 +411,8 @@ void QuadTreeNode::CheckCollision() const
 			if (entities[i] != nullptr && entities[i]->GetEntityType() == E_UNIT)
 			{
 				Unit* unit = (Unit*)entities[i];
-				unit->CheckCollisions();
+				if(unit->GetUnitCircle().Intersects(&elipse))
+					return unit;
 			}
 				
 			else
@@ -419,7 +420,8 @@ void QuadTreeNode::CheckCollision() const
 	}
 	else
 		for (int i = 0; i < 4; i++)
-			childs[i]->CheckCollision();
+			if(childs[i]->area.Overlaps(elipse))
+				childs[i]->CheckCollision(elipse);
 }
 
 void QuadTreeNode::CheckUnitCollisions(const Unit * ptr) const
@@ -495,9 +497,9 @@ Entity * QuadTree::SearchFirstEnemy(int pixel_range, fPoint from, Side side) con
 	return origin->SearchFirstEnemy(pixel_range, from, side);
 }
 
-Entity * QuadTree::SearchFirstEnemy(IsoRect rect, const Side side) const
+Entity * QuadTree::SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TYPE entity_type) const
 {
-	return origin->SearchFirstEnemy(rect,side);
+	return origin->SearchFirstEnemy(rect,side,entity_type);
 }
 
 void QuadTree::Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const
@@ -521,14 +523,9 @@ void QuadTree::DeleteEntities() const
 	origin->DeleteEntities();
 }
 
-void QuadTree::CheckCollisions() const
+Unit* QuadTree::CheckCollisions(Elipse elipse) const
 {
-	origin->CheckCollision();
-}
-
-void QuadTree::CheckUnitCollisions(const Unit * ptr) const
-{
-	origin->CheckUnitCollisions(ptr);
+	return origin->CheckCollision(elipse);
 }
 
 void QuadTree::DrawRects() const

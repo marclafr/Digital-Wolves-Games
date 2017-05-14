@@ -37,11 +37,11 @@ public:
 	void Select(Entity* select) const;
 	void CheckClick(int mouse_x, int mouse_y)  const;
 
-	Entity* LookForEnemies(int range, fPoint pos, Side side) const;
+	Entity* LookForEnemies(int range, fPoint pos, Side side, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
 	
 	Entity* CheckForCombat(fPoint position, int range, Side side) const;
 	Entity* CheckForObjective(fPoint position, int vision_range, Side side) const;
-	void CheckUnitCollisions(const Unit* ptr) const;
+	Unit* CheckUnitCollisions(const Unit* ptr) const;
 
 	bool IsUnitInTile(const Unit* unit, const iPoint tile) const;
 

@@ -26,6 +26,7 @@
 struct PathNode;
 struct ForcedNeighbour;
 class Entity;
+class Elipse;
 
 enum X_DIRECTION
 {
@@ -78,6 +79,7 @@ public:
 	void MakeConstruible_neutral(const iPoint& pos);
 	void MakeNoWalkable(const iPoint& pos);
 	void MakeWalkable(const iPoint& pos);
+	iPoint FindEmptyTile(iPoint from, Elipse collision) const;
 
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;

@@ -114,6 +114,7 @@ private:
 	//Investigations bonuses:
 	bool bonus_attack = false;
 	bool bonus_defense = false;
+	bool collided = false;
 
 	void UnitDies();
 

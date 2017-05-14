@@ -665,10 +665,15 @@ void j1Scene::HandleInput( SDL_Event event)
 				objective.x -= App->render->camera->GetPosition().x;
 				objective.y -= App->render->camera->GetPosition().y;
 
+				Unit* unit;
+
 				for (std::vector<Entity*>::iterator it = selection.begin(); it != selection.end(); ++it)
 				{
-					Unit* unit = (Unit*)(*it);
-					unit->GoTo(objective);
+					if ((*it)->GetSide() == S_ALLY)
+					{
+						unit = (Unit*)(*it);
+						unit->GoTo(objective);
+					}
 				}
 			}
 		break;
