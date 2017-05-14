@@ -168,8 +168,7 @@ iPoint j1PathFinding::FindEmptyAttackPos(iPoint from, int range)
 				iPoint ret = App->map->WorldToMap(pos.x, pos.y);
 				iPoint pos = App->map->MapToWorld(ret.x, ret.y);
 				return pos;
-			}
-				
+			}		
 			phi += atan(App->map->data.tile_height / 2.0f / range);
 		}
 		range -= App->map->data.tile_height / 2.0f;

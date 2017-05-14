@@ -201,14 +201,14 @@ bool j1Scene::PostUpdate()
 
 
 
-	/*if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
 		int x = 0;
 		int y = 0;
 		App->input->GetMousePosition(x, y);
 		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, pos, S_ENEMY);
-	}*/
+	}
 
 	return ret;
 }
