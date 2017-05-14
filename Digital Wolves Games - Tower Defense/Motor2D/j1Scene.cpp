@@ -64,16 +64,7 @@ bool j1Scene::Start()
 	App->investigations->Enable();
 	App->score->Enable();
 
-	//TUTORIAL
-		if (App->tutorial->tutorial)
-		{
-			App->tutorial->Enable();
-			App->tutorial->TutorialReset();
-			TutorialUI();
-		}
-		else {
-			App->wave_manager->Enable();//TODO put after tutorial 
-		}
+	
 
 	App->score_scene->prove_achievements = true;
 	App->score_scene->build_simple_tower = true;
@@ -98,7 +89,17 @@ bool j1Scene::Start()
 	//Reset scores and timers
 	App->score->Reset();
 
-	
+	//TUTORIAL
+		if (App->tutorial->tutorial)
+		{
+			App->tutorial->Enable();
+			App->tutorial->TutorialReset();
+			TutorialUI();
+		}
+		else {
+			App->wave_manager->Enable();//TODO put after tutorial 
+		}
+
 	return true;
 }
 
