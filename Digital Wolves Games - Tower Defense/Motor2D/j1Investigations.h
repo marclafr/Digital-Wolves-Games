@@ -78,6 +78,7 @@ public:
 	Investigation* GetInvestigation(INVESTIGATION_TYPE name);
 	LEVEL GetLevel(Investigation* investigation);
 	bool WantToInvestigate(Investigation* investigation);
+	int GetInvestigationCost(Investigation* investigation);
 
 private:
 

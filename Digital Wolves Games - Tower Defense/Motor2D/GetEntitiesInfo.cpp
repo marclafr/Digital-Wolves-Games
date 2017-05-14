@@ -913,12 +913,16 @@ const char* GetInvestigationName(const INVESTIGATION_TYPE type)
 const char * GetInvestigationPrice(const INVESTIGATION_TYPE type)
 {
 	char* ret = nullptr;
+	std::string temp;
+	temp = std::to_string(App->investigations->GetInvestigationCost(App->investigations->GetInvestigation(type)));
+	ret = (char*)temp.c_str();
+	return ret;
 
-	switch (type)
+	/*switch (type)
 	{
 		//RESOURCES
 	case INV_FOOD:
-		ret = "???????????";
+		ret = (char*)temp.c_str();
 		break;
 	case INV_WOOD:
 		ret = "???????????";
@@ -966,5 +970,5 @@ const char * GetInvestigationPrice(const INVESTIGATION_TYPE type)
 		break;
 	}
 
-	return ret;
+	return ret;*/
 }

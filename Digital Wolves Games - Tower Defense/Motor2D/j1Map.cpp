@@ -303,8 +303,6 @@ iPoint j1Map::WorldToMap(int x, int y) const
 		//float det = cos(TILE_ANGLE) * sin(TILE_ANGLE + PI / 2.0f) - sin(TILE_ANGLE) * cos(TILE_ANGLE + PI / 2.0f);
 		float det = 2*sin(TILE_ANGLE)*cos(TILE_ANGLE);
 
-		if (det != 1.0f)
-			LOG("A");
 		fPoint iso_pos;
 		iso_pos.x = (x * (-sin(TILE_ANGLE)) + y * cos(TILE_ANGLE)) / det;
 		iso_pos.y = (x * sin(TILE_ANGLE) + y * cos(TILE_ANGLE)) / det;

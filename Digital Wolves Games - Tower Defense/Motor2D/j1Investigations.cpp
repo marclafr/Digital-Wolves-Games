@@ -37,9 +37,9 @@ bool j1Investigations::Start()
 	CreateInvestigation(INV_INFANTRY_ATTACK, false, 300, 30.0);
 	CreateInvestigation(INV_INFANTRY_DEFENSE, false, 300, 25.0);
 	//TOWERS
-	CreateInvestigation(INV_FIRE_TOWER, false, 200, 10.0);
-	CreateInvestigation(INV_ICE_TOWER, false, 250, 10.0);
-	CreateInvestigation(INV_AIR_TOWER, false, 300, 10.0);
+	CreateInvestigation(INV_FIRE_TOWER, false, 250, 10.0);
+	CreateInvestigation(INV_ICE_TOWER, false, 300, 10.0);
+	CreateInvestigation(INV_AIR_TOWER, false, 200, 10.0);
 	//--
 
 	return ret;
@@ -161,6 +161,11 @@ bool j1Investigations::WantToInvestigate(Investigation * investigation)
 		return true;
 	}
 	return false;
+}
+
+int j1Investigations::GetInvestigationCost(Investigation* investigation)
+{
+	return investigation->cost;
 }
 
 bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
