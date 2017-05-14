@@ -144,7 +144,7 @@ void j1ScoreScene::CreateAchievements()
 {
 	//ACHIEVEMENT 1
 	achievement1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 355, 73, 718, 130 }, { 0, 2606, 718, 130 });
-	title_achievement1 = App->uimanager->AddLabel(410, 130, "Achievement 1", { 0,0,0,0 });
+	title_achievement1 = App->uimanager->AddLabel(410, 130, "Win without any damage taken to the Town Hall", { 0,0,0,0 });
 	check_achievement1 = App->uimanager->AddCheckButton({ 1005, 120, 40, 39 }, { 995, 869, 40, 39 }, { 1036, 868, 40, 39 });
 
 	//ACHIEVEMENT 2

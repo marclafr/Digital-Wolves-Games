@@ -60,7 +60,7 @@ bool j1Scene::Start()
 	//App->collision->Enable();
 	App->entity_manager->Enable();
 	App->projectile_manager->Enable();
-	App->wave_manager->Enable();//TODO put after tutorial 
+	//App->wave_manager->Enable();//TODO put after tutorial no descomentar
 	App->investigations->Enable();
 	App->score->Enable();
 
@@ -94,7 +94,7 @@ bool j1Scene::Start()
 		TutorialUI();
 	}
 	else {
-		//App->wave_manager->Enable();//TODO put after tutorial 
+		App->wave_manager->Enable();//TODO put after tutorial 
 	}
 	return true;
 }
