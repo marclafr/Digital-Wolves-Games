@@ -53,7 +53,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 5;
 		SetArmor(1);
 		speed = 1.3f;
-		rate_of_fire = 60.0f;
+		rate_of_fire = 0.8f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -71,7 +71,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 7;
 		SetArmor(3);
 		speed = 1.28f;
-		rate_of_fire = 150.0f;
+		rate_of_fire = 1.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -88,7 +88,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 10;
 		SetArmor(4);
 		speed = 1.30f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 1.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -105,7 +105,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 13;
 		SetArmor(5);
 		speed = 1.30f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 1.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -122,7 +122,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 14;
 		SetArmor(6);
 		speed = 1.30f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 1.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -139,7 +139,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 4;
 		SetArmor(1);
 		speed = 1.29f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 1.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -156,7 +156,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 5;
 		SetArmor(1);
 		speed = 1.29f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 0.9f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -176,7 +176,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 5;
 		SetArmor(1);
 		speed = 1.29f;
-		rate_of_fire = 90.0f;
+		rate_of_fire = 0.8f;
 		range = 250;
 		vision_range = 250;
 		unit_class = C_ARCHER;
@@ -194,7 +194,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 7;
 		SetArmor(1);
 		speed = 1.19f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 0.9f;
 		range = 200;
 		vision_range = 150;
 		unit_class = C_ARCHER;
@@ -211,7 +211,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 6;
 		SetArmor(1);
 		speed = 1.45f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 0.8f;
 		range = 250;
 		vision_range = 250;
 		unit_class = C_ARCHER;
@@ -228,7 +228,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 8;
 		SetArmor(1);
 		speed = 1.45f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 0.8f;
 		range = 250;
 		vision_range = 250;
 		unit_class = C_ARCHER;
@@ -248,7 +248,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 16;
 		SetArmor(6);
 		speed = 1.55f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 1.2f;
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
@@ -265,7 +265,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 12;
 		SetArmor(5);
 		speed = 1.6f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 1.2f;
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
@@ -282,7 +282,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 13;
 		SetArmor(3);
 		speed = 1.55f;
-		rate_of_fire = 100.0f;
+		rate_of_fire = 1.2f;
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
@@ -302,7 +302,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 110;
 		SetArmor(3);
 		speed = 0.95f;
-		rate_of_fire = 250.0f;
+		rate_of_fire = 2.0f;
 		range = 25;
 		vision_range = 100;
 		unit_class = C_SIEGE;
@@ -319,7 +319,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority): Entity(E_UNIT
 		attack = 80;
 		SetArmor(-6);
 		speed = 0.95f;
-		rate_of_fire = 250.0f;
+		rate_of_fire = 2.0f;
 		range = 300;
 		vision_range = 300;
 		unit_class = C_SIEGE;
