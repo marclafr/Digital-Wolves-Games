@@ -159,8 +159,10 @@ iPoint j1PathFinding::FindEmptyAttackPos(iPoint from, int range)
 {
 	IsoRect range (fPoint(from.x,from.y),range*2.0f,range*2.0f);
 	IsoRect tile;
-	float tile_range = ;
-	iPoint start(from.x - range*range, from.y - range*range);
+	float tile_diagonal = sqrt(App->map->data.tile_width * );
+	float tile_range_x = range*range
+	float range*range;
+	iPoint start(from.x - , from.y - );
 	iPoint pos;
 	fPoint rect_center;
 	for (int i = 0; i < 3; i++)

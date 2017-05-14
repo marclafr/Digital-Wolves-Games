@@ -339,3 +339,4 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	return true;
 	return true;
 }
+
