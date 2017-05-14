@@ -456,7 +456,7 @@ class LoadLastChackpoint : public Task
 public:
 	bool Execute()
 	{
-
+		App->LoadGame("save_game.xml");
 		return true;
 	}
 };
