@@ -162,7 +162,9 @@ enum ENTITY_TASKTYPE
 	ET_UNIT,
 	ET_UPGRADE_TOWER,
 	ET_UPGRADE_WALL,
-	ET_INVESTIGATION
+	ET_INVESTIGATION,
+	ET_DELETETOWER,
+	ET_DELETEWALL
 };
 
 class EntityTask : public Task
@@ -199,7 +201,7 @@ class PlaceBombardTowerTask : public EntityTask
 public:
 	PlaceBombardTowerTask(ENTITY_TASKTYPE type = ET_BOMBARDTOWER) : EntityTask(type) {}
 
-	bool Execute() 
+	bool Execute()
 	{
 		App->scene->placing_wall = false;
 		App->scene->placing_tower = T_BOMBARD_TOWER;
@@ -237,6 +239,8 @@ public:
 			{
 				App->tutorial->TowerUpgradeSelected = true;
 			}
+
+			App->entity_manager->UnselectEverything();
 		}
 		return true;
 	}
@@ -264,6 +268,7 @@ public:
 	bool Execute()
 	{
 		if (wall->IsAlive())	wall->UpgradeWall(type);
+		App->entity_manager->UnselectEverything();
 		return true;
 	}
 };
@@ -288,14 +293,14 @@ public:
 	}
 };
 
-class DeleteTowerTask : public Task
+class DeleteTowerTask : public EntityTask
 {
 private:
 	Tower* tower = nullptr;
 	TURRET_UPGRADE type = TU_NULL;
 
 public:
-	DeleteTowerTask() {}
+	DeleteTowerTask(ENTITY_TASKTYPE type = ET_DELETETOWER) : EntityTask(type) {}
 
 	void SetTower(Tower* tower)
 	{
@@ -304,18 +309,19 @@ public:
 
 	bool Execute()
 	{
-		if(tower->IsAlive())	tower->ConvertToRubble();
+		if (tower->IsAlive())	tower->ConvertToRubble();
+		App->entity_manager->UnselectEverything();
 		return true;
 	}
 };
 
-class DeleteWallTask : public Task
+class DeleteWallTask : public EntityTask
 {
 private:
 	Building* wall = nullptr;
 
 public:
-	DeleteWallTask() {}
+	DeleteWallTask(ENTITY_TASKTYPE type = ET_DELETEWALL) : EntityTask(type) {}
 
 	void SetWall(Building* wall)
 	{
@@ -325,6 +331,7 @@ public:
 	bool Execute()
 	{
 		if (wall->IsAlive())	wall->ConvertToRubble();
+		App->entity_manager->UnselectEverything();
 		return true;
 	}
 };
