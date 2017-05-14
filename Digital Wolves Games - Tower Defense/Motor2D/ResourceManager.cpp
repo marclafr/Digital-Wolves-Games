@@ -6,6 +6,7 @@
 #include "Units.h"
 #include "Resources.h"
 #include "ResourceManager.h"
+#include "j1ScoreScene.h"
 
 ResourceManager::ResourceManager(): wood(STARTING_WOOD), food (STARTING_FOOD), gold (STARTING_GOLD), stone (STARTING_STONE)
 {
@@ -210,6 +211,7 @@ void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos, iPoint posintiles)
 	case T_BASIC_TOWER:
 		wood -= BASIC_TOWER_WOOD_COST;
 		stone -= BASIC_TOWER_STONE_COST;
+		App->score_scene->build_simple_tower = false;
 		break;
 
 	case T_FIRE_TOWER:

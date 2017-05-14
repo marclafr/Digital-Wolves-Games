@@ -12,6 +12,7 @@
 #include "Camera.h"
 #include "j1Map.h"
 #include "j1Audio.h"
+#include "j1ScoreScene.h"
 
 j1EntityManager::j1EntityManager() : j1Module()
 {
@@ -32,6 +33,7 @@ Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)//T
 	Entity* new_entity = (Entity*) new Unit(u_type, pos, side, priority);
 	entity_quadtree->PushBack(new_entity);
 	priority++;
+	App->score_scene->units_count++;
 	return new_entity;
 }
 

@@ -76,6 +76,7 @@ bool j1Scene::Start()
 		}
 
 	App->score_scene->prove_achievements = true;
+	App->score_scene->build_simple_tower = true;
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
 	App->render->camera->SetPosition(iPoint(1700, -2400));

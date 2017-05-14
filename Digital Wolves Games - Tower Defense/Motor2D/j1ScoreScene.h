@@ -59,6 +59,8 @@ public:
 	UIComponents* GetUnderBackground();
 	void ChangeUnselected(BUTTONSUNDERGROUND);
 	bool prove_achievements = false;
+	bool build_simple_tower = true;
+	int units_count = 0;
 
 private:
 	UIComponents* under_background;
@@ -86,6 +88,14 @@ private:
 	UIComponents* achievement2;
 	UILabel* title_achievement2;
 	UIComponents* check_achievement2;
+
+	UIComponents* achievement3;
+	UILabel* title_achievement3;
+	UIComponents* check_achievement3;
+
+	UIComponents* achievement4;
+	UILabel* title_achievement4;
+	UIComponents* check_achievement4;
 
 	char text_score[256];
 
