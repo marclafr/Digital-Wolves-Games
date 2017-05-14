@@ -247,7 +247,7 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 			{
 				//if (App->collision->AbleToBuild(pos))
 				//{
-					App->audio->PlayFx(App->entity_manager->fx_construction);
+					App->audio->PlayFx(App->audio->fx_construction);
 
 					if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true)
 						resources->BuildTower(type, pos);
