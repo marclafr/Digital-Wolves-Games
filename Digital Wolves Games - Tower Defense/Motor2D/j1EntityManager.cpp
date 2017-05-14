@@ -70,25 +70,38 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Enti
 	{
 		(*it)->SetEntityStatus(ST_SELECTED);
 
-		if ((*it)->GetEntityType() == E_UNIT && unit_found == false)
+		if ((*it)->GetEntityType() == E_UNIT && (*it)->GetHp() > 0 && unit_found == false)
 		{
 			unit_found = true;
 			it = selection.begin();
 		}
 
-		if(unit_found)
+		if ((*it)->GetHp() > 0)
 		{
-			if ((*it)->GetEntityType() != E_UNIT)
+			if (unit_found)
 			{
-				(*it)->SetEntityStatus(ST_NON_SELECTED);
-				selection.erase(it);
-				it = selection.begin();
+				if ((*it)->GetEntityType() == E_UNIT && (*it)->GetHp() > 0)
+					(*it)->SetEntityStatus(ST_SELECTED);
+				else
+				{
+					(*it)->SetEntityStatus(ST_NON_SELECTED);
+					selection.erase(it);
+					it = selection.begin();
+					if (selection.size() == 0)
+						break;
+				}
 			}
 			else
-				(*it)->SetEntityStatus(ST_SELECTED);					
+				(*it)->SetEntityStatus(ST_SELECTED);
 		}
 		else
-			(*it)->SetEntityStatus(ST_SELECTED);
+		{
+			(*it)->SetEntityStatus(ST_NON_SELECTED);
+			selection.erase(it);
+			it = selection.begin();
+			if (selection.size() == 0)
+				break;
+		}
 	}
 
 	App->uimanager->CreatePanelInfo(selection);

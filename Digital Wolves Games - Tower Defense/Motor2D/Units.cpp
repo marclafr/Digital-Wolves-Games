@@ -880,7 +880,15 @@ void Unit::SaveUnit(pugi::xml_node &data)
 void Unit::UnitDies()
 {
 	this->action = A_DIE;
-	this->SetEntityStatus(ST_NON_SELECTED);
+
+	for (std::vector<Entity*>::iterator it = App->scene->selection.begin(); it != App->scene->selection.end(); ++it)
+		if ((*it) == ((Entity*)this))
+		{
+			SetEntityStatus(ST_NON_SELECTED);
+			App->scene->selection.erase(it);
+			break;
+		}
+	
 	if (GetSide() == S_ENEMY)
 		App->score->EnemyKilled();
 	changed = true;
