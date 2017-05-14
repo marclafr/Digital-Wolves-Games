@@ -71,7 +71,10 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Enti
 		(*it)->SetEntityStatus(ST_SELECTED);
 
 		if ((*it)->GetEntityType() == E_UNIT && unit_found == false)
+		{
 			unit_found = true;
+			it = selection.begin();
+		}
 
 		if(unit_found)
 		{
