@@ -58,6 +58,8 @@ public:
 
 	bool AbleToBuild(iPoint pos);
 
+	void GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entity*>& vec) const;
+
 private:
 	//Textura provisional para sprites por si no se cargan en animation
 	//SDL_Texture* sprites;

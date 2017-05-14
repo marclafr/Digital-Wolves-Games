@@ -69,6 +69,7 @@ public:
 	Entity* SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
 	bool CheckIfFull(IsoRect tile) const;
 	void Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const;
+	void SearchInIsoRect(const IsoRect rect, std::vector<Entity*>& vec);
 
 	void Selection(SDL_Rect rect, std::vector<Entity*>& vec) const;
 

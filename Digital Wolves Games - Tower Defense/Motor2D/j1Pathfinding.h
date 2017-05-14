@@ -80,6 +80,7 @@ public:
 	void MakeNoWalkable(const iPoint& pos);
 	void MakeWalkable(const iPoint& pos);
 	iPoint FindEmptyTile(iPoint from, Elipse collision) const;
+	iPoint FindEmptyAttackPos(iPoint from, int range);
 
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;

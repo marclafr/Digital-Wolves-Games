@@ -363,3 +363,8 @@ bool j1EntityManager::AbleToBuild(iPoint pos)
 	IsoRect tile(fPoint(map_pos.x + App->map->data.tile_width / 2.0f, map_pos.y + App->map->data.tile_height / 2.0f), App->map->data.tile_width, App->map->data.tile_height);
 	return entity_quadtree->CheckIfFull(tile);
 }
+
+void j1EntityManager::GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entity*>& vec) const
+{
+	entity_quadtree->SearchInIsoRect(rect,vec);
+}

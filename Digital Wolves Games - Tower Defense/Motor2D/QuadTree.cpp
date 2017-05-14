@@ -548,6 +548,11 @@ void QuadTree::Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) c
 	origin->Search(pixel_range, from, vec);
 }
 
+void QuadTree::SearchInIsoRect(const IsoRect rect, std::vector<Entity*>& vec)
+{
+	origin->Search(rect, vec);
+}
+
 void QuadTree::Selection(SDL_Rect rect, std::vector<Entity*>& vec) const
 {
 	vec.clear();
