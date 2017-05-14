@@ -33,6 +33,9 @@ public:
 	void IncreaseScore();
 	void DecreaseScore();
 	int  GetEnemiesKilled() const;
+	void SetScore(int num);
+	void SetEnemiesKilleds(int num);
+	void SetTime(int num);
 };
 
 #endif

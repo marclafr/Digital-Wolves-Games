@@ -101,3 +101,19 @@ int j1Score::GetEnemiesKilled() const
 {
 	return enemies_killed;
 }
+
+void j1Score::SetScore(int num)
+{
+	score = num;
+}
+
+void j1Score::SetEnemiesKilleds(int num)
+{
+	enemies_killed = num;
+	enemy_killed = true;
+}
+
+void j1Score::SetTime(int num)
+{
+	game_time.SetTicks(num);
+}

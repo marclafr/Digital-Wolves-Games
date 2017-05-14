@@ -159,7 +159,7 @@ public:
 
 	void SlowUnit();
 
-	void SaveUnit(pugi::xml_node& );
+	void Save(pugi::xml_node& );
 };
 
 #endif

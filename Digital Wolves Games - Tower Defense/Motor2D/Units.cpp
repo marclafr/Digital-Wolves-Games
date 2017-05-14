@@ -891,16 +891,7 @@ bool Unit::FindEmptyAttackPos(iPoint & pos) const
 {
 	return App->pathfinding->FindEmptyAttackPos(attacking, pos);
 }
-/*
-void Unit::SaveUnit(pugi::xml_node &data)
-{
-	pugi::xml_node ActualUnit = data.append_child("unit");
-	ActualUnit.append_attribute("unit_type") = GetUnitType();
-	ActualUnit.append_attribute("posx") = GetX();
-	ActualUnit.append_attribute("posy") = GetY();
-	ActualUnit.append_attribute("hp") = GetHp();
 
-}*/
 
 void Unit::UnitDies()
 {
@@ -930,9 +921,10 @@ void Unit::SlowUnit()
 	}
 }
 
-void Unit::SaveUnit(pugi::xml_node &data)
+void Unit::Save(pugi::xml_node &data)
 {
-	pugi::xml_node ActualUnit = data.append_child("unit");
+	pugi::xml_node build = data.child("units");
+	pugi::xml_node ActualUnit = build.append_child("unit");
 	ActualUnit.append_attribute("unit_type") = GetUnitType();
 	ActualUnit.append_attribute("posx") = GetX();
 	ActualUnit.append_attribute("posy") = GetY();

@@ -203,7 +203,20 @@ void j1EntityManager::DrawQuadTree() const
 }
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
-	App->entity_manager->CleanUp();
+	delete entity_quadtree;
+
+	float m = App->map->data.height;
+	float n = App->map->data.width;
+
+	float map_h = (m + n) * 0.5f * App->map->data.tile_height + 75;//75 1 4 each tile
+	float map_w = (m + n) * 0.5f * App->map->data.tile_width;
+
+	float map_x = (m - n) * 0.5f * 0.5f * App->map->data.tile_width;
+	float map_y = (m + n) * 0.5f * 0.5f * App->map->data.tile_height + 75 / 2; //75 1 4 each tile
+
+																			   //IsoRect map(iPoint(map_x, map_y), map_w, map_h);
+	IsoRect map(fPoint(map_x, map_y), map_w, map_h);
+	entity_quadtree = new QuadTree(map);
 
 	pugi::xml_node Buildingsload = data.child("buildings").first_child();
 	pugi::xml_node Unitsload = data.child("units").first_child();
@@ -234,7 +247,6 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 		Resourcesload = Resourcesload.next_sibling();
 	}
 
-
 	pugi::xml_node AmountOfResources = data.child("resources_amount").first_child();
 
 	App->scene->resources->LoadResourcesAmount(AmountOfResources);
@@ -242,9 +254,9 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 	pugi::xml_node Score = data.child("score");
 
 	App->score->Reset();
-	//App->score->SetScore(Score.attribute("points").as_int());
-	//App->score->SetEnemiesKilleds(Score.attribute("enemies_killeds").as_int());
-	//App->score->SetTimePassed(Score.attribute("time_passed").as_int());
+	App->score->SetScore(Score.attribute("points").as_int());
+	App->score->SetEnemiesKilleds(Score.attribute("enemies_killeds").as_int());
+	App->score->SetTime(Score.attribute("time_passed").as_int());
 	App->wave_manager->ResetWave();
 	App->wave_manager->SetWaveNum(Score.attribute("wave_num").as_int());
 	return true;
@@ -312,31 +324,7 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	pugi::xml_node Turrets = data.append_child("turrets");
 	pugi::xml_node Resourcess = data.append_child("resources");
 
-	entity_quadtree->SaveAll();
-
-	/*for (int k = 0; k <entity_array.size(); k++) {
-		if (entity_array[k]->GetEntityType() == E_BUILDING)
-		{
-			Building* buildingptr = (Building*)entity_array[k];
-			if (buildingptr->GetBuildingType() == B_TURRET || buildingptr->GetBuildingType() == B_CANNON)
-			{
-				Tower* towerptr = (Tower*)buildingptr;
-				towerptr->SaveTurret(Turrets);
-			}
-			else buildingptr->SaveBuilding(Buildings);
-		}
-		else if (entity_array[k]->GetEntityType() == E_UNIT)
-		{
-			Unit* unit = (Unit*)entity_array[k];
-			if (unit->GetSide() == S_ALLY)	unit->SaveUnit(Units);
-		}
-		else if (entity_array[k]->GetEntityType() == E_RESOURCE)
-		{
-			Resources* rest = (Resources*)entity_array[k];
-			rest->SaveResource(Resourcess);
-		}
-	}
-	*/
+	entity_quadtree->SaveAll(data);
 
 
 	pugi::xml_node AmountOfResources = data.append_child("resources_amount");

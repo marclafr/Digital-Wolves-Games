@@ -272,9 +272,10 @@ const int Tower::GetRange() const
 	return range;
 }
 
-void Tower::SaveTurret(pugi::xml_node &data)
+void Tower::Save(pugi::xml_node &data)
 {
-	pugi::xml_node ActualTurret = data.append_child("turret");
+	pugi::xml_node build = data.child("turrets");
+	pugi::xml_node ActualTurret = build.append_child("turret");
 	ActualTurret.append_attribute("tower_type") = GetTowerType();
 	ActualTurret.append_attribute("posx") = GetX();
 	ActualTurret.append_attribute("posy") = GetY();

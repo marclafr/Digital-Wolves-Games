@@ -56,7 +56,7 @@ public:
 	void ConvertToRubble();
 	void DestroyBuilding();
 	const int GetRange() const;
-	void SaveBuilding(pugi::xml_node&);
+	virtual void Save(pugi::xml_node&);
 };
 
 #endif

@@ -55,6 +55,8 @@ public:
 
 	bool Save(pugi::xml_node&)const;
 
+
+
 private:
 	//Textura provisional para sprites por si no se cargan en animation
 	//SDL_Texture* sprites;
