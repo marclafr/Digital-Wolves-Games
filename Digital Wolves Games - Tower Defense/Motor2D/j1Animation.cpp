@@ -229,6 +229,9 @@ const bool Animation::GetLoopState() const
 const SDL_Rect Animation::GetFrame(int frame_num) const
 {
 	//TODO: if frame_num> frames.size?????? it broke once
+	if (frame_num >= frames.size())
+		frame_num = 0;
+	
 	return frames[frame_num];
 }
 
