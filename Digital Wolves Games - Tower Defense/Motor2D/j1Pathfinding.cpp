@@ -156,32 +156,19 @@ iPoint j1PathFinding::FindEmptyTile(iPoint from, Elipse collision) const
 }
 
 iPoint j1PathFinding::FindEmptyAttackPos(iPoint from, int range)
-{
-	/*
-	IsoRect range (fPoint(from.x,from.y),range*2.0f,range*2.0f);
-	IsoRect tile;
-	float tile_diagonal = sqrt(App->map->data.tile_width * );
-	float tile_range_x = range*range
-	float range*range;
-	iPoint start(from.x - , from.y - );
-	iPoint pos;
-	fPoint rect_center;
-	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
+{	
+	while (range > App->map->data.tile_height / 2.0f)
+	{
+		float phi = 0.0f;
+		while (phi < 2.0f * PI)
 		{
-			pos = iPoint(start.x + i, start.y + j);
-			if (IsWalkable(pos))
-			{
-				rect_center = fPoint(App->map->MapToWorld(pos.x, pos.y).x, App->map->MapToWorld(pos.x, pos.y).y);
-				rect_center.x += App->map->data.tile_width / 2.0f;
-				rect_center.x += App->map->data.tile_height / 2.0f;
-				tile = IsoRect(rect_center, App->map->data.tile_width, App->map->data.tile_height);
-				if (!tile.Overlaps(collision))
-					return pos;
-			}
+			iPoint pos(from.x + range * cos(phi), from.y + range * sin(phi));
+			if (IsWalkable(App->map->WorldToMap(pos.x,pos.y)) && App->entity_manager->AbleToBuild(pos))
+				return pos;
+			phi += atan(App->map->data.tile_height / 2.0f / range);
 		}
-	return iPoint(-1, -1);
-	return iPoint()*/
+		range -= App->map->data.tile_height / 2.0f;
+	}
 	return iPoint(-1, -1);
 }
 

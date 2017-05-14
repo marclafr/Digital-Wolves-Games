@@ -347,7 +347,8 @@ void j1EntityManager::BlitMinimap() const
 bool j1EntityManager::AbleToBuild(iPoint pos)
 {
 	iPoint map_pos = App->map->WorldToMap(pos.x, pos.y);
-	IsoRect tile(fPoint(map_pos.x + App->map->data.tile_width / 2.0f, map_pos.y + App->map->data.tile_height / 2.0f), App->map->data.tile_width, App->map->data.tile_height);
+	iPoint tile_pos = App->map->MapToWorld(map_pos.x, map_pos.y);
+	IsoRect tile(fPoint(tile_pos.x + App->map->data.tile_width / 2.0f, tile_pos.y + App->map->data.tile_height / 2.0f), App->map->data.tile_width, App->map->data.tile_height);
 	return entity_quadtree->CheckIfFull(tile);
 }
 

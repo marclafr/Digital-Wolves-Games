@@ -55,7 +55,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(1);
 		speed = 1.45f;
 		rate_of_fire = 80.0f;
-		range = 30;
+		range = 50;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -73,7 +73,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(3);
 		speed = 1.28f;
 		rate_of_fire = 120.0f;
-		range = 30;
+		range = 50;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -90,7 +90,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(4);
 		speed = 1.30f;
 		rate_of_fire = 95.0f;
-		range = 30;
+		range = 50;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -107,7 +107,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(5);
 		speed = 1.30f;
 		rate_of_fire = 100.0f;
-		range = 30;
+		range = 50;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -124,7 +124,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(6);
 		speed = 1.30f;
 		rate_of_fire = 100.0f;
-		range = 30;
+		range = 50;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -141,7 +141,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(1);
 		speed = 1.29f;
 		rate_of_fire = 95.0f;
-		range = 30;
+		range = 50;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -158,7 +158,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(1);
 		speed = 1.29f;
 		rate_of_fire = 95.0f;
-		range = 30;
+		range = 50;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -250,7 +250,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(6);
 		speed = 1.60f;
 		rate_of_fire = 110.0f;
-		range = 35;
+		range = 50;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 18);
@@ -267,7 +267,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(5);
 		speed = 1.62f;
 		rate_of_fire = 105.0f;
-		range = 35;
+		range = 50;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 18);
@@ -496,7 +496,13 @@ void Unit::AI()
 			target = App->entity_manager->LookForEnemies(vision_range, GetPosition(), GetSide());
 		if (target != nullptr)
 		{
-			GoTo(iPoint(target->GetX(), target->GetY()));
+			new_pos = App->pathfinding->FindEmptyAttackPos(target->GetIPos(), range);
+			if (new_pos.x == -1)
+			{
+				target = nullptr;
+				break;
+			}
+			GoTo(new_pos);
 			break;
 		}
 
@@ -537,7 +543,15 @@ void Unit::AI()
 		}
 
 		if (target != nullptr && animation->Finished())
-			ChangeDirection(iPoint(target->GetX(), target->GetY()));
+		{
+			new_pos = App->pathfinding->FindEmptyAttackPos(target->GetIPos(), range);
+			if (new_pos.x == -1)
+			{
+				target = nullptr;
+				break;
+			}
+			ChangeDirection(new_pos);
+		}
 		
 		attacking = App->entity_manager->LookForEnemies(range, GetPosition(), GetSide(), E_UNIT);
 		if (attacking == nullptr)
@@ -556,7 +570,13 @@ void Unit::AI()
 			target = App->entity_manager->LookForEnemies(vision_range, GetPosition(), GetSide());
 		if (target != nullptr)
 		{
-			GoTo(iPoint(target->GetX(), target->GetY()));
+			new_pos = App->pathfinding->FindEmptyAttackPos(target->GetIPos(), range);
+			if (new_pos.x == -1)
+			{
+				target = nullptr;
+				break;
+			}
+			GoTo(new_pos);
 			break;
 		}
 		break;
