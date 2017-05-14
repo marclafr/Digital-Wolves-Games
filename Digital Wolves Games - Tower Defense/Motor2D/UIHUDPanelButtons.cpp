@@ -261,7 +261,6 @@ bool UIHUDPanelButtons::Update()
 	}
 	else if (b_selected == nullptr)
 	{
-	
 		if(panel_type == BP_NO_SELECTION)
 		{
 			for (std::vector<info_button*>::iterator ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
@@ -273,8 +272,8 @@ bool UIHUDPanelButtons::Update()
 				}
 			}
 		}
-		return true;
 	}
+	return true;
 }
 
 //x - 0 to 4 | y - 0 to 2 | Max 15 buttons
