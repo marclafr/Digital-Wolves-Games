@@ -27,6 +27,10 @@ void Entity::ResetDT()
 	ai_dt = 0.0f;
 }
 
+void Entity::Save(pugi::xml_node & node)
+{
+}
+
 bool Entity::Inside(SDL_Rect rect) const
 {
 	//top-left to down right

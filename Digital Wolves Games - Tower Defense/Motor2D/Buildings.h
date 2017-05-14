@@ -38,7 +38,7 @@ private:
 
 public:
 	iPoint arrowpos;
-	Building(BUILDING_TYPE b_type, fPoint pos, Side side);
+	Building(BUILDING_TYPE b_type, fPoint pos, bool builded);
 	~Building();
 
 	virtual void Update(float dt); // defines order
@@ -56,7 +56,7 @@ public:
 	void ConvertToRubble();
 	void DestroyBuilding();
 	const int GetRange() const;
-	void SaveBuilding(pugi::xml_node&);
+	virtual void Save(pugi::xml_node&);
 };
 
 #endif

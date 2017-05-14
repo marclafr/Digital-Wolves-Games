@@ -11,27 +11,31 @@
 #include "Camera.h"
 
 
-Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILDING, pos, side), building_type(b_type)
+Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BUILDING, pos, S_ALLY), building_type(b_type)
 {
 	SDL_Rect rect;
 	SetTextureID(T_TURRET);
+	if (builded == true)
+		totally_built = true;
 	switch (b_type)
 	{
 	case B_TURRET:
-		SetSide(side);
+		SetSide(S_ALLY);
 		build_rect = IsoRect({ GetX(), GetY() }, 96, 47,	GetPivot());
 		break;
 
 	case B_WOOD_WALL:
-		SetSide(side);
+		SetSide(S_ALLY);
 		SetHp(500);
 		SetAttack(0);
+		SetRect({ 610,289,100,106 });
+		SetPivot(0.49 * 100, 106 * 0.754717);
 		SetArmor(8);
 		build_rect = IsoRect({ GetX(), GetY() }, 96, 47, GetPivot());
 		break;
 
 	case B_TOWNHALL:
-		SetSide(side);
+		SetSide(S_ALLY);
 		SetHp(1500);
 		SetAttack(0);
 		SetArmor(8);
@@ -43,7 +47,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 		build_rect = IsoRect({ GetX(), GetY() }, 375, 170, {0,0});
 		break;
 	case B_UNIVERSITY:
-		SetSide(side);
+		SetSide(S_ALLY);
 		SetHp(1500);
 		SetAttack(0);
 		SetArmor(8);
@@ -195,7 +199,6 @@ void Building::ConvertToRubble()
 void Building::DestroyBuilding()
 {
 	iPoint p = App->map->WorldToMap(GetX(), GetY());
-
 	App->pathfinding->MakeConstruible_neutral(p);
 	App->pathfinding->MakeConstruible_ally(p);
 	App->pathfinding->MakeWalkable(p);
@@ -208,9 +211,10 @@ const int Building::GetRange() const
 	return 250;
 }
 
-void Building::SaveBuilding(pugi::xml_node &data)
+void Building::Save(pugi::xml_node &data)
 {
-	pugi::xml_node ActualBuilding = data.append_child("building");
+	pugi::xml_node build = data.child("buildings");
+	pugi::xml_node ActualBuilding = build.append_child("building");
 	ActualBuilding.append_attribute("building_type") = GetBuildingType();
 	ActualBuilding.append_attribute("posx") = GetX();
 	ActualBuilding.append_attribute("posy") = GetY();

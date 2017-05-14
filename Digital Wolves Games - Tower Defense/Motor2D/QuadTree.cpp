@@ -481,8 +481,7 @@ void QuadTreeNode::SaveAll(pugi::xml_node & node)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
 			if (entities[i] != nullptr)
-			{ }
-				//entities[i]->Save(node);
+				entities[i]->Save(node);
 	}
 	else
 		for (int i = 0; i < 4; i++)

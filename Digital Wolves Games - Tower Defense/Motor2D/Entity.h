@@ -3,7 +3,7 @@
 
 #include "SDL\include\SDL.h"
 #include "p2Point.h"
-
+#include "PugiXml\src\pugixml.hpp"
 enum TextureID;
 
 enum ENTITY_TYPE
@@ -57,7 +57,7 @@ public:
 
 	void DT(float dt);
 	void ResetDT();
-
+	virtual void Save(pugi::xml_node &node);
 	bool Inside(SDL_Rect rect) const;
 
 	//Geters
@@ -90,6 +90,8 @@ public:
 	void UpgradeUnit(int plushealth);
 	void SetHp(int new_hp);
 	void DrawPointMinimap();
+
+
 protected:
 	//Seters
 	void SetArmor(int new_armor);

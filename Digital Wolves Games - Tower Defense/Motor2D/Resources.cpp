@@ -154,9 +154,10 @@ int Resources::GetResource()
 	return amount_collected;
 }
 
-void Resources::SaveResource(pugi::xml_node &data)
+void Resources::Save(pugi::xml_node &data)
 {
-	pugi::xml_node actualresource = data.append_child("resource");
+	pugi::xml_node build = data.child("resources");
+	pugi::xml_node actualresource = build.append_child("resource");
 	actualresource.append_attribute("resource_type") = GetResourceType();
 	actualresource.append_attribute("posx") = GetX();
 	actualresource.append_attribute("posy") = GetY();

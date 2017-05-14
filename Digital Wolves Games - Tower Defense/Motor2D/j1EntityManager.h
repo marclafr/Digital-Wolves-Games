@@ -28,9 +28,9 @@ public:
 	bool CleanUp();
 
 	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side);//TODO make const if we can take priority out
-	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side) const;
+	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, bool builded) const;
 	Entity* CreateTower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) const;
-	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos) const;
+	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos, int amount_collect, int time) const;
 
 	void SelectInQuad(const SDL_Rect& select_rect, std::vector<Entity*>& selection) const;
 	void UnselectEverything() const;
@@ -54,9 +54,8 @@ public:
 	void LoadResource(pugi::xml_node&);
 
 	bool Save(pugi::xml_node&)const;
-	void BlitMinimap() const;
 
-	bool AbleToBuild(iPoint pos);
+
 
 	void GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entity*>& vec) const;
 
