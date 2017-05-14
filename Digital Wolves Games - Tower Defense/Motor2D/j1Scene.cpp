@@ -768,17 +768,51 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TOWNHALL, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_TOWER), new PlaceBombardTowerTask());
 	panel->AddButton(BP_TOWNHALL, iPoint(2, 0), GetBuildingIconPositionFromAtlas(B_WOOD_WALL), new PlaceWallTask());
 	
-		//Turrets
+	//Turrets
 	panel->AddButton(BP_TURRET, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_FIRE_TOWER), new UpgradeTowerTask(TU_FIRE));
 	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
 	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
-	
+	panel->AddButton(BP_TURRET, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
+
+	panel->AddButton(BP_CANNON, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_FIRE_TOWER), new UpgradeTowerTask(TU_FIRE));
+	panel->AddButton(BP_CANNON, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
+	panel->AddButton(BP_CANNON, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
+	panel->AddButton(BP_CANNON, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
+
+	panel->AddButton(BP_TURRET_UPGRADED, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
+
+	//Walls
+	panel->AddButton(BP_WOOD_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_STONE_WALL));
+	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+
+	panel->AddButton(BP_STONE_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_BRICK_WALL));
+	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+
+	panel->AddButton(BP_BRICK_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+
 	//Units
 	panel->AddButton(BP_TOWNHALL, iPoint(0, 1), GetUnitIconPositionFromAtlas(U_CHAMPION), new TrainUnitTask(U_CHAMPION));
 	panel->AddButton(BP_TOWNHALL, iPoint(1, 1), GetUnitIconPositionFromAtlas(U_HEAVYCAVALRYARCHER), new TrainUnitTask(U_HEAVYCAVALRYARCHER));
 	panel->AddButton(BP_TOWNHALL, iPoint(2, 1), GetUnitIconPositionFromAtlas(U_PALADIN), new TrainUnitTask(U_PALADIN));
-	panel->AddButton(BP_TOWNHALL,iPoint(3, 1), GetUnitIconPositionFromAtlas(U_ARBALEST), new TrainUnitTask(U_ARBALEST));
+	panel->AddButton(BP_TOWNHALL, iPoint(3, 1), GetUnitIconPositionFromAtlas(U_ARBALEST), new TrainUnitTask(U_ARBALEST));
 
+	//University
+
+	panel->AddButton(BP_UNIVERSITY, iPoint(0, 0), { 852,884 }, new DoInvestigation(INV_FIRE_TOWER));
+	panel->AddButton(BP_UNIVERSITY, iPoint(1, 0), { 878,884 }, new DoInvestigation(INV_ICE_TOWER));
+	panel->AddButton(BP_UNIVERSITY, iPoint(2, 0), { 904,884 }, new DoInvestigation(INV_AIR_TOWER));
+
+	panel->AddButton(BP_UNIVERSITY, iPoint(3, 0), { 852,858 }, new DoInvestigation(INV_FOOD));
+	panel->AddButton(BP_UNIVERSITY, iPoint(4, 0), { 878,858 }, new DoInvestigation(INV_WOOD));
+	panel->AddButton(BP_UNIVERSITY, iPoint(3, 1), { 904,858 }, new DoInvestigation(INV_STONE));
+	panel->AddButton(BP_UNIVERSITY, iPoint(4, 1), { 930,858 }, new DoInvestigation(INV_GOLD));
+
+	panel->AddButton(BP_UNIVERSITY, iPoint(0, 1), { 748,858 }, new DoInvestigation(INV_INFANTRY_ATTACK));
+	panel->AddButton(BP_UNIVERSITY, iPoint(1, 1), { 748,910 }, new DoInvestigation(INV_INFANTRY_DEFENSE));
+	panel->AddButton(BP_UNIVERSITY, iPoint(0, 2), { 800,858 }, new DoInvestigation(INV_CAVALRY_ATTACK));
+	panel->AddButton(BP_UNIVERSITY, iPoint(1, 2), { 748,884 }, new DoInvestigation(INV_CAVALRY_DEFENSE));
+	panel->AddButton(BP_UNIVERSITY, iPoint(2, 2), { 800,884 }, new DoInvestigation(INV_ARCHERS_ATTACK));
+	panel->AddButton(BP_UNIVERSITY, iPoint(3, 2), { 748,936 }, new DoInvestigation(INV_ARCHERS_DEFENSE));
 	//Panel Info
 	App->uimanager->AddPanelInfo();
 
