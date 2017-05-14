@@ -109,6 +109,7 @@ bool j1Investigations::DeleteInvestigation(Investigation* ptr)
 
 bool j1Investigations::CanInvestigate(Investigation* investigation)
 {
+	if (App->tutorial->tutorial3_completed && investigation->investigation_type == INV_FIRE_TOWER) App->tutorial->InvestigationSelected = true;
 	if (App->scene->resources->GetGold() > investigation->cost)
 	{
 		investigation->inv_state = INV_S_IN_COURSE;

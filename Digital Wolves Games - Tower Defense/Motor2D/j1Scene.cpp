@@ -61,7 +61,7 @@ bool j1Scene::Start()
 	App->collision->Enable();
 	App->entity_manager->Enable();
 	App->projectile_manager->Enable();
-	App->wave_manager->Enable();//TODO put after tutorial 
+	//App->wave_manager->Enable();//TODO put after tutorial 
 	App->investigations->Enable();
 	App->score->Enable();
 
@@ -96,6 +96,9 @@ bool j1Scene::Start()
 		App->tutorial->Enable();
 		App->tutorial->TutorialReset();
 		TutorialUI();
+	}
+	else {
+		App->wave_manager->Enable();//TODO put after tutorial 
 	}
 
 	//TEST FOR SAMPER: TODO delete this and all related
@@ -887,12 +890,14 @@ void j1Scene::TutorialUI()
 	App->tutorial->text_tutorial5 = App->uimanager->AddLabel(1130, 290, "Click one tower", { 0,0,0,0 });
 	App->tutorial->text1_tutorial5 = App->uimanager->AddLabel(1130, 330, "Click the fire upgrade icon", { 0,0,0,0 });
 	App->tutorial->text2_tutorial5 = App->uimanager->AddLabel(1130, 310, "Fire=+dmg / Ice=slow / Air=faster shot", { 0,0,0,0 });
+	App->tutorial->text3_tutorial5 = App->uimanager->AddLabel(1130, 350, "Click space bar to start the battle", { 0,0,0,0 });
 
 	App->tutorial->tutorial4 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2737, 418, 130 });
 	App->tutorial->text_tutorial4 = App->uimanager->AddLabel(1130, 290, "Here is the resource and investigation zone", { 0,0,0,0 });
 	App->tutorial->text1_tutorial4 = App->uimanager->AddLabel(1130, 310, "Select the University", { 0,0,0,0 });
 	App->tutorial->text3_tutorial4 = App->uimanager->AddLabel(1130, 330, "You can upgrade towers, resources, units", { 0,0,0,0 });
 	App->tutorial->text2_tutorial4 = App->uimanager->AddLabel(1130, 350, "Click the fire upgrade on the panel", { 0,0,0,0 });
+	App->tutorial->text4_tutorial4 = App->uimanager->AddLabel(1130, 370, "Wait until the upgrade is done", { 0,0,0,0 });
 
 	App->tutorial->tutorial3 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
 	App->tutorial->text_tutorial3 = App->uimanager->AddLabel(1130, 290, "Move around using keys or mouse:", { 0,0,0,0 });

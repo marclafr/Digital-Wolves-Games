@@ -71,11 +71,13 @@ public:
 	UILabel* text1_tutorial4;
 	UILabel* text2_tutorial4;
 	UILabel* text3_tutorial4;
+	UILabel* text4_tutorial4;
 
 	UIComponents* tutorial5;
 	UILabel* text_tutorial5;
 	UILabel* text1_tutorial5;
 	UILabel* text2_tutorial5;
+	UILabel* text3_tutorial5;
 
 	UIComponents* tutorial6;
 	UILabel* text_tutorial6;
@@ -91,6 +93,7 @@ public:
 	bool PanelSelected = false;
 	bool UniversitySelected = false;
 	bool TowerSelected = false;
+	bool InvestigationSelected = false;
 	bool InvestigationDone = false;
 	bool TowerUpgradeSelected = false;
 	bool NextWaveButtonSelected = false;

@@ -90,7 +90,7 @@ bool j1Tutorial::Update(float dt)
 		tutorial4_completed = true;
 	}
 
-	if (tutorial5_part2 && tutorial5_part3)
+	if (tutorial5_part2 && tutorial5_part3 && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		tutorial5_completed = true;
 	}
@@ -157,6 +157,7 @@ void j1Tutorial::TutorialsProgression()
 		text1_tutorial4->SetToDelete();
 		text2_tutorial4->SetToDelete();
 		text3_tutorial4->SetToDelete();
+		text4_tutorial4->SetToDelete();
 	}
 
 	if (tutorial5_completed)
@@ -165,6 +166,7 @@ void j1Tutorial::TutorialsProgression()
 		text_tutorial5->SetToDelete();
 		text1_tutorial5->SetToDelete();
 		text2_tutorial5->SetToDelete();
+		text3_tutorial5->SetToDelete();
 	}
 
 	if (tutorial6_completed)
@@ -204,6 +206,7 @@ void j1Tutorial::TutorialReset()
 	tutorial4_part2 = false;
 	tutorial4_part3 = false;
 	UniversitySelected = false;
+	InvestigationSelected = false;
 	InvestigationDone = false;
 	tutorial5_completed = false;
 	tutorial5_part1 = false;
@@ -331,7 +334,7 @@ void j1Tutorial::Tutorial4()
 		{
 			text1_tutorial4->ChangeColor({ 255,255,255,0 });
 		}
-		if (tutorial4_part3)
+		if (InvestigationSelected)
 		{
 			text2_tutorial4->ChangeColor({ 255,255,255,0 });
 		}
@@ -369,6 +372,8 @@ void j1Tutorial::Tutorial5()
 
 void j1Tutorial::Tutorial6()
 {
+	App->wave_manager->Enable();//TODO put after tutorial 
+	
 	if (!tutorial6_part1)
 	{
 		App->render->camera->SetPosition(iPoint(1700, -2400));
@@ -378,6 +383,7 @@ void j1Tutorial::Tutorial6()
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
 		tutorial6_part2 = true;
+		
 	}
 	if (NextWaveButtonSelected)
 	{
