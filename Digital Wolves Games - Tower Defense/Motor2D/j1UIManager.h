@@ -70,7 +70,7 @@ public:
 	UIHUDScoreBar* AddScoreBar();
 	void AddTownHallBarLife();
 	void AddMinimap();
-	UIHUDMenuInGame* AddMenuInGame();
+	UIHUDMenuInGame* AddMenuInGame(UICheckbutton* enable);
 
 	const SDL_Texture* GetAtlas() const;
 	const std::list<UIComponents*>::iterator GetLastComponent();
@@ -86,6 +86,7 @@ public:
 	void SetPanelButtons(Building*);
 	const UIHUDPanelButtons* GetPanelButtons() const;
 	void DeletePanelButtons();
+	void ShowInGameMenu();
 
 private:
 	std::list<UIComponents*> components;
@@ -100,5 +101,6 @@ private:
 	UIHUDPanelButtons* panel_buttons;
 	UIHUDDescription* hud_description;
 	UIComponents* info_ui;
+	UICheckbutton* menu_btn;
 };
 #endif // __j1GUIMANAGER_H__

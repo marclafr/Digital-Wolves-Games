@@ -748,8 +748,7 @@ void j1Scene::CreateSceneUI()
 	//In Game Menu
 	UICheckbutton* menuingame_btn = App->uimanager->AddCheckButton({ 1323, 2, 36 , 15 }, { 1325, 996, 36, 14 }, { 1325, 996, 36, 14 });
 		//Window
-	UIHUDMenuInGame* menuingame = App->uimanager->AddMenuInGame();
-	menuingame->SetEnableButton(menuingame_btn);
+	UIHUDMenuInGame* menuingame = App->uimanager->AddMenuInGame(menuingame_btn);
 	menuingame->AddButton(0, "Return To Main Menu", new InGameToMainMenuScene());
 	menuingame->AddButton(1, "Load Last Chekpoint", new LoadLastChackpoint());
 	menuingame->AddButton(2, "Surrender", new Surrender());
