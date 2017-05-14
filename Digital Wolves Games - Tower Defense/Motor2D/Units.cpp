@@ -53,7 +53,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(43);
 		attack = 5;
 		SetArmor(1);
-		speed = 3.0f;
+		speed = 1.45f;
 		rate_of_fire = 80.0f;
 		range = 30;
 		vision_range = 300;
@@ -71,7 +71,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(58);
 		attack = 7;
 		SetArmor(3);
-		speed = 2.28f;
+		speed = 1.28f;
 		rate_of_fire = 120.0f;
 		range = 30;
 		vision_range = 300;
@@ -88,7 +88,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(118);
 		attack = 10;
 		SetArmor(4);
-		speed = 2.30f;
+		speed = 1.30f;
 		rate_of_fire = 95.0f;
 		range = 30;
 		vision_range = 300;
@@ -105,7 +105,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(95);
 		attack = 13;
 		SetArmor(5);
-		speed = 2.30f;
+		speed = 1.30f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -122,7 +122,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(152);
 		attack = 14;
 		SetArmor(6);
-		speed = 2.30f;
+		speed = 1.30f;
 		rate_of_fire = 100.0f;
 		range = 30;
 		vision_range = 300;
@@ -139,7 +139,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(55);
 		attack = 4;
 		SetArmor(1);
-		speed = 2.29f;
+		speed = 1.29f;
 		rate_of_fire = 95.0f;
 		range = 30;
 		vision_range = 300;
@@ -156,7 +156,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(65);
 		attack = 5;
 		SetArmor(1);
-		speed = 2.29f;
+		speed = 1.29f;
 		rate_of_fire = 95.0f;
 		range = 30;
 		vision_range = 300;
@@ -176,7 +176,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(41);
 		attack = 5;
 		SetArmor(1);
-		speed = 2.29f;
+		speed = 1.29f;
 		rate_of_fire = 95.0f;
 		range = 250;
 		vision_range = 250;
@@ -194,7 +194,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(50);
 		attack = 7;
 		SetArmor(1);
-		speed = 2.19f;
+		speed = 1.19f;
 		rate_of_fire = 80.0f;
 		range = 200;
 		vision_range = 150;
@@ -211,7 +211,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(65);
 		attack = 6;
 		SetArmor(1);
-		speed = 2.45f;
+		speed = 1.55f;
 		rate_of_fire = 85.0f;
 		range = 250;
 		vision_range = 250;
@@ -228,7 +228,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(81);
 		attack = 8;
 		SetArmor(1);
-		speed = 2.45f;
+		speed = 2.55f;
 		rate_of_fire = 120.0f;
 		range = 250;
 		vision_range = 250;
@@ -248,7 +248,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(167);
 		attack = 16;
 		SetArmor(6);
-		speed = 2.55f;
+		speed = 1.60f;
 		rate_of_fire = 110.0f;
 		range = 35;
 		vision_range = 250;
@@ -265,7 +265,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(137);
 		attack = 12;
 		SetArmor(5);
-		speed = 2.6f;
+		speed = 1.62f;
 		rate_of_fire = 105.0f;
 		range = 35;
 		vision_range = 250;
@@ -282,7 +282,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(125);
 		attack = 13;
 		SetArmor(3);
-		speed = 2.55f;
+		speed = 1.55f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
@@ -302,7 +302,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(600);
 		attack = 110;
 		SetArmor(-3);
-		speed = 1.7f;
+		speed = 0.7f;
 		rate_of_fire = 210.0f;
 		range = 100;
 		vision_range = 100;
@@ -319,7 +319,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(500);
 		attack = 80;
 		SetArmor(-1);
-		speed = 1.8f;
+		speed = 0.8f;
 		rate_of_fire = 250.0f;
 		range = 180;
 		vision_range = 230;
