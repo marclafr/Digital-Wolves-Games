@@ -159,7 +159,10 @@ enum ENTITY_TASKTYPE
 	ET_BASICTOWER,
 	ET_BOMBARDTOWER,
 	ET_WALL,
-	ET_UNIT
+	ET_UNIT,
+	ET_UPGRADE_TOWER,
+	ET_UPGRADE_WALL,
+	ET_INVESTIGATION
 };
 
 class EntityTask : public Task
@@ -205,14 +208,19 @@ public:
 	}
 };
 
-class UpgradeTowerTask : public Task
+class UpgradeTowerTask : public EntityTask
 {
 private:
 	Tower* tower = nullptr;
 	TURRET_UPGRADE type = TU_NULL;
 
 public:
-	UpgradeTowerTask(TURRET_UPGRADE type) : type(type) {}
+	UpgradeTowerTask(TURRET_UPGRADE type, ENTITY_TASKTYPE et_type = ET_UPGRADE_TOWER) : EntityTask(et_type), type(type) {}
+
+	const TURRET_UPGRADE GetUpgradeType()const
+	{
+		return type;
+	}
 
 	void SetTower(Tower* tower)
 	{
@@ -222,6 +230,52 @@ public:
 	bool Execute()
 	{
 		if (tower->IsAlive()) tower->UpgradeTurret(type);
+		return true;
+	}
+};
+
+class UpgradeWallTask : public EntityTask
+{
+private:
+	Building* wall = nullptr;
+	BUILDING_TYPE type;
+public:
+	UpgradeWallTask(BUILDING_TYPE type, ENTITY_TASKTYPE et_type = ET_UPGRADE_WALL) : EntityTask(et_type), type(type) {}
+
+	const BUILDING_TYPE GetWallType() const
+	{
+		return type;
+	}
+
+	void SetWall(Building* wall)
+	{
+		this->wall = wall;
+		type = wall->GetBuildingType();
+	}
+
+	bool Execute()
+	{
+		if (wall->IsAlive())	wall->UpgradeWall(type);
+		return true;
+	}
+};
+
+class DoInvestigation : public EntityTask
+{
+private:
+	INVESTIGATION_TYPE type;
+
+public:
+	DoInvestigation(INVESTIGATION_TYPE type, ENTITY_TASKTYPE et_type = ET_INVESTIGATION) : EntityTask(et_type), type(type) {}
+
+	const INVESTIGATION_TYPE GetInvestigationType() const
+	{
+		return type;
+	}
+
+	bool Execute()
+	{
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(type));
 		return true;
 	}
 };
@@ -263,40 +317,6 @@ public:
 	bool Execute()
 	{
 		if (wall->IsAlive())	wall->ConvertToRubble();
-		return true;
-	}
-};
-class UpgradeWallTask : public Task
-{
-private:
-	Building* wall = nullptr;
-	BUILDING_TYPE type;
-public:
-	UpgradeWallTask(BUILDING_TYPE type) : type(type) {}
-
-	void SetWall(Building* wall)
-	{
-		this->wall = wall;
-	}
-
-	bool Execute()
-	{
-		if (wall->IsAlive())	wall->UpgradeWall(type);
-		return true;
-	}
-};
-
-class DoInvestigation : public Task
-{
-private:
-	
-	INVESTIGATION_TYPE type;
-public:
-	DoInvestigation(INVESTIGATION_TYPE type) : type(type) {}
-
-	bool Execute()
-	{
-		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(type));
 		return true;
 	}
 };

@@ -24,9 +24,10 @@ public:
 	UILabel* description_price = nullptr;
 
 	UNIT_TYPE unit_desc;
-
 	BUILDING_TYPE build_desc;
 	TOWER_TYPE tower_desc;
+	TURRET_UPGRADE tower_upgrade_desc;
+	INVESTIGATION_TYPE investigation_desc;
 
 	info_button* selected = nullptr;
 
@@ -39,6 +40,10 @@ public:
 	void SetDescription(info_button* if_btn);
 	void SetLabelUnit();
 	void SetLabelBuilding();
+	void SetLabelTower();
+	void SetLabelTowerUpgrade();
+	void SetLabelWallUpgrade();
+	void SetLabelInvestigations();
 
 	void Clear();
 };

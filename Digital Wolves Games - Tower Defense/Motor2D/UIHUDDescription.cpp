@@ -30,6 +30,8 @@ UIHUDDescription::UIHUDDescription(UICOMPONENT_TYPE type) : UIComponents(type)
 	unit_desc = U_NO_UNIT;
 	build_desc = B_NO_BUILDING;
 	tower_desc = T_NO_TYPE;
+	tower_upgrade_desc = TU_NULL;
+	investigation_desc = INV_NONE;
 }
 
 void UIHUDDescription::SetEnableButton(UICheckbutton* btn)
@@ -56,40 +58,43 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 	if (enable)
 	{
 		const EntityTask* e_task = (EntityTask*)if_btn->GetTask();
+		TrainUnitTask* u_task = nullptr;
+		UpgradeTowerTask* ut_task = nullptr;
+		UpgradeWallTask* uw_task = nullptr;
+		DoInvestigation* di_task = nullptr;
 
 		switch (e_task->GetEntityType())
 		{
 		case ET_BASICTOWER:
 			tower_desc = T_BASIC_TOWER;
+			SetLabelTower();
 			break;
 		case ET_BOMBARDTOWER:
 			tower_desc = T_BOMBARD_TOWER;
+			SetLabelTower();
 			break;
 		case ET_WALL:
-			build_desc = B_STONE_WALL;
-			break;
-		case ET_UNIT:
-			TrainUnitTask* u_task = (TrainUnitTask*)e_task;
-			unit_desc = u_task->GetUnitType();
-			break;
-		}
-
-		/*
-		switch (if_btn->GetTask()->)
-		{
-		case E_UNIT:
-			unit_desc = if_btn->u_type;
-			side_desc = if_btn->s_type;
-			SetLabelUnit();
-			break;
-
-		case E_BUILDING:
-			build_desc = if_btn->b_type;
-			side_desc = if_btn->s_type;
+			build_desc = B_WOOD_WALL;
 			SetLabelBuilding();
 			break;
+		case ET_UNIT:
+			u_task = (TrainUnitTask*)e_task;
+			unit_desc = u_task->GetUnitType();
+			SetLabelUnit();
+			break;
+		case ET_UPGRADE_TOWER:
+			ut_task = (UpgradeTowerTask*)e_task;
+			tower_upgrade_desc = ut_task->GetUpgradeType();
+			break;
+		case ET_UPGRADE_WALL:
+			uw_task = (UpgradeWallTask*)e_task;
+			build_desc = uw_task->GetWallType();
+			break;
+		case ET_INVESTIGATION:
+			di_task = (DoInvestigation*)e_task;
+			investigation_desc = di_task->GetInvestigationType();
+			break;
 		}
-		*/
 		selected = if_btn;
 	}
 }
@@ -116,11 +121,57 @@ void UIHUDDescription::SetLabelBuilding()
 	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, GetBuildingPrice(build_desc));
 }
 
+void UIHUDDescription::SetLabelTower()
+{
+	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+
+	background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+
+	description_name = App->uimanager->AddLabel(X_LABEL_NAME, Y_LABEL_NAME, GetTowerName(tower_desc));
+
+	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, GetTowerPrice(tower_desc));
+}
+
+void UIHUDDescription::SetLabelTowerUpgrade()
+{
+	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+
+	background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+
+	description_name = App->uimanager->AddLabel(X_LABEL_NAME, Y_LABEL_NAME, GetTowerUpgradeName(tower_upgrade_desc));
+
+	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, GetTowerUpgradePrice(tower_upgrade_desc));
+}
+
+void UIHUDDescription::SetLabelWallUpgrade()
+{
+	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+
+	background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+
+	description_name = App->uimanager->AddLabel(X_LABEL_NAME, Y_LABEL_NAME, GetWallUpgradeName(build_desc));
+
+	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, GetWallUpgradePrice(build_desc));
+}
+
+void UIHUDDescription::SetLabelInvestigations()
+{
+	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+
+	background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+
+	description_name = App->uimanager->AddLabel(X_LABEL_NAME, Y_LABEL_NAME, GetInvestigationName(investigation_desc));
+
+	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, GetInvestigationPrice(investigation_desc));
+}
+
 void UIHUDDescription::Clear()
 {
 	unit_desc = U_NO_UNIT;
 	build_desc = B_NO_BUILDING;
 	tower_desc = T_NO_TYPE;
+	tower_upgrade_desc = TU_NULL;
+	investigation_desc = INV_NONE;
 	background_name->SetToDelete();
 	description_name->SetToDelete();
 	background_price->SetToDelete();

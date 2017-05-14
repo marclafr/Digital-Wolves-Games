@@ -331,7 +331,7 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	case B_CANNON:
 		ret = "Bombard Tower";
 		break;
-	case B_WOOD_WALL:
+	case B_WOOD_WALL: //THIS
 		ret = "Wood Wall";
 		break;
 	case B_STONE_WALL:
@@ -352,28 +352,6 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	return ret;
 }
 
-const char * GetBuildingPriceChar(const BUILDING_TYPE type)
-{
-	char* ret = nullptr;
-
-	switch (type)
-	{
-	case B_TURRET:
-		ret = "";
-		break;
-	case B_CANNON:
-		ret = "Bombard Tower";
-		break;
-	case B_WOOD_WALL:
-		ret = "Wood Wall";
-		break;
-	case B_STONE_WALL:
-		ret = "Stone Wall";
-		break;
-	}
-	return ret;
-}
-
 const char * GetBuildingPrice(const BUILDING_TYPE type)
 {
 	char* ret = nullptr;
@@ -383,7 +361,7 @@ const char * GetBuildingPrice(const BUILDING_TYPE type)
 	case B_TURRET:
 		ret = "Wood: 75 Stone: 25";
 		break;
-	case B_WOOD_WALL:
+	case B_WOOD_WALL: //THIS
 		ret = "Stone: 50";
 		break;
 	case B_STONE_WALL:
@@ -450,6 +428,114 @@ const char* GetTowerName(const TOWER_TYPE type)
 		break;
 	default:
 		ret = "Turret Error";
+		break;
+	}
+
+	return ret;
+}
+
+const char * GetTowerPrice(const TOWER_TYPE type)
+{
+	char* ret = nullptr;
+
+	switch (type)
+	{
+	case T_BASIC_TOWER:
+		ret = "???????????";
+		break;
+	case T_BOMBARD_TOWER:
+		ret = "???????????";
+		break;
+	default:
+		ret = "Turret Price";
+		break;
+	}
+
+	return ret;
+}
+
+const char * GetTowerUpgradeName(const TURRET_UPGRADE type)
+{
+	char* ret = nullptr;
+
+	switch (type)
+	{
+	case TU_FIRE:
+		ret = "Upgrade to fire";
+		break;
+	case TU_ICE:
+		ret = "Upgrade to ice";
+		break;
+	case TU_AIR:
+		ret = "Upgrade to air";
+		break;
+	default:
+		ret = "Error tower upgrade";
+		break;
+	}
+
+	return ret;
+}
+
+const char * GetTowerUpgradePrice(const TURRET_UPGRADE type)
+{
+	char* ret = nullptr;
+
+	switch (type)
+	{
+	case TU_FIRE:
+		ret = "???????????";
+		break;
+	case TU_ICE:
+		ret = "???????????";
+		break;
+	case TU_AIR:
+		ret = "???????????";
+		break;
+	default:
+		ret = "Error tower upgrade";
+		break;
+	}
+
+	return ret;
+}
+
+//The level of wall obtains from type, the next lvl. If wood wall -> stone wall.
+const char * GetWallUpgradeName(const BUILDING_TYPE type)
+{
+	char* ret = nullptr;
+
+	switch (type)
+	{
+	case B_WOOD_WALL:
+		ret = "Upgrade to stone wall";
+		break;
+	case B_STONE_WALL:
+		ret = "Upgrade to brick wall";
+		break;
+	default:
+		ret = "Error wall upgrade";
+		break;
+	}
+
+	return ret;
+}
+
+//Same at GetWallUpgradeName
+const char * GetWallUpgradePrice(const BUILDING_TYPE type)
+{
+	char* ret = nullptr;
+
+	switch (type)
+	{
+	case B_WOOD_WALL:
+		ret = "???????????"; // PRICE stone wall
+		break;
+	case B_STONE_WALL:
+		ret = "???????????"; // PRICE brick wall
+		break;
+	default:
+		ret = "Error wall upgrade";
 		break;
 	}
 
@@ -749,6 +835,11 @@ iPoint GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type)
 {
 	iPoint ret{ 0,0};
 
+	switch (type)
+	{
+	default:
+		break;
+	}
 
 	return ret;
 }
@@ -757,7 +848,6 @@ const uint GetInvestigationPercentage(const Investigation * type)
 {
 	uint ret = 0;
 
-
 	return ret;
 }
 
@@ -765,12 +855,88 @@ const char* GetInvestigationName(const INVESTIGATION_TYPE type)
 {
 	char* ret = nullptr;
 
+	switch (type)
+	{
+		//RESOURCES
+		case INV_FOOD:
+			break;
+		case INV_WOOD:
+			break;
+		case INV_GOLD:
+			break;
+		case INV_STONE:
+			break;
+		//TROPS
+		//INV_CAVALRY_UNLOCK
+		case INV_CAVALRY_ATTACK:
+			break;
+		case INV_CAVALRY_DEFENSE:
+			break;
+		//INV_ARCHERS_UNLOCK
+		case INV_ARCHERS_ATTACK:
+			break;
+		case INV_ARCHERS_DEFENSE:
+			break;
+		//INV_INFANTRY_UNLOCK,
+		case INV_INFANTRY_ATTACK:
+			break;
+		case INV_INFANTRY_DEFENSE:
+			break;
+		//TOWERS
+		case INV_FIRE_TOWER:
+			break;
+		case INV_ICE_TOWER:
+			break;
+		case INV_AIR_TOWER:
+			break;
+	default:
+		break;
+	}
+
 	return ret;
 }
 
 const char * GetInvestigationPrice(const INVESTIGATION_TYPE type)
 {
 	char* ret = nullptr;
+
+	switch (type)
+	{
+		//RESOURCES
+	case INV_FOOD:
+		break;
+	case INV_WOOD:
+		break;
+	case INV_GOLD:
+		break;
+	case INV_STONE:
+		break;
+		//TROPS
+		//INV_CAVALRY_UNLOCK
+	case INV_CAVALRY_ATTACK:
+		break;
+	case INV_CAVALRY_DEFENSE:
+		break;
+		//INV_ARCHERS_UNLOCK
+	case INV_ARCHERS_ATTACK:
+		break;
+	case INV_ARCHERS_DEFENSE:
+		break;
+		//INV_INFANTRY_UNLOCK,
+	case INV_INFANTRY_ATTACK:
+		break;
+	case INV_INFANTRY_DEFENSE:
+		break;
+		//TOWERS
+	case INV_FIRE_TOWER:
+		break;
+	case INV_ICE_TOWER:
+		break;
+	case INV_AIR_TOWER:
+		break;
+	default:
+		break;
+	}
 
 	return ret;
 }

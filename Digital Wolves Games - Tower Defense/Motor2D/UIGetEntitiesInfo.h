@@ -35,6 +35,12 @@ const char* GetInvestigationPrice(const INVESTIGATION_TYPE type);
 
 iPoint GetTowerIconPositionFromAtlas(const TOWER_TYPE type);
 const char* GetTowerName(const TOWER_TYPE type);
+const char* GetTowerPrice(const TOWER_TYPE type);
+const char* GetTowerUpgradeName(const TURRET_UPGRADE type);
+const char* GetTowerUpgradePrice(const TURRET_UPGRADE type);
+
+const char* GetWallUpgradeName(const BUILDING_TYPE type);
+const char* GetWallUpgradePrice(const BUILDING_TYPE type);
 
 const char* GetSideName(const Side type);
 

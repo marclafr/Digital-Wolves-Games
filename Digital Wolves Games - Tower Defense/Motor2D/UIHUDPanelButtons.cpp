@@ -182,7 +182,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -192,7 +192,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -202,7 +202,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -212,7 +212,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -222,7 +222,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -232,7 +232,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -242,7 +242,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -252,7 +252,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -268,7 +268,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
