@@ -64,7 +64,7 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Enti
 
 	selection.clear();
 
-	entity_quadtree->Search(select_rect, selection);
+	entity_quadtree->Selection(select_rect, selection);
 
 	for (std::vector<Entity*>::iterator it = selection.begin(); it != selection.end(); ++it)
 	{

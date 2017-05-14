@@ -148,9 +148,9 @@ bool j1Scene::Update(float dt)
 	//Selection quad
 	if (selecting)
 	{
-		select_rect.w = x - App->render->camera->GetPosition().x;
-		select_rect.h = y - App->render->camera->GetPosition().y;
-		App->render->DrawQuad({ select_rect.x, select_rect.y, select_rect.w - select_rect.x, select_rect.h - select_rect.y }, 255, 255, 255, 255, false);
+		select_rect.w = x - App->render->camera->GetPosition().x - select_rect.x;
+		select_rect.h = y - App->render->camera->GetPosition().y - select_rect.y;
+		App->render->DrawQuad({select_rect.x, select_rect.y, select_rect.w, select_rect.h}, 255, 255, 255, 255, false);
 	}
 
 	// Camera Movement (has to go after blit so that sprites print in the right camera position)

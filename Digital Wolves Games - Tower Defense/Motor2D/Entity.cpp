@@ -26,11 +26,34 @@ void Entity::ResetDT()
 
 bool Entity::Inside(SDL_Rect rect) const
 {
+	//top-left to down right
 	if (rect.x < position.x
-		&& rect.x + abs(rect.w) > position.x
+		&& rect.x + rect.w > position.x
 		&& rect.y < position.y
-		&& rect.y + abs(rect.h) > position.y)
+		&& rect.y + rect.h > position.y)
 		return true;
+	
+	//down-right to top-left
+	if (rect.x > position.x
+		&& rect.x + rect.w < position.x
+		&& rect.y > position.y
+		&& rect.y + rect.h < position.y)
+		return true;
+
+	//down-left to top-right
+	if (rect.x < position.x
+		&& rect.x + rect.w > position.x
+		&& rect.y > position.y
+		&& rect.y + rect.h < position.y)
+		return true;
+
+	//top-right to down-left
+	if (rect.x > position.x
+		&& rect.x + rect.w < position.x
+		&& rect.y < position.y
+		&& rect.y + rect.h > position.y)
+		return true;
+
 	return false;
 }
 

@@ -31,8 +31,10 @@ public:
 	Entity* SearchFirstEnemy(int pixel_range, const fPoint from, const Side side) const;
 	Entity* SearchFirstEnemy(IsoRect rect, const Side side) const;
 	void Search(int pixel_range, const fPoint from, std::vector<Entity*>& vec) const;
-	void Search(const SDL_Rect rect, std::vector<Entity*>& vec) const;
 	void Search(const IsoRect rect, std::vector<Entity*>& vec) const;
+
+	void Selection(const SDL_Rect rect, std::vector<Entity*>& vec) const;
+
 	void Update(float dt);
 	void DeleteEntities();
 	void CheckCollision() const;
@@ -65,7 +67,8 @@ public:
 	Entity* SearchFirstEnemy(int pixel_range, fPoint from, Side side) const;
 	Entity* SearchFirstEnemy(IsoRect rect, const Side side) const;
 	void Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const;
-	void Search(SDL_Rect rect, std::vector<Entity*>& vec) const;
+
+	void Selection(SDL_Rect rect, std::vector<Entity*>& vec) const;
 
 	void UpdateAll(float dt) const;
 

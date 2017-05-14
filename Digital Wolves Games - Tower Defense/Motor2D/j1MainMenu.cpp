@@ -103,25 +103,7 @@ bool j1MainMenu::PreUpdate()
 // Called each loop iteration
 bool j1MainMenu::Update(float dt)
 {
-	int x = 0;
-	int y = 0;
-	App->input->GetMousePosition(x,y);
-	fPoint mouse_pos(x,y);
-	mouse_pos.x -= App->render->camera->GetPosition().x;
-	mouse_pos.y -= App->render->camera->GetPosition().y;
-
-	rect = IsoRect(mouse_pos, 300, 300);
-	rect.SetColor(SDL_Color{ 255,0,0,255 });
-
-	Elipse elip(fPoint(App->render->camera->GetCenter().x, App->render->camera->GetCenter().y), 100);
-	elip.SetColor(SDL_Color{ 255,0,0,200 });
-
-	if(elip.Intersects(&iPoint(mouse_pos.x, mouse_pos.y)))
-		App->render->BlitMainMenu();
-
-	rect.Draw();
-	elip.Draw();
-
+	App->render->BlitMainMenu();
 	return true;
 }
 

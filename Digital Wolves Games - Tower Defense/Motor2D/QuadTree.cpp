@@ -179,7 +179,7 @@ void QuadTreeNode::Search(int pixel_range, const fPoint from, std::vector<Entity
 				childs[i]->Search(pixel_range, from, vec);
 }
 
-void QuadTreeNode::Search(const SDL_Rect rect, std::vector<Entity*>& vec) const
+void QuadTreeNode::Selection(const SDL_Rect rect, std::vector<Entity*>& vec) const
 {
 	if (childs[0] == nullptr)
 	{
@@ -191,7 +191,7 @@ void QuadTreeNode::Search(const SDL_Rect rect, std::vector<Entity*>& vec) const
 	else
 		for (int i = 0; i < 4; i++)
 			if (childs[i]->area.Overlaps(rect))
-				childs[i]->Search(rect, vec);
+				childs[i]->Selection(rect, vec);
 }
 
 void QuadTreeNode::Search(const IsoRect rect, std::vector<Entity*>& vec) const
@@ -505,10 +505,10 @@ void QuadTree::Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) c
 	origin->Search(pixel_range, from, vec);
 }
 
-void QuadTree::Search(SDL_Rect rect, std::vector<Entity*>& vec) const
+void QuadTree::Selection(SDL_Rect rect, std::vector<Entity*>& vec) const
 {
 	vec.clear();
-	origin->Search(rect, vec);
+	origin->Selection(rect, vec);
 }
 
 void QuadTree::UpdateAll(float dt) const
