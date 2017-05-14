@@ -50,11 +50,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		//INFANTRY
 
 	case U_MILITIA:
-		SetHp(50);
-		attack = 4;
+		SetHp(43);
+		attack = 5;
 		SetArmor(1);
-		speed = 1.1f;
-		rate_of_fire = 60.0f;
+		speed = 3.0f;
+		rate_of_fire = 80.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -68,11 +68,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		break;
 
 	case U_MANATARMS:
-		SetHp(55);
-		attack = 6;
+		SetHp(58);
+		attack = 7;
 		SetArmor(3);
-		speed = 1.1f;
-		rate_of_fire = 150.0f;
+		speed = 2.28f;
+		rate_of_fire = 120.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -85,11 +85,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		break;
 
 	case U_LONGSWORDMAN:
-		SetHp(70);
-		attack = 9;
-		SetArmor(1);
-		speed = 1.1f;
-		rate_of_fire = 100.0f;
+		SetHp(118);
+		attack = 10;
+		SetArmor(4);
+		speed = 2.30f;
+		rate_of_fire = 95.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -102,12 +102,12 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		break;
 
 	case U_TWOHANDEDSWORDMAN:
-		SetHp(70);
-		attack = 12;
-		SetArmor(1);
-		speed = 1.1f;
+		SetHp(95);
+		attack = 13;
+		SetArmor(5);
+		speed = 2.30f;
 		rate_of_fire = 100.0f;
-		range = 50;
+		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -119,12 +119,12 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		break;
 
 	case U_CHAMPION:
-		SetHp(80);
-		attack = 13;
-		SetArmor(2);
-		speed = 1.1f;
+		SetHp(152);
+		attack = 14;
+		SetArmor(6);
+		speed = 2.30f;
 		rate_of_fire = 100.0f;
-		range = 50;
+		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
@@ -137,10 +137,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_SPEARMAN:
 		SetHp(55);
-		attack = 3;
+		attack = 4;
 		SetArmor(1);
-		speed = 1.16f;
-		rate_of_fire = 100.0f;
+		speed = 2.29f;
+		rate_of_fire = 95.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -154,10 +154,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_PIKEMAN:
 		SetHp(65);
-		attack = 4;
+		attack = 5;
 		SetArmor(1);
-		speed = 1.16f;
-		rate_of_fire = 100.0f;
+		speed = 2.29f;
+		rate_of_fire = 95.0f;
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
@@ -173,13 +173,13 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		//ARCHERS
 
 	case U_ARCHER:
-		SetHp(40);
+		SetHp(41);
 		attack = 5;
 		SetArmor(1);
-		speed = 1.16f;
-		rate_of_fire = 90.0f;
-		range = 160;
-		vision_range = 150;
+		speed = 2.29f;
+		rate_of_fire = 95.0f;
+		range = 250;
+		vision_range = 250;
 		unit_class = C_ARCHER;
 		unit_circle = Elipse({ GetX(), GetY() }, 10);
 		if (side == S_ENEMY)
@@ -194,8 +194,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(50);
 		attack = 7;
 		SetArmor(1);
-		speed = 1.16f;
-		rate_of_fire = 100.0f;
+		speed = 2.19f;
+		rate_of_fire = 80.0f;
 		range = 200;
 		vision_range = 150;
 		unit_class = C_ARCHER;
@@ -208,13 +208,13 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		break;
 
 	case U_CAVALRYARCHER:
-		SetHp(60);
+		SetHp(65);
 		attack = 6;
 		SetArmor(1);
-		speed = 1.4f;
-		rate_of_fire = 100.0f;
-		range = 160;
-		vision_range = 200;
+		speed = 2.45f;
+		rate_of_fire = 85.0f;
+		range = 250;
+		vision_range = 250;
 		unit_class = C_ARCHER;
 		unit_circle = Elipse({ GetX(), GetY() }, 18);
 		if (side == S_ENEMY)
@@ -225,13 +225,13 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		break;
 
 	case U_HEAVYCAVALRYARCHER:
-		SetHp(70);
+		SetHp(81);
 		attack = 8;
 		SetArmor(1);
-		speed = 1.4f;
-		rate_of_fire = 100.0f;
-		range = 160;
-		vision_range = 200;
+		speed = 2.45f;
+		rate_of_fire = 120.0f;
+		range = 250;
+		vision_range = 250;
 		unit_class = C_ARCHER;
 		unit_circle = Elipse({ GetX(), GetY() }, 18);
 		if (side == S_ENEMY)
@@ -245,11 +245,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		//CAVALRY
 
 	case U_PALADIN:
-		SetHp(165);
-		attack = 14;
-		SetArmor(3);
-		speed = 1.45f;
-		rate_of_fire = 100.0f;
+		SetHp(167);
+		attack = 16;
+		SetArmor(6);
+		speed = 2.55f;
+		rate_of_fire = 110.0f;
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
@@ -262,11 +262,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		break;
 
 	case U_KNIGHT:
-		SetHp(105);
-		attack = 11;
-		SetArmor(1);
-		speed = 1.45f;
-		rate_of_fire = 100.0f;
+		SetHp(137);
+		attack = 12;
+		SetArmor(5);
+		speed = 2.6f;
+		rate_of_fire = 105.0f;
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
@@ -280,9 +280,9 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_CAVALIER:
 		SetHp(125);
-		attack = 12;
-		SetArmor(1);
-		speed = 1.45f;
+		attack = 13;
+		SetArmor(3);
+		speed = 2.55f;
 		rate_of_fire = 100.0f;
 		range = 35;
 		vision_range = 250;
@@ -299,11 +299,11 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		//SIEGE
 
 	case U_SIEGERAM:
-		SetHp(270);
-		attack = 10;
+		SetHp(600);
+		attack = 110;
 		SetArmor(-3);
-		speed = 0.7f;
-		rate_of_fire = 250.0f;
+		speed = 1.7f;
+		rate_of_fire = 210.0f;
 		range = 100;
 		vision_range = 100;
 		unit_class = C_SIEGE;
@@ -316,13 +316,13 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		break;
 
 	case U_MANGONEL:
-		SetHp(350);
-		attack = 100;
+		SetHp(500);
+		attack = 80;
 		SetArmor(-1);
-		speed = 0.8f;
+		speed = 1.8f;
 		rate_of_fire = 250.0f;
 		range = 180;
-		vision_range = 250;
+		vision_range = 230;
 		unit_class = C_SIEGE;
 		unit_circle = Elipse({ GetX(), GetY() }, 30);
 		SetTextureID(T_MANGONEL);

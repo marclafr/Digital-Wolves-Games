@@ -6,6 +6,7 @@
 #include "j1Render.h"
 #include "j1Audio.h"
 #include "ProjectileManager.h"
+#include "j1EntityManager.h"
 
 Projectile::Projectile(fPoint initialpos, Entity * target, int damage, float TimeInSecs, int Startheight, int Curveheight, PROJECTILE_TYPE type) : StartPos(initialpos), Damage(damage), Target(target), StartHeight(Startheight), CurveHeight(Curveheight), projectile_type(type)
 {
@@ -167,7 +168,8 @@ AnimationManager * Projectile::GetProjectileAnim()
 
 void Projectile::AreaDamage(int damage, iPoint center, int radius)
 {
-	Elipse circle(fPoint(center.x, center.y), radius);
+	IsoRect rect(fPoint(center.x, center.y), radius);
+	App->entity_manager->LookForEnemies(radius, { (float)center.x, (float)center.y }, S_ALLY);
 	//TODO: when quadtree is finished
 	/*
 	if (projectile_type == P_ICE_CANNONBALL)

@@ -1,8 +1,21 @@
-#define TWOHANDEDSWORDMAN_HP 170
 #define CAVALRYARCHER_HP 50
 #define SIEGERAM_HP 270
-#define MANATARMS_HP 100
+#define MILITIA_HP 43
+#define MANATARMS_HP 58
+#define LONGSWORDMAN_HP 118
+#define TWOHANDEDSWORDMAN_HP 95
+#define CHAMPION_HP 152
+#define SPEARMAN_HP 55
+#define PIKEMAN_HP 65
+#define ARCHER_HP 41
+#define ARBALEST_HP 50
+#define CAVALRYARCHER_HP 65
+#define HEAVYCAVALRYARCHER_HP 81
+#define KNIGHT_HP 137
+#define CAVALIER_HP 125
 #define PALADIN_HP 200
+#define SIEGEMRAM_HP 600
+#define MANGONEL_HP 500
 
 #define TURRET_HP 250
 #define WOODWALL_HP 500
@@ -174,7 +187,7 @@ const char* GetUnitPrice(const UNIT_TYPE type)
 		break;
 		*/
 	case U_CHAMPION:
-		ret = "Food: 60 Gold: 20";
+		ret = "Food: 100";
 		break;
 
 		/*
@@ -189,7 +202,7 @@ const char* GetUnitPrice(const UNIT_TYPE type)
 		break;
 		*/
 	case U_ARBALEST:
-		ret = "Wood: 60 Gold: 20";
+		ret = "Food: 125";
 		break;
 		/*
 	case U_CAVALRYARCHER:
@@ -197,7 +210,7 @@ const char* GetUnitPrice(const UNIT_TYPE type)
 		break;
 		*/
 	case U_HEAVYCAVALRYARCHER:
-		ret = "Wood: 60 Gold: 20";
+		ret = "Food: 175";
 		break;
 
 		//Cavalry
@@ -210,7 +223,7 @@ const char* GetUnitPrice(const UNIT_TYPE type)
 		break;
 		*/
 	case U_PALADIN:
-		ret = "Food: 60 Gold: 20";
+		ret = "Food: 200";
 		break;
 
 		//Siege
@@ -355,7 +368,7 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 const char * GetBuildingPrice(const BUILDING_TYPE type)
 {
 	char* ret = nullptr;
-
+	//THIS ISNT USED I THINK// TODO
 	switch (type)
 	{
 	case B_TURRET:
@@ -441,10 +454,10 @@ const char * GetTowerPrice(const TOWER_TYPE type)
 	switch (type)
 	{
 	case T_BASIC_TOWER:
-		ret = "???????????";
+		ret = "115 Wood, 50 Stone";
 		break;
 	case T_BOMBARD_TOWER:
-		ret = "???????????";
+		ret = "135 Wood, 80 Stone";
 		break;
 	default:
 		ret = "Turret Price";
@@ -571,27 +584,70 @@ int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp, const uint pixels)
 	int ret = 0;
 
 	switch (type)
-	{
-	case U_TWOHANDEDSWORDMAN:
-		ret = hp * pixels / TWOHANDEDSWORDMAN_HP;
-		break;
-
-	case U_CAVALRYARCHER:
-		ret = hp * pixels / CAVALRYARCHER_HP;
-		break;
-
-	case U_SIEGERAM:
-		ret = hp * pixels / SIEGERAM_HP;
+	{		
+	case U_MILITIA:
+		ret = hp * pixels / MILITIA_HP;
 		break;
 
 	case U_MANATARMS:
 		ret = hp * pixels / MANATARMS_HP;
 		break;
 
+	case U_LONGSWORDMAN:
+		ret = hp * pixels / LONGSWORDMAN_HP;
+		break;
+
+	case U_TWOHANDEDSWORDMAN:
+		ret = hp * pixels / TWOHANDEDSWORDMAN_HP;
+		break;
+
+	case U_CHAMPION:
+		ret = hp * pixels / CHAMPION_HP;
+		break;
+
+	case U_SPEARMAN:
+		ret = hp * pixels / SPEARMAN_HP;
+		break;
+
+	case U_PIKEMAN:
+		ret = hp * pixels / PIKEMAN_HP;
+		break;
+
+	case U_ARCHER:
+		ret = hp * pixels / ARCHER_HP;
+		break;
+
+	case U_ARBALEST:
+		ret = hp * pixels / ARBALEST_HP;
+		break;
+
+	case U_CAVALRYARCHER:
+		ret = hp * pixels / CAVALRYARCHER_HP;
+		break;
+
+	case U_HEAVYCAVALRYARCHER:
+		ret = hp * pixels / HEAVYCAVALRYARCHER_HP;
+		break;
+
+	case U_KNIGHT:
+		ret = hp * pixels / KNIGHT_HP;
+		break;
+
+	case U_CAVALIER:
+		ret = hp * pixels / CAVALIER_HP;
+		break;
+
 	case U_PALADIN:
 		ret = hp * pixels / PALADIN_HP;
 		break;
 
+	case U_SIEGERAM:
+		ret = hp * pixels / SIEGERAM_HP;
+		break;
+
+	case U_MANGONEL:
+		ret = hp * pixels / MANGONEL_HP;
+		break;
 		//TODO: ADD UNIT
 
 

@@ -470,8 +470,7 @@ void j1Render::BlitGameScene()
 		App->entity_manager->DrawQuadTree();
 
 	BlitUI();
-	
-
+	App->entity_manager->BlitMinimap();
 
 	CleanUpMapVec();
 	CleanUpInGameSpriteQueue();

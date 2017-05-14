@@ -403,25 +403,32 @@ void QuadTreeNode::DeleteEntities()
 	}
 }
 
-Unit* QuadTreeNode::CheckCollision(Elipse elipse) const
+Unit* QuadTreeNode::CheckCollision(const Unit* ptr) const
 {
+	Unit* ret = nullptr;
+
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
-			if (entities[i] != nullptr && entities[i]->GetEntityType() == E_UNIT)
-			{
-				Unit* unit = (Unit*)entities[i];
-				if(unit->GetUnitCircle().Intersects(&elipse))
-					return unit;
-			}
-				
+			if (entities[i] != nullptr)
+				if(entities[i]->GetEntityType() == E_UNIT)
+				{
+					Unit* unit = (Unit*)entities[i];
+					if(unit->GetUnitCircle().IsIn(&ptr->GetUnitCircle().GetPosition()) && ptr != entities[i])
+						return unit;
+				}	
 			else
 				break;
 	}
 	else
 		for (int i = 0; i < 4; i++)
-			if(childs[i]->area.Overlaps(elipse))
-				childs[i]->CheckCollision(elipse);
+			if (childs[i]->area.Inside(ptr->GetUnitCircle().GetPosition()))
+			{
+				ret = childs[i]->CheckCollision(ptr);
+				if (ret != nullptr)
+					break;
+			}
+	return ret;
 }
 
 void QuadTreeNode::CheckUnitCollisions(const Unit * ptr) const
@@ -528,6 +535,13 @@ Entity * QuadTree::SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TYPE e
 	return origin->SearchFirstEnemy(rect,side,entity_type);
 }
 
+bool QuadTree::CheckIfFull(IsoRect tile) const
+{
+	if (origin->SearchFirst(tile) != nullptr)
+		return true;
+	return false;
+}
+
 void QuadTree::Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const
 {
 	origin->Search(pixel_range, from, vec);
@@ -549,9 +563,9 @@ void QuadTree::DeleteEntities() const
 	origin->DeleteEntities();
 }
 
-Unit* QuadTree::CheckCollisions(Elipse elipse) const
+Unit* QuadTree::CheckCollisions(const Unit* ptr) const
 {
-	return origin->CheckCollision(elipse);
+	return origin->CheckCollision(ptr);
 }
 
 void QuadTree::DrawRects() const
@@ -562,4 +576,9 @@ void QuadTree::DrawRects() const
 void QuadTree::SaveAll(pugi::xml_node & node)
 {
 	origin->SaveAll(node);
+}
+
+void QuadTree::BlitMinimap() const
+{
+	origin->BlitMinimap();
 }

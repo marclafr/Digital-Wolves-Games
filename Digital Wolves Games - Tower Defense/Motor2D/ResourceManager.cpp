@@ -10,10 +10,10 @@
 
 ResourceManager::ResourceManager(): wood(STARTING_WOOD), food (STARTING_FOOD), gold (STARTING_GOLD), stone (STARTING_STONE)
 {
-	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(1392, 858));
-	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1240, 979));
-	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1588, 952));
-	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1419, 1031));	
+	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(1392, 858), 30, 5);
+	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1240, 979), 75, 6);
+	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1588, 952), 65, 5);
+	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1419, 1031), 62, 6);
 }
 
 ResourceManager::~ResourceManager()
@@ -257,7 +257,7 @@ bool ResourceManager::CanBuildWall(BUILDING_TYPE type)
 
 bool ResourceManager::CanBuildAmountOfWalls(int number_of_walls)
 {
-	return stone >= BASIC_WALL_STONE_COST*number_of_walls;
+	return stone >= BASIC_WALL_STONE_COST* number_of_walls;
 	return false;
 }
 
@@ -294,9 +294,9 @@ bool ResourceManager::CanTrainSoldier(UNIT_TYPE type)
 	case U_LONGSWORDMAN:
 		return false;
 	case U_TWOHANDEDSWORDMAN:
-		return wood > TWOHANDED_WOOD_COST && stone > TWOHANDED_STONE_COST;
+		return false;
 	case U_CHAMPION:
-		return wood > TWOHANDED_WOOD_COST && stone > TWOHANDED_STONE_COST;
+		return food > CHAMPION_FOOD_COST;
 		return false;
 	case U_SPEARMAN:
 		return false;
@@ -305,19 +305,19 @@ bool ResourceManager::CanTrainSoldier(UNIT_TYPE type)
 	case U_ARCHER:
 		return false;
 	case U_ARBALEST:
-		return wood > TWOHANDED_WOOD_COST && stone > TWOHANDED_STONE_COST;
+		return food > ARBALEST_FOOD_COST;
 		return false;
 	case U_CAVALRYARCHER:
 		return false;
 	case U_HEAVYCAVALRYARCHER:
-		return wood > TWOHANDED_WOOD_COST && stone > TWOHANDED_STONE_COST;
+		return food > HEAVYCAVALRYARCHER_FOOD_COST;
 		return false;
 	case U_KNIGHT:
 		return false;
 	case U_CAVALIER:
 		return false;
 	case U_PALADIN:
-		return wood > TWOHANDED_WOOD_COST && stone > TWOHANDED_STONE_COST;
+		return food > PALADIN_FOOD_COST;
 		return false;
 	case U_SIEGERAM:
 		return false;
@@ -343,12 +343,9 @@ void ResourceManager::TrainSoldier(UNIT_TYPE type)
 	case U_LONGSWORDMAN:
 		break;
 	case U_TWOHANDEDSWORDMAN:
-		wood -= TWOHANDED_WOOD_COST;
-		stone -= TWOHANDED_STONE_COST;
 		break;
 	case U_CHAMPION:
-		wood -= TWOHANDED_WOOD_COST;
-		stone -= TWOHANDED_STONE_COST;
+		food -= CHAMPION_FOOD_COST;
 		break;
 	case U_SPEARMAN:
 		break;
@@ -357,22 +354,19 @@ void ResourceManager::TrainSoldier(UNIT_TYPE type)
 	case U_ARCHER:
 		break;
 	case U_ARBALEST:
-		wood -= TWOHANDED_WOOD_COST;
-		stone -= TWOHANDED_STONE_COST;
+		food -= ARBALEST_FOOD_COST;
 		break;
 	case U_CAVALRYARCHER:
 		break;
 	case U_HEAVYCAVALRYARCHER:
-		wood -= TWOHANDED_WOOD_COST;
-		stone -= TWOHANDED_STONE_COST;
+		food -= HEAVYCAVALRYARCHER_FOOD_COST;
 		break;
 	case U_KNIGHT:
 		break;
 	case U_CAVALIER:
 		break;
 	case U_PALADIN:
-		wood -= TWOHANDED_WOOD_COST;
-		stone -= TWOHANDED_STONE_COST;
+		food -= PALADIN_FOOD_COST;
 		break;
 	case U_SIEGERAM:
 		break;
