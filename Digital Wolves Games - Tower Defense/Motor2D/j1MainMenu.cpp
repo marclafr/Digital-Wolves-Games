@@ -107,13 +107,21 @@ bool j1MainMenu::Update(float dt)
 	int y = 0;
 	App->input->GetMousePosition(x,y);
 	fPoint mouse_pos(x,y);
-	rect = IsoRect(fPoint( App->render->camera->GetCenter().x, App->render->camera->GetCenter().y ), 300, 300);
-	rect.SetColor(SDL_Color{ 255,255,255,255 });
+	mouse_pos.x -= App->render->camera->GetPosition().x;
+	mouse_pos.y -= App->render->camera->GetPosition().y;
 
-	if(rect.Inside(mouse_pos))
+	rect = IsoRect(mouse_pos, 300, 300);
+	rect.SetColor(SDL_Color{ 255,0,0,255 });
+
+	Elipse elip(fPoint(App->render->camera->GetCenter().x, App->render->camera->GetCenter().y), 100);
+	elip.SetColor(SDL_Color{ 255,0,0,200 });
+
+	if(elip.Intersects(&iPoint(mouse_pos.x, mouse_pos.y)))
 		App->render->BlitMainMenu();
 
 	rect.Draw();
+	elip.Draw();
+
 	return true;
 }
 

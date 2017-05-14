@@ -96,7 +96,7 @@ private:
 	iPoint path_objective;
 	fPoint move_vector;
 	float angle;
-	Circle unit_circle;
+	Elipse unit_circle;
 	UNIT_CLASS unit_class;
 	int rand_num;
 	AnimationManager* animation;
@@ -136,7 +136,7 @@ public:
 	bool GetPath(iPoint dest);
 	const int GetAttack() const;
 	const int GetRange() const;
-	const Circle GetUnitCircle() const;
+	const Elipse GetUnitCircle() const;
 	const int GetVisionRange() const;
 	const bool IsMoving() const;
 

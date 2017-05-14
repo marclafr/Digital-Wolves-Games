@@ -167,7 +167,7 @@ AnimationManager * Projectile::GetProjectileAnim()
 
 void Projectile::AreaDamage(int damage, iPoint center, int radius)
 {
-	Circle circle(fPoint(center.x, center.y), radius);
+	Elipse circle(fPoint(center.x, center.y), radius);
 	//TODO: when quadtree is finished
 	/*
 	if (projectile_type == P_ICE_CANNONBALL)

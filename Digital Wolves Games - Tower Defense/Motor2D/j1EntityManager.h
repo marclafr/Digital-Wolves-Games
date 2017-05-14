@@ -37,7 +37,7 @@ public:
 	void Select(Entity* select) const;
 	void CheckClick(int mouse_x, int mouse_y)  const;
 
-	Entity* LookForEnemies(int range, fPoint pos) const;
+	Entity* LookForEnemies(int range, fPoint pos, Side side) const;
 	
 	Entity* CheckForCombat(fPoint position, int range, Side side) const;
 	Entity* CheckForObjective(fPoint position, int vision_range, Side side) const;

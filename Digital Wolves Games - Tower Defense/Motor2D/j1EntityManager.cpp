@@ -107,9 +107,10 @@ void j1EntityManager::Select(Entity * select) const
 	App->uimanager->CreatePanelInfo(App->scene->selection);
 }
 
-Entity * j1EntityManager::LookForEnemies(int range, fPoint pos) const
+Entity * j1EntityManager::LookForEnemies(int range, fPoint pos, Side side) const
 {
-	return entity_quadtree->SearchFirst(range, pos);
+	IsoRect rect(pos,range * 2.0f, range*2.0f);
+	return entity_quadtree->SearchFirstEnemy(rect, side);
 }
 
 void j1EntityManager::CheckClick(int mouse_x, int mouse_y) const
