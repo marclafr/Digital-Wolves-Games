@@ -31,7 +31,8 @@ const bool isBuilded(const Entity* build);
 iPoint GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type);
 const uint GetInvestigationPercentage(const Investigation* type);
 const char* GetInvestigationName(const INVESTIGATION_TYPE type);
-const char* GetInvestigationPrice(const INVESTIGATION_TYPE type);
+void GetInvestigationPrice(const INVESTIGATION_TYPE type, std::string & price);
+
 
 iPoint GetTowerIconPositionFromAtlas(const TOWER_TYPE type);
 const char* GetTowerName(const TOWER_TYPE type);

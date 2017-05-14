@@ -23,6 +23,7 @@ public:
 	TOWER_TYPE tower_desc;
 	TURRET_UPGRADE tower_upgrade_desc;
 	INVESTIGATION_TYPE investigation_desc;
+	std::string invest_price;
 
 	info_button* selected = nullptr;
 
