@@ -53,9 +53,9 @@ Entity * j1EntityManager::CreateTower(TOWER_TYPE t_type, fPoint pos, iPoint posi
 	return new_entity;
 }
 
-Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos) const
+Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos, int amount_collect, int time) const
 {
-	Entity* new_entity = (Entity*) new Resources(r_type, pos);
+	Entity* new_entity = (Entity*) new Resources(r_type, pos, amount_collect, time);
 	entity_quadtree->PushBack(new_entity);
 	return new_entity;
 }
