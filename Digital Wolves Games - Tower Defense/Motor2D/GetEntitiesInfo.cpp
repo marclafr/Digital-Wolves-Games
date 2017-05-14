@@ -187,7 +187,7 @@ const char* GetUnitPrice(const UNIT_TYPE type)
 		break;
 		*/
 	case U_CHAMPION:
-		ret = "Food: 60 Gold: 20";
+		ret = "Food: 100";
 		break;
 
 		/*
@@ -202,7 +202,7 @@ const char* GetUnitPrice(const UNIT_TYPE type)
 		break;
 		*/
 	case U_ARBALEST:
-		ret = "Wood: 60 Gold: 20";
+		ret = "Food: 125";
 		break;
 		/*
 	case U_CAVALRYARCHER:
@@ -210,7 +210,7 @@ const char* GetUnitPrice(const UNIT_TYPE type)
 		break;
 		*/
 	case U_HEAVYCAVALRYARCHER:
-		ret = "Wood: 60 Gold: 20";
+		ret = "Food: 175";
 		break;
 
 		//Cavalry
@@ -223,7 +223,7 @@ const char* GetUnitPrice(const UNIT_TYPE type)
 		break;
 		*/
 	case U_PALADIN:
-		ret = "Food: 60 Gold: 20";
+		ret = "Food: 200";
 		break;
 
 		//Siege
@@ -368,7 +368,7 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 const char * GetBuildingPrice(const BUILDING_TYPE type)
 {
 	char* ret = nullptr;
-
+	//THIS ISNT USED I THINK// TODO
 	switch (type)
 	{
 	case B_TURRET:
@@ -454,10 +454,10 @@ const char * GetTowerPrice(const TOWER_TYPE type)
 	switch (type)
 	{
 	case T_BASIC_TOWER:
-		ret = "???????????";
+		ret = "115 Wood, 50 Stone";
 		break;
 	case T_BOMBARD_TOWER:
-		ret = "???????????";
+		ret = "135 Wood, 80 Stone";
 		break;
 	default:
 		ret = "Turret Price";

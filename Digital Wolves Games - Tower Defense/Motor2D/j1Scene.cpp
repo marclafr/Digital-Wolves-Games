@@ -64,6 +64,31 @@ bool j1Scene::Start()
 	App->investigations->Enable();
 	App->score->Enable();
 
+	
+
+	App->score_scene->prove_achievements = true;
+	App->score_scene->build_simple_tower = true;
+	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
+
+	App->render->camera->SetPosition(iPoint(1700, -2400));
+	CreateSceneUI();
+	//ENTITIES
+	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(0, 272), S_ALLY);
+	resources = new ResourceManager();
+	iPoint pos = App->map->WorldToMap(-300, 370);
+	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-225, 370),pos);
+	pos = App->map->WorldToMap(150, 370);
+	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(225, 370),pos);
+	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
+	//--
+
+	//uint w, h;
+	//App->win->GetWindowSize(w, h);
+	//SDL_Rect r = { 0,0,w,h };
+	//App->video->PlayVideo("introdw.ogv",r);
+	//Reset scores and timers
+	App->score->Reset();
+
 	//TUTORIAL
 		if (App->tutorial->tutorial)
 		{
@@ -75,30 +100,6 @@ bool j1Scene::Start()
 			App->wave_manager->Enable();//TODO put after tutorial 
 		}
 
-	App->score_scene->prove_achievements = true;
-	App->score_scene->build_simple_tower = true;
-	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
-
-	App->render->camera->SetPosition(iPoint(1700, -2400));
-	CreateSceneUI();
-	//ENTITIES
-	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-75, 272), S_ALLY);
-	resources = new ResourceManager();
-	iPoint pos = App->map->WorldToMap(-300, 370);
-	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-300, 370),pos);
-	pos = App->map->WorldToMap(150, 370);
-	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370),pos);
-	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
-	//--
-
-	//uint w, h;
-	//App->win->GetWindowSize(w, h);
-	//SDL_Rect r = { 0,0,w,h };
-	//App->video->PlayVideo("introdw.ogv",r);
-	//Reset scores and timers
-	App->score->Reset();
-
-	
 	return true;
 }
 

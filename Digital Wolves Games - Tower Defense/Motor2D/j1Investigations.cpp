@@ -176,6 +176,7 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 	{
 		investigation->inv_state = INV_S_COMPLETED;
 		App->audio->PlayFx(fx_inv_completed);
+		if (App->tutorial->tutorial3_completed && investigation->investigation_type == INV_FIRE_TOWER) App->tutorial->InvestigationDone = true;
 
 		if (investigation->has_levels == false)
 		{
