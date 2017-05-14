@@ -29,7 +29,6 @@
 #include "UICheckbutton.h"
 #include "UIHUDMenuInGame.h"
 #include "j1UIManager.h"
-#include "Video.h"
 #include "UIGetEntitiesInfo.h"
 
 #define RECT_INGAME_WITHOUT_UI {0, 15, 1360, 620}

@@ -5,7 +5,7 @@
 #include <windows.h>
 #include "p2Log.h"
 #include "SDL_image\include\SDL_image.h"
-
+#include "j1Window.h"
 
 
 j1Video::j1Video() : j1Module()
@@ -81,15 +81,16 @@ bool j1Video::GrabAVIFrame()
 	//This surface will recieve the data of actual frame.
 	SDL_Surface *surface;
 
-	surface = SDL_CreateRGBSurfaceFrom(pdata, width, height, BitCount, width * 3, 0, 0, 0, 0);
+	surface = SDL_CreateRGBSurfaceFrom(pdata, width, height, BitCount, width * pitch, 0, 0, 0, 0);
 
 	//-----
 
 	//TODO 4 Use this surface to create a SDL_Texture, and Blit it.
 	//Also, After picking up the frame, you should go to the next one
-	SDL_Texture* image = App->tex->LoadSurface(surface);
-
-	App->render->Blit(image, 0, 0, NULL, SDL_FLIP_HORIZONTAL);
+	SDL_Texture* image = App->tex->LoadSurfaceVideo(surface);
+	uint w, h;
+	App->win->GetWindowSize(w, h);
+	App->render->Blit(image, w / 4.4, h / 1.2, NULL, SDL_FLIP_VERTICAL);
 
 
 	frame++;
@@ -98,7 +99,7 @@ bool j1Video::GrabAVIFrame()
 	//----
 
 	//TODO 5 Unload texture and surface
-	App->tex->UnLoad(image);
+	App->tex->UnloadVideo(image);
 	SDL_FreeSurface(surface);
 	//-----
 
@@ -115,5 +116,3 @@ void j1Video::CloseAVI() {
 	AVIFileExit();												// Release The File
 
 }
-
-

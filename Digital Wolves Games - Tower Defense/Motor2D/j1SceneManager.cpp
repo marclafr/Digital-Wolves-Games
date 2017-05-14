@@ -23,11 +23,12 @@ j1SceneManager::~j1SceneManager()
 bool j1SceneManager::Awake(pugi::xml_node& config)
 {	
 	//todo: assign pointers to scene modules
-	current_scene = SC_MAIN_MENU;
+	current_scene = SC_INTRO;
 
 	main_menu = (j1Module*) App->main_menu;
 	game_scene = (j1Module*) App->scene;
 	score_scene = (j1Module*) App->score_scene;
+	intro = (j1Module*)App->intro;
 
 	return true;
 }
@@ -103,6 +104,8 @@ j1Module * j1SceneManager::GetCurrentScenePtr() const
 
 	case SC_SCORE:
 		return score_scene;
+	case SC_INTRO:
+		return intro;
 	}
 	return nullptr;
 }

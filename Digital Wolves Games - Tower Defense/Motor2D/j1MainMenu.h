@@ -6,6 +6,7 @@
 #include "j1App.h"
 #include "j1Render.h"
 #include "Camera.h"
+#include "IsoPrimitives.h"
 
 struct SDL_Texture;
 class UILabel;

@@ -148,7 +148,9 @@ public:
 	SDL_Texture* const	Load(const char* path, TextureID id);
 	bool UnLoad(Texture* texture);
 	bool UnLoad(TextureID id);
+	bool UnloadVideo(SDL_Texture* texture);
 	SDL_Texture* const	LoadSurface(SDL_Surface* surface, TextureID id);
+	SDL_Texture* const LoadSurfaceVideo(SDL_Surface* surface);
 
 	void GetSize(const SDL_Texture* texture, uint& width, uint& height) const;
 	SDL_Texture* GetTexture(const TextureID id) const;
@@ -159,7 +161,10 @@ public:
 
 	void GetConstructionTexture(SDL_Texture*& ptr, SDL_Rect& rect, iPoint& pivot, uint state_num);
 	void GetTowerTexture(SDL_Texture*& ptr, SDL_Rect& rect, iPoint& pivot, TOWER_TYPE tower, BUILDING_TEXTURE_TYPES = BTT_NONE);
+
 	void GetBuildingTexture(SDL_Texture*& ptr, SDL_Rect& rect, iPoint & pivot, BUILDING_TYPE building, BUILDING_TEXTURE_TYPES color = BTT_NONE);
+
+
 private:
 
 	std::vector<Texture*> textures;
@@ -167,6 +172,8 @@ private:
 	std::vector<ConstructionRect> construction_rects;
 	std::vector<TowerRect> towers_rects;
 	std::vector<BuildingRect> buildings_rects;
+
+	std::vector<SDL_Texture*> texturesVideo;
 
 	uint ConstrString2Uint(const std::string name);
 	TOWER_TYPE TowerString2Enum(const std::string name, BUILDING_TEXTURE_TYPES &color);
