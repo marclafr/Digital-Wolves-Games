@@ -157,6 +157,7 @@ iPoint j1PathFinding::FindEmptyTile(iPoint from, Elipse collision) const
 
 iPoint j1PathFinding::FindEmptyAttackPos(iPoint from, int range)
 {
+	/*
 	IsoRect range (fPoint(from.x,from.y),range*2.0f,range*2.0f);
 	IsoRect tile;
 	float tile_diagonal = sqrt(App->map->data.tile_width * );
@@ -180,7 +181,8 @@ iPoint j1PathFinding::FindEmptyAttackPos(iPoint from, int range)
 			}
 		}
 	return iPoint(-1, -1);
-	return iPoint()
+	return iPoint()*/
+	return iPoint(-1, -1);
 }
 
 // Utility: return the walkability value of a tile
