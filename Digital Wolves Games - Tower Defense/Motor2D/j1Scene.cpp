@@ -802,10 +802,10 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_UNIVERSITY, iPoint(1, 0), { 878,884 }, new DoInvestigation(INV_ICE_TOWER));
 	panel->AddButton(BP_UNIVERSITY, iPoint(2, 0), { 904,884 }, new DoInvestigation(INV_AIR_TOWER));
 
-	panel->AddButton(BP_UNIVERSITY, iPoint(3, 0), { 852,858 }, new DoInvestigation(INV_FOOD));
-	panel->AddButton(BP_UNIVERSITY, iPoint(4, 0), { 878,858 }, new DoInvestigation(INV_WOOD));
+	panel->AddButton(BP_UNIVERSITY, iPoint(3, 0), { 852,858 }, new DoInvestigation(INV_WOOD));
+	panel->AddButton(BP_UNIVERSITY, iPoint(4, 0), { 878,858 }, new DoInvestigation(INV_GOLD));
 	panel->AddButton(BP_UNIVERSITY, iPoint(3, 1), { 904,858 }, new DoInvestigation(INV_STONE));
-	panel->AddButton(BP_UNIVERSITY, iPoint(4, 1), { 930,858 }, new DoInvestigation(INV_GOLD));
+	panel->AddButton(BP_UNIVERSITY, iPoint(4, 1), { 930,858 }, new DoInvestigation(INV_FOOD));
 
 	panel->AddButton(BP_UNIVERSITY, iPoint(0, 1), { 748,858 }, new DoInvestigation(INV_INFANTRY_ATTACK));
 	panel->AddButton(BP_UNIVERSITY, iPoint(1, 1), { 748,910 }, new DoInvestigation(INV_INFANTRY_DEFENSE));
