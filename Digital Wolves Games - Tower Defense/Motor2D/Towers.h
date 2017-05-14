@@ -1,3 +1,6 @@
+
+
+
 #ifndef __TOWERS_
 #define __TOWERS_
 
@@ -53,6 +56,9 @@ public:
 	const TOWER_TYPE GetTowerType() const;
 	const int GetRange() const;
 	void SaveTurret(pugi::xml_node&);
+	float GetSpeed();
+	void SetSpeed(float new_speed);
+	void SetRange(float new_range);
 };
 
 #endif //__TOWERS_

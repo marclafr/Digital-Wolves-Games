@@ -10,7 +10,7 @@
 #include "j1Pathfinding.h"
 #include "j1Scene.h"
 
-Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos, S_ALLY), resource_type(r_type)
+Resources::Resources(RESOURCE_TYPE r_type, fPoint pos, int collected, float time) : Entity(E_RESOURCE, pos, S_ALLY), resource_type(r_type)
 {
 	SDL_Rect rect;
 	switch (r_type)
@@ -80,6 +80,8 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos) : Entity(E_RESOURCE, pos,
 		resource_type = R_NO_RESOURCE;
 		break;
 	}
+	amount_collected = collected;
+	collect_time = time;
 	buildtimer.Start();
 	iPoint p = App->map->WorldToMap(pos.x, pos.y);
 
@@ -95,7 +97,7 @@ Resources::~Resources()
 
 void Resources::Update(float dt)
 {
-	if (GetHp() <= 0) 
+	if (GetHp() <= 0)
 	{
 		this->Die();
 	}
@@ -111,6 +113,7 @@ void Resources::AI()
 	if (CollectTimer.ReadSec() >= collect_time)
 	{
 		AddResource(amount_collected);
+
 		CollectTimer.Start();
 	}
 }
@@ -146,6 +149,11 @@ void Resources::IncreaseResourceAmount(int amount)
 	amount_collected += amount;
 }
 
+int Resources::GetResource()
+{
+	return amount_collected;
+}
+
 void Resources::SaveResource(pugi::xml_node &data)
 {
 	pugi::xml_node actualresource = data.append_child("resource");
@@ -156,7 +164,7 @@ void Resources::SaveResource(pugi::xml_node &data)
 	actualresource.append_attribute("collect_time") = collect_time;
 }
 
-void Resources::AddResource(int add) 
+void Resources::AddResource(int add)
 {
 	switch (resource_type)
 	{

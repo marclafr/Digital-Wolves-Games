@@ -13,7 +13,7 @@
 #define ENEMY_CREATION_POS_X2 -1200
 #define ENEMY_CREATION_POS_Y2 2928
 
-#define TIME_BETWEEN_WAVES 30 //seconds
+#define TIME_BETWEEN_WAVES 20 //seconds
 #define TIME_BETWEEN_UNITS 1 //seconds
 
 enum UNIT_TYPE;
@@ -60,9 +60,10 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
-
-	bool BringNextWave();
 	int GetWaveNum();
+	void SetWaveNum(int wave);
+	bool BringNextWave();
+	void ResetWave();
 private:
 	j1Timer timer;
 	j1Timer delay_timer;
@@ -99,6 +100,8 @@ private:
 	uint kills_for_next_wave = 0;
 	bool all_waves_ended = false;
 	bool can_bring_next_wave = true;
+
+
 };
 
 #endif // __j1WAVE_MANAGER_H__
