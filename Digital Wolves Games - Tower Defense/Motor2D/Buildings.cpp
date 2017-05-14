@@ -9,7 +9,7 @@
 #include "j1Pathfinding.h"
 #include "j1Audio.h"
 #include "Camera.h"
-
+#include "j1Scene.h"
 
 Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILDING, pos, side), building_type(b_type)
 {
@@ -24,7 +24,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 
 	case B_WOOD_WALL:
 		SetSide(side);
-		SetHp(500);
+		SetHp(250);
 		SetAttack(0);
 		SetArmor(8);
 		build_rect = IsoRect({ GetX(), GetY() }, 96, 47, GetPivot());
@@ -131,14 +131,24 @@ void Building::UpgradeWall(BUILDING_TYPE type)
 		switch (type)
 		{
 		case B_WOOD_WALL:
-			SetRect({ 1020,12,99,178});
-			SetPivot(0.494949 * 99, 178 * 0.865169);
-			building_type = B_STONE_WALL;
+			if (App->scene->resources->CanUpgradeWall(type) == true)
+			{
+				App->scene->resources->UpgradeWall(type);
+				SetRect({ 1020,12,99,178 });
+				SetPivot(0.494949 * 99, 178 * 0.865169);
+				building_type = B_STONE_WALL;
+				SetHp(500);
+			}
 			break;
 		case B_STONE_WALL:
-			SetRect({0,66,95,169});
-			SetPivot(0.454211*96,169*0.899822);
-			building_type = B_BRICK_WALL;
+			if (App->scene->resources->CanUpgradeWall(type) == true)
+			{
+				App->scene->resources->UpgradeWall(type);
+				SetRect({ 0,66,95,169 });
+				SetPivot(0.454211 * 96, 169 * 0.899822);
+				building_type = B_BRICK_WALL;
+				SetHp(750);
+			}
 			break;
 		default:
 			break;

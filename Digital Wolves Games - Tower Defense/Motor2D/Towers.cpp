@@ -10,6 +10,7 @@
 #include "j1Input.h"
 #include "j1Map.h"
 #include "Camera.h"
+#include "j1Scene.h"
 
 Tower::Tower(TOWER_TYPE t_type, fPoint pos,iPoint posintiles) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
@@ -311,8 +312,9 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 			switch (type)
 			{
 			case TU_FIRE:
-				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED)
+				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_FIRE_TOWER) == true)
 				{
+					App->scene->resources->UpgradeTower(T_FIRE_TOWER);
 					App->tex->GetTowerTexture(text, tower_rect, pivot, T_FIRE_TOWER);
 					SetRect(tower_rect);
 					SetPivot(pivot.x, pivot.y);
@@ -326,8 +328,9 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				}
 				break;
 			case TU_ICE:
-				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED)
+				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_ICE_TOWER) == true)
 				{
+					App->scene->resources->UpgradeTower(T_ICE_TOWER);
 					App->tex->GetTowerTexture(text, tower_rect, pivot, T_ICE_TOWER);
 					SetRect(tower_rect);
 					SetPivot(pivot.x, pivot.y);
@@ -339,8 +342,9 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				}
 				break;
 			case TU_AIR:
-				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED)
+				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_AIR_TOWER) == true)
 				{
+					App->scene->resources->UpgradeTower(T_AIR_TOWER);
 					App->tex->GetTowerTexture(text, tower_rect, pivot, T_AIR_TOWER);
 					SetRect(tower_rect);
 					SetPivot(pivot.x, pivot.y);
@@ -363,8 +367,9 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 			switch (type)
 			{
 			case TU_FIRE:
-				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED)
+				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_FIRE_TOWER) == true)
 				{
+					App->scene->resources->UpgradeTower(T_FIRE_TOWER);
 					App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_FIRE_TOWER);
 					SetRect(tower_rect);
 					SetPivot(pivot.x, pivot.y);
@@ -376,8 +381,9 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				}
 				break;
 			case TU_ICE:
-				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED)
+				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_ICE_TOWER) == true)
 				{
+					App->scene->resources->UpgradeTower(T_ICE_TOWER);
 					App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_ICE_TOWER);
 					SetRect(tower_rect);
 					SetPivot(pivot.x, pivot.y);
@@ -388,8 +394,9 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				}
 				break;
 			case TU_AIR:
-				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED)
+				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_AIR_TOWER) == true)
 				{
+					App->scene->resources->UpgradeTower(T_AIR_TOWER);
 					App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_AIR_TOWER);
 					SetRect(tower_rect);
 					SetPivot(pivot.x, pivot.y);
