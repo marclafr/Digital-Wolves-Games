@@ -296,7 +296,6 @@ void j1EntityManager::LoadBuilding(pugi::xml_node& data)
 	{
 		App->scene->townhall = actualbuild;
 	}
-	
 }
 
 void j1EntityManager::LoadUnit(pugi::xml_node& data)
@@ -350,4 +349,9 @@ bool j1EntityManager::AbleToBuild(iPoint pos)
 	iPoint map_pos = App->map->WorldToMap(pos.x, pos.y);
 	IsoRect tile(fPoint(map_pos.x + App->map->data.tile_width / 2.0f, map_pos.y + App->map->data.tile_height / 2.0f), App->map->data.tile_width, App->map->data.tile_height);
 	return entity_quadtree->CheckIfFull(tile);
+}
+
+void j1EntityManager::GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entity*>& vec) const
+{
+	entity_quadtree->SearchInIsoRect(rect, vec);
 }
