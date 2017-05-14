@@ -69,23 +69,23 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Enti
 	for (std::vector<Entity*>::iterator it = selection.begin(); it != selection.end(); ++it)
 	{
 		(*it)->SetEntityStatus(ST_SELECTED);
+
 		if ((*it)->GetEntityType() == E_UNIT && unit_found == false)
+			unit_found = true;
+
+		if(unit_found)
 		{
-			for(std::vector<Entity*>::iterator item = selection.begin(); item != it - 1; ++item)
+			if ((*it)->GetEntityType() != E_UNIT)
 			{
-				(*item)->SetEntityStatus(ST_NON_SELECTED);
-				selection.erase(item);
+				(*it)->SetEntityStatus(ST_NON_SELECTED);
+				selection.erase(it);
+				it = selection.begin();
 			}
-			for (std::vector<Entity*>::iterator item = it; item != selection.end(); ++item)
-				if ((*item)->GetEntityType() != E_UNIT)
-				{
-					(*item)->SetEntityStatus(ST_NON_SELECTED);
-					selection.erase(item);
-				}
-				else
-					(*it)->SetEntityStatus(ST_SELECTED);
+			else
+				(*it)->SetEntityStatus(ST_SELECTED);					
 		}
-		break;
+		else
+			(*it)->SetEntityStatus(ST_SELECTED);
 	}
 
 	App->uimanager->CreatePanelInfo(selection);
