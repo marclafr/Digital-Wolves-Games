@@ -62,16 +62,9 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, Side side) : Entity(E_BUILD
 	buildtimer.Start();
 	iPoint p = App->map->WorldToMap(pos.x, pos.y);
 
-	if (App->pathfinding->IsWalkable(iPoint(p.x +1, p.y)) == true && (building_type == B_TURRET || building_type == B_WOOD_WALL))
-	{
 		App->pathfinding->MakeNoWalkable(iPoint(p.x + 1, p.y));
-	}
-	if (side == S_NEUTRAL) {
 		App->pathfinding->MakeNoConstruible_neutral(p);
-	}
-	if (side == S_ALLY) {
 		App->pathfinding->MakeNoConstruible_ally(p);
-	}
 }
 
 Building::~Building()
@@ -137,12 +130,12 @@ void Building::UpgradeWall(BUILDING_TYPE type)
 	{
 		switch (type)
 		{
-		case B_STONE_WALL:
+		case B_WOOD_WALL:
 			SetRect({ 1020,12,99,178});
 			SetPivot(0.494949 * 99, 178 * 0.865169);
 			building_type = B_STONE_WALL;
 			break;
-		case B_BRICK_WALL:
+		case B_STONE_WALL:
 			SetRect({0,66,95,169});
 			SetPivot(0.454211*96,169*0.899822);
 			building_type = B_BRICK_WALL;
@@ -202,12 +195,9 @@ void Building::ConvertToRubble()
 void Building::DestroyBuilding()
 {
 	iPoint p = App->map->WorldToMap(GetX(), GetY());
-	if (GetSide() == S_NEUTRAL) {
-		App->pathfinding->MakeConstruible_neutral(p);
-	}
-	if (GetSide() == S_ALLY) {
-		App->pathfinding->MakeConstruible_ally(p);
-	}
+
+	App->pathfinding->MakeConstruible_neutral(p);
+	App->pathfinding->MakeConstruible_ally(p);
 	App->pathfinding->MakeWalkable(p);
 	this->Die();
 }

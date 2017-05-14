@@ -6,6 +6,9 @@
 #include "UIComponents.h"
 #include "p2Point.h"
 
+#define GREEN_POINT_ATLAS {1164, 2575 ,2, 2}
+#define RED_POINT_ATLAS {1164, 2572, 2, 2}
+
 class IsoRect;
 
 class UIHUDMinimap : public UIComponents

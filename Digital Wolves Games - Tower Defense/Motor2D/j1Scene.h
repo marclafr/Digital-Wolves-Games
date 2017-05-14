@@ -65,6 +65,8 @@ public:
 
 	void TutorialUI();
 
+	const int GetTownHallHp();
+
 private:
 
 	bool game_scene = true;

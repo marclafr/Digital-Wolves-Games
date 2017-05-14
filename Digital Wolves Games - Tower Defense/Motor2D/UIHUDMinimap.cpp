@@ -15,7 +15,6 @@
 #define ISOMINIMAP_POSITIOIN {1243,706}
 #define MINIMAP_POSITION {1126, 647, MINIMAP_WIDTH, MINIMAP_HEIGHT}
 #define MINIMAP_ATLAS {926,2572,MINIMAP_WIDTH,MINIMAP_HEIGHT}
-#define RED_POINT_ATLAS {1164, 2572,2,2}
 
 UIHUDMinimap::UIHUDMinimap(UICOMPONENT_TYPE type) : UIComponents(type)
 {
@@ -71,16 +70,6 @@ bool UIHUDMinimap::Update()
 void UIHUDMinimap::Draw()
 {
 	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), GetPosRect().x - App->render->camera->GetPosition().x, GetPosRect().y - App->render->camera->GetPosition().y, &GetAtlasRect());
-
-	//Test unit print pos
-	fPoint unit_pos(0,1000);
-	unit_pos.x += 3600; // Iso To Rect
-	//unit_pos.x -= App->render->camera->GetPosition().x;
-	//unit_pos.y -= App->render->camera->GetPosition().y;
-	iPoint unit_minimap_pos = WorldToMinimap(unit_pos);
-	SDL_Rect red_point = RED_POINT_ATLAS;
-	//Draw enemy units points
-	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), unit_minimap_pos.x - App->render->camera->GetPosition().x, unit_minimap_pos.y - App->render->camera->GetPosition().y, &red_point);
 }
 
 iPoint UIHUDMinimap::WorldToMinimap(fPoint world_point)

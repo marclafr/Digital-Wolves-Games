@@ -6,6 +6,7 @@
 #include "Units.h"
 #include "Resources.h"
 #include "ResourceManager.h"
+#include "j1ScoreScene.h"
 
 ResourceManager::ResourceManager(): wood(STARTING_WOOD), food (STARTING_FOOD), gold (STARTING_GOLD), stone (STARTING_STONE)
 {
@@ -199,7 +200,7 @@ bool ResourceManager::CanBuildTower(TOWER_TYPE type)
 	return false;
 }
 
-void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos)
+void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos, iPoint posintiles)
 {
 	//TODO fill defines and cases for all towers && all creates here. use this funct with a task
 	switch (type)
@@ -210,6 +211,7 @@ void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos)
 	case T_BASIC_TOWER:
 		wood -= BASIC_TOWER_WOOD_COST;
 		stone -= BASIC_TOWER_STONE_COST;
+		App->score_scene->build_simple_tower = false;
 		break;
 
 	case T_FIRE_TOWER:
@@ -235,7 +237,7 @@ void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos)
 	case T_BOMBARD_AIR_TOWER:
 		break;
 	}
-	App->entity_manager->CreateTower(type, fPoint(pos.x, pos.y - 9));
+	App->entity_manager->CreateTower(type, fPoint(pos.x, pos.y), posintiles);
 }
 
 bool ResourceManager::CanBuildWall(BUILDING_TYPE type)

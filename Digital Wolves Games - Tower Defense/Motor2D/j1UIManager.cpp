@@ -211,13 +211,21 @@ void j1UIManager::AddMinimap()
 {
 	UIHUDMinimap* new_minimap;
 	components.push_back(new_minimap = new UIHUDMinimap());
+	minimap = new_minimap;
 }
 
-UIHUDMenuInGame* j1UIManager::AddMenuInGame()
+UIHUDMenuInGame* j1UIManager::AddMenuInGame(UICheckbutton* enable)
 {
 	UIHUDMenuInGame* new_menuingame;
 	components.push_back(new_menuingame = new UIHUDMenuInGame());
+	new_menuingame->SetEnableButton(enable);
+	menu_btn = enable;
 	return new_menuingame;
+}
+
+UIHUDMinimap * j1UIManager::GetMinimap()
+{
+	return minimap;
 }
 
 // const getter for atlas
@@ -295,4 +303,12 @@ void j1UIManager::DeletePanelButtons()
 {
 	if(panel_buttons != nullptr)
 		panel_buttons->DeletePanel();
+}
+
+void j1UIManager::ShowInGameMenu()
+{
+	if (menu_btn->GetStat() == CB_UNCHECK)
+		menu_btn->SetStat(CB_CHECK);
+	else
+		menu_btn->SetStat(CB_UNCHECK);
 }

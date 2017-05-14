@@ -144,13 +144,51 @@ void j1ScoreScene::CreateAchievements()
 {
 	//ACHIEVEMENT 1
 	achievement1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 355, 73, 718, 130 }, { 0, 2606, 718, 130 });
-	title_achievement1 = App->uimanager->AddLabel(410, 130, "Achievement 1", { 0,0,0,0 });
-	check_achievement1 = App->uimanager->AddCheckButton({ 1005, 120, 40, 39 }, { 995, 869, 40, 39 }, { 1036, 868, 40, 39 });
+	title_achievement1 = App->uimanager->AddLabel(410, 130, "Win without any damage taken to the Town Hall", { 0,0,0,0 });
+	check_achievement1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 120, 40, 39 }, { 995, 869, 40, 39 });
 
 	//ACHIEVEMENT 2
 	achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 355, 203, 718, 130 }, { 0, 2737, 718, 130 });
-	title_achievement2 = App->uimanager->AddLabel(410, 260, "Achievement 2", { 0,0,0,0 });
-	check_achievement2 = (UICheckbutton*)App->uimanager->AddCheckButton({ 1005, 250, 40, 39 }, { 995, 869, 40, 39 }, { 1036, 868, 40, 39 });
+	title_achievement2 = App->uimanager->AddLabel(410, 260, "Get more than 100.000 points", { 0,0,0,0 });
+	check_achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 250, 40, 39 }, { 995, 869, 40, 39 });
+
+	//ACHIEVEMENT 3
+	achievement3 = App->uimanager->AddComponent(UIT_UIIMAGE, { 355, 333, 718, 130 }, { 0, 2606, 718, 130 });
+	title_achievement3 = App->uimanager->AddLabel(410, 390, "Win only using bombard towers", { 0,0,0,0 });
+	check_achievement3 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 380, 40, 39 }, { 995, 869, 40, 39 });
+
+	//ACHIEVEMENT 4
+	achievement4 = App->uimanager->AddComponent(UIT_UIIMAGE, { 355, 463, 718, 130 }, { 0, 2737, 718, 130 });
+	title_achievement4 = App->uimanager->AddLabel(410, 520, "Create 100 units or more in one game", { 0,0,0,0 });
+	check_achievement4 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 510, 40, 39 }, { 995, 869, 40, 39 });
+	
+	
+	
+	//prove achievements
+	if (prove_achievements)
+	{
+		if (App->scene->GetTownHallHp() == 1500)
+		{
+			//check_achievement1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 120, 40, 39 }, { 1036, 868, 40, 39 });
+			check_achievement1->SetAtlas({ 1036, 868, 40, 39 });
+		}
+	
+		if (App->score->GetScore()>=100000)
+		{
+			//check_achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 250, 40, 39 }, { 1036, 868, 40, 39 });
+			check_achievement2->SetAtlas({ 1036, 868, 40, 39 });
+		}
+
+		if (build_simple_tower)
+		{
+			check_achievement3->SetAtlas({ 1036, 868, 40, 39 });
+		}
+
+		if (units_count >=100)
+		{
+			check_achievement4->SetAtlas({ 1036, 868, 40, 39 });
+		}
+	}
 
 	components_achievements_deleted = false;
 }
@@ -312,6 +350,12 @@ void j1ScoreScene::OptionSelected()
 			achievement2->SetToDelete();
 			title_achievement2->SetToDelete();
 			check_achievement2->SetToDelete();
+			achievement3->SetToDelete();
+			title_achievement3->SetToDelete();
+			check_achievement3->SetToDelete();
+			achievement4->SetToDelete();
+			title_achievement4->SetToDelete();
+			check_achievement4->SetToDelete();
 			components_achievements_deleted = true;
 		}
 	}

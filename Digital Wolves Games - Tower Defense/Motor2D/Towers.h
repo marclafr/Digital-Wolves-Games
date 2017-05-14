@@ -1,3 +1,6 @@
+
+
+
 #ifndef __TOWERS_
 #define __TOWERS_
 
@@ -40,10 +43,10 @@ private:
 	j1Timer AttackTimer;
 	Entity* Target = nullptr;
 	AnimationManager* anim_fire = nullptr;
-
+	iPoint posintiles;
 public:
 	iPoint arrowpos;
-	Tower(TOWER_TYPE t_type, fPoint pos);
+	Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles);
 	~Tower();
 	void UpgradeTurret(TURRET_UPGRADE type);
 	void Update(float dt); // defines order
@@ -53,6 +56,9 @@ public:
 	const TOWER_TYPE GetTowerType() const;
 	const int GetRange() const;
 	void SaveTurret(pugi::xml_node&);
+	float GetSpeed();
+	void SetSpeed(float new_speed);
+	void SetRange(float new_range);
 };
 
 #endif //__TOWERS_

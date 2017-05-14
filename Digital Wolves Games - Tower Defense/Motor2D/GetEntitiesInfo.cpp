@@ -796,25 +796,13 @@ const uint GetBuildingPercentage(const Entity * build)
 
 const double GetBuildTotalTime(const BUILDING_TYPE type)
 {
-	double ret = 0;
-
-	switch (type)
-	{
-	case B_TURRET:
-		ret = TURRET_BUILD;
-		break;
-
-	case B_STONE_WALL:
-		ret = STONEWALL_BUILD;
-		break;
-
-	default:
-		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
-		ret = 0;
-		break;
-	}
-
-	return ret;
+	if(type == B_TURRET)
+		return TURRET_BUILD;
+	else if(type == B_CANNON)
+		return CANNON_BUILD;
+	else if (type == B_WOOD_WALL)
+		return WOODWALL_BUILD;
+	return 0;
 }
 
 const bool isBuilded(const Entity * build)

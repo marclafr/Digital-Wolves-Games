@@ -55,6 +55,8 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 		UpgradeTowerTask* ut_task = nullptr;
 		UpgradeWallTask* uw_task = nullptr;
 		DoInvestigation* di_task = nullptr;
+		DeleteWallTask* dw_task = nullptr;
+		DeleteTowerTask* dt_task = nullptr;
 
 		switch (e_task->GetEntityType())
 		{
@@ -89,6 +91,12 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 			di_task = (DoInvestigation*)e_task;
 			investigation_desc = di_task->GetInvestigationType();
 			SetLabelInvestigations();
+			break;
+		case ET_DELETEWALL:
+			SetLabelDestruction();
+			break;
+		case ET_DELETETOWER:
+			SetLabelDestruction();
 			break;
 		}
 		selected = if_btn;
@@ -164,6 +172,12 @@ void UIHUDDescription::SetLabelInvestigations()
 	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, invest_price.c_str());
 }
 
+void UIHUDDescription::SetLabelDestruction()
+{
+	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
+	description_name = App->uimanager->AddLabel(X_LABEL_NAME, Y_LABEL_NAME, "Destroy this");
+}
+
 void UIHUDDescription::Clear()
 {
 	unit_desc = U_NO_UNIT;
@@ -171,9 +185,13 @@ void UIHUDDescription::Clear()
 	tower_desc = T_NO_TYPE;
 	tower_upgrade_desc = TU_NULL;
 	investigation_desc = INV_NONE;
+	if(background_name != nullptr)
 	background_name->SetToDelete();
+	if (description_name != nullptr)
 	description_name->SetToDelete();
+	if (background_price != nullptr)
 	background_price->SetToDelete();
+	if (description_price != nullptr)
 	description_price->SetToDelete();
 	selected = nullptr;
 	created = false;

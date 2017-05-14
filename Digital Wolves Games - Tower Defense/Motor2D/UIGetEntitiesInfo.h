@@ -8,8 +8,9 @@
 #include "Towers.h"
 #include "j1Investigations.h"
 
-#define TURRET_BUILD 11000
-#define STONEWALL_BUILD 11000
+#define TURRET_BUILD 11
+#define CANNON_BUILD 11
+#define WOODWALL_BUILD 6
 
 #define ICON_SIZE 25
 

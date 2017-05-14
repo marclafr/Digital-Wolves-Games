@@ -89,7 +89,7 @@ public:
 	void Damaged(int dmg);
 	void UpgradeUnit(int plushealth);
 
-
+	void DrawPointMinimap();
 protected:
 	//Seters
 	void SetArmor(int new_armor);

@@ -60,20 +60,34 @@ bool j1Scene::Start()
 	//App->collision->Enable();
 	App->entity_manager->Enable();
 	App->projectile_manager->Enable();
-	//App->wave_manager->Enable();//TODO put after tutorial 
+	//App->wave_manager->Enable();//TODO put after tutorial no descomentar
 	App->investigations->Enable();
 	App->score->Enable();
 
+	//TUTORIAL
+		if (App->tutorial->tutorial)
+		{
+			App->tutorial->Enable();
+			App->tutorial->TutorialReset();
+			TutorialUI();
+		}
+		else {
+			App->wave_manager->Enable();//TODO put after tutorial 
+		}
+
+	App->score_scene->prove_achievements = true;
+	App->score_scene->build_simple_tower = true;
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
-	App->render->camera->SetPosition(iPoint(2300, -800));
-
+	App->render->camera->SetPosition(iPoint(1700, -2400));
 	CreateSceneUI();
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-75, 272), S_ALLY);
 	resources = new ResourceManager();
-	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-300, 370));
-	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370));
+	iPoint pos = App->map->WorldToMap(-300, 370);
+	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-300, 370),pos);
+	pos = App->map->WorldToMap(150, 370);
+	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370),pos);
 	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
 	//--
 
@@ -83,6 +97,8 @@ bool j1Scene::Start()
 	//App->video->PlayVideo("introdw.ogv",r);
 	//Reset scores and timers
 	App->score->Reset();
+
+	
 	return true;
 }
 
@@ -249,10 +265,8 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 				//{
 					App->audio->PlayFx(App->audio->fx_construction);
 
-					if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true)
-						resources->BuildTower(type, pos);
-					else if (App->pathfinding->IsConstructible_ally(map_coordinates) == true)
-						resources->BuildTower(type, pos);
+					if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true || App->pathfinding->IsConstructible_ally(map_coordinates) == true)
+						resources->BuildTower(type, pos, map_coordinates);
 				//}
 			}
 		}
@@ -634,7 +648,7 @@ void j1Scene::HandleInput( SDL_Event event)
 
 	switch (event.type)
 	{
-	case SDL_MOUSEBUTTONDOWN:		
+	case SDL_MOUSEBUTTONDOWN:
 		App->input->GetMousePosition(x, y);
 
 		if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
@@ -648,7 +662,7 @@ void j1Scene::HandleInput( SDL_Event event)
 				select_rect.h = select_rect.y;
 
 				selecting = true;
-				App->entity_manager->CheckClick(x,y);
+				//App->entity_manager->CheckClick(x,y);
 			}
 
 		if (event.button.button == MK_RIGHT)
@@ -691,7 +705,7 @@ void j1Scene::HandleInput( SDL_Event event)
 
 		if (event.button.button == App->input->center_to_townhall)
 		{
-			iPoint pos(-75 + App->render->camera->GetWidth()/2, 0);
+			iPoint pos(-75 + App->render->camera->GetWidth() / 2, 0);
 			App->render->camera->SetPosition(pos);
 		}
 		//building construction
@@ -704,7 +718,7 @@ void j1Scene::HandleInput( SDL_Event event)
 		}
 
 		if (event.button.button == App->input->build_turret)
-			placing_tower = T_BASIC_TOWER;	
+			placing_tower = T_BASIC_TOWER;
 
 		if (event.button.button == App->input->build_bombard_turret)
 			placing_tower = T_BOMBARD_TOWER;
@@ -741,8 +755,7 @@ void j1Scene::CreateSceneUI()
 	//In Game Menu
 	UICheckbutton* menuingame_btn = App->uimanager->AddCheckButton({ 1323, 2, 36 , 15 }, { 1325, 996, 36, 14 }, { 1325, 996, 36, 14 });
 		//Window
-	UIHUDMenuInGame* menuingame = App->uimanager->AddMenuInGame();
-	menuingame->SetEnableButton(menuingame_btn);
+	UIHUDMenuInGame* menuingame = App->uimanager->AddMenuInGame(menuingame_btn);
 	menuingame->AddButton(0, "Return To Main Menu", new InGameToMainMenuScene());
 	menuingame->AddButton(1, "Load Last Chekpoint", new LoadLastChackpoint());
 	menuingame->AddButton(2, "Surrender", new Surrender());
@@ -777,21 +790,21 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TURRET, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_FIRE_TOWER), new UpgradeTowerTask(TU_FIRE));
 	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
 	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
-	panel->AddButton(BP_TURRET, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
+	panel->AddButton(BP_TURRET, iPoint(4, 2), { 930,962 }, new DeleteTowerTask(), true);
 
 	panel->AddButton(BP_CANNON, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_FIRE_TOWER), new UpgradeTowerTask(TU_FIRE));
 	panel->AddButton(BP_CANNON, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
 	panel->AddButton(BP_CANNON, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
-	panel->AddButton(BP_CANNON, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
+	panel->AddButton(BP_CANNON, iPoint(4, 2), { 930,962 }, new DeleteTowerTask(), true);
 
 	panel->AddButton(BP_TURRET_UPGRADED, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
 
 	//Walls
 	panel->AddButton(BP_WOOD_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_STONE_WALL));
-	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask(), true);
 
 	panel->AddButton(BP_STONE_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_BRICK_WALL));
-	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask(), true);
 
 	panel->AddButton(BP_BRICK_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
 
@@ -837,4 +850,57 @@ void j1Scene::CreateSceneUI()
 	//INFO SCORE, TIME, ENEMIES LEFT
 	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 405, 1162, 130, 65 });
 	App->uimanager->SetInfoUIComponent(info_ui);
+}
+
+
+void j1Scene::TutorialUI()
+{
+
+	App->render->camera->SetPosition(iPoint(700, 20));
+
+	App->tutorial->tutorial7 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
+	App->tutorial->text_tutorial7 = App->uimanager->AddLabel(1130, 290, "Enjoy The Game!", { 0,0,0,0 });
+	App->tutorial->text1_tutorial7 = App->uimanager->AddLabel(1130, 330, "Click 1, 2 or 3 to end the tutorial", { 0,0,0,0 });
+
+	App->tutorial->tutorial6 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2737, 418, 130 });
+	App->tutorial->text_tutorial6 = App->uimanager->AddLabel(1130, 290, "Here where the enemies appear", { 0,0,0,0 });
+	App->tutorial->text1_tutorial6 = App->uimanager->AddLabel(1130, 310, "Build a tower on the highground", { 0,0,0,0 });
+	App->tutorial->text2_tutorial6 = App->uimanager->AddLabel(1130, 330, "When you clear the wave you can", { 0,0,0,0 });
+	App->tutorial->text3_tutorial6 = App->uimanager->AddLabel(1130, 350, "click next wave button (big red button)", { 0,0,0,0 });
+
+	App->tutorial->tutorial5 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
+	App->tutorial->text_tutorial5 = App->uimanager->AddLabel(1130, 290, "Click one tower", { 0,0,0,0 });
+	App->tutorial->text1_tutorial5 = App->uimanager->AddLabel(1130, 330, "Click the fire upgrade icon", { 0,0,0,0 });
+	App->tutorial->text2_tutorial5 = App->uimanager->AddLabel(1130, 310, "Fire=+dmg / Ice=slow / Air=faster shot", { 0,0,0,0 });
+	App->tutorial->text3_tutorial5 = App->uimanager->AddLabel(1130, 350, "Click space bar to start the battle", { 0,0,0,0 });
+
+	App->tutorial->tutorial4 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2737, 418, 130 });
+	App->tutorial->text_tutorial4 = App->uimanager->AddLabel(1130, 290, "Here is the resource and investigation zone", { 0,0,0,0 });
+	App->tutorial->text1_tutorial4 = App->uimanager->AddLabel(1130, 310, "Select the University", { 0,0,0,0 });
+	App->tutorial->text3_tutorial4 = App->uimanager->AddLabel(1130, 330, "You can upgrade towers, resources, units", { 0,0,0,0 });
+	App->tutorial->text2_tutorial4 = App->uimanager->AddLabel(1130, 350, "Click the fire upgrade on the panel", { 0,0,0,0 });
+	App->tutorial->text4_tutorial4 = App->uimanager->AddLabel(1130, 370, "Wait until the upgrade is done", { 0,0,0,0 });
+
+	App->tutorial->tutorial3 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
+	App->tutorial->text_tutorial3 = App->uimanager->AddLabel(1130, 290, "Move around using keys or mouse:", { 0,0,0,0 });
+	App->tutorial->text1_tutorial3 = App->uimanager->AddLabel(1130, 310, "W", { 0,0,0,0 });
+	App->tutorial->text2_tutorial3 = App->uimanager->AddLabel(1130, 330, "A", { 0,0,0,0 });
+	App->tutorial->text3_tutorial3 = App->uimanager->AddLabel(1130, 350, "S", { 0,0,0,0 });
+	App->tutorial->text4_tutorial3 = App->uimanager->AddLabel(1130, 370, "D", { 0,0,0,0 });
+
+	App->tutorial->tutorial2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2737, 418, 130 });
+	App->tutorial->text_tutorial2 = App->uimanager->AddLabel(1130, 290, "Click on the Town Hall", { 0,0,0,0 });
+	App->tutorial->text1_tutorial2 = App->uimanager->AddLabel(1130, 310, "On the left-bottom Corner you can create", { 0,0,0,0 });
+	App->tutorial->text2_tutorial2 = App->uimanager->AddLabel(1130, 330, "towers, walls and soldiers", { 0,0,0,0 });
+
+	App->tutorial->tutorial1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
+	App->tutorial->text_tutorial1 = App->uimanager->AddLabel(1130, 290, "This is your Town Hall. Protect it!", { 0,0,0,0 });
+	App->tutorial->text1_tutorial1 = App->uimanager->AddLabel(1130, 310, "Press 1 to build a Simple Tower", { 0,0,0,0 });
+	App->tutorial->text2_tutorial1 = App->uimanager->AddLabel(1130, 330, "Press 2 to build a Bombard Tower", { 0,0,0,0 });
+	App->tutorial->text3_tutorial1 = App->uimanager->AddLabel(1130, 350, "Press 3 to build a Wall", { 0,0,0,0 });
+}
+
+const int j1Scene::GetTownHallHp()
+{
+	return townhall->GetHp();
 }
