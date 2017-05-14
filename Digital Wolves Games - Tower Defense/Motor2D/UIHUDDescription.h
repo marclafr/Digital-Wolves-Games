@@ -2,9 +2,6 @@
 #define __UIHUDDESCRIPTION_H__
 
 #include "UIComponents.h"
-#include "UIButton.h"
-#include "UILabel.h"
-#include "UICheckbutton.h"
 
 enum UNIT_TYPE;
 enum BUILDING_TYPE;
@@ -15,8 +12,6 @@ class UIHUDDescription : public UIComponents
 {
 public:
 	UICheckbutton* button_enable_component = nullptr;
-
-	bool enable = false;
 
 	UIComponents* background_name = nullptr;
 	UIComponents* background_price = nullptr;
@@ -30,6 +25,8 @@ public:
 	INVESTIGATION_TYPE investigation_desc;
 
 	info_button* selected = nullptr;
+
+	bool created = false;
 
 public:
 	UIHUDDescription(UICOMPONENT_TYPE type);

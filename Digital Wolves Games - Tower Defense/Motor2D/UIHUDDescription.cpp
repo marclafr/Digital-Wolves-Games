@@ -1,17 +1,15 @@
-#include "UIHUDDescription.h"
-
 #include "j1App.h"
 #include "j1Input.h"
 #include "j1Render.h"
 #include "j1UIManager.h"
 #include "Camera.h"
 #include "Task.h"
-
-#include "UIHUDPanelButtons.h"
+#include "UIButton.h"
 #include "UILabel.h"
 #include "UICheckbutton.h"
-
 #include "UIGetEntitiesInfo.h"
+#include "UIHUDPanelButtons.h"
+#include "UIHUDDescription.h"
 
 #define BACKGROUND_POSITION_NAME {1, 593, 194, 15}
 #define BACKGROUND_POSITION_PRICE {1, 608, 194, 15}
@@ -42,11 +40,6 @@ void UIHUDDescription::SetEnableButton(UICheckbutton* btn)
 bool UIHUDDescription::Update()
 {
 	if (button_enable_component->GetStat() == CB_CHECK)
-		enable = true;
-	else
-		enable = false;
-
-	if (enable)
 		if (selected != nullptr && selected->GetButton()->IsFocus() == false)
 			Clear();
 
@@ -55,7 +48,7 @@ bool UIHUDDescription::Update()
 
 void UIHUDDescription::SetDescription(info_button * if_btn)
 {
-	if (enable)
+	if (button_enable_component->GetStat() == CB_CHECK && created == false)
 	{
 		const EntityTask* e_task = (EntityTask*)if_btn->GetTask();
 		TrainUnitTask* u_task = nullptr;
@@ -85,17 +78,21 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 		case ET_UPGRADE_TOWER:
 			ut_task = (UpgradeTowerTask*)e_task;
 			tower_upgrade_desc = ut_task->GetUpgradeType();
+			SetLabelTowerUpgrade();
 			break;
 		case ET_UPGRADE_WALL:
 			uw_task = (UpgradeWallTask*)e_task;
 			build_desc = uw_task->GetWallType();
+			SetLabelWallUpgrade();
 			break;
 		case ET_INVESTIGATION:
 			di_task = (DoInvestigation*)e_task;
 			investigation_desc = di_task->GetInvestigationType();
+			SetLabelInvestigations();
 			break;
 		}
 		selected = if_btn;
+		created = true;
 	}
 }
 
@@ -177,4 +174,5 @@ void UIHUDDescription::Clear()
 	background_price->SetToDelete();
 	description_price->SetToDelete();
 	selected = nullptr;
+	created = false;
 }
