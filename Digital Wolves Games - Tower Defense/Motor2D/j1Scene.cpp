@@ -27,6 +27,7 @@
 #include "UIHUDResources.h"
 #include "UIHUDTownHallBarLife.h"
 #include "UICheckbutton.h"
+#include "UIHUDMenuInGame.h"
 #include "j1UIManager.h"
 #include "Video.h"
 #include "UIGetEntitiesInfo.h"
@@ -734,7 +735,14 @@ void j1Scene::CreateSceneUI()
 	App->uimanager->AddButton({ 1288, 2, 35, 14 }, { 1289, 996, 35, 14 });
 
 	//In Game Menu
-	App->uimanager->AddButton({ 1323, 2, 36 , 15 }, { 1325, 996, 36, 14 });
+	UICheckbutton* menuingame_btn = App->uimanager->AddCheckButton({ 1323, 2, 36 , 15 }, { 1325, 996, 36, 14 }, { 1325, 996, 36, 14 });
+		//Window
+	UIHUDMenuInGame* menuingame = App->uimanager->AddMenuInGame();
+	menuingame->SetEnableButton(menuingame_btn);
+	menuingame->AddButton(0, "Return To Main Menu", new InGameToMainMenuScene());
+	menuingame->AddButton(1, "Load Last Chekpoint", new LoadLastChackpoint());
+	menuingame->AddButton(2, "Surrender", new Surrender());
+	menuingame->AddButton(3, "Return to Game", new ReturnToGame(menuingame));
 
 	//Resource Panel
 	App->uimanager->AddResourcesPanel();
