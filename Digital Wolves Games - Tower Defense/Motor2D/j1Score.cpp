@@ -20,7 +20,7 @@ int j1Score::GetTime() const
 
 void j1Score::GetTimer(int & mins, int & secs) const
 {
-	secs = WINNING_TIME - GetTime();
+	secs = WINNING_TIME - game_time.ReadSec() - TimePassed;
 	mins = secs / 60;
 	secs -= mins * 60;
 }
