@@ -22,23 +22,13 @@ Shortcuts
 	- 1: To create simple tower.
 	- 2: To create bombard tower.
 	- 3: To create wood wall.
-	- 4: To create one two handed sword man in front the townhall. 		
-	- 8: To create GOD character
-	- 9: To create enemy Two handed sword man near the townhall. 			
-	- X: Investigate Cavalry Defense (25 seconds, 300 gold).
-	- C: Investigate Cavalry Attack (30 seconds, 300 gold).
-	- V: Investigate Stone (1 second, 300 gold + 100/level)).
-	- B: Investigate Wood (1 second, 300 gold + 100/level)).
-	- N: Lose the game.
-	- M: Win the game.
+	
 	- K: Kill selected units (allies only).
 	- W/A/S/D: For camera movement.
 	- Space Bar: Center camera on town hall.
 	- ESC: To go to menu.
 	- F1: Show game stats.
-	- F2: Twitter.
-	- F3: Facebook.
-	- F4: Wiki on github.
+	- F2: Show Quadtree.
 	- F10: Activate debug mode.
 
 		While on debug mode:
@@ -55,13 +45,14 @@ can select our tower and upgrade with the button located on the left corner.
 
 Changelist:
 
-v0.8:
+v1.0 Alpha:
 - Save & Load.
 - Tutorial.
 - Minimap.
+- Minimap shows enemies.
 - Investigations full operative.
 - Towers elementary upgrades.
-- Area of bombard towers done.
+- Ice Slows units.
 
 v0.8:
 - New Wall placement system.
