@@ -859,48 +859,48 @@ const char* GetInvestigationName(const INVESTIGATION_TYPE type)
 	{
 		//RESOURCES
 		case INV_FOOD:
-			ret = "???????????";
+			ret = "Increase food recollection";
 			break;
 		case INV_WOOD:
-			ret = "???????????";
+			ret = "Increase wood recollection";
 			break;
 		case INV_GOLD:
-			ret = "???????????";
+			ret = "Increase gold recollection";
 			break;
 		case INV_STONE:
-			ret = "???????????";
+			ret = "Increase stone recollection";
 			break;
 		//TROPS
 		//INV_CAVALRY_UNLOCK
 		case INV_CAVALRY_ATTACK:
-			ret = "???????????";
+			ret = "Increase cavalry attack";
 			break;
 		case INV_CAVALRY_DEFENSE:
-			ret = "???????????";
+			ret = "Increase cavalry defense";
 			break;
 		//INV_ARCHERS_UNLOCK
 		case INV_ARCHERS_ATTACK:
-			ret = "???????????";
+			ret = "Increase archers attack";
 			break;
 		case INV_ARCHERS_DEFENSE:
-			ret = "???????????";
+			ret = "Increase archers defense";
 			break;
 		//INV_INFANTRY_UNLOCK,
 		case INV_INFANTRY_ATTACK:
-			ret = "???????????";
+			ret = "Increase infantry attack";
 			break;
 		case INV_INFANTRY_DEFENSE:
-			ret = "???????????";
+			ret = "Increase infantry defense";
 			break;
 		//TOWERS
 		case INV_FIRE_TOWER:
-			ret = "???????????";
+			ret = "Allows to upgrade towers to FIRE";
 			break;
 		case INV_ICE_TOWER:
-			ret = "???????????";
+			ret = "Allows to upgrade towers to ICE";
 			break;
 		case INV_AIR_TOWER:
-			ret = "???????????";
+			ret = "Allows to upgrade towers to AIR";
 			break;
 	default:
 		ret = "ERROR investigations name";
@@ -912,60 +912,5 @@ const char* GetInvestigationName(const INVESTIGATION_TYPE type)
 
 void GetInvestigationPrice(const INVESTIGATION_TYPE type, std::string & price)
 {
-	price = std::to_string(App->investigations->GetInvestigationCost(App->investigations->GetInvestigation(type)));
-	//price = invest_price.c_str();
-
-	/*switch (type)
-	{
-		//RESOURCES
-	case INV_FOOD:
-		ret = (char*)temp.c_str();
-		break;
-	case INV_WOOD:
-		ret = "???????????";
-		break;
-	case INV_GOLD:
-		ret = "???????????";
-		break;
-	case INV_STONE:
-		ret = "???????????";
-		break;
-		//TROPS
-		//INV_CAVALRY_UNLOCK
-	case INV_CAVALRY_ATTACK:
-		ret = "???????????";
-		break;
-	case INV_CAVALRY_DEFENSE:
-		ret = "???????????";
-		break;
-		//INV_ARCHERS_UNLOCK
-	case INV_ARCHERS_ATTACK:
-		ret = "???????????";
-		break;
-	case INV_ARCHERS_DEFENSE:
-		ret = "???????????";
-		break;
-		//INV_INFANTRY_UNLOCK,
-	case INV_INFANTRY_ATTACK:
-		ret = "???????????";
-		break;
-	case INV_INFANTRY_DEFENSE:
-		ret = "???????????";
-		break;
-		//TOWERS
-	case INV_FIRE_TOWER:
-		ret = "???????????";
-		break;
-	case INV_ICE_TOWER:
-		ret = "???????????";
-		break;
-	case INV_AIR_TOWER:
-		ret = "???????????";
-		break;
-	default:
-		ret = "ERROR investigations price";
-		break;
-	}
-
-	return ret;*/
+	price += std::to_string(App->investigations->GetInvestigationCost(App->investigations->GetInvestigation(type)));
 }

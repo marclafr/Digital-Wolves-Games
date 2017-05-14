@@ -159,6 +159,7 @@ void UIHUDDescription::SetLabelInvestigations()
 
 	description_name = App->uimanager->AddLabel(X_LABEL_NAME, Y_LABEL_NAME, GetInvestigationName(investigation_desc));
 
+	invest_price = "Price: ";
 	GetInvestigationPrice(investigation_desc, invest_price);
 	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, invest_price.c_str());
 }
