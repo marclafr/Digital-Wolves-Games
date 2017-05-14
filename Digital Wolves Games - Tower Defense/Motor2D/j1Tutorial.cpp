@@ -63,12 +63,19 @@ bool j1Tutorial::Update(float dt)
 			if (tutorial3_completed)
 			{
 				Tutorial4();
+				if (tutorial4_completed)
+				{
+					Tutorial5();
+					if (tutorial5_completed)
+					{
+						Tutorial6();
+					}
+				}
 			}
 		}
-		
 	}
-	
-	if (tutorial1_part1 && tutorial1_part2 && tutorial1_part3 && tutorial1_part4)
+
+	if (tutorial1_part1 && tutorial1_part2 && tutorial1_part3)
 	{
 		tutorial1_completed = true;
 	}
@@ -78,6 +85,20 @@ bool j1Tutorial::Update(float dt)
 		tutorial3_completed = true;
 	}
 
+	if (tutorial4_part2 && tutorial4_part3)
+	{
+		tutorial4_completed = true;
+	}
+
+	if (tutorial5_part2 && tutorial5_part3 && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		tutorial5_completed = true;
+	}
+
+	if (tutorial6_part2 && tutorial6_part3)
+	{
+		tutorial6_completed = true;
+	}
 
 	TutorialsProgression();
 
@@ -109,7 +130,6 @@ void j1Tutorial::TutorialsProgression()
 		text1_tutorial1->SetToDelete();
 		text2_tutorial1->SetToDelete();
 		text3_tutorial1->SetToDelete();
-		text4_tutorial1->SetToDelete();
 	}
 
 	if (tutorial2_completed)
@@ -135,7 +155,34 @@ void j1Tutorial::TutorialsProgression()
 		tutorial4->SetToDelete();
 		text_tutorial4->SetToDelete();
 		text1_tutorial4->SetToDelete();
+		text2_tutorial4->SetToDelete();
+		text3_tutorial4->SetToDelete();
+		text4_tutorial4->SetToDelete();
+	}
 
+	if (tutorial5_completed)
+	{
+		tutorial5->SetToDelete();
+		text_tutorial5->SetToDelete();
+		text1_tutorial5->SetToDelete();
+		text2_tutorial5->SetToDelete();
+		text3_tutorial5->SetToDelete();
+	}
+
+	if (tutorial6_completed)
+	{
+		tutorial6->SetToDelete();
+		text_tutorial6->SetToDelete();
+		text1_tutorial6->SetToDelete();
+		text2_tutorial6->SetToDelete();
+		text3_tutorial6->SetToDelete();
+	}
+
+	if (tutorial7_completed)
+	{
+		tutorial7->SetToDelete();
+		text_tutorial7->SetToDelete();
+		text1_tutorial7->SetToDelete();
 	}
 }
 
@@ -145,7 +192,6 @@ void j1Tutorial::TutorialReset()
 	tutorial1_part1 = false;
 	tutorial1_part2 = false;
 	tutorial1_part3 = false;
-	tutorial1_part4 = false;
 	tutorial2_completed = false;
 	tutorial2_part1 = false;
 	TownHallSelected = false;
@@ -155,7 +201,26 @@ void j1Tutorial::TutorialReset()
 	tutorial3_part2 = false;
 	tutorial3_part3 = false;
 	tutorial3_part4 = false;
+	tutorial4_completed = false;
+	tutorial4_part1 = false;
+	tutorial4_part2 = false;
+	tutorial4_part3 = false;
 	UniversitySelected = false;
+	InvestigationSelected = false;
+	InvestigationDone = false;
+	tutorial5_completed = false;
+	tutorial5_part1 = false;
+	tutorial5_part2 = false;
+	tutorial5_part3 = false;
+	TowerSelected = false;
+	TowerUpgradeSelected = false;
+	tutorial6_completed = false;
+	tutorial6_part1 = false;
+	tutorial6_part2 = false;
+	tutorial6_part3 = false;
+	NextWaveButtonSelected = false;
+	tutorial7_completed = false;
+
 }
 
 void j1Tutorial::Tutorial1()
@@ -163,7 +228,7 @@ void j1Tutorial::Tutorial1()
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 		tutorial1_part1 = true;
 	}
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
 		tutorial1_part2 = true;
 	}
@@ -171,29 +236,21 @@ void j1Tutorial::Tutorial1()
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
 		tutorial1_part3 = true;
 	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN) {
-		tutorial1_part4 = true;
-	}
 
 	if (!tutorial1_completed)
 	{
 		if (tutorial1_part1)
-			{
-				text1_tutorial1->ChangeColor({ 255,255,255,0 });
-			}	
+		{
+			text1_tutorial1->ChangeColor({ 255,255,255,0 });
+		}
 		if (tutorial1_part2)
-			{
-				text2_tutorial1->ChangeColor({ 255,255,255,0 });
-			}
+		{
+			text2_tutorial1->ChangeColor({ 255,255,255,0 });
+		}
 		if (tutorial1_part3)
-			{
-				text3_tutorial1->ChangeColor({ 255,255,255,0 });
-			}
-		if (tutorial1_part4)
-			{
-				text4_tutorial1->ChangeColor({ 255,255,255,0 });
-			}
+		{
+			text3_tutorial1->ChangeColor({ 255,255,255,0 });
+		}
 	}
 }
 
@@ -257,19 +314,99 @@ void j1Tutorial::Tutorial3()
 
 void j1Tutorial::Tutorial4()
 {
-	if(!tutorial4_part1)
+	if (!tutorial4_part1)
 	{
-		App->render->camera->SetPosition(iPoint(-800 , -500));
+		App->render->camera->SetPosition(iPoint(-800, -500));
 		tutorial4_part1 = true;
 	}
 	if (UniversitySelected) {
 		tutorial4_part2 = true;
 	}
+
+	if (InvestigationDone)
+	{
+		tutorial4_part3 = true;
+	}
+
 	if (!tutorial4_completed)
 	{
 		if (tutorial4_part2)
 		{
 			text1_tutorial4->ChangeColor({ 255,255,255,0 });
 		}
+		if (InvestigationSelected)
+		{
+			text2_tutorial4->ChangeColor({ 255,255,255,0 });
+		}
+	}
+}
+
+void j1Tutorial::Tutorial5()
+{
+	if (!tutorial5_part1)
+	{
+		App->render->camera->SetPosition(iPoint(700, 20));
+		tutorial5_part1 = true;
+	}
+
+	if (TowerSelected) {
+		tutorial5_part2 = true;
+	}
+	if (TowerUpgradeSelected)
+	{
+		tutorial5_part3 = true;
+	}
+
+	if (!tutorial5_completed)
+	{
+		if (tutorial5_part2)
+		{
+			text_tutorial5->ChangeColor({ 255,255,255,0 });
+		}
+		if (tutorial5_part3)
+		{
+			text1_tutorial5->ChangeColor({ 255,255,255,0 });
+		}
+	}
+}
+
+void j1Tutorial::Tutorial6()
+{
+	App->wave_manager->Enable();//TODO put after tutorial 
+
+	if (!tutorial6_part1)
+	{
+		App->render->camera->SetPosition(iPoint(1700, -2400));
+		tutorial6_part1 = true;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		tutorial6_part2 = true;
+
+	}
+	if (NextWaveButtonSelected)
+	{
+		tutorial6_part3 = true;
+	}
+
+	if (!tutorial6_completed)
+	{
+		if (tutorial6_part2)
+		{
+			text1_tutorial6->ChangeColor({ 255,255,255,0 });
+		}
+		if (tutorial6_part3)
+		{
+			text3_tutorial6->ChangeColor({ 255,255,255,0 });
+		}
+	}
+}
+
+void j1Tutorial::Tutorial7()
+{
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		tutorial7_completed = true;
 	}
 }
