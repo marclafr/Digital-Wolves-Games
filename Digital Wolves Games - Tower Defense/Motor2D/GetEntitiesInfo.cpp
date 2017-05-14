@@ -21,6 +21,7 @@
 #define WOODWALL_HP 250
 #define STONEWALL_HP 500
 #define BRICKWALL_HP 750
+#define UNIVERSITY_HP 1500
 #define TOWNHALL_HP 1500
 
 #define RESOURCES_HP 10
@@ -684,6 +685,9 @@ int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp, const uint
 		break;
 	case B_TOWNHALL:
 		ret = hp * pixels / TOWNHALL_HP;
+		break;
+		case B_UNIVERSITY:
+		ret = hp * pixels / UNIVERSITY_HP;
 		break;
 	default:
 		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
