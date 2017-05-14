@@ -64,16 +64,11 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 	buildtimer.Start();
 	iPoint p = App->map->WorldToMap(pos.x, pos.y);
 
-	if (App->pathfinding->IsWalkable(p) == true && (building_type == B_TURRET || building_type == B_WOOD_WALL))
-	{
+
 		App->pathfinding->MakeNoWalkable(p);
-	}
-	if (S_ALLY == S_NEUTRAL) {
 		App->pathfinding->MakeNoConstruible_neutral(p);
-	}
-	if (S_ALLY == S_ALLY) {
 		App->pathfinding->MakeNoConstruible_ally(p);
-	}
+
 }
 
 Building::~Building()
@@ -198,12 +193,8 @@ void Building::ConvertToRubble()
 void Building::DestroyBuilding()
 {
 	iPoint p = App->map->WorldToMap(GetX(), GetY());
-	if (GetSide() == S_NEUTRAL) {
-		App->pathfinding->MakeConstruible_neutral(p);
-	}
-	if (GetSide() == S_ALLY) {
-		App->pathfinding->MakeConstruible_ally(p);
-	}
+	App->pathfinding->MakeConstruible_neutral(p);
+	App->pathfinding->MakeConstruible_ally(p);
 	App->pathfinding->MakeWalkable(p);
 	this->Die();
 }

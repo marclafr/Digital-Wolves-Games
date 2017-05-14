@@ -83,7 +83,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		tower_type = T_AIR_TOWER;
 		projectile_type = P_AIR_ARROW;
 		SetBuildingType(B_TURRET);
-		projectile_spd = 60;
+		projectile_spd = 40;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_AIR_TOWER);
 		SetRect(tower_rect);
 		SetPivot(pivot.x, pivot.y);
