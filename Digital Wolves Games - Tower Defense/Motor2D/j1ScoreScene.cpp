@@ -149,7 +149,7 @@ void j1ScoreScene::CreateAchievements()
 
 	//ACHIEVEMENT 2
 	achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 355, 203, 718, 130 }, { 0, 2737, 718, 130 });
-	title_achievement2 = App->uimanager->AddLabel(410, 260, "Get more than 5000 points", { 0,0,0,0 });
+	title_achievement2 = App->uimanager->AddLabel(410, 260, "Get more than 10000 points", { 0,0,0,0 });
 	check_achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 250, 40, 39 }, { 995, 869, 40, 39 });
 	
 	
@@ -159,12 +159,14 @@ void j1ScoreScene::CreateAchievements()
 	{
 		if (App->scene->GetTownHallHp() == 1500)
 		{
-			check_achievement1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 120, 40, 39 }, { 1036, 868, 40, 39 });
+			//check_achievement1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 120, 40, 39 }, { 1036, 868, 40, 39 });
+			check_achievement1->SetAtlas({ 1036, 868, 40, 39 });
 		}
 	
-		if (App->score->GetScore()>5000)
+		if (App->score->GetScore()>10000)
 		{
-			check_achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 250, 40, 39 }, { 1036, 868, 40, 39 });
+			//check_achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 250, 40, 39 }, { 1036, 868, 40, 39 });
+			check_achievement2->SetAtlas({ 1036, 868, 40, 39 });
 		}
 	}
 

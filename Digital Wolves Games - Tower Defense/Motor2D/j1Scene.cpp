@@ -78,7 +78,7 @@ bool j1Scene::Start()
 	App->score_scene->prove_achievements = true;
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
-	App->render->camera->SetPosition(iPoint(2300, -800));
+	App->render->camera->SetPosition(iPoint(1700, -2400));
 	CreateSceneUI();
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-75, 272), S_ALLY);
