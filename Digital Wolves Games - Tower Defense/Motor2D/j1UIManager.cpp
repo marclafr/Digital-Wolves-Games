@@ -211,6 +211,7 @@ void j1UIManager::AddMinimap()
 {
 	UIHUDMinimap* new_minimap;
 	components.push_back(new_minimap = new UIHUDMinimap());
+	minimap = new_minimap;
 }
 
 UIHUDMenuInGame* j1UIManager::AddMenuInGame(UICheckbutton* enable)
@@ -220,6 +221,11 @@ UIHUDMenuInGame* j1UIManager::AddMenuInGame(UICheckbutton* enable)
 	new_menuingame->SetEnableButton(enable);
 	menu_btn = enable;
 	return new_menuingame;
+}
+
+UIHUDMinimap * j1UIManager::GetMinimap()
+{
+	return minimap;
 }
 
 // const getter for atlas

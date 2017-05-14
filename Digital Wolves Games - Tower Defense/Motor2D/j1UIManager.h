@@ -20,6 +20,7 @@ class UIHUDResources;
 class UIHUDPanelInfo;
 class UIHUDDescription;
 class UIHUDScoreBar;
+class UIHUDMinimap;
 class UIHUDMenuInGame;
 struct info_button;
 class Building;
@@ -72,6 +73,7 @@ public:
 	void AddMinimap();
 	UIHUDMenuInGame* AddMenuInGame(UICheckbutton* enable);
 
+	UIHUDMinimap* GetMinimap();
 	const SDL_Texture* GetAtlas() const;
 	const std::list<UIComponents*>::iterator GetLastComponent();
 	const bool InUse() const;
@@ -101,6 +103,7 @@ private:
 	UIHUDPanelButtons* panel_buttons;
 	UIHUDDescription* hud_description;
 	UIComponents* info_ui;
+	UIHUDMinimap* minimap;
 	UICheckbutton* menu_btn;
 };
 #endif // __j1GUIMANAGER_H__

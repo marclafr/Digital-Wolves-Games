@@ -2,6 +2,9 @@
 #include "j1Textures.h"
 #include "j1App.h"
 #include "j1Render.h"
+#include "Camera.h"
+#include "j1UIManager.h"
+#include "UIHUDMinimap.h"
 
 Entity::Entity(ENTITY_TYPE entity_type, fPoint pos, Side side): to_delete (false), entity_type(entity_type), position(pos), side(side)
 {}
@@ -234,4 +237,16 @@ void Entity::UpgradeUnit(int plushealth) {
 
 	this->SetHp(GetHp() + plushealth);
 
+}
+
+void Entity::DrawPointMinimap()
+{
+	iPoint unit_minimap_pos = App->uimanager->GetMinimap()->WorldToMinimap(position);
+	SDL_Rect point;
+	if (GetSide() == S_ALLY)
+		point = GREEN_POINT_ATLAS;
+	else if (GetSide() == S_ENEMY)
+		point = RED_POINT_ATLAS;
+	//Draw enemy units points
+	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), unit_minimap_pos.x - App->render->camera->GetPosition().x, unit_minimap_pos.y - App->render->camera->GetPosition().y, &point);
 }
