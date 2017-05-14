@@ -542,7 +542,7 @@ fPoint UnitGroup::GetStartingPos(STARTING_ENEMY_POS pos) const
 	switch (pos)
 	{
 	case LEFT_UP:
-		return fPoint(-1296, 2880);//2880 1032
+		return fPoint(-1100, 2800);//2880 1032
 		break;
 	case LEFT_DOWN:
 		return fPoint(-1020, 2900);
