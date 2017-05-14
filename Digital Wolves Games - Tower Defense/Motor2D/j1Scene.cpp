@@ -90,15 +90,15 @@ bool j1Scene::Start()
 	App->score->Reset();
 
 	//TUTORIAL
-		if (App->tutorial->tutorial)
-		{
-			App->tutorial->Enable();
-			App->tutorial->TutorialReset();
-			TutorialUI();
-		}
-		else {
-			App->wave_manager->Enable();//TODO put after tutorial 
-		}
+	if (App->tutorial->tutorial)
+	{
+		App->tutorial->Enable();
+		App->tutorial->TutorialReset();
+		TutorialUI();
+	}
+	else
+		App->wave_manager->Enable();//TODO put after tutorial 
+		
 
 	return true;
 }
@@ -125,6 +125,7 @@ bool j1Scene::Update(float dt)
 	iPoint res = App->render->ScreenToWorld(x, y);
 
 	//Test fade to black
+	/*
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
 		App->render->camera->FadeToBlack(3, 2);
 
@@ -135,7 +136,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);	
 	//--
-
+	*/
 	if (placing_tower == T_BASIC_TOWER)
 		PlacingTower(T_BASIC_TOWER);
 	if (placing_tower == T_BOMBARD_TOWER)
@@ -200,14 +201,14 @@ bool j1Scene::PostUpdate()
 
 
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
 		int x = 0;
 		int y = 0;
 		App->input->GetMousePosition(x, y);
 		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
 		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, pos, S_ENEMY);
-	}
+	}*/
 
 	return ret;
 }

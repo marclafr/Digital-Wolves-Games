@@ -32,7 +32,7 @@ UIHUDScoreBar::UIHUDScoreBar(UICOMPONENT_TYPE type) : UIComponents(type)
 bool UIHUDScoreBar::Update()
 {
 	//rest_score_bar.w = ReturnValueBarHPBuilding(BUILDING_TYPE::B_TOWNHALL, townhall->GetHp(), BAR_PIXELS);
-	rest_score_bar.w = App->score->GetScore() / 100;
+	rest_score_bar.w = App->score->GetScore() / 120;
 
 	Draw();
 	return true;
