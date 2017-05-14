@@ -701,7 +701,7 @@ void j1Scene::HandleInput( SDL_Event event)
 		if (event.button.button == SDL_SCANCODE_L)
 			App->LoadGame("save_game.xml");
 
-		if (event.button.button == SDL_SCANCODE_S)
+		if (event.button.button == SDL_SCANCODE_K)
 			App->SaveGame("save_game.xml");
 
 		if (event.button.button == App->input->center_to_townhall)
