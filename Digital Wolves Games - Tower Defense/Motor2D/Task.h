@@ -229,7 +229,15 @@ public:
 
 	bool Execute()
 	{
-		if (tower->IsAlive()) tower->UpgradeTurret(type);
+		if (tower->IsAlive())
+		{
+			tower->UpgradeTurret(type);
+
+			if (App->tutorial->tutorial4_completed)
+			{
+				App->tutorial->TowerUpgradeSelected = true;
+			}
+		}
 		return true;
 	}
 };
@@ -405,6 +413,7 @@ public:
 	bool Execute()
 	{
 		App->wave_manager->BringNextWave();
+		if (App->tutorial->tutorial5_completed) App->tutorial->NextWaveButtonSelected = true;
 		return true;
 	}
 };
