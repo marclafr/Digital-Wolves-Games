@@ -90,28 +90,28 @@ bool j1ScoreScene::PreUpdate()
 // Called each loop iteration
 bool j1ScoreScene::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-	{
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-		App->score->IncreaseScore();
-	}
-
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
-		App->score->DecreaseScore();
+//	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+//	{
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//		App->score->IncreaseScore();
+//	}
+//
+//
+//	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+//		App->score->DecreaseScore();
 
 	OptionSelected();
 	ActualTrophie();
@@ -144,31 +144,31 @@ bool j1ScoreScene::CleanUp()
 void j1ScoreScene::ActualTrophie()
 {
 
-	if (App->score->GetScore() >= 551 && App->score->GetScore() <= 1830)
+	if (App->score->GetScore() >= 6975 && App->score->GetScore() <= 21900)
 	{
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 850, 410, 87, 98 }, { 677, 1370, 87, 98 });
 		//actual_trophie->SetAtlas({ 677, 1370, 87, 98 });
 		//actual_trophie->SetPos({ 850, 410, 87, 98 });
 	}
-	else if (App->score->GetScore() >= 1830 && App->score->GetScore() <= 3220)
+	else if (App->score->GetScore() >= 21900 && App->score->GetScore() <= 38820)
 	{
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 845, 410, 97, 113 }, { 765, 1355, 97, 113 });
 		//actual_trophie->SetAtlas({ 765, 1355, 97, 113 });
 		//actual_trophie->SetPos({ 845, 410, 97, 113 });
 	}
-	else if (App->score->GetScore() >= 3220 && App->score->GetScore() <= 4680)
+	else if (App->score->GetScore() >= 38820 && App->score->GetScore() <= 56227)
 	{		
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 837, 410, 113, 129 }, { 941, 1162, 113, 129 });
 		//actual_trophie->SetAtlas({ 941, 1162, 113, 129 });
 		//actual_trophie->SetPos({ 837, 410, 113, 129 });
 	}
-	else if (App->score->GetScore() >= 4680 && App->score->GetScore() <= 6250)
+	else if (App->score->GetScore() >= 56227 && App->score->GetScore() <= 74625)
 	{
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 833, 410, 119, 139 }, { 1058, 1162, 119, 139 });
 		//actual_trophie->SetAtlas({ 1058, 1162, 119, 139 });
 		//actual_trophie->SetPos({ 833, 410, 119, 139 });
 	}
-	else if (App->score->GetScore() >= 6250)
+	else if (App->score->GetScore() >= 74625)
 	{
 		actual_trophie = App->uimanager->AddComponent(UIT_UIIMAGE, { 825, 410, 136, 153 }, { 1181, 1162, 136, 153 });
 		//actual_trophie->SetAtlas({ 1181, 1162, 136, 153 });
