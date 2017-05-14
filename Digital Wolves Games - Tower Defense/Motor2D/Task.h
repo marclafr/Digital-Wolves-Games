@@ -392,6 +392,7 @@ public:
 	bool Execute()
 	{
 		App->wave_manager->BringNextWave();
+		if (App->tutorial->tutorial5_completed) App->tutorial->NextWaveButtonSelected = true;
 		return true;
 	}
 };
