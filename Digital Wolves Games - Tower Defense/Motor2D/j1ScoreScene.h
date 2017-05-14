@@ -58,6 +58,7 @@ public:
 	bool IsSceneChange();
 	UIComponents* GetUnderBackground();
 	void ChangeUnselected(BUTTONSUNDERGROUND);
+	bool prove_achievements = false;
 
 private:
 	UIComponents* under_background;
@@ -80,11 +81,11 @@ private:
 	//ACHIEVEMENTS
 	UIComponents* achievement1;
 	UILabel* title_achievement1;
-	UICheckbutton* check_achievement1;
+	UIComponents* check_achievement1;
 
 	UIComponents* achievement2;
 	UILabel* title_achievement2;
-	UICheckbutton* check_achievement2;
+	UIComponents* check_achievement2;
 
 	char text_score[256];
 

@@ -75,6 +75,7 @@ bool j1Scene::Start()
 			App->wave_manager->Enable();//TODO put after tutorial 
 		}
 
+	App->score_scene->prove_achievements = true;
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
 
 	App->render->camera->SetPosition(iPoint(2300, -800));
@@ -891,4 +892,9 @@ void j1Scene::TutorialUI()
 	App->tutorial->text1_tutorial1 = App->uimanager->AddLabel(1130, 310, "Press 1 to build a Simple Tower", { 0,0,0,0 });
 	App->tutorial->text2_tutorial1 = App->uimanager->AddLabel(1130, 330, "Press 2 to build a Bombard Tower", { 0,0,0,0 });
 	App->tutorial->text3_tutorial1 = App->uimanager->AddLabel(1130, 350, "Press 3 to build a Wall", { 0,0,0,0 });
+}
+
+const int j1Scene::GetTownHallHp()
+{
+	return townhall->GetHp();
 }

@@ -145,12 +145,28 @@ void j1ScoreScene::CreateAchievements()
 	//ACHIEVEMENT 1
 	achievement1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 355, 73, 718, 130 }, { 0, 2606, 718, 130 });
 	title_achievement1 = App->uimanager->AddLabel(410, 130, "Win without any damage taken to the Town Hall", { 0,0,0,0 });
-	check_achievement1 = App->uimanager->AddCheckButton({ 1005, 120, 40, 39 }, { 995, 869, 40, 39 }, { 1036, 868, 40, 39 });
+	check_achievement1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 120, 40, 39 }, { 995, 869, 40, 39 });
 
 	//ACHIEVEMENT 2
 	achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 355, 203, 718, 130 }, { 0, 2737, 718, 130 });
-	title_achievement2 = App->uimanager->AddLabel(410, 260, "Achievement 2", { 0,0,0,0 });
-	check_achievement2 = (UICheckbutton*)App->uimanager->AddCheckButton({ 1005, 250, 40, 39 }, { 995, 869, 40, 39 }, { 1036, 868, 40, 39 });
+	title_achievement2 = App->uimanager->AddLabel(410, 260, "Get more than 5000 points", { 0,0,0,0 });
+	check_achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 250, 40, 39 }, { 995, 869, 40, 39 });
+	
+	
+	
+	//prove achievements
+	if (prove_achievements)
+	{
+		if (App->scene->GetTownHallHp() == 1500)
+		{
+			check_achievement1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 120, 40, 39 }, { 1036, 868, 40, 39 });
+		}
+	
+		if (App->score->GetScore()>5000)
+		{
+			check_achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 250, 40, 39 }, { 1036, 868, 40, 39 });
+		}
+	}
 
 	components_achievements_deleted = false;
 }
