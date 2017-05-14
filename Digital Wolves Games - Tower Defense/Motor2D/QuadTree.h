@@ -40,7 +40,7 @@ public:
 	Unit* CheckCollision(Elipse Circle) const;
 	void CheckUnitCollisions(const Unit* ptr) const;
 	void DrawArea();
-	void SaveAll(pugi::xml_node&);
+	void SaveAll(pugi::xml_node& node);
 	void BlitMinimap();
 
 private:
@@ -78,6 +78,8 @@ public:
 	Unit* CheckCollisions(Elipse elipse) const;
 
 	void DrawRects() const;
+
+	void SaveAll(pugi::xml_node& node);
 };
 
 #endif

@@ -468,6 +468,33 @@ void QuadTreeNode::DrawArea()
 	area.Draw();
 }
 
+void QuadTreeNode::SaveAll(pugi::xml_node & node)
+{
+	if (childs[0] == nullptr)
+	{
+		for (int i = 0; i < NODE_ENTITIES; i++)
+			if (entities[i] != nullptr)
+			{ }
+				//entities[i]->Save(node);
+	}
+	else
+		for (int i = 0; i < 4; i++)
+			childs[i]->SaveAll(node);
+}
+
+void QuadTreeNode::BlitMinimap()
+{
+	if (childs[0] == nullptr)
+	{
+		for (int i = 0; i < NODE_ENTITIES; i++)
+			if (entities[i] != nullptr)
+				entities[i]->DrawPointMinimap();
+	}
+	else
+		for (int i = 0; i < 4; i++)
+			childs[i]->BlitMinimap();
+}
+
 QuadTree::QuadTree(IsoRect area)
 {
 	origin = new QuadTreeNode(area, nullptr);
@@ -531,4 +558,9 @@ Unit* QuadTree::CheckCollisions(Elipse elipse) const
 void QuadTree::DrawRects() const
 {
 	origin->DrawArea();
+}
+
+void QuadTree::SaveAll(pugi::xml_node & node)
+{
+	origin->SaveAll(node);
 }

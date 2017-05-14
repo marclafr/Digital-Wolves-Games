@@ -209,6 +209,8 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	pugi::xml_node Turrets = data.append_child("turrets");
 	pugi::xml_node Resourcess = data.append_child("resources");
 
+	entity_quadtree->SaveAll();
+
 	/*for (int k = 0; k <entity_array.size(); k++) {
 		if (entity_array[k]->GetEntityType() == E_BUILDING)
 		{
