@@ -11,17 +11,24 @@
 
 Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
+	SDL_Rect tower_rect;
+	iPoint pivot;
+	SDL_Texture* text;
 	switch (t_type)
 	{
 	case T_BASIC_TOWER:
 		SetHp(150);
 		SetAttack(15);
 		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
+		rate_of_fire = 0.90f;	//time between each attack in seconds
 		range = 300;
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;
+		SetBuildingType(B_TURRET);
 		projectile_spd = 60;
+		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BASIC_TOWER);
+		SetRect(tower_rect);
+		SetPivot(pivot.x, pivot.y);
 		break;
 
 	case T_BOMBARD_TOWER:
@@ -34,8 +41,95 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		projectile_type = P_CANNONBALL;
 		SetBuildingType(B_CANNON);
 		projectile_spd = 75;
+		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_TOWER);
+		SetRect(tower_rect);
+		SetPivot(pivot.x, pivot.y);
 		break;
 
+	case T_FIRE_TOWER:
+		SetHp(150);
+		SetAttack(15);
+		SetArmor(1);
+		rate_of_fire = 1.0f;	//time between each attack in seconds
+		range = 300;
+		tower_type = T_FIRE_TOWER;
+		projectile_type = P_FIRE_ARROW;
+		SetBuildingType(B_TURRET);
+		projectile_spd = 60;
+		App->tex->GetTowerTexture(text, tower_rect, pivot, T_FIRE_TOWER);
+		SetRect(tower_rect);
+		SetPivot(pivot.x, pivot.y);
+		break;
+	case T_ICE_TOWER:
+		SetHp(150);
+		SetAttack(15);
+		SetArmor(1);
+		rate_of_fire = 1.0f;	//time between each attack in seconds
+		range = 300;
+		tower_type = T_ICE_TOWER;
+		projectile_type = P_ICE_ARROW;
+		SetBuildingType(B_TURRET);
+		projectile_spd = 60;
+		App->tex->GetTowerTexture(text, tower_rect, pivot, T_ICE_TOWER);
+		SetRect(tower_rect);
+		SetPivot(pivot.x, pivot.y);
+		break;
+	case T_AIR_TOWER:
+		SetHp(150);
+		SetAttack(15);
+		SetArmor(1);
+		rate_of_fire = 1.0f;	//time between each attack in seconds
+		range = 300;
+		tower_type = T_AIR_TOWER;
+		projectile_type = P_AIR_ARROW;
+		SetBuildingType(B_TURRET);
+		projectile_spd = 60;
+		App->tex->GetTowerTexture(text, tower_rect, pivot, T_AIR_TOWER);
+		SetRect(tower_rect);
+		SetPivot(pivot.x, pivot.y);
+		break;
+	case T_BOMBARD_FIRE_TOWER:
+		SetHp(175);
+		SetAttack(40);
+		SetArmor(1);
+		rate_of_fire = 1.0f;	//time between each attack in seconds
+		range = 300;
+		tower_type = T_BOMBARD_FIRE_TOWER;
+		projectile_type = P_FIRE_CANNONBALL;
+		SetBuildingType(B_TURRET);
+		projectile_spd = 60;
+		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_FIRE_TOWER);
+		SetRect(tower_rect);
+		SetPivot(pivot.x, pivot.y);
+		break;
+	case T_BOMBARD_ICE_TOWER:
+		SetHp(175);
+		SetAttack(30);
+		SetArmor(1);
+		rate_of_fire = 1.0f;	//time between each attack in seconds
+		range = 300;
+		tower_type = T_BOMBARD_ICE_TOWER;
+		projectile_type = P_ICE_CANNONBALL;
+		SetBuildingType(B_TURRET);
+		projectile_spd = 60;
+		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_ICE_TOWER);
+		SetRect(tower_rect);
+		SetPivot(pivot.x, pivot.y);
+		break;
+	case T_BOMBARD_AIR_TOWER:
+		SetHp(175);
+		SetAttack(30);
+		SetArmor(1);
+		rate_of_fire = 1.0f;	//time between each attack in seconds
+		range = 300;
+		tower_type = T_BASIC_TOWER;
+		projectile_type = P_AIR_CANNONBALL;
+		SetBuildingType(B_TURRET);
+		projectile_spd = 60;
+		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_AIR_TOWER);
+		SetRect(tower_rect);
+		SetPivot(pivot.x, pivot.y);
+		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");
 		tower_type = T_NO_TYPE;
@@ -51,25 +145,9 @@ Tower::~Tower()
 
 void Tower::Update(float dt)
 {
-	if(GetEntityStatus() == ST_SELECTED)
-	{
-		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-		{
-			UpgradeTurret(TU_FIRE);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-		{
-			UpgradeTurret(TU_ICE);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-		{
-			UpgradeTurret(TU_AIR);
-		}
-	}
-
 	DT(dt);
 
-	if (GetAIDT() >= dt * 3)
+	if (GetAIDT() >= dt * 5)
 	{
 		ResetDT();
 		AI();
@@ -81,7 +159,10 @@ void Tower::Update(float dt)
 void Tower::AI()
 {
 	if (Target != nullptr) {
-		if (Target->GetHp() <= 0)
+		if (Target->GetX() < (GetX() - range) || Target->GetX() > (GetX() + range) || Target->GetY() < (GetY() - range) || Target->GetY() > (GetY() + range))
+			Target = nullptr;
+
+		if (Target != nullptr && Target->GetHp() <= 0)
 		{
 			Target = nullptr;
 			attacking = false;
@@ -92,7 +173,7 @@ void Tower::AI()
 
 	if (Target == nullptr && AttackTimer.ReadSec() >= rate_of_fire && attacking == false && IsBuilt() == true && IsAlive() == true)
 	{
-		Target = App->entity_manager->LookForEnemies(GetRange(), GetPosition());
+		Target = App->entity_manager->LookForEnemies(GetRange(), GetPosition(), GetSide());
 		if (Target != nullptr)
 			attacking = true;
 	}
@@ -100,7 +181,13 @@ void Tower::AI()
 	if (attacking == true && Target != nullptr && AttackTimer.ReadSec() >= rate_of_fire)
 	{
 		App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), projectile_spd, HEIGHT_BASIC_TOWER, 100, projectile_type);
-		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY())) App->audio->PlayFx(App->entity_manager->fx_arrow);
+		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
+		{
+			if (tower_type == T_BASIC_TOWER || tower_type == T_ICE_TOWER || tower_type == T_AIR_TOWER || tower_type == T_FIRE_TOWER)
+				App->audio->PlayFx(App->audio->fx_arrow);
+			else
+				App->audio->PlayFx(App->audio->fx_cannon);
+		}
 		AttackTimer.Start();
 	}
 

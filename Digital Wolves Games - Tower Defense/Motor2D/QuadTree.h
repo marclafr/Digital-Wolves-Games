@@ -26,16 +26,20 @@ public:
 	bool Inside(const Entity* entity) const;
 
 	Entity* SearchFirst(int pixel_range, const  fPoint from) const;
+	Entity* SearchFirst(IsoRect rect) const;
 	Entity* SearchFirst(const SDL_Rect rect) const;
 	Entity* SearchFirstEnemy(int pixel_range, const fPoint from, const Side side) const;
+	Entity* SearchFirstEnemy(IsoRect rect, const Side side) const;
 	void Search(int pixel_range, const fPoint from, std::vector<Entity*>& vec) const;
 	void Search(const SDL_Rect rect, std::vector<Entity*>& vec) const;
+	void Search(const IsoRect rect, std::vector<Entity*>& vec) const;
 	void Update(float dt);
 	void DeleteEntities();
 	void CheckCollision() const;
 	void CheckUnitCollisions(const Unit* ptr) const;
 	void DrawArea();
 	void SaveAll(pugi::xml_node&);
+
 private:
 	bool PushToCorrectChild(Entity* entity);
 	bool SubDivide(Entity* entity);
@@ -59,6 +63,7 @@ public:
 	
 	Entity* SearchFirst(int pixel_range, fPoint from) const;
 	Entity* SearchFirstEnemy(int pixel_range, fPoint from, Side side) const;
+	Entity* SearchFirstEnemy(IsoRect rect, const Side side) const;
 	void Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const;
 	void Search(SDL_Rect rect, std::vector<Entity*>& vec) const;
 

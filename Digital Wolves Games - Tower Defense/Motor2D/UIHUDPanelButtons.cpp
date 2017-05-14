@@ -29,6 +29,7 @@
 UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
+	panel_type = BP_NO_SELECTION;
 }
 
 UIHUDPanelButtons::~UIHUDPanelButtons()
@@ -36,6 +37,10 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 	std::vector<info_button*>::iterator ib_item;
 	switch (panel_type)
 	{
+	case BP_NO_SELECTION:
+		for (ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
+		break;
 	case BP_TOWNHALL:
 		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
 			(*ib_item)->ButtonToDelete();
@@ -69,6 +74,9 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 			(*ib_item)->ButtonToDelete();
 		break;
 	}
+
+	for (ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
+		DELETE_PTR(*ib_item);
 	
 	for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
 		DELETE_PTR(*ib_item);
@@ -97,62 +105,69 @@ UIHUDPanelButtons::~UIHUDPanelButtons()
 
 void UIHUDPanelButtons::SetPanel(Building* building)
 {
-	if (b_selected != nullptr)
-		DeletePanel();
+	DeletePanel();
 
-	switch (building->GetBuildingType())
+	if (building == nullptr)
 	{
-	case B_TURRET:
-		panel_type = BP_TURRET;
-		b_selected = building;
-		CreatePanel();
-		break;
-	case B_CANNON:
-		panel_type = BP_CANNON;
-		b_selected = building;
-		CreatePanel();
-		break;
-	case B_TURRET_UPGRADED:
-		panel_type = BP_TURRET_UPGRADED;
-		b_selected = building;
-		CreatePanel();
-		break;
-	case B_CANNON_UPGRADED:
-		panel_type = BP_TURRET_UPGRADED;
-		b_selected = building;
-		CreatePanel();
-		break;
-	case B_WOOD_WALL:
-		panel_type = BP_WOOD_WALL;
-		b_selected = building;
-		CreatePanel();
-		break;
-	case B_STONE_WALL:
-		panel_type = BP_STONE_WALL;
-		b_selected = building;
-		CreatePanel();
-		break;
-	case B_BRICK_WALL:
-		panel_type = BP_BRICK_WALL;
-		b_selected = building;
-		CreatePanel();
-		break;
-	case B_TOWNHALL:
-		panel_type = BP_TOWNHALL;
-		b_selected = building;
-		CreatePanel();
-		if (App->tutorial->tutorial1_completed) App->tutorial->TownHallSelected = true;
-		break;
-	case B_UNIVERSITY:
-		panel_type = BP_UNIVERSITY;
-		b_selected = building;
-		CreatePanel();
-		if (App->tutorial->tutorial3_completed) App->tutorial->UniversitySelected = true;
-		break;
-	default:
-		panel_type = BP_NONE;
+		panel_type = BP_NO_SELECTION;
 		b_selected = nullptr;
-		break;
+		CreatePanel();
+	}
+	else {
+		switch (building->GetBuildingType())
+		{
+		case B_TURRET:
+			panel_type = BP_TURRET;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_CANNON:
+			panel_type = BP_CANNON;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_TURRET_UPGRADED:
+			panel_type = BP_TURRET_UPGRADED;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_CANNON_UPGRADED:
+			panel_type = BP_TURRET_UPGRADED;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_WOOD_WALL:
+			panel_type = BP_WOOD_WALL;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_STONE_WALL:
+			panel_type = BP_STONE_WALL;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_BRICK_WALL:
+			panel_type = BP_BRICK_WALL;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_TOWNHALL:
+			panel_type = BP_TOWNHALL;
+			b_selected = building;
+			CreatePanel();
+			if (App->tutorial->tutorial1_completed) App->tutorial->TownHallSelected = true;
+			break;
+		case B_UNIVERSITY:
+			panel_type = BP_UNIVERSITY;
+			b_selected = building;
+			CreatePanel();
+			if (App->tutorial->tutorial3_completed) App->tutorial->UniversitySelected = true;
+			break;
+		default:
+			panel_type = BP_NONE;
+			b_selected = nullptr;
+			break;
+		}
 	}
 }
 
@@ -160,7 +175,6 @@ bool UIHUDPanelButtons::Update()
 {
 	if (b_selected != nullptr)
 	{
-		std::vector<info_button*>::iterator ib_item;
 		switch (panel_type)
 		{
 		case BP_TOWNHALL:
@@ -168,7 +182,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -178,7 +192,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -188,7 +202,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -198,7 +212,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -208,7 +222,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -218,7 +232,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -228,7 +242,7 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
@@ -238,11 +252,25 @@ bool UIHUDPanelButtons::Update()
 			{
 				if ((*ib_item)->GetButton()->IsFocus())
 				{
-					//App->uimanager->SetDescriptionHUDDescription(panel_active->at(i));
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
 					break;
 				}
 			}
 			break;
+		}
+	}
+	else if (b_selected == nullptr)
+	{
+		if(panel_type == BP_NO_SELECTION)
+		{
+			for (std::vector<info_button*>::iterator ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
+			{
+				if ((*ib_item)->GetButton()->IsFocus())
+				{
+					App->uimanager->SetDescriptionHUDDescription((*ib_item));
+					break;
+				}
+			}
 		}
 	}
 	return true;
@@ -255,6 +283,10 @@ info_button* UIHUDPanelButtons::AddButton(BUILDING_PANELINFO type, iPoint positi
 
 	switch (type)
 	{
+	case BP_NO_SELECTION:
+		panel_no_selection.push_back(new_btn);
+		return new_btn;
+		break;
 	case BP_TOWNHALL:
 		panel_townhall.push_back(new_btn);
 		return new_btn;
@@ -298,6 +330,10 @@ void UIHUDPanelButtons::CreatePanel()
 	std::vector<info_button*>::iterator ib_item;
 	switch (panel_type)
 	{
+	case BP_NO_SELECTION:
+		for (ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
+			(*ib_item)->CreateButton();
+		break;
 	case BP_TOWNHALL:
 		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
 			(*ib_item)->CreateButton();
@@ -362,6 +398,10 @@ void UIHUDPanelButtons::DeletePanel()
 	std::vector<info_button*>::iterator ib_item;
 	switch (panel_type)
 	{
+	case BP_NO_SELECTION:
+		for (ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
+		break;
 	case BP_TOWNHALL:
 		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
 			(*ib_item)->ButtonToDelete();

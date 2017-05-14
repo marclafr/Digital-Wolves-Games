@@ -180,7 +180,7 @@ bool Building::IsAlive() const
 void Building::ConvertToRubble()
 {
 	//TODO: If townhall, change the rect
-	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY())) App->audio->PlayFx(App->entity_manager->fx_building_destroyed);
+	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY())) App->audio->PlayFx(App->audio->fx_building_destroyed);
 	
 	SetTextureID(T_TOWNHALL);
 	SDL_Rect rect;
@@ -218,4 +218,5 @@ void Building::SaveBuilding(pugi::xml_node &data)
 	ActualBuilding.append_attribute("building_type") = GetBuildingType();
 	ActualBuilding.append_attribute("posx") = GetX();
 	ActualBuilding.append_attribute("posy") = GetY();
+	ActualBuilding.append_attribute("hp") = GetHp();
 }

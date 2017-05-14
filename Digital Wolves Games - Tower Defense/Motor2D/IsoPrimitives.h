@@ -44,15 +44,15 @@ public:
 /// ---------------------------------------------
 
 
-///Class Circle ---------------------------------
-//Circle isometric primitive
-class Circle : public Primitive
+///Class Elipse ---------------------------------
+//Elipse isometric primitive
+class Elipse : public Primitive
 {
 public:
 
-	Circle(const fPoint& position = { 0,0 }, uint rad = 0, const iPoint& displacement = { 0,0 });
-	Circle(const Circle& copy);
-	~Circle();
+	Elipse(const fPoint& position = { 0,0 }, uint rad = 0, const iPoint& displacement = { 0,0 });
+	Elipse(const Elipse& copy);
+	~Elipse();
 
 private:
 
@@ -66,11 +66,11 @@ public:
 	//Shape functions
 	bool	IsIn(const fPoint* loc) const;
 	bool	Intersects(const SDL_Rect* rect) const;
-	bool	Intersects(const Circle* target)const;
+	bool	Intersects(const Elipse* target)const;
 	bool	Intersects(const IsoRect* target)const;
 	bool	Intersects(const iPoint* point)const;
-	bool	Overlap(const Circle* target)const;
-	iPoint  NearestPoint(const Circle* target)const;
+	bool	Overlap(const Elipse* target)const;
+	iPoint  NearestPoint(const Elipse* target)const;
 	iPoint	NearestPoint(const IsoRect* target)const;
 
 	//Set Methods
@@ -108,7 +108,8 @@ public:
 
 	bool Inside(const fPoint pos) const;
 	bool Overlaps(SDL_Rect rect) const;
-	bool Overlaps(Circle circle) const;
+	bool Overlaps(Elipse circle) const;
+	bool Overlaps(IsoRect rect) const;
 };
 /// ---------------------------------------------
 

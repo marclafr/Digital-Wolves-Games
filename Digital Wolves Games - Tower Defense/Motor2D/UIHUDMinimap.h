@@ -6,26 +6,14 @@
 #include "UIComponents.h"
 #include "p2Point.h"
 
-struct MinimapTriangle
-{
-private:
-	iPoint left;
-	iPoint right;
-	iPoint top;
-
-public:
-	void SetPoints(iPoint left, iPoint right, iPoint top);
-	float sign(iPoint p1, iPoint p2, iPoint p3);
-	bool PointInTriangle(iPoint pt);
-};
+class IsoRect;
 
 class UIHUDMinimap : public UIComponents
 {
 private:
 	UIComponents* minimap_image = nullptr;
 
-	MinimapTriangle t_top;
-	MinimapTriangle t_down;
+	IsoRect* minimap;
 
 	iPoint quad_minimap_position;
 
@@ -40,8 +28,8 @@ public:
 
 	void Draw();
 
-	iPoint TransformPointFromMap(iPoint point);
-	iPoint TransformPointFromMinimap(iPoint point);
+	iPoint WorldToMinimap(fPoint world_point);
+	iPoint MinimapToWorld(fPoint minimap_point);
 };
 
 #endif // __UIHUDMINIMAP_H__

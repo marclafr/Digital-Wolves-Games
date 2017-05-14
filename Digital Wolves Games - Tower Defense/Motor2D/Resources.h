@@ -44,6 +44,8 @@ public:
 	void AddResource(int add);
 	bool ReduceCollectTime(float reduction);
 	void IncreaseResourceAmount(int amount);
+
+	void SaveResource(pugi::xml_node&);
 };
 
 #endif

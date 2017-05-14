@@ -69,31 +69,32 @@ SDL_Color Primitive::GetColor() const
 /// ---------------------------------------------
 
 
-///Class Circle ---------------------------------
+///Class Elipse ---------------------------------
 //Constructors ==============
-Circle::Circle(const fPoint& position, uint rad, const iPoint& desplacement) :Primitive(position, desplacement), rad(rad)
+Elipse::Elipse(const fPoint& position, uint rad, const iPoint& desplacement) :Primitive(position, desplacement), rad(rad)
 {}
 
-Circle::Circle(const Circle & copy) : Primitive(copy), rad(copy.rad)
+Elipse::Elipse(const Elipse & copy) : Primitive(copy), rad(copy.rad)
 {}
 
 //Destructors ===============
-Circle::~Circle()
+Elipse::~Elipse()
 {}
 
 //Functionality =============
-bool Circle::Draw()
+bool Elipse::Draw()
 {
-	return App->render->DrawElipse(position.x + displacement.x, position.y + displacement.y, rad, color.r, color.g, color.b, color.a, x_angle, true);
+	float angle = x_angle * 180 / PI;
+	return App->render->DrawElipse(position.x + displacement.x, position.y + displacement.y, rad, color.r, color.g, color.b, angle, color.a, true);
 }
 
-bool Circle::IsIn(const fPoint* loc) const
+bool Elipse::IsIn(const fPoint* loc) const
 {
 	float sin_rad = rad * sin(x_angle);
 	return ((((loc->x - position.x) * (loc->x - position.x)) / (rad  *rad) + ((loc->y - position.y) * (loc->y - position.y)) / (sin_rad * sin_rad)) <= 1);
 }
 
-bool Circle::Intersects(const SDL_Rect * rect) const
+bool Elipse::Intersects(const SDL_Rect * rect) const
 {
 	if (rect == nullptr)return false;
 	float dx = abs(position.x - (rect->x + rect->w * 0.5));
@@ -115,7 +116,7 @@ bool Circle::Intersects(const SDL_Rect * rect) const
 	return corner_distance <= rad ^ 2;
 }
 
-bool Circle::Intersects(const Circle * target) const
+bool Elipse::Intersects(const Elipse * target) const
 {
 	if (target == nullptr)
 		return false;
@@ -127,7 +128,7 @@ bool Circle::Intersects(const Circle * target) const
 	float vec_len = sqrt(vec.x * vec.x + vec.y * vec.y);
 	return (rad >= vec_len);
 }
-bool Circle::Overlap(const Circle* target) const
+bool Elipse::Overlap(const Elipse* target) const
 {
 	if (target == nullptr)return false;
 
@@ -138,26 +139,30 @@ bool Circle::Overlap(const Circle* target) const
 	return (abs(deltaX) < radius && abs(deltaY) < radius*sin(x_angle));
 }
 
-bool Circle::Intersects(const IsoRect * target) const
+bool Elipse::Intersects(const IsoRect * target) const
 {
 	if (target == nullptr)return false;
 	iPoint vec = (iPoint(target->GetPosition().x, target->GetPosition().y) + target->GetDisplacement()) - iPoint(position.x,position.y);
 	fPoint norm(vec.x, vec.y);
 	norm.Norm();
 	vec.x -= ceil((target->GetWidth() * 0.5) * norm.x);
-	vec.y -= ceil(((target->GetHeight()) * 0.5) * norm.y);
+	float diagonal = sqrt(target->GetHeight() / 2.0f * target->GetHeight() / 2.0f + target->GetWidth() / 2.0f);
+	vec.y -= ceil(((diagonal) * 0.5) * norm.y);
 	float len = sqrt(vec.x * vec.x + vec.y * vec.y);
 	return (len <= rad);
 }
 
-bool Circle::Intersects(const iPoint* point) const
-{
-	if (point == nullptr)return false;
-	iPoint loc(point->x - position.x, point->y - position.y);
-	return (abs(loc.x) <= rad && abs(loc.y) <= rad);
+bool Elipse::Intersects(const iPoint* point) const
+{	
+	float r_x = rad * cos(x_angle);
+	float r_y = rad * sin(x_angle);
+	float delta_x = (point->x - position.x) * (point->x - position.x) / (r_x * r_x);
+	float delta_y = (point->y - position.y) * (point->y - position.y) / (r_y * r_y);
+
+	return delta_x + delta_y <= 1.0f;
 }
 
-iPoint Circle::NearestPoint(const Circle* target) const
+iPoint Elipse::NearestPoint(const Elipse* target) const
 {
 	iPoint vec(target->position.x - position.x, target->position.y - position.y);
 	fPoint cpy(vec.x, vec.y);
@@ -168,7 +173,7 @@ iPoint Circle::NearestPoint(const Circle* target) const
 	return iPoint(position.x + vec.x, position.y + vec.y);
 }
 
-iPoint Circle::NearestPoint(const IsoRect* target) const
+iPoint Elipse::NearestPoint(const IsoRect* target) const
 {
 	iPoint vec = (iPoint(target->GetPosition().x, target->GetPosition().y) + target->GetDisplacement()) - iPoint(position.x, position.y);
 	fPoint norm(vec.x, vec.y);
@@ -178,12 +183,12 @@ iPoint Circle::NearestPoint(const IsoRect* target) const
 	return iPoint(position.x + vec.x, position.y + vec.y);
 }
 
-void Circle::SetRad(uint r)
+void Elipse::SetRad(uint r)
 {
 	rad = r;
 }
 
-uint Circle::GetRad() const
+uint Elipse::GetRad() const
 {
 	return rad;
 }
@@ -248,6 +253,7 @@ bool IsoRect::Inside(const fPoint pos) const
 		return true;
 	return false;
 }
+
 bool IsoRect::Overlaps(SDL_Rect rect) const
 {
 	//check if SDL_Rect vertices are inside IsoRect
@@ -283,9 +289,29 @@ bool IsoRect::Overlaps(SDL_Rect rect) const
 
 	return false;
 }
-bool IsoRect::Overlaps(Circle circle) const
+bool IsoRect::Overlaps(Elipse circle) const
 {
 	return circle.Intersects(this);
+}
+bool IsoRect::Overlaps(IsoRect rect) const
+{
+	fPoint first(rect.GetPosition().x, rect.GetPosition().y + rect.GetHeight()/ 2.0f);
+	fPoint second(rect.GetPosition().x, rect.GetPosition().y - rect.GetHeight() / 2.0f);
+	fPoint third(rect.GetPosition().x + rect.GetWidth() / 2.0f, rect.GetPosition().y);
+	fPoint forth(rect.GetPosition().x - rect.GetWidth() / 2.0f, rect.GetPosition().y);
+	
+	if (Inside(first) || Inside(second) || Inside(third) || Inside(forth))
+		return true;
+
+	fPoint fith(GetPosition().x, GetPosition().y + GetHeight() / 2.0f);
+	fPoint sixth(GetPosition().x, GetPosition().y - GetHeight() / 2.0f);
+	fPoint seventh(GetPosition().x + GetWidth() / 2.0f, GetPosition().y);
+	fPoint eigth(GetPosition().x - GetWidth() / 2.0f, GetPosition().y);
+
+	if (rect.Inside(fith) || rect.Inside(sixth) || rect.Inside(seventh) || rect.Inside(eigth))
+		return true;
+
+	return false;
 }
 /// ---------------------------------------------
 

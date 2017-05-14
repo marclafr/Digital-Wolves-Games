@@ -504,6 +504,11 @@ bool j1WaveManager::BringNextWave()
 	return false;
 }
 
+int j1WaveManager::GetWaveNum()
+{
+	return wave_num;
+}
+
 Wave::~Wave()
 {
 	units_vec_left_up.clear();

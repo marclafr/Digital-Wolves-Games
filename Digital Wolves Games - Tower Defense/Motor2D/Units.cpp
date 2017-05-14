@@ -38,7 +38,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 350;
 		vision_range = 350;
 		unit_class = C_ARCHER;
-		unit_circle = Circle({ GetX(), GetY() }, 18);
+		unit_circle = Elipse({ GetX(), GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_HEAVYCAVALRYARCHER);
 		else
@@ -58,7 +58,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle = Circle({ GetX(), GetY() }, 10);
+		unit_circle = Elipse({ GetX(), GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_MILITIA);
 		else
@@ -76,7 +76,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle = Circle({ GetX(), GetY() }, 10);
+		unit_circle = Elipse({ GetX(), GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_MANATARMS);
 		else
@@ -93,7 +93,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle = Circle({ GetX(), GetY() }, 10);
+		unit_circle = Elipse({ GetX(), GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_LONGSWORDMAN);
 		else
@@ -110,7 +110,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle = Circle({ GetX(), GetY() }, 10);
+		unit_circle = Elipse({ GetX(), GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_TWOHANDEDSWORDMAN);
 		else
@@ -127,7 +127,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle = Circle({ GetX(), GetY() }, 10);
+		unit_circle = Elipse({ GetX(), GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_CHAMPION);
 		else
@@ -144,7 +144,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle = Circle({ GetX(), GetY() }, 10);
+		unit_circle = Elipse({ GetX(), GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_SPEARMAN);
 		else
@@ -161,7 +161,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 30;
 		vision_range = 300;
 		unit_class = C_INFANTRY;
-		unit_circle = Circle({ GetX(), GetY() }, 10);
+		unit_circle = Elipse({ GetX(), GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_PIKEMAN);
 		else
@@ -181,7 +181,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 160;
 		vision_range = 150;
 		unit_class = C_ARCHER;
-		unit_circle = Circle({ GetX(), GetY() }, 10);
+		unit_circle = Elipse({ GetX(), GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_ARCHER);
 		else
@@ -199,7 +199,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 200;
 		vision_range = 150;
 		unit_class = C_ARCHER;
-		unit_circle = Circle({ GetX(), GetY() }, 10);
+		unit_circle = Elipse({ GetX(), GetY() }, 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_ARBALEST);
 		else
@@ -216,7 +216,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 160;
 		vision_range = 200;
 		unit_class = C_ARCHER;
-		unit_circle = Circle({ GetX(), GetY() }, 18);
+		unit_circle = Elipse({ GetX(), GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_CAVALRYARCHER);
 		else
@@ -233,7 +233,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 160;
 		vision_range = 200;
 		unit_class = C_ARCHER;
-		unit_circle = Circle({ GetX(), GetY() }, 18);
+		unit_circle = Elipse({ GetX(), GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_HEAVYCAVALRYARCHER);
 		else
@@ -253,7 +253,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
-		unit_circle = Circle({ GetX(), GetY() }, 18);
+		unit_circle = Elipse({ GetX(), GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_PALADIN);
 		else
@@ -270,7 +270,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
-		unit_circle = Circle({ GetX(), GetY() }, 18);
+		unit_circle = Elipse({ GetX(), GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_KNIGHT);
 		else
@@ -287,7 +287,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 35;
 		vision_range = 250;
 		unit_class = C_CAVALRY;
-		unit_circle = Circle({ GetX(), GetY() }, 18);
+		unit_circle = Elipse({ GetX(), GetY() }, 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_CAVALIER);
 		else
@@ -307,7 +307,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 100;
 		vision_range = 100;
 		unit_class = C_SIEGE;
-		unit_circle = Circle({ GetX(), GetY() }, 30);
+		unit_circle = Elipse({ GetX(), GetY() }, 30);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_SIEGERAM);
 		else
@@ -324,7 +324,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		range = 180;
 		vision_range = 250;
 		unit_class = C_SIEGE;
-		unit_circle = Circle({ GetX(), GetY() }, 30);
+		unit_circle = Elipse({ GetX(), GetY() }, 30);
 		SetTextureID(T_MANGONEL);
 		priority = 1;
 		break;
@@ -670,7 +670,7 @@ const int Unit::GetRange() const
 	return range;
 }
 
-const Circle Unit::GetUnitCircle() const
+const Elipse Unit::GetUnitCircle() const
 {
 	return unit_circle;
 }
@@ -798,19 +798,19 @@ void Unit::PlayDeathSound() const
 	switch (rand_num)
 	{
 	case 0:
-		App->audio->PlayFx(App->entity_manager->fx_twohanded_die01);
+		App->audio->PlayFx(App->audio->fx_twohanded_die01);
 		break;
 	case 1:
-		App->audio->PlayFx(App->entity_manager->fx_twohanded_die02);
+		App->audio->PlayFx(App->audio->fx_twohanded_die02);
 		break;
 	case 2:
-		App->audio->PlayFx(App->entity_manager->fx_twohanded_die03);
+		App->audio->PlayFx(App->audio->fx_twohanded_die03);
 		break;
 	case 3:
-		App->audio->PlayFx(App->entity_manager->fx_twohanded_die04);
+		App->audio->PlayFx(App->audio->fx_twohanded_die04);
 		break;
 	case 4:
-		App->audio->PlayFx(App->entity_manager->fx_twohanded_die05);
+		App->audio->PlayFx(App->audio->fx_twohanded_die05);
 		break;
 	}	
 }
@@ -841,7 +841,7 @@ bool Unit::GetNextTile()
 void Unit::PlayAttackSound() const
 {
 	if(unit_class == C_ARCHER)
-		App->audio->PlayFx(App->entity_manager->fx_arrow);
+		App->audio->PlayFx(App->audio->fx_arrow);
 
 	else
 	{
@@ -850,13 +850,13 @@ void Unit::PlayAttackSound() const
 		switch (rand_num)
 		{
 		case 0:
-			App->audio->PlayFx(App->entity_manager->fx_attack01);
+			App->audio->PlayFx(App->audio->fx_attack01);
 			break;
 		case 1:
-			App->audio->PlayFx(App->entity_manager->fx_attack02);
+			App->audio->PlayFx(App->audio->fx_attack02);
 			break;
 		case 2:
-			App->audio->PlayFx(App->entity_manager->fx_attack03);
+			App->audio->PlayFx(App->audio->fx_attack03);
 			break;
 		}
 	}
@@ -895,4 +895,14 @@ void Unit::SlowUnit()
 		slowed = true;
 		slow_timer.Start();
 	}
+}
+
+void Unit::SaveUnit(pugi::xml_node &data)
+{
+	pugi::xml_node ActualUnit = data.append_child("unit");
+	ActualUnit.append_attribute("unit_type") = GetUnitType();
+	ActualUnit.append_attribute("posx") = GetX();
+	ActualUnit.append_attribute("posy") = GetY();
+	ActualUnit.append_attribute("hp") = GetHp();
+	ActualUnit.append_attribute("side") = GetSide();
 }

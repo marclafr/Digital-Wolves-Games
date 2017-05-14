@@ -146,6 +146,16 @@ void Resources::IncreaseResourceAmount(int amount)
 	amount_collected += amount;
 }
 
+void Resources::SaveResource(pugi::xml_node &data)
+{
+	pugi::xml_node actualresource = data.append_child("resource");
+	actualresource.append_attribute("resource_type") = GetResourceType();
+	actualresource.append_attribute("posx") = GetX();
+	actualresource.append_attribute("posy") = GetY();
+	actualresource.append_attribute("amount_collected") = amount_collected;
+	actualresource.append_attribute("collect_time") = collect_time;
+}
+
 void Resources::AddResource(int add) 
 {
 	switch (resource_type)

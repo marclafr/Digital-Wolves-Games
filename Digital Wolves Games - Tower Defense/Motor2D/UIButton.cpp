@@ -132,3 +132,8 @@ void UIButton::SetNotDeleteTask()
 {
 	delete_task = false;
 }
+
+UILabel * UIButton::GetLabel() const
+{
+	return title;
+}

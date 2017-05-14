@@ -24,6 +24,7 @@
 #include "UIHUDTownHallBarLife.h"
 #include "UIHUDScoreBar.h"
 #include "UIHUDMinimap.h"
+#include "UIHUDMenuInGame.h"
 
 j1UIManager::j1UIManager() : j1Module()
 {
@@ -210,6 +211,13 @@ void j1UIManager::AddMinimap()
 {
 	UIHUDMinimap* new_minimap;
 	components.push_back(new_minimap = new UIHUDMinimap());
+}
+
+UIHUDMenuInGame* j1UIManager::AddMenuInGame()
+{
+	UIHUDMenuInGame* new_menuingame;
+	components.push_back(new_menuingame = new UIHUDMenuInGame());
+	return new_menuingame;
 }
 
 // const getter for atlas

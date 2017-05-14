@@ -7,6 +7,8 @@
 #include "j1Render.h"
 #include "j1Fonts.h"
 #include "j1Window.h"
+#include "j1Score.h"
+#include "j1WaveManager.h"
 #include "Camera.h"
 #include "j1Map.h"
 #include "j1Audio.h"
@@ -96,7 +98,7 @@ void j1EntityManager::UnselectEverything() const
 
 	App->scene->selection.clear();
 	App->uimanager->DeleteSelectionPanelInfo();
-	App->uimanager->DeletePanelButtons();
+	App->uimanager->SetPanelButtons(nullptr);
 }
 
 void j1EntityManager::Select(Entity * select) const
@@ -107,9 +109,10 @@ void j1EntityManager::Select(Entity * select) const
 	App->uimanager->CreatePanelInfo(App->scene->selection);
 }
 
-Entity * j1EntityManager::LookForEnemies(int range, fPoint pos) const
+Entity * j1EntityManager::LookForEnemies(int range, fPoint pos, Side side) const
 {
-	return entity_quadtree->SearchFirst(range, pos);
+	IsoRect rect(pos,range * 2.0f, range*2.0f);
+	return entity_quadtree->SearchFirstEnemy(rect, side);
 }
 
 void j1EntityManager::CheckClick(int mouse_x, int mouse_y) const
@@ -123,7 +126,6 @@ void j1EntityManager::CheckClick(int mouse_x, int mouse_y) const
 
 bool j1EntityManager::Start()
 {
-	LoadAllFx();
 
 	float m = App->map->data.height;
 	float n = App->map->data.width;
@@ -175,23 +177,7 @@ bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
 	return false;
 }
 
-void j1EntityManager::LoadAllFx()
-{
-	//UNITS
-	fx_twohanded_die01 = App->audio->LoadFx("audio/fx/Male_Death01.wav");
-	fx_twohanded_die02 = App->audio->LoadFx("audio/fx/Male_Death02.wav");
-	fx_twohanded_die03 = App->audio->LoadFx("audio/fx/Male_Death03.wav");
-	fx_twohanded_die04 = App->audio->LoadFx("audio/fx/Male_Death04.wav");
-	fx_twohanded_die05 = App->audio->LoadFx("audio/fx/Male_Death05.wav");
-	fx_attack01 = App->audio->LoadFx("audio/fx/Swordfight01.wav");
-	fx_attack02 = App->audio->LoadFx("audio/fx/Swordfight02.wav");
-	fx_attack03 = App->audio->LoadFx("audio/fx/Swordfight03.wav");
 
-	//BUILDINGS
-	fx_building_destroyed = App->audio->LoadFx("audio/fx/Building_destroyed01.wav");
-	fx_arrow = App->audio->LoadFx("audio/fx/Arrow01.wav");
-	fx_construction = App->audio->LoadFx("audio/fx/Construction01.wav");
-}
 
 void j1EntityManager::DrawQuadTree() const
 {
@@ -200,8 +186,46 @@ void j1EntityManager::DrawQuadTree() const
 
 bool j1EntityManager::Save(pugi::xml_node &data) const
 {
-	pugi::xml_node Buildings = data.append_child("building");
+	pugi::xml_node Buildings = data.append_child("buildings");
+	pugi::xml_node Units = data.append_child("units");
+	pugi::xml_node Turrets = data.append_child("turrets");
+	pugi::xml_node Resourcess = data.append_child("resources");
+
+	/*for (int k = 0; k <entity_array.size(); k++) {
+		if (entity_array[k]->GetEntityType() == E_BUILDING)
+		{
+			Building* buildingptr = (Building*)entity_array[k];
+			if (buildingptr->GetBuildingType() == B_TURRET || buildingptr->GetBuildingType() == B_CANNON)
+			{
+				Tower* towerptr = (Tower*)buildingptr;
+				towerptr->SaveTurret(Turrets);
+			}
+			else buildingptr->SaveBuilding(Buildings);
+		}
+		else if (entity_array[k]->GetEntityType() == E_UNIT)
+		{
+			Unit* unit = (Unit*)entity_array[k];
+			if (unit->GetSide() == S_ALLY)	unit->SaveUnit(Units);
+		}
+		else if (entity_array[k]->GetEntityType() == E_RESOURCE)
+		{
+			Resources* rest = (Resources*)entity_array[k];
+			rest->SaveResource(Resourcess);
+		}
+	}
+	*/
 
 
+	pugi::xml_node AmountOfResources = data.append_child("resources_amount");
+
+	App->scene->resources->SaveResourcesAmount(AmountOfResources);
+
+	pugi::xml_node Score = data.append_child("score");
+
+	Score.append_attribute("points") = App->score->GetScore();
+	Score.append_attribute("enemies_killeds") = App->score->GetEnemiesKilled();
+	Score.append_attribute("time_passed") = App->score->GetTime();
+	Score.append_attribute("wave_num") = App->wave_manager->GetWaveNum();
+	return true;
 	return true;
 }
