@@ -26,10 +26,10 @@ void Entity::ResetDT()
 
 bool Entity::Inside(SDL_Rect rect) const
 {
-	if (rect.x > position.x
-		&& rect.x + rect.w < position.x
-		&& rect.y > position.y
-		&& rect.y + rect.h < position.y)
+	if (rect.x < position.x
+		&& rect.x + abs(rect.w) > position.x
+		&& rect.y < position.y
+		&& rect.y + abs(rect.h) > position.y)
 		return true;
 	return false;
 }

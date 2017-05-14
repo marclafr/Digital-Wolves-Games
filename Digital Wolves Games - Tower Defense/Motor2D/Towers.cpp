@@ -161,6 +161,7 @@ void Tower::AI()
 	if (Target != nullptr) {
 		if (Target->GetX() < (GetX() - range) || Target->GetX() > (GetX() + range) || Target->GetY() < (GetY() - range) || Target->GetY() > (GetY() + range))
 			Target = nullptr;
+
 		if (Target != nullptr && Target->GetHp() <= 0)
 		{
 			Target = nullptr;
