@@ -73,12 +73,12 @@ bool j1Scene::Start()
 	App->render->camera->SetPosition(iPoint(1700, -2400));
 	CreateSceneUI();
 	//ENTITIES
-	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-75, 272), S_ALLY);
+	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(0, 272), S_ALLY);
 	resources = new ResourceManager();
 	iPoint pos = App->map->WorldToMap(-300, 370);
-	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-300, 370),pos);
+	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-225, 370),pos);
 	pos = App->map->WorldToMap(150, 370);
-	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370),pos);
+	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(225, 370),pos);
 	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
 	//--
 
