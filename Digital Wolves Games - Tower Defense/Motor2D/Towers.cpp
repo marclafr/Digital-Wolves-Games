@@ -11,7 +11,7 @@
 #include "j1Map.h"
 #include "Camera.h"
 
-Tower::Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
+Tower::Tower(TOWER_TYPE t_type, fPoint pos,iPoint posintiles) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
 	SDL_Rect tower_rect;
 	iPoint pivot;
@@ -22,23 +22,23 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) : Building(B_TURR
 		SetHp(150);
 		SetAttack(15);
 		SetArmor(1);
-		rate_of_fire = 0.90f;	//time between each attack in seconds
-		range = 300;
+		rate_of_fire = 0.85f;	//time between each attack in seconds
+		range = 290;
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;
 		SetBuildingType(B_TURRET);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BASIC_TOWER);
 		SetRect(tower_rect);
-		SetPivot(pivot.x, pivot.y);
+		SetPivot(pivot.x,pivot.y);
 		break;
 
 	case T_BOMBARD_TOWER:
 		SetHp(175);
-		SetAttack(30);
-		SetArmor(1);
-		rate_of_fire = 2.0f;
-		range = 300;
+		SetAttack(26);
+		SetArmor(4);
+		rate_of_fire = 1.95f;
+		range = 290;
 		tower_type = T_BOMBARD_TOWER;
 		projectile_type = P_CANNONBALL;
 		SetBuildingType(B_CANNON);
@@ -49,11 +49,11 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) : Building(B_TURR
 		break;
 
 	case T_FIRE_TOWER:
-		SetHp(150);
-		SetAttack(15);
+		SetHp(195);
+		SetAttack(25);
 		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
-		range = 300;
+		rate_of_fire = 0.85f;	//time between each attack in seconds
+		range = 250;
 		tower_type = T_FIRE_TOWER;
 		projectile_type = P_FIRE_ARROW;
 		SetBuildingType(B_TURRET);
@@ -63,8 +63,8 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) : Building(B_TURR
 		SetPivot(pivot.x, pivot.y);
 		break;
 	case T_ICE_TOWER:
-		SetHp(150);
-		SetAttack(15);
+		SetHp(175);
+		SetAttack(20);
 		SetArmor(1);
 		rate_of_fire = 1.0f;	//time between each attack in seconds
 		range = 300;
@@ -77,11 +77,11 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) : Building(B_TURR
 		SetPivot(pivot.x, pivot.y);
 		break;
 	case T_AIR_TOWER:
-		SetHp(150);
-		SetAttack(15);
+		SetHp(165);
+		SetAttack(12);
 		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
-		range = 300;
+		rate_of_fire = 0.5f;	//time between each attack in seconds
+		range = 350;
 		tower_type = T_AIR_TOWER;
 		projectile_type = P_AIR_ARROW;
 		SetBuildingType(B_TURRET);
@@ -140,12 +140,10 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) : Building(B_TURR
 	SetTextureID(T_TURRET);
 	AttackTimer.Start();
 
-	
+	App->pathfinding->MakeNoWalkable(iPoint(posintiles.x, posintiles.y));
 
-		App->pathfinding->MakeNoWalkable(iPoint(posintiles.x, posintiles.y));
-
-		App->pathfinding->MakeNoConstruible_neutral(posintiles);
-		App->pathfinding->MakeNoConstruible_ally(posintiles);
+	App->pathfinding->MakeNoConstruible_neutral(posintiles);
+	App->pathfinding->MakeNoConstruible_ally(posintiles);
 }
 
 Tower::~Tower()
@@ -167,7 +165,7 @@ void Tower::Update(float dt)
 
 void Tower::AI()
 {
-	if (Target != nullptr)
+	if (Target != nullptr) 
 	{
 		if (Target->GetX() < (GetX() - range) || Target->GetX() > (GetX() + range) || Target->GetY() < (GetY() - range) || Target->GetY() > (GetY() + range))
 			Target = nullptr;
@@ -176,11 +174,11 @@ void Tower::AI()
 			Target = nullptr;
 			attacking = false;
 		}
-
+	
 	}
 	else
 		attacking = false;
-
+	
 	if (Target == nullptr && AttackTimer.ReadSec() >= rate_of_fire && attacking == false && IsBuilt() == true && IsAlive() == true)
 	{
 		Target = App->entity_manager->LookForEnemies(GetRange(), GetPosition(), GetSide());
@@ -193,10 +191,10 @@ void Tower::AI()
 		App->projectile_manager->CreateProjectile(GetPosition(), Target, GetAttack(), projectile_spd, HEIGHT_BASIC_TOWER, 100, projectile_type);
 		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
 		{
-			if (tower_type == T_BASIC_TOWER || tower_type == T_ICE_TOWER || tower_type == T_AIR_TOWER || tower_type == T_FIRE_TOWER)
-				App->audio->PlayFx(App->audio->fx_arrow);
-			else
-				App->audio->PlayFx(App->audio->fx_cannon);
+			if(tower_type == T_BASIC_TOWER || tower_type == T_ICE_TOWER || tower_type == T_AIR_TOWER || tower_type == T_FIRE_TOWER)
+			App->audio->PlayFx(App->audio->fx_arrow);
+			else 
+			App->audio->PlayFx(App->audio->fx_cannon);
 		}
 		AttackTimer.Start();
 	}
@@ -300,6 +298,7 @@ void Tower::SetRange(float new_range)
 	range += new_range;
 }
 
+
 void Tower::UpgradeTurret(TURRET_UPGRADE type)
 {
 	if (this->IsBuilt())
@@ -320,7 +319,10 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_FIRE_ARROW;
 					tower_type = T_FIRE_TOWER;
 					SetBuildingType(B_TURRET_UPGRADED);
-					SetAttack(GetAttack() + 10);
+					SetRange(- 50);
+					SetAttack(GetAttack() + 13);
+					SetHp(GetHp() + 45);
+
 				}
 				break;
 			case TU_ICE:
@@ -332,6 +334,8 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_ICE_ARROW;
 					tower_type = T_ICE_TOWER;
 					SetBuildingType(B_TURRET_UPGRADED);
+					SetAttack(GetAttack() + 5);
+					SetHp(GetHp() + 25);
 				}
 				break;
 			case TU_AIR:
@@ -344,7 +348,9 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					tower_type = T_AIR_TOWER;
 					SetBuildingType(B_TURRET_UPGRADED);
 					SetSpeed(0.5f);
-					SetRange(2.0f);
+					SetRange(50);
+					SetAttack(GetAttack() + 2);
+					SetHp(GetHp() + 15);
 
 				}
 				break;
@@ -365,7 +371,8 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_FIRE_CANNONBALL;
 					tower_type = T_BOMBARD_FIRE_TOWER;
 					SetBuildingType(B_CANNON_UPGRADED);
-					SetAttack(GetAttack() + 3);
+					SetAttack(GetAttack() + 7);
+					SetHp(GetHp() + 50);
 				}
 				break;
 			case TU_ICE:
@@ -377,6 +384,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_ICE_CANNONBALL;
 					tower_type = T_BOMBARD_ICE_TOWER;
 					SetBuildingType(B_CANNON_UPGRADED);
+					SetHp(GetHp() + 20);
 				}
 				break;
 			case TU_AIR:
@@ -388,8 +396,8 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_AIR_CANNONBALL;
 					tower_type = T_BOMBARD_AIR_TOWER;
 					SetBuildingType(B_CANNON_UPGRADED);
-					SetSpeed(1.0f);
-					SetRange(2.0f);
+					SetSpeed(0.6f);
+					SetRange(40);
 				}
 				break;
 			default:
