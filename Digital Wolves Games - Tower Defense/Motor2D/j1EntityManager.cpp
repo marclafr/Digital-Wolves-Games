@@ -201,6 +201,109 @@ void j1EntityManager::DrawQuadTree() const
 {
 	entity_quadtree->DrawRects();
 }
+bool j1EntityManager::Load(pugi::xml_node& data)
+{
+	App->entity_manager->CleanUp();
+
+	pugi::xml_node Buildingsload = data.child("buildings").first_child();
+	pugi::xml_node Unitsload = data.child("units").first_child();
+	pugi::xml_node Turretsload = data.child("turrets").first_child();
+	pugi::xml_node Resourcesload = data.child("resources").first_child();
+
+	while (Buildingsload != NULL)
+	{
+		LoadBuilding(Buildingsload);
+		Buildingsload = Buildingsload.next_sibling();
+	}
+
+	while (Unitsload != NULL)
+	{
+		LoadUnit(Unitsload);
+		Unitsload = Unitsload.next_sibling();
+	}
+
+	while (Turretsload != NULL)
+	{
+		LoadTurret(Turretsload);
+		Turretsload = Turretsload.next_sibling();
+	}
+
+	while (Resourcesload != NULL)
+	{
+		LoadResource(Resourcesload);
+		Resourcesload = Resourcesload.next_sibling();
+	}
+
+
+	pugi::xml_node AmountOfResources = data.child("resources_amount").first_child();
+
+	App->scene->resources->LoadResourcesAmount(AmountOfResources);
+
+	pugi::xml_node Score = data.child("score");
+
+	App->score->Reset();
+	//App->score->SetScore(Score.attribute("points").as_int());
+	//App->score->SetEnemiesKilleds(Score.attribute("enemies_killeds").as_int());
+	//App->score->SetTimePassed(Score.attribute("time_passed").as_int());
+	App->wave_manager->ResetWave();
+	App->wave_manager->SetWaveNum(Score.attribute("wave_num").as_int());
+	return true;
+}
+
+void j1EntityManager::LoadResource(pugi::xml_node& data)
+{
+	pugi::xml_node actualresource = data;
+	fPoint pos(actualresource.attribute("posx").as_int(), actualresource.attribute("posy").as_int());
+	//Resources* actualres = (Resources*)App->entity_manager->CreateResource(RESOURCE_TYPE(actualresource.attribute("resource_type").as_int()), pos, actualresource.attribute("amount_collected").as_int(), actualresource.attribute("collect_time").as_int());
+	
+	/*switch (actualres->GetResourceType())
+	{
+	case R_WOOD:
+		App->scene->resources->SetWood(actualres);
+		break;
+	case R_FOOD:
+		App->scene->resources->SetFood(actualres);
+		break;
+	case R_GOLD:
+		App->scene->resources->SetGold(actualres);
+		break;
+	case R_STONE:
+		App->scene->resources->SetStone(actualres);
+		break;
+	}
+	*/
+}
+
+void j1EntityManager::LoadBuilding(pugi::xml_node& data)
+{
+	pugi::xml_node Actualbuilding = data;
+	fPoint pos(Actualbuilding.attribute("posx").as_int(), Actualbuilding.attribute("posy").as_int());
+	//Building* actualbuild = (Building*)App->entity_manager->CreateBuilding(BUILDING_TYPE(Actualbuilding.attribute("building_type").as_int()), pos, true);
+	//actualbuild->SetHp(Actualbuilding.attribute("hp").as_int());
+	//actualbuild->BuildingComplete();
+	/*if (actualbuild->GetBuildingType() == B_TOWNHALL)
+	{
+		App->scene->townhall = actualbuild;
+	}
+	*/
+}
+
+void j1EntityManager::LoadUnit(pugi::xml_node& data)
+{
+	pugi::xml_node Actualunit = data;
+	fPoint pos(Actualunit.attribute("posx").as_int(), Actualunit.attribute("posy").as_int());
+	Unit* actualunit = (Unit*)App->entity_manager->CreateUnit(UNIT_TYPE(Actualunit.attribute("unit_type").as_int()), pos, Side(Actualunit.attribute("side").as_int()));
+	actualunit->SetHp(Actualunit.attribute("hp").as_int());
+}
+
+void j1EntityManager::LoadTurret(pugi::xml_node& data)
+{
+	pugi::xml_node Actualturret = data;
+	fPoint pos(Actualturret.attribute("posx").as_int(), Actualturret.attribute("posy").as_int());
+	Tower* actualturret = (Tower*)App->entity_manager->CreateTower(TOWER_TYPE(Actualturret.attribute("tower_type").as_int()), pos, iPoint(Actualturret.attribute("tilex").as_int(), Actualturret.attribute("tilyx").as_int()));
+	actualturret->SetHp(Actualturret.attribute("hp").as_int());
+	actualturret->BuildingComplete();
+}
 
 bool j1EntityManager::Save(pugi::xml_node &data) const
 {

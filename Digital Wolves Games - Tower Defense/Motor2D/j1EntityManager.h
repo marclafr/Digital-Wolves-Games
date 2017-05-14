@@ -47,7 +47,12 @@ public:
 
 	void DrawQuadTree() const;
 
-	//bool Load(pugi::xml_node&);
+	bool Load(pugi::xml_node&);
+	void LoadBuilding(pugi::xml_node&);
+	void LoadUnit(pugi::xml_node&);
+	void LoadTurret(pugi::xml_node&);
+	void LoadResource(pugi::xml_node&);
+
 	bool Save(pugi::xml_node&)const;
 
 private:

@@ -66,7 +66,7 @@ public:
 	void TutorialUI();
 
 	const int GetTownHallHp();
-
+	Building* townhall;
 private:
 
 	bool game_scene = true;
@@ -75,8 +75,6 @@ private:
 	bool selecting = false;
 
 	SDL_Rect select_rect;
-
-	Building* townhall;
  
 	iPoint firstSelectedForWall;
 	iPoint LastSelectedForWall;

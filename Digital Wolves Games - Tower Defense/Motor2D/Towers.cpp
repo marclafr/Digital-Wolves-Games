@@ -278,6 +278,8 @@ void Tower::SaveTurret(pugi::xml_node &data)
 	ActualTurret.append_attribute("tower_type") = GetTowerType();
 	ActualTurret.append_attribute("posx") = GetX();
 	ActualTurret.append_attribute("posy") = GetY();
+	ActualTurret.append_attribute("tilex") = posintiles.x;
+	ActualTurret.append_attribute("tiley") = posintiles.y;
 	ActualTurret.append_attribute("hp") = GetHp();
 }
 
