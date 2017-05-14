@@ -15,7 +15,6 @@ private:
 	UILabel* armor = nullptr;
 	UILabel* range = nullptr;
 
-	bool build = false;
 	UILabel* building_percentage = nullptr;
 
 	Entity* e_ptr = nullptr;

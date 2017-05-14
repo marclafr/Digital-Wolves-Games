@@ -172,11 +172,13 @@ void OneSelection::Update()
 		UpdateHP();
 
 		if (e_ptr->GetEntityType() == E_BUILDING)
-			if (build == false && isBuilded(e_ptr) == false)
+		{
+			Building* b_ptr = (Building*)e_ptr;
+			if (b_ptr->IsBuilt() == false)
 			{
-				build = true;
 				PrepareBuildingConstruction();
 			}
+		}
 	}
 
 	Draw();
@@ -304,7 +306,7 @@ void OneSelection::DrawBuildInfo()
 			App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), 231 - App->render->camera->GetPosition().x, 711 - App->render->camera->GetPosition().y, &mark_range);
 		}
 
-		if (build)
+		if (building_life_bar->IsBuilt() == false)
 		{
 			uint percentage = GetBuildingPercentage(e_ptr);
 			if (percentage < 100)
@@ -329,8 +331,6 @@ void OneSelection::DrawBuildInfo()
 				if (percentage < 98)
 					App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), 401 + (int)percentage - App->render->camera->GetPosition().x, 729 - App->render->camera->GetPosition().y, &mark_last_bar);
 			}
-			else
-				build = false;
 
 		}
 	}
