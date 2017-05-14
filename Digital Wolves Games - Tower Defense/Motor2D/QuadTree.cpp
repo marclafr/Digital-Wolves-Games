@@ -410,12 +410,13 @@ Unit* QuadTreeNode::CheckCollision(const Unit* ptr) const
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
-			if (entities[i] != nullptr && entities[i]->GetEntityType() == E_UNIT)
-			{
-				Unit* unit = (Unit*)entities[i];
-				if(unit->GetUnitCircle().IsIn(&ptr->GetUnitCircle().GetPosition()) && ptr != entities[i])
-					return unit;
-			}	
+			if (entities[i] != nullptr)
+				if(entities[i]->GetEntityType() == E_UNIT)
+				{
+					Unit* unit = (Unit*)entities[i];
+					if(unit->GetUnitCircle().IsIn(&ptr->GetUnitCircle().GetPosition()) && ptr != entities[i])
+						return unit;
+				}	
 			else
 				break;
 	}
