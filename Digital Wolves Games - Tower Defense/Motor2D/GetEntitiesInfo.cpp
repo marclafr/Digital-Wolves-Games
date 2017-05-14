@@ -910,13 +910,10 @@ const char* GetInvestigationName(const INVESTIGATION_TYPE type)
 	return ret;
 }
 
-const char * GetInvestigationPrice(const INVESTIGATION_TYPE type)
+void GetInvestigationPrice(const INVESTIGATION_TYPE type, std::string & price)
 {
-	char* ret = nullptr;
-	std::string temp;
-	temp = std::to_string(App->investigations->GetInvestigationCost(App->investigations->GetInvestigation(type)));
-	ret = (char*)temp.c_str();
-	return ret;
+	price = std::to_string(App->investigations->GetInvestigationCost(App->investigations->GetInvestigation(type)));
+	//price = invest_price.c_str();
 
 	/*switch (type)
 	{
