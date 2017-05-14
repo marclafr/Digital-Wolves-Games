@@ -101,22 +101,15 @@ void Projectile::Update()
 			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FIRE_EXPLOSION));
 			dest_reached = true;
 			PrintElementTerrainTimer.Start();
-			App->audio->PlayFx(App->projectile_manager->fx_explosion);
 			break;
 		case P_ICE_CANNONBALL:
 			Target->Damaged(Damage);
 			AreaDamage(Damage, { (int)Target->GetX(), (int)Target->GetY() }, AREA_DMG_RADIUS);
-			/*
-			TODO:
-			Unit* target_unit = (Unit*)Target;
-			target_unit->SlowUnit();
-			*/
 			element_terrain_pos = Target->GetPosition();
 			delete projectile_anim;
 			projectile_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_ICE_EXPLOSION));
 			dest_reached = true;
 			PrintElementTerrainTimer.Start();
-			App->audio->PlayFx(App->projectile_manager->fx_explosion);
 			break;
 		default:
 			break;
@@ -169,15 +162,17 @@ AnimationManager * Projectile::GetProjectileAnim()
 void Projectile::AreaDamage(int damage, iPoint center, int radius)
 {
 	IsoRect rect(fPoint(center.x, center.y), radius);
-	App->entity_manager->LookForEnemies(radius, { (float)center.x, (float)center.y }, S_ALLY);
-	//TODO: when quadtree is finished
-	/*
-	if (projectile_type == P_ICE_CANNONBALL)
+	std::vector<Entity*> vec;
+	App->entity_manager->GetEntitiesInIsoRect(rect, vec);
+	for (int i = 0; i < vec.size(); i++)
 	{
-		Unit* target_unit = (Unit*)Target;
-		target_unit->SlowUnit();
+		Unit* unit = (Unit*)vec[i];
+		unit->Damaged(damage / 2);
+		if (projectile_type == P_ICE_CANNONBALL)
+		{
+			unit->SlowUnit();
+		}
 	}
-	*/
 }
 
 void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)
