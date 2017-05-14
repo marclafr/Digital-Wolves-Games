@@ -46,7 +46,7 @@ public:
 	void IncreaseResourceAmount(int amount);
 	int GetResource();
 
-	void SaveResource(pugi::xml_node&);
+	void Save(pugi::xml_node&);
 };
 
 #endif

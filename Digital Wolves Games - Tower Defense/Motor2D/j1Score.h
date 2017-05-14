@@ -5,7 +5,7 @@
 #include "SDL_image\include\SDL_image.h"
 #include "j1Timer.h"
 
-#define WINNING_TIME 600
+#define WINNING_TIME 1500
 #define ENEMY_KILL_SCORE 100
 
 class j1Score : public j1Module
@@ -33,6 +33,9 @@ public:
 	void IncreaseScore();
 	void DecreaseScore();
 	int  GetEnemiesKilled() const;
+	void SetScore(int num);
+	void SetEnemiesKilleds(int num);
+	void SetTime(int num);
 };
 
 #endif

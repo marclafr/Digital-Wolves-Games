@@ -37,9 +37,9 @@ Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)//T
 	return new_entity;
 }
 
-Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, Side side) const
+Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, bool builded) const
 {
-	Entity* new_entity = (Entity*) new Building(b_type, pos, side);
+	Entity* new_entity = (Entity*) new Building(b_type, pos, builded);
 	entity_quadtree->PushBack(new_entity);
 	if (b_type == B_TOWNHALL)
 		App->uimanager->SetTownHall((Building*)new_entity);
@@ -53,9 +53,9 @@ Entity * j1EntityManager::CreateTower(TOWER_TYPE t_type, fPoint pos, iPoint posi
 	return new_entity;
 }
 
-Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos) const
+Entity * j1EntityManager::CreateResource(RESOURCE_TYPE r_type, fPoint pos, int amount_collect, int time) const
 {
-	Entity* new_entity = (Entity*) new Resources(r_type, pos);
+	Entity* new_entity = (Entity*) new Resources(r_type, pos, amount_collect, time);
 	entity_quadtree->PushBack(new_entity);
 	return new_entity;
 }
@@ -203,7 +203,20 @@ void j1EntityManager::DrawQuadTree() const
 }
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
-	App->entity_manager->CleanUp();
+	delete entity_quadtree;
+
+	float m = App->map->data.height;
+	float n = App->map->data.width;
+
+	float map_h = (m + n) * 0.5f * App->map->data.tile_height + 75;//75 1 4 each tile
+	float map_w = (m + n) * 0.5f * App->map->data.tile_width;
+
+	float map_x = (m - n) * 0.5f * 0.5f * App->map->data.tile_width;
+	float map_y = (m + n) * 0.5f * 0.5f * App->map->data.tile_height + 75 / 2; //75 1 4 each tile
+
+																			   //IsoRect map(iPoint(map_x, map_y), map_w, map_h);
+	IsoRect map(fPoint(map_x, map_y), map_w, map_h);
+	entity_quadtree = new QuadTree(map);
 
 	pugi::xml_node Buildingsload = data.child("buildings").first_child();
 	pugi::xml_node Unitsload = data.child("units").first_child();
@@ -234,7 +247,6 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 		Resourcesload = Resourcesload.next_sibling();
 	}
 
-
 	pugi::xml_node AmountOfResources = data.child("resources_amount").first_child();
 
 	App->scene->resources->LoadResourcesAmount(AmountOfResources);
@@ -242,9 +254,9 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 	pugi::xml_node Score = data.child("score");
 
 	App->score->Reset();
-	//App->score->SetScore(Score.attribute("points").as_int());
-	//App->score->SetEnemiesKilleds(Score.attribute("enemies_killeds").as_int());
-	//App->score->SetTimePassed(Score.attribute("time_passed").as_int());
+	App->score->SetScore(Score.attribute("points").as_int());
+	App->score->SetEnemiesKilleds(Score.attribute("enemies_killeds").as_int());
+	App->score->SetTime(Score.attribute("time_passed").as_int());
 	App->wave_manager->ResetWave();
 	App->wave_manager->SetWaveNum(Score.attribute("wave_num").as_int());
 	return true;
@@ -254,9 +266,9 @@ void j1EntityManager::LoadResource(pugi::xml_node& data)
 {
 	pugi::xml_node actualresource = data;
 	fPoint pos(actualresource.attribute("posx").as_int(), actualresource.attribute("posy").as_int());
-	//Resources* actualres = (Resources*)App->entity_manager->CreateResource(RESOURCE_TYPE(actualresource.attribute("resource_type").as_int()), pos, actualresource.attribute("amount_collected").as_int(), actualresource.attribute("collect_time").as_int());
+	Resources* actualres = (Resources*)App->entity_manager->CreateResource(RESOURCE_TYPE(actualresource.attribute("resource_type").as_int()), pos, actualresource.attribute("amount_collected").as_int(), actualresource.attribute("collect_time").as_int());
 	
-	/*switch (actualres->GetResourceType())
+	switch (actualres->GetResourceType())
 	{
 	case R_WOOD:
 		App->scene->resources->SetWood(actualres);
@@ -271,21 +283,20 @@ void j1EntityManager::LoadResource(pugi::xml_node& data)
 		App->scene->resources->SetStone(actualres);
 		break;
 	}
-	*/
 }
 
 void j1EntityManager::LoadBuilding(pugi::xml_node& data)
 {
 	pugi::xml_node Actualbuilding = data;
 	fPoint pos(Actualbuilding.attribute("posx").as_int(), Actualbuilding.attribute("posy").as_int());
-	//Building* actualbuild = (Building*)App->entity_manager->CreateBuilding(BUILDING_TYPE(Actualbuilding.attribute("building_type").as_int()), pos, true);
-	//actualbuild->SetHp(Actualbuilding.attribute("hp").as_int());
-	//actualbuild->BuildingComplete();
-	/*if (actualbuild->GetBuildingType() == B_TOWNHALL)
+	Building* actualbuild = (Building*)App->entity_manager->CreateBuilding(BUILDING_TYPE(Actualbuilding.attribute("building_type").as_int()), pos, true);
+	actualbuild->SetHp(Actualbuilding.attribute("hp").as_int());
+	actualbuild->BuildingComplete();
+	if (actualbuild->GetBuildingType() == B_TOWNHALL)
 	{
 		App->scene->townhall = actualbuild;
 	}
-	*/
+	
 }
 
 void j1EntityManager::LoadUnit(pugi::xml_node& data)
@@ -312,30 +323,7 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	pugi::xml_node Turrets = data.append_child("turrets");
 	pugi::xml_node Resourcess = data.append_child("resources");
 
-
-	/*for (int k = 0; k <entity_array.size(); k++) {
-		if (entity_array[k]->GetEntityType() == E_BUILDING)
-		{
-			Building* buildingptr = (Building*)entity_array[k];
-			if (buildingptr->GetBuildingType() == B_TURRET || buildingptr->GetBuildingType() == B_CANNON)
-			{
-				Tower* towerptr = (Tower*)buildingptr;
-				towerptr->SaveTurret(Turrets);
-			}
-			else buildingptr->SaveBuilding(Buildings);
-		}
-		else if (entity_array[k]->GetEntityType() == E_UNIT)
-		{
-			Unit* unit = (Unit*)entity_array[k];
-			if (unit->GetSide() == S_ALLY)	unit->SaveUnit(Units);
-		}
-		else if (entity_array[k]->GetEntityType() == E_RESOURCE)
-		{
-			Resources* rest = (Resources*)entity_array[k];
-			rest->SaveResource(Resourcess);
-		}
-	}
-	*/
+	entity_quadtree->SaveAll(data);
 
 
 	pugi::xml_node AmountOfResources = data.append_child("resources_amount");
@@ -350,16 +338,4 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	Score.append_attribute("wave_num") = App->wave_manager->GetWaveNum();
 	return true;
 	return true;
-}
-
-void j1EntityManager::BlitMinimap() const
-{
-	entity_quadtree->BlitMinimap();
-}
-
-bool j1EntityManager::AbleToBuild(iPoint pos)
-{
-	iPoint map_pos = App->map->WorldToMap(pos.x, pos.y);
-	IsoRect tile(fPoint(map_pos.x + App->map->data.tile_width / 2.0f, map_pos.y + App->map->data.tile_height / 2.0f), App->map->data.tile_width, App->map->data.tile_height);
-	return entity_quadtree->CheckIfFull(tile);
 }

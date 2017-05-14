@@ -410,12 +410,13 @@ Unit* QuadTreeNode::CheckCollision(const Unit* ptr) const
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
-			if (entities[i] != nullptr && entities[i]->GetEntityType() == E_UNIT)
-			{
-				Unit* unit = (Unit*)entities[i];
-				if(unit->GetUnitCircle().IsIn(&ptr->GetUnitCircle().GetPosition()) && ptr != entities[i])
-					return unit;
-			}	
+			if (entities[i] != nullptr)
+				if(entities[i]->GetEntityType() == E_UNIT)
+				{
+					Unit* unit = (Unit*)entities[i];
+					if(unit->GetUnitCircle().IsIn(&ptr->GetUnitCircle().GetPosition()) && ptr != entities[i])
+						return unit;
+				}	
 			else
 				break;
 	}
@@ -480,8 +481,7 @@ void QuadTreeNode::SaveAll(pugi::xml_node & node)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
 			if (entities[i] != nullptr)
-			{ }
-				//entities[i]->Save(node);
+				entities[i]->Save(node);
 	}
 	else
 		for (int i = 0; i < 4; i++)
@@ -545,6 +545,11 @@ bool QuadTree::CheckIfFull(IsoRect tile) const
 void QuadTree::Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const
 {
 	origin->Search(pixel_range, from, vec);
+}
+
+void QuadTree::SearchInIsoRect(const IsoRect rect, std::vector<Entity*>& vec)
+{
+	origin->Search(rect, vec);
 }
 
 void QuadTree::Selection(SDL_Rect rect, std::vector<Entity*>& vec) const

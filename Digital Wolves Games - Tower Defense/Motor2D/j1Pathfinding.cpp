@@ -155,6 +155,32 @@ iPoint j1PathFinding::FindEmptyTile(iPoint from, Elipse collision) const
 	return iPoint(-1,-1);
 }
 
+iPoint j1PathFinding::FindEmptyAttackPos(iPoint from, int range)
+{
+	IsoRect range (fPoint(from.x,from.y),range*2.0f,range*2.0f);
+	IsoRect tile;
+	float tile_range = ;
+	iPoint start(from.x - range*range, from.y - range*range);
+	iPoint pos;
+	fPoint rect_center;
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+		{
+			pos = iPoint(start.x + i, start.y + j);
+			if (IsWalkable(pos))
+			{
+				rect_center = fPoint(App->map->MapToWorld(pos.x, pos.y).x, App->map->MapToWorld(pos.x, pos.y).y);
+				rect_center.x += App->map->data.tile_width / 2.0f;
+				rect_center.x += App->map->data.tile_height / 2.0f;
+				tile = IsoRect(rect_center, App->map->data.tile_width, App->map->data.tile_height);
+				if (!tile.Overlaps(collision))
+					return pos;
+			}
+		}
+	return iPoint(-1, -1);
+	return iPoint()
+}
+
 // Utility: return the walkability value of a tile
 uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 {

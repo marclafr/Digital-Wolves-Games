@@ -316,7 +316,7 @@ void j1Tutorial::Tutorial4()
 {
 	if (!tutorial4_part1)
 	{
-		App->render->camera->SetPosition(iPoint(-800, -500));
+		App->render->camera->SetPosition(iPoint(-700, -500));
 		tutorial4_part1 = true;
 	}
 	if (UniversitySelected) {
