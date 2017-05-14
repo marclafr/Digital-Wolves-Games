@@ -26,7 +26,6 @@ public:
 	void DeleteProjectile(Projectile* projectile);
 
 	int fx_cannon_shoot;
-	int fx_explosion;
 
 };
 

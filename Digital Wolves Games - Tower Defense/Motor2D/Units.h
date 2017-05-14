@@ -8,7 +8,7 @@
 #include "IsoPrimitives.h"
 
 #define XY_TILES_RELATION 2
-#define TOWN_HALL iPoint(-720,672) //TODO final townhall destination;
+#define TOWN_HALL iPoint(0, 272) //TODO final townhall destination;
 #define SLOW_PROPORTION 1.4f
 #define SLOW_TIME 2.0f
 

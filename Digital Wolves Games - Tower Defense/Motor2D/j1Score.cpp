@@ -15,12 +15,12 @@ bool j1Score::SecChange() const
 
 int j1Score::GetTime() const
 {
-	return game_time.ReadSec();
+	return game_time.ReadSec() + TimePassed;
 }
 
 void j1Score::GetTimer(int & mins, int & secs) const
 {
-	secs = WINNING_TIME - game_time.ReadSec();
+	secs = WINNING_TIME - game_time.ReadSec() - TimePassed;
 	mins = secs / 60;
 	secs -= mins * 60;
 }
@@ -115,5 +115,5 @@ void j1Score::SetEnemiesKilleds(int num)
 
 void j1Score::SetTime(int num)
 {
-	game_time.SetTicks(num);
+	TimePassed = num;
 }

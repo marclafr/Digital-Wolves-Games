@@ -33,6 +33,8 @@ public:
 
 	iPoint WorldToMinimap(fPoint world_point);
 	iPoint MinimapToWorld(fPoint minimap_point);
+
+	const SDL_Rect GetRectMap() const;
 };
 
 #endif // __UIHUDMINIMAP_H__

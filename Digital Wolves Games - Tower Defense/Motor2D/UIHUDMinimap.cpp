@@ -60,7 +60,7 @@ bool UIHUDMinimap::Update()
 		mouse_pos.x -= App->render->camera->GetPosition().x;
 		mouse_pos.y -= App->render->camera->GetPosition().y;
 		quad_minimap_position = WorldToMinimap(mouse_pos);
-		quad_atlas = { quad_minimap_position.x, quad_minimap_position.y, 100, 56 };
+		quad_atlas = { quad_minimap_position.x + GetPosRect().w / 2, quad_minimap_position.y, 100, 56 };
 	}
 
 	Draw();
@@ -89,4 +89,9 @@ iPoint UIHUDMinimap::MinimapToWorld(fPoint minimap_point)
 	world_point.x = minimap_point.x / GetPosRect().w * rect_map.w * -1;
 	world_point.y = minimap_point.y / GetPosRect().h * rect_map.h * -1;
 	return iPoint(world_point.x, world_point.y);
+}
+
+const SDL_Rect UIHUDMinimap::GetRectMap() const
+{
+	return rect_map;
 }

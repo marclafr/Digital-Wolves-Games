@@ -325,7 +325,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				}
 				break;
 			case TU_ICE:
-				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_ICE_TOWER) == true)
+				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ICE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_ICE_TOWER) == true)
 				{
 					App->scene->resources->UpgradeTower(T_ICE_TOWER);
 					App->tex->GetTowerTexture(text, tower_rect, pivot, T_ICE_TOWER);
@@ -337,7 +337,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				}
 				break;
 			case TU_AIR:
-				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_AIR_TOWER) == true)
+				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_AIR_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_AIR_TOWER) == true)
 				{
 					App->scene->resources->UpgradeTower(T_AIR_TOWER);
 					App->tex->GetTowerTexture(text, tower_rect, pivot, T_AIR_TOWER);
@@ -373,7 +373,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				}
 				break;
 			case TU_ICE:
-				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_ICE_TOWER) == true)
+				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ICE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_ICE_TOWER) == true)
 				{
 					App->scene->resources->UpgradeTower(T_ICE_TOWER);
 					App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_ICE_TOWER);
@@ -385,7 +385,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 				}
 				break;
 			case TU_AIR:
-				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_AIR_TOWER) == true)
+				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_AIR_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_AIR_TOWER) == true)
 				{
 					App->scene->resources->UpgradeTower(T_AIR_TOWER);
 					App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_AIR_TOWER);

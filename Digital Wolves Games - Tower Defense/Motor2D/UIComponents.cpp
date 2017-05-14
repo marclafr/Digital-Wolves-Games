@@ -56,6 +56,11 @@ void UIComponents::SetAtlas(const SDL_Rect & atlas)
 	rect_atlas = atlas;
 }
 
+void UIComponents::SetPos(const SDL_Rect & pos)
+{
+	rect_position = pos;
+}
+
 const bool UIComponents::GetInteractive() const
 {
 	return interactive;

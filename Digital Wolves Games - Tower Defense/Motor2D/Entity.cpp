@@ -246,11 +246,12 @@ void Entity::UpgradeUnit(int plushealth) {
 void Entity::DrawPointMinimap()
 {
 	iPoint unit_minimap_pos = App->uimanager->GetMinimap()->WorldToMinimap(position);
-	SDL_Rect point;
+	unit_minimap_pos.x += App->uimanager->GetMinimap()->GetPosRect().w / 2;
+	SDL_Rect atlas_point;
 	if (GetSide() == S_ALLY)
-		point = GREEN_POINT_ATLAS;
+		atlas_point = GREEN_POINT_ATLAS;
 	else if (GetSide() == S_ENEMY)
-		point = RED_POINT_ATLAS;
+		atlas_point = RED_POINT_ATLAS;
 	//Draw enemy units points
-	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), unit_minimap_pos.x - App->render->camera->GetPosition().x, unit_minimap_pos.y - App->render->camera->GetPosition().y, &point);
+	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), unit_minimap_pos.x - App->render->camera->GetPosition().x, unit_minimap_pos.y - App->render->camera->GetPosition().y, &atlas_point);
 }
