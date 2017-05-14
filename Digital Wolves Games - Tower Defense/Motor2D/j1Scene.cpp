@@ -261,7 +261,7 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				//if (App->collision->AbleToBuild(pos))
+				//if (App->entity_manager->AbleToBuild(pos))
 				//{
 					App->audio->PlayFx(App->audio->fx_construction);
 

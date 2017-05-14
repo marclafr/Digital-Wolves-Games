@@ -185,7 +185,7 @@ Entity* j1EntityManager::CheckForObjective(fPoint position, int vision_range, Si
 
 Unit* j1EntityManager::CheckUnitCollisions(const Unit * ptr) const
 {
-	return entity_quadtree->CheckCollisions(ptr->GetUnitCircle());
+	return entity_quadtree->CheckCollisions(ptr);
 }
 
 bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
@@ -312,7 +312,6 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	pugi::xml_node Turrets = data.append_child("turrets");
 	pugi::xml_node Resourcess = data.append_child("resources");
 
-	entity_quadtree->SaveAll();
 
 	/*for (int k = 0; k <entity_array.size(); k++) {
 		if (entity_array[k]->GetEntityType() == E_BUILDING)
@@ -351,4 +350,16 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	Score.append_attribute("wave_num") = App->wave_manager->GetWaveNum();
 	return true;
 	return true;
+}
+
+void j1EntityManager::BlitMinimap() const
+{
+	entity_quadtree->BlitMinimap();
+}
+
+bool j1EntityManager::AbleToBuild(iPoint pos)
+{
+	iPoint map_pos = App->map->WorldToMap(pos.x, pos.y);
+	IsoRect tile(fPoint(map_pos.x + App->map->data.tile_width / 2.0f, map_pos.y + App->map->data.tile_height / 2.0f), App->map->data.tile_width, App->map->data.tile_height);
+	return entity_quadtree->CheckIfFull(tile);
 }

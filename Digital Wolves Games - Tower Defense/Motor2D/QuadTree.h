@@ -37,7 +37,7 @@ public:
 
 	void Update(float dt);
 	void DeleteEntities();
-	Unit* CheckCollision(Elipse Circle) const;
+	Unit* CheckCollision(const Unit* ptr) const;
 	void CheckUnitCollisions(const Unit* ptr) const;
 	void DrawArea();
 	void SaveAll(pugi::xml_node& node);
@@ -67,6 +67,7 @@ public:
 	Entity* SearchFirst(int pixel_range, fPoint from) const;
 	Entity* SearchFirstEnemy(int pixel_range, fPoint from, Side side) const;
 	Entity* SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
+	bool CheckIfFull(IsoRect tile) const;
 	void Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const;
 
 	void Selection(SDL_Rect rect, std::vector<Entity*>& vec) const;
@@ -75,11 +76,13 @@ public:
 
 	void DeleteEntities() const;
 
-	Unit* CheckCollisions(Elipse elipse) const;
+	Unit* CheckCollisions(const Unit* ptr) const;
 
 	void DrawRects() const;
 
 	void SaveAll(pugi::xml_node& node);
+
+	void BlitMinimap() const;
 };
 
 #endif

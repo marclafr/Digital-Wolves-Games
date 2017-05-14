@@ -54,6 +54,9 @@ public:
 	void LoadResource(pugi::xml_node&);
 
 	bool Save(pugi::xml_node&)const;
+	void BlitMinimap() const;
+
+	bool AbleToBuild(iPoint pos);
 
 private:
 	//Textura provisional para sprites por si no se cargan en animation
