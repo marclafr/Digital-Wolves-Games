@@ -1,15 +1,17 @@
 #include "Towers.h"
 #include "j1App.h"
 #include "j1Render.h"
+#include "j1Pathfinding.h"
 #include "p2Log.h"
 #include "j1Audio.h"
 #include "j1EntityManager.h"
 #include "ProjectileManager.h"
 #include "j1Animation.h"
 #include "j1Input.h"
+#include "j1Map.h"
 #include "Camera.h"
 
-Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
+Tower::Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
 	SDL_Rect tower_rect;
 	iPoint pivot;
@@ -137,6 +139,13 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 	}
 	SetTextureID(T_TURRET);
 	AttackTimer.Start();
+
+	
+
+		App->pathfinding->MakeNoWalkable(iPoint(posintiles.x, posintiles.y));
+
+		App->pathfinding->MakeNoConstruible_neutral(posintiles);
+		App->pathfinding->MakeNoConstruible_ally(posintiles);
 }
 
 Tower::~Tower()

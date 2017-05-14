@@ -43,10 +43,10 @@ private:
 	j1Timer AttackTimer;
 	Entity* Target = nullptr;
 	AnimationManager* anim_fire = nullptr;
-
+	iPoint posintiles;
 public:
 	iPoint arrowpos;
-	Tower(TOWER_TYPE t_type, fPoint pos);
+	Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles);
 	~Tower();
 	void UpgradeTurret(TURRET_UPGRADE type);
 	void Update(float dt); // defines order

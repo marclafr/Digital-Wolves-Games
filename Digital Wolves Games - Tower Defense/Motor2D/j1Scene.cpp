@@ -83,8 +83,10 @@ bool j1Scene::Start()
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(-75, 272), S_ALLY);
 	resources = new ResourceManager();
-	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-300, 370));
-	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370));
+	iPoint pos = App->map->WorldToMap(-300, 370);
+	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-300, 370),pos);
+	pos = App->map->WorldToMap(150, 370);
+	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370),pos);
 	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
 	//--
 
@@ -262,10 +264,8 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 				//{
 					App->audio->PlayFx(App->audio->fx_construction);
 
-					if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true)
-						resources->BuildTower(type, pos);
-					else if (App->pathfinding->IsConstructible_ally(map_coordinates) == true)
-						resources->BuildTower(type, pos);
+					if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true || App->pathfinding->IsConstructible_ally(map_coordinates) == true)
+						resources->BuildTower(type, pos, map_coordinates);
 				//}
 			}
 		}
