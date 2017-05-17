@@ -10,6 +10,7 @@
 #include "j1Scene.h"
 #include "j1ScoreScene.h"
 #include "j1EntityManager.h"
+#include "j1WaveManager.h"
 #include "j1Tutorial.h"
 #include "j1SceneManager.h"
 #include "Task.h"

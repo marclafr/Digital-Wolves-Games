@@ -16,6 +16,7 @@
 #include "j1Collision.h"
 #include "j1Score.h"
 #include "ProjectileManager.h"
+#include "j1Tutorial.h"
 #include "j1SceneManager.h"
 #include "j1MainMenu.h"
 #include "j1ScoreScene.h"

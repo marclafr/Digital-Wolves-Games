@@ -1,20 +1,19 @@
 #ifndef _TASK
 #define _TASK
 
-#include "j1App.h"
-#include "j1EntityManager.h"
-#include "j1SceneManager.h"
-#include "j1Scene.h"
-#include "j1MainMenu.h"
-#include "j1ScoreScene.h"
-#include "UIComponents.h"
-#include "UIHUDMenuInGame.h"
-#include "Buildings.h"
-#include "Towers.h"
-#include "Units.h"
-#include "p2Log.h"
-#include "j1Tutorial.h"
-#include "j1WaveManager.h"
+#include "p2Point.h"
+class Tower;
+class Building;
+class UIHUDMenuInGame;
+enum BUILDING_TYPE;
+enum Side;
+enum SCENES;
+enum BUTTONSUNDERGROUND;
+enum TURRET_UPGRADE;
+enum UNIT_TYPE;
+enum INVESTIGATION_TYPE;
+struct SDL_Rect;
+struct info_button;
 
 class Task
 {
@@ -34,107 +33,52 @@ private:
 	Side side;
 
 public:
-	CreateTowerTask() : type(B_NO_BUILDING), position(fPoint(0.0f, 0.0f)), side(S_NO_SIDE)
-	{}
-	CreateTowerTask(BUILDING_TYPE type, fPoint position, Side side) : type(type), position(position), side(side)
-	{}
+	CreateTowerTask();
 
-	void Set(BUILDING_TYPE type, fPoint position, Side side)
-	{
-		this->type = type;
-		this->position = position;
-		this->side = side;
-	}
+	CreateTowerTask(BUILDING_TYPE type, fPoint position, Side side);
 
-	bool Execute()
-	{
-		App->entity_manager->CreateBuilding(type, position, side);
+	void Set(BUILDING_TYPE type, fPoint position, Side side);
 
-		return true;
-	}
+	bool Execute();
 };
 
 class ChangeMainMenuSceneToTask : public Task
 {
 private:
-	SCENES to_scene = SC_NO_SCENE;
+	SCENES to_scene;
 
 public:
-	ChangeMainMenuSceneToTask(SCENES to_scene) : to_scene(to_scene) {}
+	ChangeMainMenuSceneToTask(SCENES to_scene);
 
-	bool Execute()
-	{
-		App->scene_manager->ChangeScene(to_scene);
-
-		if (to_scene == SC_GAME)
-		{
-			App->scene->win = false;
-			App->scene->lose = false;
-		}
-		return true;
-	}
+	bool Execute();
 };
 
 class ChangeMainMenuSceneToTutorial : public Task
 {
 private:
-	SCENES to_scene = SC_NO_SCENE;
+	SCENES to_scene;
 
 public:
-	ChangeMainMenuSceneToTutorial(SCENES to_scene) : to_scene(to_scene) {}
+	ChangeMainMenuSceneToTutorial(SCENES to_scene);
 
-	bool Execute()
-	{
-		App->scene_manager->ChangeScene(to_scene);
-
-		if (to_scene == SC_GAME)
-		{
-			App->scene->win = false;
-			App->scene->lose = false;
-			App->tutorial->tutorial = true;
-		}
-		return true;
-	}
+	bool Execute();
 };
 
 class SetPreUpdateFalseTask : public Task
 {
 public:
-	bool Execute()
-	{
-		App->main_menu->SetRetPreUpdate(false);
-		return true;
-	}
+	bool Execute();
 };
 
 class ChangeScoreSceneToTask : public Task
 {
 private:
-	SCENES to_scene = SC_NO_SCENE;
+	SCENES to_scene;
 
 public:
-	ChangeScoreSceneToTask(SCENES to_scene) : to_scene(to_scene) {}
+	ChangeScoreSceneToTask(SCENES to_scene);
 
-	bool Execute()
-	{
-		App->scene_manager->ChangeScene(to_scene);
-
-		if (to_scene == SC_GAME)
-		{
-			App->score_scene->SetSceneChange(true);
-			App->scene->win = false;
-			App->scene->lose = false;
-		}
-		else if (SC_MAIN_MENU)
-		{
-			if (!App->score_scene->IsSceneChange())
-			{
-				App->scene->win = false;
-				App->scene->lose = false;
-			}
-		}
-		return true;
-	}
+	bool Execute();
 };
 
 class ChangeBackGroundTask : public Task
@@ -144,14 +88,9 @@ private:
 	BUTTONSUNDERGROUND underground;
 
 public:
-	ChangeBackGroundTask(const SDL_Rect & atlas, const BUTTONSUNDERGROUND underground) : rect_atlas(atlas), underground(underground) {}
+	ChangeBackGroundTask(const SDL_Rect & atlas, const BUTTONSUNDERGROUND underground);
 
-	bool Execute()
-	{
-		App->score_scene->GetUnderBackground()->SetAtlas(rect_atlas);
-		App->score_scene->ChangeUnselected(underground);
-		return true;
-	}
+	bool Execute();
 };
 
 enum ENTITY_TASKTYPE
@@ -164,7 +103,9 @@ enum ENTITY_TASKTYPE
 	ET_UPGRADE_WALL,
 	ET_INVESTIGATION,
 	ET_DELETETOWER,
-	ET_DELETEWALL
+	ET_DELETEWALL,
+	ET_MOREBUTTONS,
+	ET_BACKBUTTONS
 };
 
 class EntityTask : public Task
@@ -173,77 +114,42 @@ private:
 	ENTITY_TASKTYPE type;
 
 public:
-	EntityTask(ENTITY_TASKTYPE type) : type(type) {}
+	EntityTask(ENTITY_TASKTYPE type);
 
-	const ENTITY_TASKTYPE GetEntityType() const
-	{
-		return type;
-	}
+	const ENTITY_TASKTYPE GetEntityType() const;
 };
 
 
 class PlaceBasicTowerTask : public EntityTask
 {
 public:
-	PlaceBasicTowerTask(ENTITY_TASKTYPE type = ET_BASICTOWER) : EntityTask(type) {}
+	PlaceBasicTowerTask(ENTITY_TASKTYPE type = ET_BASICTOWER);
 
-	bool Execute()
-	{
-		App->scene->placing_wall = false;
-		App->scene->placing_tower = T_BASIC_TOWER;
-		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
-		return true;
-	}
+	bool Execute();
 };
 
 class PlaceBombardTowerTask : public EntityTask
 {
 public:
-	PlaceBombardTowerTask(ENTITY_TASKTYPE type = ET_BOMBARDTOWER) : EntityTask(type) {}
+	PlaceBombardTowerTask(ENTITY_TASKTYPE type = ET_BOMBARDTOWER);
 
-	bool Execute()
-	{
-		App->scene->placing_wall = false;
-		App->scene->placing_tower = T_BOMBARD_TOWER;
-		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
-		return true;
-	}
+	bool Execute();
 };
 
 class UpgradeTowerTask : public EntityTask
 {
 private:
 	Tower* tower = nullptr;
-	TURRET_UPGRADE type = TU_NULL;
+	TURRET_UPGRADE type;
 
 public:
-	UpgradeTowerTask(TURRET_UPGRADE type, ENTITY_TASKTYPE et_type = ET_UPGRADE_TOWER) : EntityTask(et_type), type(type) {}
+	UpgradeTowerTask(TURRET_UPGRADE type, ENTITY_TASKTYPE et_type = ET_UPGRADE_TOWER);
 
-	const TURRET_UPGRADE GetUpgradeType()const
-	{
-		return type;
-	}
+	const TURRET_UPGRADE GetUpgradeType()const;
 
-	void SetTower(Tower* tower)
-	{
-		this->tower = tower;
-	}
+	void SetTower(Tower* tower);
 
-	bool Execute()
-	{
-		if (tower->IsAlive())
-		{
-			tower->UpgradeTurret(type);
-
-			if (App->tutorial->tutorial4_completed)
-			{
-				App->tutorial->TowerUpgradeSelected = true;
-			}
-
-			App->entity_manager->UnselectEverything();
-		}
-		return true;
-	}
+	bool Execute();
 };
 
 class UpgradeWallTask : public EntityTask
@@ -252,25 +158,13 @@ private:
 	Building* wall = nullptr;
 	BUILDING_TYPE type;
 public:
-	UpgradeWallTask(BUILDING_TYPE type, ENTITY_TASKTYPE et_type = ET_UPGRADE_WALL) : EntityTask(et_type), type(type) {}
+	UpgradeWallTask(BUILDING_TYPE type, ENTITY_TASKTYPE et_type = ET_UPGRADE_WALL);
 
-	const BUILDING_TYPE GetWallType() const
-	{
-		return type;
-	}
+	const BUILDING_TYPE GetWallType() const;
 
-	void SetWall(Building* wall)
-	{
-		this->wall = wall;
-		type = wall->GetBuildingType();
-	}
+	void SetWall(Building* wall);
 
-	bool Execute()
-	{
-		if (wall->IsAlive())	wall->UpgradeWall(type);
-		App->entity_manager->UnselectEverything();
-		return true;
-	}
+	bool Execute();
 };
 
 class DoInvestigation : public EntityTask
@@ -279,40 +173,25 @@ private:
 	INVESTIGATION_TYPE type;
 
 public:
-	DoInvestigation(INVESTIGATION_TYPE type, ENTITY_TASKTYPE et_type = ET_INVESTIGATION) : EntityTask(et_type), type(type) {}
+	DoInvestigation(INVESTIGATION_TYPE type, ENTITY_TASKTYPE et_type = ET_INVESTIGATION);
 
-	const INVESTIGATION_TYPE GetInvestigationType() const
-	{
-		return type;
-	}
+	const INVESTIGATION_TYPE GetInvestigationType() const;
 
-	bool Execute()
-	{
-		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(type));
-		return true;
-	}
+	bool Execute();
 };
 
 class DeleteTowerTask : public EntityTask
 {
 private:
 	Tower* tower = nullptr;
-	TURRET_UPGRADE type = TU_NULL;
+	TURRET_UPGRADE type;
 
 public:
-	DeleteTowerTask(ENTITY_TASKTYPE type = ET_DELETETOWER) : EntityTask(type) {}
+	DeleteTowerTask(ENTITY_TASKTYPE type = ET_DELETETOWER);
 
-	void SetTower(Tower* tower)
-	{
-		this->tower = tower;
-	}
+	void SetTower(Tower* tower);
 
-	bool Execute()
-	{
-		if (tower->IsAlive())	tower->ConvertToRubble();
-		App->entity_manager->UnselectEverything();
-		return true;
-	}
+	bool Execute();
 };
 
 class DeleteWallTask : public EntityTask
@@ -321,33 +200,19 @@ private:
 	Building* wall = nullptr;
 
 public:
-	DeleteWallTask(ENTITY_TASKTYPE type = ET_DELETEWALL) : EntityTask(type) {}
+	DeleteWallTask(ENTITY_TASKTYPE type = ET_DELETEWALL);
 
-	void SetWall(Building* wall)
-	{
-		this->wall = wall;
-	}
+	void SetWall(Building* wall);
 
-	bool Execute()
-	{
-		if (wall->IsAlive())	wall->ConvertToRubble();
-		App->entity_manager->UnselectEverything();
-		return true;
-	}
+	bool Execute();
 };
 
 class PlaceWallTask : public EntityTask
 {
 public:
-	PlaceWallTask(ENTITY_TASKTYPE type = ET_WALL) : EntityTask(type) {}
+	PlaceWallTask(ENTITY_TASKTYPE type = ET_WALL);
 
-	bool Execute()
-	{
-		App->scene->placing_wall = true;
-		App->scene->placing_tower = T_NO_TYPE;
-		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
-		return true;
-	}
+	bool Execute();
 };
 
 class TrainUnitTask : public EntityTask
@@ -355,85 +220,47 @@ class TrainUnitTask : public EntityTask
 private:
 	UNIT_TYPE u_type;
 public:
-	TrainUnitTask(UNIT_TYPE u_type, ENTITY_TASKTYPE type = ET_UNIT) : EntityTask(type), u_type(u_type) {}
+	TrainUnitTask(UNIT_TYPE u_type, ENTITY_TASKTYPE type = ET_UNIT);
 
-	bool Execute()
-	{
-		if (App->scene->resources->CanTrainSoldier(u_type))
-		{
-			App->scene->resources->TrainSoldier(u_type);
-		}
-			
-		if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
-		return true;
-	}
+	bool Execute();
 
-	const UNIT_TYPE GetUnitType()const
-	{
-		return u_type;
-	}
+	const UNIT_TYPE GetUnitType()const;
 };
 
 class ChangeToFacebook : public Task
 {
 public:
-	bool Execute()
-	{
-		ShellExecute(NULL, "open", "https://www.facebook.com/Digital-Wolves-Games-233798633695568/?ref=bookmarks", NULL, NULL, SW_SHOWMAXIMIZED);
-		return true;
-	}
+	bool Execute();
 };
 
 class ChangeToTwitter : public Task
 {
 public:
-	bool Execute()
-	{
-		ShellExecute(NULL, "open", "https://twitter.com/DigitalWolvesG", NULL, NULL, SW_SHOWMAXIMIZED);
-		return true;
-	}
+	bool Execute();
 };
 
 class ChangeToGithub : public Task
 {
 public:
-	bool Execute()
-	{
-		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/wiki", NULL, NULL, SW_SHOWMAXIMIZED);
-		return true;
-	}
+	bool Execute();
 };
 
 class ChangeToBugs : public Task
 {
 public:
-	bool Execute()
-	{
-		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/issues", NULL, NULL, SW_SHOWMAXIMIZED);
-		return true;
-	}
+	bool Execute();
 };
 
 class BringNextWave : public Task
 {
 public:
-	bool Execute()
-	{
-		App->wave_manager->BringNextWave();
-		if (App->tutorial->tutorial5_completed) App->tutorial->NextWaveButtonSelected = true;
-		return true;
-	}
+	bool Execute();
 };
 
 class Surrender : public Task
 {
 public:
-	bool Execute()
-	{
-		App->scene->lose = true;
-		App->scene_manager->ChangeScene(SC_SCORE);
-		return true;
-	}
+	bool Execute();
 };
 
 class ReturnToGame : public Task
@@ -442,33 +269,21 @@ private:
 	UIHUDMenuInGame* menu_ingame;
 
 public:
-	ReturnToGame(UIHUDMenuInGame* menu_ingame) : menu_ingame(menu_ingame) {}
+	ReturnToGame(UIHUDMenuInGame* menu_ingame);
 
-	bool Execute()
-	{
-		menu_ingame->DeletePanel();
-		return true;
-	}
+	bool Execute();
 };
 
 class LoadLastChackpoint : public Task
 {
 public:
-	bool Execute()
-	{
-		App->LoadGame("save_game.xml");
-		return true;
-	}
+	bool Execute();
 };
 
 class InGameToMainMenuScene : public Task
 {
 public:
-	bool Execute()
-	{
-		App->scene_manager->ChangeScene(SC_MAIN_MENU);
-		return true;
-	}
+	bool Execute();
 };
 
 #endif

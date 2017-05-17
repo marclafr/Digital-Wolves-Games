@@ -5,6 +5,7 @@
 #include "j1UIManager.h"
 #include "j1Render.h"
 #include "Camera.h"
+#include "j1Scene.h"
 
 #include "UIGetEntitiesInfo.h"
 

@@ -120,6 +120,7 @@
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Resources.cpp" />
+    <ClCompile Include="Task.cpp" />
     <ClCompile Include="theoraplay.c" />
     <ClCompile Include="Towers.cpp" />
     <ClCompile Include="UIButton.cpp" />
