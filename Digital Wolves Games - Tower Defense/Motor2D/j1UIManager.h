@@ -86,7 +86,7 @@ public:
 	void SetInfoUIComponent(UIComponents*);
 	SDL_Rect GetPosRectFromInfoUI();
 	void SetPanelButtons(Building*);
-	const UIHUDPanelButtons* GetPanelButtons() const;
+	UIHUDPanelButtons* GetPanelButtons() const;
 	void DeletePanelButtons();
 	void ShowInGameMenu();
 

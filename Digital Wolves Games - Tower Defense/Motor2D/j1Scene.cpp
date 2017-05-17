@@ -814,22 +814,25 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TOWNHALL, iPoint(3, 1), GetUnitIconPositionFromAtlas(U_ARBALEST), new TrainUnitTask(U_ARBALEST));
 
 	//University
+	info_button* more_btn = panel->AddButton(BP_UNIVERSITY, iPoint(0, 0), { 852,884 }, new ShowButtonsInside());
+	more_btn->AddButton(iPoint(0, 0), { 852,884 }, new DoInvestigation(INV_FIRE_TOWER));
+	more_btn->AddButton(iPoint(1, 0), { 878,884 }, new DoInvestigation(INV_ICE_TOWER));
+	more_btn->AddButton(iPoint(2, 0), { 904,884 }, new DoInvestigation(INV_AIR_TOWER));
 
-	panel->AddButton(BP_UNIVERSITY, iPoint(0, 0), { 852,884 }, new DoInvestigation(INV_FIRE_TOWER));
-	panel->AddButton(BP_UNIVERSITY, iPoint(1, 0), { 878,884 }, new DoInvestigation(INV_ICE_TOWER));
-	panel->AddButton(BP_UNIVERSITY, iPoint(2, 0), { 904,884 }, new DoInvestigation(INV_AIR_TOWER));
+	more_btn = panel->AddButton(BP_UNIVERSITY, iPoint(3, 0), { 852,858 }, new ShowButtonsInside());
+	more_btn->AddButton(iPoint(0, 0), { 852,858 }, new DoInvestigation(INV_WOOD));
+	more_btn->AddButton(iPoint(1, 0), { 878,858 }, new DoInvestigation(INV_GOLD));
+	more_btn->AddButton(iPoint(0, 1), { 904,858 }, new DoInvestigation(INV_STONE));
+	more_btn->AddButton(iPoint(1, 1), { 930,858 }, new DoInvestigation(INV_FOOD));
 
-	panel->AddButton(BP_UNIVERSITY, iPoint(3, 0), { 852,858 }, new DoInvestigation(INV_WOOD));
-	panel->AddButton(BP_UNIVERSITY, iPoint(4, 0), { 878,858 }, new DoInvestigation(INV_GOLD));
-	panel->AddButton(BP_UNIVERSITY, iPoint(3, 1), { 904,858 }, new DoInvestigation(INV_STONE));
-	panel->AddButton(BP_UNIVERSITY, iPoint(4, 1), { 930,858 }, new DoInvestigation(INV_FOOD));
+	more_btn = panel->AddButton(BP_UNIVERSITY, iPoint(0, 1), { 748,858 }, new ShowButtonsInside());
+	more_btn->AddButton(iPoint(0, 0), { 748,858 }, new DoInvestigation(INV_INFANTRY_ATTACK));
+	more_btn->AddButton(iPoint(1, 0), { 748,910 }, new DoInvestigation(INV_INFANTRY_DEFENSE));
+	more_btn->AddButton(iPoint(0, 1), { 800,858 }, new DoInvestigation(INV_CAVALRY_ATTACK));
+	more_btn->AddButton(iPoint(1, 1), { 748,884 }, new DoInvestigation(INV_CAVALRY_DEFENSE));
+	more_btn->AddButton(iPoint(2, 1), { 748,936 }, new DoInvestigation(INV_ARCHERS_ATTACK));
+	more_btn->AddButton(iPoint(3, 1), { 800,884 }, new DoInvestigation(INV_ARCHERS_DEFENSE));
 
-	panel->AddButton(BP_UNIVERSITY, iPoint(0, 1), { 748,858 }, new DoInvestigation(INV_INFANTRY_ATTACK));
-	panel->AddButton(BP_UNIVERSITY, iPoint(1, 1), { 748,910 }, new DoInvestigation(INV_INFANTRY_DEFENSE));
-	panel->AddButton(BP_UNIVERSITY, iPoint(0, 2), { 800,858 }, new DoInvestigation(INV_CAVALRY_ATTACK));
-	panel->AddButton(BP_UNIVERSITY, iPoint(1, 2), { 748,884 }, new DoInvestigation(INV_CAVALRY_DEFENSE));
-	panel->AddButton(BP_UNIVERSITY, iPoint(2, 2), { 748,936 }, new DoInvestigation(INV_ARCHERS_ATTACK));
-	panel->AddButton(BP_UNIVERSITY, iPoint(3, 2), { 800,884 }, new DoInvestigation(INV_ARCHERS_DEFENSE));
 	//Panel Info
 	App->uimanager->AddPanelInfo();
 

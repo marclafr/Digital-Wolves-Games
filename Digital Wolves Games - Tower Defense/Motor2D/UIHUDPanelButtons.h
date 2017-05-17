@@ -28,24 +28,38 @@ enum BUILDING_PANELINFO
 struct info_button
 {
 private:
+	bool contain_butons = false;
+	bool show_buttons = false;
+	info_button* back_ib = nullptr;
 	UIButton* btn;
 	iPoint position;
 	iPoint atlas;
 	Task* task;
 	bool delete_entity;
+	std::vector<info_button*> buttons_inside;
 
 public:
-	info_button(iPoint position, iPoint atlas, Task* task, bool delete_entity) : position(position), atlas(atlas), task(task), delete_entity(delete_entity) {}
+	info_button(iPoint position, iPoint atlas, Task* task, bool delete_entity) : position(position), atlas(atlas), task(task), delete_entity(delete_entity){}
 	~info_button()
 	{
 		DELETE_PTR(task);
+		if (contain_butons)
+			for (std::vector<info_button*>::iterator ib_item = buttons_inside.begin(); ib_item != buttons_inside.end(); ++ib_item)
+				DELETE_PTR(*ib_item)
 	}
 
+	void Update();
+
+	info_button* AddButton(iPoint position, iPoint atlas, Task* task, bool delete_button = false);
 	void CreateButton();
 	void ButtonToDelete();
 	const UIButton* GetButton() const;
 	const Task* GetTask() const;
 	bool IsForDelete();
+	bool ContainButtons();
+	bool ShowButtons();
+	void SetShowButtons(bool);
+	std::vector<info_button*>* GetInfoButtons();
 };
 
 class UIHUDPanelButtons : public UIComponents
@@ -60,8 +74,13 @@ private:
 	std::vector<info_button*> panel_wood_wall;
 	std::vector<info_button*> panel_stone_wall;
 	std::vector<info_button*> panel_brick_wall;
-	BUILDING_PANELINFO panel_type = BP_NONE;
+	std::vector<info_button*>* panel_seleted = nullptr;
+	BUILDING_PANELINFO panel_seleted_type = BP_NONE;
 	Building* b_selected = nullptr;
+
+	bool want_to_reset = false;
+	bool want_enter = false;
+	info_button* ib_reset = nullptr;
 
 public:
 	UIHUDPanelButtons(UICOMPONENT_TYPE type);
@@ -74,6 +93,9 @@ public:
 
 	void CreatePanel();
 	void DeletePanel();
+	void Reset();
+
+	void WantReset(info_button*, bool);
 };
 
 #endif // __UIHUDPANELBUTTONS_H__

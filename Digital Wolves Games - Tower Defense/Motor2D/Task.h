@@ -227,6 +227,32 @@ public:
 	const UNIT_TYPE GetUnitType()const;
 };
 
+class ShowButtonsInside : public EntityTask
+{
+private:
+	info_button* info_b = nullptr;
+	
+public:
+	ShowButtonsInside(ENTITY_TASKTYPE type = ET_MOREBUTTONS);
+
+	bool Execute();
+
+	void SetInfoButton(info_button* info_b);
+};
+
+class ExitButonsInside : public EntityTask
+{
+private:
+	info_button* from_info_b = nullptr;
+
+public:
+	ExitButonsInside(ENTITY_TASKTYPE type = ET_BACKBUTTONS);
+
+	bool Execute();
+
+	void SetInfoButton(info_button* info_b);
+};
+
 class ChangeToFacebook : public Task
 {
 public:

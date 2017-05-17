@@ -29,7 +29,7 @@
 UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
-	panel_type = BP_NO_SELECTION;
+	panel_seleted_type = BP_NO_SELECTION;
 }
 
 UIHUDPanelButtons::~UIHUDPanelButtons()
@@ -71,7 +71,8 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 
 	if (building == nullptr)
 	{
-		panel_type = BP_NO_SELECTION;
+		panel_seleted = &panel_no_selection;
+		panel_seleted_type = BP_NO_SELECTION;
 		b_selected = nullptr;
 		CreatePanel();
 	}
@@ -79,56 +80,66 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 		switch (building->GetBuildingType())
 		{
 		case B_TURRET:
-			panel_type = BP_TURRET;
+			panel_seleted = &panel_turret;
+			panel_seleted_type = BP_TURRET;
 			b_selected = building;
 			CreatePanel();
 			if (App->tutorial->tutorial4_completed) App->tutorial->TowerSelected = true;
 			break;
 		case B_CANNON:
-			panel_type = BP_CANNON;
+			panel_seleted = &panel_cannon;
+			panel_seleted_type = BP_CANNON;
 			b_selected = building;
 			CreatePanel();
 			if (App->tutorial->tutorial4_completed) App->tutorial->TowerSelected = true;
 			break;
 		case B_TURRET_UPGRADED:
-			panel_type = BP_TURRET_UPGRADED;
+			panel_seleted = &panel_turret_upgraded;
+			panel_seleted_type = BP_TURRET_UPGRADED;
 			b_selected = building;
 			CreatePanel();
 			break;
 		case B_CANNON_UPGRADED:
-			panel_type = BP_TURRET_UPGRADED;
+			panel_seleted = &panel_turret_upgraded;
+			panel_seleted_type = BP_TURRET_UPGRADED;
 			b_selected = building;
 			CreatePanel();
 			break;
 		case B_WOOD_WALL:
-			panel_type = BP_WOOD_WALL;
+			panel_seleted = &panel_wood_wall;
+			panel_seleted_type = BP_WOOD_WALL;
 			b_selected = building;
 			CreatePanel();
 			break;
 		case B_STONE_WALL:
-			panel_type = BP_STONE_WALL;
+			panel_seleted = &panel_stone_wall;
+			panel_seleted_type = BP_STONE_WALL;
 			b_selected = building;
 			CreatePanel();
 			break;
 		case B_BRICK_WALL:
-			panel_type = BP_BRICK_WALL;
+			panel_seleted = &panel_brick_wall;
+			panel_seleted_type = BP_BRICK_WALL;
 			b_selected = building;
 			CreatePanel();
 			break;
 		case B_TOWNHALL:
-			panel_type = BP_TOWNHALL;
+			panel_seleted = &panel_townhall;
+			panel_seleted_type = BP_TOWNHALL;
 			b_selected = building;
 			CreatePanel();
 			if (App->tutorial->tutorial1_completed) App->tutorial->TownHallSelected = true;
 			break;
 		case B_UNIVERSITY:
-			panel_type = BP_UNIVERSITY;
+			panel_seleted = &panel_university;
+			panel_seleted_type = BP_UNIVERSITY;
 			b_selected = building;
 			CreatePanel();
 			if (App->tutorial->tutorial3_completed) App->tutorial->UniversitySelected = true;
 			break;
 		default:
-			panel_type = BP_NONE;
+			panel_seleted = nullptr;
+			panel_seleted_type = BP_NONE;
 			b_selected = nullptr;
 			break;
 		}
@@ -137,104 +148,25 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 
 bool UIHUDPanelButtons::Update()
 {
-	if (b_selected != nullptr)
+	if (panel_seleted != nullptr)
 	{
-		switch (panel_type)
+		if (want_to_reset)
+			Reset();
+
+		bool inside_buttons = false;
+		for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
 		{
-		case BP_TOWNHALL:
-			for (std::vector<info_button*>::iterator ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
+			if ((*ib_item)->ShowButtons())
 			{
-				if ((*ib_item)->GetButton()->IsFocus())
-				{
-					App->uimanager->SetDescriptionHUDDescription((*ib_item));
-					break;
-				}
+				inside_buttons = true;
+				(*ib_item)->Update();
+				break;
 			}
-			break;
-		case BP_UNIVERSITY:
-			for (std::vector<info_button*>::iterator ib_item = panel_university.begin(); ib_item != panel_university.end(); ++ib_item)
-			{
-				if ((*ib_item)->GetButton()->IsFocus())
-				{
-					App->uimanager->SetDescriptionHUDDescription((*ib_item));
-					break;
-				}
-			}
-			break;
-		case BP_TURRET:
-			for (std::vector<info_button*>::iterator ib_item = panel_turret.begin(); ib_item != panel_turret.end(); ++ib_item)
-			{
-				if ((*ib_item)->GetButton()->IsFocus())
-				{
-					App->uimanager->SetDescriptionHUDDescription((*ib_item));
-					break;
-				}
-			}
-			break;
-		case BP_CANNON:
-			for (std::vector<info_button*>::iterator ib_item = panel_cannon.begin(); ib_item != panel_cannon.end(); ++ib_item)
-			{
-				if ((*ib_item)->GetButton()->IsFocus())
-				{
-					App->uimanager->SetDescriptionHUDDescription((*ib_item));
-					break;
-				}
-			}
-			break;
-		case BP_TURRET_UPGRADED:
-			for (std::vector<info_button*>::iterator ib_item = panel_turret_upgraded.begin(); ib_item != panel_turret_upgraded.end(); ++ib_item)
-			{
-				if ((*ib_item)->GetButton()->IsFocus())
-				{
-					App->uimanager->SetDescriptionHUDDescription((*ib_item));
-					break;
-				}
-			}
-			break;
-		case BP_WOOD_WALL:
-			for (std::vector<info_button*>::iterator ib_item = panel_wood_wall.begin(); ib_item != panel_wood_wall.end(); ++ib_item)
-			{
-				if ((*ib_item)->GetButton()->IsFocus())
-				{
-					App->uimanager->SetDescriptionHUDDescription((*ib_item));
-					break;
-				}
-			}
-			break;
-		case BP_STONE_WALL:
-			for (std::vector<info_button*>::iterator ib_item = panel_stone_wall.begin(); ib_item != panel_stone_wall.end(); ++ib_item)
-			{
-				if ((*ib_item)->GetButton()->IsFocus())
-				{
-					App->uimanager->SetDescriptionHUDDescription((*ib_item));
-					break;
-				}
-			}
-			break;
-		case BP_BRICK_WALL:
-			for (std::vector<info_button*>::iterator ib_item = panel_brick_wall.begin(); ib_item != panel_brick_wall.end(); ++ib_item)
-			{
-				if ((*ib_item)->GetButton()->IsFocus())
-				{
-					App->uimanager->SetDescriptionHUDDescription((*ib_item));
-					break;
-				}
-			}
-			break;
 		}
-	}
-	else if (b_selected == nullptr)
-	{
-		if(panel_type == BP_NO_SELECTION)
+		if (!inside_buttons)
 		{
-			for (std::vector<info_button*>::iterator ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
-			{
-				if ((*ib_item)->GetButton()->IsFocus())
-				{
-					App->uimanager->SetDescriptionHUDDescription((*ib_item));
-					break;
-				}
-			}
+			for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
+				(*ib_item)->Update();
 		}
 	}
 	return true;
@@ -291,165 +223,195 @@ info_button* UIHUDPanelButtons::AddButton(BUILDING_PANELINFO type, iPoint positi
 
 void UIHUDPanelButtons::CreatePanel()
 {
-	std::vector<info_button*>::iterator ib_item;
-	switch (panel_type)
+	if (panel_seleted != nullptr)
 	{
-	case BP_NO_SELECTION:
-		for (ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
-			(*ib_item)->CreateButton();
-		break;
-	case BP_TOWNHALL:
-		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
-			(*ib_item)->CreateButton();
-		break;
-	case BP_UNIVERSITY:
-		for (ib_item = panel_university.begin(); ib_item != panel_university.end(); ++ib_item)
-			(*ib_item)->CreateButton();
-		break;
-	case BP_TURRET:
-		for (ib_item = panel_turret.begin(); ib_item != panel_turret.end(); ++ib_item)
+		bool inside_button = false;
+		for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
 		{
-			(*ib_item)->CreateButton();
-			if ((*ib_item)->IsForDelete())
+			if ((*ib_item)->ShowButtons())
 			{
-				DeleteTowerTask* delete_task = (DeleteTowerTask*)(*ib_item)->GetTask();
-				delete_task->SetTower((Tower*)b_selected);
-			}
-			else
-			{
-				UpgradeTowerTask* upgrade_task = (UpgradeTowerTask*)(*ib_item)->GetTask();
-				upgrade_task->SetTower((Tower*)b_selected);
-			}
-			
-		}
-		break;
-	case BP_CANNON:
-		for (ib_item = panel_cannon.begin(); ib_item != panel_cannon.end(); ++ib_item)
-		{
-			(*ib_item)->CreateButton();
-			if ((*ib_item)->IsForDelete())
-			{
-				DeleteTowerTask* delete_task = (DeleteTowerTask*)(*ib_item)->GetTask();
-				delete_task->SetTower((Tower*)b_selected);
-			}
-			else
-			{
-				UpgradeTowerTask* upgrade_task = (UpgradeTowerTask*)(*ib_item)->GetTask();
-				upgrade_task->SetTower((Tower*)b_selected);
+				inside_button = true;
+				(*ib_item)->CreateButton();
+				break;
 			}
 		}
-		break;
-	case BP_TURRET_UPGRADED:
-		for (ib_item = panel_turret_upgraded.begin(); ib_item != panel_turret_upgraded.end(); ++ib_item)
-		{
-			(*ib_item)->CreateButton();
-			DeleteTowerTask* delete_task = (DeleteTowerTask*)(*ib_item)->GetTask();
-			delete_task->SetTower((Tower*)b_selected);
-		}
-		break;
-	case BP_WOOD_WALL:
-		for (ib_item = panel_wood_wall.begin(); ib_item != panel_wood_wall.end(); ++ib_item)
-		{
-			(*ib_item)->CreateButton();
-			if ((*ib_item)->IsForDelete())
+		if(!inside_button)
+			for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
 			{
-				DeleteWallTask* delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
-				delete_w_task->SetWall((Building*)b_selected);
+				(*ib_item)->CreateButton();
+				DeleteTowerTask* delete_task = nullptr;
+				UpgradeTowerTask* upgrade_task = nullptr;
+				DeleteWallTask* delete_w_task = nullptr;
+				UpgradeWallTask* upgrade_w_task = nullptr;
+				switch (panel_seleted_type)
+				{
+				case BP_TURRET:
+					if ((*ib_item)->IsForDelete())
+					{
+						delete_task = (DeleteTowerTask*)(*ib_item)->GetTask();
+						delete_task->SetTower((Tower*)b_selected);
+					}
+					else
+					{
+						upgrade_task = (UpgradeTowerTask*)(*ib_item)->GetTask();
+						upgrade_task->SetTower((Tower*)b_selected);
+					}
+					break;
+				case BP_CANNON:
+					if ((*ib_item)->IsForDelete())
+					{
+						delete_task = (DeleteTowerTask*)(*ib_item)->GetTask();
+						delete_task->SetTower((Tower*)b_selected);
+					}
+					else
+					{
+						upgrade_task = (UpgradeTowerTask*)(*ib_item)->GetTask();
+						upgrade_task->SetTower((Tower*)b_selected);
+					}
+					break;
+				case BP_TURRET_UPGRADED:
+					delete_task = (DeleteTowerTask*)(*ib_item)->GetTask();
+					delete_task->SetTower((Tower*)b_selected);
+					break;
+				case BP_WOOD_WALL:
+					if ((*ib_item)->IsForDelete())
+					{
+						delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
+						delete_w_task->SetWall((Building*)b_selected);
+					}
+					else
+					{
+						upgrade_w_task = (UpgradeWallTask*)(*ib_item)->GetTask();
+						upgrade_w_task->SetWall((Building*)b_selected);
+					}
+					break;
+				case BP_STONE_WALL:
+					if ((*ib_item)->IsForDelete())
+					{
+						delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
+						delete_w_task->SetWall((Building*)b_selected);
+					}
+					else
+					{
+						upgrade_w_task = (UpgradeWallTask*)(*ib_item)->GetTask();
+						upgrade_w_task->SetWall((Building*)b_selected);
+					}
+					break;
+				case BP_BRICK_WALL:
+					delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
+					delete_w_task->SetWall((Building*)b_selected);
+					break;
+				}
 			}
-			else
-			{
-				UpgradeWallTask* upgrade_w_task = (UpgradeWallTask*)(*ib_item)->GetTask();
-				upgrade_w_task->SetWall((Building*)b_selected);
-			}
-		}
-		break;
-	case BP_STONE_WALL:
-		for (ib_item = panel_stone_wall.begin(); ib_item != panel_stone_wall.end(); ++ib_item)
-		{
-			(*ib_item)->CreateButton();
-			if ((*ib_item)->IsForDelete())
-			{
-				DeleteWallTask* delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
-				delete_w_task->SetWall((Building*)b_selected);
-			}
-			else
-			{
-				UpgradeWallTask* upgrade_w_task = (UpgradeWallTask*)(*ib_item)->GetTask();
-				upgrade_w_task->SetWall((Building*)b_selected);
-			}
-		}
-		break;
-	case BP_BRICK_WALL:
-		for (ib_item = panel_brick_wall.begin(); ib_item != panel_brick_wall.end(); ++ib_item)
-		{
-			(*ib_item)->CreateButton();
-			DeleteWallTask* delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
-			delete_w_task->SetWall((Building*)b_selected);
-		}
-		break;
 	}
 }
 
 void UIHUDPanelButtons::DeletePanel()
 {
-	std::vector<info_button*>::iterator ib_item;
-	switch (panel_type)
+	if (panel_seleted != nullptr)
 	{
-	case BP_NO_SELECTION:
-		for (ib_item = panel_no_selection.begin(); ib_item != panel_no_selection.end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
-		break;
-	case BP_TOWNHALL:
-		for (ib_item = panel_townhall.begin(); ib_item != panel_townhall.end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
-		break;
-	case BP_UNIVERSITY:
-		for (ib_item = panel_university.begin(); ib_item != panel_university.end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
-		break;
-	case BP_TURRET:
-		for (ib_item = panel_turret.begin(); ib_item != panel_turret.end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
-		break;
-	case BP_CANNON:
-		for (ib_item = panel_cannon.begin(); ib_item != panel_cannon.end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
-		break;
-	case BP_TURRET_UPGRADED:
-		for (ib_item = panel_turret_upgraded.begin(); ib_item != panel_turret_upgraded.end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
-		break;
-	case BP_WOOD_WALL:
-		for (ib_item = panel_wood_wall.begin(); ib_item != panel_wood_wall.end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
-		break;
-	case BP_STONE_WALL:
-		for (ib_item = panel_stone_wall.begin(); ib_item != panel_stone_wall.end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
-		break;
-	case BP_BRICK_WALL:
-		for (ib_item = panel_brick_wall.begin(); ib_item != panel_brick_wall.end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
-		break;
-	}
+		bool inside_button = false;
+		for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
+		{
+			if ((*ib_item)->ShowButtons())
+			{
+				inside_button = true;
+				(*ib_item)->ButtonToDelete();
+				break;
+			}
+		}
+		if(!inside_button)
+			for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
+				(*ib_item)->ButtonToDelete();
 
-	panel_type = BP_NONE;
-	b_selected = nullptr;
+		panel_seleted_type = BP_NONE;
+		b_selected = nullptr;
+	}
+}
+
+void UIHUDPanelButtons::Reset()
+{
+	std::vector<info_button*>* temp_panel_seleted = panel_seleted;
+	BUILDING_PANELINFO temp_panel_seleted_type = panel_seleted_type;
+	Building* temp_b_selected = b_selected;
+	DeletePanel();
+	panel_seleted = temp_panel_seleted;
+	panel_seleted_type = temp_panel_seleted_type;
+	b_selected = temp_b_selected;
+	if(want_enter)
+		ib_reset->SetShowButtons(true);
+	else
+		ib_reset->SetShowButtons(false);
+	CreatePanel();
+	want_to_reset = false;
+	ib_reset = nullptr;
+}
+
+void UIHUDPanelButtons::WantReset(info_button* ib_btn, bool enter)
+{
+	want_to_reset = true;
+	want_enter = enter;
+	ib_reset = ib_btn;
+}
+
+void info_button::Update()
+{
+	if (!show_buttons)
+	{
+		if(btn->IsFocus()) 
+			App->uimanager->SetDescriptionHUDDescription(this);
+	}
+	else
+	{
+		for (std::vector<info_button*>::iterator ib_item = buttons_inside.begin(); ib_item != buttons_inside.end(); ++ib_item)
+			(*ib_item)->Update();
+	}
+}
+
+info_button* info_button::AddButton(iPoint position, iPoint atlas, Task* task, bool delete_button)
+{
+	info_button*  new_if = new info_button(position, atlas, task, delete_button);
+	if(!contain_butons)
+	{
+		ShowButtonsInside* show_buttoins_task = (ShowButtonsInside*)this->task;
+		show_buttoins_task->SetInfoButton(this);
+		
+		ExitButonsInside* back_task = new ExitButonsInside();
+		back_ib = new info_button(iPoint(4, 2), { 904,884 }, back_task, false);
+		back_task->SetInfoButton(this);
+		buttons_inside.push_back(back_ib);
+		contain_butons = true;
+	}
+	buttons_inside.push_back(new_if);
+	return new_if;
 }
 
 void info_button::CreateButton()
 {
-	btn = App->uimanager->AddButton(
-	{ PANEL_XPOSITION + (ICON_SEPARATION * position.x),PANEL_YPOSITION + (ICON_SEPARATION * position.y),ICON_SIZE, ICON_SIZE },
-	{ atlas.x, atlas.y,ICON_ATLASSIZE, ICON_ATLASSIZE }
-	);
-	btn->SetTask(task);
-	btn->SetNotDeleteTask();
+	if (!show_buttons)
+	{
+		btn = App->uimanager->AddButton(
+		{ PANEL_XPOSITION + (ICON_SEPARATION * position.x),PANEL_YPOSITION + (ICON_SEPARATION * position.y),ICON_SIZE, ICON_SIZE },
+		{ atlas.x, atlas.y,ICON_ATLASSIZE, ICON_ATLASSIZE }
+		);
+		btn->SetTask(task);
+		btn->SetNotDeleteTask();
+	}
+	else
+		for (std::vector<info_button*>::iterator ib_item = buttons_inside.begin(); ib_item != buttons_inside.end(); ++ib_item)
+			(*ib_item)->CreateButton();
 }
 
 void info_button::ButtonToDelete()
 {
-	btn->SetToDelete();
+	if (!show_buttons)
+		btn->SetToDelete();
+	else
+	{
+		for (std::vector<info_button*>::iterator ib_item = buttons_inside.begin(); ib_item != buttons_inside.end(); ++ib_item)
+			(*ib_item)->ButtonToDelete();
+		show_buttons = false;
+	}
 }
 
 const UIButton* info_button::GetButton() const
@@ -465,4 +427,24 @@ const Task* info_button::GetTask() const
 bool info_button::IsForDelete()
 {
 	return delete_entity;
+}
+
+bool info_button::ContainButtons()
+{
+	return contain_butons;
+}
+
+bool info_button::ShowButtons()
+{
+	return show_buttons;
+}
+
+void info_button::SetShowButtons(bool sw)
+{
+	show_buttons = sw;
+}
+
+std::vector<info_button*>* info_button::GetInfoButtons()
+{
+	return &buttons_inside;
 }

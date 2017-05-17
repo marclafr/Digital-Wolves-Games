@@ -294,7 +294,7 @@ void j1UIManager::SetPanelButtons(Building* building)
 		panel_buttons->SetPanel(building);
 }
 
-const UIHUDPanelButtons * j1UIManager::GetPanelButtons() const
+UIHUDPanelButtons* j1UIManager::GetPanelButtons() const
 {
 	return panel_buttons;
 }
