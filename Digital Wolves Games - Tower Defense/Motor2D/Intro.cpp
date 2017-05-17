@@ -28,8 +28,8 @@ bool j1Intro::Awake()
 bool j1Intro::Start()
 {
 	//TODO 1 Initialize the video - Just call the function
-	App->video->Initialize("intro_anim.avi");
-	App->audio->PlayMusic("audio/music/logo_anim_audio.ogg", 0.0f);
+	//App->video->Initialize("intro_anim.avi");
+	//App->audio->PlayMusic("audio/music/logo_anim_audio.ogg", 0.0f);
 	time.Start();
 	return true;
 }
@@ -46,7 +46,7 @@ bool j1Intro::Update(float dt)
 	//TODO 2 Every frame you should take one frame of the video
 	if (time.ReadSec() < 5.2)
 	{
-		App->video->GrabAVIFrame();
+		//App->video->GrabAVIFrame();
 	}
 	if (time.ReadSec() >= 5.2)
 	{
@@ -68,7 +68,7 @@ bool j1Intro::PostUpdate()
 bool j1Intro::CleanUp()
 {
 	//TODO 6 Clean the Avi files used
-	App->video->CloseAVI();
+	//App->video->CloseAVI();
 	return true;
 }
 
