@@ -85,6 +85,7 @@
     <ClCompile Include="GetEntitiesInfo.cpp" />
     <ClCompile Include="Intro.cpp" />
     <ClCompile Include="IsoPrimitives.cpp" />
+    <ClCompile Include="j1Achievements.cpp" />
     <ClCompile Include="j1Animation.cpp" />
     <ClCompile Include="j1Collision.cpp" />
     <ClCompile Include="j1Console.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Intro.h" />
     <ClInclude Include="IsoPrimitives.h" />
+    <ClInclude Include="j1Achievements.h" />
     <ClInclude Include="j1Animation.h" />
     <ClInclude Include="j1Collision.h" />
     <ClInclude Include="j1Console.h" />

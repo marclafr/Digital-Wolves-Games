@@ -175,6 +175,9 @@
     <ClCompile Include="j1Video.cpp">
       <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="j1Achievements.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Window.h">
@@ -364,6 +367,9 @@
       <Filter>Awsome_Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="j1Video.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Achievements.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
   </ItemGroup>

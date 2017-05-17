@@ -29,6 +29,7 @@
 #include "ProjectileManager.h"
 #include "j1Investigations.h"
 #include "j1Score.h"
+#include "j1Achievements.h"
 #include "Intro.h"
 #include "j1Tutorial.h"
 
@@ -59,6 +60,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	console = new j1Console();
 	investigations = new j1Investigations();
 	score = new j1Score();
+	achievements = new j1Achievements();
 	tutorial = new j1Tutorial();
 	video = new j1Video();
 	intro = new j1Intro();
@@ -86,6 +88,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(wave_manager, false);
 	AddModule(investigations, false);
 	AddModule(score, false);
+	AddModule(achievements, false);
 	AddModule(tutorial, false);
 
 	// Scenes	
