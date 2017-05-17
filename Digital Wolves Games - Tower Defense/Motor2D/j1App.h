@@ -27,6 +27,7 @@ class j1WaveManager;
 class j1Console;
 class j1Investigations;
 class j1Score;
+class j1Achievements;
 class j1Tutorial;
 class j1Video;
 
@@ -140,6 +141,7 @@ public:
 	j1Console*			console = nullptr;
 	j1Investigations*	investigations = nullptr;
 	j1Score*			score = nullptr;
+	j1Achievements*		achievements = nullptr;
 	j1Tutorial*			tutorial = nullptr;
 	j1Video*			video = nullptr;
 		//Scenesko

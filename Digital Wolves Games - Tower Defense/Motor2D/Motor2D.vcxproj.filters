@@ -177,6 +177,8 @@
     </ClCompile>
     <ClCompile Include="Task.cpp">
       <Filter>Awsome_Game\Tools</Filter>
+    <ClCompile Include="j1Achievements.cpp">
+      <Filter>Awsome_Game\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +369,9 @@
       <Filter>Awsome_Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="j1Video.h">
+      <Filter>Awsome_Game\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Achievements.h">
       <Filter>Awsome_Game\Modules</Filter>
     </ClInclude>
   </ItemGroup>
