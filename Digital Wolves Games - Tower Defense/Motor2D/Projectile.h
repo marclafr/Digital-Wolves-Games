@@ -1,8 +1,9 @@
 #ifndef _PROJECTILE
 #define _PROJECTILE
 
-#define AREA_DMG_RADIUS 30
-#define ELEMENT_TERRAIN_TIME 1.0f
+#define AREA_DMG_RADIUS 75
+#define ELEMENT_TERRAIN_TIME 2.0f
+#define FLOOR_DAMAGE_TIME 250 //ms
 
 #include "j1App.h"
 #include "j1Module.h"
@@ -48,9 +49,8 @@ private:
 
 	void AreaDamage(int damage, iPoint center, int radius);
 
-	AnimationManager* anim_ice_floor = nullptr;
-	AnimationManager* anim_fire_try = nullptr;
 	j1PerfTimer PrintElementTerrainTimer;
+	j1PerfTimer area_damage_timer;
 	bool dest_reached = false;
 	fPoint element_terrain_pos;
 	void PrintElementTerrain(PROJECTILE_TYPE element, fPoint center);
