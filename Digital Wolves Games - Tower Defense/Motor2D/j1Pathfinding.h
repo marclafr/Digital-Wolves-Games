@@ -91,11 +91,13 @@ public:
 
 	void Debug();
 
-	bool FindEmptyAttackPos(const Entity* entity, iPoint& pos) const;
-	bool FindNearestUnocupied(iPoint& pos) const;
+	void AddPath(std::vector<iPoint>* path);
+
+	bool IsEmpty(const iPoint pos) const;
+
+	iPoint FindNearestEmpty(const iPoint start) const;
 
 	//JPS
-
 	//Main function of JPS Algorithm
 	bool CalculatePath(iPoint origin,const iPoint& destination, std::vector<iPoint>& vec_to_fill);
 
@@ -163,6 +165,8 @@ private:
 
 	// we store the created path here
 	std::vector<iPoint> last_path;
+
+	std::vector<std::vector<iPoint>*> all_paths;
 
 	//JPS
 	bool destination_reached = false;

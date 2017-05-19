@@ -12,6 +12,8 @@
 #define SLOW_PROPORTION 1.4f
 #define SLOW_TIME 2.0f
 
+#define CLOSE_COMBAT_RANGE 100
+
 class AnimationManager;
 struct PathList;
 struct PathNode;
@@ -104,6 +106,7 @@ private:
 	bool changed;
 	Entity* target;
 	Entity* attacking;
+	bool fighting;
 
 	std::vector<iPoint> path_vec;
 
@@ -117,6 +120,18 @@ private:
 	bool collided = false;
 
 	void UnitDies();
+
+	bool OutOfHP() const;
+	Entity* EnemyInRange() const;
+	void Attack();
+	Entity* EnemyInSight() const;
+	void GoToEnemy();
+	void ChangeDirecctionToEnemy();
+	void GoIdle();
+	bool DestinationFull() const;
+	bool EnemyDead();
+	void DoDamage() const;
+	bool AproachEnemy();
 
 public:
 
@@ -150,12 +165,10 @@ public:
 	bool GetNextTile();
 
 	void LookAt(iPoint pos);
-	bool GoTo(iPoint destination);
-	bool ChangeDirection(iPoint destination);
+	bool GoTo(iPoint dest);
+	bool ChangeDirection(iPoint dest);
 	void PlayDeathSound() const;
 	void PlayAttackSound() const;
-
-	bool FindEmptyAttackPos(iPoint& pos) const;
 
 	void SlowUnit();
 

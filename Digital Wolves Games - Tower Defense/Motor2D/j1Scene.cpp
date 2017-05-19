@@ -65,8 +65,6 @@ bool j1Scene::Start()
 	App->investigations->Enable();
 	App->score->Enable();
 
-	
-
 	App->score_scene->prove_achievements = true;
 	App->score_scene->build_simple_tower = true;
 	App->audio->PlayMusic("audio/music/Music_enviroment03.ogg", 0.0f);
@@ -98,7 +96,8 @@ bool j1Scene::Start()
 		TutorialUI();
 	}
 	else
-		App->wave_manager->Enable();//TODO put after tutorial 
+	{ }
+		//App->wave_manager->Enable();//TODO put after tutorial 
 		
 
 	return true;

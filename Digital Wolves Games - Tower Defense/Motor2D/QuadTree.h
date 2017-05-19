@@ -28,7 +28,7 @@ public:
 	Entity* SearchFirst(int pixel_range, const  fPoint from) const;
 	Entity* SearchFirst(IsoRect rect) const;
 	Entity* SearchFirst(const SDL_Rect rect) const;
-	Entity* SearchFirstEnemy(int pixel_range, const fPoint from, const Side side) const;
+	Entity* SearchFirstEnemy(int pixel_range, fPoint from, Side side, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
 	Entity* SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TYPE entity_type) const;
 	void Search(int pixel_range, const fPoint from, std::vector<Entity*>& vec) const;
 	void Search(const IsoRect rect, std::vector<Entity*>& vec) const;
@@ -65,7 +65,7 @@ public:
 	bool PushBack(Entity* entity) const;
 	
 	Entity* SearchFirst(int pixel_range, fPoint from) const;
-	Entity* SearchFirstEnemy(int pixel_range, fPoint from, Side side) const;
+	Entity* SearchFirstEnemy(int pixel_range, fPoint from, Side side, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
 	Entity* SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
 	bool CheckIfFull(IsoRect tile) const;
 	void Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const;

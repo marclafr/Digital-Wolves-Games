@@ -288,21 +288,6 @@ iPoint j1Map::WorldToMap(int x, int y) const
 
 	if (data.type == MAPTYPE_ISOMETRIC)
 	{
-		/*float half_width = data.tile_width * 0.5f;
-		float half_height = data.tile_height * 0.5f;
-
-		float pX = (((ret.x / half_width) + (ret.y / half_height)) * 0.5f);
-		float pY = (((ret.y / half_height) - (ret.x / half_width)) * 0.5f);
-
-		ret.x = (pX > (floor(pX) + 0.5f)) ? ceil(pX) : floor(pX);
-		ret.y = (pY > (floor(pY) + 0.5f)) ? ceil(pY) : floor(pY);
-
-		if (ret.x <= 0)ret.x = 0;
-		else if (ret.x >= 120)ret.x = 120;
-		if (ret.y <= 0)ret.y = 0;
-		else if (ret.y >= 120)ret.y = 120;*/
-		
-		//float det = cos(TILE_ANGLE) * sin(TILE_ANGLE + PI / 2.0f) - sin(TILE_ANGLE) * cos(TILE_ANGLE + PI / 2.0f);
 		float det = 2*sin(TILE_ANGLE)*cos(TILE_ANGLE);
 
 		fPoint iso_pos;

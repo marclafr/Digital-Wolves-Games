@@ -148,8 +148,8 @@ iPoint j1PathFinding::FindEmptyTile(iPoint from, Elipse collision) const
 				rect_center.x += App->map->data.tile_width / 2.0f;
 				rect_center.x += App->map->data.tile_height / 2.0f;
 				tile = IsoRect(rect_center, App->map->data.tile_width, App->map->data.tile_height);
-				if (!tile.Overlaps(collision))
-					return pos;
+				/*if (!tile.Overlaps(collision))
+					return pos;*/
 			}
 		}		 
 	return iPoint(-1,-1);
@@ -163,12 +163,15 @@ iPoint j1PathFinding::FindEmptyAttackPos(iPoint from, int range)
 		while (phi < 2.0f * PI)
 		{
 			iPoint pos(from.x + range * cos(phi), from.y + range * sin(phi));
-			if (IsWalkable(App->map->WorldToMap(pos.x, pos.y)) && App->entity_manager->AbleToBuild(pos))
+			iPoint tile = App->map->WorldToMap(pos.x, pos.y);
+			if (IsEmpty(tile))
 			{
-				iPoint ret = App->map->WorldToMap(pos.x, pos.y);
-				iPoint pos = App->map->MapToWorld(ret.x, ret.y);
-				return pos;
-			}		
+				iPoint tile_center = App->map->MapToWorld(tile.x, tile.y);
+				tile_center.x += App->map->data.tile_width / 2.0f;
+				tile_center.y += App->map->data.tile_height / 2.0f;
+				return tile_center;
+			}
+						
 			phi += atan(App->map->data.tile_height / 2.0f / range);
 		}
 		range -= App->map->data.tile_height / 2.0f;
@@ -868,6 +871,64 @@ void j1PathFinding::DeleteIfNotPushed(PathNode *& ptr)
 	}
 }
 
+void j1PathFinding::AddPath(std::vector<iPoint>* path)
+{
+	all_paths.push_back(path);
+}
+
+bool j1PathFinding::IsEmpty(const iPoint tile) const
+{
+	if (IsWalkable(tile) && App->entity_manager->AbleToBuild(tile))
+		return true;
+	return false;
+}
+
+iPoint j1PathFinding::FindNearestEmpty(const iPoint start) const
+{
+	if (IsEmpty(start))
+		return start;
+
+	int range = 1;
+	iPoint pos;
+
+	while (range < MAX(App->map->data.width, App->map->data.height))
+	{
+		pos.x = start.x - range;
+		pos.y = start.y - range;
+
+		for (int i = -range; i < range; i++)
+		{
+			if (IsEmpty(pos))
+				return pos;
+			pos.x++;
+		}
+
+		for (int i = -range; i < range; i++)
+		{
+			if (IsEmpty(pos))
+				return pos;
+			pos.y++;
+		}
+
+		for (int i = -range; i < range; i++)
+		{
+			if (IsEmpty(pos))
+				return pos;
+			pos.x--;
+		}
+
+		for (int i = -range; i < range; i++)
+		{
+			if (IsEmpty(pos))
+				return pos;
+			pos.y--;
+		}
+
+		range++;
+	}
+	return iPoint(-1,-1);
+}
+
 void j1PathFinding::Debug()
 {
 	iPoint pos;
@@ -880,31 +941,6 @@ void j1PathFinding::Debug()
 		App->render->PushInGameSprite(debug_tex, pos.x - 32, pos.y - 32);
 	}
 }
-
-//TODO both functs
-bool j1PathFinding::FindEmptyAttackPos(const Entity * entity, iPoint & pos) const
-{
-	iPoint entity_tile = App->map->WorldToMap(entity->GetX(), entity->GetX());
-	
-	if (IsWalkable(iPoint(entity_tile.x, entity_tile.y)))
-	{
-		/*iPoint tile_pos = App->map->MapToWorld(entity_tile.x, entity_tile.y);
-		SDL_Rect tile_rect {tile_pos.x, tile_pos.y, App->map->data.tile_width, App->map->data.tile_height};
-		if (App->entity_manager->entity_quadtree->SearchFirst(tile_rect) == nullptr)
-		{
-			pos.x = tile_pos.x + App->map->data.tile_width / 2;
-			pos.y = tile_pos.y + App->map->data.tile_height / 2;
-			return true;
-		}*/
-	}
-	return false;
-}
-
-bool j1PathFinding::FindNearestUnocupied(iPoint & pos) const
-{
-	return false;
-}
-
 
 // PathNode -------------------------------------------------------------------------
 // Convenient constructors

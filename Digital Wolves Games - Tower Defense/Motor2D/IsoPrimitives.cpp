@@ -244,7 +244,7 @@ uint IsoRect::GetHeight() const
 bool IsoRect::Inside(const fPoint pos) const
 {
 	float delta_x = abs(pos.x - position.x);
-	if (delta_x > width / 2.0f)
+	if (delta_x >= width / 2.0f)
 		return false;
 
 	float delta_y = abs(pos.y - position.y);
@@ -289,10 +289,7 @@ bool IsoRect::Overlaps(SDL_Rect rect) const
 
 	return false;
 }
-bool IsoRect::Overlaps(Elipse circle) const
-{
-	return circle.Intersects(this);
-}
+
 bool IsoRect::Overlaps(IsoRect rect) const
 {
 	fPoint first(rect.GetPosition().x, rect.GetPosition().y + rect.GetHeight()/ 2.0f);
@@ -312,6 +309,19 @@ bool IsoRect::Overlaps(IsoRect rect) const
 		return true;
 
 	return false;
+}
+
+bool IsoRect::Overlaps(fPoint center, int radius)
+{
+	if (Inside(center))
+		return true;
+
+	float delta_x = abs(center.x - position.x);
+	float delta_y = abs(center.y - position.y);
+
+	float distance = abs(-(height / width) * delta_x - delta_y + height / 2.0f) / sqrt((height / width) * (height / width) + 1);
+
+	return distance < radius;
 }
 /// ---------------------------------------------
 

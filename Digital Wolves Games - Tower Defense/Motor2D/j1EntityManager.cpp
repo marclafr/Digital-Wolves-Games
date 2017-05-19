@@ -129,8 +129,7 @@ void j1EntityManager::Select(Entity * select) const
 
 Entity * j1EntityManager::LookForEnemies(int range, fPoint pos, Side side, ENTITY_TYPE entity_type) const
 {
-	IsoRect rect(pos,range * 2.0f, range*2.0f);
-	return entity_quadtree->SearchFirstEnemy(rect, side, entity_type);
+	return entity_quadtree->SearchFirstEnemy(range, pos, side, entity_type);
 }
 
 void j1EntityManager::CheckClick(int mouse_x, int mouse_y) const
@@ -344,12 +343,13 @@ void j1EntityManager::BlitMinimap() const
 	entity_quadtree->BlitMinimap();
 }
 
-bool j1EntityManager::AbleToBuild(iPoint pos)
+bool j1EntityManager::AbleToBuild(iPoint tile) const
 {
-	iPoint map_pos = App->map->WorldToMap(pos.x, pos.y);
-	iPoint tile_pos = App->map->MapToWorld(map_pos.x, map_pos.y);
-	IsoRect tile(fPoint(tile_pos.x + App->map->data.tile_width / 2.0f, tile_pos.y + App->map->data.tile_height / 2.0f), App->map->data.tile_width, App->map->data.tile_height);
-	return entity_quadtree->CheckIfFull(tile);
+	iPoint world_pos;
+	world_pos.x = (tile.x - tile.y) * App->map->data.tile_width / 2.0f;
+	world_pos.y = (tile.x + tile.y) * App->map->data.tile_height / 2.0f;
+	IsoRect rect(fPoint(world_pos.x + App->map->data.tile_width / 2.0f, world_pos.y + App->map->data.tile_height / 2.0f), App->map->data.tile_width, App->map->data.tile_height);
+	return entity_quadtree->CheckIfFull(rect) == false;
 }
 
 void j1EntityManager::GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entity*>& vec) const

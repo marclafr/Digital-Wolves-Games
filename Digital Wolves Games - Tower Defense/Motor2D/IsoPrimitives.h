@@ -108,8 +108,8 @@ public:
 
 	bool Inside(const fPoint pos) const;
 	bool Overlaps(SDL_Rect rect) const;
-	bool Overlaps(Elipse circle) const;
 	bool Overlaps(IsoRect rect) const;
+	bool Overlaps(fPoint center, int radius);
 };
 /// ---------------------------------------------
 
