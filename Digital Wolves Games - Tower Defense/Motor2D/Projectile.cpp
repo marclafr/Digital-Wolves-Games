@@ -161,7 +161,7 @@ AnimationManager * Projectile::GetProjectileAnim()
 
 void Projectile::AreaDamage(int damage, iPoint center, int radius)
 {
-	IsoRect rect(fPoint(center.x, center.y), radius);
+	IsoRect rect(fPoint(center.x, center.y), radius, radius);
 	std::vector<Entity*> vec;
 	App->entity_manager->GetEntitiesInIsoRect(rect, vec);
 	for (int i = 0; i < vec.size(); i++)
@@ -173,6 +173,7 @@ void Projectile::AreaDamage(int damage, iPoint center, int radius)
 			unit->SlowUnit();
 		}
 	}
+	vec.clear();
 }
 
 void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)
@@ -196,9 +197,17 @@ void Projectile::PrintElementTerrain(PROJECTILE_TYPE element, fPoint center)
 	}
 	SDL_Rect rect;
 	iPoint pivot;
-	projectile_anim->Update(rect, pivot);
+	if (area_damage_timer.ReadMs() >= FLOOR_DAMAGE_TIME)
+	{
+		area_damage_timer.Start();
+		if (projectile_type == P_FIRE_CANNONBALL)
+			AreaDamage(Damage / 2, { (int)element_terrain_pos.x, (int)element_terrain_pos.y }, AREA_DMG_RADIUS);
+		else if (projectile_type == P_ICE_CANNONBALL)
+			AreaDamage(Damage / 2, { (int)element_terrain_pos.x, (int)element_terrain_pos.y }, AREA_DMG_RADIUS);
+	}
 	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + ActualPos.x, App->render->camera->GetPosition().y + ActualPos.y))
 	{
+		projectile_anim->Update(rect, pivot);
 		switch (element)
 		{
 		case P_CANNONBALL:

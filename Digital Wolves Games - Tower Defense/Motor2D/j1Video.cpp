@@ -32,7 +32,7 @@ bool j1Video::CleanUp()
 void j1Video::Initialize(char* file_path)
 {
 	std::string path = SDL_GetBasePath();
-	path += "..\\Game\\";
+	path += "..\\IntroVideo\\";
 	std::string file_name = file_path;
 
 	std::string temp = path + file_name;

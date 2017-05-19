@@ -243,7 +243,7 @@ void QuadTreeNode::Search(const IsoRect rect, std::vector<Entity*>& vec) const
 	else
 		for (int i = 0; i < 4; i++)
 			if (rect.Overlaps(childs[i]->area))
-				childs[i]->SearchFirst(rect);
+				childs[i]->Search(rect, vec);
 }
 
 bool QuadTreeNode::PushToCorrectChild(Entity * entity)
