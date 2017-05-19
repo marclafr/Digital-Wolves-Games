@@ -54,6 +54,7 @@ public:
 	const int GetRange() const;
 	void Save(pugi::xml_node&);
 	float GetSpeed();
+	void DestroyTower();
 	void SetSpeed(float new_speed);
 	void SetRange(float new_range);
 };

@@ -74,10 +74,10 @@ bool j1Scene::Start()
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(0, 272), S_ALLY);
 	resources = new ResourceManager();
-	iPoint pos = App->map->WorldToMap(-300, 370);
-	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-225, 370),pos);
+	iPoint pos = App->map->WorldToMap(-280, 340);
+	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-290, 350),pos);
 	pos = App->map->WorldToMap(150, 370);
-	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(225, 370),pos);
+	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(150, 370),pos);
 	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
 	//--
 
@@ -784,6 +784,10 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TOWNHALL, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_TOWER), new PlaceBombardTowerTask());
 	panel->AddButton(BP_TOWNHALL, iPoint(2, 0), GetBuildingIconPositionFromAtlas(B_WOOD_WALL), new PlaceWallTask());
 	
+	panel->AddButton(BP_NO_SELECTION, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BASIC_TOWER), new PlaceBasicTowerTask());
+	panel->AddButton(BP_NO_SELECTION, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_TOWER), new PlaceBombardTowerTask());
+	panel->AddButton(BP_NO_SELECTION, iPoint(2, 0), GetBuildingIconPositionFromAtlas(B_WOOD_WALL), new PlaceWallTask());
+
 	//Turrets
 	panel->AddButton(BP_TURRET, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_FIRE_TOWER), new UpgradeTowerTask(TU_FIRE));
 	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(TU_ICE));

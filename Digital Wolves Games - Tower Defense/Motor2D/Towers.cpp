@@ -206,7 +206,7 @@ void Tower::AI()
 		ConvertToRubble();
 	}
 	if (IsAlive() == false && GetDieTime() >= 2)
-		DestroyBuilding();
+		DestroyTower();
 }
 
 void Tower::Draw()
@@ -287,6 +287,14 @@ float Tower::GetSpeed()
 {
 	return rate_of_fire;
 
+}
+
+void Tower::DestroyTower()
+{
+	App->pathfinding->MakeConstruible_neutral(posintiles);
+	App->pathfinding->MakeConstruible_ally(posintiles);
+	App->pathfinding->MakeWalkable(posintiles);
+	this->Die();
 }
 
 void Tower::SetSpeed(float new_speed)
