@@ -102,7 +102,7 @@ bool j1Scene::Start()
 	}
 	else
 	{ }
-		//App->wave_manager->Enable();//TODO put after tutorial 
+		App->wave_manager->Enable();//TODO put after tutorial 
 		
 
 	return true;

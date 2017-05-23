@@ -320,7 +320,7 @@ void QuadTreeNode::Reorganise()
 		if (entities[i] == nullptr && entities[i + 1] != nullptr)
 		{
 			entities[i] = entities[i + 1];
-			entities[i+ 1] = nullptr;
+			entities[i + 1] = nullptr;
 			i = 0;
 		}
 }
@@ -447,14 +447,16 @@ void QuadTreeNode::DeleteEntities()
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
+		{
 			if (entities[i] != nullptr)
+			{
 				if (entities[i]->ToDelete())
-				{
 					DELETE_PTR(entities[i]);
-					Reorganise();
-				}
+			}
 			else
 				break;
+		}
+		Reorganise();
 	}
 	else
 	{	

@@ -102,7 +102,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_TWOHANDEDSWORDMAN:
 		SetHp(95);
-		attack = 1;// 13;
+		attack = 13;
 		SetArmor(5);
 		speed = 1.30f;
 		rate_of_fire = 100.0f;
