@@ -593,8 +593,7 @@ void Unit::AI()
 	case A_DISAPPEAR:
 
 		if (animation->Finished())
-			SetToDelete();
-
+			Die();
 		break;
 	}
 }
