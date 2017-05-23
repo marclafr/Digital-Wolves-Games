@@ -80,7 +80,7 @@ public:
 };
 /// ---------------------------------------------
 
-
+#define PIXEL_TOLERANCE 0.5f
 ///Class Rectangle ------------------------------
 //Rectangle isometric primitive
 class IsoRect : public Primitive

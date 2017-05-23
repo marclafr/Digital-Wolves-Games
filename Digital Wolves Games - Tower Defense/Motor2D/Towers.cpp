@@ -141,10 +141,10 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) : Building(B_TURR
 	SetTextureID(T_TURRET);
 	AttackTimer.Start();
 
-		App->pathfinding->MakeNoWalkable(iPoint(posintiles.x, posintiles.y));
+	App->pathfinding->MakeNoWalkable(iPoint(posintiles.x, posintiles.y));
 
-		App->pathfinding->MakeNoConstruible_neutral(posintiles);
-		App->pathfinding->MakeNoConstruible_ally(posintiles);
+	App->pathfinding->MakeNoConstruible_neutral(posintiles);
+	App->pathfinding->MakeNoConstruible_ally(posintiles);
 }
 
 Tower::~Tower()
@@ -182,7 +182,7 @@ void Tower::AI()
 
 	if (Target == nullptr && AttackTimer.ReadSec() >= rate_of_fire && attacking == false && IsBuilt() == true && IsAlive() == true)
 	{
-		Target = App->entity_manager->LookForEnemies(GetRange(), GetPosition(), GetSide());
+		Target = App->entity_manager->LookForEnemies(GetRange(), GetPosition(), GetSide(), this);
 		if (Target != nullptr)
 			attacking = true;
 	}

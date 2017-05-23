@@ -7,6 +7,12 @@
 #include "ResourceManager.h"
 #include "Towers.h"
 
+//tiles
+#define TOWER_POS_1_X 4
+#define TOWER_POS_1_Y 10
+#define TOWER_POS_2_X 9
+#define TOWER_POS_2_Y 6
+
 struct SDL_Texture;
 class Resources;
 class Building;

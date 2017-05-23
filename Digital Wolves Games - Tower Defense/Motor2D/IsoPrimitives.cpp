@@ -249,7 +249,7 @@ bool IsoRect::Inside(const fPoint pos) const
 
 	float delta_y = abs(pos.y - position.y);
 
-	if(height / 2.0f - height / width * delta_x - delta_y >= -2.5f)
+	if(height / 2.0f - height / width * delta_x - delta_y >= -PIXEL_TOLERANCE)
 		return true;
 	return false;
 }

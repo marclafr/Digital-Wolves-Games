@@ -37,7 +37,7 @@ public:
 	void Select(Entity* select) const;
 	void CheckClick(int mouse_x, int mouse_y)  const;
 
-	Entity* LookForEnemies(int range, fPoint pos, Side side, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
+	Entity* LookForEnemies(int pixel_range, fPoint pos, Side side, Entity* attacker, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
 	
 	Entity* CheckForCombat(fPoint position, int range, Side side) const;
 	Entity* CheckForObjective(fPoint position, int vision_range, Side side) const;
@@ -56,7 +56,7 @@ public:
 	bool Save(pugi::xml_node&)const;
 
 	void BlitMinimap() const;
-	bool AbleToBuild(iPoint tile) const;
+	bool AbleToBuild(iPoint tile, Entity* exeption = nullptr) const;
 
 	void GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entity*>& vec) const;
 

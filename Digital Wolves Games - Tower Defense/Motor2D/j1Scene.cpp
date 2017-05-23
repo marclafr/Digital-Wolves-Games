@@ -61,7 +61,6 @@ bool j1Scene::Start()
 	//App->collision->Enable();
 	App->entity_manager->Enable();
 	App->projectile_manager->Enable();
-	//App->wave_manager->Enable();//TODO put after tutorial no descomentar
 	App->investigations->Enable();
 	App->score->Enable();
 
@@ -74,10 +73,16 @@ bool j1Scene::Start()
 	//ENTITIES
 	townhall = (Building*)App->entity_manager->CreateBuilding(B_TOWNHALL, fPoint(0, 272), S_ALLY);
 	resources = new ResourceManager();
-	iPoint pos = App->map->WorldToMap(-300, 370);
-	App->entity_manager->CreateTower(T_BOMBARD_TOWER, fPoint(-225, 370),pos);
-	pos = App->map->WorldToMap(150, 370);
-	App->entity_manager->CreateTower(T_BASIC_TOWER, fPoint(225, 370),pos);
+
+	iPoint tower_ipos = App->map->MapToWorld(TOWER_POS_1_X, TOWER_POS_1_Y);
+	fPoint tower_pos(tower_ipos.x, tower_ipos.y);
+	App->entity_manager->CreateTower(T_BOMBARD_TOWER, tower_pos, iPoint(TOWER_POS_1_X, TOWER_POS_1_Y));
+
+	tower_ipos = App->map->MapToWorld(TOWER_POS_2_X, TOWER_POS_2_Y);
+	tower_pos.x = tower_ipos.x;
+	tower_pos.y = tower_ipos.y;
+	App->entity_manager->CreateTower(T_BASIC_TOWER, tower_pos, iPoint(TOWER_POS_2_X, TOWER_POS_2_Y));
+
 	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
 	//--
 

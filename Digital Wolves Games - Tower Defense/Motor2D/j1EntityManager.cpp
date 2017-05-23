@@ -1,5 +1,7 @@
+#include <vector>
 #include "j1App.h"
 #include "j1EntityManager.h"
+#include "j1Pathfinding.h"
 #include "Units.h"
 #include "j1UIManager.h"
 #include "UIHUDPanelInfo.h"
@@ -127,9 +129,40 @@ void j1EntityManager::Select(Entity * select) const
 	App->uimanager->CreatePanelInfo(App->scene->selection);
 }
 
-Entity * j1EntityManager::LookForEnemies(int range, fPoint pos, Side side, ENTITY_TYPE entity_type) const
+Entity * j1EntityManager::LookForEnemies(int pixel_range, fPoint pos, Side side, Entity* attacker, ENTITY_TYPE entity_type) const
 {
-	return entity_quadtree->SearchFirstEnemy(range, pos, side, entity_type);
+	Entity* ret = nullptr;
+
+	std::vector<Entity*> enemies_in_range;
+	entity_quadtree->SearchForEnemies(pixel_range, pos, enemies_in_range, side, entity_type);
+
+	if (enemies_in_range.size() == 0)
+		return ret;
+
+	float shortest_distance = VISION_RANGE;
+	float current_distance = 0.0f;
+
+	for (std::vector<Entity*>::iterator it = enemies_in_range.begin(); it != enemies_in_range.end(); ++it)
+	{
+		current_distance = pos.DistanceTo((*it)->GetPosition());
+		if (current_distance < shortest_distance)
+		{
+			if (attacker->GetEntityType() == E_UNIT)
+			{
+				if (App->pathfinding->FindClosestEmptyAttackTile((*it)->GetIPos(), ((Unit*)attacker)->GetRange(), attacker).y != -1)
+				{
+					ret = *it;
+					shortest_distance = current_distance;
+				}
+			}
+			else
+			{
+				ret = *it;
+				shortest_distance = current_distance;
+			}		
+		}
+	}
+	return ret;
 }
 
 void j1EntityManager::CheckClick(int mouse_x, int mouse_y) const
@@ -343,13 +376,13 @@ void j1EntityManager::BlitMinimap() const
 	entity_quadtree->BlitMinimap();
 }
 
-bool j1EntityManager::AbleToBuild(iPoint tile) const
+bool j1EntityManager::AbleToBuild(iPoint tile, Entity* exeption) const
 {
-	iPoint world_pos;
+	fPoint world_pos;
 	world_pos.x = (tile.x - tile.y) * App->map->data.tile_width / 2.0f;
-	world_pos.y = (tile.x + tile.y) * App->map->data.tile_height / 2.0f;
-	IsoRect rect(fPoint(world_pos.x + App->map->data.tile_width / 2.0f, world_pos.y + App->map->data.tile_height / 2.0f), App->map->data.tile_width, App->map->data.tile_height);
-	return entity_quadtree->CheckIfFull(rect) == false;
+	world_pos.y = (tile.x + tile.y + 1) * App->map->data.tile_height / 2.0f;
+	IsoRect rect(world_pos, App->map->data.tile_width, App->map->data.tile_height);
+	return entity_quadtree->CheckIfFull(rect, exeption) == false;
 }
 
 void j1EntityManager::GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entity*>& vec) const

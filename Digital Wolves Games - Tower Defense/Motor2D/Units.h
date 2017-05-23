@@ -12,7 +12,14 @@
 #define SLOW_PROPORTION 1.4f
 #define SLOW_TIME 2.0f
 
-#define CLOSE_COMBAT_RANGE 100
+//range in tiles
+#define CLOSE_COMBAT_RANGE 1
+#define MID_COMBAT_RANGE 2
+#define LONG_COMBAT_RANGE 3
+
+//close combat approach
+#define APPROACH 65 //pixels from ennemy while attacking
+#define VISION_RANGE 300 //pixels
 
 class AnimationManager;
 struct PathList;
@@ -66,7 +73,8 @@ enum ACTION
 	A_DIE,
 	A_DISAPPEAR,
 	A_IDLE,
-	A_WALK
+	A_WALK,
+	A_APPROACH
 };
 
 enum DIRECTION
@@ -91,10 +99,9 @@ private:
 
 	int attack;
 	int range;
-	int vision_range;
 	float speed;
 	float rate_of_fire;
-	iPoint destination;
+	iPoint destination; //tile
 	iPoint path_objective;
 	fPoint move_vector;
 	float angle;
@@ -105,8 +112,6 @@ private:
 	AnimationManager* idle_siege;
 	bool changed;
 	Entity* target;
-	Entity* attacking;
-	bool fighting;
 
 	std::vector<iPoint> path_vec;
 
@@ -122,16 +127,18 @@ private:
 	void UnitDies();
 
 	bool OutOfHP() const;
-	Entity* EnemyInRange() const;
-	void Attack();
-	Entity* EnemyInSight() const;
+	Entity* EnemyInSight();
 	void GoToEnemy();
 	void ChangeDirecctionToEnemy();
 	void GoIdle();
 	bool DestinationFull() const;
 	bool EnemyDead();
-	void DoDamage() const;
+	void DoDamage();
 	bool AproachEnemy();
+	void SetAttackPosition();
+	void StartAttack();
+
+	bool GetNextTile();
 
 public:
 
@@ -140,7 +147,7 @@ public:
 	
 	void Update( float dt); // defines order
 
-	bool Move();
+	bool Walk();
 	void AI();
 	void Draw();
 
@@ -150,10 +157,10 @@ public:
 	const ACTION GetAction() const;
 	const int GetUnitRadius() const;
 	bool GetPath(iPoint dest);
+	bool GetTilePath(iPoint& tile);
 	const int GetAttack() const;
 	const int GetRange() const;
 	const Elipse GetUnitCircle() const;
-	const int GetVisionRange() const;
 	const bool IsMoving() const;
 
 	void CheckCollisions() const;
@@ -161,12 +168,11 @@ public:
 	const int GetPriority() const;
 	void SetAction(const ACTION action);
 
-	//TODO:this should be private?
-	bool GetNextTile();
-
 	void LookAt(iPoint pos);
 	bool GoTo(iPoint dest);
+	bool GoToTile(iPoint& tile);
 	bool ChangeDirection(iPoint dest);
+	bool ChangeDirectionTile(iPoint& tile);
 	void PlayDeathSound() const;
 	void PlayAttackSound() const;
 

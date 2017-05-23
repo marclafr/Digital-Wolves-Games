@@ -215,10 +215,7 @@ bool j1Input::Update(float dt)
 			App->debug_features.print_walkability_map = !App->debug_features.print_walkability_map;
 
 		if (GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
-			if(App->debug_features.pf == true)
-				App->debug_features.pf = false;
-			else
-				App->debug_features.pf = true;
+			App->debug_features.pf = !App->debug_features.pf;
 	}
 	//
 	return true;

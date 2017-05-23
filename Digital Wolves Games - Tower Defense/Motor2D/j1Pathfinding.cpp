@@ -10,6 +10,7 @@
 #include "j1EntityManager.h"
 #include "QuadTree.h"
 #include "Entity.h"
+#include "Units.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
@@ -155,28 +156,79 @@ iPoint j1PathFinding::FindEmptyTile(iPoint from, Elipse collision) const
 	return iPoint(-1,-1);
 }
 
-iPoint j1PathFinding::FindEmptyAttackPos(iPoint from, int range)
+iPoint j1PathFinding::FindClosestEmptyAttackTile(iPoint objective_pos, int tile_range, Entity* attacker)
 {	
-	while (range > App->map->data.tile_height / 2.0f)
+	iPoint ret(-1, -1);
+
+	if (tile_range < 1)
 	{
-		float phi = 0.0f;
-		while (phi < 2.0f * PI)
-		{
-			iPoint pos(from.x + range * cos(phi), from.y + range * sin(phi));
-			iPoint tile = App->map->WorldToMap(pos.x, pos.y);
-			if (IsEmpty(tile))
-			{
-				iPoint tile_center = App->map->MapToWorld(tile.x, tile.y);
-				tile_center.x += App->map->data.tile_width / 2.0f;
-				tile_center.y += App->map->data.tile_height / 2.0f;
-				return tile_center;
-			}
-						
-			phi += atan(App->map->data.tile_height / 2.0f / range);
-		}
-		range -= App->map->data.tile_height / 2.0f;
+		LOG("Tile range inferior to 1");
+		return ret;
 	}
-	return iPoint(-1, -1);
+
+	iPoint attacker_tile = App->map->WorldToMap(attacker->GetX(), attacker->GetY());
+	std::vector<iPoint> empty_attack_tiles;
+	iPoint objective_tile = App->map->WorldToMap(objective_pos.x, objective_pos.y);
+
+	while (tile_range > 0)
+	{
+		iPoint current_tile(objective_tile.x - tile_range, objective_tile.y - tile_range);
+
+		//Left
+		for (int i = -tile_range; i < tile_range; i++)
+		{
+			current_tile.x = objective_tile.x + i;
+			if (IsEmpty(current_tile, attacker))
+				empty_attack_tiles.push_back(current_tile);
+		}
+		current_tile.x++;
+
+		//Down
+		for (int i = -tile_range; i < tile_range; i++)
+		{
+			current_tile.y = objective_tile.y + i;
+			if (IsEmpty(current_tile, attacker))
+				empty_attack_tiles.push_back(current_tile);
+		}
+		current_tile.y++;
+
+		//Right
+		for (int i = -tile_range; i < tile_range; i++)
+		{
+			current_tile.x = objective_tile.x - i;
+			if (IsEmpty(current_tile, attacker))
+				empty_attack_tiles.push_back(current_tile);
+		}
+		current_tile.x--;
+
+		//Up
+		for (int i = -tile_range; i < tile_range; i++)
+		{
+			current_tile.y = objective_tile.y - i;
+			if (IsEmpty(current_tile, attacker))
+				empty_attack_tiles.push_back(current_tile);
+		}
+		current_tile.y--;
+
+		tile_range--;
+	}
+	
+	if (empty_attack_tiles.size() == 0)
+		return ret;
+
+	float shortest_distance = NUM_TILES;
+	float distance_to_tile = 0.0f;
+
+	for(std::vector<iPoint>::iterator it = empty_attack_tiles.begin(); it != empty_attack_tiles.end(); ++it)
+	{
+		distance_to_tile = it->DistanceTo(attacker_tile);
+		if (shortest_distance > distance_to_tile)
+		{
+			shortest_distance = distance_to_tile;
+			ret = *it;
+		}
+	}
+	return ret;
 }
 
 // Utility: return the walkability value of a tile
@@ -876,9 +928,9 @@ void j1PathFinding::AddPath(std::vector<iPoint>* path)
 	all_paths.push_back(path);
 }
 
-bool j1PathFinding::IsEmpty(const iPoint tile) const
+bool j1PathFinding::IsEmpty(const iPoint tile, Entity* exeption) const
 {
-	if (IsWalkable(tile) && App->entity_manager->AbleToBuild(tile))
+	if (IsWalkable(tile) && App->entity_manager->AbleToBuild(tile, exeption))
 		return true;
 	return false;
 }

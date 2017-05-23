@@ -85,7 +85,7 @@ Entity * QuadTreeNode::SearchFirst(int pixel_range, const fPoint from) const
 	return nullptr;
 }
 
-Entity * QuadTreeNode::SearchFirst(IsoRect rect) const
+Entity * QuadTreeNode::SearchFirst(IsoRect rect, Entity* exeption) const
 {
 	Entity* ret = nullptr;
 
@@ -94,7 +94,7 @@ Entity * QuadTreeNode::SearchFirst(IsoRect rect) const
 		for (int i = 0; i < NODE_ENTITIES; i++)
 			if (entities[i] != nullptr)
 			{
-				if (rect.Inside(entities[i]->GetPosition()))
+				if (rect.Inside(entities[i]->GetPosition()) && entities[i] != exeption && entities[i]->GetHp() > 0)
 					ret = entities[i];
 			}
 			else
@@ -104,7 +104,7 @@ Entity * QuadTreeNode::SearchFirst(IsoRect rect) const
 		for (int i = 0; i < 4; i++)
 			if (rect.Overlaps(childs[i]->area))
 			{
-				ret = childs[i]->SearchFirst(rect);
+				ret = childs[i]->SearchFirst(rect, exeption);
 				if (ret != nullptr)
 					break;
 			}
@@ -244,6 +244,30 @@ void QuadTreeNode::Search(const IsoRect rect, std::vector<Entity*>& vec) const
 		for (int i = 0; i < 4; i++)
 			if (rect.Overlaps(childs[i]->area))
 				childs[i]->Search(rect, vec);
+}
+
+void QuadTreeNode::SearchForEnemies(int pixel_range, fPoint from, std::vector<Entity*>& vec, const Side side, ENTITY_TYPE entity_type)
+{
+	if (childs[0] == nullptr)
+	{
+		for (int i = 0; i < NODE_ENTITIES; i++)
+			if (entities[i] != nullptr)
+			{
+				float distance_x = entities[i]->GetX() - from.x;
+				float distance_y = entities[i]->GetY() - from.y;
+				float distance = sqrt(distance_x * distance_x + distance_y * distance_y);
+
+				if (distance <= pixel_range && (entity_type == E_NO_ENTITY || entity_type == entities[i]->GetEntityType()))
+					if (entities[i]->GetSide() != side && entities[i]->GetHp() >= 0)
+						vec.push_back(entities[i]);
+			}
+			else
+				break;
+	}
+	else
+		for (int i = 0; i < 4; i++)
+			if (childs[i]->area.Overlaps(from, pixel_range))
+				childs[i]->SearchForEnemies(pixel_range, from, vec, side, entity_type);
 }
 
 bool QuadTreeNode::PushToCorrectChild(Entity * entity)
@@ -574,9 +598,9 @@ Entity * QuadTree::SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TYPE e
 	return origin->SearchFirstEnemy(rect,side,entity_type);
 }
 
-bool QuadTree::CheckIfFull(IsoRect tile) const
+bool QuadTree::CheckIfFull(IsoRect tile, Entity* exeption) const
 {
-	if (origin->SearchFirst(tile) != nullptr)
+	if (origin->SearchFirst(tile, exeption) != nullptr)
 		return true;
 	return false;
 }
@@ -584,6 +608,11 @@ bool QuadTree::CheckIfFull(IsoRect tile) const
 void QuadTree::Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const
 {
 	origin->Search(pixel_range, from, vec);
+}
+
+void QuadTree::SearchForEnemies(int pixel_range, fPoint from, std::vector<Entity*>& vec, const Side side, ENTITY_TYPE entity_type)
+{
+	origin->SearchForEnemies(pixel_range, from,	vec, side, entity_type);
 }
 
 void QuadTree::SearchInIsoRect(const IsoRect rect, std::vector<Entity*>& vec)

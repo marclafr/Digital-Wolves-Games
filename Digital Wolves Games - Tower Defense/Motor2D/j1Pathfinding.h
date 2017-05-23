@@ -16,6 +16,7 @@
 #define DIAGONAL_COST 1.414214f // sqrt 2
 #define STRAIGHT_COST 1.0f
 #define FIND_RADIUS 10
+#define NUM_TILES 75 * 75
 
 // --------------------------------------------------
 // Recommended reading:
@@ -27,6 +28,7 @@ struct PathNode;
 struct ForcedNeighbour;
 class Entity;
 class Elipse;
+class Unit;
 
 enum X_DIRECTION
 {
@@ -80,7 +82,7 @@ public:
 	void MakeNoWalkable(const iPoint& pos);
 	void MakeWalkable(const iPoint& pos);
 	iPoint FindEmptyTile(iPoint from, Elipse collision) const;
-	iPoint FindEmptyAttackPos(iPoint from, int range);
+	iPoint FindClosestEmptyAttackTile(iPoint objective_pos, int tile_range, Entity* attacker);
 
 	// Utility: return the walkability value of a tile
 	uchar GetTileAt(const iPoint& pos) const;
@@ -93,7 +95,7 @@ public:
 
 	void AddPath(std::vector<iPoint>* path);
 
-	bool IsEmpty(const iPoint pos) const;
+	bool IsEmpty(const iPoint pos, Entity* exeption = nullptr) const;
 
 	iPoint FindNearestEmpty(const iPoint start) const;
 
