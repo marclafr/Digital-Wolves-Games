@@ -84,7 +84,7 @@ void Building::Update(float dt)
 		ConvertToRubble();
 
 	if (alive == false && DieTimer.ReadSec() >= 2)
-		Die();
+		DestroyBuilding();
 }
 
 void Building::AI()
@@ -206,14 +206,14 @@ void Building::ConvertToRubble()
 	alive = false;
 	totally_built = true;
 	iPoint p = App->map->WorldToMap(GetX(), GetY());
-	App->pathfinding->MakeConstruible_neutral(p);
-	App->pathfinding->MakeConstruible_ally(p);
 	App->pathfinding->MakeWalkable(p);
 }
 
 void Building::DestroyBuilding()
 {
-
+	iPoint p = App->map->WorldToMap(GetX(), GetY());
+	App->pathfinding->MakeConstruible_neutral(p);
+	App->pathfinding->MakeConstruible_ally(p);
 	this->Die();
 }
 
