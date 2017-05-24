@@ -44,7 +44,7 @@ bool UIHUDMinimap::Update()
 
 	if (minimap->Inside(fPoint(x,y)))
 	{
-		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN)
+		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN || App->input->GetMouseButtonDown(MK_LEFT) == KEY_REPEAT)
 		{
 			mouse_pos.x -= GetPosRect().x;
 			mouse_pos.y -= GetPosRect().y;
@@ -55,13 +55,11 @@ bool UIHUDMinimap::Update()
 			App->scene->camera_new_position = new_camera_pos;
 		}
 	}
-	else
-	{
-		mouse_pos.x -= App->render->camera->GetPosition().x;
-		mouse_pos.y -= App->render->camera->GetPosition().y;
-		quad_minimap_position = WorldToMinimap(mouse_pos);
-		quad_atlas = { quad_minimap_position.x + GetPosRect().w / 2, quad_minimap_position.y, 100, 56 };
-	}
+
+	//new pos from quad into minimap
+	quad_minimap_position = WorldToMinimap(fPoint(App->render->camera->GetCenter().x, App->render->camera->GetCenter().y));
+	quad_minimap_position.y += GetPosRect().h; //Testing values
+	quad_atlas = { quad_minimap_position.x, quad_minimap_position.y, 50, 30 };
 
 	Draw();
 	return true;
@@ -70,6 +68,11 @@ bool UIHUDMinimap::Update()
 void UIHUDMinimap::Draw()
 {
 	App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), GetPosRect().x - App->render->camera->GetPosition().x, GetPosRect().y - App->render->camera->GetPosition().y, &GetAtlasRect());
+}
+
+void UIHUDMinimap::DrawQuad()
+{
+	App->render->DrawQuad(quad_atlas,255,255,255,255,false,false);
 }
 
 iPoint UIHUDMinimap::WorldToMinimap(fPoint world_point)

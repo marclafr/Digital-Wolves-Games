@@ -787,6 +787,10 @@ void j1Scene::CreateSceneUI()
 
 	//Panel Buttons
 	UIHUDPanelButtons* panel = App->uimanager->AddPanelButtons();
+
+	panel->AddButton(BP_NO_SELECTION, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BASIC_TOWER), new PlaceBasicTowerTask());
+	panel->AddButton(BP_NO_SELECTION, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_TOWER), new PlaceBombardTowerTask());
+	panel->AddButton(BP_NO_SELECTION, iPoint(2, 0), GetBuildingIconPositionFromAtlas(B_WOOD_WALL), new PlaceWallTask());
 		//Buildings
 	panel->AddButton(BP_TOWNHALL, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BASIC_TOWER), new PlaceBasicTowerTask());
 	panel->AddButton(BP_TOWNHALL, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_TOWER), new PlaceBombardTowerTask());

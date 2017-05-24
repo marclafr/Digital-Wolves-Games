@@ -17,7 +17,8 @@
 #define SIEGEMRAM_HP 600
 #define MANGONEL_HP 500
 
-#define TURRET_HP 250
+#define TURRET_HP 150
+#define BOMBARD_HP 175
 #define WOODWALL_HP 250
 #define STONEWALL_HP 500
 #define BRICKWALL_HP 750
@@ -686,7 +687,7 @@ int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp, const uint
 	case B_TOWNHALL:
 		ret = hp * pixels / TOWNHALL_HP;
 		break;
-		case B_UNIVERSITY:
+	case B_UNIVERSITY:
 		ret = hp * pixels / UNIVERSITY_HP;
 		break;
 	default:
@@ -694,6 +695,42 @@ int ReturnValueBarHPBuilding(const BUILDING_TYPE type, const uint hp, const uint
 		ret = 0;
 		break;
 	}
+
+	return ret;
+}
+
+int ReturnValueBarHPTower(const TOWER_TYPE type, const uint hp, const uint pixels)
+{
+	int ret = 0;
+
+	switch (type)
+	{
+	case T_BASIC_TOWER:
+		ret = hp * pixels / TURRET_HP;
+		break;
+	case T_FIRE_TOWER:
+		ret = hp * pixels / TURRET_HP;
+		break;
+	case T_ICE_TOWER:
+		ret = hp * pixels / TURRET_HP;
+		break;
+	case T_AIR_TOWER:
+		ret = hp * pixels / TURRET_HP;
+		break;
+	case T_BOMBARD_TOWER:
+		ret = hp * pixels / BOMBARD_HP;
+		break;
+	case T_BOMBARD_FIRE_TOWER:
+		ret = hp * pixels / BOMBARD_HP;
+		break;
+	case T_BOMBARD_ICE_TOWER:
+		ret = hp * pixels / BOMBARD_HP;
+		break;
+	case T_BOMBARD_AIR_TOWER:
+		ret = hp * pixels / BOMBARD_HP;
+		break;
+	}
+
 
 	return ret;
 }
@@ -770,6 +807,9 @@ int ReturnValueHeightCorrectionBuilding(const BUILDING_TYPE type)
 	case B_STONE_WALL:
 		ret = 90;
 		break;
+	case B_BRICK_WALL:
+		ret = 90;
+		break;
 	case B_TOWNHALL:
 		ret = 210;
 		break;
@@ -792,13 +832,13 @@ int ReturnValueHeightCorrectionResource(const RESOURCE_TYPE type)
 	switch (type)
 	{
 	case R_WOOD:
-		ret = 70;
+		ret = 150;
 		break;
 	case R_STONE:
 		ret = 70;
 		break;
 	case R_FOOD:
-		ret = 100;
+		ret = 160;
 		break;
 	case R_GOLD:
 		ret = 70;

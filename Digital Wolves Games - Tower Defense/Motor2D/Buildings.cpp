@@ -205,6 +205,8 @@ void Building::ConvertToRubble()
 	SetHp(0);
 	alive = false;
 	totally_built = true;
+	iPoint p = App->map->WorldToMap(GetX(), GetY());
+	App->pathfinding->MakeWalkable(p);
 }
 
 void Building::DestroyBuilding()
@@ -212,7 +214,6 @@ void Building::DestroyBuilding()
 	iPoint p = App->map->WorldToMap(GetX(), GetY());
 	App->pathfinding->MakeConstruible_neutral(p);
 	App->pathfinding->MakeConstruible_ally(p);
-	App->pathfinding->MakeWalkable(p);
 	this->Die();
 }
 

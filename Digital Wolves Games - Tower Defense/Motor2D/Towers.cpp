@@ -204,6 +204,7 @@ void Tower::AI()
 	{
 		Target = nullptr;
 		ConvertToRubble();
+		App->pathfinding->MakeWalkable(posintiles);
 	}
 	if (IsAlive() == false && GetDieTime() >= 2)
 		DestroyTower();
@@ -293,7 +294,6 @@ void Tower::DestroyTower()
 {
 	App->pathfinding->MakeConstruible_neutral(posintiles);
 	App->pathfinding->MakeConstruible_ally(posintiles);
-	App->pathfinding->MakeWalkable(posintiles);
 	this->Die();
 }
 

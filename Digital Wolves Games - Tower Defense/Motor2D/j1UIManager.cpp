@@ -1,6 +1,3 @@
-#define RIGHT_CLICK 3
-#define LEFT_CLICK 1
-
 #include "j1UIManager.h"
 
 #include "p2Defs.h"
@@ -139,11 +136,11 @@ UIComponents* j1UIManager::AddComponent(UICOMPONENT_TYPE type, const SDL_Rect & 
 	return new_component;
 }
 
-UIButton* j1UIManager::AddButton(const SDL_Rect & position, const SDL_Rect & atlas)
+UIButton* j1UIManager::AddButton(const SDL_Rect & position, const SDL_Rect & atlas, bool panel_buttons)
 {
 	UIButton* new_btn;
 	components.push_back(new_btn = new UIButton(UIT_UIBUTTON));
-	new_btn->Set(position, atlas);
+	new_btn->Set(position, atlas, panel_buttons);
 	return new_btn;
 }
 
@@ -311,4 +308,9 @@ void j1UIManager::ShowInGameMenu()
 		menu_btn->SetStat(CB_CHECK);
 	else
 		menu_btn->SetStat(CB_UNCHECK);
+}
+
+void j1UIManager::DrawMinimapQuad()
+{
+	minimap->DrawQuad();
 }

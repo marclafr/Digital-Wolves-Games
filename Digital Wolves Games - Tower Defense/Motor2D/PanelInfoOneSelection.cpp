@@ -274,11 +274,31 @@ void OneSelection::DrawBuildInfo()
 
 	if (building_life_bar->GetHp() > 0)
 	{
-		life_bar_selected.w = ReturnValueBarHPBuilding(building_life_bar->GetBuildingType(), building_life_bar->GetHp(), GREEN_BAR_PIXELS);
+		int rest_life_bar = 0;
+		int height_correction = 0;
 
-		//Bar life
-		int rest_life_bar = ReturnValueBarHPBuilding(building_life_bar->GetBuildingType(), building_life_bar->GetHp());
-		int height_correction = ReturnValueHeightCorrectionBuilding(building_life_bar->GetBuildingType());
+		if (building_life_bar->GetBuildingType() == B_CANNON ||
+			building_life_bar->GetBuildingType() == B_TURRET ||
+			building_life_bar->GetBuildingType() == B_TURRET_UPGRADED ||
+			building_life_bar->GetBuildingType() == B_CANNON_UPGRADED)
+		{
+			Tower* info_tower = (Tower*)building_life_bar;
+
+			life_bar_selected.w = ReturnValueBarHPTower(info_tower->GetTowerType(), info_tower->GetHp(), GREEN_BAR_PIXELS);
+
+			//Bar life
+			rest_life_bar = ReturnValueBarHPTower(info_tower->GetTowerType(), info_tower->GetHp());
+			height_correction = ReturnValueHeightCorrectionTowers(info_tower->GetTowerType());
+		}
+		else 
+		{
+			life_bar_selected.w = ReturnValueBarHPBuilding(building_life_bar->GetBuildingType(), building_life_bar->GetHp(), GREEN_BAR_PIXELS);
+
+			//Bar life
+			rest_life_bar = ReturnValueBarHPBuilding(building_life_bar->GetBuildingType(), building_life_bar->GetHp());
+			height_correction = ReturnValueHeightCorrectionBuilding(building_life_bar->GetBuildingType());
+		}
+
 		SDL_Rect mark_life_bar_red{ 1059, 832, 32, 4 };
 		SDL_Rect mark_life_bar_green{ 1059, 827, rest_life_bar, 4 };
 		App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), building_life_bar->GetX() - BAR_LIFE_CENTER, building_life_bar->GetY() - height_correction, &mark_life_bar_red);
@@ -323,7 +343,7 @@ void OneSelection::DrawBuildInfo()
 				App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), 356 - App->render->camera->GetPosition().x, 701 - App->render->camera->GetPosition().y, &mark_icon);
 
 				//Progress bar
-				SDL_Rect mark_clear_bar{ 330, 1203, 100, 12 };
+				SDL_Rect mark_clear_bar{ 300, 1203, 100, 12 };
 				SDL_Rect mark_last_bar{ 403, 1216, 1, 12 };
 				SDL_Rect mark_full_bar{ 298, 1216, 2 + (int)percentage, 12 };
 				App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), 400 - App->render->camera->GetPosition().x, 729 - App->render->camera->GetPosition().y, &mark_clear_bar);
