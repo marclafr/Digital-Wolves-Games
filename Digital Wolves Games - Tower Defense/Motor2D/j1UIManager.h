@@ -61,7 +61,7 @@ public:
 
 	// Gui creation functions
 	UIComponents* AddComponent(UICOMPONENT_TYPE type, const SDL_Rect & position, const SDL_Rect & atlas);
-	UIButton* AddButton(const SDL_Rect & position, const SDL_Rect & atlas);
+	UIButton * AddButton(const SDL_Rect & position, const SDL_Rect & atlas, bool panel_buttons = false);
 	UILabel* AddLabel(int pos_x, int pos_y, const char * text, SDL_Color color = { 255,255,255,0 }, _TTF_Font*  font = nullptr);
 	UICheckbutton* AddCheckButton(const SDL_Rect& position, const SDL_Rect& atlas, const SDL_Rect & atlas_clicked);
 	void AddPanelInfo();
@@ -89,6 +89,7 @@ public:
 	UIHUDPanelButtons* GetPanelButtons() const;
 	void DeletePanelButtons();
 	void ShowInGameMenu();
+	void DrawMinimapQuad();
 
 private:
 	std::list<UIComponents*> components;

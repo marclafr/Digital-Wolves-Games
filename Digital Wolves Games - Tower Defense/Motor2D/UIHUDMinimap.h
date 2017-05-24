@@ -30,6 +30,7 @@ public:
 	bool Update();
 
 	void Draw();
+	void DrawQuad();
 
 	iPoint WorldToMinimap(fPoint world_point);
 	iPoint MinimapToWorld(fPoint minimap_point);

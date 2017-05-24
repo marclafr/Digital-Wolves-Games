@@ -9,6 +9,7 @@
 #include "Entity.h"
 #include "j1Animation.h"
 #include "j1EntityManager.h"
+#include "j1UIManager.h"
 #include "Camera.h"
 #include "j1Scene.h"
 
@@ -471,6 +472,7 @@ void j1Render::BlitGameScene()
 
 	BlitUI();
 	App->entity_manager->BlitMinimap();
+	//App->uimanager->DrawMinimapQuad(); DISABLED, DRAW INCORRECTLY AND INVERSE :(
 
 	CleanUpMapVec();
 	CleanUpInGameSpriteQueue();

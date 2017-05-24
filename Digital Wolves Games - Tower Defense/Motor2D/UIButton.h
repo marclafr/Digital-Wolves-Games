@@ -29,7 +29,7 @@ private:
 	Task* task = nullptr;
 	bool delete_task = true;
 
-	bool is_ui_pannel = false;
+	bool panel_buttons;
 
 	UILabel* title = nullptr;
 
@@ -37,7 +37,7 @@ public:
 	UIButton(UICOMPONENT_TYPE type);
 	~UIButton();
 
-	void Set(const SDL_Rect& position, const SDL_Rect& atlas);
+	void Set(const SDL_Rect& position, const SDL_Rect& atlas, bool panel_buttons = false);
 
 	void Draw();
 	void HandleInput(SDL_Event);

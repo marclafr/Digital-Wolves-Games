@@ -392,8 +392,7 @@ void info_button::CreateButton()
 	{
 		btn = App->uimanager->AddButton(
 		{ PANEL_XPOSITION + (ICON_SEPARATION * position.x),PANEL_YPOSITION + (ICON_SEPARATION * position.y),ICON_SIZE, ICON_SIZE },
-		{ atlas.x, atlas.y,ICON_ATLASSIZE, ICON_ATLASSIZE }
-		);
+		{ atlas.x, atlas.y,ICON_ATLASSIZE, ICON_ATLASSIZE }, true);
 		btn->SetTask(task);
 		btn->SetNotDeleteTask();
 	}

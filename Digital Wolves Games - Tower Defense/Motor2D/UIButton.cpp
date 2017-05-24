@@ -18,12 +18,13 @@ UIButton::~UIButton()
 		DELETE_PTR(task);
 }
 
-void UIButton::Set(const SDL_Rect & position, const SDL_Rect & atlas)
+void UIButton::Set(const SDL_Rect & position, const SDL_Rect & atlas, bool panel_buttons)
 {
 	rect_position = position;
 	rect_atlas = atlas;
 	atlas_clicked = atlas;
 	atlas_mouse_on_top = atlas;
+	this->panel_buttons = panel_buttons;
 }
 
 void UIButton::Draw()
@@ -37,19 +38,28 @@ void UIButton::Draw()
 	{
 	case BS_NONE:
 		App->render->PushUISprite(atlas, rect.x, rect.y, &GetAtlasRect());
+		if (panel_buttons)
+		{
+			SDL_Rect mark_btn{ 969, 827, 29, 29 };
+			App->render->PushUISprite(atlas, rect.x - UI_PANEL_MARK_MARGIN, rect.y - UI_PANEL_MARK_MARGIN, &mark_btn);
+		}
 		break;
 	case BS_CLICKED:
 		App->render->PushUISprite(atlas, rect.x - displacement, rect.y - displacement, &atlas_clicked);
+		if (panel_buttons)
+		{
+			SDL_Rect mark_btn{ 1092, 827, 29, 29 };
+			App->render->PushUISprite(atlas, rect.x - UI_PANEL_MARK_MARGIN, rect.y - UI_PANEL_MARK_MARGIN, &mark_btn);
+		}
 		break;
 	case BS_MOUSE_ON_TOP:
 		App->render->PushUISprite(atlas, rect.x - displacement, rect.y - displacement, &atlas_mouse_on_top);
+		if (panel_buttons)
+		{
+			SDL_Rect mark_btn{ 969, 827, 29, 29 };
+			App->render->PushUISprite(atlas, rect.x - UI_PANEL_MARK_MARGIN, rect.y - UI_PANEL_MARK_MARGIN, &mark_btn);
+		}
 		break;
-	}
-
-	if (is_ui_pannel)
-	{
-		SDL_Rect mark_btn{ 969, 827, 29, 29 };
-		App->render->PushUISprite(atlas, rect.x - UI_PANEL_MARK_MARGIN, rect.y - UI_PANEL_MARK_MARGIN, &mark_btn);
 	}
 }
 
