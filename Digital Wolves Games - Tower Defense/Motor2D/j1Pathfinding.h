@@ -99,6 +99,9 @@ public:
 
 	iPoint FindNearestEmpty(const iPoint start) const;
 
+	void UpdateAfterBuilding(iPoint& building_tile);
+	bool IsInPath(const iPoint& tile, const std::vector<iPoint>& path) const;
+
 	//JPS
 	//Main function of JPS Algorithm
 	bool CalculatePath(iPoint origin,const iPoint& destination, std::vector<iPoint>& vec_to_fill);
@@ -168,7 +171,7 @@ private:
 	// we store the created path here
 	std::vector<iPoint> last_path;
 
-	std::vector<std::vector<iPoint>*> all_paths;
+	std::vector<std::vector<iPoint>*> allied_paths;
 
 	//JPS
 	bool destination_reached = false;

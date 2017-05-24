@@ -925,7 +925,7 @@ void j1PathFinding::DeleteIfNotPushed(PathNode *& ptr)
 
 void j1PathFinding::AddPath(std::vector<iPoint>* path)
 {
-	all_paths.push_back(path);
+	allied_paths.push_back(path);
 }
 
 bool j1PathFinding::IsEmpty(const iPoint tile, Entity* exeption) const
@@ -979,6 +979,57 @@ iPoint j1PathFinding::FindNearestEmpty(const iPoint start) const
 		range++;
 	}
 	return iPoint(-1,-1);
+}
+
+void j1PathFinding::UpdateAfterBuilding(iPoint & building_tile)
+{
+	for (std::vector<std::vector<iPoint>*>::iterator it = allied_paths.begin(); it != allied_paths.end(); ++it)
+	{
+		if (IsInPath(building_tile, *(*it)))
+			CalculatePath((*it)->front(), (*it)->back(), *(*it));
+	}
+}
+
+bool j1PathFinding::IsInPath(const iPoint & tile, const std::vector<iPoint>& path) const
+{
+	X_DIRECTION x_dir = X_NO_DIR;
+	Y_DIRECTION y_dir = Y_NO_DIR;
+
+	for (int i = 0; i < path.size() - 1; i++)
+	{
+		if (path[i + 1].x - path[i].x > 0)
+			x_dir = X_LEFT;
+		else if(path[i + 1].x - path[i].x < 0)
+			x_dir = X_RIGHT;
+		else if (path[i + 1].x - path[i].x == 0)
+			x_dir = X_NO_DIR;
+
+		if (path[i + 1].y - path[i].y > 0)
+			y_dir = Y_DOWN;
+		else if (path[i + 1].y - path[i].y < 0)
+			y_dir = Y_UP;
+		else if (path[i + 1].y - path[i].y == 0)
+			y_dir = Y_NO_DIR;
+
+		iPoint current_tile(path[i]);
+
+		while (current_tile != path[i + 1])
+		{
+			if (current_tile == tile)
+				return true;
+
+			if (x_dir == X_LEFT)
+				current_tile.x++;
+			if (x_dir == X_RIGHT)
+				current_tile.x--;
+
+			if (y_dir == Y_DOWN)
+				current_tile.y++;
+			if (y_dir == Y_UP)
+				current_tile.y--;
+		}
+	}
+	return false;
 }
 
 void j1PathFinding::Debug()

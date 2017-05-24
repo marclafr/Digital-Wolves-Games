@@ -17,7 +17,7 @@
 Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), target(nullptr), priority(priority)
 {
 	//Add paths
-	App->pathfinding->AddPath(&path_vec);
+	
 
 	if (side == S_ENEMY)
 	{
@@ -25,6 +25,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		bonus_attack = true;
 		bonus_defense = true;
 	}
+	else
+		App->pathfinding->AddPath(&path_vec);
 
 	switch (u_type)
 	{
@@ -102,7 +104,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_TWOHANDEDSWORDMAN:
 		SetHp(95);
-		attack = 13;
+		attack = 0.5;// 13;
 		SetArmor(5);
 		speed = 1.30f;
 		rate_of_fire = 100.0f;
@@ -474,12 +476,12 @@ void Unit::AI()
 			break;
 		}
 		
-		if (GetSide() == S_ENEMY)
+		/*if (GetSide() == S_ENEMY)
 		{
 			target = App->scene->townhall;
 			GoToEnemy();
 			break;
-		}
+		}*/
 
 		/*collision = App->entity_manager->CheckUnitCollisions(this);
 		if (collision != nullptr && collided == false)
@@ -531,14 +533,12 @@ void Unit::AI()
 			break;
 		}
 
-
 		target = EnemyInSight();
 		if (target != nullptr)
 		{
 			ChangeDirecctionToEnemy();
 			break;
 		}
-
 
 		break;
 
@@ -957,7 +957,6 @@ bool Unit::EnemyDead()
 		target = nullptr;
 		return true;
 	}
-
 	return false;
 }
 

@@ -264,13 +264,16 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				//if (App->entity_manager->AbleToBuild(pos))
-				//{
+				if (App->entity_manager->AbleToBuild(map_coordinates))
+				{
 					App->audio->PlayFx(App->audio->fx_construction);
 
 					if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true || App->pathfinding->IsConstructible_ally(map_coordinates) == true)
+					{
 						resources->BuildTower(type, pos, map_coordinates);
-				//}
+						//App->pathfinding->UpdateAfterBuilding(map_coordinates); //TODO
+					}
+				}
 			}
 		}
 	}
