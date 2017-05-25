@@ -7,14 +7,11 @@
 #include "j1Timer.h"
 
 
-#define ENEMY_CREATION_POS_X1 -1296
-#define ENEMY_CREATION_POS_Y1 2880
-
-#define ENEMY_CREATION_POS_X2 -1200
-#define ENEMY_CREATION_POS_Y2 2928
+#define LEFT_UP_TILE_X 47
+#define LEFT_UP_TILE_y 73
 
 #define TIME_BETWEEN_WAVES 20 //seconds
-#define TIME_BETWEEN_UNITS 1 //seconds
+#define TIME_BETWEEN_UNITS 1 //seconds 522 317
 
 enum UNIT_TYPE;
 

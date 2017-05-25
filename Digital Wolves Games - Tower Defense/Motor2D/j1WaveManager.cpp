@@ -549,23 +549,26 @@ void Wave::PushBack(UnitGroup unit_group, STARTING_ENEMY_POS start_pos)
 fPoint UnitGroup::GetStartingPos(STARTING_ENEMY_POS pos) const
 {
 	//TODO rellenar posiciones
+	iPoint spawn;
+
 	switch (pos)
 	{
 	case LEFT_UP:
-		return fPoint(-1082, 2799);//2880 1032
+		spawn = App->map->MapToWorld(47,73);
 		break;
 	case LEFT_DOWN:
-		return fPoint(-1020, 2900);
+		spawn = App->map->MapToWorld(49, 73);
 		break;
 	case RIGHT_UP:
-		return fPoint(-417, 3256);
+		spawn = App->map->MapToWorld(64, 73);
 		break;
 	case RIGHT_DOWN:
-		return fPoint(-275, 3325);
+		spawn = App->map->MapToWorld(66, 73);
 		break;
 	default:
 		break;
 	}
+	return fPoint(spawn.x, spawn.y);
 }
 
 UnitGroup::UnitGroup(UNIT_TYPE type, int amount, STARTING_ENEMY_POS start_pos) : type(type), amount(amount), start_pos(start_pos)
