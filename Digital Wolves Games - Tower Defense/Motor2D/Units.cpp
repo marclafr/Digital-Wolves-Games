@@ -57,7 +57,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(43);
 		attack = 5;
 		SetArmor(1);
-		speed = 1.45f;
+		speed = 1.42f;
 		rate_of_fire = 80.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
@@ -73,7 +73,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 	case U_MANATARMS:
 		SetHp(58);
 		attack = 7;
-		SetArmor(3);
+		SetArmor(4);
 		speed = 1.28f;
 		rate_of_fire = 120.0f;
 		range = CLOSE_COMBAT_RANGE;
@@ -89,7 +89,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 	case U_LONGSWORDMAN:
 		SetHp(118);
 		attack = 10;
-		SetArmor(4);
+		SetArmor(5);
 		speed = 1.30f;
 		rate_of_fire = 95.0f;
 		range = CLOSE_COMBAT_RANGE;
@@ -105,7 +105,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 	case U_TWOHANDEDSWORDMAN:
 		SetHp(95);
 		attack = 0.5;// 13;
-		SetArmor(5);
+		SetArmor(7);
 		speed = 1.30f;
 		rate_of_fire = 100.0f;
 		range = CLOSE_COMBAT_RANGE;
@@ -121,7 +121,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 	case U_CHAMPION:
 		SetHp(152);
 		attack = 14;
-		SetArmor(6);
+		SetArmor(8);
 		speed = 1.30f;
 		rate_of_fire = 100.0f;
 		range = CLOSE_COMBAT_RANGE;
@@ -205,7 +205,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 	case U_CAVALRYARCHER:
 		SetHp(65);
 		attack = 6;
-		SetArmor(1);
+		SetArmor(2);
 		speed = 1.55f;
 		rate_of_fire = 85.0f;
 		range = LONG_COMBAT_RANGE;
@@ -221,8 +221,8 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 	case U_HEAVYCAVALRYARCHER:
 		SetHp(81);
 		attack = 8;
-		SetArmor(1);
-		speed = 2.55f;
+		SetArmor(4);
+		speed = 1.55f;
 		rate_of_fire = 120.0f;
 		range = LONG_COMBAT_RANGE;
 		unit_class = C_ARCHER;
@@ -291,7 +291,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 	case U_SIEGERAM:
 		SetHp(600);
 		attack = 110;
-		SetArmor(-3);
+		SetArmor(3);
 		speed = 0.7f;
 		rate_of_fire = 210.0f;
 		range = CLOSE_COMBAT_RANGE;
