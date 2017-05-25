@@ -476,12 +476,12 @@ void Unit::AI()
 			break;
 		}
 		
-		/*if (GetSide() == S_ENEMY)
+		if (GetSide() == S_ENEMY)
 		{
 			target = App->scene->townhall;
 			GoToEnemy();
 			break;
-		}*/
+		}
 
 		/*collision = App->entity_manager->CheckUnitCollisions(this);
 		if (collision != nullptr && collided == false)

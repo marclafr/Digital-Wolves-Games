@@ -67,9 +67,9 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 	buildtimer.Start();
 	iPoint p = App->map->WorldToMap(pos.x, pos.y);
 
-		App->pathfinding->MakeNoWalkable(iPoint(p.x + 1, p.y));
-		App->pathfinding->MakeNoConstruible_neutral(p);
-		App->pathfinding->MakeNoConstruible_ally(p);
+	App->pathfinding->MakeNoWalkable(p);
+	App->pathfinding->MakeNoConstruible_neutral(p);
+	App->pathfinding->MakeNoConstruible_ally(p);
 }
 
 Building::~Building()

@@ -78,59 +78,59 @@ void j1PathFinding::SetConstructibleMaps(uint width, uint height, uchar* data, u
 }
 
 // Utility: return true if pos is inside the map boundaries
-bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
+bool j1PathFinding::CheckBoundaries(const iPoint& tile) const
 {
-	return (pos.x >= 0 && pos.x <= (int)width &&
-		pos.y >= 0 && pos.y <= (int)height);
+	return (tile.x >= 0 && tile.x <= (int)width &&
+		tile.y >= 0 && tile.y <= (int)height);
 }
 
 // Utility: returns true is the tile is walkable
-bool j1PathFinding::IsWalkable(const iPoint& pos) const
+bool j1PathFinding::IsWalkable(const iPoint& tile) const
 {
-	uchar t = GetTileAt(pos);
+	uchar t = GetTileAt(tile);
 	return t != INVALID_WALK_CODE && t > 0;
 }
 
-bool j1PathFinding::IsConstructible_ally(const iPoint& pos) const
+bool j1PathFinding::IsConstructible_ally(const iPoint& tile) const
 {
-	uchar t = GetTileAtConstructible_ally(pos);
+	uchar t = GetTileAtConstructible_ally(tile);
 	return t != INVALID_WALK_CODE && t > 1;
 }
 
-bool j1PathFinding::IsConstructible_neutral(const iPoint& pos) const
+bool j1PathFinding::IsConstructible_neutral(const iPoint& tile) const
 {
-	uchar t = GetTileAtConstructible_neutral(pos);
+	uchar t = GetTileAtConstructible_neutral(tile);
 	return t != INVALID_WALK_CODE && t > 1;
 }
 
-void j1PathFinding::MakeNoConstruible_ally(const iPoint& pos)
+void j1PathFinding::MakeNoConstruible_ally(const iPoint& tile)
 {
-	constructible_map_ally[pos.y*width + pos.x] = INVALID_WALK_CODE;
+	constructible_map_ally[tile.y*width + tile.x] = INVALID_WALK_CODE;
 }
 
-void j1PathFinding::MakeNoConstruible_neutral(const iPoint& pos)
+void j1PathFinding::MakeNoConstruible_neutral(const iPoint& tile)
 {
-	constructible_map_neutral[pos.y*width + pos.x] = INVALID_WALK_CODE;
+	constructible_map_neutral[tile.y*width + tile.x] = INVALID_WALK_CODE;
 }
 
-void j1PathFinding::MakeConstruible_neutral(const iPoint& pos)
+void j1PathFinding::MakeConstruible_neutral(const iPoint& tile)
 {
-	constructible_map_neutral[pos.y*width + pos.x] = 10;
+	constructible_map_neutral[tile.y*width + tile.x] = 10;
 }
 
-void j1PathFinding::MakeConstruible_ally(const iPoint& pos)
+void j1PathFinding::MakeConstruible_ally(const iPoint& tile)
 {
-	constructible_map_ally[pos.y*width + pos.x] = 10;
+	constructible_map_ally[tile.y*width + tile.x] = 10;
 }
 
-void j1PathFinding::MakeNoWalkable(const iPoint& pos)
+void j1PathFinding::MakeNoWalkable(const iPoint& tile)
 {
-	map[pos.y*width + pos.x] = INVALID_WALK_CODE;
+	map[tile.y*width + tile.x] = INVALID_WALK_CODE;
 }
 
-void j1PathFinding::MakeWalkable(const iPoint& pos)
+void j1PathFinding::MakeWalkable(const iPoint& tile)
 {
-	map[pos.y*width + pos.x] = 34;
+	map[tile.y*width + tile.x] = 34;
 }
 
 iPoint j1PathFinding::FindEmptyTile(iPoint from, Elipse collision) const

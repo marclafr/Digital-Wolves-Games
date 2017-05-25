@@ -76,12 +76,12 @@ bool j1Scene::Start()
 
 	iPoint tower_ipos = App->map->MapToWorld(TOWER_POS_1_X, TOWER_POS_1_Y);
 	fPoint tower_pos(tower_ipos.x, tower_ipos.y);
-	App->entity_manager->CreateTower(T_BOMBARD_TOWER, tower_pos, iPoint(TOWER_POS_1_X, TOWER_POS_1_Y));
+	App->entity_manager->CreateTower(T_BOMBARD_TOWER, tower_pos);
 
 	tower_ipos = App->map->MapToWorld(TOWER_POS_2_X, TOWER_POS_2_Y);
 	tower_pos.x = tower_ipos.x;
 	tower_pos.y = tower_ipos.y;
-	App->entity_manager->CreateTower(T_BASIC_TOWER, tower_pos, iPoint(TOWER_POS_2_X, TOWER_POS_2_Y));
+	App->entity_manager->CreateTower(T_BASIC_TOWER, tower_pos);
 
 	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
 	//--
@@ -270,7 +270,7 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 
 					if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true || App->pathfinding->IsConstructible_ally(map_coordinates) == true)
 					{
-						resources->BuildTower(type, pos, map_coordinates);
+						resources->BuildTower(type, pos);
 						//App->pathfinding->UpdateAfterBuilding(map_coordinates); //TODO
 					}
 				}

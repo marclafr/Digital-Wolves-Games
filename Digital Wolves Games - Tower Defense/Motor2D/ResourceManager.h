@@ -78,7 +78,7 @@ public:
 
 	//Entity creation
 	bool CanBuildTower(TOWER_TYPE type);
-	void BuildTower(TOWER_TYPE type, iPoint pos, iPoint posintiles);
+	void BuildTower(TOWER_TYPE type, iPoint pos);
 	bool CanBuildWall(BUILDING_TYPE type);
 	bool CanBuildAmountOfWalls(int number_of_walls);
 	void BuildWall(BUILDING_TYPE type);

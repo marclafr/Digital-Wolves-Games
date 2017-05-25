@@ -301,8 +301,8 @@ iPoint j1Map::WorldToMap(int x, int y) const
 
 		if (ret.x < 0) ret.x = 0;
 		if (ret.y < 0) ret.y = 0;
-		if (ret.x > 74) ret.x = 74;
-		if (ret.y > 74) ret.y = 74;
+		if (ret.x > 75) ret.x = 75;
+		if (ret.y > 75) ret.y = 75;
 	}
 	else
 	{

@@ -200,7 +200,7 @@ bool ResourceManager::CanBuildTower(TOWER_TYPE type)
 	return false;
 }
 
-void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos, iPoint posintiles)
+void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos)
 {
 	//TODO fill defines and cases for all towers && all creates here. use this funct with a task
 	switch (type)
@@ -237,7 +237,7 @@ void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos, iPoint posintiles)
 	case T_BOMBARD_AIR_TOWER:
 		break;
 	}
-	App->entity_manager->CreateTower(type, fPoint(pos.x, pos.y), posintiles);
+	App->entity_manager->CreateTower(type, fPoint(pos.x, pos.y));
 }
 
 bool ResourceManager::CanBuildWall(BUILDING_TYPE type)

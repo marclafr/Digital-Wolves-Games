@@ -48,9 +48,9 @@ Entity * j1EntityManager::CreateBuilding(BUILDING_TYPE b_type, fPoint pos, bool 
 	return new_entity;
 }
 
-Entity * j1EntityManager::CreateTower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) const
+Entity * j1EntityManager::CreateTower(TOWER_TYPE t_type, fPoint pos) const
 {
-	Entity* new_entity = (Entity*) new Tower(t_type, pos, posintiles);
+	Entity* new_entity = (Entity*) new Tower(t_type, pos);
 	entity_quadtree->PushBack(new_entity);
 	return new_entity;
 }
@@ -342,7 +342,7 @@ void j1EntityManager::LoadTurret(pugi::xml_node& data)
 {
 	pugi::xml_node Actualturret = data;
 	fPoint pos(Actualturret.attribute("posx").as_int(), Actualturret.attribute("posy").as_int());
-	Tower* actualturret = (Tower*)App->entity_manager->CreateTower(TOWER_TYPE(Actualturret.attribute("tower_type").as_int()), pos, iPoint(Actualturret.attribute("tilex").as_int(), Actualturret.attribute("tilyx").as_int()));
+	Tower* actualturret = (Tower*)App->entity_manager->CreateTower(TOWER_TYPE(Actualturret.attribute("tower_type").as_int()), pos);
 	actualturret->SetHp(Actualturret.attribute("hp").as_int());
 	actualturret->BuildingComplete();
 }

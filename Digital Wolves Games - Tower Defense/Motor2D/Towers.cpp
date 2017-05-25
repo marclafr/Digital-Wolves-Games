@@ -12,7 +12,7 @@
 #include "Camera.h"
 #include "j1Scene.h"
 
-Tower::Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type), posintiles(posintiles)
+Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), tower_type(t_type)
 {
 	SDL_Rect tower_rect;
 	iPoint pivot;
@@ -141,10 +141,10 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos, iPoint posintiles) : Building(B_TURR
 	SetTextureID(T_TURRET);
 	AttackTimer.Start();
 
-	App->pathfinding->MakeNoWalkable(iPoint(posintiles.x, posintiles.y));
-
-	App->pathfinding->MakeNoConstruible_neutral(posintiles);
-	App->pathfinding->MakeNoConstruible_ally(posintiles);
+	iPoint tile = App->map->WorldToMap(pos.x, pos.y);
+	App->pathfinding->MakeNoWalkable(tile);
+	App->pathfinding->MakeNoConstruible_neutral(tile);
+	App->pathfinding->MakeNoConstruible_ally(tile);
 }
 
 Tower::~Tower()
@@ -204,7 +204,7 @@ void Tower::AI()
 	{
 		Target = nullptr;
 		ConvertToRubble();
-		App->pathfinding->MakeWalkable(posintiles);
+		App->pathfinding->MakeWalkable(App->map->WorldToMap(GetPosition().x, GetPosition().y));
 	}
 	if (IsAlive() == false && GetDieTime() >= 2)
 		DestroyTower();
@@ -279,8 +279,6 @@ void Tower::Save(pugi::xml_node &data)
 	ActualTurret.append_attribute("tower_type") = GetTowerType();
 	ActualTurret.append_attribute("posx") = GetX();
 	ActualTurret.append_attribute("posy") = GetY();
-	ActualTurret.append_attribute("tilex") = posintiles.x;
-	ActualTurret.append_attribute("tiley") = posintiles.y;
 	ActualTurret.append_attribute("hp") = GetHp();
 }
 
@@ -292,8 +290,9 @@ float Tower::GetSpeed()
 
 void Tower::DestroyTower()
 {
-	App->pathfinding->MakeConstruible_neutral(posintiles);
-	App->pathfinding->MakeConstruible_ally(posintiles);
+	iPoint tile = App->map->WorldToMap(GetPosition().x, GetPosition().y);
+	App->pathfinding->MakeConstruible_neutral(tile);
+	App->pathfinding->MakeConstruible_ally(tile);
 	this->Die();
 }
 

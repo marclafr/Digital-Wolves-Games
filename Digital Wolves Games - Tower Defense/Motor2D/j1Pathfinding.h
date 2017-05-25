@@ -69,18 +69,18 @@ public:
 	const std::vector<iPoint>& GetLastPath() const;
 
 	// Utility: return true if pos is inside the map boundaries
-	bool CheckBoundaries(const iPoint& pos) const;
+	bool CheckBoundaries(const iPoint& tile) const;
 
 	// Utility: returns true is the tile is walkable
-	bool IsWalkable(const iPoint& pos) const;
-	bool IsConstructible_ally(const iPoint& pos) const;
-	bool IsConstructible_neutral(const iPoint& pos) const;
-	void MakeNoConstruible_ally(const iPoint& pos);
-	void MakeNoConstruible_neutral(const iPoint& pos);
-	void MakeConstruible_ally(const iPoint& pos);
-	void MakeConstruible_neutral(const iPoint& pos);
-	void MakeNoWalkable(const iPoint& pos);
-	void MakeWalkable(const iPoint& pos);
+	bool IsWalkable(const iPoint& tile) const;
+	bool IsConstructible_ally(const iPoint& tile) const;
+	bool IsConstructible_neutral(const iPoint& tile) const;
+	void MakeNoConstruible_ally(const iPoint& tile);
+	void MakeNoConstruible_neutral(const iPoint& tile);
+	void MakeConstruible_ally(const iPoint& tile);
+	void MakeConstruible_neutral(const iPoint& tile);
+	void MakeNoWalkable(const iPoint& tile);
+	void MakeWalkable(const iPoint& tile);
 	iPoint FindEmptyTile(iPoint from, Elipse collision) const;
 	iPoint FindClosestEmptyAttackTile(iPoint objective_pos, int tile_range, Entity* attacker);
 
