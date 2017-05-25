@@ -284,37 +284,9 @@ iPoint j1Map::MapToWorld(int x, int y, TileSet* tileset) const
 
 iPoint j1Map::WorldToMap(int x, int y) const
 {
-	/*iPoint ret(x + data.tile_width * 0.5f, y);
-
-	if (data.type == MAPTYPE_ISOMETRIC)
-	{
-		float det = 2*sin(TILE_ANGLE)*cos(TILE_ANGLE);
-
-		fPoint iso_pos;
-		iso_pos.x = (x * (-sin(TILE_ANGLE)) + y * cos(TILE_ANGLE)) / det;
-		iso_pos.y = (x * sin(TILE_ANGLE) + y * cos(TILE_ANGLE)) / det;
-		
-		float tile_diagonal = sqrtf(((data.tile_height)/2)*((data.tile_height)/2) + ((data.tile_width)/2)*((data.tile_width )/2));
-
-		ret.y = iso_pos.x / tile_diagonal;
-		ret.x = iso_pos.y / tile_diagonal;
-
-		if (ret.x < 0) ret.x = 0;
-		if (ret.y < 0) ret.y = 0;
-		if (ret.x > 75) ret.x = 75;
-		if (ret.y > 75) ret.y = 75;
-	}
-	else
-	{
-		LOG("Unknown map type");
-	}*/
-
 	fPoint ret;
 	float tile_height = data.tile_height - 1;
 	float tile_width = data.tile_width - 1;
-
-	//ret.x = x / tile_width + y / (tile_height + 2) + 0.5f;
-	//ret.y = y / (tile_height + 2) - x / tile_width - 0.5f;
 
 	ret.y = (y - tile_height / 2.0f) / (tile_height + 2.0f) - x / tile_width + 0.5f;
 	ret.x = 2.0f * x / tile_width + ((y - tile_height / 2.0f) / (tile_height + 2.0f) - x / tile_width) + 0.5f;
