@@ -284,7 +284,7 @@ iPoint j1Map::MapToWorld(int x, int y, TileSet* tileset) const
 
 iPoint j1Map::WorldToMap(int x, int y) const
 {
-	iPoint ret(x + data.tile_width * 0.5f, y);
+	/*iPoint ret(x + data.tile_width * 0.5f, y);
 
 	if (data.type == MAPTYPE_ISOMETRIC)
 	{
@@ -307,9 +307,30 @@ iPoint j1Map::WorldToMap(int x, int y) const
 	else
 	{
 		LOG("Unknown map type");
-	}
+	}*/
 
-	return ret;
+	fPoint ret;
+	float tile_height = data.tile_height - 1;
+	float tile_width = data.tile_width - 1;
+
+	//ret.x = x / tile_width + y / (tile_height + 2) + 0.5f;
+	//ret.y = y / (tile_height + 2) - x / tile_width - 0.5f;
+
+	ret.y = (y - tile_height / 2.0f) / (tile_height + 2.0f) - x / tile_width + 0.5f;
+	ret.x = 2.0f * x / tile_width + ((y - tile_height / 2.0f) / (tile_height + 2.0f) - x / tile_width) + 0.5f;
+
+	//Correcció
+	float diff = ret.x - ret.y;
+
+	ret.x -= 0.4f * (diff / 75.0f);
+	ret.y += 0.4f * (diff / 75.0f);
+
+	if (ret.x < 0) ret.x = 0;
+	if (ret.y < 0) ret.y = 0;
+	if (ret.x > 74) ret.x = 74;
+	if (ret.y > 74) ret.y = 74;
+
+	return iPoint(ret.x, ret.y);
 }
 
 SDL_Rect TileSet::GetTileRect(int id) const

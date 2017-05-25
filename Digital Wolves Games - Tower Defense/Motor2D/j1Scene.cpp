@@ -58,7 +58,6 @@ bool j1Scene::Start()
 	App->pathfinding->Enable();
 	App->map->Enable();
 	App->anim->Enable();
-	//App->collision->Enable();
 	App->entity_manager->Enable();
 	App->projectile_manager->Enable();
 	App->investigations->Enable();
@@ -102,7 +101,7 @@ bool j1Scene::Start()
 	}
 	else
 	{ }
-		App->wave_manager->Enable();//TODO put after tutorial 
+		//App->wave_manager->Enable();//TODO put after tutorial 
 		
 
 	return true;
@@ -208,7 +207,7 @@ bool j1Scene::PostUpdate()
 		int y = 0;
 		App->input->GetMousePosition(x, y);
 		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, pos, S_ENEMY);
+		App->entity_manager->CreateUnit(U_ARCHER, pos, S_ENEMY);
 	}
 
 	return ret;

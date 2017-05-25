@@ -266,7 +266,7 @@ void j1App::FinishUpdate()
 
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
+	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y); // = App->map->WorldToMap(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
 
 	static char mouse_pos[256];
 	sprintf_s(mouse_pos, 256, "Mouse Pos: %d,%d", x, y);
