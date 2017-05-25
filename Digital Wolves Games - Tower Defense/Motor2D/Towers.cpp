@@ -23,7 +23,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetHp(150);
 		SetAttack(15);
 		SetArmor(1);
-		rate_of_fire = 0.90f;	//time between each attack in seconds
+		rate_of_fire = 0.85f;	//time between each attack in seconds
 		range = 300;
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;
@@ -36,10 +36,10 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 
 	case T_BOMBARD_TOWER:
 		SetHp(175);
-		SetAttack(30);
-		SetArmor(1);
-		rate_of_fire = 2.0f;
-		range = 300;
+		SetAttack(26);
+		SetArmor(3);
+		rate_of_fire = 1.95f;
+		range = 290;
 		tower_type = T_BOMBARD_TOWER;
 		projectile_type = P_CANNONBALL;
 		SetBuildingType(B_CANNON);
@@ -50,11 +50,11 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		break;
 
 	case T_FIRE_TOWER:
-		SetHp(150);
-		SetAttack(15);
+		SetHp(90);
+		SetAttack(25);
 		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
-		range = 300;
+		rate_of_fire = 0.85f;	//time between each attack in seconds
+		range = 250;
 		tower_type = T_FIRE_TOWER;
 		projectile_type = P_FIRE_ARROW;
 		SetBuildingType(B_TURRET);
@@ -64,10 +64,10 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetPivot(pivot.x, pivot.y);
 		break;
 	case T_ICE_TOWER:
-		SetHp(150);
-		SetAttack(15);
+		SetHp(175);
+		SetAttack(20);
 		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
+		rate_of_fire = 0.88;	//time between each attack in seconds
 		range = 300;
 		tower_type = T_ICE_TOWER;
 		projectile_type = P_ICE_ARROW;
@@ -78,11 +78,11 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetPivot(pivot.x, pivot.y);
 		break;
 	case T_AIR_TOWER:
-		SetHp(150);
-		SetAttack(15);
+		SetHp(165);
+		SetAttack(11);
 		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
-		range = 300;
+		rate_of_fire = 0.55f;	//time between each attack in seconds
+		range = 350;
 		tower_type = T_AIR_TOWER;
 		projectile_type = P_AIR_ARROW;
 		SetBuildingType(B_TURRET);
@@ -92,11 +92,11 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetPivot(pivot.x, pivot.y);
 		break;
 	case T_BOMBARD_FIRE_TOWER:
-		SetHp(175);
-		SetAttack(40);
-		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
-		range = 300;
+		SetHp(225);
+		SetAttack(33);
+		SetArmor(4);
+		rate_of_fire = 1.95f;	//time between each attack in seconds
+		range = 290;
 		tower_type = T_BOMBARD_FIRE_TOWER;
 		projectile_type = P_FIRE_CANNONBALL;
 		SetBuildingType(B_TURRET);
@@ -106,11 +106,11 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetPivot(pivot.x, pivot.y);
 		break;
 	case T_BOMBARD_ICE_TOWER:
-		SetHp(175);
-		SetAttack(30);
-		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
-		range = 300;
+		SetHp(195);
+		SetAttack(28);
+		SetArmor(4);
+		rate_of_fire = 1.90f;	//time between each attack in seconds
+		range = 290;
 		tower_type = T_BOMBARD_ICE_TOWER;
 		projectile_type = P_ICE_CANNONBALL;
 		SetBuildingType(B_TURRET);
@@ -121,10 +121,10 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		break;
 	case T_BOMBARD_AIR_TOWER:
 		SetHp(175);
-		SetAttack(30);
-		SetArmor(1);
-		rate_of_fire = 1.0f;	//time between each attack in seconds
-		range = 300;
+		SetAttack(21);
+		SetArmor(4);
+		rate_of_fire = 1.45f;	//time between each attack in seconds
+		range = 325;
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_AIR_CANNONBALL;
 		SetBuildingType(B_TURRET);
@@ -329,6 +329,8 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					tower_type = T_FIRE_TOWER;
 					SetBuildingType(B_TURRET_UPGRADED);
 					SetAttack(GetAttack() + 10);
+					SetHp(190);
+					SetRange(-0.50);
 				}
 				break;
 			case TU_ICE:
@@ -341,6 +343,10 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_ICE_ARROW;
 					tower_type = T_ICE_TOWER;
 					SetBuildingType(B_TURRET_UPGRADED);
+					SetAttack(GetAttack() + 5);
+					SetHp(175);
+					SetSpeed(0.88f);
+					
 				}
 				break;
 			case TU_AIR:
@@ -353,8 +359,9 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_AIR_ARROW;
 					tower_type = T_AIR_TOWER;
 					SetBuildingType(B_TURRET_UPGRADED);
+					SetAttack(GetAttack() - 4);
 					SetSpeed(0.5f);
-					SetRange(2.0f);
+					SetRange(50);
 
 				}
 				break;
@@ -376,7 +383,9 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_FIRE_CANNONBALL;
 					tower_type = T_BOMBARD_FIRE_TOWER;
 					SetBuildingType(B_CANNON_UPGRADED);
-					SetAttack(GetAttack() + 3);
+					SetAttack(GetAttack() + 7);
+					SetHp(225);
+					SetRange(-10);
 				}
 				break;
 			case TU_ICE:
@@ -389,6 +398,9 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_ICE_CANNONBALL;
 					tower_type = T_BOMBARD_ICE_TOWER;
 					SetBuildingType(B_CANNON_UPGRADED);
+					SetAttack(GetAttack() + 2);
+					SetHp(195);
+					
 				}
 				break;
 			case TU_AIR:
@@ -401,8 +413,11 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					projectile_type = P_AIR_CANNONBALL;
 					tower_type = T_BOMBARD_AIR_TOWER;
 					SetBuildingType(B_CANNON_UPGRADED);
-					SetSpeed(1.0f);
-					SetRange(2.0f);
+					SetAttack(GetAttack() - 5);
+					SetHp(175);
+					SetRange(40);
+					SetSpeed(0.60f);
+
 				}
 				break;
 			default:

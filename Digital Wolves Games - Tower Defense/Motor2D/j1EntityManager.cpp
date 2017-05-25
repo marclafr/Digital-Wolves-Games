@@ -90,7 +90,7 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Enti
 				{
 					(*it)->SetEntityStatus(ST_NON_SELECTED);
 					selection.erase(it);
-					it = selection.begin();
+					--it;
 					if (selection.size() == 0)
 						break;
 				}
@@ -102,7 +102,7 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Enti
 		{
 			(*it)->SetEntityStatus(ST_NON_SELECTED);
 			selection.erase(it);
-			it = selection.begin();
+			--it;
 			if (selection.size() == 0)
 				break;
 		}
