@@ -29,6 +29,7 @@ private:
 	j1Timer buildtimer;
 	j1Timer CollectTimer;
 	bool totallybuilded = false;
+	AnimationManager* mill_anim = nullptr;
 public:
 
 	Resources(RESOURCE_TYPE b_type, fPoint pos, int collected = 100, float col_time = 11.0f);
