@@ -157,6 +157,7 @@ void GroupSelection::Draw()
 			ENTITY_TYPE e_type = (*es_item)->pointer_entity->GetEntityType();
 			Entity* e_selected = (*es_item)->pointer_entity;
 			Building* b_selected = nullptr;
+			Tower* t_selected = nullptr;
 			Resources* r_selected = nullptr;
 			Unit* u_selected = nullptr;
 			switch (e_type)
@@ -170,9 +171,21 @@ void GroupSelection::Draw()
 
 			case E_BUILDING:
 				b_selected = (Building*)e_selected;
-				rest_life_bar = ReturnValueBarHPBuilding(b_selected->GetBuildingType(), b_selected->GetHp());
-				height_correction = ReturnValueHeightCorrectionBuilding(b_selected->GetBuildingType());
-				life_bar.w = ReturnValueBarHPBuilding(b_selected->GetBuildingType(), b_selected->GetHp(), BAR_LIFE_PIXELS);
+				if (b_selected->GetBuildingType() == B_CANNON ||
+					b_selected->GetBuildingType() == B_TURRET ||
+					b_selected->GetBuildingType() == B_TURRET_UPGRADED ||
+					b_selected->GetBuildingType() == B_CANNON_UPGRADED)
+				{
+					t_selected = (Tower*)b_selected;
+					rest_life_bar = ReturnValueBarHPTower(t_selected->GetTowerType(), t_selected->GetHp());
+					height_correction = ReturnValueHeightCorrectionTowers(t_selected->GetTowerType());
+					life_bar.w = ReturnValueBarHPTower(t_selected->GetTowerType(), t_selected->GetHp(), BAR_LIFE_PIXELS);
+				}
+				else {
+					rest_life_bar = ReturnValueBarHPBuilding(b_selected->GetBuildingType(), b_selected->GetHp());
+					height_correction = ReturnValueHeightCorrectionBuilding(b_selected->GetBuildingType());
+					life_bar.w = ReturnValueBarHPBuilding(b_selected->GetBuildingType(), b_selected->GetHp(), BAR_LIFE_PIXELS);
+				}
 				break;
 
 			case E_RESOURCE:

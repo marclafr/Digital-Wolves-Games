@@ -12,6 +12,7 @@
 #include "j1UIManager.h"
 #include "Camera.h"
 #include "j1Scene.h"
+#include "j1Input.h"
 
 #define VSYNC true
 
@@ -455,9 +456,22 @@ void j1Render::BlitUI() const
 		Blit((*it)->texture, (*it)->x, (*it)->y, (*it)->section, (*it)->flip, (*it)->pivot_x, (*it)->pivot_y, (*it)->speed, (*it)->angle, true);
 }
 
+void j1Render::BlitMouse() const
+{
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	Blit(App->tex->GetTexture(T_MOUSE_ICONS), x - camera->GetPosition().x, y - camera->GetPosition().y, &mouse_icon_rect);
+}
+
+void j1Render::SetMouseIconRect(SDL_Rect rect)
+{
+	mouse_icon_rect = rect;
+}
+
 void j1Render::BlitMainMenu()
 {
 	BlitUI();
+	BlitMouse();
 	CleanUpUISpriteVec();
 }
 
@@ -472,6 +486,7 @@ void j1Render::BlitGameScene()
 
 	BlitUI();
 	App->entity_manager->BlitMinimap();
+	BlitMouse();
 	//App->uimanager->DrawMinimapQuad(); DISABLED, DRAW INCORRECTLY AND INVERSE :(
 
 	CleanUpMapVec();
@@ -482,6 +497,7 @@ void j1Render::BlitGameScene()
 void j1Render::BlitScoreScene()
 {
 	BlitUI();
+	BlitMouse();
 	CleanUpUISpriteVec();
 }
 

@@ -16,6 +16,8 @@
 #include "j1Audio.h"
 #include "j1ScoreScene.h"
 
+#define MAX_SELECTION 25
+
 j1EntityManager::j1EntityManager() : j1Module()
 {
 	name.assign("Units");
@@ -107,6 +109,9 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Enti
 				break;
 		}
 	}
+
+	if (selection.size() > MAX_SELECTION)
+		selection.resize(MAX_SELECTION);
 
 	App->uimanager->CreatePanelInfo(selection);
 }

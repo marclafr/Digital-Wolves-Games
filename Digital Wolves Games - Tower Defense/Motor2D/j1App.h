@@ -30,6 +30,7 @@ class j1Score;
 class j1Achievements;
 class j1Tutorial;
 class j1Video;
+class j1Mouse;
 
 	//Scenes
 class j1Intro;
@@ -144,6 +145,7 @@ public:
 	j1Achievements*		achievements = nullptr;
 	j1Tutorial*			tutorial = nullptr;
 	j1Video*			video = nullptr;
+	j1Mouse*			mouse = nullptr;
 		//Scenesko
 	j1Intro*			intro = nullptr;
 	j1MainMenu*			main_menu = nullptr;

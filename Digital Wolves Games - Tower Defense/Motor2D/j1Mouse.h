@@ -1,0 +1,20 @@
+#ifndef __j1MOUSE__
+#define __j1MOUSE__
+
+#include "SDL\include\SDL.h"
+#include "j1Module.h"
+
+class j1Mouse : public j1Module
+{
+private:
+	SDL_Rect icon_rect;
+
+public:
+	// Called before the first frame
+	bool Start();
+
+	// Called each loop iteration
+	bool Update(float dt);
+};
+
+#endif //__j1MOUSE__
