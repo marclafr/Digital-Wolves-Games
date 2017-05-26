@@ -170,7 +170,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_ARCHER:
 		SetHp(41);
-		attack = 1;// 5;
+		attack = 5;
 		SetArmor(1);
 		speed = 1.29f;
 		rate_of_fire = 95.0f;
