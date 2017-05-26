@@ -97,7 +97,7 @@ public:
 
 	bool IsEmpty(const iPoint pos, Entity* exeption = nullptr) const;
 
-	iPoint FindNearestEmpty(const iPoint start) const;
+	iPoint FindNearestEmpty(Unit* unit) const;
 
 	void UpdateAfterBuilding(iPoint& building_tile);
 	bool IsInPath(const iPoint& tile, const std::vector<iPoint>& path) const;

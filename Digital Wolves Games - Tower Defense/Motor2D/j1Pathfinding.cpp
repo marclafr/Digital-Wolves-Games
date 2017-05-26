@@ -935,50 +935,53 @@ bool j1PathFinding::IsEmpty(const iPoint tile, Entity* exeption) const
 	return false;
 }
 
-iPoint j1PathFinding::FindNearestEmpty(const iPoint start) const
+iPoint j1PathFinding::FindNearestEmpty(Unit* unit) const
 {
-	if (IsEmpty(start))
-		return start;
+	iPoint start_tile = App->map->WorldToMap(unit->GetPosition().x, unit->GetPosition().y);
+	int tile_range = 1;
 
-	int range = 1;
-	iPoint pos;
-
-	while (range < MAX(App->map->data.width, App->map->data.height))
+	while (tile_range < 75)
 	{
-		pos.x = start.x - range;
-		pos.y = start.y - range;
+		iPoint current_tile(start_tile.x - tile_range, start_tile.y - tile_range);
 
-		for (int i = -range; i < range; i++)
+		//Left
+		for (int i = -tile_range; i < tile_range; i++)
 		{
-			if (IsEmpty(pos))
-				return pos;
-			pos.x++;
+			current_tile.x = start_tile.x + i;
+			if (IsEmpty(current_tile, unit))
+				return current_tile;;
 		}
+		current_tile.x++;
 
-		for (int i = -range; i < range; i++)
+		//Down
+		for (int i = -tile_range; i < tile_range; i++)
 		{
-			if (IsEmpty(pos))
-				return pos;
-			pos.y++;
+			current_tile.y = start_tile.y + i;
+			if (IsEmpty(current_tile, unit))
+				return current_tile;;
 		}
+		current_tile.y++;
 
-		for (int i = -range; i < range; i++)
+		//Right
+		for (int i = -tile_range; i < tile_range; i++)
 		{
-			if (IsEmpty(pos))
-				return pos;
-			pos.x--;
+			current_tile.x = start_tile.x - i;
+			if (IsEmpty(current_tile, unit))
+				return current_tile;;
 		}
+		current_tile.x--;
 
-		for (int i = -range; i < range; i++)
+		//Up
+		for (int i = -tile_range; i < tile_range; i++)
 		{
-			if (IsEmpty(pos))
-				return pos;
-			pos.y--;
+			current_tile.y = start_tile.y - i;
+			if (IsEmpty(current_tile, unit))
+				return current_tile;
 		}
+		current_tile.y--;
 
-		range++;
+		tile_range++;
 	}
-	return iPoint(-1,-1);
 }
 
 void j1PathFinding::UpdateAfterBuilding(iPoint & building_tile)

@@ -427,6 +427,9 @@ void Unit::AI()
 			break;
 		}
 
+		if (App->pathfinding->IsEmpty(App->map->WorldToMap(GetPosition().x, GetPosition().y), this) == false)
+			MoveAway();
+
 		/*collision = App->entity_manager->CheckUnitCollisions(this);
 		if (collision != nullptr && collided == false)
 		{
@@ -962,6 +965,15 @@ void Unit::StartAttack()
 	action = A_ATTACK;
 	LookAt(target->GetIPos());
 	changed = true;
+}
+
+void Unit::MoveAway()
+{
+	iPoint new_pos = App->pathfinding->FindNearestEmpty(this);
+	if (new_pos.y == -1)
+		LOG("CAN NOT FIND EMPTY POS");
+	else
+		GoToTile(new_pos);
 }
 
 void Unit::CheckUnitsBuffs()

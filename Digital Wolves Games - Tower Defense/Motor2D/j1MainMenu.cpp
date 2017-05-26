@@ -104,6 +104,7 @@ bool j1MainMenu::PreUpdate()
 bool j1MainMenu::Update(float dt)
 {
 	App->render->BlitMainMenu();
+
 	return true;
 }
 
