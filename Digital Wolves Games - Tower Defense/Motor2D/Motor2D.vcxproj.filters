@@ -181,6 +181,9 @@
     <ClCompile Include="PanelInfoOneSelection.cpp">
       <Filter>UIComponents\HUD\PanelInfo</Filter>
     </ClCompile>
+    <ClCompile Include="j1Mouse.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buildings.h">
@@ -374,6 +377,9 @@
     </ClInclude>
     <ClInclude Include="PanelInfoOneSelection.h">
       <Filter>UIComponents\HUD\PanelInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Mouse.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

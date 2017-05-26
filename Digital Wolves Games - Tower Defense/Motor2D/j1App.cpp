@@ -32,6 +32,7 @@
 #include "j1Achievements.h"
 #include "Intro.h"
 #include "j1Tutorial.h"
+#include "j1Mouse.h"
 
 // Constructor
 j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
@@ -64,6 +65,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	tutorial = new j1Tutorial();
 	video = new j1Video();
 	intro = new j1Intro();
+	mouse = new j1Mouse();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 
@@ -78,6 +80,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(console);
 	AddModule(scene_manager);
 	AddModule(video);
+	AddModule(mouse);
 	//Not-Active at start
 	AddModule(pathfinding, false);
 	AddModule(map, false);

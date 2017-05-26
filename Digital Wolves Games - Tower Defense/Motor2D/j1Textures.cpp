@@ -94,6 +94,10 @@ bool j1Textures::Start()
 	App->tex->Load("animations/BuildingsFire.png", T_BUILDINGS_FIRE);
 	App->tex->Load("animations/ExplosionsAndFloor.png", T_EXPLOSIONS_AND_FLOOR);
 
+	//MOUSE ICONS
+	App->tex->Load("textures/MouseIcons.png", T_MOUSE_ICONS);
+	//--
+
 	std::string towers_walls_folder = "textures/Towers.xml";
 
 	//Load UNIT animations data from animations folder
