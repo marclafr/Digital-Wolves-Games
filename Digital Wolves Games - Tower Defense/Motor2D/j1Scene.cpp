@@ -102,7 +102,7 @@ bool j1Scene::Start()
 	else
 		App->wave_manager->Enable();//TODO put after tutorial
 		 
-		
+	mouse_click_move_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_MOUSE_CLICK_MOVE));
 
 	return true;
 }
@@ -172,6 +172,14 @@ bool j1Scene::Update(float dt)
 		select_rect.w = x - App->render->camera->GetPosition().x - select_rect.x;
 		select_rect.h = y - App->render->camera->GetPosition().y - select_rect.y;
 		App->render->DrawQuad({select_rect.x, select_rect.y, select_rect.w, select_rect.h}, 255, 255, 255, 255, false);
+	}
+
+	if (!mouse_click_move_anim->Finished())
+	{
+		SDL_Rect rect;
+		iPoint pivot;
+		mouse_click_move_anim->Update(rect, pivot);
+		App->render->PushUISprite(App->tex->GetTexture(T_MOUSE_CLICK_MOVE), mouse_click_objective.x, mouse_click_objective.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 	}
 
 	// Camera Movement (has to go after blit so that sprites print in the right camera position)
@@ -676,13 +684,15 @@ void j1Scene::HandleInput( SDL_Event event)
 			placing_tower = T_NO_TYPE;
 		}
 
-		if (App->input->GetMouseButtonDown(3) == KEY_DOWN)
-			if (selection.size() > 0 && selection[0]->GetEntityType() == E_UNIT)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+		{
+			if (selection.size() > 0 && selection[0]->GetEntityType() == E_UNIT && selection[0]->GetSide() == S_ALLY)
 			{
-				iPoint objective;
-				App->input->GetMousePosition(objective.x, objective.y);
-				objective.x -= App->render->camera->GetPosition().x;
-				objective.y -= App->render->camera->GetPosition().y;
+				mouse_click_move_anim->Reset();
+
+				App->input->GetMousePosition(mouse_click_objective.x, mouse_click_objective.y);
+				mouse_click_objective.x -= App->render->camera->GetPosition().x;
+				mouse_click_objective.y -= App->render->camera->GetPosition().y;
 
 				Unit* unit;
 
@@ -691,10 +701,12 @@ void j1Scene::HandleInput( SDL_Event event)
 					if ((*it)->GetSide() == S_ALLY)
 					{
 						unit = (Unit*)(*it);
-						unit->GoTo(objective);
+						unit->GoTo(mouse_click_objective);
 					}
 				}
 			}
+		}
+
 		break;
 
 	case SDL_MOUSEBUTTONUP:

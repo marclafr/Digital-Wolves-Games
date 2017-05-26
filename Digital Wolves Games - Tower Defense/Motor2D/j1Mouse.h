@@ -8,6 +8,8 @@ class j1Mouse : public j1Module
 {
 private:
 	SDL_Rect icon_rect;
+	int pivot_x = 0;
+	int pivot_y = 0;
 
 public:
 	// Called before the first frame

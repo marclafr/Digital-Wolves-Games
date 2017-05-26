@@ -78,7 +78,7 @@ public:
 	void BlitSelection() const;
 	void BlitUI() const;
 	void BlitMouse() const;
-	void SetMouseIconRect(SDL_Rect rect);
+	void SetMouseIconRect(SDL_Rect rect, int pivotX, int pivotY);
 	
 	void BlitMainMenu();
 	void BlitGameScene();
@@ -106,6 +106,8 @@ private:
 	std::deque<Sprite*> in_game_sprite_queue;
 	std::vector<Sprite*> ui_sprite_vec;
 	SDL_Rect mouse_icon_rect;
+	int pivot_mouse_x = 0;
+	int pivot_mouse_y = 0;
 };
 
 

@@ -137,6 +137,7 @@ private:
 	bool AproachEnemy();
 	void SetAttackPosition();
 	void StartAttack();
+	void CheckUnitsBuffs();
 
 	bool GetNextTile();
 

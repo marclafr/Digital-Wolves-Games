@@ -460,12 +460,14 @@ void j1Render::BlitMouse() const
 {
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	Blit(App->tex->GetTexture(T_MOUSE_ICONS), x - camera->GetPosition().x, y - camera->GetPosition().y, &mouse_icon_rect);
+	Blit(App->tex->GetTexture(T_MOUSE_ICONS), x - camera->GetPosition().x, y - camera->GetPosition().y, &mouse_icon_rect, SDL_FLIP_NONE, pivot_mouse_x, pivot_mouse_y);
 }
 
-void j1Render::SetMouseIconRect(SDL_Rect rect)
+void j1Render::SetMouseIconRect(SDL_Rect rect, int pivotX, int pivotY)
 {
 	mouse_icon_rect = rect;
+	pivot_mouse_x = pivotX;
+	pivot_mouse_y = pivotY;
 }
 
 void j1Render::BlitMainMenu()

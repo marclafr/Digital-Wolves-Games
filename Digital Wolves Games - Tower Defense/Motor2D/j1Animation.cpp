@@ -109,7 +109,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 
 	if (result == NULL)
 	{
-		LOG("Error loading ARROW and BOMBS animations data: %s", result.description());
+		LOG("Error loading ANIMATION SPRITES data: %s", result.description());
 		return false;
 	}
 
@@ -134,7 +134,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		new_sprites_anim->speed = 75.0f;
 		//TODO UNCOMMENT WHEN RECTS ARE CORRECT 
 		
-		if (new_sprites_anim->name == ANIM_FIRE_EXPLOSION || new_sprites_anim->name == ANIM_ICE_EXPLOSION)
+		if (new_sprites_anim->name == ANIM_FIRE_EXPLOSION || new_sprites_anim->name == ANIM_ICE_EXPLOSION || new_sprites_anim->name == ANIM_MOUSE_CLICK_MOVE)
 			new_sprites_anim->loop = false;
 		if(new_sprites_anim->name == ANIM_FIRE_FLOOR || new_sprites_anim->name == ANIM_ICE_FLOOR)
 		{
@@ -521,6 +521,9 @@ ANIMATION_NAME j1Animation::AnimString2Enum(const std::string name)
 
 	else if (name == "ice_floor")
 		return ANIM_ICE_FLOOR;
+
+	else if (name == "mouse_click_move")
+		return ANIM_MOUSE_CLICK_MOVE;
 
 	return NO_ANIM_NAME;
 }

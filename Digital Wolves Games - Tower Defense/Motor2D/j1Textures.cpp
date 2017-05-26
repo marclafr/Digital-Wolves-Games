@@ -91,11 +91,12 @@ bool j1Textures::Start()
 	App->tex->Load("textures/Extras.png", T_TOWNHALL);
 	App->tex->Load("textures/Resouces.png", T_RESOURCE);
 	App->tex->Load("animations/ArrowsBombs.png", T_ARROW_BOMB);
-	App->tex->Load("animations/BuildingsFire.png", T_BUILDINGS_FIRE);
+	App->tex->Load("animations/BuildingsFire.png", T_BUILDINGS_FIRE); 
 	App->tex->Load("animations/ExplosionsAndFloor.png", T_EXPLOSIONS_AND_FLOOR);
 
 	//MOUSE ICONS
 	App->tex->Load("textures/MouseIcons.png", T_MOUSE_ICONS);
+	App->tex->Load("animations/MouseClickMove.png", T_MOUSE_CLICK_MOVE);
 	//--
 
 	std::string towers_walls_folder = "textures/Towers.xml";

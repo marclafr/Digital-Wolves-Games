@@ -13,9 +13,17 @@ bool j1Mouse::Start()
 bool j1Mouse::Update(float dt)
 {
 	if (App->scene->placing_wall == true || App->scene->placing_tower != T_NO_TYPE)
+	{
 		icon_rect = { 24,0,35,35 };
+		pivot_x = 6;
+		pivot_y = 9;
+	}
 	else
+	{
 		icon_rect = { 0,0,24,32 };
-	App->render->SetMouseIconRect(icon_rect);
+		pivot_x = 0;
+		pivot_y = 0;
+	}
+	App->render->SetMouseIconRect(icon_rect, pivot_x, pivot_y);
 	return true;
 }

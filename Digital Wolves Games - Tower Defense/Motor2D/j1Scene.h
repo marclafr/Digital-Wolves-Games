@@ -21,7 +21,8 @@ enum RESOURCE_TYPE;
 enum BUILDING_TYPE;
 class AnimationManager;
 
-enum PlacingWallDirection {
+enum PlacingWallDirection 
+{
 	NORTH,
 	SOUTH,
 	WEST,
@@ -86,6 +87,9 @@ private:
 	iPoint LastSelectedForWall;
 	PlacingWallDirection direction;
 	bool placing_wall_clicked = false;
+
+	iPoint mouse_click_objective;
+	AnimationManager* mouse_click_move_anim;
 
 public:
 	bool win = false;
