@@ -100,7 +100,7 @@ bool j1Scene::Start()
 		TutorialUI();
 	}
 	else
-		App->wave_manager->Enable();//TODO put after tutorial
+		//App->wave_manager->Enable();//TODO put after tutorial
 		 
 	mouse_click_move_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_MOUSE_CLICK_MOVE));
 
