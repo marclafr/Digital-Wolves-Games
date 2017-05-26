@@ -3,6 +3,7 @@
 #include "j1Video.h"
 #include "j1Audio.h"
 #include "j1SceneManager.h"
+#include "j1Input.h"
 #include "j1MainMenu.h"
 
 j1Intro::j1Intro() : j1Module()
@@ -44,6 +45,10 @@ bool j1Intro::PreUpdate()
 bool j1Intro::Update(float dt)
 {
 	//TODO 2 Every frame you should take one frame of the video
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		App->scene_manager->ChangeScene(SC_MAIN_MENU);
+	}
 	if (time.ReadSec() < 5.2)
 	{
 		App->video->GrabAVIFrame();
