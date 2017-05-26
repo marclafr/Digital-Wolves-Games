@@ -378,11 +378,10 @@ void j1EntityManager::BlitMinimap() const
 
 bool j1EntityManager::AbleToBuild(iPoint tile, Entity* exeption) const
 {
-	fPoint world_pos;
-	world_pos.x = (tile.x - tile.y) * App->map->data.tile_width / 2.0f;
-	world_pos.y = (tile.x + tile.y + 1) * App->map->data.tile_height / 2.0f;
-	IsoRect rect(world_pos, App->map->data.tile_width, App->map->data.tile_height);
-	return entity_quadtree->CheckIfFull(rect, exeption) == false;
+	iPoint i_pos = App->map->MapToWorld(tile.x, tile.y);
+	fPoint tile_center(i_pos.x, i_pos.y);
+	IsoRect rect(tile_center, App->map->data.tile_width, App->map->data.tile_height);
+	return (entity_quadtree->CheckIfFull(rect, exeption) == false);
 }
 
 void j1EntityManager::GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entity*>& vec) const

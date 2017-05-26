@@ -21,7 +21,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 	{
 	case T_BASIC_TOWER:
 		SetHp(150);
-		SetAttack(15);
+		SetAttack(1);//15
 		SetArmor(1);
 		rate_of_fire = 0.85f;	//time between each attack in seconds
 		range = 300;
