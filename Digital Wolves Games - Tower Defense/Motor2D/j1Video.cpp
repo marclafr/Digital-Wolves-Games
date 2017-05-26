@@ -90,8 +90,11 @@ bool j1Video::GrabAVIFrame()
 	App->win->GetWindowSize(w, h);
 	App->render->Blit(image, w / 4.4, h / 1.2, NULL, SDL_FLIP_VERTICAL);
 
-
-	frame++;
+	if (i % 2 == 0)
+	{
+		frame++;
+	}
+	i++;
 	if (frame >= lastframe)
 		frame = 0;
 	//----

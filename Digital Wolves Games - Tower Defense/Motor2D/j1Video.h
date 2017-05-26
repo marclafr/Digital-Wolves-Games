@@ -53,7 +53,7 @@ public:
 
 
 	const char*			wString;									//Path to our video
-
+	int i = 1;
 
 };
 
