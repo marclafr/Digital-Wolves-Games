@@ -28,6 +28,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos, int collected, float time
 		SetTextureID(T_RESOURCE);
 		totallybuilded = true;
 		CollectTimer.Start();
+		mill_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_MILL_ROTATION));
 		break;
 
 	case R_WOOD:
@@ -121,6 +122,13 @@ void Resources::AI()
 void Resources::Draw()
 {
 	App->render->PushInGameSprite(this);
+	if (resource_type == R_FOOD)
+	{
+		SDL_Rect anim_rect;
+		iPoint anim_pivot;
+		mill_anim->Update(anim_rect, anim_pivot);
+		App->render->PushInGameSprite(App->tex->GetTexture(T_MILL_ANIMATION), GetX() - 14, GetY() - 81, &anim_rect, SDL_FLIP_NONE, anim_pivot.x, anim_pivot.y); //Magic numbers yay!! :/
+	}
 }
 
 const RESOURCE_TYPE Resources::GetResourceType() const
