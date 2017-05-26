@@ -38,9 +38,9 @@ bool j1Investigations::Start()
 	CreateInvestigation(INV_INFANTRY_ATTACK, false, 300, 30.0);
 	CreateInvestigation(INV_INFANTRY_DEFENSE, false, 300, 25.0);
 	//TOWERS
-	CreateInvestigation(INV_FIRE_TOWER, false, 250, 10.0);
-	CreateInvestigation(INV_ICE_TOWER, false, 300, 10.0);
-	CreateInvestigation(INV_AIR_TOWER, false, 200, 10.0);
+	CreateInvestigation(INV_FIRE_TOWER, false, 450, 10.0);
+	CreateInvestigation(INV_ICE_TOWER, false, 320, 10.0);
+	CreateInvestigation(INV_AIR_TOWER, false, 400, 10.0);
 	//--
 
 	return ret;

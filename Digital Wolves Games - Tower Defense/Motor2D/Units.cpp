@@ -56,7 +56,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(43);
 		attack = 5;
 		SetArmor(1);
-		speed = 1.42f;
+		speed = 1.35f;
 		rate_of_fire = 80.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
@@ -73,7 +73,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(58);
 		attack = 7;
 		SetArmor(4);
-		speed = 1.28f;
+		speed = 1.27f;
 		rate_of_fire = 120.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
@@ -89,7 +89,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(118);
 		attack = 10;
 		SetArmor(5);
-		speed = 1.30f;
+		speed = 1.28f;
 		rate_of_fire = 95.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
@@ -189,7 +189,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(50);
 		attack = 7;
 		SetArmor(1);
-		speed = 1.19f;
+		speed = 1.29f;
 		rate_of_fire = 80.0f;
 		range = MID_COMBAT_RANGE;
 		unit_class = C_ARCHER;
@@ -240,7 +240,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(167);
 		attack = 16;
 		SetArmor(6);
-		speed = 1.60f;
+		speed = 1.58f;
 		rate_of_fire = 110.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_CAVALRY;
@@ -256,7 +256,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetHp(137);
 		attack = 12;
 		SetArmor(5);
-		speed = 1.62f;
+		speed = 1.60f;
 		rate_of_fire = 105.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_CAVALRY;
