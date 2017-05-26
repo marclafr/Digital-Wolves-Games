@@ -127,7 +127,7 @@ void Resources::Draw()
 		SDL_Rect anim_rect;
 		iPoint anim_pivot;
 		mill_anim->Update(anim_rect, anim_pivot);
-		App->render->PushInGameSprite(App->tex->GetTexture(T_MILL_ANIMATION), GetX() - 14, GetY() - 81, &anim_rect, SDL_FLIP_NONE, anim_pivot.x, anim_pivot.y); //Magic numbers yay!! :/
+		App->render->PushInGameSprite(App->tex->GetTexture(T_MILL_ANIMATION), GetX() - 14, GetY() - 81 + 100, &anim_rect, SDL_FLIP_NONE, anim_pivot.x, anim_pivot.y + 100); //Magic numbers yay!! :/
 	}
 }
 
