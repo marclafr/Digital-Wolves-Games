@@ -489,7 +489,7 @@ void j1Render::BlitGameScene()
 	BlitUI();
 	App->entity_manager->BlitMinimap();
 	BlitMouse();
-	//App->uimanager->DrawMinimapQuad(); DISABLED, DRAW INCORRECTLY AND INVERSE :(
+	App->uimanager->DrawMinimapQuad();
 
 	CleanUpMapVec();
 	CleanUpInGameSpriteQueue();
