@@ -100,7 +100,7 @@ bool j1Scene::Start()
 		TutorialUI();
 	}
 	else
-		//App->wave_manager->Enable();//TODO put after tutorial
+		App->wave_manager->Enable();//TODO put after tutorial
 		 
 	mouse_click_move_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_MOUSE_CLICK_MOVE));
 
@@ -215,7 +215,7 @@ bool j1Scene::PostUpdate()
 		int y = 0;
 		App->input->GetMousePosition(x, y);
 		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-		App->entity_manager->CreateUnit(U_ARCHER, pos, S_ENEMY);
+		App->entity_manager->CreateUnit(U_SIEGERAM, pos, S_ENEMY);
 	}
 
 	return ret;
