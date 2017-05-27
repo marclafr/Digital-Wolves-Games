@@ -262,7 +262,7 @@ iPoint j1Map::MapToWorld(int x, int y, TileSet* tileset) const
 		tile_height = tileset->tile_height;
 		tile_width = tileset->tile_width;
 
-		if (tileset->name.compare("Extras") == 0)
+		if (tileset->name.compare("Extras") == 0 || tileset->name.compare("Polish")==0)
 		{
 			ret.x = (x - y) * (int)(tile_width * 0.5f) - tile_width * 0.5f;
 			ret.y = (x + y) * (int)(tile_height * 0.5f) + tile_height;
