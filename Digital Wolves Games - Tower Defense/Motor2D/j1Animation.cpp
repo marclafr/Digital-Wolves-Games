@@ -528,6 +528,9 @@ ANIMATION_NAME j1Animation::AnimString2Enum(const std::string name)
 	else if (name == "mill_rotation")
 		return ANIM_MILL_ROTATION;
 
+	else if (name == "fish_jump")
+		return ANIM_FISH_JUMP;
+
 	return NO_ANIM_NAME;
 }
 

@@ -95,6 +95,7 @@ bool j1Textures::Start()
 	App->tex->Load("animations/BuildingsFire.png", T_BUILDINGS_FIRE); 
 	App->tex->Load("animations/ExplosionsAndFloor.png", T_EXPLOSIONS_AND_FLOOR); 
 	App->tex->Load("animations/MillAnimation.png", T_MILL_ANIMATION);
+	App->tex->Load("animations/Fish_anim.png", T_FISH_ANIMATION);
 
 	//MOUSE ICONS
 	App->tex->Load("textures/MouseIcons.png", T_MOUSE_ICONS);

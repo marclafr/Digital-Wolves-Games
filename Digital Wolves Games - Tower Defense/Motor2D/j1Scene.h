@@ -90,7 +90,7 @@ private:
 
 	iPoint mouse_click_objective;
 	AnimationManager* mouse_click_move_anim;
-
+	AnimationManager* fish_anim = nullptr;
 public:
 	bool win = false;
 	bool lose = false;
