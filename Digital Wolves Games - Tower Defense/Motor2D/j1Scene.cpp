@@ -83,7 +83,7 @@ bool j1Scene::Start()
 	App->entity_manager->CreateTower(T_BASIC_TOWER, tower_pos);
 
 	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
-//	fish_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FISH_JUMP));
+	fish_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FISH_JUMP));
 
 	//--
 
@@ -187,8 +187,8 @@ bool j1Scene::Update(float dt)
 	
 	SDL_Rect anim_rect;
 	iPoint anim_pivot;
-	//fish_anim->Update(anim_rect, anim_pivot);
-//	App->render->PushInGameSprite(App->tex->GetTexture(T_FISH_ANIMATION), 100, 100, &anim_rect, SDL_FLIP_NONE, anim_pivot.x, anim_pivot.y + 100); //no final positions just to try
+	fish_anim->Update(anim_rect, anim_pivot);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_FISH_ANIMATION), 100, 100, &anim_rect, SDL_FLIP_NONE, anim_pivot.x, anim_pivot.y + 100); //no final positions just to try
 	// Camera Movement (has to go after blit so that sprites print in the right camera position)
 	App->render->camera->KeyboardMove(dt);
 	App->render->camera->MouseMove(x, y, dt);
