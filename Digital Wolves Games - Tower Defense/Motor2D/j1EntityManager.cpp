@@ -233,12 +233,11 @@ bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
 	return false;
 }
 
-
-
 void j1EntityManager::DrawQuadTree() const
 {
 	entity_quadtree->DrawRects();
 }
+
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
 	delete entity_quadtree;

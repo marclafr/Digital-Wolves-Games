@@ -256,38 +256,166 @@ bool IsoRect::Inside(const fPoint pos) const
 
 bool IsoRect::Overlaps(SDL_Rect rect) const
 {
+	bool ret = false;
 	//check if SDL_Rect vertices are inside IsoRect
 	if (Inside(fPoint(rect.x, rect.y)))
-		return true;
+		ret = true;
 	if(Inside(fPoint(rect.x + rect.w, rect.y)))
-		return true;
+		ret = true;
 	if(Inside(fPoint(rect.x, rect.y + rect.h)))
-		return true;
+		ret = true;
 	if(Inside(fPoint(rect.x + rect.w, rect.y + rect.h)))
-		return true;
+		ret = true;
+	if (Inside(fPoint(rect.x + rect.w / 2.0f, rect.y + rect.h / 2.0f)))
+		ret = true;
 
 	//check if IsoRect vertices are inside SDL_Rect 
-	fPoint up(position.x, position.y - height / 2);
-	if (up.x > rect.x && up.x < rect.x + rect.w
-		&& up.y > rect.y && up.y < rect.y + rect.h)
-		return true;
+	fPoint up(position.x, position.y - height / 2);	
+	//top-left to down right
+	if (rect.x < up.x
+		&& rect.x + rect.w > up.x
+		&& rect.y < up.y
+		&& rect.y + rect.h > up.y)
+		ret = true;
+
+	//down-right to top-left
+	if (rect.x > up.x
+		&& rect.x + rect.w < up.x
+		&& rect.y > up.y
+		&& rect.y + rect.h < up.y)
+		ret = true;
+
+	//down-left to top-right
+	if (rect.x < up.x
+		&& rect.x + rect.w > up.x
+		&& rect.y > up.y
+		&& rect.y + rect.h < up.y)
+		ret = true;
+
+	//top-right to down-left
+	if (rect.x > up.x
+		&& rect.x + rect.w < up.x
+		&& rect.y < up.y
+		&& rect.y + rect.h > up.y)
+		ret = true;
 
 	fPoint left(position.x - width / 2, position.y);
-	if (left.x > rect.x && left.x < rect.x + rect.w
-		&& left.y > rect.y && left.y < rect.y + rect.h)
-		return true;
+	//top-left to down right
+	if (rect.x < left.x
+		&& rect.x + rect.w > left.x
+		&& rect.y < left.y
+		&& rect.y + rect.h > left.y)
+		ret = true;
+
+	//down-right to top-left
+	if (rect.x > left.x
+		&& rect.x + rect.w < left.x
+		&& rect.y > left.y
+		&& rect.y + rect.h < left.y)
+		ret = true;
+
+	//down-left to top-right
+	if (rect.x < left.x
+		&& rect.x + rect.w > left.x
+		&& rect.y > left.y
+		&& rect.y + rect.h < left.y)
+		ret = true;
+
+	//top-right to down-left
+	if (rect.x > left.x
+		&& rect.x + rect.w < left.x
+		&& rect.y < left.y
+		&& rect.y + rect.h > left.y)
+		ret = true;
 
 	fPoint right(position.x + width / 2, position.y);
-	if (right.x > rect.x && right.x < rect.x + rect.w
-		&& right.y > rect.y && right.y < rect.y + rect.h)
-		return true;
+	//top-left to down right
+	if (rect.x < right.x
+		&& rect.x + rect.w > right.x
+		&& rect.y < right.y
+		&& rect.y + rect.h > right.y)
+		ret = true;
+
+	//down-right to top-left
+	if (rect.x > right.x
+		&& rect.x + rect.w < right.x
+		&& rect.y > right.y
+		&& rect.y + rect.h < right.y)
+		ret = true;
+
+	//down-left to top-right
+	if (rect.x < right.x
+		&& rect.x + rect.w > right.x
+		&& rect.y > right.y
+		&& rect.y + rect.h < right.y)
+		ret = true;
+
+	//top-right to down-left
+	if (rect.x > right.x
+		&& rect.x + rect.w < right.x
+		&& rect.y < right.y
+		&& rect.y + rect.h > right.y)
+		ret = true;
 
 	fPoint down(position.x, position.y + height / 2);
-	if (down.x > rect.x && down.x < rect.x + rect.w
-		&& down.y > rect.y && down.y < rect.y + rect.h)
-		return true;
+	//top-left to down right
+	if (rect.x < down.x
+		&& rect.x + rect.w > down.x
+		&& rect.y < down.y
+		&& rect.y + rect.h > down.y)
+		ret = true;
 
-	return false;
+	//down-right to top-left
+	if (rect.x > down.x
+		&& rect.x + rect.w < down.x
+		&& rect.y > down.y
+		&& rect.y + rect.h < down.y)
+		ret = true;
+
+	//down-left to top-right
+	if (rect.x < down.x
+		&& rect.x + rect.w > down.x
+		&& rect.y > down.y
+		&& rect.y + rect.h < down.y)
+		ret = true;
+
+	//Center
+	//top-right to down-left
+	if (rect.x > down.x
+		&& rect.x + rect.w < down.x
+		&& rect.y < down.y
+		&& rect.y + rect.h > down.y)
+		ret = true;
+
+	//top-left to down right
+	if (rect.x < position.x
+		&& rect.x + rect.w > position.x
+		&& rect.y < position.y
+		&& rect.y + rect.h > position.y)
+		ret = true;
+
+	//down-right to top-left
+	if (rect.x > position.x
+		&& rect.x + rect.w < position.x
+		&& rect.y > position.y
+		&& rect.y + rect.h < position.y)
+		ret = true;
+
+	//down-left to top-right
+	if (rect.x < position.x
+		&& rect.x + rect.w > position.x
+		&& rect.y > position.y
+		&& rect.y + rect.h < position.y)
+		ret = true;
+
+	//top-right to down-left
+	if (rect.x > position.x
+		&& rect.x + rect.w < position.x
+		&& rect.y < position.y
+		&& rect.y + rect.h > position.y)
+		ret = true;
+
+	return ret;
 }
 
 bool IsoRect::Overlaps(IsoRect rect) const

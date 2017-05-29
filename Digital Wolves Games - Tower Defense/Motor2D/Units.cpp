@@ -13,7 +13,7 @@
 #include "j1Score.h"
 #include "j1Scene.h"
 
-Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), target(nullptr), priority(priority)
+Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNIT, pos, side), unit_type(u_type), direction(D_EAST), action(A_IDLE), changed(false), target(nullptr), ai_update(0)
 {
 	//Add paths
 	
@@ -391,6 +391,8 @@ bool Unit::Walk()
 
 void Unit::AI()
 {
+	ai_update++;
+
 	if (slowed == true && slow_timer.ReadSec() >= SLOW_TIME)
 	{
 		this->speed *= SLOW_PROPORTION;
@@ -413,7 +415,7 @@ void Unit::AI()
 			break;
 		}
 		
-		if(collided)
+		if (collided)
 			if (App->pathfinding->IsEmpty(GetTile(), this))
 				collided = false;
 
@@ -423,7 +425,7 @@ void Unit::AI()
 			GoToEnemy();
 			break;
 		}
-		
+
 		if (GetSide() == S_ENEMY)
 		{
 			target = App->scene->townhall;
@@ -473,17 +475,22 @@ void Unit::AI()
 			}
 		}
 		
-		if (DestinationFull())
+		if (ai_update == 3)
 		{
-			GoIdle();
-			break;
-		}
+			ai_update = 0;
 
-		target = EnemyInSight();
-		if (target != nullptr)
-		{
-			ChangeDirecctionToEnemy();
-			break;
+			if (DestinationFull())
+			{
+				GoIdle();
+				break;
+			}
+
+			target = EnemyInSight();
+			if (target != nullptr)
+			{
+				ChangeDirecctionToEnemy();
+				break;
+			}
 		}
 
 		break;
@@ -637,11 +644,6 @@ const bool Unit::IsMoving() const
 const bool Unit::Collided() const
 {
 	return collided;
-}
-
-const int Unit::GetPriority() const
-{
-	return priority;
 }
 
 void Unit::SetAction(const ACTION action)
@@ -836,7 +838,7 @@ void Unit::UnitDies()
 	action = A_DIE;
 
 	for (std::vector<Entity*>::iterator it = App->scene->selection.begin(); it != App->scene->selection.end(); ++it)
-		if ((*it) == ((Entity*)this))
+		if ((*it) == this)
 		{
 			SetEntityStatus(ST_NON_SELECTED);
 			App->scene->selection.erase(it);
@@ -1043,7 +1045,7 @@ void Unit::CheckUnitsBuffs()
 
 void Unit::DropUnits()
 {
-	App->entity_manager->CreateUnit(U_CHAMPION, { GetX() + 10,GetY() }, GetSide());
+	App->entity_manager->CreateUnit(U_CHAMPION, GetPosition(), GetSide());
 	//App->entity_manager->CreateUnit(U_CHAMPION, { GetX() - 10,GetY() }, GetSide());
 	//App->entity_manager->CreateUnit(U_CHAMPION, { GetX(),GetY() + 10 }, GetSide());
 	//App->entity_manager->CreateUnit(U_CHAMPION, { GetX(),GetY() - 10 }, GetSide());

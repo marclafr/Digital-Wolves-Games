@@ -22,7 +22,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 	{
 	case B_TURRET:
 		SetSide(S_ALLY);
-		build_rect = IsoRect({ GetX(), GetY() }, 96, 47,	GetPivot());
+		build_rect = IsoRect( GetPosition(), 96, 47);
 		break;
 
 	case B_WOOD_WALL:
@@ -32,7 +32,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 		SetRect({ 610,289,100,106 });
 		SetPivot(0.49 * 100, 106 * 0.754717);
 		SetArmor(8);
-		build_rect = IsoRect({ GetX(), GetY() }, 96, 47, GetPivot());
+		build_rect = IsoRect(GetPosition(), 96, 47);
 		break;
 
 	case B_TOWNHALL:
@@ -45,7 +45,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 		SetPivot(0.52459 * 366, 0.72555 * 317);
 		SetTextureID(T_TOWNHALL);
 		totally_built = true;
-		build_rect = IsoRect({ GetX(), GetY() }, 375, 170, {0,0});
+		build_rect = IsoRect(GetPosition(), 375, 170);
 		break;
 	case B_UNIVERSITY:
 		SetSide(S_ALLY);
@@ -57,7 +57,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 		SetPivot(0.509317*483, 0.726923*291);
 		SetTextureID(T_TOWNHALL);
 		totally_built = true;
-		build_rect = IsoRect({ GetX(), GetY() }, 483, 210, {0,-20});
+		build_rect = IsoRect(GetPosition(), 483, 210);
 		break;
 	default:
 		LOG("Error BUILDING TYPE STATS NULL");

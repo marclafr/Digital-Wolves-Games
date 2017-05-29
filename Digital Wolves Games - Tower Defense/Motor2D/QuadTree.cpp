@@ -180,9 +180,13 @@ Entity * QuadTreeNode::SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TY
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
 			if (entities[i] != nullptr)
+			{
 				if (rect.Inside(entities[i]->GetPosition()) && (entity_type == E_NO_ENTITY || entity_type == entities[i]->GetEntityType()))
-					if(entities[i]->GetSide() != side && entities[i]->GetHp() >= 0)
+					if (entities[i]->GetSide() != side && entities[i]->GetHp() >= 0)
 						ret = entities[i];
+			}
+			else
+				break;
 	}
 	else
 		for (int i = 0; i < 4; i++)
@@ -210,6 +214,8 @@ void QuadTreeNode::Search(int pixel_range, const fPoint from, std::vector<Entity
 					if (entities[i]->GetHp() >= 0)
 						vec.push_back(entities[i]);
 			}
+			else
+				break;
 	}
 	else
 		for (int i = 0; i < 4; i++)
@@ -222,9 +228,13 @@ void QuadTreeNode::Selection(const SDL_Rect rect, std::vector<Entity*>& vec) con
 	if (childs[0] == nullptr)
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
-			if(entities[i] != nullptr)
+			if (entities[i] != nullptr)
+			{
 				if (entities[i]->Inside(rect))
 					vec.push_back(entities[i]);
+			}
+			else
+				break;
 	}
 	else
 		for (int i = 0; i < 4; i++)

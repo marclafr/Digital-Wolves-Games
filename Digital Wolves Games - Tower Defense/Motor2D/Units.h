@@ -97,6 +97,8 @@ private:
 	enum ACTION action;
 	enum DIRECTION direction;
 
+	int ai_update;
+
 	int attack;
 	int range;
 	float speed;
@@ -115,7 +117,6 @@ private:
 
 	std::vector<iPoint> path_vec;
 
-	int priority;
 	bool slowed = false;
 	j1Timer slow_timer;
 
@@ -167,7 +168,6 @@ public:
 	const bool IsMoving() const;
 
 	const bool Collided() const;
-	const int GetPriority() const;
 	void SetAction(const ACTION action);
 
 	void LookAt(iPoint pos);
