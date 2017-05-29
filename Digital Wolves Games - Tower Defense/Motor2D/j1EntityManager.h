@@ -41,7 +41,7 @@ public:
 	
 	Entity* CheckForCombat(fPoint position, int range, Side side) const;
 	Entity* CheckForObjective(fPoint position, int vision_range, Side side) const;
-	Unit* CheckUnitCollisions(const Unit* ptr) const;
+	Entity* TileCollisions(Entity* ptr) const;
 
 	bool IsUnitInTile(const Unit* unit, const iPoint tile) const;
 

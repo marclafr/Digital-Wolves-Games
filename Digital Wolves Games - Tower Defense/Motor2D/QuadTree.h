@@ -33,12 +33,13 @@ public:
 	void Search(int pixel_range, const fPoint from, std::vector<Entity*>& vec) const;
 	void Search(const IsoRect rect, std::vector<Entity*>& vec) const;
 	void SearchForEnemies(int pixel_range, fPoint from, std::vector<Entity*>& vec, const Side side, ENTITY_TYPE entity_type = E_NO_ENTITY);
+	Entity* SearchFirstCollisionInTile(iPoint tile, Entity* exeption = nullptr);
+	Entity* SearchFirstCollision(IsoRect rect, Entity* exeption = nullptr) const;
 
 	void Selection(const SDL_Rect rect, std::vector<Entity*>& vec) const;
 
 	void Update(float dt);
 	void DeleteEntities();
-	Unit* CheckCollision(const Unit* ptr) const;
 	void CheckUnitCollisions(const Unit* ptr) const;
 	void DrawArea();
 	void SaveAll(pugi::xml_node& node);
@@ -72,14 +73,13 @@ public:
 	void Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const;
 	void SearchForEnemies(int pixel_range, fPoint from, std::vector<Entity*>& vec, const Side side, ENTITY_TYPE entity_type = E_NO_ENTITY);
 	void SearchInIsoRect(const IsoRect rect, std::vector<Entity*>& vec);
+	Entity* SearchFirstCollisionInTile(iPoint tile, Entity* exeption = nullptr) const;
 
 	void Selection(SDL_Rect rect, std::vector<Entity*>& vec) const;
 
 	void UpdateAll(float dt) const;
 
 	void DeleteEntities() const;
-
-	Unit* CheckCollisions(const Unit* ptr) const;
 
 	void DrawRects() const;
 

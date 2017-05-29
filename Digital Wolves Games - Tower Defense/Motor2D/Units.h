@@ -166,8 +166,7 @@ public:
 	const Elipse GetUnitCircle() const;
 	const bool IsMoving() const;
 
-	void CheckCollisions() const;
-
+	const bool Collided() const;
 	const int GetPriority() const;
 	void SetAction(const ACTION action);
 

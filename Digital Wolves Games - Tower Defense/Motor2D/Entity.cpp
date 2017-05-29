@@ -1,10 +1,12 @@
-#include "Entity.h"
-#include "j1Textures.h"
 #include "j1App.h"
+#include "j1Textures.h"
+#include "j1Map.h"
 #include "j1Render.h"
 #include "Camera.h"
 #include "j1UIManager.h"
 #include "UIHUDMinimap.h"
+#include "Entity.h"
+
 
 Entity::Entity(ENTITY_TYPE entity_type, fPoint pos, Side side): to_delete (false), entity_type(entity_type), position(pos), side(side)
 {}
@@ -177,6 +179,11 @@ const Side Entity::GetSide() const
 const float Entity::GetAIDT() const
 {
 	return ai_dt;
+}
+
+const iPoint Entity::GetTile() const
+{
+	return App->map->WorldToMap(GetX(), GetY());
 }
 
 void Entity::SetArmor(int new_armor)

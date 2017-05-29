@@ -84,6 +84,7 @@ public:
 	const TextureID GetTextureID() const;
 	const Side GetSide() const;
 	const float GetAIDT() const;
+	const iPoint GetTile()const;
 
 	void Attack(Entity*);
 	void Damaged(int dmg);

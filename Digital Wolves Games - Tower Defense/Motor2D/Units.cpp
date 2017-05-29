@@ -412,6 +412,10 @@ void Unit::AI()
 			UnitDies();
 			break;
 		}
+		
+		if(collided)
+			if (App->pathfinding->IsEmpty(GetTile(), this))
+				collided = false;
 
 		target = EnemyInSight();
 		if (target != nullptr)
@@ -427,22 +431,17 @@ void Unit::AI()
 			break;
 		}
 
-		if (App->pathfinding->IsEmpty(App->map->WorldToMap(GetPosition().x, GetPosition().y), this) == false)
-			MoveAway();
-
-		/*collision = App->entity_manager->CheckUnitCollisions(this);
-		if (collision != nullptr && collided == false)
+		if (!collided)
 		{
-			new_pos = App->pathfinding->FindNearestEmpty(App->map->WorldToMap(GetX(), GetY()));
-			if (new_pos.y != -1)
-				GoTo(App->map->MapToWorld(new_pos.x, new_pos.y));	
-			collided = true;
-			collision->collided = true;
-			collision = nullptr;
+			collision = (Unit*)App->entity_manager->TileCollisions(this);
+			if (collision != nullptr && collision->Collided() == false)
+			{
+				collision->collided = true;
+				collided = true;
+				MoveAway();
+				collision = nullptr;
+			}
 		}
-
-		if (collision == nullptr)
-			collided = false;*/
 		
 		break;
 
@@ -635,9 +634,9 @@ const bool Unit::IsMoving() const
 	return false;
 }
 
-void Unit::CheckCollisions() const
+const bool Unit::Collided() const
 {
-	App->entity_manager->CheckUnitCollisions(this);
+	return collided;
 }
 
 const int Unit::GetPriority() const

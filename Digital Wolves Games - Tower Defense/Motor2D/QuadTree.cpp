@@ -1,6 +1,7 @@
 #include <math.h>
 #include "p2Log.h"
 #include "j1App.h"
+#include "j1Map.h"
 #include "IsoPrimitives.h"
 #include "j1Pathfinding.h"
 #include "QuadTree.h"
@@ -270,6 +271,40 @@ void QuadTreeNode::SearchForEnemies(int pixel_range, fPoint from, std::vector<En
 				childs[i]->SearchForEnemies(pixel_range, from, vec, side, entity_type);
 }
 
+Entity * QuadTreeNode::SearchFirstCollisionInTile(iPoint tile, Entity* exeption)
+{
+	iPoint i_pos = App->map->MapToWorld(tile.x, tile.y);
+	fPoint tile_center(i_pos.x, i_pos.y);
+	IsoRect rect(tile_center, App->map->data.tile_width, App->map->data.tile_height);
+	return SearchFirstCollision(rect, exeption);
+}
+
+Entity * QuadTreeNode::SearchFirstCollision(IsoRect rect, Entity * exeption) const
+{
+	Entity* ret = nullptr;
+
+	if (childs[0] == nullptr)
+	{
+		for (int i = 0; i < NODE_ENTITIES; i++)
+			if (entities[i] != nullptr)
+			{
+				if (rect.Inside(entities[i]->GetPosition()) && entities[i] != exeption && entities[i]->GetHp() > 0 && ((Unit*) entities[i])->Collided() == false)
+					ret = entities[i];
+			}
+			else
+				break;
+	}
+	else
+		for (int i = 0; i < 4; i++)
+			if (rect.Overlaps(childs[i]->area))
+			{
+				ret = childs[i]->SearchFirst(rect, exeption);
+				if (ret != nullptr)
+					break;
+			}
+	return ret;
+}
+
 bool QuadTreeNode::PushToCorrectChild(Entity * entity)
 {
 	for (int i = 0; i < 4; i++)
@@ -466,34 +501,6 @@ void QuadTreeNode::DeleteEntities()
 	}
 }
 
-Unit* QuadTreeNode::CheckCollision(const Unit* ptr) const
-{
-	Unit* ret = nullptr;
-
-	if (childs[0] == nullptr)
-	{
-		for (int i = 0; i < NODE_ENTITIES; i++)
-			if (entities[i] != nullptr)
-				if(entities[i]->GetEntityType() == E_UNIT)
-				{
-					Unit* unit = (Unit*)entities[i];
-					if(unit->GetUnitCircle().IsIn(&ptr->GetUnitCircle().GetPosition()) && ptr != entities[i])
-						return unit;
-				}	
-			else
-				break;
-	}
-	else
-		for (int i = 0; i < 4; i++)
-			if (childs[i]->area.Inside(ptr->GetUnitCircle().GetPosition()))
-			{
-				ret = childs[i]->CheckCollision(ptr);
-				if (ret != nullptr)
-					break;
-			}
-	return ret;
-}
-
 void QuadTreeNode::CheckUnitCollisions(const Unit * ptr) const
 {
 	if (childs[0] == nullptr)
@@ -622,6 +629,11 @@ void QuadTree::SearchInIsoRect(const IsoRect rect, std::vector<Entity*>& vec)
 	origin->Search(rect, vec);
 }
 
+Entity * QuadTree::SearchFirstCollisionInTile(iPoint tile, Entity * exeption) const
+{
+	return origin->SearchFirstCollisionInTile(tile,exeption);
+}
+
 void QuadTree::Selection(SDL_Rect rect, std::vector<Entity*>& vec) const
 {
 	vec.clear();
@@ -636,11 +648,6 @@ void QuadTree::UpdateAll(float dt) const
 void QuadTree::DeleteEntities() const
 {
 	origin->DeleteEntities();
-}
-
-Unit* QuadTree::CheckCollisions(const Unit* ptr) const
-{
-	return origin->CheckCollision(ptr);
 }
 
 void QuadTree::DrawRects() const

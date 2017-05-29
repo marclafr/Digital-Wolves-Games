@@ -949,7 +949,7 @@ iPoint j1PathFinding::FindNearestEmpty(Unit* unit) const
 		{
 			current_tile.x = start_tile.x + i;
 			if (IsEmpty(current_tile, unit))
-				return current_tile;;
+				return current_tile;
 		}
 		current_tile.x++;
 
@@ -958,7 +958,7 @@ iPoint j1PathFinding::FindNearestEmpty(Unit* unit) const
 		{
 			current_tile.y = start_tile.y + i;
 			if (IsEmpty(current_tile, unit))
-				return current_tile;;
+				return current_tile;
 		}
 		current_tile.y++;
 
@@ -967,7 +967,7 @@ iPoint j1PathFinding::FindNearestEmpty(Unit* unit) const
 		{
 			current_tile.x = start_tile.x - i;
 			if (IsEmpty(current_tile, unit))
-				return current_tile;;
+				return current_tile;
 		}
 		current_tile.x--;
 

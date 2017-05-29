@@ -220,9 +220,10 @@ Entity* j1EntityManager::CheckForObjective(fPoint position, int vision_range, Si
 	return entity_quadtree->SearchFirstEnemy(vision_range, position, side);
 }
 
-Unit* j1EntityManager::CheckUnitCollisions(const Unit * ptr) const
+Entity * j1EntityManager::TileCollisions(Entity* ptr) const
 {
-	return entity_quadtree->CheckCollisions(ptr);
+	iPoint tile = App->map->WorldToMap(ptr->GetX(), ptr->GetY());
+	return entity_quadtree->SearchFirstCollisionInTile(tile, ptr);
 }
 
 bool j1EntityManager::IsUnitInTile(const Unit* unit, const iPoint tile)const
