@@ -55,6 +55,8 @@ public:
 
 	bool Save(pugi::xml_node&)const;
 
+	void DropUnits(float pos_x, float pos_y); //When a siegeram dies
+
 	void BlitMinimap() const;
 	bool AbleToBuild(iPoint tile, Entity* exeption = nullptr) const;
 
@@ -71,8 +73,8 @@ private:
 
 	//TODO:Must change this
 	int priority = 0;
-
-public: //TODO: should be protected
+	bool siegeram_destroyed = false;
+	fPoint siegeram_pos;
 
 };
 #endif //_j1EntityManager_

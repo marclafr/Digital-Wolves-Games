@@ -140,7 +140,6 @@ private:
 	void StartAttack();
 	void MoveAway();
 	void CheckUnitsBuffs();
-	void DropUnits(); //When a siegeram dies
 
 	bool GetNextTile();
 

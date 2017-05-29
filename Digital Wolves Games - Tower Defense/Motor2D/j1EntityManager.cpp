@@ -207,6 +207,14 @@ bool j1EntityManager::Update(float dt)
 bool j1EntityManager::PostUpdate()
 {
 	entity_quadtree->DeleteEntities();
+	if (siegeram_destroyed == true)
+	{
+		App->entity_manager->CreateUnit(U_CHAMPION, { siegeram_pos.x + 10.0f, siegeram_pos.y		 }, S_ENEMY);
+		App->entity_manager->CreateUnit(U_CHAMPION, { siegeram_pos.x - 10.0f, siegeram_pos.y		 }, S_ENEMY);
+		App->entity_manager->CreateUnit(U_CHAMPION, { siegeram_pos.x,		  siegeram_pos.y + 10.0f }, S_ENEMY);
+		App->entity_manager->CreateUnit(U_CHAMPION, { siegeram_pos.x,		  siegeram_pos.y - 10.0f }, S_ENEMY);
+		siegeram_destroyed = false;
+	}
 	return true;
 }
 
@@ -374,6 +382,13 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	Score.append_attribute("wave_num") = App->wave_manager->GetWaveNum();
 	return true;
 	return true;
+}
+
+void j1EntityManager::DropUnits(float pos_x, float pos_y)
+{
+	siegeram_destroyed = true;
+	siegeram_pos.x = pos_x;
+	siegeram_pos.y = pos_y;
 }
 
 void j1EntityManager::BlitMinimap() const
