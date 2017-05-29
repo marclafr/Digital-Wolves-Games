@@ -847,7 +847,7 @@ void Unit::UnitDies()
 		App->score->EnemyKilled();
 
 	if (unit_type == U_SIEGERAM)
-		DropUnits();
+		App->entity_manager->DropUnits(GetX(), GetY());
 
 	changed = true;
 	PlayDeathSound();
@@ -1039,15 +1039,6 @@ void Unit::CheckUnitsBuffs()
 		}
 	}
 	//-------------
-}
-
-void Unit::DropUnits()
-{
-	App->entity_manager->CreateUnit(U_CHAMPION, { GetX() + 10,GetY() }, GetSide());
-	//App->entity_manager->CreateUnit(U_CHAMPION, { GetX() - 10,GetY() }, GetSide());
-	//App->entity_manager->CreateUnit(U_CHAMPION, { GetX(),GetY() + 10 }, GetSide());
-	//App->entity_manager->CreateUnit(U_CHAMPION, { GetX(),GetY() - 10 }, GetSide());
-	//TODO: Why if there is more than 1 it breaks???
 }
 
 void Unit::SlowUnit()
