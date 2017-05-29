@@ -1,5 +1,4 @@
 #define CAVALRYARCHER_HP 50
-#define SIEGERAM_HP 270
 #define MILITIA_HP 43
 #define MANATARMS_HP 58
 #define LONGSWORDMAN_HP 118
@@ -14,7 +13,7 @@
 #define KNIGHT_HP 137
 #define CAVALIER_HP 125
 #define PALADIN_HP 200
-#define SIEGEMRAM_HP 600
+#define SIEGERAM_HP 600
 #define MANGONEL_HP 500
 
 #define TURRET_HP 150
@@ -44,32 +43,76 @@ iPoint GetUnitIconPositionFromAtlas(const UNIT_TYPE type)
 
 	switch (type)
 	{
+		//Infantry
+	case U_MILITIA:
+		ret = { 1008,936 };
+		break;
+
+	case U_MANATARMS:
+		ret = { 1034,936 };
+		break;
+
+	case U_LONGSWORDMAN:
+		ret = { 1060,936 };
+		break;
+
 	case U_TWOHANDEDSWORDMAN:
 		ret = { 774, 962 };
 		break;
 
+	case U_CHAMPION:
+		ret = { 982,936 };
+		break;
+
+	case U_SPEARMAN:
+		ret = { 1086,936 };
+		break;
+
+	case U_PIKEMAN:
+		ret = { 1112,936 };
+		break;
+
+		//Archers
+	case U_ARCHER:
+		ret = { 1190,936 };
+		break;
+
+	case U_ARBALEST:
+		ret = { 930,936 };
+		break;
+
+	case U_CAVALRYARCHER:
+		ret = { 1216,936 };
+		break;
+
 	case U_HEAVYCAVALRYARCHER:
-		ret = { 956, 936};
+		ret = { 956, 936 };
+		break;
+
+		//Cavalry
+	case U_KNIGHT:
+		ret = { 1138,936 };
+		break;
+
+	case U_CAVALIER:
+		ret = { 1164,936 };
+		break;
+
+	case U_PALADIN:
+		ret = { 930, 910 };
+		break;
+
+		//Siege
+	case U_SIEGERAM:
+		ret = { 748, 962 };
+		break;
+
+	case U_MANGONEL:
+		ret = { 1242,936 };
 		break;
 
 	case U_GOD:
 		ret = { 956, 936};
-		break;
-
-	case U_SIEGERAM:
-		ret = { 748, 962};
-		break;
-
-	case U_PALADIN:
-		ret = { 930, 910};
-		break;
-
-	case U_ARBALEST:
-		ret = { 930,936};
-		break;
-
-	case U_CHAMPION:
-		ret = { 982,936};
 		break;
 
 	default:
@@ -109,6 +152,10 @@ const char* GetUnitName(const UNIT_TYPE type)
 		break;
 
 	case U_SPEARMAN:
+		ret = "Spearman";
+		break;
+
+	case U_PIKEMAN:
 		ret = "Spearman";
 		break;
 		
@@ -196,6 +243,10 @@ const char* GetUnitPrice(const UNIT_TYPE type)
 		/*
 	case U_SPEARMAN:
 		ret = "Food: 60 Wood: 20";
+		break;
+
+	case U_PIKEMAN:
+		ret = "Spearman";
 		break;
 		*/
 		//Archers

@@ -58,7 +58,7 @@ bool UIHUDMinimap::Update()
 
 	//new pos from quad into minimap
 	quad_minimap_position = WorldToMinimap(fPoint(App->render->camera->GetCenter().x, App->render->camera->GetCenter().y));
-	quad_minimap_position.y += GetPosRect().h; //Testing values
+	//quad_minimap_position.y += GetPosRect().h; //Testing values
 	quad_atlas = { quad_minimap_position.x, quad_minimap_position.y, 50, 30 };
 
 	Draw();

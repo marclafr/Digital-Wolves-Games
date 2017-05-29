@@ -186,6 +186,7 @@
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="QuadTree.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Task.h" />
@@ -207,6 +208,12 @@
     <ClInclude Include="UISelectOption.h" />
     <ClInclude Include="Units.h" />
     <ClInclude Include="j1Video.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AOEII_Defenders.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Game\AoE II Icon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

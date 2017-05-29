@@ -381,6 +381,7 @@
     <ClInclude Include="j1Mouse.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">
@@ -419,5 +420,11 @@
     <Filter Include="UIComponents\HUD\PanelInfo">
       <UniqueIdentifier>{d336046b-e54d-4c78-8c49-771d7ed3dffa}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AOEII_Defenders.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Game\AoE II Icon.ico" />
   </ItemGroup>
 </Project>
