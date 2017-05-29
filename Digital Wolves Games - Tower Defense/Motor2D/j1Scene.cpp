@@ -103,7 +103,7 @@ bool j1Scene::Start()
 		TutorialUI();
 	}
 	else
-		App->wave_manager->Enable();//TODO put after tutorial
+		//App->wave_manager->Enable();//TODO put after tutorial
 		 
 	mouse_click_move_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_MOUSE_CLICK_MOVE));
 
@@ -224,6 +224,12 @@ bool j1Scene::PostUpdate()
 		App->input->GetMousePosition(x, y);
 		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
 		App->entity_manager->CreateUnit(U_ARCHER, pos, S_ENEMY);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		for(int i = 0; i < selection.size(); i++)
+			selection[i]->SetHp(0);
 	}
 
 	return ret;

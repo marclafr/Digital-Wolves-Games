@@ -21,6 +21,9 @@
 #define APPROACH 65 //pixels from ennemy while attacking
 #define VISION_RANGE 300 //pixels
 
+//AI
+#define CHECK_DESTINATION_FRAMES 3 //chechs if destination full every x frames
+
 class AnimationManager;
 struct PathList;
 struct PathNode;
@@ -74,7 +77,8 @@ enum ACTION
 	A_DISAPPEAR,
 	A_IDLE,
 	A_WALK,
-	A_APPROACH
+	A_APPROACH,
+	A_CENTER
 };
 
 enum DIRECTION
@@ -128,7 +132,7 @@ private:
 	void UnitDies();
 
 	bool OutOfHP() const;
-	Entity* EnemyInSight();
+	void EnemyInSight();
 	void GoToEnemy();
 	void ChangeDirecctionToEnemy();
 	void GoIdle();
@@ -140,6 +144,9 @@ private:
 	void StartAttack();
 	void MoveAway();
 	void CheckUnitsBuffs();
+	void GoToTileCenter();
+	bool CenterUnit();
+	void ChangeAnimation();
 
 	bool GetNextTile();
 

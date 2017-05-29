@@ -346,41 +346,15 @@ void Unit::Update(float dt)
 
 	if (changed == true)
 	{
-		if (unit_type == U_GOD)
-		{
-			if (action == A_ATTACK)
-				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, action, direction), this->rate_of_fire);
-			else
-				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, action, direction));
-		}
-
-		else
-		{
-			if (action == A_ATTACK)
-				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), this->rate_of_fire);
-			else
-				animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
-
-			if (unit_class == C_SIEGE)
-				idle_siege->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));;
-		}
-
+		ChangeAnimation();
 		changed = false;
 	}
 
 	Draw();
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && GetEntityStatus() == ST_SELECTED && GetSide() == S_ALLY)
-	{
-		SetHp(0);
-	}
 }
 
 bool Unit::Walk()
 {
-	if (target != nullptr)
-		GoToEnemy();
-
 	if (path_objective.DistanceTo(iPoint(GetX(), GetY())) < 3)
 		if (!GetNextTile())
 			return false;
@@ -419,12 +393,7 @@ void Unit::AI()
 			if (App->pathfinding->IsEmpty(GetTile(), this))
 				collided = false;
 
-		target = EnemyInSight();
-		if (target != nullptr)
-		{
-			GoToEnemy();
-			break;
-		}
+		EnemyInSight();
 
 		if (GetSide() == S_ENEMY)
 		{
@@ -475,18 +444,16 @@ void Unit::AI()
 			}
 		}
 		
-		if (ai_update == 3)
+		if (DestinationFull())
 		{
-			ai_update = 0;
+			GoIdle();
+			break;
+		}
 
-			if (DestinationFull())
-			{
-				GoIdle();
-				break;
-			}
-
-			target = EnemyInSight();
-			if (target != nullptr)
+		EnemyInSight();
+		if (target != nullptr)
+		{
+			if (App->pathfinding->IsEmpty(target->GetTile()))
 			{
 				ChangeDirecctionToEnemy();
 				break;
@@ -510,6 +477,25 @@ void Unit::AI()
 		}
 
 		if (AproachEnemy() == true)
+			StartAttack();
+
+		break;
+
+	case A_CENTER:
+
+		if (OutOfHP())
+		{
+			UnitDies();
+			break;
+		}
+		
+		if (DestinationFull())
+		{
+			GoIdle();
+			break;
+		}
+
+		if (CenterUnit() == true)
 			StartAttack();
 
 		break;
@@ -862,12 +848,18 @@ bool Unit::OutOfHP() const
 	return false;
 }
 
-Entity * Unit::EnemyInSight()
+void Unit::EnemyInSight()
 {
 	Entity* ret = App->entity_manager->LookForEnemies(VISION_RANGE, GetPosition(), GetSide(), this, E_UNIT);
 	if (ret == nullptr)
 		ret = App->entity_manager->LookForEnemies(VISION_RANGE, GetPosition(), GetSide(), this);
-	return ret;
+
+	if (ret != nullptr && ret != target)
+	{
+		target = ret;
+		GoToEnemy();
+	}
+		
 }
 
 void Unit::GoToEnemy()
@@ -876,7 +868,12 @@ void Unit::GoToEnemy()
 	if (destination.y == -1)
 		target = nullptr;
 	else
-		GoToTile(destination);
+	{
+		if (destination == GetTile())
+			GoToTileCenter();
+		else
+			GoToTile(destination);
+	}
 }
 
 void Unit::ChangeDirecctionToEnemy()
@@ -1041,6 +1038,60 @@ void Unit::CheckUnitsBuffs()
 		}
 	}
 	//-------------
+}
+
+void Unit::GoToTileCenter()
+{
+	iPoint tile = GetTile();
+	iPoint tile_center = App->map->MapToWorld(tile.x, tile.y);
+
+	action = A_CENTER;
+	float delta_x = tile_center.x - GetX();
+	float delta_y = tile_center.y - GetY();
+	float distance = sqrtf(delta_x * delta_x + delta_y * delta_y);
+
+	float modul = sqrt(move_vector.x*move_vector.x + move_vector.y * move_vector.y);
+
+	move_vector.x = move_vector.x / modul;
+	move_vector.y = move_vector.y / modul;
+}
+
+bool Unit::CenterUnit()
+{
+	SetPosition(GetX() + move_vector.x*speed, GetY() + move_vector.y*speed);
+	unit_circle.SetPosition(GetPosition());
+
+	iPoint tile = GetTile();
+	iPoint center = App->map->MapToWorld(tile.x, tile.y);
+
+	if (GetIPos().DistanceTo(center) <= 3)
+		return true;
+	return false;
+}
+
+void Unit::ChangeAnimation()
+{
+	if (unit_type == U_GOD)
+	{
+		if (action == A_CENTER || action == A_APPROACH)
+			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, A_WALK, direction));
+		if (action == A_ATTACK)
+			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, action, direction), this->rate_of_fire);
+		else
+			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, U_HEAVYCAVALRYARCHER, action, direction));
+	}
+	else
+	{
+		if (action == A_CENTER || action == A_APPROACH)
+			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_WALK, direction));
+		if (action == A_ATTACK)
+			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction), this->rate_of_fire);
+		else
+			animation->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, action, direction));
+
+		if (unit_class == C_SIEGE)
+			idle_siege->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));;
+	}
 }
 
 void Unit::SlowUnit()
