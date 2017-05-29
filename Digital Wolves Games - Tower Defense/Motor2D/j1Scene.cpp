@@ -55,6 +55,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {	
+	
 	App->pathfinding->Enable();
 	App->map->Enable();
 	App->anim->Enable();
@@ -129,7 +130,7 @@ bool j1Scene::Update(float dt)
 	int x, y;
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
-
+	
 	//Test fade to black
 	/*
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
@@ -188,11 +189,11 @@ bool j1Scene::Update(float dt)
 	SDL_Rect anim_rect;
 	iPoint anim_pivot;
 	fish_anim->Update(anim_rect, anim_pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_FISH_ANIMATION), 100, 100, &anim_rect, SDL_FLIP_NONE, anim_pivot.x, anim_pivot.y + 100); //no final positions just to try
+	App->render->PushInGameSprite(App->tex->GetTexture(T_FISH_ANIMATION), -300 ,1000, &anim_rect, SDL_FLIP_NONE, anim_pivot.x, anim_pivot.y + 100); //no final positions just to try
 	// Camera Movement (has to go after blit so that sprites print in the right camera position)
 	App->render->camera->KeyboardMove(dt);
 	App->render->camera->MouseMove(x, y, dt);
-
+	
 	return true;
 }
 
