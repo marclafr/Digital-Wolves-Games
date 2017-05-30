@@ -1044,7 +1044,7 @@ void j1PathFinding::Debug()
 		++item)
 	{
 		pos = App->map->MapToWorld(item->x, item->y);
-		App->render->PushInGameSprite(debug_tex, pos.x - 32, pos.y - 32);
+		App->render->PushInGameSprite(debug_tex, pos.x, pos.y);
 	}
 }
 

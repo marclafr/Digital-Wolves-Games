@@ -38,6 +38,8 @@ public:
 
 	void Selection(const SDL_Rect rect, std::vector<Entity*>& vec) const;
 
+	Entity* ClickSelect(const iPoint& mouse_pos) const;
+
 	void Update(float dt);
 	void DeleteEntities();
 	void CheckUnitCollisions(const Unit* ptr) const;
@@ -86,6 +88,8 @@ public:
 	void SaveAll(pugi::xml_node& node);
 
 	void BlitMinimap() const;
+
+	Entity* ClickSelect(const iPoint& mouse_pos) const;
 };
 
 #endif

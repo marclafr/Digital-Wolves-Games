@@ -15,9 +15,7 @@
 #include "j1UIManager.h"
 #include "j1Scene.h"
 #include "SDL\include\SDL_rect.h"
-#include "j1Collision.h"
 #include "Task.h"
-
 #include "UIButton.h"
 #include "UIHUDDescription.h"
 #include "j1Tutorial.h"

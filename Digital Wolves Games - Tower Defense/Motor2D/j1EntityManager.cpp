@@ -408,3 +408,8 @@ void j1EntityManager::GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entit
 {
 	entity_quadtree->SearchInIsoRect(rect, vec);
 }
+
+Entity * j1EntityManager::ClickSelect(const iPoint & mouse_pos) const
+{
+	return entity_quadtree->ClickSelect(mouse_pos);
+}

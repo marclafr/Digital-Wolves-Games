@@ -470,6 +470,15 @@ void j1Render::SetMouseIconRect(SDL_Rect rect, int pivotX, int pivotY)
 	pivot_mouse_y = pivotY;
 }
 
+void j1Render::BlitSelectingRect()
+{
+	if (App->scene->group_select)
+	{
+		SDL_Rect rect = App->scene->GetSelectionRect();
+		DrawQuad(rect, 255, 255, 255, 255, false);
+	}
+}
+
 void j1Render::BlitMainMenu()
 {
 	BlitUI();
@@ -486,6 +495,7 @@ void j1Render::BlitGameScene()
 	if(App->debug_features.quadtree)
 		App->entity_manager->DrawQuadTree();
 
+	BlitSelectingRect();
 	BlitUI();
 	App->entity_manager->BlitMinimap();
 	BlitMouse();

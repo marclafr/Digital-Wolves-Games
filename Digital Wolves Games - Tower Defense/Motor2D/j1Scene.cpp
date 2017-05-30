@@ -13,7 +13,6 @@
 #include "j1Scene.h"
 #include "j1Animation.h"
 #include "j1EntityManager.h"
-#include "j1Collision.h"
 #include "j1Score.h"
 #include "ProjectileManager.h"
 #include "j1Tutorial.h"
@@ -152,12 +151,40 @@ bool j1Scene::Update(float dt)
 		PlacingWall();
 
 	//SELECTION
-	if(selecting)
-		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
+	if (selecting)
+	{
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		{
+			select_rect.w = x - App->render->camera->GetPosition().x - select_rect.x;
+			select_rect.h = y - App->render->camera->GetPosition().y - select_rect.y;
+			group_select = true;
+		}
+		else if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP && group_select)
 		{
 			App->entity_manager->SelectInQuad(select_rect, selection);
 			selecting = false;
+			group_select = false;
 		}
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && !group_select)
+		{
+			selecting = false;
+
+			//click select
+			iPoint world_mouse_pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
+			Entity* selected = App->entity_manager->ClickSelect(world_mouse_pos);
+
+			if (selected != nullptr)
+			{
+				selected->SetEntityStatus(ST_SELECTED);
+				selection.push_back(selected);
+				App->uimanager->CreatePanelInfo(selection);
+			}
+
+			
+		}
+
+	}
 
 	App->debug_features.UpdateDebug();
 
@@ -167,14 +194,6 @@ bool j1Scene::Update(float dt)
 	{
 		App->render->camera->SetPosition(camera_new_position);
 		move_camera = false;
-	}
-
-	//Selection quad
-	if (selecting)
-	{
-		select_rect.w = x - App->render->camera->GetPosition().x - select_rect.x;
-		select_rect.h = y - App->render->camera->GetPosition().y - select_rect.y;
-		App->render->DrawQuad({select_rect.x, select_rect.y, select_rect.w, select_rect.h}, 255, 255, 255, 255, false);
 	}
 
 	if (!mouse_click_move_anim->Finished())
@@ -668,28 +687,24 @@ void j1Scene::PlacingWall()
 }
 
 void j1Scene::HandleInput( SDL_Event event)
-{
+{	
+	SDL_Rect rect_ingame_no_ui = RECT_INGAME_WITHOUT_UI;
 	int x = 0;
 	int y = 0;
-	SDL_Rect rect_ingame_no_ui = RECT_INGAME_WITHOUT_UI;
+	App->input->GetMousePosition(x, y);
 
 	switch (event.type)
 	{
 	case SDL_MOUSEBUTTONDOWN:
-		App->input->GetMousePosition(x, y);
-
 		if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
-			if (event.button.button == MK_LEFT)
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				App->entity_manager->UnselectEverything();
 
 				select_rect.x = x - App->render->camera->GetPosition().x;
 				select_rect.y = y - App->render->camera->GetPosition().y;
-				select_rect.w = select_rect.x;
-				select_rect.h = select_rect.y;
-
+				
 				selecting = true;
-				//App->entity_manager->CheckClick(x,y);
 			}
 
 		if (event.button.button == MK_RIGHT)
@@ -941,4 +956,9 @@ void j1Scene::TutorialUI()
 const int j1Scene::GetTownHallHp()
 {
 	return townhall->GetHp();
+}
+
+const SDL_Rect & j1Scene::GetSelectionRect() const
+{
+	return select_rect;
 }

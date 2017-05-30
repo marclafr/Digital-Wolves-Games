@@ -83,7 +83,7 @@ bool j1Input::PreUpdate()
 {
 	static SDL_Event event;
 
-	const Uint8* keys = SDL_GetKeyboardState(NULL);
+	const Uint8* keys = SDL_GetKeyboardState(NULL);	
 
 	for (int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
@@ -111,7 +111,6 @@ bool j1Input::PreUpdate()
 				keyboard[i] = KEY_IDLE;
 		}
 	}
-	
 
 	while(SDL_PollEvent(&event) != 0)
 	{
@@ -142,7 +141,6 @@ bool j1Input::PreUpdate()
 			break;
 
 			case SDL_MOUSEBUTTONDOWN:
-
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;
 				if(App->scene->active)
 					App->scene->HandleInput(event);

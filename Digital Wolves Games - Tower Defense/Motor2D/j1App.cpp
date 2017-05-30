@@ -22,7 +22,6 @@
 #include "j1ScoreScene.h"
 #include "j1Video.h"
 #include "j1App.h"
-#include "j1Collision.h"
 #include "j1SceneManager.h"
 #include "j1Console.h"
 #include "j1WaveManager.h"

@@ -262,3 +262,14 @@ void Entity::DrawPointMinimap()
 	//Draw enemy units points
 	App->render->Blit((SDL_Texture*)App->uimanager->GetAtlas(), unit_minimap_pos.x - App->render->camera->GetPosition().x, unit_minimap_pos.y - App->render->camera->GetPosition().y, &atlas_point);
 }
+
+const SDL_Rect Entity::GetTextureRectWorldPos() const
+{
+	SDL_Rect ret;
+
+	ret = GetRect();
+	ret.x = GetPosition().x - GetPivot().x;
+	ret.y = GetPosition().y - GetPivot().y;
+
+	return ret;
+}

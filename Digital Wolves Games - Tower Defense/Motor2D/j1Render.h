@@ -79,6 +79,7 @@ public:
 	void BlitUI() const;
 	void BlitMouse() const;
 	void SetMouseIconRect(SDL_Rect rect, int pivotX, int pivotY);
+	void BlitSelectingRect();
 	
 	void BlitMainMenu();
 	void BlitGameScene();

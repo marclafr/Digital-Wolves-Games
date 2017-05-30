@@ -62,6 +62,8 @@ public:
 
 	void GetEntitiesInIsoRect(const IsoRect rect, std::vector<Entity*>& vec) const;
 
+	Entity* ClickSelect(const iPoint& mouse_pos) const;
+
 private:
 	//Textura provisional para sprites por si no se cargan en animation
 	//SDL_Texture* sprites;

@@ -242,6 +242,37 @@ void QuadTreeNode::Selection(const SDL_Rect rect, std::vector<Entity*>& vec) con
 				childs[i]->Selection(rect, vec);
 }
 
+Entity * QuadTreeNode::ClickSelect(const iPoint & mouse_pos) const
+{
+	Entity* ret = nullptr;
+	if (childs[0] == nullptr)
+	{
+		for (int i = 0; i < NODE_ENTITIES; i++)
+			if (entities[i] != nullptr)
+			{
+				SDL_Rect rect = entities[i]->GetTextureRectWorldPos();
+				if (rect.x < mouse_pos.x
+					&& rect.x + rect.w > mouse_pos.x
+					&& rect.y < mouse_pos.y
+					&& rect.y + rect.h > mouse_pos.y)
+				{
+					ret = entities[i];
+					break;
+				}
+			}
+			else
+				break;
+	}
+	else
+		for (int i = 0; i < 4; i++)
+		{
+			ret = childs[i]->ClickSelect(mouse_pos);
+			if (ret != nullptr)
+				return ret;
+		}
+	return ret;
+}
+
 void QuadTreeNode::Search(const IsoRect rect, std::vector<Entity*>& vec) const
 {
 	if (childs[0] == nullptr)
@@ -673,4 +704,9 @@ void QuadTree::SaveAll(pugi::xml_node & node)
 void QuadTree::BlitMinimap() const
 {
 	origin->BlitMinimap();
+}
+
+Entity * QuadTree::ClickSelect(const iPoint & mouse_pos) const
+{
+	return origin->ClickSelect(mouse_pos);
 }

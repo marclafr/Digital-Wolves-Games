@@ -74,12 +74,13 @@ public:
 
 	const int GetTownHallHp();
 	Building* townhall;
-private:
 
+	const SDL_Rect& GetSelectionRect() const;
+
+private:
 	bool game_scene = true;
 
 	j1Audio* scene_music;
-	bool selecting = false;
 
 	SDL_Rect select_rect;
  
@@ -89,11 +90,15 @@ private:
 	bool placing_wall_clicked = false;
 
 	iPoint mouse_click_objective;
-	AnimationManager* mouse_click_move_anim;
+	AnimationManager* mouse_click_move_anim = nullptr;
 	AnimationManager* fish_anim = nullptr;
+
 public:
 	bool win = false;
 	bool lose = false;
+
+	bool selecting = false;
+	bool group_select = false;
 	
 	//Minimap, when click move the camera
 	bool move_camera = false;
@@ -105,13 +110,6 @@ public:
 	ResourceManager* resources = nullptr;
 
 	std::vector<Entity*> selection;
-
-	//TEST FOR SAMPER: TODO delete this and all related
-	AnimationManager* anim_test2;
-	AnimationManager* anim_test3;
-	AnimationManager* anim_test4;
-	AnimationManager* anim_test5;
-	//--
 };
 
 #endif // __j1SCENE_H__

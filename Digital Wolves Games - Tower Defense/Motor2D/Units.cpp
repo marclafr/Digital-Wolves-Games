@@ -41,7 +41,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 15.0f;
 		range = LONG_COMBAT_RANGE;
 		unit_class = C_ARCHER;
-		unit_circle = Elipse({ GetX(), GetY() }, 18);
+		unit_circle = Elipse(GetPosition(), 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_HEAVYCAVALRYARCHER);
 		else
@@ -60,7 +60,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 80.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
-		unit_circle = Elipse({ GetX(), GetY() }, 10);
+		unit_circle = Elipse(GetPosition(), 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_MILITIA);
 		else
@@ -77,7 +77,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 120.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
-		unit_circle = Elipse({ GetX(), GetY() }, 10);
+		unit_circle = Elipse(GetPosition(), 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_MANATARMS);
 		else
@@ -93,7 +93,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 95.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
-		unit_circle = Elipse({ GetX(), GetY() }, 10);
+		unit_circle = Elipse(GetPosition(), 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_LONGSWORDMAN);
 		else
@@ -109,7 +109,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 100.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
-		unit_circle = Elipse({ GetX(), GetY() }, 10);
+		unit_circle = Elipse(GetPosition(), 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_TWOHANDEDSWORDMAN);
 		else
@@ -125,7 +125,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 100.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
-		unit_circle = Elipse({ GetX(), GetY() }, 10);
+		unit_circle = Elipse(GetPosition(), 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_CHAMPION);
 		else
@@ -141,7 +141,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 95.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
-		unit_circle = Elipse({ GetX(), GetY() }, 10);
+		unit_circle = Elipse(GetPosition(), 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_SPEARMAN);
 		else
@@ -157,7 +157,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 95.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_INFANTRY;
-		unit_circle = Elipse({ GetX(), GetY() }, 10);
+		unit_circle = Elipse(GetPosition(), 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_PIKEMAN);
 		else
@@ -176,7 +176,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 95.0f;
 		range = LONG_COMBAT_RANGE;
 		unit_class = C_ARCHER;
-		unit_circle = Elipse({ GetX(), GetY() }, 10);
+		unit_circle = Elipse(GetPosition(), 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_ARCHER);
 		else
@@ -193,7 +193,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 80.0f;
 		range = MID_COMBAT_RANGE;
 		unit_class = C_ARCHER;
-		unit_circle = Elipse({ GetX(), GetY() }, 10);
+		unit_circle = Elipse(GetPosition(), 10);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_ARBALEST);
 		else
@@ -209,7 +209,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 85.0f;
 		range = LONG_COMBAT_RANGE;
 		unit_class = C_ARCHER;
-		unit_circle = Elipse({ GetX(), GetY() }, 18);
+		unit_circle = Elipse(GetPosition(), 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_CAVALRYARCHER);
 		else
@@ -225,7 +225,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 120.0f;
 		range = LONG_COMBAT_RANGE;
 		unit_class = C_ARCHER;
-		unit_circle = Elipse({ GetX(), GetY() }, 18);
+		unit_circle = Elipse(GetPosition(), 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_HEAVYCAVALRYARCHER);
 		else
@@ -244,7 +244,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 110.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_CAVALRY;
-		unit_circle = Elipse({ GetX(), GetY() }, 18);
+		unit_circle = Elipse(GetPosition(), 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_PALADIN);
 		else
@@ -260,7 +260,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 105.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_CAVALRY;
-		unit_circle = Elipse({ GetX(), GetY() }, 18);
+		unit_circle = Elipse(GetPosition(), 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_KNIGHT);
 		else
@@ -276,7 +276,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 100.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_CAVALRY;
-		unit_circle = Elipse({ GetX(), GetY() }, 18);
+		unit_circle = Elipse(GetPosition(), 18);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_CAVALIER);
 		else
@@ -295,7 +295,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 210.0f;
 		range = CLOSE_COMBAT_RANGE;
 		unit_class = C_SIEGE;
-		unit_circle = Elipse({ GetX(), GetY() }, 30);
+		unit_circle = Elipse(GetPosition(), 30);
 		if (side == S_ENEMY)
 			SetTextureID(T_ENEMY_SIEGERAM);
 		else
@@ -311,7 +311,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		rate_of_fire = 250.0f;
 		range = MID_COMBAT_RANGE;
 		unit_class = C_SIEGE;
-		unit_circle = Elipse({ GetX(), GetY() }, 30);
+		unit_circle = Elipse(GetPosition(), 30);
 		SetTextureID(T_MANGONEL);
 		priority = 1;
 		break;
@@ -395,13 +395,6 @@ void Unit::AI()
 
 		EnemyInSight();
 
-		if (GetSide() == S_ENEMY)
-		{
-			target = App->scene->townhall;
-			GoToEnemy();
-			break;
-		}
-
 		if (!collided)
 		{
 			collision = (Unit*)App->entity_manager->TileCollisions(this);
@@ -413,6 +406,15 @@ void Unit::AI()
 				collision = nullptr;
 			}
 		}
+
+		if (GetSide() == S_ENEMY)
+		{
+			target = App->scene->townhall;
+			GoToEnemy();
+			break;
+		}
+
+		
 		
 		break;
 

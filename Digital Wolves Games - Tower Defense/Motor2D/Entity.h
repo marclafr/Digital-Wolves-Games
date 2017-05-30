@@ -44,6 +44,7 @@ private:
 	enum Side side;
 	float Arrow_pos = 0; //It goes from 0 to 1
 	float ai_dt = 0;
+
 public:
 	Entity(ENTITY_TYPE entity_type, fPoint pos, Side side);
 
@@ -92,6 +93,7 @@ public:
 	void SetHp(int new_hp);
 	void DrawPointMinimap();
 
+	const SDL_Rect GetTextureRectWorldPos() const;
 
 protected:
 	//Seters

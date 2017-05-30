@@ -22,9 +22,6 @@
     <ClCompile Include="j1Audio.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="j1Collision.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="j1Console.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -202,9 +199,6 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Audio.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Collision.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="j1Console.h">
