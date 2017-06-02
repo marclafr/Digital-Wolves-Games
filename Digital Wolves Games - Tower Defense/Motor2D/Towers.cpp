@@ -228,7 +228,7 @@ void Tower::Draw()
 			SDL_Rect fire_rect;
 			iPoint fire_pivot;
 			building_fire->Update(fire_rect, fire_pivot);
-			App->render->PushInGameSprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX(), GetY() - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+			App->render->PushInGameSprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX(), GetY() + 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y + 100);
 		}
 	}
 	else
