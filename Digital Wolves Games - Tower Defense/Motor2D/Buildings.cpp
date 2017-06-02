@@ -15,19 +15,23 @@
 Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BUILDING, pos, S_ALLY), building_type(b_type)
 {
 	SDL_Rect rect;
-	SetTextureID(T_TURRET);
+	building_fire = new AnimationManager(App->anim->GetAnimationType(ANIM_BUILDINGS_FIRE));
+
 	if (builded == true)
 		totally_built = true;
 	switch (b_type)
 	{
 	case B_TURRET:
 		SetSide(S_ALLY);
+		SetTextureID(T_TURRET);
 		build_rect = IsoRect( GetPosition(), 96, 47);
 		break;
 
 	case B_WOOD_WALL:
 		SetSide(S_ALLY);
+		SetTextureID(T_TURRET);
 		SetHp(250);
+		SetMaxHP(250);
 		SetAttack(0);
 		SetRect({ 610,289,100,106 });
 		SetPivot(0.49 * 100, 106 * 0.754717);
@@ -38,6 +42,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 	case B_TOWNHALL:
 		SetSide(S_ALLY);
 		SetHp(1500);
+		SetMaxHP(1500);
 		SetAttack(0);
 		SetArmor(8);
 		rect = { 477,0,366,317 };
@@ -50,6 +55,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 	case B_UNIVERSITY:
 		SetSide(S_ALLY);
 		SetHp(1500);
+		SetMaxHP(1500);
 		SetAttack(0);
 		SetArmor(8);
 		rect = {0,158,483,291};
@@ -98,6 +104,48 @@ void Building::Draw()
 	{
 		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
 			App->render->PushInGameSprite(this);
+
+		//BUILDINGS FIRE IF DAMAGED
+
+		if (building_type == B_TOWNHALL)
+		{
+			if (GetHp() <= GetMaxHp()/4)
+			{
+				SDL_Rect fire_rect;
+				iPoint fire_pivot;
+				building_fire->Update(fire_rect, fire_pivot);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() - 35, GetY() + 20 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX(), GetY() - 70 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() + 70, GetY() - 150 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() + 90, GetY() - 60 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() - 100, GetY() - 40 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() - 30, GetY() - 165 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() + 50, GetY() - 50 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() - 50, GetY() - 50 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+			}
+			else if(GetHp() <= GetMaxHp() / 2)
+			{
+				SDL_Rect fire_rect;
+				iPoint fire_pivot;
+				building_fire->Update(fire_rect, fire_pivot);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX(), GetY() - 70 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() + 70, GetY() - 150 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() + 90, GetY() - 60 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() - 100, GetY() - 40 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX() - 30, GetY() - 165 - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+			}
+		}
+		else
+		{
+			if (GetHp() <= GetMaxHp() / 2)
+			{
+				SDL_Rect fire_rect;
+				iPoint fire_pivot;
+				building_fire->Update(fire_rect, fire_pivot);
+				App->render->PushUISprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX(), GetY() - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+			}
+		}
+		
 	}
 	else
 	{
@@ -143,6 +191,7 @@ void Building::UpgradeWall(BUILDING_TYPE type)
 				SetPivot(0.494949 * 99, 178 * 0.865169);
 				building_type = B_STONE_WALL;
 				SetHp(500);
+				SetMaxHP(500);
 			}
 			break;
 		case B_STONE_WALL:
@@ -153,6 +202,7 @@ void Building::UpgradeWall(BUILDING_TYPE type)
 				SetPivot(0.454211 * 96, 169 * 0.899822);
 				building_type = B_BRICK_WALL;
 				SetHp(750);
+				SetMaxHP(750);
 			}
 			break;
 		default:
@@ -221,6 +271,16 @@ const int Building::GetRange() const
 {
 	//TODO
 	return 250;
+}
+
+const int Building::GetMaxHp() const
+{
+	return max_hp;
+}
+
+void Building::SetMaxHP(int maxhp)
+{
+	max_hp = maxhp;
 }
 
 void Building::Save(pugi::xml_node &data)

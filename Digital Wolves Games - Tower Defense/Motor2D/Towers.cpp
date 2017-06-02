@@ -21,6 +21,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 	{
 	case T_BASIC_TOWER:
 		SetHp(150);
+		SetMaxHP(150);
 		SetAttack(15);
 		SetArmor(1);
 		rate_of_fire = 0.85f;	//time between each attack in seconds
@@ -36,6 +37,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 
 	case T_BOMBARD_TOWER:
 		SetHp(175);
+		SetMaxHP(175);
 		SetAttack(26);
 		SetArmor(3);
 		rate_of_fire = 1.95f;
@@ -51,6 +53,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 
 	case T_FIRE_TOWER:
 		SetHp(90);
+		SetMaxHP(90);
 		SetAttack(25);
 		SetArmor(1);
 		rate_of_fire = 0.85f;	//time between each attack in seconds
@@ -65,6 +68,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		break;
 	case T_ICE_TOWER:
 		SetHp(175);
+		SetMaxHP(175);
 		SetAttack(20);
 		SetArmor(1);
 		rate_of_fire = 0.88;	//time between each attack in seconds
@@ -79,6 +83,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		break;
 	case T_AIR_TOWER:
 		SetHp(165);
+		SetMaxHP(165);
 		SetAttack(11);
 		SetArmor(1);
 		rate_of_fire = 0.55f;	//time between each attack in seconds
@@ -93,6 +98,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		break;
 	case T_BOMBARD_FIRE_TOWER:
 		SetHp(225);
+		SetMaxHP(225);
 		SetAttack(33);
 		SetArmor(4);
 		rate_of_fire = 1.95f;	//time between each attack in seconds
@@ -107,6 +113,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		break;
 	case T_BOMBARD_ICE_TOWER:
 		SetHp(195);
+		SetMaxHP(195);
 		SetAttack(28);
 		SetArmor(4);
 		rate_of_fire = 1.90f;	//time between each attack in seconds
@@ -121,6 +128,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		break;
 	case T_BOMBARD_AIR_TOWER:
 		SetHp(175);
+		SetMaxHP(175);
 		SetAttack(21);
 		SetArmor(4);
 		rate_of_fire = 1.45f;	//time between each attack in seconds
@@ -215,6 +223,13 @@ void Tower::Draw()
 	if (IsBuilt())
 	{
 		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY())) App->render->PushInGameSprite(this);
+		if (GetHp() <= GetMaxHp() / 2) //TOWERS FIRE
+		{
+			SDL_Rect fire_rect;
+			iPoint fire_pivot;
+			building_fire->Update(fire_rect, fire_pivot);
+			App->render->PushInGameSprite(App->tex->GetTexture(T_BUILDINGS_FIRE), GetX(), GetY() - 100, &fire_rect, SDL_FLIP_NONE, fire_pivot.x, fire_pivot.y - 100);
+		}
 	}
 	else
 	{

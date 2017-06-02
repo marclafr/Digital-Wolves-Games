@@ -35,9 +35,12 @@ private:
 	bool alive = true;
 	bool totally_built = false;
 	IsoRect build_rect;
+	int max_hp = 0;
 
 public:
 	iPoint arrowpos;
+	AnimationManager* building_fire;
+
 	Building(BUILDING_TYPE b_type, fPoint pos, bool builded);
 	~Building();
 
@@ -56,6 +59,8 @@ public:
 	void ConvertToRubble();
 	void DestroyBuilding();
 	const int GetRange() const;
+	const int GetMaxHp() const;
+	void SetMaxHP(int maxhp);
 	virtual void Save(pugi::xml_node&);
 };
 
