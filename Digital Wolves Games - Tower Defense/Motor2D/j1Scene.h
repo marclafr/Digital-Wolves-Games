@@ -20,6 +20,7 @@ enum TOWER_TYPE;
 enum RESOURCE_TYPE;
 enum BUILDING_TYPE;
 class AnimationManager;
+class UIComponents;
 
 enum PlacingWallDirection 
 {
@@ -88,6 +89,7 @@ private:
 	iPoint LastSelectedForWall;
 	PlacingWallDirection direction;
 	bool placing_wall_clicked = false;
+	
 
 	iPoint mouse_click_objective;
 	AnimationManager* mouse_click_move_anim = nullptr;
@@ -99,6 +101,10 @@ public:
 
 	bool selecting = false;
 	bool group_select = false;
+
+	UIComponents* new_wave_exclamation;
+	bool bring_next_wave = false;
+	bool can_click_next_wave = false;
 	
 	//Minimap, when click move the camera
 	bool move_camera = false;

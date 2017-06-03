@@ -7,6 +7,7 @@
 #include "j1Pathfinding.h"
 #include "p2Log.h"
 #include "j1Score.h"
+#include "j1Scene.h"
 
 j1WaveManager::j1WaveManager() : j1Module()
 {
@@ -383,6 +384,7 @@ bool j1WaveManager::Update(float dt)
 			App->score->SetNullWaveTimer();
 			can_bring_next_wave = false;
 			kills_for_next_wave += waves[wave_num].total_wave_units;
+			App->scene->bring_next_wave = true;
 		}
 
 		if (spawning)

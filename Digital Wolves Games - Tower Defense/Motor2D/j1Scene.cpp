@@ -198,7 +198,21 @@ bool j1Scene::Update(float dt)
 		App->render->PushUISprite(App->tex->GetTexture(T_MOUSE_CLICK_MOVE), mouse_click_objective.x, mouse_click_objective.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
 	}
 
-	
+	if (bring_next_wave)
+	{
+		new_wave_exclamation = App->uimanager->AddComponent(UIT_UIIMAGE, { 1190, 715, 41, 41 }, { 1079, 1313, 41, 41 });
+		bring_next_wave = false;
+		can_click_next_wave = true;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && can_click_next_wave)
+	{
+		new_wave_exclamation->SetToDelete();
+		can_click_next_wave = false;
+		
+	}
+
+
 	SDL_Rect anim_rect;
 	iPoint anim_pivot;
 	fish_anim->Update(anim_rect, anim_pivot);
@@ -898,6 +912,9 @@ void j1Scene::CreateSceneUI()
 	new_wave_button->SetClickedTextRect({ 687, 1227, 104, 104 });
 	new_wave_button->SetMouseOnTopTextRect({ 580, 1226, 104, 104 });
 	new_wave_button->SetTask(new BringNextWave());
+
+	//NEW WAVE EXCLAMATION
+	//UIComponents* new_wave_exclamation = App->uimanager->AddComponent(UIT_UIIMAGE, { 1190, 715, 41, 41 }, { 1079, 1313, 41, 41 });
 
 	//INFO SCORE, TIME, ENEMIES LEFT
 	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 944, 1313, 130, 88 });
