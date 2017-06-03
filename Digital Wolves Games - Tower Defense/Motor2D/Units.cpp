@@ -451,6 +451,7 @@ void Unit::AI()
 		}
 
 		EnemyInSight();
+
 		if (target != nullptr)
 		{
 			if (App->pathfinding->IsEmpty(target->GetTile()))
@@ -962,7 +963,7 @@ bool Unit::AproachEnemy()
 
 void Unit::SetAttackPosition()
 {
-	if (range != CLOSE_COMBAT_RANGE || GetUnitType() == U_SIEGERAM)
+	if (range != CLOSE_COMBAT_RANGE || GetUnitType() == U_SIEGERAM || GetUnitType() == U_MANGONEL)
 		StartAttack();
 	else
 	{
