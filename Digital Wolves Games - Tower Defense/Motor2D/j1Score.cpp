@@ -6,6 +6,7 @@
 #include "j1UIManager.h"
 #include "j1Score.h"
 #include "j1WaveManager.h"
+#include "j1Tutorial.h"
 
 bool j1Score::SecChange() const
 {
@@ -43,8 +44,12 @@ bool j1Score::Update(float dt)
 		if (App->wave_manager->WaveEnded())
 		{
 			SDL_DestroyTexture(wave_timer_texture);
-			sprintf_s(time_left, 256, "Next Wave in: %d seconds", App->wave_manager->SecondsUntilNextWave());
-			wave_timer_texture = App->font->Print(time_left);
+			if (!App->tutorial->tutorial)
+			{
+				sprintf_s(time_left, 256, "Next Wave in: %d seconds", App->wave_manager->SecondsUntilNextWave());
+				wave_timer_texture = App->font->Print(time_left);
+			}
+			
 		}
 		//--
 	}

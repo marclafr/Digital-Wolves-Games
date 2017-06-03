@@ -373,8 +373,8 @@ void j1Tutorial::Tutorial5()
 
 void j1Tutorial::Tutorial6()
 {
-	App->wave_manager->Enable();//TODO put after tutorial 
-
+	App->wave_manager->Enable(); 
+	tutorial = false;
 	if (!tutorial6_part1)
 	{
 		App->render->camera->SetPosition(iPoint(1700, -2400));

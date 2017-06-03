@@ -271,6 +271,7 @@ bool j1Scene::CleanUp()
 	App->anim->Disable();
 	App->map->Disable();
 	App->pathfinding->Disable();
+	App->tutorial->Disable();
 	
 	App->uimanager->SetAllToDelete();
 
