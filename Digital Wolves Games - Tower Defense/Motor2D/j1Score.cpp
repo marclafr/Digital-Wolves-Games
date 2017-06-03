@@ -46,7 +46,7 @@ bool j1Score::Update(float dt)
 			SDL_DestroyTexture(wave_timer_texture);
 			if (!App->tutorial->tutorial)
 			{
-				sprintf_s(time_left, 256, "Next Wave in: %d seconds", App->wave_manager->SecondsUntilNextWave());
+				sprintf_s(time_left, 256, "Next Wave in: %d", App->wave_manager->SecondsUntilNextWave());
 				wave_timer_texture = App->font->Print(time_left);
 			}
 			
