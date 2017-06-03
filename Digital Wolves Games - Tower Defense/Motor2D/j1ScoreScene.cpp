@@ -50,8 +50,6 @@ bool j1ScoreScene::Start()
 	components_trophies_deleted = false;
 	achievements_unselected = true;
 	components_achievements_deleted = true;
-	investigation_unselected = true;
-	components_investigation_deleted = true;
 
 	//BACKGROUND
 	App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 0, 1336, 622 }, { 0, 1504, 1366, 622 });
@@ -305,13 +303,6 @@ void j1ScoreScene::CreateAllButtons()
 
 	btn->SetLabel(label = App->uimanager->AddLabel(440, 710, "Achievements", { 255,255,255,0 }));
 	label->SetColorMouseOnTop({ 255,255,0,0 });
-
-	//INVESTIGATIONS
-	btn = App->uimanager->AddButton({ 555, 696, 123, 55 }, { 0, 0, 0, 0 });
-	btn->SetTask(new ChangeBackGroundTask({ 0, 2426, 1366, 144 }, BU_INVESTIGATIONS));
-
-	btn->SetLabel(label = App->uimanager->AddLabel(575, 710, "Investigations", { 255,255,255,0 }));
-	label->SetColorMouseOnTop({ 255,255,0,0 });
 }
 
 void j1ScoreScene::SetSceneChange(bool is_change)
@@ -335,18 +326,11 @@ void j1ScoreScene::ChangeUnselected(BUTTONSUNDERGROUND unselected)
 	{
 	case BU_TROPHIES:
 		trophies_unselected = false;
-		achievements_unselected = true;
-		investigation_unselected = true;
+		achievements_unselected = true;;
 		break;
 	case BU_ACHIEVEMENTS:
 		trophies_unselected = true;
 		achievements_unselected = false;
-		investigation_unselected = true;
-		break;
-	case BU_INVESTIGATIONS:
-		trophies_unselected = true;
-		achievements_unselected = true;
-		investigation_unselected = false;
 		break;
 	}
 }
@@ -400,10 +384,5 @@ void j1ScoreScene::OptionSelected()
 	{
 		if(components_achievements_deleted)
 			CreateAchievements();
-	}
-
-	if (investigation_unselected)
-	{
-
 	}
 }

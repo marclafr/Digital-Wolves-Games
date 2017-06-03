@@ -15,7 +15,6 @@ enum BUTTONSUNDERGROUND
 {
 	BU_TROPHIES,
 	BU_ACHIEVEMENTS,
-	BU_INVESTIGATIONS
 };
 
 class j1ScoreScene : public j1Module
@@ -104,8 +103,6 @@ private:
 	bool components_trophies_deleted = false;
 	bool achievements_unselected = true;
 	bool components_achievements_deleted = true;
-	bool investigation_unselected = true;
-	bool components_investigation_deleted = true;
 };
 
 #endif // __j1SCORESCENE_H__
