@@ -83,13 +83,13 @@ class AnimationManager
 {
 private:
 	Animation* anim_type;
-	float current_frame;
+	float current_frame = 0;
 	j1Timer	anim_timer;
 	j1Timer	idle_wait_timer;
 	float speed; //More speed equals slow down the animation
-	bool loop;
-	bool wait_started;
-	bool finished;
+	bool loop = true;
+	bool wait_started = false;
+	bool finished = false;
 
 public:
 	AnimationManager();
