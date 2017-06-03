@@ -901,7 +901,7 @@ void j1Scene::CreateSceneUI()
 	new_wave_button->SetTask(new BringNextWave());
 
 	//INFO SCORE, TIME, ENEMIES LEFT
-	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 942, 1296, 130, 88 });
+	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 944, 1313, 130, 88 });
 	App->uimanager->SetInfoUIComponent(info_ui);
 }
 
