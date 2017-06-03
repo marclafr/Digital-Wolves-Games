@@ -309,7 +309,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetArmor(-1);
 		speed = 0.8f;
 		rate_of_fire = 250.0f;
-		range = MID_COMBAT_RANGE;
+		range = EXTRA_LONG_COMBAT_RANGE;
 		unit_class = C_SIEGE;
 		unit_circle = Elipse(GetPosition(), 30);
 		SetTextureID(T_MANGONEL);
@@ -511,11 +511,23 @@ void Unit::AI()
 		if (EnemyDead())
 		{
 			GoIdle();
+			if (unit_class == C_SIEGE)
+				siege_attacked = false;
 			break;
 		}
 
-		if (animation->Finished())
-			DoDamage();
+		if (unit_class == C_SIEGE)
+		{
+			if (animation->GetCurrentFrame() >= GetFrameAttack() && siege_attacked == false)
+				DoDamage();
+			else if (siege_attacked == true)
+				if (animation->Finished())
+					siege_attacked = false;
+		}
+
+		else
+			if (animation->Finished())
+				DoDamage();
 
 		break;
 
@@ -920,10 +932,17 @@ void Unit::DoDamage()
 		else
 			App->projectile_manager->CreateProjectile(GetPosition(), target, attack, 15, 20, 0, P_BASIC_ARROW);
 	}
+
+	else if(unit_type == U_MANGONEL)
+		App->projectile_manager->CreateProjectile(GetPosition(), target, attack, 30, 40, 50, P_CANNONBALL);
+
 	else
 		target->Damaged(attack);
 
 	PlayAttackSound();
+
+	if (unit_class == C_SIEGE)
+		siege_attacked = true;
 
 	if (destination != App->map->WorldToMap(GetX(), GetY()))
 		LOG("NOT EQUAL!!!!!!!");
@@ -1091,6 +1110,22 @@ void Unit::ChangeAnimation()
 
 		if (unit_class == C_SIEGE)
 			idle_siege->ChangeAnimation(App->anim->GetAnimationType(ANIM_UNIT, unit_type, A_IDLE, direction));;
+	}
+}
+
+int Unit::GetFrameAttack()
+{
+	switch (unit_type)
+	{
+	case U_MANGONEL:
+		return 2;
+		break;
+	case U_SIEGERAM:
+		return 9;
+		break;
+	default:
+		return 0;
+		break;
 	}
 }
 

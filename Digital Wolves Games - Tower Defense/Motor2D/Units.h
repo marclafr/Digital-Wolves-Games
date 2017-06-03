@@ -16,6 +16,7 @@
 #define CLOSE_COMBAT_RANGE 1
 #define MID_COMBAT_RANGE 2
 #define LONG_COMBAT_RANGE 3
+#define EXTRA_LONG_COMBAT_RANGE 4	//MANGONEL
 
 //close combat approach
 #define APPROACH 65 //pixels from ennemy while attacking
@@ -118,6 +119,7 @@ private:
 	AnimationManager* idle_siege;
 	bool changed;
 	Entity* target;
+	bool siege_attacked = false;
 
 	std::vector<iPoint> path_vec;
 
@@ -147,6 +149,7 @@ private:
 	void GoToTileCenter();
 	bool CenterUnit();
 	void ChangeAnimation();
+	int GetFrameAttack();
 
 	bool GetNextTile();
 

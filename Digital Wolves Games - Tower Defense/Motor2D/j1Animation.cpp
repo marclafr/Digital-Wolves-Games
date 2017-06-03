@@ -365,6 +365,11 @@ void AnimationManager::Reset()
 	wait_started = false;
 }
 
+int AnimationManager::GetCurrentFrame()
+{
+	return current_frame;
+}
+
 void Animation::SetUnit(const pugi::xml_node node)
 {
 	//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:

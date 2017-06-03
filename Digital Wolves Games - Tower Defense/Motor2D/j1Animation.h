@@ -105,6 +105,7 @@ public:
 
 	bool Finished();
 	void Reset();
+	int GetCurrentFrame();
 
 };
 
