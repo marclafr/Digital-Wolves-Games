@@ -82,7 +82,7 @@ bool j1Scene::Start()
 	tower_pos.y = tower_ipos.y;
 	App->entity_manager->CreateTower(T_BASIC_TOWER, tower_pos);
 
-	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
+	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1093, 819), S_ALLY);
 	fish_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FISH_JUMP));
 
 	//--
