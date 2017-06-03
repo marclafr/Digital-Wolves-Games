@@ -984,15 +984,6 @@ iPoint j1PathFinding::FindNearestEmpty(Unit* unit) const
 	}
 }
 
-void j1PathFinding::UpdateAfterBuilding(iPoint & building_tile)
-{
-	for (std::vector<std::vector<iPoint>*>::iterator it = allied_paths.begin(); it != allied_paths.end(); ++it)
-	{
-		if (IsInPath(building_tile, *(*it)))
-			CalculatePath((*it)->front(), (*it)->back(), *(*it));
-	}
-}
-
 bool j1PathFinding::IsInPath(const iPoint & tile, const std::vector<iPoint>& path) const
 {
 	X_DIRECTION x_dir = X_NO_DIR;

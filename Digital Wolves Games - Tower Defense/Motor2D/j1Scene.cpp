@@ -84,14 +84,8 @@ bool j1Scene::Start()
 
 	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
 	fish_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FISH_JUMP));
-
 	//--
-
-	//uint w, h;
-	//App->win->GetWindowSize(w, h);
-	//SDL_Rect r = { 0,0,w,h };
-	//App->video->PlayVideo("introdw.ogv",r);
-	//Reset scores and timers
+	
 	App->score->Reset();
 
 	//TUTORIAL
@@ -267,7 +261,6 @@ bool j1Scene::CleanUp()
 	App->wave_manager->Disable();
 	App->projectile_manager->Disable();
 	App->entity_manager->Disable();
-	//App->collision->Disable();
 	App->anim->Disable();
 	App->map->Disable();
 	App->pathfinding->Disable();
@@ -309,10 +302,7 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 					App->audio->PlayFx(App->audio->fx_construction);
 
 					if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true || App->pathfinding->IsConstructible_ally(map_coordinates) == true)
-					{
 						resources->BuildTower(type, pos);
-						//App->pathfinding->UpdateAfterBuilding(map_coordinates); //TODO
-					}
 				}
 			}
 		}
@@ -320,7 +310,6 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 		placing_tower = T_NO_TYPE;
 }
-//SDL_SetTextureAlphaMod(wall_tex, 180);
 
 void j1Scene::PlacingWall()
 {

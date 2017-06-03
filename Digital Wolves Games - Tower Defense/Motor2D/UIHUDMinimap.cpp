@@ -40,26 +40,24 @@ bool UIHUDMinimap::Update()
 {
 	int x, y;
 	App->input->GetMousePosition(x, y);
-	fPoint mouse_pos(x,y);
+	iPoint mouse_pos(x,y);
 
 	if (minimap->Inside(fPoint(x,y)))
 	{
 		if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_DOWN || App->input->GetMouseButtonDown(MK_LEFT) == KEY_REPEAT)
 		{
-			mouse_pos.x -= GetPosRect().x;
-			mouse_pos.y -= GetPosRect().y;
-			iPoint new_camera_pos(MinimapToWorld(mouse_pos));
+			iPoint new_camera_pos(MinimapToWorld(iPoint(mouse_pos.x - GetPosRect().x, mouse_pos.y - GetPosRect().y)));
 			new_camera_pos.x += App->render->camera->GetWidth()/2;
 			new_camera_pos.y += App->render->camera->GetHeight()/2;
 			App->scene->move_camera = true;
 			App->scene->camera_new_position = new_camera_pos;
 		}
 	}
-
-	//new pos from quad into minimap
-	quad_minimap_position = WorldToMinimap(fPoint(App->render->camera->GetCenter().x, App->render->camera->GetCenter().y));
-	//quad_minimap_position.y += GetPosRect().h; //Testing values
-	quad_atlas = { quad_minimap_position.x, quad_minimap_position.y, 50, 30 };
+	
+	iPoint camera_pos = App->render->camera->GetPosition();
+	iPoint quad_pos = WorldToMinimap(fPoint (-camera_pos.x, -camera_pos.y));
+	quad_pos.x += GetPosRect().w / 2.0f;
+	quad_atlas = { quad_pos.x, quad_pos.y, 50, 30 };
 
 	Draw();
 	return true;
@@ -85,12 +83,13 @@ iPoint UIHUDMinimap::WorldToMinimap(fPoint world_point)
 	return iPoint(minimap_point.x, minimap_point.y);
 }
 
-iPoint UIHUDMinimap::MinimapToWorld(fPoint minimap_point)
+iPoint UIHUDMinimap::MinimapToWorld(iPoint minimap_point)
 {
-	fPoint world_point;
-	minimap_point.x -= GetPosRect().w / 2.0f;
-	world_point.x = minimap_point.x / GetPosRect().w * rect_map.w * -1;
-	world_point.y = minimap_point.y / GetPosRect().h * rect_map.h * -1;
+	iPoint world_point;
+	fPoint tmp(minimap_point.x, minimap_point.y);
+	tmp.x -= GetPosRect().w / 2.0f;
+	world_point.x = tmp.x / GetPosRect().w * rect_map.w * -1.0f;
+	world_point.y = tmp.y / GetPosRect().h * rect_map.h * -1.0f;
 	return iPoint(world_point.x, world_point.y);
 }
 

@@ -99,7 +99,6 @@ public:
 
 	iPoint FindNearestEmpty(Unit* unit) const;
 
-	void UpdateAfterBuilding(iPoint& building_tile);
 	bool IsInPath(const iPoint& tile, const std::vector<iPoint>& path) const;
 
 	//JPS
