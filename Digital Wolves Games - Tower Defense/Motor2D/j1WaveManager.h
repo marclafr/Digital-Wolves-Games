@@ -58,9 +58,13 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 	int GetWaveNum();
+	int GetMaxWaveNum();
 	void SetWaveNum(int wave);
 	bool BringNextWave();
+	bool WaveEnded();
 	void ResetWave();
+	int SecondsUntilNextWave();
+
 private:
 	j1Timer timer;
 	j1Timer delay_timer;

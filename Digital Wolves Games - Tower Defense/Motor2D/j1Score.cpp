@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "j1UIManager.h"
 #include "j1Score.h"
+#include "j1WaveManager.h"
 
 bool j1Score::SecChange() const
 {
@@ -37,6 +38,15 @@ bool j1Score::Update(float dt)
 		GetTimer(minutes, seconds);
 		sprintf_s(time_left, 256, " Time Left: %d:%d", minutes, seconds);
 		time_texture = App->font->Print(time_left);
+
+		//Wave timer
+		if (App->wave_manager->WaveEnded())
+		{
+			SDL_DestroyTexture(wave_timer_texture);
+			sprintf_s(time_left, 256, "Next Wave in: %d seconds", App->wave_manager->SecondsUntilNextWave());
+			wave_timer_texture = App->font->Print(time_left);
+		}
+		//--
 	}
 
 	if (enemy_killed)
@@ -59,6 +69,7 @@ bool j1Score::Update(float dt)
 	App->render->PushUISprite(num_kills_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 5);
 	App->render->PushUISprite(score_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 25);
 	App->render->PushUISprite(time_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 45);
+	App->render->PushUISprite(wave_timer_texture, -App->render->camera->GetPosition().x + App->uimanager->GetPosRectFromInfoUI().x + 10, -App->render->camera->GetPosition().y + App->uimanager->GetPosRectFromInfoUI().y + 65);
 
 	return true;
 }
@@ -116,4 +127,13 @@ void j1Score::SetEnemiesKilleds(int num)
 void j1Score::SetTime(int num)
 {
 	TimePassed = num;
+}
+
+void j1Score::SetNullWaveTimer()
+{
+	char wave_num[256];
+	int actual_wave_num = App->wave_manager->GetWaveNum() + 1;
+	SDL_DestroyTexture(wave_timer_texture);
+	sprintf_s(wave_num, 256, "Wave %i / %d", actual_wave_num, App->wave_manager->GetMaxWaveNum());
+	wave_timer_texture = App->font->Print(wave_num);
 }

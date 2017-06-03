@@ -380,6 +380,7 @@ bool j1WaveManager::Update(float dt)
 			unit_num_rd = 0;
 			spawning = true;
 			wave_ended = false;
+			App->score->SetNullWaveTimer();
 			can_bring_next_wave = false;
 			kills_for_next_wave += waves[wave_num].total_wave_units;
 		}
@@ -492,7 +493,6 @@ bool j1WaveManager::Update(float dt)
 			if (App->score->GetEnemiesKilled() >= kills_for_next_wave && can_bring_next_wave == false)
 			{
 				App->SaveGame("save_game.xml");
-				//TODO: SAVE GAME HERE DANI
 				timer.Start();
 				can_bring_next_wave = true;
 			}
@@ -511,6 +511,11 @@ bool j1WaveManager::CleanUp()
 int j1WaveManager::GetWaveNum()
 {
 	return wave_num;
+}
+
+int j1WaveManager::GetMaxWaveNum()
+{
+	return waves.size();
 }
 
 void j1WaveManager::SetWaveNum(int wave)
@@ -589,6 +594,11 @@ bool j1WaveManager::BringNextWave()
 	return false;
 }
 
+bool j1WaveManager::WaveEnded()
+{
+	return (wave_ended && can_bring_next_wave);
+}
+
 void j1WaveManager::ResetWave()
 {
 	group_num_lu = 0;
@@ -604,4 +614,9 @@ void j1WaveManager::ResetWave()
 	can_bring_next_wave = true;
 	wave_ended = true;
 	timer.Start();
+}
+
+int j1WaveManager::SecondsUntilNextWave()
+{
+	return (20 - (int)timer.ReadSec());
 }

@@ -17,6 +17,7 @@ private:
 	SDL_Texture* num_kills_texture = nullptr;
 	SDL_Texture* score_texture = nullptr;
 	SDL_Texture* time_texture = nullptr;
+	SDL_Texture* wave_timer_texture = nullptr;
 	int TimePassed = 0;
 	j1Timer game_time;
 
@@ -36,6 +37,7 @@ public:
 	void SetScore(int num);
 	void SetEnemiesKilleds(int num);
 	void SetTime(int num);
+	void SetNullWaveTimer();
 };
 
 #endif
