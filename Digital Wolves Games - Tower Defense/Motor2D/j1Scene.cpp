@@ -895,13 +895,13 @@ void j1Scene::CreateSceneUI()
 	App->uimanager->AddTownHallBarLife();
 
 	//New Wave Button
-	UIButton* new_wave_button = App->uimanager->AddButton({ 1256, 95, 98 , 99 }, { 476, 1229, 98, 99 });
+	UIButton* new_wave_button = App->uimanager->AddButton({ 1256, 120, 98 , 99 }, { 476, 1229, 98, 99 });
 	new_wave_button->SetClickedTextRect({ 687, 1227, 104, 104 });
 	new_wave_button->SetMouseOnTopTextRect({ 580, 1226, 104, 104 });
 	new_wave_button->SetTask(new BringNextWave());
 
 	//INFO SCORE, TIME, ENEMIES LEFT
-	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 405, 1162, 130, 65 });
+	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 942, 1296, 130, 88 });
 	App->uimanager->SetInfoUIComponent(info_ui);
 }
 
