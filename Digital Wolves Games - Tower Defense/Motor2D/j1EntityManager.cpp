@@ -179,6 +179,11 @@ void j1EntityManager::CheckClick(int mouse_x, int mouse_y) const
 		App->scene->selection.push_back(clicked);
 }
 
+bool j1EntityManager::AreUnitsInRect(const SDL_Rect & rect) const
+{
+	return (entity_quadtree->SearchFirstUnit(rect) != nullptr);
+}
+
 bool j1EntityManager::Start()
 {
 

@@ -395,6 +395,13 @@ void Unit::AI()
 
 		EnemyInSight();
 
+		if (GetSide() == S_ENEMY)
+		{
+			target = App->scene->townhall;
+			GoToEnemy();
+			break;
+		}
+
 		if (!collided)
 		{
 			collision = (Unit*)App->entity_manager->TileCollisions(this);
@@ -406,15 +413,6 @@ void Unit::AI()
 				collision = nullptr;
 			}
 		}
-
-		if (GetSide() == S_ENEMY)
-		{
-			target = App->scene->townhall;
-			GoToEnemy();
-			break;
-		}
-
-		
 		
 		break;
 
@@ -945,7 +943,7 @@ bool Unit::AproachEnemy()
 
 void Unit::SetAttackPosition()
 {
-	if (range != CLOSE_COMBAT_RANGE)
+	if (range != CLOSE_COMBAT_RANGE || GetUnitType() == U_SIEGERAM)
 		StartAttack();
 	else
 	{

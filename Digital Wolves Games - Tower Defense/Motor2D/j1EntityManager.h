@@ -27,7 +27,7 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side);//TODO make const if we can take priority out
+	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side); //TODO make const if we can take priority out
 	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, bool builded) const;
 	Entity* CreateTower(TOWER_TYPE t_type, fPoint pos) const;
 	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos, int amount_collect, int time) const;
@@ -36,6 +36,7 @@ public:
 	void UnselectEverything() const;
 	void Select(Entity* select) const;
 	void CheckClick(int mouse_x, int mouse_y)  const;
+	bool AreUnitsInRect(const SDL_Rect& rect) const;
 
 	Entity* LookForEnemies(int pixel_range, fPoint pos, Side side, Entity* attacker, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
 	

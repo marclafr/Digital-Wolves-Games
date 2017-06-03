@@ -142,6 +142,37 @@ Entity * QuadTreeNode::SearchFirst(const SDL_Rect rect) const
 	return ret;
 }
 
+Entity * QuadTreeNode::SearchFirstUnit(const SDL_Rect & rect) const
+{
+	Entity* ret = nullptr;
+
+	if (childs[0] == nullptr)
+	{
+		for (int i = 0; i < NODE_ENTITIES; i++)
+		{
+			iPoint entity_pos(entities[i]->GetX(), entities[i]->GetY());
+			if (entities[i] != nullptr)
+			{
+				if (rect.x < entity_pos.x && rect.x + rect.w > entity_pos.x
+					&& rect.y < entity_pos.y && rect.y + rect.h > entity_pos.y)
+					if (entities[i]->GetEntityType() == E_UNIT)
+						ret = entities[i];
+			}
+			else
+				break;
+		}
+	}
+	else
+		for (int i = 0; i < 4; i++)
+			if (childs[i]->area.Overlaps(rect))
+			{
+				ret = childs[i]->SearchFirstUnit(rect);
+				if (ret != nullptr)
+					break;
+			}
+	return ret;
+}
+
 Entity * QuadTreeNode::SearchFirstEnemy(int pixel_range, const fPoint from, const Side side, ENTITY_TYPE entity_type) const
 {
 	Entity* ret = nullptr;
@@ -673,6 +704,16 @@ void QuadTree::SearchInIsoRect(const IsoRect rect, std::vector<Entity*>& vec)
 Entity * QuadTree::SearchFirstCollisionInTile(iPoint tile, Entity * exeption) const
 {
 	return origin->SearchFirstCollisionInTile(tile,exeption);
+}
+
+Entity * QuadTree::SearchFirst(const SDL_Rect & rect) const
+{
+	return origin->SearchFirst(rect);
+}
+
+Entity* QuadTree::SearchFirstUnit(const SDL_Rect & rect) const
+{
+	return origin->SearchFirstUnit(rect);
 }
 
 void QuadTree::Selection(SDL_Rect rect, std::vector<Entity*>& vec) const
