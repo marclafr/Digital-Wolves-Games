@@ -153,6 +153,9 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 	App->pathfinding->MakeNoWalkable(tile);
 	App->pathfinding->MakeNoConstruible_neutral(tile);
 	App->pathfinding->MakeNoConstruible_ally(tile);
+
+	Position_rect = { (int)pos.x - (tower_rect.w/2),(int)pos.y - tower_rect.h, tower_rect.w, tower_rect.h };
+
 }
 
 Tower::~Tower()
@@ -222,6 +225,18 @@ void Tower::Draw()
 {
 	if (IsBuilt())
 	{
+		if (IsAlive())
+		{
+			if (App->entity_manager->AreUnitsInRect(Position_rect))
+			{
+				SetTextureID(T_TURRET_ALPHA_DOWN);
+			}
+			else
+			{
+				SetTextureID(T_TURRET);
+			}
+		}
+
 		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY())) App->render->PushInGameSprite(this);
 		if (GetHp() <= GetMaxHp() / 2) //TOWERS FIRE
 		{
@@ -260,11 +275,13 @@ void Tower::Draw()
 			case T_BASIC_TOWER:
 				SetRect({ 302,0,107,208 });
 				SetPivot(0.504673 * 107, 0.902913 * 208);
+				Position_rect = { (int)GetX()- (GetRect().w / 2),(int)GetY() - GetRect().h, GetRect().w, GetRect().h };
 				break;
 
 			case T_BOMBARD_TOWER:
 				SetRect({ 629,0,130,281 });
 				SetPivot(0.5 * 130, 0.914591 * 281);
+				Position_rect = { (int)GetX() - (GetRect().w / 2),(int)GetY() - GetRect().h, GetRect().w, GetRect().h };
 				break;
 
 			default:
@@ -346,6 +363,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetAttack(GetAttack() + 10);
 					SetHp(190);
 					SetRange(-0.50);
+					Position_rect = { (int)GetX() - (tower_rect.w / 2), (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
 				}
 				break;
 			case TU_ICE:
@@ -361,7 +379,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetAttack(GetAttack() + 5);
 					SetHp(175);
 					SetSpeed(0.88f);
-					
+					Position_rect = { (int)GetX() - (tower_rect.w / 2), (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
 				}
 				break;
 			case TU_AIR:
@@ -377,7 +395,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetAttack(GetAttack() - 4);
 					SetSpeed(0.5f);
 					SetRange(50);
-
+					Position_rect = { (int)GetX() - (tower_rect.w / 2),  (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
 				}
 				break;
 			default:
@@ -401,6 +419,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetAttack(GetAttack() + 7);
 					SetHp(225);
 					SetRange(-10);
+					Position_rect = { (int)GetX() - (tower_rect.w / 2),  (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
 				}
 				break;
 			case TU_ICE:
@@ -415,7 +434,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetBuildingType(B_CANNON_UPGRADED);
 					SetAttack(GetAttack() + 2);
 					SetHp(195);
-					
+					Position_rect = { (int)GetX() - (tower_rect.w / 2),  (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
 				}
 				break;
 			case TU_AIR:
@@ -432,7 +451,7 @@ void Tower::UpgradeTurret(TURRET_UPGRADE type)
 					SetHp(175);
 					SetRange(40);
 					SetSpeed(0.60f);
-
+					Position_rect = { (int)GetX() - (tower_rect.w / 2), (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
 				}
 				break;
 			default:

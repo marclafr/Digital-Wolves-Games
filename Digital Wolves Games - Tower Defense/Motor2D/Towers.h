@@ -39,6 +39,7 @@ private:
 	float range;
 	j1Timer AttackTimer;
 	Entity* Target = nullptr;
+	SDL_Rect Position_rect;
 	AnimationManager* anim_fire = nullptr;
 public:
 	iPoint arrowpos;

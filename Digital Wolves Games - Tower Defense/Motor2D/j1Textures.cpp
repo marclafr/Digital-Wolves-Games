@@ -89,7 +89,7 @@ bool j1Textures::Start()
 
 	App->tex->Load("textures/Towers.png", T_TURRET);
 	App->tex->Load("textures/Towers.png", T_TURRET_ALPHA_DOWN);
-	SDL_SetTextureAlphaMod(GetTexture(T_TURRET_ALPHA_DOWN), 130);
+	SDL_SetTextureAlphaMod(GetTexture(T_TURRET_ALPHA_DOWN), 160);
 	App->tex->Load("animations/StoneWall.png", T_WALL);
 	App->tex->Load("textures/Extras.png", T_TOWNHALL);
 	App->tex->Load("textures/Resouces.png", T_RESOURCE);
