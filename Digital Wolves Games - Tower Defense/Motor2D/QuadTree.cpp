@@ -150,9 +150,9 @@ Entity * QuadTreeNode::SearchFirstUnit(const SDL_Rect & rect) const
 	{
 		for (int i = 0; i < NODE_ENTITIES; i++)
 		{
-			iPoint entity_pos(entities[i]->GetX(), entities[i]->GetY());
 			if (entities[i] != nullptr)
 			{
+				iPoint entity_pos(entities[i]->GetX(), entities[i]->GetY());
 				if (rect.x < entity_pos.x && rect.x + rect.w > entity_pos.x
 					&& rect.y < entity_pos.y && rect.y + rect.h > entity_pos.y)
 					if (entities[i]->GetEntityType() == E_UNIT)
