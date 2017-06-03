@@ -119,12 +119,14 @@ bool j1Investigations::CanInvestigate(Investigation* investigation)
 		DoInvestigationUpgrade(investigation);
 		//TODO: If there is a visual feedback when you click an investigation delete the fx line
 		App->audio->PlayFx(fx_inv_completed);
-		if (App->tutorial->tutorial3_completed && investigation->investigation_type == INV_FIRE_TOWER) App->tutorial->InvestigationDone = true;
 		return true;
 	}
 
 	if (investigation->investigation_level == INV_LVL_UNLOCKED)
+	{
 		investigation->inv_state = INV_S_COMPLETED;
+	}
+		
 	else
 		investigation->inv_state = INV_S_IDLE;
 	return false;
@@ -176,11 +178,14 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 	{
 		investigation->inv_state = INV_S_COMPLETED;
 		App->audio->PlayFx(fx_inv_completed);
-		if (App->tutorial->tutorial3_completed && investigation->investigation_type == INV_FIRE_TOWER) App->tutorial->InvestigationDone = true;
 
 		if (investigation->has_levels == false)
 		{
 			investigation->investigation_level = INV_LVL_UNLOCKED;
+			if (App->tutorial->tutorial3_completed && investigation->investigation_type == INV_FIRE_TOWER)
+			{
+				App->tutorial->InvestigationDone = true;
+			}
 			return true;
 		}
 
