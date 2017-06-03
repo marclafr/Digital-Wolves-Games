@@ -919,8 +919,8 @@ void j1Scene::TutorialUI()
 	App->tutorial->tutorial6 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2737, 418, 130 });
 	App->tutorial->text_tutorial6 = App->uimanager->AddLabel(1130, 290, "Here where the enemies appear", { 0,0,0,0 });
 	App->tutorial->text1_tutorial6 = App->uimanager->AddLabel(1130, 310, "Build a tower on the highground", { 0,0,0,0 });
-	App->tutorial->text2_tutorial6 = App->uimanager->AddLabel(1130, 330, "When you clear the wave you can", { 0,0,0,0 });
-	App->tutorial->text3_tutorial6 = App->uimanager->AddLabel(1130, 350, "click next wave button (big red button)", { 0,0,0,0 });
+	App->tutorial->text2_tutorial6 = App->uimanager->AddLabel(1130, 330, "Click next wave button (big red button)", { 0,0,0,0 });
+	App->tutorial->text3_tutorial6 = App->uimanager->AddLabel(1130, 350, "to bring a new wave", { 0,0,0,0 });
 
 	App->tutorial->tutorial5 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
 	App->tutorial->text_tutorial5 = App->uimanager->AddLabel(1130, 290, "Click one tower", { 0,0,0,0 });

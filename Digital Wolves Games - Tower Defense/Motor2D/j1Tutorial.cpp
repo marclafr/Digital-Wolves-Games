@@ -70,6 +70,10 @@ bool j1Tutorial::Update(float dt)
 					if (tutorial5_completed)
 					{
 						Tutorial6();
+						if (tutorial6_completed)
+						{
+							Tutorial7();
+						}
 					}
 				}
 			}
@@ -79,26 +83,31 @@ bool j1Tutorial::Update(float dt)
 	if (tutorial1_part1 && tutorial1_part2 && tutorial1_part3)
 	{
 		tutorial1_completed = true;
+		tutorial1_part1, tutorial1_part2, tutorial1_part3 = false;
 	}
 
 	if (tutorial3_part1 && tutorial3_part2 && tutorial3_part3 && tutorial3_part4)
 	{
 		tutorial3_completed = true;
+		tutorial3_part1, tutorial3_part2, tutorial3_part3, tutorial3_part4 = false;
 	}
 
 	if (tutorial4_part2 && tutorial4_part3)
 	{
 		tutorial4_completed = true;
+		tutorial4_part2, tutorial4_part3 = false;
 	}
 
 	if (tutorial5_part2 && tutorial5_part3 && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		tutorial5_completed = true;
+		tutorial5_part2, tutorial5_part3 = false;
 	}
 
 	if (tutorial6_part2 && tutorial6_part3)
 	{
 		tutorial6_completed = true;
+		tutorial6_part2, tutorial6_part3 = false;
 	}
 
 	TutorialsProgression();
@@ -228,30 +237,17 @@ void j1Tutorial::Tutorial1()
 {
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 		tutorial1_part1 = true;
+		text1_tutorial1->ChangeText("Press 1 to build a Simple Tower Done");
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
 		tutorial1_part2 = true;
+		text2_tutorial1->ChangeText("Press 2 to build a Bombard Tower Done");
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
 		tutorial1_part3 = true;
-	}
-
-	if (!tutorial1_completed)
-	{
-		if (tutorial1_part1)
-		{
-			text1_tutorial1->ChangeColor({ 255,255,255,0 });
-		}
-		if (tutorial1_part2)
-		{
-			text2_tutorial1->ChangeColor({ 255,255,255,0 });
-		}
-		if (tutorial1_part3)
-		{
-			text3_tutorial1->ChangeColor({ 255,255,255,0 });
-		}
+		text3_tutorial1->ChangeText("Press 3 to build a Wall Done");
 	}
 }
 
@@ -259,18 +255,11 @@ void j1Tutorial::Tutorial2()
 {
 	if (TownHallSelected) {
 		tutorial2_part1 = true;
+		text_tutorial2->ChangeText("Click on the Town Hall Done");
 	}
 
 	if (PanelSelected) {
 		tutorial2_completed = true;
-	}
-
-	if (!tutorial2_completed)
-	{
-		if (tutorial2_part1)
-		{
-			text_tutorial2->ChangeColor({ 255,255,255,0 });
-		}
 	}
 }
 
@@ -278,38 +267,22 @@ void j1Tutorial::Tutorial3()
 {
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN) {
 		tutorial3_part1 = true;
+		text1_tutorial3->ChangeText("W Done");
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN) {
 		tutorial3_part2 = true;
+		text2_tutorial3->ChangeText("A Done");
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN) {
 		tutorial3_part3 = true;
+		text3_tutorial3->ChangeText("S Done");
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN) {
 		tutorial3_part4 = true;
-	}
-
-	if (!tutorial3_completed)
-	{
-		if (tutorial3_part1)
-		{
-			text1_tutorial3->ChangeColor({ 255,255,255,0 });
-		}
-		if (tutorial3_part2)
-		{
-			text2_tutorial3->ChangeColor({ 255,255,255,0 });
-		}
-		if (tutorial3_part3)
-		{
-			text3_tutorial3->ChangeColor({ 255,255,255,0 });
-		}
-		if (tutorial3_part4)
-		{
-			text4_tutorial3->ChangeColor({ 255,255,255,0 });
-		}
+		text4_tutorial3->ChangeText("D Done");
 	}
 }
 
@@ -322,23 +295,13 @@ void j1Tutorial::Tutorial4()
 	}
 	if (UniversitySelected) {
 		tutorial4_part2 = true;
+		text1_tutorial4->ChangeText("Select the University Done");
 	}
 
 	if (InvestigationDone)
 	{
 		tutorial4_part3 = true;
-	}
-
-	if (!tutorial4_completed)
-	{
-		if (tutorial4_part2)
-		{
-			text1_tutorial4->ChangeColor({ 255,255,255,0 });
-		}
-		if (InvestigationSelected)
-		{
-			text2_tutorial4->ChangeColor({ 255,255,255,0 });
-		}
+		text2_tutorial4->ChangeText("Click the fire upgrade on the panel Done");
 	}
 }
 
@@ -352,22 +315,12 @@ void j1Tutorial::Tutorial5()
 
 	if (TowerSelected) {
 		tutorial5_part2 = true;
+		text_tutorial5->ChangeText("Click one tower Done");
 	}
 	if (TowerUpgradeSelected)
 	{
 		tutorial5_part3 = true;
-	}
-
-	if (!tutorial5_completed)
-	{
-		if (tutorial5_part2)
-		{
-			text_tutorial5->ChangeColor({ 255,255,255,0 });
-		}
-		if (tutorial5_part3)
-		{
-			text1_tutorial5->ChangeColor({ 255,255,255,0 });
-		}
+		text1_tutorial5->ChangeText("Click the fire upgrade icon Done");
 	}
 }
 
@@ -384,22 +337,12 @@ void j1Tutorial::Tutorial6()
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
 		tutorial6_part2 = true;
+		text1_tutorial6->ChangeText("Click the fire upgrade icon Done");
 	}
 	if (NextWaveButtonSelected)
 	{
 		tutorial6_part3 = true;
-	}
-
-	if (!tutorial6_completed)
-	{
-		if (tutorial6_part2)
-		{
-			text1_tutorial6->ChangeColor({ 255,255,255,0 });
-		}
-		if (tutorial6_part3)
-		{
-			text3_tutorial6->ChangeColor({ 255,255,255,0 });
-		}
+		text3_tutorial6->ChangeText("Click next wave button (big red button) Done");
 	}
 }
 
