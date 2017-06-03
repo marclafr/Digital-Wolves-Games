@@ -5,7 +5,7 @@
 #include "p2Point.h"
 
 #define H_MARGIN 60 //biggest height for culling without popping
-#define W_MARGIN 60 //biggest width for culling without popping
+#define W_MARGIN 477 //biggest width for culling without popping
 #define FPS 60
 
 //Camera limits
