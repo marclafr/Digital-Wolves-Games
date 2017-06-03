@@ -239,6 +239,15 @@ bool j1Scene::PostUpdate()
 		App->entity_manager->CreateUnit(U_SIEGERAM, pos, S_ENEMY);
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+	{
+		int x = 0;
+		int y = 0;
+		App->input->GetMousePosition(x, y);
+		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
+		App->entity_manager->CreateUnit(U_MANGONEL, pos, S_ENEMY);
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
 		for(int i = 0; i < selection.size(); i++)
