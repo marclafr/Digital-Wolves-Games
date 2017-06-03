@@ -105,6 +105,7 @@ public:
 	UIComponents* new_wave_exclamation;
 	bool bring_next_wave = false;
 	bool can_click_next_wave = false;
+	j1Timer exclamation_timer;
 	
 	//Minimap, when click move the camera
 	bool move_camera = false;

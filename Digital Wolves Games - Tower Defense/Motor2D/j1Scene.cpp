@@ -203,9 +203,10 @@ bool j1Scene::Update(float dt)
 		new_wave_exclamation = App->uimanager->AddComponent(UIT_UIIMAGE, { 1190, 715, 41, 41 }, { 1079, 1313, 41, 41 });
 		bring_next_wave = false;
 		can_click_next_wave = true;
+		exclamation_timer.Start();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN && can_click_next_wave)
+	if (exclamation_timer.ReadSec() >= 5.0f && can_click_next_wave)
 	{
 		new_wave_exclamation->SetToDelete();
 		can_click_next_wave = false;
