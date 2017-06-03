@@ -337,7 +337,7 @@ void j1Tutorial::Tutorial6()
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
 		tutorial6_part2 = true;
-		text1_tutorial6->ChangeText("Click the fire upgrade icon Done");
+		text1_tutorial6->ChangeText("Build a tower on the highground Done");
 	}
 	if (NextWaveButtonSelected)
 	{
