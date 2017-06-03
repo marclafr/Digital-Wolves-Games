@@ -963,7 +963,7 @@ bool Unit::AproachEnemy()
 
 void Unit::SetAttackPosition()
 {
-	if (range != CLOSE_COMBAT_RANGE || GetUnitType() == U_SIEGERAM || GetUnitType() == U_MANGONEL)
+	if (range != CLOSE_COMBAT_RANGE || GetUnitType() == U_SIEGERAM)
 		StartAttack();
 	else
 	{
