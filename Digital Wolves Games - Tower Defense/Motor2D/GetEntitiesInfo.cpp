@@ -987,6 +987,21 @@ iPoint GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type)
 	return ret;
 }
 
+const char * GetExpandButtonsDescription(SDL_Rect rect_pos)
+{
+	char* ret = nullptr;
+
+	if (rect_pos.x == 26 && rect_pos.y == 666)
+		ret = "Tower Elemental Upgrades";
+	else if (rect_pos.x == 26 && rect_pos.y == 696)
+		ret = "Units Upgrades";
+	else if (rect_pos.x == 26 && rect_pos.y == 726)
+		ret = "Resources Upgrades";
+	else
+		ret = "Error";
+	return ret;
+}
+
 const uint GetInvestigationPercentage(const Investigation * type)
 {
 	uint ret = 0;

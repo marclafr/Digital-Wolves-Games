@@ -116,7 +116,7 @@ private:
 public:
 	EntityTask(ENTITY_TASKTYPE type);
 
-	const ENTITY_TASKTYPE GetEntityType() const;
+	const ENTITY_TASKTYPE GetEntityTaskType() const;
 };
 
 

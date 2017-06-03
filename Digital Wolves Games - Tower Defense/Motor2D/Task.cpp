@@ -105,7 +105,7 @@ bool ChangeBackGroundTask::Execute()
 
 EntityTask::EntityTask(ENTITY_TASKTYPE type) : type(type) {}
 
-const ENTITY_TASKTYPE EntityTask::GetEntityType() const
+const ENTITY_TASKTYPE EntityTask::GetEntityTaskType() const
 {
 	return type;
 }

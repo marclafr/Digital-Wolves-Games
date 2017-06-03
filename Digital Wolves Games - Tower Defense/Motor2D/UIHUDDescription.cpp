@@ -48,9 +48,10 @@ bool UIHUDDescription::Update()
 
 void UIHUDDescription::SetDescription(info_button * if_btn)
 {
+	const EntityTask* e_task = (EntityTask*)if_btn->GetTask();
+
 	if (button_enable_component->GetStat() == CB_CHECK && created == false)
 	{
-		const EntityTask* e_task = (EntityTask*)if_btn->GetTask();
 		TrainUnitTask* u_task = nullptr;
 		UpgradeTowerTask* ut_task = nullptr;
 		UpgradeWallTask* uw_task = nullptr;
@@ -58,7 +59,7 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 		DeleteWallTask* dw_task = nullptr;
 		DeleteTowerTask* dt_task = nullptr;
 
-		switch (e_task->GetEntityType())
+		switch (e_task->GetEntityTaskType())
 		{
 		case ET_BASICTOWER:
 			tower_desc = T_BASIC_TOWER;
@@ -98,10 +99,18 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 		case ET_DELETETOWER:
 			SetLabelDestruction();
 			break;
+		case ET_MOREBUTTONS:
+			SDL_Rect rect_pos = if_btn->GetButton()->GetPosRect();
+			SetLabelMoreButtons(rect_pos);
+			break;
 		}
-		selected = if_btn;
 		created = true;
+		selected = if_btn;
 	}
+
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && e_task->GetEntityTaskType() == ET_MOREBUTTONS)
+		Clear();
+
 }
 
 void UIHUDDescription::SetLabelUnit()
@@ -170,6 +179,13 @@ void UIHUDDescription::SetLabelInvestigations()
 	invest_price = "Price: ";
 	GetInvestigationPrice(investigation_desc, invest_price);
 	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, invest_price.c_str());
+}
+
+//Investigations expansion
+void UIHUDDescription::SetLabelMoreButtons(SDL_Rect rect_pos)
+{
+	background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, GetExpandButtonsDescription(rect_pos));
 }
 
 void UIHUDDescription::SetLabelDestruction()

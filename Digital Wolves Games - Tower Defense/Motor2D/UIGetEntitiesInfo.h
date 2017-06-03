@@ -30,6 +30,8 @@ const double GetBuildTotalTime(const BUILDING_TYPE type);
 const bool isBuilded(const Entity* build);
 
 iPoint GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type);
+
+const char* GetExpandButtonsDescription(SDL_Rect rect_pos);
 const uint GetInvestigationPercentage(const Investigation* type);
 const char* GetInvestigationName(const INVESTIGATION_TYPE type);
 void GetInvestigationPrice(const INVESTIGATION_TYPE type, std::string & price);

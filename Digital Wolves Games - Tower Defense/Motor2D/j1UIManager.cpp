@@ -64,7 +64,7 @@ bool j1UIManager::PreUpdate()
 		if ((*item)->GetInteractive() &&
 			(x_mouse > (*item)->GetPosRect().x) &&
 			(x_mouse < (*item)->GetPosRect().x + (*item)->GetPosRect().w) &&
-			(y_mouse >(*item)->GetPosRect().y) &&
+			(y_mouse > (*item)->GetPosRect().y) &&
 			(y_mouse < (*item)->GetPosRect().y + (*item)->GetPosRect().h))
 		{
 			focus = (*item);
