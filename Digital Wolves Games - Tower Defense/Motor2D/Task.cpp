@@ -13,6 +13,7 @@
 #include "UIComponents.h"
 #include "j1UIManager.h"
 #include "UIHUDMenuInGame.h"
+#include "j1Tutorial.h"
 
 #include "UIHUDPanelButtons.h"
 
@@ -308,6 +309,7 @@ bool Surrender::Execute()
 {
 	App->scene->lose = true;
 	App->scene_manager->ChangeScene(SC_SCORE);
+	App->tutorial->tutorial = false;
 	return true;
 }
 

@@ -88,28 +88,28 @@ bool j1ScoreScene::PreUpdate()
 // Called each loop iteration
 bool j1ScoreScene::Update(float dt)
 {
-//	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-//	{
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//		App->score->IncreaseScore();
-//	}
-//
-//
-//	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
-//		App->score->DecreaseScore();
+	if (App->debug_features.debug_mode)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+			{
+				int i = 0;
+				do {
+					App->score->IncreaseScore();
+					i++;
+				} while (i < 20);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT)
+			{
+				int i = 0;
+				do {
+					App->score->DecreaseScore();
+					i++;
+				} while (i < 20);
+			}
+			ActualTrophie();
+			
+	}
+	
 
 	OptionSelected();
 	App->render->BlitScoreScene();

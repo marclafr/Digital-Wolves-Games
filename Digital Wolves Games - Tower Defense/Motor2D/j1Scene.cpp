@@ -82,7 +82,7 @@ bool j1Scene::Start()
 	tower_pos.y = tower_ipos.y;
 	App->entity_manager->CreateTower(T_BASIC_TOWER, tower_pos);
 
-	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1073, 799), S_ALLY);
+	App->entity_manager->CreateBuilding(B_UNIVERSITY, fPoint(1093, 819), S_ALLY);
 	fish_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_FISH_JUMP));
 	//--
 	
@@ -264,6 +264,7 @@ bool j1Scene::CleanUp()
 	App->anim->Disable();
 	App->map->Disable();
 	App->pathfinding->Disable();
+	App->tutorial->Disable();
 	
 	App->uimanager->SetAllToDelete();
 
@@ -890,7 +891,7 @@ void j1Scene::CreateSceneUI()
 	new_wave_button->SetTask(new BringNextWave());
 
 	//INFO SCORE, TIME, ENEMIES LEFT
-	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 942, 1296, 130, 88 });
+	UIComponents* info_ui = App->uimanager->AddComponent(UIT_UIIMAGE, { 1236, 25, 130, 65 }, { 944, 1313, 130, 88 });
 	App->uimanager->SetInfoUIComponent(info_ui);
 }
 
@@ -907,8 +908,8 @@ void j1Scene::TutorialUI()
 	App->tutorial->tutorial6 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2737, 418, 130 });
 	App->tutorial->text_tutorial6 = App->uimanager->AddLabel(1130, 290, "Here where the enemies appear", { 0,0,0,0 });
 	App->tutorial->text1_tutorial6 = App->uimanager->AddLabel(1130, 310, "Build a tower on the highground", { 0,0,0,0 });
-	App->tutorial->text2_tutorial6 = App->uimanager->AddLabel(1130, 330, "When you clear the wave you can", { 0,0,0,0 });
-	App->tutorial->text3_tutorial6 = App->uimanager->AddLabel(1130, 350, "click next wave button (big red button)", { 0,0,0,0 });
+	App->tutorial->text2_tutorial6 = App->uimanager->AddLabel(1130, 330, "Click next wave button (big red button)", { 0,0,0,0 });
+	App->tutorial->text3_tutorial6 = App->uimanager->AddLabel(1130, 350, "to bring a new wave", { 0,0,0,0 });
 
 	App->tutorial->tutorial5 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1112, 274, 418, 130 }, { 0, 2606, 418, 130 });
 	App->tutorial->text_tutorial5 = App->uimanager->AddLabel(1130, 290, "Click one tower", { 0,0,0,0 });
