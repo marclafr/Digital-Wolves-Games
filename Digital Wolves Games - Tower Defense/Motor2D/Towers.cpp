@@ -215,6 +215,7 @@ void Tower::AI()
 	{
 		Target = nullptr;
 		ConvertToRubble();
+		ConvertTowerToRubble();
 		App->pathfinding->MakeWalkable(App->map->WorldToMap(GetPosition().x, GetPosition().y));
 	}
 	if (IsAlive() == false && GetDieTime() >= 2)
@@ -225,19 +226,15 @@ void Tower::Draw()
 {
 	if (IsBuilt())
 	{
-		if (IsAlive())
+		if (App->entity_manager->AreUnitsInRect(Position_rect))
 		{
-			if (App->entity_manager->AreUnitsInRect(Position_rect))
-			{
-				SetTextureID(T_TURRET_ALPHA_DOWN);
-			}
-			else
-			{
-				SetTextureID(T_TURRET);
-			}
+			SetTextureID(T_TURRET_ALPHA_DOWN);
 		}
-
-		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY())) App->render->PushInGameSprite(this);
+		else
+		{
+			SetTextureID(T_TURRET);
+		}
+	if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY())) App->render->PushInGameSprite(this);
 		if (GetHp() <= GetMaxHp() / 2) //TOWERS FIRE
 		{
 			SDL_Rect fire_rect;
@@ -337,6 +334,14 @@ void Tower::SetSpeed(float new_speed)
 void Tower::SetRange(float new_range)
 {
 	range += new_range;
+}
+
+void Tower::ConvertTowerToRubble()
+{
+	SDL_Rect rect;
+	rect = { 1029, 520, 93, 53 };
+	SetRect(rect);
+	SetPivot(0.362637 * 91, 0.431373 * 51);
 }
 
 void Tower::UpgradeTurret(TURRET_UPGRADE type)

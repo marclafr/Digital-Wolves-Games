@@ -200,7 +200,7 @@ void DeleteTowerTask::SetTower(Tower * tower)
 
 bool DeleteTowerTask::Execute()
 {
-	if (tower->IsAlive())	tower->ConvertToRubble();
+	if (tower->IsAlive())	tower->SetHp(0);
 	App->entity_manager->UnselectEverything();
 	return true;
 }

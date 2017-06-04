@@ -36,7 +36,7 @@ private:
 	bool totally_built = false;
 	IsoRect build_rect;
 	int max_hp = 0;
-
+	SDL_Rect Alpha_rect;
 public:
 	iPoint arrowpos;
 	AnimationManager* building_fire;

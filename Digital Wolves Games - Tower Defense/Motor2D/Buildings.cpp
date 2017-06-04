@@ -76,6 +76,9 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 	App->pathfinding->MakeNoWalkable(p);
 	App->pathfinding->MakeNoConstruible_neutral(p);
 	App->pathfinding->MakeNoConstruible_ally(p);
+
+	Alpha_rect = { (int)pos.x - (rect.w / 2),(int)pos.y - rect.h, rect.w, rect.h };
+
 }
 
 Building::~Building()
@@ -102,6 +105,32 @@ void Building::Draw()
 {
 	if (totally_built == true)
 	{
+		if (IsAlive())
+		{
+			if (App->entity_manager->AreUnitsInRect(Alpha_rect))
+			{
+				if (building_type == B_TOWNHALL || building_type == B_UNIVERSITY)
+				{
+					SetTextureID(T_TOWNHALL_ALPHA_DOWN);
+				}
+				else
+				{
+					SetTextureID(T_WALL_ALPHA_DOWN);
+				}
+
+			}
+			else
+			{
+				if (building_type == B_TOWNHALL || building_type == B_UNIVERSITY)
+				{
+					SetTextureID(T_TOWNHALL);
+				}
+				else
+				{
+					SetTextureID(T_WALL);
+				}
+			}
+		}
 		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
 			App->render->PushInGameSprite(this);
 
@@ -160,6 +189,7 @@ void Building::Draw()
 			SetRect({ 610,289,100,106 });
 			SetPivot(0.49 * 100, 106 * 0.754717);
 			totally_built = true;
+			Alpha_rect = { (int)GetX() - (GetRect().w / 2),(int)GetY() - GetRect().h, GetRect().w, GetRect().h };
 		}
 
 		if (App->render->camera->InsideRenderTarget(App->render->camera->GetPosition().x + GetX(), App->render->camera->GetPosition().y + GetY()))
@@ -192,6 +222,7 @@ void Building::UpgradeWall(BUILDING_TYPE type)
 				building_type = B_STONE_WALL;
 				SetHp(500);
 				SetMaxHP(500);
+				Alpha_rect = { (int)GetX() - (GetRect().w / 2),(int)GetY() - GetRect().h, GetRect().w, GetRect().h };
 			}
 			break;
 		case B_STONE_WALL:
@@ -203,6 +234,7 @@ void Building::UpgradeWall(BUILDING_TYPE type)
 				building_type = B_BRICK_WALL;
 				SetHp(750);
 				SetMaxHP(750);
+				Alpha_rect = { (int)GetX() - (GetRect().w / 2),(int)GetY() - GetRect().h, GetRect().w, GetRect().h };
 			}
 			break;
 		default:

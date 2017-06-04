@@ -57,6 +57,7 @@ public:
 	void DestroyTower();
 	void SetSpeed(float new_speed);
 	void SetRange(float new_range);
+	void ConvertTowerToRubble();
 };
 
 #endif //__TOWERS_

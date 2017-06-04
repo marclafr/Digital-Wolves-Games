@@ -90,7 +90,10 @@ bool j1Render::CleanUp()
 	delete camera; 
 
 	LOG("Destroying SDL render");
-	SDL_DestroyRenderer(renderer);
+	if (renderer != nullptr)
+	{
+		SDL_DestroyRenderer(renderer);
+	}
 	return true;
 }
 
