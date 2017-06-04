@@ -25,7 +25,7 @@ private:
 	SDL_Rect atlas_clicked = { 0,0,0,0 };
 
 	int displacement = 0;
-
+	uint fx_sound = 0;
 	Task* task = nullptr;
 	bool delete_task = true;
 
@@ -45,11 +45,13 @@ public:
 
 	const BUTTON_STAT GetStat() const;
 
+	void SetAtlasBtn(const SDL_Rect& rect);
 	void SetMouseOnTopTextRect(const SDL_Rect & rect, int displacement = 0);
 	void SetClickedTextRect(const SDL_Rect& rect);
 	void SetTask(Task* task);
 	void SetLabel(UILabel*);
 	void SetNotDeleteTask();
+	void SetFxSound(uint);
 	UILabel* GetLabel() const;
 };
 

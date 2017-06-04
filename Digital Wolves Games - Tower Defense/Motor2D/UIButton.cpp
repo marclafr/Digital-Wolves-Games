@@ -5,6 +5,7 @@
 #include "j1UIManager.h"
 #include "Camera.h"
 #include "j1Scene.h"
+#include "j1Audio.h"
 
 #include "UIHUDPanelButtons.h"
 #include "UIHUDDescription.h"
@@ -103,6 +104,8 @@ bool UIButton::Update()
 		else if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
 		{
 			state = BS_MOUSE_ON_TOP;
+			if (fx_sound != 0)
+				App->audio->PlayFx(fx_sound);
 			if (task != nullptr)
 				task->Execute();
 		}
@@ -115,6 +118,13 @@ bool UIButton::Update()
 const BUTTON_STAT UIButton::GetStat() const
 {
 	return state;
+}
+
+void UIButton::SetAtlasBtn(const SDL_Rect & rect)
+{
+	if (SDL_RectEquals(&atlas_clicked, &rect_atlas) == SDL_TRUE) { atlas_clicked = rect; }
+	if (SDL_RectEquals(&atlas_mouse_on_top, &rect_atlas) == SDL_TRUE) { atlas_mouse_on_top = rect; }
+	rect_atlas = rect;
 }
 
 void UIButton::SetMouseOnTopTextRect(const SDL_Rect & rect, int displacement)
@@ -141,6 +151,11 @@ void UIButton::SetLabel(UILabel * label)
 void UIButton::SetNotDeleteTask()
 {
 	delete_task = false;
+}
+
+void UIButton::SetFxSound(uint fx)
+{
+	fx_sound = fx;
 }
 
 UILabel * UIButton::GetLabel() const

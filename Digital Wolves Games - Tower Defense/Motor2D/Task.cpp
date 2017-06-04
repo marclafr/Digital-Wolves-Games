@@ -130,9 +130,9 @@ bool PlaceBombardTowerTask::Execute()
 	return true;
 }
 
-UpgradeTowerTask::UpgradeTowerTask(TURRET_UPGRADE type, ENTITY_TASKTYPE et_type) : EntityTask(et_type), type(type) {}
+UpgradeTowerTask::UpgradeTowerTask(INVESTIGATION_TYPE type, ENTITY_TASKTYPE et_type) : EntityTask(et_type), type(type) {}
 
-const TURRET_UPGRADE UpgradeTowerTask::GetUpgradeType() const
+const INVESTIGATION_TYPE UpgradeTowerTask::GetUpgradeType() const
 {
 	return type;
 }
@@ -142,9 +142,14 @@ void UpgradeTowerTask::SetTower(Tower * tower)
 	this->tower = tower;
 }
 
+void UpgradeTowerTask::SetCanUpgrade(bool canU)
+{
+	canUpgrade = canU;
+}
+
 bool UpgradeTowerTask::Execute()
 {
-	if (tower->IsAlive())
+	if (canUpgrade && tower->IsAlive())
 	{
 		tower->UpgradeTurret(type);
 

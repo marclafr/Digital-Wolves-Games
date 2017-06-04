@@ -53,7 +53,7 @@ public:
 	info_button* AddButton(iPoint position, iPoint atlas, Task* task, bool delete_button = false);
 	void CreateButton();
 	void ButtonToDelete();
-	const UIButton* GetButton() const;
+	UIButton* GetButton() const;
 	const Task* GetTask() const;
 	bool IsForDelete();
 	bool ContainButtons();

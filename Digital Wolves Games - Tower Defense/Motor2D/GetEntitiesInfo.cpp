@@ -521,19 +521,19 @@ const char * GetTowerPrice(const TOWER_TYPE type)
 	return ret;
 }
 
-const char * GetTowerUpgradeName(const TURRET_UPGRADE type)
+const char * GetTowerUpgradeName(const INVESTIGATION_TYPE type)
 {
 	char* ret = nullptr;
 
 	switch (type)
 	{
-	case TU_FIRE:
+	case INV_FIRE_TOWER:
 		ret = "Upgrade to fire";
 		break;
-	case TU_ICE:
+	case INV_ICE_TOWER:
 		ret = "Upgrade to ice";
 		break;
-	case TU_AIR:
+	case INV_AIR_TOWER:
 		ret = "Upgrade to air";
 		break;
 	default:
@@ -544,19 +544,19 @@ const char * GetTowerUpgradeName(const TURRET_UPGRADE type)
 	return ret;
 }
 
-const char * GetTowerUpgradePrice(const TURRET_UPGRADE type)
+const char * GetTowerUpgradePrice(const INVESTIGATION_TYPE type)
 {
 	char* ret = nullptr;
 
 	switch (type)
 	{
-	case TU_FIRE:
+	case INV_FIRE_TOWER:
 		ret = "125 Gold";
 		break;
-	case TU_ICE:
+	case INV_ICE_TOWER:
 		ret = "150 Gold";
 		break;
-	case TU_AIR:
+	case INV_AIR_TOWER:
 		ret = "100 Gold";
 		break;
 	default:

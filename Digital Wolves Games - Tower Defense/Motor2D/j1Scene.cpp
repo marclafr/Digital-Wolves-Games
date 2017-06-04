@@ -853,14 +853,14 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TOWNHALL, iPoint(2, 0), GetBuildingIconPositionFromAtlas(B_WOOD_WALL), new PlaceWallTask());
 	
 	//Turrets
-	panel->AddButton(BP_TURRET, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_FIRE_TOWER), new UpgradeTowerTask(TU_FIRE));
-	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
-	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
+	panel->AddButton(BP_TURRET, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_FIRE_TOWER), new UpgradeTowerTask(INV_FIRE_TOWER));
+	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(INV_ICE_TOWER));
+	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeTowerTask(INV_AIR_TOWER));
 	panel->AddButton(BP_TURRET, iPoint(4, 2), { 930,962 }, new DeleteTowerTask(), true);
 
-	panel->AddButton(BP_CANNON, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_FIRE_TOWER), new UpgradeTowerTask(TU_FIRE));
-	panel->AddButton(BP_CANNON, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_ICE_TOWER), new UpgradeTowerTask(TU_ICE));
-	panel->AddButton(BP_CANNON, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_AIR_TOWER), new UpgradeTowerTask(TU_AIR));
+	panel->AddButton(BP_CANNON, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_FIRE_TOWER), new UpgradeTowerTask(INV_FIRE_TOWER));
+	panel->AddButton(BP_CANNON, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_ICE_TOWER), new UpgradeTowerTask(INV_ICE_TOWER));
+	panel->AddButton(BP_CANNON, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_AIR_TOWER), new UpgradeTowerTask(INV_AIR_TOWER));
 	panel->AddButton(BP_CANNON, iPoint(4, 2), { 930,962 }, new DeleteTowerTask(), true);
 
 	panel->AddButton(BP_TURRET_UPGRADED, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());

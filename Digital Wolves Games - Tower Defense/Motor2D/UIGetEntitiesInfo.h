@@ -40,8 +40,8 @@ void GetInvestigationPrice(const INVESTIGATION_TYPE type, std::string & price);
 iPoint GetTowerIconPositionFromAtlas(const TOWER_TYPE type);
 const char* GetTowerName(const TOWER_TYPE type);
 const char* GetTowerPrice(const TOWER_TYPE type);
-const char* GetTowerUpgradeName(const TURRET_UPGRADE type);
-const char* GetTowerUpgradePrice(const TURRET_UPGRADE type);
+const char* GetTowerUpgradeName(const INVESTIGATION_TYPE type);
+const char* GetTowerUpgradePrice(const INVESTIGATION_TYPE type);
 
 const char* GetWallUpgradeName(const BUILDING_TYPE type);
 const char* GetWallUpgradePrice(const BUILDING_TYPE type);

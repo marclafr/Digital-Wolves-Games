@@ -50,6 +50,10 @@ public:
 	unsigned int fx_arrow;
 	unsigned int fx_cannon;
 	unsigned int fx_construction;
+
+	//FX UI
+	uint fx_click_btn;
+	uint fx_cancelclick_btn;
 private:
 
 	_Mix_Music*				music = NULL;

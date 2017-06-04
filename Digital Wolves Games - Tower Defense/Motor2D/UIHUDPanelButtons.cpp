@@ -1,9 +1,3 @@
-#define ICON_ATLASSIZE 25
-#define ICON_SIZE 29
-#define ICON_SEPARATION 30
-#define PANEL_XPOSITION 26
-#define PANEL_YPOSITION 666
-
 #include "UIHUDPanelButtons.h"
 
 #include "j1App.h"
@@ -23,6 +17,16 @@
 #include "Units.h"
 #include "Buildings.h"
 #include "Towers.h"
+#include "j1Audio.h"
+
+#define ICON_ATLASSIZE 25
+#define ICON_SIZE 29
+#define ICON_SEPARATION 30
+#define PANEL_XPOSITION 26
+#define PANEL_YPOSITION 666
+#define ATLASX_BUTTONGREY_CANNON_DISTANCE 355
+#define ATLASY_BUTTONGREY_CANNON_DISTANCE 78
+#define ATLAS_BUTTONGREY_TOWER_DISTANCE 251
 
 UIHUDPanelButtons::UIHUDPanelButtons(UICOMPONENT_TYPE type) : UIComponents(type)
 {
@@ -241,6 +245,7 @@ void UIHUDPanelButtons::CreatePanel()
 				UpgradeTowerTask* upgrade_task = nullptr;
 				DeleteWallTask* delete_w_task = nullptr;
 				UpgradeWallTask* upgrade_w_task = nullptr;
+				SDL_Rect atlas_grey;
 				switch (panel_seleted_type)
 				{
 				case BP_TURRET:
@@ -252,7 +257,19 @@ void UIHUDPanelButtons::CreatePanel()
 					else
 					{
 						upgrade_task = (UpgradeTowerTask*)(*ib_item)->GetTask();
-						upgrade_task->SetTower((Tower*)b_selected);
+						if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state != INV_S_COMPLETED)
+						{
+							atlas_grey = (*ib_item)->GetButton()->GetAtlasRect();
+							atlas_grey.x += ATLAS_BUTTONGREY_TOWER_DISTANCE;
+							(*ib_item)->GetButton()->SetAtlasBtn(atlas_grey);
+							(*ib_item)->GetButton()->SetFxSound(App->audio->fx_cancelclick_btn);
+							upgrade_task->SetCanUpgrade(false);
+						}
+						else if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state == INV_S_COMPLETED)
+						{
+							upgrade_task->SetTower((Tower*)b_selected);
+							upgrade_task->SetCanUpgrade(true);
+						}
 					}
 					break;
 				case BP_CANNON:
@@ -264,7 +281,20 @@ void UIHUDPanelButtons::CreatePanel()
 					else
 					{
 						upgrade_task = (UpgradeTowerTask*)(*ib_item)->GetTask();
-						upgrade_task->SetTower((Tower*)b_selected);
+						if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state != INV_S_COMPLETED)
+						{
+							atlas_grey = (*ib_item)->GetButton()->GetAtlasRect();
+							atlas_grey.x += ATLASX_BUTTONGREY_CANNON_DISTANCE;
+							atlas_grey.y -= ATLASY_BUTTONGREY_CANNON_DISTANCE;
+							(*ib_item)->GetButton()->SetAtlasBtn(atlas_grey);
+							(*ib_item)->GetButton()->SetFxSound(App->audio->fx_cancelclick_btn);
+							upgrade_task->SetCanUpgrade(false);
+						}
+						else if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state == INV_S_COMPLETED)
+						{
+							upgrade_task->SetTower((Tower*)b_selected);
+							upgrade_task->SetCanUpgrade(true);
+						}
 					}
 					break;
 				case BP_TURRET_UPGRADED:
@@ -393,6 +423,7 @@ void info_button::CreateButton()
 		{ atlas.x, atlas.y,ICON_ATLASSIZE, ICON_ATLASSIZE }, true);
 		btn->SetTask(task);
 		btn->SetNotDeleteTask();
+		btn->SetFxSound(App->audio->fx_click_btn);
 	}
 	else
 		for (std::vector<info_button*>::iterator ib_item = buttons_inside.begin(); ib_item != buttons_inside.end(); ++ib_item)
@@ -411,7 +442,7 @@ void info_button::ButtonToDelete()
 	}
 }
 
-const UIButton* info_button::GetButton() const
+UIButton* info_button::GetButton() const
 {
 	return btn;
 }

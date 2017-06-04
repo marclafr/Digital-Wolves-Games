@@ -28,7 +28,7 @@ UIHUDDescription::UIHUDDescription(UICOMPONENT_TYPE type) : UIComponents(type)
 	unit_desc = U_NO_UNIT;
 	build_desc = B_NO_BUILDING;
 	tower_desc = T_NO_TYPE;
-	tower_upgrade_desc = TU_NULL;
+	tower_upgrade_desc = INV_NONE;
 	investigation_desc = INV_NONE;
 }
 
@@ -199,7 +199,7 @@ void UIHUDDescription::Clear()
 	unit_desc = U_NO_UNIT;
 	build_desc = B_NO_BUILDING;
 	tower_desc = T_NO_TYPE;
-	tower_upgrade_desc = TU_NULL;
+	tower_upgrade_desc = INV_NONE;
 	investigation_desc = INV_NONE;
 	if(background_name != nullptr)
 	background_name->SetToDelete();

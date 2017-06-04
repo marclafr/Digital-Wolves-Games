@@ -21,7 +21,7 @@ public:
 	UNIT_TYPE unit_desc;
 	BUILDING_TYPE build_desc;
 	TOWER_TYPE tower_desc;
-	TURRET_UPGRADE tower_upgrade_desc;
+	INVESTIGATION_TYPE tower_upgrade_desc;
 	INVESTIGATION_TYPE investigation_desc;
 	std::string invest_price;
 

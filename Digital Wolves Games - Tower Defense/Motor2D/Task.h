@@ -140,15 +140,16 @@ class UpgradeTowerTask : public EntityTask
 {
 private:
 	Tower* tower = nullptr;
-	TURRET_UPGRADE type;
+	INVESTIGATION_TYPE type;
+	bool canUpgrade = true;
 
 public:
-	UpgradeTowerTask(TURRET_UPGRADE type, ENTITY_TASKTYPE et_type = ET_UPGRADE_TOWER);
+	UpgradeTowerTask(INVESTIGATION_TYPE type, ENTITY_TASKTYPE et_type = ET_UPGRADE_TOWER);
 
-	const TURRET_UPGRADE GetUpgradeType()const;
+	const INVESTIGATION_TYPE GetUpgradeType()const;
 
 	void SetTower(Tower* tower);
-
+	void SetCanUpgrade(bool canU);
 	bool Execute();
 };
 
