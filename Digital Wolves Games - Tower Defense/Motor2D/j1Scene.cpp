@@ -217,7 +217,8 @@ bool j1Scene::Update(float dt)
 	SDL_Rect anim_rect;
 	iPoint anim_pivot;
 	fish_anim->Update(anim_rect, anim_pivot);
-	App->render->PushInGameSprite(App->tex->GetTexture(T_FISH_ANIMATION), -300 ,1000, &anim_rect, SDL_FLIP_NONE, anim_pivot.x, anim_pivot.y + 100); //no final positions just to try
+	App->render->PushInGameSprite(App->tex->GetTexture(T_FISH_ANIMATION), -300 ,1000, &anim_rect, SDL_FLIP_NONE, anim_pivot.x, anim_pivot.y + 100);
+	App->render->PushInGameSprite(App->tex->GetTexture(T_FISH_ANIMATION), -400, 750, &anim_rect, SDL_FLIP_NONE, anim_pivot.x, anim_pivot.y + 100);//no final positions just to try
 	// Camera Movement (has to go after blit so that sprites print in the right camera position)
 	App->render->camera->KeyboardMove(dt);
 	App->render->camera->MouseMove(x, y, dt);
