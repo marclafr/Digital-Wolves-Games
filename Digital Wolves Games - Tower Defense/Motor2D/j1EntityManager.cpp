@@ -325,6 +325,11 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 	App->investigations->InstaUnlockInvestigation(INV_ICE_TOWER, (LEVEL)Investigations.attribute("inv_ice_tower").as_int());
 	App->investigations->InstaUnlockInvestigation(INV_AIR_TOWER, (LEVEL)Investigations.attribute("inv_air_tower").as_int());
 
+	App->investigations->SetInvestigationCost(INV_STONE, Investigations.attribute("inv_res_stone").as_int());
+	App->investigations->SetInvestigationCost(INV_GOLD, Investigations.attribute("inv_res_gold").as_int());
+	App->investigations->SetInvestigationCost(INV_WOOD, Investigations.attribute("inv_res_wood").as_int());
+	App->investigations->SetInvestigationCost(INV_FOOD, Investigations.attribute("inv_res_food").as_int());
+
 	return true;
 }
 
@@ -416,6 +421,12 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	Investigations.append_attribute("inv_fire_tower") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER));
 	Investigations.append_attribute("inv_ice_tower") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ICE_TOWER));
 	Investigations.append_attribute("inv_air_tower") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_AIR_TOWER));
+
+	Investigations.append_attribute("inv_res_stone") = App->investigations->GetInvestigationCost(App->investigations->GetInvestigation(INV_STONE));
+	Investigations.append_attribute("inv_res_gold") = App->investigations->GetInvestigationCost(App->investigations->GetInvestigation(INV_GOLD));
+	Investigations.append_attribute("inv_res_wood") = App->investigations->GetInvestigationCost(App->investigations->GetInvestigation(INV_WOOD));
+	Investigations.append_attribute("inv_res_food") = App->investigations->GetInvestigationCost(App->investigations->GetInvestigation(INV_FOOD));
+
 
 	return true;
 }
