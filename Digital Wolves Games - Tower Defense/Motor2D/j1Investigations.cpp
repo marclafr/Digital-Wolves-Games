@@ -172,6 +172,12 @@ int j1Investigations::GetInvestigationCost(Investigation* investigation)
 	return investigation->cost;
 }
 
+void j1Investigations::InstaUnlockInvestigation(INVESTIGATION_TYPE name, LEVEL level)
+{
+	Investigation* actual_inv = GetInvestigation(name);
+	actual_inv->investigation_level = level;
+}
+
 bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 {
 	if (investigation->upgrade_timer.ReadSec() >= investigation->time_to_upgrade)
@@ -214,3 +220,4 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 	}
 	return false;
 }
+

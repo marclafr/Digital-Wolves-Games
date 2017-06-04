@@ -309,6 +309,22 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 	App->score->SetTime(Score.attribute("time_passed").as_int());
 	App->wave_manager->ResetWave();
 	App->wave_manager->SetWaveNum(Score.attribute("wave_num").as_int());
+
+	pugi::xml_node Investigations = data.child("investigations");
+
+	App->investigations->InstaUnlockInvestigation(INV_CAVALRY_ATTACK, (LEVEL)Investigations.attribute("inv_cavalry_attack").as_int());
+	App->investigations->InstaUnlockInvestigation(INV_CAVALRY_DEFENSE,(LEVEL)Investigations.attribute("inv_cavalry_defense").as_int());
+
+	App->investigations->InstaUnlockInvestigation(INV_ARCHERS_ATTACK, (LEVEL)Investigations.attribute("inv_archers_attack").as_int());
+	App->investigations->InstaUnlockInvestigation(INV_ARCHERS_DEFENSE, (LEVEL)Investigations.attribute("inv_archers_defense").as_int());
+
+	App->investigations->InstaUnlockInvestigation(INV_INFANTRY_ATTACK, (LEVEL)Investigations.attribute("inv_infantry_attack").as_int());
+	App->investigations->InstaUnlockInvestigation(INV_INFANTRY_DEFENSE, (LEVEL)Investigations.attribute("inv_infantry_defense").as_int());
+
+	App->investigations->InstaUnlockInvestigation(INV_FIRE_TOWER, (LEVEL)Investigations.attribute("inv_fire_tower").as_int());
+	App->investigations->InstaUnlockInvestigation(INV_ICE_TOWER, (LEVEL)Investigations.attribute("inv_ice_tower").as_int());
+	App->investigations->InstaUnlockInvestigation(INV_AIR_TOWER, (LEVEL)Investigations.attribute("inv_air_tower").as_int());
+
 	return true;
 }
 
@@ -385,7 +401,22 @@ bool j1EntityManager::Save(pugi::xml_node &data) const
 	Score.append_attribute("enemies_killeds") = App->score->GetEnemiesKilled();
 	Score.append_attribute("time_passed") = App->score->GetTime();
 	Score.append_attribute("wave_num") = App->wave_manager->GetWaveNum();
-	return true;
+
+	pugi::xml_node Investigations = data.append_child("investigations");
+
+	Investigations.append_attribute("inv_cavalry_attack") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_CAVALRY_ATTACK));
+	Investigations.append_attribute("inv_cavalry_defense") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_CAVALRY_DEFENSE));
+
+	Investigations.append_attribute("inv_archers_attack") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ARCHERS_ATTACK));
+	Investigations.append_attribute("inv_archers_defense") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ARCHERS_DEFENSE));
+
+	Investigations.append_attribute("inv_infantry_attack") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_INFANTRY_ATTACK));
+	Investigations.append_attribute("inv_infantry_defense") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_INFANTRY_DEFENSE));
+
+	Investigations.append_attribute("inv_fire_tower") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER));
+	Investigations.append_attribute("inv_ice_tower") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ICE_TOWER));
+	Investigations.append_attribute("inv_air_tower") = App->investigations->GetLevel(App->investigations->GetInvestigation(INV_AIR_TOWER));
+
 	return true;
 }
 

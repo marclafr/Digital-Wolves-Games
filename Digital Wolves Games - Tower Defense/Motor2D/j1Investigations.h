@@ -79,7 +79,7 @@ public:
 	LEVEL GetLevel(Investigation* investigation);
 	bool WantToInvestigate(Investigation* investigation);
 	int GetInvestigationCost(Investigation* investigation);
-
+	void InstaUnlockInvestigation(INVESTIGATION_TYPE name, LEVEL level);
 private:
 
 	Investigation* CreateInvestigation(INVESTIGATION_TYPE investigation, bool has_lvls, uint cost, float time_to_upgrade);
