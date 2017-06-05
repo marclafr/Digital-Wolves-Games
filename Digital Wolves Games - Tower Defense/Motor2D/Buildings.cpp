@@ -113,21 +113,12 @@ void Building::Draw()
 				{
 					SetTextureID(T_TOWNHALL_ALPHA_DOWN);
 				}
-				else
-				{
-					SetTextureID(T_WALL_ALPHA_DOWN);
-				}
-
 			}
 			else
 			{
 				if (building_type == B_TOWNHALL || building_type == B_UNIVERSITY)
 				{
 					SetTextureID(T_TOWNHALL);
-				}
-				else
-				{
-					SetTextureID(T_WALL);
 				}
 			}
 		}
