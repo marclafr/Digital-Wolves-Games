@@ -411,7 +411,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 		{
 			switch (type)
 			{
-			case TU_FIRE:
+			case INV_FIRE_TOWER:
 				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_FIRE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_FIRE_TOWER) == true)
 				{
 					App->scene->resources->UpgradeTower(T_FIRE_TOWER);
@@ -427,7 +427,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					Position_rect = { (int)GetX() - (tower_rect.w / 2),  (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
 				}
 				break;
-			case TU_ICE:
+			case INV_ICE_TOWER:
 				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_ICE_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_ICE_TOWER) == true)
 				{
 					App->scene->resources->UpgradeTower(T_ICE_TOWER);
@@ -442,7 +442,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					Position_rect = { (int)GetX() - (tower_rect.w / 2),  (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
 				}
 				break;
-			case TU_AIR:
+			case INV_AIR_TOWER:
 				if (App->investigations->GetLevel(App->investigations->GetInvestigation(INV_AIR_TOWER)) == INV_LVL_UNLOCKED && App->scene->resources->CanUpgradeTower(T_AIR_TOWER) == true)
 				{
 					App->scene->resources->UpgradeTower(T_AIR_TOWER);
