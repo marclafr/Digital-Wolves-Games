@@ -514,10 +514,6 @@ void Unit::AI()
 		else
 			if (animation->Finished())
 				DoDamage();
-
-		if(target->GetTile() == GetTile())
-
-
 		break;
 
 	case A_DIE:

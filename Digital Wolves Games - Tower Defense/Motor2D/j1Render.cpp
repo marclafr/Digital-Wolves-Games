@@ -285,17 +285,17 @@ bool j1Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, U
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
 	int result = -1;
-	SDL_Point points[120];
+	SDL_Point points[360];
 
-	float factor = ((float)M_PI / 180.0f) * 3;
+	float factor = ((float)M_PI / 180.0f);
 
-	for(uint i = 0; i < 120; ++i)
+	for(uint i = 0; i < 360; ++i)
 	{
 		points[i].x = (int)(x + radius * cos(i * factor));
 		points[i].y = (int)(y + radius * sin(i * factor));
 	}
 
-	result = SDL_RenderDrawPoints(renderer, points, 120);
+	result = SDL_RenderDrawPoints(renderer, points, 360);
 
 	if(result != 0)
 	{
@@ -442,13 +442,19 @@ void j1Render::BlitSelection() const
 		if ((*it)->GetEntityType() == E_UNIT)
 		{
 			Unit* unit = (Unit*)*it;
-			App->render->DrawElipse(unit->GetX() + camera->GetPosition().x, unit->GetY() + camera->GetPosition().y, unit->GetUnitRadius(), 255, 255, 255, 20);
+			DrawElipse(unit->GetX() + camera->GetPosition().x, unit->GetY() + camera->GetPosition().y, unit->GetUnitRadius(), 255, 255, 255, 20);
 		}
 
 		if ((*it)->GetEntityType() == E_BUILDING)
 		{
 			Building* building = (Building*)*it;
 			building->GetBuildRectangle().Draw();
+
+			if (building->GetBuildingType() == B_TURRET || building->GetBuildingType() == B_CANNON || building->GetBuildingType() == B_TURRET_UPGRADED || building->GetBuildingType() == B_CANNON_UPGRADED)
+			{
+				int range = ((Tower*)building)->GetRange();
+				DrawCircle(building->GetX() + camera->GetPosition().x, building->GetY() + camera->GetPosition().y, range, 255, 255, 255, 255);
+			}
 		}
 	}
 }
