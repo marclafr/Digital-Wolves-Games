@@ -555,7 +555,7 @@ void Unit::Draw()
 	SDL_Rect rect;
 	iPoint pivot;
 
-	if (unit_class == C_SIEGE && action == A_WALK)
+	if (unit_class == C_SIEGE && (action == A_WALK || action == A_APPROACH || action == A_CENTER))
 	{	
 		idle_siege->Update(rect, pivot);
 
