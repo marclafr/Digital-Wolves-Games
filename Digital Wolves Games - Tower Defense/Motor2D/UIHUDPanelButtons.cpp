@@ -13,11 +13,8 @@
 #include "UIButton.h"
 #include "UIHUDDescription.h"
 #include "j1Tutorial.h"
-#include "Entity.h"
-#include "Units.h"
-#include "Buildings.h"
-#include "Towers.h"
 #include "j1Audio.h"
+#include "UIGetEntitiesInfo.h"
 
 #define ICON_ATLASSIZE 25
 #define ICON_SIZE 29
@@ -152,9 +149,6 @@ bool UIHUDPanelButtons::Update()
 {
 	if (panel_seleted != nullptr)
 	{
-		if (want_to_reset)
-			Reset();
-
 		bool inside_buttons = false;
 		for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
 		{
@@ -170,6 +164,9 @@ bool UIHUDPanelButtons::Update()
 			for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
 				(*ib_item)->Update();
 		}
+
+		if (want_to_reset)
+			Reset();
 	}
 	return true;
 }
@@ -233,103 +230,14 @@ void UIHUDPanelButtons::CreatePanel()
 			if ((*ib_item)->ShowButtons())
 			{
 				inside_button = true;
-				(*ib_item)->CreateButton();
+				(*ib_item)->CreateButton(panel_seleted_type, b_selected);
 				break;
 			}
 		}
 		if(!inside_button)
 			for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
 			{
-				(*ib_item)->CreateButton();
-				DeleteTowerTask* delete_task = nullptr;
-				UpgradeTowerTask* upgrade_task = nullptr;
-				DeleteWallTask* delete_w_task = nullptr;
-				UpgradeWallTask* upgrade_w_task = nullptr;
-				SDL_Rect atlas_grey;
-				switch (panel_seleted_type)
-				{
-				case BP_TURRET:
-					if ((*ib_item)->IsForDelete())
-					{
-						delete_task = (DeleteTowerTask*)(*ib_item)->GetTask();
-						delete_task->SetTower((Tower*)b_selected);
-					}
-					else
-					{
-						upgrade_task = (UpgradeTowerTask*)(*ib_item)->GetTask();
-						if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state != INV_S_COMPLETED)
-						{
-							atlas_grey = (*ib_item)->GetButton()->GetAtlasRect();
-							atlas_grey.x += ATLAS_BUTTONGREY_TOWER_DISTANCE;
-							(*ib_item)->GetButton()->SetAtlasBtn(atlas_grey);
-							(*ib_item)->GetButton()->SetFxSound(App->audio->fx_cancelclick_btn);
-							upgrade_task->SetCanUpgrade(false);
-						}
-						else if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state == INV_S_COMPLETED)
-						{
-							upgrade_task->SetTower((Tower*)b_selected);
-							upgrade_task->SetCanUpgrade(true);
-						}
-					}
-					break;
-				case BP_CANNON:
-					if ((*ib_item)->IsForDelete())
-					{
-						delete_task = (DeleteTowerTask*)(*ib_item)->GetTask();
-						delete_task->SetTower((Tower*)b_selected);
-					}
-					else
-					{
-						upgrade_task = (UpgradeTowerTask*)(*ib_item)->GetTask();
-						if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state != INV_S_COMPLETED)
-						{
-							atlas_grey = (*ib_item)->GetButton()->GetAtlasRect();
-							atlas_grey.x += ATLASX_BUTTONGREY_CANNON_DISTANCE;
-							atlas_grey.y -= ATLASY_BUTTONGREY_CANNON_DISTANCE;
-							(*ib_item)->GetButton()->SetAtlasBtn(atlas_grey);
-							(*ib_item)->GetButton()->SetFxSound(App->audio->fx_cancelclick_btn);
-							upgrade_task->SetCanUpgrade(false);
-						}
-						else if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state == INV_S_COMPLETED)
-						{
-							upgrade_task->SetTower((Tower*)b_selected);
-							upgrade_task->SetCanUpgrade(true);
-						}
-					}
-					break;
-				case BP_TURRET_UPGRADED:
-					delete_task = (DeleteTowerTask*)(*ib_item)->GetTask();
-					delete_task->SetTower((Tower*)b_selected);
-					break;
-				case BP_WOOD_WALL:
-					if ((*ib_item)->IsForDelete())
-					{
-						delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
-						delete_w_task->SetWall((Building*)b_selected);
-					}
-					else
-					{
-						upgrade_w_task = (UpgradeWallTask*)(*ib_item)->GetTask();
-						upgrade_w_task->SetWall((Building*)b_selected);
-					}
-					break;
-				case BP_STONE_WALL:
-					if ((*ib_item)->IsForDelete())
-					{
-						delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
-						delete_w_task->SetWall((Building*)b_selected);
-					}
-					else
-					{
-						upgrade_w_task = (UpgradeWallTask*)(*ib_item)->GetTask();
-						upgrade_w_task->SetWall((Building*)b_selected);
-					}
-					break;
-				case BP_BRICK_WALL:
-					delete_w_task = (DeleteWallTask*)(*ib_item)->GetTask();
-					delete_w_task->SetWall((Building*)b_selected);
-					break;
-				}
+				(*ib_item)->CreateButton(panel_seleted_type, b_selected);
 			}
 	}
 }
@@ -414,7 +322,7 @@ info_button* info_button::AddButton(iPoint position, iPoint atlas, Task* task, b
 	return new_if;
 }
 
-void info_button::CreateButton()
+void info_button::CreateButton(BUILDING_PANELINFO b_panel_type, Building* b_selected)
 {
 	if (!show_buttons)
 	{
@@ -424,10 +332,126 @@ void info_button::CreateButton()
 		btn->SetTask(task);
 		btn->SetNotDeleteTask();
 		btn->SetFxSound(App->audio->fx_click_btn);
+		PrepareButton(b_panel_type, b_selected);
 	}
 	else
 		for (std::vector<info_button*>::iterator ib_item = buttons_inside.begin(); ib_item != buttons_inside.end(); ++ib_item)
-			(*ib_item)->CreateButton();
+			(*ib_item)->CreateButton(b_panel_type, b_selected);
+}
+
+void info_button::PrepareButton(BUILDING_PANELINFO b_panel_type, Building* b_selected)
+{
+	SDL_Rect atlas_grey;
+	EntityTask* e_task = (EntityTask*)task;
+	if (e_task != nullptr && e_task->GetEntityTaskType() == ET_INVESTIGATION)
+	{
+		DoInvestigation* do_inv = (DoInvestigation*)e_task;
+		if (App->investigations->GetInvestigation(do_inv->GetInvestigationType())->inv_state != INV_S_IDLE)
+		{
+			if (do_inv->GetInvestigationType() == INV_FIRE_TOWER
+				|| do_inv->GetInvestigationType() == INV_ICE_TOWER
+				|| do_inv->GetInvestigationType() == INV_AIR_TOWER)
+			{
+				iPoint icon_grey = GetGreyInvestigationIconPositionFromAtlas(do_inv->GetInvestigationType());
+				atlas_grey = { icon_grey.x, icon_grey.y, ICON_ATLASSIZE, ICON_ATLASSIZE };
+				btn->SetAtlasBtn(atlas_grey);
+				btn->SetFxSound(App->audio->fx_cancelclick_btn);
+				do_inv->SetCanInvestigate(false);
+			}
+		}
+		else
+		{
+			do_inv->SetCanInvestigate(true);
+		}
+	}
+	DeleteTowerTask* delete_task = nullptr;
+	UpgradeTowerTask* upgrade_task = nullptr;
+	DeleteWallTask* delete_w_task = nullptr;
+	UpgradeWallTask* upgrade_w_task = nullptr;
+	switch (b_panel_type)
+	{
+	case BP_TURRET:
+		if (IsForDelete())
+		{
+			delete_task = (DeleteTowerTask*)task;
+			delete_task->SetTower((Tower*)b_selected);
+		}
+		else
+		{
+			upgrade_task = (UpgradeTowerTask*)task;
+			if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state != INV_S_COMPLETED)
+			{
+				atlas_grey = btn->GetAtlasRect();
+				atlas_grey.x += ATLAS_BUTTONGREY_TOWER_DISTANCE;
+				btn->SetAtlasBtn(atlas_grey);
+				btn->SetFxSound(App->audio->fx_cancelclick_btn);
+				upgrade_task->SetCanUpgrade(false);
+			}
+			else if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state == INV_S_COMPLETED)
+			{
+				upgrade_task->SetTower((Tower*)b_selected);
+				upgrade_task->SetCanUpgrade(true);
+			}
+		}
+		break;
+	case BP_CANNON:
+		if (delete_entity)
+		{
+			delete_task = (DeleteTowerTask*)task;
+			delete_task->SetTower((Tower*)b_selected);
+		}
+		else
+		{
+			upgrade_task = (UpgradeTowerTask*)task;
+			if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state != INV_S_COMPLETED)
+			{
+				atlas_grey = btn->GetAtlasRect();
+				atlas_grey.x += ATLASX_BUTTONGREY_CANNON_DISTANCE;
+				atlas_grey.y -= ATLASY_BUTTONGREY_CANNON_DISTANCE;
+				btn->SetAtlasBtn(atlas_grey);
+				btn->SetFxSound(App->audio->fx_cancelclick_btn);
+				upgrade_task->SetCanUpgrade(false);
+			}
+			else if (App->investigations->GetInvestigation(upgrade_task->GetUpgradeType())->inv_state == INV_S_COMPLETED)
+			{
+				upgrade_task->SetTower((Tower*)b_selected);
+				upgrade_task->SetCanUpgrade(true);
+			}
+		}
+		break;
+	case BP_TURRET_UPGRADED:
+		delete_task = (DeleteTowerTask*)task;
+		delete_task->SetTower((Tower*)b_selected);
+		break;
+	case BP_WOOD_WALL:
+		if (delete_entity)
+		{
+			delete_w_task = (DeleteWallTask*)task;
+			delete_w_task->SetWall((Building*)b_selected);
+		}
+		else
+		{
+			upgrade_w_task = (UpgradeWallTask*)task;
+			upgrade_w_task->SetWall((Building*)b_selected);
+		}
+		break;
+	case BP_STONE_WALL:
+		if (delete_entity)
+		{
+			delete_w_task = (DeleteWallTask*)task;
+			delete_w_task->SetWall((Building*)b_selected);
+		}
+		else
+		{
+			upgrade_w_task = (UpgradeWallTask*)task;
+			upgrade_w_task->SetWall((Building*)b_selected);
+		}
+		break;
+	case BP_BRICK_WALL:
+		delete_w_task = (DeleteWallTask*)task;
+		delete_w_task->SetWall((Building*)b_selected);
+		break;
+	}
 }
 
 void info_button::ButtonToDelete()

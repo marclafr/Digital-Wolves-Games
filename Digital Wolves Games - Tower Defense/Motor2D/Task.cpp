@@ -190,9 +190,18 @@ const INVESTIGATION_TYPE DoInvestigation::GetInvestigationType() const
 	return type;
 }
 
+void DoInvestigation::SetCanInvestigate(bool canU)
+{
+	canInvestigate = canU;
+}
+
 bool DoInvestigation::Execute()
 {
-	App->investigations->WantToInvestigate(App->investigations->GetInvestigation(type));
+	if (canInvestigate)
+	{
+		App->investigations->WantToInvestigate(App->investigations->GetInvestigation(type));
+		App->entity_manager->UnselectEverything();
+	}
 	return true;
 }
 

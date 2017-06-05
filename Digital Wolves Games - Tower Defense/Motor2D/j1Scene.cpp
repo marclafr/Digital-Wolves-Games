@@ -169,20 +169,21 @@ bool j1Scene::Update(float dt)
 		{
 			selecting = false;
 
-			//click select
-			iPoint world_mouse_pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-			Entity* selected = App->entity_manager->ClickSelect(world_mouse_pos);
-
-			if (selected != nullptr)
+			SDL_Rect rect_ingame_no_ui = RECT_INGAME_WITHOUT_UI;
+			if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
 			{
-				selected->SetEntityStatus(ST_SELECTED);
-				selection.push_back(selected);
-				App->uimanager->CreatePanelInfo(selection);
+				//click select
+				iPoint world_mouse_pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
+				Entity* selected = App->entity_manager->ClickSelect(world_mouse_pos);
+
+				if (selected != nullptr)
+				{
+					selected->SetEntityStatus(ST_SELECTED);
+					selection.push_back(selected);
+					App->uimanager->CreatePanelInfo(selection);
+				}
 			}
-
-			
 		}
-
 	}
 
 	App->debug_features.UpdateDebug();
@@ -888,23 +889,23 @@ void j1Scene::CreateSceneUI()
 
 	//University
 	info_button* more_btn = panel->AddButton(BP_UNIVERSITY, iPoint(0, 0), { 852,884 }, new ShowButtonsInside());
-	more_btn->AddButton(iPoint(0, 0), { 852,884 }, new DoInvestigation(INV_FIRE_TOWER));
-	more_btn->AddButton(iPoint(1, 0), { 878,884 }, new DoInvestigation(INV_ICE_TOWER));
-	more_btn->AddButton(iPoint(2, 0), { 904,884 }, new DoInvestigation(INV_AIR_TOWER));
+	more_btn->AddButton(iPoint(0, 0), GetInvestigationIconPositionFromAtlas(INV_FIRE_TOWER), new DoInvestigation(INV_FIRE_TOWER));
+	more_btn->AddButton(iPoint(1, 0), GetInvestigationIconPositionFromAtlas(INV_ICE_TOWER), new DoInvestigation(INV_ICE_TOWER));
+	more_btn->AddButton(iPoint(2, 0), GetInvestigationIconPositionFromAtlas(INV_AIR_TOWER), new DoInvestigation(INV_AIR_TOWER));
 
 	more_btn = panel->AddButton(BP_UNIVERSITY, iPoint(0, 2), { 852,858 }, new ShowButtonsInside());
-	more_btn->AddButton(iPoint(0, 0), { 930,858 }, new DoInvestigation(INV_FOOD));
-	more_btn->AddButton(iPoint(1, 0), { 852,858 }, new DoInvestigation(INV_WOOD));
-	more_btn->AddButton(iPoint(0, 1), { 878,858 }, new DoInvestigation(INV_GOLD));
-	more_btn->AddButton(iPoint(1, 1), { 904,858 }, new DoInvestigation(INV_STONE));
+	more_btn->AddButton(iPoint(0, 0), GetInvestigationIconPositionFromAtlas(INV_FOOD), new DoInvestigation(INV_FOOD));
+	more_btn->AddButton(iPoint(1, 0), GetInvestigationIconPositionFromAtlas(INV_WOOD), new DoInvestigation(INV_WOOD));
+	more_btn->AddButton(iPoint(0, 1), GetInvestigationIconPositionFromAtlas(INV_GOLD), new DoInvestigation(INV_GOLD));
+	more_btn->AddButton(iPoint(1, 1), GetInvestigationIconPositionFromAtlas(INV_STONE), new DoInvestigation(INV_STONE));
 
 	more_btn = panel->AddButton(BP_UNIVERSITY, iPoint(0, 1), { 748,858 }, new ShowButtonsInside());
-	more_btn->AddButton(iPoint(0, 0), { 748,858 }, new DoInvestigation(INV_INFANTRY_ATTACK));
-	more_btn->AddButton(iPoint(1, 0), { 748,910 }, new DoInvestigation(INV_INFANTRY_DEFENSE));
-	more_btn->AddButton(iPoint(0, 1), { 800,858 }, new DoInvestigation(INV_CAVALRY_ATTACK));
-	more_btn->AddButton(iPoint(1, 1), { 748,884 }, new DoInvestigation(INV_CAVALRY_DEFENSE));
-	more_btn->AddButton(iPoint(0, 2), { 748,936 }, new DoInvestigation(INV_ARCHERS_ATTACK));
-	more_btn->AddButton(iPoint(1, 2), { 800,884 }, new DoInvestigation(INV_ARCHERS_DEFENSE));
+	more_btn->AddButton(iPoint(0, 0), GetInvestigationIconPositionFromAtlas(INV_INFANTRY_ATTACK), new DoInvestigation(INV_INFANTRY_ATTACK));
+	more_btn->AddButton(iPoint(1, 0), GetInvestigationIconPositionFromAtlas(INV_INFANTRY_DEFENSE), new DoInvestigation(INV_INFANTRY_DEFENSE));
+	more_btn->AddButton(iPoint(0, 1), GetInvestigationIconPositionFromAtlas(INV_CAVALRY_ATTACK), new DoInvestigation(INV_CAVALRY_ATTACK));
+	more_btn->AddButton(iPoint(1, 1), GetInvestigationIconPositionFromAtlas(INV_CAVALRY_DEFENSE), new DoInvestigation(INV_CAVALRY_DEFENSE));
+	more_btn->AddButton(iPoint(0, 2), GetInvestigationIconPositionFromAtlas(INV_ARCHERS_ATTACK), new DoInvestigation(INV_ARCHERS_ATTACK));
+	more_btn->AddButton(iPoint(1, 2), GetInvestigationIconPositionFromAtlas(INV_ARCHERS_DEFENSE), new DoInvestigation(INV_ARCHERS_DEFENSE));
 
 	//Panel Info
 	App->uimanager->AddPanelInfo();

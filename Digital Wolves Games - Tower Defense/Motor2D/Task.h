@@ -172,11 +172,13 @@ class DoInvestigation : public EntityTask
 {
 private:
 	INVESTIGATION_TYPE type;
+	bool canInvestigate = true;
 
 public:
 	DoInvestigation(INVESTIGATION_TYPE type, ENTITY_TASKTYPE et_type = ET_INVESTIGATION);
 
 	const INVESTIGATION_TYPE GetInvestigationType() const;
+	void SetCanInvestigate(bool canU);
 
 	bool Execute();
 };

@@ -51,7 +51,8 @@ public:
 	void Update();
 
 	info_button* AddButton(iPoint position, iPoint atlas, Task* task, bool delete_button = false);
-	void CreateButton();
+	void CreateButton(BUILDING_PANELINFO b_panel_type, Building* b_selected);
+	void PrepareButton(BUILDING_PANELINFO b_panel_type, Building* b_selected);
 	void ButtonToDelete();
 	UIButton* GetButton() const;
 	const Task* GetTask() const;

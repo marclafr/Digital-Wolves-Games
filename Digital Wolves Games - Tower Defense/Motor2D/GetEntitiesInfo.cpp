@@ -977,7 +977,93 @@ iPoint GetInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type)
 
 	switch (type)
 	{
-	default:
+		//RESOURCES
+	case INV_FOOD:
+		ret = { 930,858 };
+		break;
+	case INV_WOOD:
+		ret = { 852,858 };
+		break;
+	case INV_GOLD:
+		ret = { 878,858 };
+		break;
+	case INV_STONE:
+		ret = { 904,858 };
+		break;
+		//TROPS
+		//INV_CAVALRY_UNLOCK
+	case INV_CAVALRY_ATTACK:
+		ret = { 800,858 };
+		break;
+	case INV_CAVALRY_DEFENSE:
+		ret = { 748,884 };
+		break;
+		//INV_ARCHERS_UNLOCK
+	case INV_ARCHERS_ATTACK:
+		ret = { 748,936 };
+		break;
+	case INV_ARCHERS_DEFENSE:
+		ret = { 800,884 };
+		break;
+		//INV_INFANTRY_UNLOCK,
+	case INV_INFANTRY_ATTACK:
+		ret = { 748,858 };
+		break;
+	case INV_INFANTRY_DEFENSE:
+		ret = { 748,910 };
+		break;
+		//TOWERS
+	case INV_FIRE_TOWER:
+		ret = { 852,884 };
+		break;
+	case INV_ICE_TOWER:
+		ret = { 878,884 };
+		break;
+	case INV_AIR_TOWER:
+		ret = { 904,884 };
+		break;
+	}
+
+	return ret;
+}
+
+iPoint GetGreyInvestigationIconPositionFromAtlas(const INVESTIGATION_TYPE type)
+{
+	iPoint ret{ 0,0 };
+
+	switch (type)
+	{
+		//TROPS
+		//INV_CAVALRY_UNLOCK
+	case INV_CAVALRY_ATTACK:
+		ret = { 1129,858 };;
+		break;
+	case INV_CAVALRY_DEFENSE:
+		ret = { 1077,884 };
+		break;
+		//INV_ARCHERS_UNLOCK
+	case INV_ARCHERS_ATTACK:
+		ret = { 1181,858 };
+		break;
+	case INV_ARCHERS_DEFENSE:
+		ret = { 1129,884 };
+		break;
+		//INV_INFANTRY_UNLOCK,
+	case INV_INFANTRY_ATTACK:
+		ret = { 1077,858 };;
+		break;
+	case INV_INFANTRY_DEFENSE:
+		ret = { 1077,910 };
+		break;
+		//TOWERS
+	case INV_FIRE_TOWER:
+		ret = { 1181,884 };
+		break;
+	case INV_ICE_TOWER:
+		ret = { 1207,884 };
+		break;
+	case INV_AIR_TOWER:
+		ret = { 1233,884 };
 		break;
 	}
 
