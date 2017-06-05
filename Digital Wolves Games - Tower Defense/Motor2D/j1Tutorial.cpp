@@ -127,30 +127,39 @@ bool j1Tutorial::CleanUp()
 	LOG("Freeing  MainMenu");
 	App->uimanager->SetAllToDelete();
 	tutorial = false;
+	tutorial1_deleted = false;
+	tutorial2_deleted = false;
+	tutorial3_deleted = false;
+	tutorial4_deleted = false;
+	tutorial5_deleted = false;
+	tutorial6_deleted = false;
+	tutorial7_deleted = false;
 	return true;
 }
 
 
 void j1Tutorial::TutorialsProgression()
 {
-	if (tutorial1_completed)
+	if (tutorial1_completed && !tutorial1_deleted)
 	{
 		tutorial1->SetToDelete();
 		text_tutorial1->SetToDelete();
 		text1_tutorial1->SetToDelete();
 		text2_tutorial1->SetToDelete();
 		text3_tutorial1->SetToDelete();
+		tutorial1_deleted = true;
 	}
 
-	if (tutorial2_completed)
+	if (tutorial2_completed && !tutorial2_deleted)
 	{
 		tutorial2->SetToDelete();
 		text_tutorial2->SetToDelete();
 		text1_tutorial2->SetToDelete();
 		text2_tutorial2->SetToDelete();
+		tutorial2_deleted = true;
 	}
 
-	if (tutorial3_completed)
+	if (tutorial3_completed && !tutorial3_deleted)
 	{
 		tutorial3->SetToDelete();
 		text_tutorial3->SetToDelete();
@@ -158,9 +167,10 @@ void j1Tutorial::TutorialsProgression()
 		text2_tutorial3->SetToDelete();
 		text3_tutorial3->SetToDelete();
 		text4_tutorial3->SetToDelete();
+		tutorial3_deleted = true;
 	}
 
-	if (tutorial4_completed)
+	if (tutorial4_completed && !tutorial4_deleted)
 	{
 		tutorial4->SetToDelete();
 		text_tutorial4->SetToDelete();
@@ -168,31 +178,35 @@ void j1Tutorial::TutorialsProgression()
 		text2_tutorial4->SetToDelete();
 		text3_tutorial4->SetToDelete();
 		text4_tutorial4->SetToDelete();
+		tutorial4_deleted = true;
 	}
 
-	if (tutorial5_completed)
+	if (tutorial5_completed && !tutorial5_deleted)
 	{
 		tutorial5->SetToDelete();
 		text_tutorial5->SetToDelete();
 		text1_tutorial5->SetToDelete();
 		text2_tutorial5->SetToDelete();
 		text3_tutorial5->SetToDelete();
+		tutorial5_deleted = true;
 	}
 
-	if (tutorial6_completed)
+	if (tutorial6_completed && !tutorial6_deleted)
 	{
 		tutorial6->SetToDelete();
 		text_tutorial6->SetToDelete();
 		text1_tutorial6->SetToDelete();
 		text2_tutorial6->SetToDelete();
 		text3_tutorial6->SetToDelete();
+		tutorial6_deleted = true;
 	}
 
-	if (tutorial7_completed)
+	if (tutorial7_completed && !tutorial7_deleted)
 	{
 		tutorial7->SetToDelete();
 		text_tutorial7->SetToDelete();
 		text1_tutorial7->SetToDelete();
+		tutorial7_deleted = true;
 	}
 }
 

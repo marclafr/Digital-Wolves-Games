@@ -130,6 +130,13 @@ private:
 	bool tutorial6_part2 = false;
 	bool tutorial6_part3 = false;
 
+	bool tutorial1_deleted = false;
+	bool tutorial2_deleted = false;
+	bool tutorial3_deleted = false;
+	bool tutorial4_deleted = false;
+	bool tutorial5_deleted = false;
+	bool tutorial6_deleted = false;
+	bool tutorial7_deleted = false;
 };
 
 #endif // __j1TUTORIAL_H__

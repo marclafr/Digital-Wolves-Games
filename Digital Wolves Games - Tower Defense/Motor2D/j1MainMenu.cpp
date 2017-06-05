@@ -55,7 +55,7 @@ bool j1MainMenu::Start()
 	//TUTORIAL
 	UIButton* tutorial = App->uimanager->AddButton({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
 	tutorial->SetMouseOnTopTextRect({ 719, 2572, 200, 237 },3);
-	tutorial->SetTask(new MainMenuLoadGame());
+	tutorial->SetTask(new ChangeMainMenuSceneToTutorial(SC_GAME));
 
 	App->uimanager->AddLabel(218, 23, "Tutorial");
 
