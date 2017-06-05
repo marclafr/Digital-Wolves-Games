@@ -371,8 +371,6 @@ void Unit::AI()
 	CheckUnitsBuffs();
 	//----------------------
 
-	Unit* collision = nullptr;
-
 	switch (action)
 	{
 	case A_IDLE:
@@ -383,9 +381,9 @@ void Unit::AI()
 			break;
 		}
 		
-		if (collided)
-			if (App->pathfinding->IsEmpty(GetTile(), this))
-				collided = false;
+		if (collision != nullptr)
+			if (collision->GetTile() != GetTile())
+				collision = nullptr;
 
 		EnemyInSight();
 
@@ -396,15 +394,17 @@ void Unit::AI()
 			break;
 		}
 
-		if (!collided)
+		if (collision == nullptr)
 		{
 			collision = (Unit*)App->entity_manager->TileCollisions(this);
-			if (collision != nullptr && collision->Collided() == false)
+			if (collision != nullptr)
 			{
-				collision->collided = true;
-				collided = true;
-				MoveAway();
-				collision = nullptr;
+				collision->collision = this;
+
+				if (collision->GetAction() == A_IDLE)
+					collision->MoveAway();
+				else
+					MoveAway();
 			}
 		}
 		
@@ -417,6 +417,10 @@ void Unit::AI()
 			UnitDies();
 			break;
 		}
+
+		if (collision != nullptr)
+			if (collision->GetTile() != GetTile())
+				collision = nullptr;
 
 		if (target != nullptr && EnemyDead())
 		{
@@ -634,9 +638,9 @@ const bool Unit::IsMoving() const
 	return false;
 }
 
-const bool Unit::Collided() const
+const Unit * Unit::GetCollision() const
 {
-	return collided;
+	return collision;
 }
 
 void Unit::SetAction(const ACTION action)

@@ -360,7 +360,7 @@ Entity * QuadTreeNode::SearchFirstCollision(IsoRect rect, Entity * exeption) con
 		for (int i = 0; i < NODE_ENTITIES; i++)
 			if (entities[i] != nullptr)
 			{
-				if (rect.Inside(entities[i]->GetPosition()) && entities[i] != exeption && entities[i]->GetHp() > 0 && ((Unit*) entities[i])->Collided() == false)
+				if (rect.Inside(entities[i]->GetPosition()) && entities[i] != exeption && entities[i]->GetHp() > 0 && ((Unit*) entities[i])->GetCollision() == nullptr && ((Unit*)entities[i])->GetAction() != A_WALK)
 					ret = entities[i];
 			}
 			else

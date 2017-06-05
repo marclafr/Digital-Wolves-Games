@@ -127,7 +127,7 @@ private:
 	//Investigations bonuses:
 	bool bonus_attack = false;
 	bool bonus_defense = false;
-	bool collided = false;
+	Unit* collision = nullptr;
 
 	void UnitDies();
 
@@ -174,7 +174,7 @@ public:
 	const Elipse GetUnitCircle() const;
 	const bool IsMoving() const;
 
-	const bool Collided() const;
+	const Unit* GetCollision() const;
 	void SetAction(const ACTION action);
 
 	void LookAt(iPoint pos);
