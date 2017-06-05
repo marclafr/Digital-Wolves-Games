@@ -133,9 +133,10 @@ bool j1Animation::Awake(pugi::xml_node& config)
 
 		new_sprites_anim->speed = 75.0f;
 		
-		if (new_sprites_anim->name == ANIM_FIRE_EXPLOSION || new_sprites_anim->name == ANIM_ICE_EXPLOSION || new_sprites_anim->name == ANIM_MOUSE_CLICK_MOVE)
+		if (new_sprites_anim->name == ANIM_FIRE_EXPLOSION || new_sprites_anim->name == ANIM_ICE_EXPLOSION || new_sprites_anim->name == ANIM_MOUSE_CLICK_MOVE || new_sprites_anim->name == ANIM_FIRE_FLOOR)
 			new_sprites_anim->loop = false;
-		if(new_sprites_anim->name == ANIM_FIRE_FLOOR || new_sprites_anim->name == ANIM_ICE_FLOOR)
+
+		if(new_sprites_anim->name == ANIM_ICE_FLOOR)
 		{
 			new_sprites_anim->loop = false;
 			new_sprites_anim->speed= 450.0f;
