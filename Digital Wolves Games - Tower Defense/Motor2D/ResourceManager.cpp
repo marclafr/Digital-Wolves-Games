@@ -157,7 +157,6 @@ int ResourceManager::GetResource(RESOURCE_TYPE type)
 
 bool ResourceManager::CanBuildTower(TOWER_TYPE type)
 {
-	//TODO fill defines and cases for all towers
 	switch (type)
 	{
 	case T_NO_TYPE:
@@ -202,7 +201,6 @@ bool ResourceManager::CanBuildTower(TOWER_TYPE type)
 
 void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos)
 {
-	//TODO fill defines and cases for all towers && all creates here. use this funct with a task
 	switch (type)
 	{
 	case T_NO_TYPE:
@@ -242,7 +240,6 @@ void ResourceManager::BuildTower(TOWER_TYPE type, iPoint pos)
 
 bool ResourceManager::CanBuildWall(BUILDING_TYPE type)
 {
-	//TODO create defines and fill cases for all walls
 	switch (type)
 	{
 	case B_WOOD_WALL:
@@ -263,7 +260,6 @@ bool ResourceManager::CanBuildAmountOfWalls(int number_of_walls)
 
 void ResourceManager::BuildWall(BUILDING_TYPE type)
 {
-	//TODO create defines and fill cases for all walls && all creates here. use this funct with a task
 	switch (type)
 	{
 	case B_WOOD_WALL:
@@ -278,7 +274,6 @@ void ResourceManager::BuildWall(BUILDING_TYPE type)
 
 bool ResourceManager::CanTrainSoldier(UNIT_TYPE type)
 {
-	//TODO  create defines and fill cases for all units
 	switch (type)
 	{
 	case U_NO_UNIT:
@@ -327,7 +322,6 @@ bool ResourceManager::CanTrainSoldier(UNIT_TYPE type)
 
 void ResourceManager::TrainSoldier(UNIT_TYPE type)
 {
-	//TODO  create defines and fill cases for all units && all creates here. use this funct with a task
 	switch (type)
 	{
 	case U_NO_UNIT:

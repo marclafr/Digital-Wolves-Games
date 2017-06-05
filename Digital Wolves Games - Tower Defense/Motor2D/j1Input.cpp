@@ -179,7 +179,7 @@ bool j1Input::PreUpdate()
 
 bool j1Input::Update(float dt)
 {
-	//TODO: DEBUG FEATURES
+	//DEBUG FEATURES
 	if (GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		App->debug_features.debug_mode = !App->debug_features.debug_mode;
 

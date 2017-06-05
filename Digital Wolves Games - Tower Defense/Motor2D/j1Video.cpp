@@ -75,7 +75,6 @@ bool j1Video::GrabAVIFrame()
 	int BitCount = lpbi->biBitCount;
 	int pitch = 3;
 
-	//TODO 3 Create a surface
 	//This surface will recieve the data of actual frame.
 	SDL_Surface *surface;
 
@@ -83,7 +82,6 @@ bool j1Video::GrabAVIFrame()
 
 	//-----
 
-	//TODO 4 Use this surface to create a SDL_Texture, and Blit it.
 	//Also, After picking up the frame, you should go to the next one
 	SDL_Texture* image = App->tex->LoadSurfaceVideo(surface);
 	uint w, h;
@@ -99,7 +97,6 @@ bool j1Video::GrabAVIFrame()
 		frame = 0;
 	//----
 
-	//TODO 5 Unload texture and surface
 	App->tex->UnloadVideo(image);
 	SDL_FreeSurface(surface);
 	//-----

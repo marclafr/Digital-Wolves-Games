@@ -132,7 +132,6 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		}
 
 		new_sprites_anim->speed = 75.0f;
-		//TODO UNCOMMENT WHEN RECTS ARE CORRECT 
 		
 		if (new_sprites_anim->name == ANIM_FIRE_EXPLOSION || new_sprites_anim->name == ANIM_ICE_EXPLOSION || new_sprites_anim->name == ANIM_MOUSE_CLICK_MOVE)
 			new_sprites_anim->loop = false;
@@ -228,7 +227,6 @@ const bool Animation::GetLoopState() const
 
 const SDL_Rect Animation::GetFrame(int frame_num) const
 {
-	//TODO: if frame_num> frames.size?????? it broke once
 	if (frame_num >= frames.size())
 		frame_num = 0; 
 	return frames[frame_num];
@@ -427,8 +425,6 @@ void Animation::SetUnit(const pugi::xml_node node)
 	else if (strcmp(node.name(), "mangonel") == 0)
 		unit_type = U_MANGONEL;
 	//-------
-
-	//TODO: ADD UNIT
 
 	else
 	{

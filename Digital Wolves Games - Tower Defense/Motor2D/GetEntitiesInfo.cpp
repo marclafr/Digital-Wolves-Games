@@ -422,20 +422,18 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 const char * GetBuildingPrice(const BUILDING_TYPE type)
 {
 	char* ret = nullptr;
-	//THIS ISNT USED I THINK// TODO
 	switch (type)
 	{
 	case B_TURRET:
 		ret = "Wood: 75 Stone: 25";
 		break;
-	case B_WOOD_WALL: //THIS
+	case B_WOOD_WALL:
 		ret = "Stone: 50";
 		break;
 	case B_STONE_WALL:
 		ret = "Stone: 50";
 		break;
 	default:
-		//LOG("Error BUILDING TYPE NAME NULL (UIManager)");
 		ret = "Error Building Price";
 		break;
 	}
@@ -702,7 +700,6 @@ int ReturnValueBarHPUnit(const UNIT_TYPE type, const uint hp, const uint pixels)
 	case U_MANGONEL:
 		ret = hp * pixels / MANGONEL_HP;
 		break;
-		//TODO: ADD UNIT
 
 
 	default:

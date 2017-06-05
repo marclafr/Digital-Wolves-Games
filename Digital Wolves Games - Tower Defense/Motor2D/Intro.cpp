@@ -28,7 +28,6 @@ bool j1Intro::Awake()
 // Called before the first frame
 bool j1Intro::Start()
 {
-	//TODO 1 Initialize the video - Just call the function
 	App->video->Initialize("intro_anim.avi");
 	App->audio->PlayMusic("audio/music/logo_anim_audio.ogg", 0.0f);
 	time.Start();
@@ -44,7 +43,6 @@ bool j1Intro::PreUpdate()
 // Called each loop iteration
 bool j1Intro::Update(float dt)
 {
-	//TODO 2 Every frame you should take one frame of the video
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		App->scene_manager->ChangeScene(SC_MAIN_MENU);
@@ -72,7 +70,6 @@ bool j1Intro::PostUpdate()
 // Called before quitting
 bool j1Intro::CleanUp()
 {
-	//TODO 6 Clean the Avi files used
 	App->video->CloseAVI();
 	return true;
 }

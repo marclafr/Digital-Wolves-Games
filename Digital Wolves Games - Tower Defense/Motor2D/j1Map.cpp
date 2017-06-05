@@ -30,7 +30,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 }
 bool j1Map::Start()
 {
-	//TODO check if it should be unloaded
 	//load map
 	if (App->map->Load("AlphaOne.tmx") == true)
 	{

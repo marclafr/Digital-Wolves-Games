@@ -27,7 +27,7 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side); //TODO make const if we can take priority out
+	Entity* CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side);
 	Entity* CreateBuilding(BUILDING_TYPE b_type, fPoint pos, bool builded) const;
 	Entity* CreateTower(TOWER_TYPE t_type, fPoint pos) const;
 	Entity* CreateResource(RESOURCE_TYPE r_type, fPoint pos, int amount_collect, int time) const;
@@ -74,7 +74,6 @@ private:
 	//lista para "almacenar" unidades, puede ser cambiada a array etc.
 	QuadTree* entity_quadtree;
 
-	//TODO:Must change this
 	int priority = 0;
 	bool siegeram_destroyed = false;
 	fPoint siegeram_pos;

@@ -59,7 +59,6 @@ void j1PathFinding::SetMap(uint width, uint height, uchar* data)
 
 	RELEASE_ARRAY(map);
 	map = new uchar[width*height];
-	//TODO1
 	//create a node_map
 	//RELEASE_ARRAY(node_map);
 	node_map = new PathNode[width*height];

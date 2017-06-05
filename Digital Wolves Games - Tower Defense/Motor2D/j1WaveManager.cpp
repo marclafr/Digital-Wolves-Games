@@ -18,7 +18,6 @@ j1WaveManager::~j1WaveManager() {}
 
 bool j1WaveManager::Start()
 {
-	//TODO create waves in grups
 	Wave wave1;
 	//UnitGroup group20(U_SIEGERAM, 3, LEFT_UP);
 	UnitGroup group1(U_MILITIA, 6, LEFT_UP);
@@ -555,9 +554,7 @@ void Wave::PushBack(UnitGroup unit_group, STARTING_ENEMY_POS start_pos)
 
 fPoint UnitGroup::GetStartingPos(STARTING_ENEMY_POS pos) const
 {
-	//TODO rellenar posiciones
 	iPoint spawn;
-
 	switch (pos)
 	{
 	case LEFT_UP:

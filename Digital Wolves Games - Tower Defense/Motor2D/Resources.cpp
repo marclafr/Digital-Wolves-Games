@@ -53,7 +53,7 @@ Resources::Resources(RESOURCE_TYPE r_type, fPoint pos, int collected, float time
 		collect_time = 11.0f;
 		amount_collected = 60;
 		build_time = 7.0f;
-		rect = { 0, 217, 212, 130 };	//TODO CHANGE RECT/PIVOT : SPRITE?????
+		rect = { 0, 217, 212, 130 };
 		SetRect(rect);
 		SetPivot(104, 85);
 		SetTextureID(T_RESOURCE);

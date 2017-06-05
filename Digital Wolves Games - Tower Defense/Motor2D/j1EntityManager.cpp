@@ -32,7 +32,7 @@ bool j1EntityManager::CleanUp() {
 	return true;
 }
 
-Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)//TODO make const if we can take priority out
+Entity * j1EntityManager::CreateUnit(UNIT_TYPE u_type, fPoint pos, Side side)
 {
 	Entity* new_entity = (Entity*) new Unit(u_type, pos, side, priority);
 	entity_quadtree->PushBack(new_entity);

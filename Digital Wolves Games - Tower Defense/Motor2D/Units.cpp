@@ -29,10 +29,6 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	switch (u_type)
 	{
-		//ADD UNIT: IF ANY UNIT IS ADDED ADD CODE HERE:
-		//TODO: ALL UNITS VALUES MUST BE CHANGED
-		//TODO: CHANGE/QUIT PRIORITY
-
 	case U_GOD:
 		SetHp(1000);
 		attack = 100;
@@ -315,8 +311,6 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 		SetTextureID(T_MANGONEL);
 		priority = 1;
 		break;
-
-		//TODO: ADD UNIT
 
 	default:
 		LOG("Error UNIT TYPE STATS NULL");

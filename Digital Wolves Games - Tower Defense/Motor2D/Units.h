@@ -8,7 +8,7 @@
 #include "IsoPrimitives.h"
 
 #define XY_TILES_RELATION 2
-#define TOWN_HALL iPoint(0, 272) //TODO final townhall destination;
+#define TOWN_HALL iPoint(0, 272) //Final townhall destination;
 #define SLOW_PROPORTION 1.4f
 #define SLOW_TIME 2.0f
 
@@ -56,8 +56,6 @@ enum UNIT_TYPE
 		//SIEGE
 	U_SIEGERAM,
 	U_MANGONEL
-
-	//TODO: ADD UNIT
 };
 
 enum UNIT_CLASS
