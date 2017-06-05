@@ -246,6 +246,7 @@ uchar j1PathFinding::GetTileAtConstructible_ally(const iPoint& pos) const
 
 	return INVALID_WALK_CODE;
 }
+
 uchar j1PathFinding::GetTileAtConstructible_neutral(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
@@ -265,30 +266,53 @@ PathNode* j1PathFinding::GetPathNode(int x, int y)
 	return &node_map[(y*width) + x];
 }
 
-iPoint j1PathFinding::FindNearestWalkable(const iPoint & origin)
+const iPoint& j1PathFinding::FindNearestWalkableToDestination(const Unit* unit) const
 {
-	iPoint ret(origin);
+	iPoint start_tile = unit->GetDestination();
+	int tile_range = 1;
 
-	// dx -> direction x  | dy -> direction y  
-	// search_in_radius -> finds the nearest walkable tile in a radius (max radius in FIND_RADIUS) 
-
-	int search_in_radius = 1;
-	while (search_in_radius != FIND_RADIUS)
+	while (tile_range < 75)
 	{
-		for (int dx = -search_in_radius; dx < search_in_radius; dx++)
-		{
-			for (int dy = -search_in_radius; dy < search_in_radius; dy++)
-			{
-				ret.x = origin.x + dx;
-				ret.y = origin.y + dy;
-				if (IsWalkable(ret))
-					return ret; // Found the nearest walkable tile
-			}
-		}
+		iPoint current_tile(start_tile.x - tile_range, start_tile.y - tile_range);
 
-		++search_in_radius;
+		//Left
+		for (int i = -tile_range; i < tile_range; i++)
+		{
+			current_tile.x = start_tile.x + i;
+			if (IsEmpty(current_tile, unit))
+				return current_tile;
+		}
+		current_tile.x++;
+
+		//Down
+		for (int i = -tile_range; i < tile_range; i++)
+		{
+			current_tile.y = start_tile.y + i;
+			if (IsEmpty(current_tile, unit))
+				return current_tile;
+		}
+		current_tile.y++;
+
+		//Right
+		for (int i = -tile_range; i < tile_range; i++)
+		{
+			current_tile.x = start_tile.x - i;
+			if (IsEmpty(current_tile, unit))
+				return current_tile;
+		}
+		current_tile.x--;
+
+		//Up
+		for (int i = -tile_range; i < tile_range; i++)
+		{
+			current_tile.y = start_tile.y - i;
+			if (IsEmpty(current_tile, unit))
+				return current_tile;
+		}
+		current_tile.y--;
+
+		tile_range++;
 	}
-	return ret.create(-1, -1);
 }
 
 	 //----------------||----------------||----------------\\
@@ -927,7 +951,7 @@ void j1PathFinding::AddPath(std::vector<iPoint>* path)
 	allied_paths.push_back(path);
 }
 
-bool j1PathFinding::IsEmpty(const iPoint tile, Entity* exeption) const
+bool j1PathFinding::IsEmpty(const iPoint tile, const Entity* exeption) const
 {
 	if (IsWalkable(tile) && App->entity_manager->AbleToBuild(tile, exeption))
 		return true;

@@ -26,7 +26,7 @@ public:
 	bool Inside(const Entity* entity) const;
 
 	Entity* SearchFirst(int pixel_range, const  fPoint from) const;
-	Entity* SearchFirst(IsoRect rect, Entity* exeption = nullptr) const;
+	Entity* SearchFirst(IsoRect rect,const Entity* exeption = nullptr) const;
 	Entity* SearchFirst(const SDL_Rect rect) const;
 	Entity* SearchFirstUnit(const SDL_Rect& rect) const;
 	Entity* SearchFirstEnemy(int pixel_range, fPoint from, Side side, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
@@ -72,7 +72,7 @@ public:
 	Entity* SearchFirst(int pixel_range, fPoint from) const;
 	Entity* SearchFirstEnemy(int pixel_range, fPoint from, Side side, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
 	Entity* SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TYPE entity_type = E_NO_ENTITY) const;
-	bool CheckIfFull(IsoRect tile, Entity* exeption = nullptr) const;
+	bool CheckIfFull(IsoRect tile,const Entity* exeption = nullptr) const;
 	void Search(int pixel_range, fPoint from, std::vector<Entity*>& vec) const;
 	void SearchForEnemies(int pixel_range, fPoint from, std::vector<Entity*>& vec, const Side side, ENTITY_TYPE entity_type = E_NO_ENTITY);
 	void SearchInIsoRect(const IsoRect rect, std::vector<Entity*>& vec);

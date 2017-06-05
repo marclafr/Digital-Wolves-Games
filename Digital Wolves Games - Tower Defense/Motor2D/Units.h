@@ -143,6 +143,7 @@ private:
 	void SetAttackPosition();
 	void StartAttack();
 	void MoveAway();
+	void GetNewDestination();
 	void CheckUnitsBuffs();
 	void GoToTileCenter();
 	bool CenterUnit();
@@ -173,6 +174,7 @@ public:
 	const int GetRange() const;
 	const Elipse GetUnitCircle() const;
 	const bool IsMoving() const;
+	const iPoint& GetDestination() const;
 
 	const Unit* GetCollision() const;
 	void SetAction(const ACTION action);

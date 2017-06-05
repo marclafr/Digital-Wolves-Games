@@ -384,6 +384,8 @@ void Unit::AI()
 		if (collision != nullptr)
 			if (collision->GetTile() != GetTile())
 				collision = nullptr;
+			else if (collision->GetAction() == A_IDLE)
+				collision->MoveAway();
 
 		EnemyInSight();
 
@@ -403,6 +405,8 @@ void Unit::AI()
 
 				if (collision->GetAction() == A_IDLE)
 					collision->MoveAway();
+				else if (collision->GetAction() == A_WALK)
+					break;
 				else
 					MoveAway();
 			}
@@ -444,7 +448,10 @@ void Unit::AI()
 		
 		if (DestinationFull())
 		{
-			GoIdle();
+			if (target != nullptr)
+				GoToEnemy();
+			else
+				GetNewDestination();
 			break;
 		}
 
@@ -523,10 +530,12 @@ void Unit::AI()
 				if (animation->Finished())
 					siege_attacked = false;
 		}
-
 		else
 			if (animation->Finished())
 				DoDamage();
+
+		if(target->GetTile() == GetTile())
+
 
 		break;
 
@@ -636,6 +645,11 @@ const bool Unit::IsMoving() const
 	if (action == A_WALK)
 		return true;
 	return false;
+}
+
+const iPoint & Unit::GetDestination() const
+{
+	return destination;
 }
 
 const Unit * Unit::GetCollision() const
@@ -877,7 +891,10 @@ void Unit::GoToEnemy()
 {
 	destination = App->pathfinding->FindClosestEmptyAttackTile(target->GetIPos(), range, this);
 	if (destination.y == -1)
+	{
 		target = nullptr;
+		GoIdle();
+	}
 	else
 	{
 		if (destination == GetTile())
@@ -994,6 +1011,16 @@ void Unit::MoveAway()
 		LOG("CAN NOT FIND EMPTY POS");
 	else
 		GoToTile(new_pos);
+}
+
+void Unit::GetNewDestination()
+{
+	iPoint new_pos = App->pathfinding->FindNearestWalkableToDestination(this);
+
+	if (new_pos.y == -1)
+		LOG("Can't Find new destination");
+	else
+		GoToTile(destination);
 }
 
 void Unit::CheckUnitsBuffs()

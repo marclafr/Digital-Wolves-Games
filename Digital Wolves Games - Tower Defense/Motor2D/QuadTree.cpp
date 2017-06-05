@@ -86,7 +86,7 @@ Entity * QuadTreeNode::SearchFirst(int pixel_range, const fPoint from) const
 	return nullptr;
 }
 
-Entity * QuadTreeNode::SearchFirst(IsoRect rect, Entity* exeption) const
+Entity * QuadTreeNode::SearchFirst(IsoRect rect,const Entity* exeption) const
 {
 	Entity* ret = nullptr;
 
@@ -679,7 +679,7 @@ Entity * QuadTree::SearchFirstEnemy(IsoRect rect, const Side side, ENTITY_TYPE e
 	return origin->SearchFirstEnemy(rect,side,entity_type);
 }
 
-bool QuadTree::CheckIfFull(IsoRect tile, Entity* exeption) const
+bool QuadTree::CheckIfFull(IsoRect tile,const Entity* exeption) const
 {
 	if (origin->SearchFirst(tile, exeption) != nullptr)
 		return true;

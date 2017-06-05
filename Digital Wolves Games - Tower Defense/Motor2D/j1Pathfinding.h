@@ -95,11 +95,13 @@ public:
 
 	void AddPath(std::vector<iPoint>* path);
 
-	bool IsEmpty(const iPoint tile, Entity* exeption = nullptr) const;
+	bool IsEmpty(const iPoint tile, const Entity* exeption = nullptr) const;
 
 	iPoint FindNearestEmpty(Unit* unit) const;
 
 	bool IsInPath(const iPoint& tile, const std::vector<iPoint>& path) const;
+
+	const iPoint& FindNearestWalkableToDestination(const Unit* unit) const;
 
 	//JPS
 	//Main function of JPS Algorithm
@@ -143,9 +145,6 @@ private:
 
 	//Update cost_so_far of all Nodes opened from a given tile after changin this ones cost
 	void ChangeCosts(std::vector<PathNode*>::iterator from, float new_cost);
-
-	//Extra
-	iPoint FindNearestWalkable(const iPoint& origin);
 
 	//Getters
 	const bool FrontierFinished() const;

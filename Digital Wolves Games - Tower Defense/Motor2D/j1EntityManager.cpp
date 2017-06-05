@@ -445,7 +445,7 @@ void j1EntityManager::BlitMinimap() const
 	entity_quadtree->BlitMinimap();
 }
 
-bool j1EntityManager::AbleToBuild(iPoint tile, Entity* exeption) const
+bool j1EntityManager::AbleToBuild(iPoint tile,const Entity* exeption) const
 {
 	iPoint i_pos = App->map->MapToWorld(tile.x, tile.y);
 	fPoint tile_center(i_pos.x, i_pos.y);
