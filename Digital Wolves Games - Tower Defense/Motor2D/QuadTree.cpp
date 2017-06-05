@@ -351,6 +351,33 @@ Entity * QuadTreeNode::SearchFirstCollisionInTile(iPoint tile, Entity* exeption)
 	return SearchFirstCollision(rect, exeption);
 }
 
+void QuadTreeNode::SearchCollisionsInTile(iPoint tile, std::vector<Unit*>& vec, Entity * exeption)
+{ 
+	iPoint i_pos = App->map->MapToWorld(tile.x, tile.y);
+	fPoint tile_center(i_pos.x, i_pos.y);
+	IsoRect rect(tile_center, App->map->data.tile_width, App->map->data.tile_height);
+	return SearchCollisions(rect, vec, exeption);
+}
+
+void QuadTreeNode::SearchCollisions(IsoRect tile, std::vector<Unit*>& vec, Entity * exeption)
+{
+	if (childs[0] == nullptr)
+	{
+		for (int i = 0; i < NODE_ENTITIES; i++)
+			if (entities[i] != nullptr)
+			{
+				if (tile.Inside(entities[i]->GetPosition()) && entities[i] != exeption && entities[i]->GetHp() > 0 && ((Unit*)entities[i])->GetCollision() == nullptr && ((Unit*)entities[i])->GetAction() != A_WALK)
+					vec.push_back((Unit*)entities[i]);
+			}
+			else
+				break;
+	}
+	else
+		for (int i = 0; i < 4; i++)
+			if (tile.Overlaps(childs[i]->area))
+				childs[i]->SearchCollisions(tile, vec, exeption);
+}
+
 Entity * QuadTreeNode::SearchFirstCollision(IsoRect rect, Entity * exeption) const
 {
 	Entity* ret = nullptr;
@@ -703,7 +730,12 @@ void QuadTree::SearchInIsoRect(const IsoRect rect, std::vector<Entity*>& vec)
 
 Entity * QuadTree::SearchFirstCollisionInTile(iPoint tile, Entity * exeption) const
 {
-	return origin->SearchFirstCollisionInTile(tile,exeption);
+	return origin->SearchFirstCollisionInTile(tile, exeption);
+}
+
+void QuadTree::SearchCollisionsInTile(iPoint tile, std::vector<Unit*>& vec, Entity * exeption)
+{
+	origin->SearchCollisionsInTile(tile, vec, exeption);
 }
 
 Entity * QuadTree::SearchFirst(const SDL_Rect & rect) const

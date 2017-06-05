@@ -149,6 +149,7 @@ private:
 	bool CenterUnit();
 	void ChangeAnimation();
 	int GetFrameAttack();
+	void Collisions();
 
 	bool GetNextTile();
 

@@ -35,6 +35,8 @@ public:
 	void Search(const IsoRect rect, std::vector<Entity*>& vec) const;
 	void SearchForEnemies(int pixel_range, fPoint from, std::vector<Entity*>& vec, const Side side, ENTITY_TYPE entity_type = E_NO_ENTITY);
 	Entity* SearchFirstCollisionInTile(iPoint tile, Entity* exeption = nullptr);
+	void SearchCollisionsInTile(iPoint tile, std::vector<Unit*>& vec, Entity* exeption = nullptr);
+	void SearchCollisions(IsoRect tile, std::vector<Unit*>& vec, Entity* exeption = nullptr);
 	Entity* SearchFirstCollision(IsoRect rect, Entity* exeption = nullptr) const;
 
 	void Selection(const SDL_Rect rect, std::vector<Entity*>& vec) const;
@@ -77,6 +79,7 @@ public:
 	void SearchForEnemies(int pixel_range, fPoint from, std::vector<Entity*>& vec, const Side side, ENTITY_TYPE entity_type = E_NO_ENTITY);
 	void SearchInIsoRect(const IsoRect rect, std::vector<Entity*>& vec);
 	Entity* SearchFirstCollisionInTile(iPoint tile, Entity* exeption = nullptr) const;
+	void SearchCollisionsInTile(iPoint tile, std::vector<Unit*>& vec, Entity* exeption = nullptr);
 	Entity* SearchFirst(const SDL_Rect& rect) const;
 	Entity* SearchFirstUnit(const SDL_Rect& rect) const;
 

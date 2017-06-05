@@ -380,12 +380,6 @@ void Unit::AI()
 			UnitDies();
 			break;
 		}
-		
-		if (collision != nullptr)
-			if (collision->GetTile() != GetTile())
-				collision = nullptr;
-			else if (collision->GetAction() == A_IDLE)
-				collision->MoveAway();
 
 		EnemyInSight();
 
@@ -397,20 +391,7 @@ void Unit::AI()
 		}
 
 		if (collision == nullptr)
-		{
-			collision = (Unit*)App->entity_manager->TileCollisions(this);
-			if (collision != nullptr)
-			{
-				collision->collision = this;
-
-				if (collision->GetAction() == A_IDLE)
-					collision->MoveAway();
-				else if (collision->GetAction() == A_WALK)
-					break;
-				else
-					MoveAway();
-			}
-		}
+			Collisions();			
 		
 		break;
 
@@ -1152,6 +1133,29 @@ int Unit::GetFrameAttack()
 	default:
 		return 0;
 		break;
+	}
+}
+
+void Unit::Collisions()
+{
+	std::vector<Unit *> collisions;
+	App->entity_manager->TileCollisions(this, collisions);
+
+	if (collisions.empty() == false)
+	{
+		for (std::vector<Unit*>::iterator it = collisions.begin(); it != collisions.end(); ++it)
+		{
+			if ((*it)->GetAction() == A_IDLE)
+			{
+				(*it)->collision = this;
+				(*it)->MoveAway();
+			}
+			else
+			{
+				collision = (*it);
+				MoveAway();
+			}
+		}
 	}
 }
 
