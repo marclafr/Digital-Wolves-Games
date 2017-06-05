@@ -50,7 +50,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_MILITIA:
 		SetHp(43);
-		attack = 5;
+		attack = 6;
 		SetArmor(1);
 		speed = 1.35f;
 		rate_of_fire = 80.0f;
@@ -83,7 +83,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_LONGSWORDMAN:
 		SetHp(118);
-		attack = 10;
+		attack = 11;
 		SetArmor(5);
 		speed = 1.28f;
 		rate_of_fire = 95.0f;
@@ -131,7 +131,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_SPEARMAN:
 		SetHp(55);
-		attack = 4;
+		attack = 6;
 		SetArmor(1);
 		speed = 1.29f;
 		rate_of_fire = 95.0f;
@@ -166,7 +166,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_ARCHER:
 		SetHp(41);
-		attack = 5;
+		attack = 6;
 		SetArmor(1);
 		speed = 1.29f;
 		rate_of_fire = 95.0f;
@@ -286,7 +286,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 	case U_SIEGERAM:
 		SetHp(600);
 		attack = 110;
-		SetArmor(3);
+		SetArmor(4);
 		speed = 0.7f;
 		rate_of_fire = 210.0f;
 		range = CLOSE_COMBAT_RANGE;
@@ -301,10 +301,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_MANGONEL:
 		SetHp(500);
-		attack = 80;
-		SetArmor(-1);
-		speed = 0.8f;
-		rate_of_fire = 250.0f;
+		attack = 75;
+		SetArmor(-3);
+		speed = 0.7f;
+		rate_of_fire = 300.0f;
 		range = EXTRA_LONG_COMBAT_RANGE;
 		unit_class = C_SIEGE;
 		unit_circle = Elipse(GetPosition(), 30);

@@ -12,7 +12,7 @@
 #define HEAVYCAVALRYARCHER_HP 81
 #define KNIGHT_HP 137
 #define CAVALIER_HP 125
-#define PALADIN_HP 200
+#define PALADIN_HP 167
 #define SIEGERAM_HP 600
 #define MANGONEL_HP 500
 
@@ -549,13 +549,13 @@ const char * GetTowerUpgradePrice(const INVESTIGATION_TYPE type)
 	switch (type)
 	{
 	case INV_FIRE_TOWER:
-		ret = "125 Gold";
+		ret = "Gold: 55, Wood: 25, Stone: 25";
 		break;
 	case INV_ICE_TOWER:
-		ret = "150 Gold";
+		ret = "Gold: 25, Wood: 20, Stone: 30";
 		break;
 	case INV_AIR_TOWER:
-		ret = "100 Gold";
+		ret = "Gold: 40, Wood: 35, Stone: 20";
 		break;
 	default:
 		ret = "Error tower upgrade";
@@ -594,7 +594,7 @@ const char * GetWallUpgradePrice(const BUILDING_TYPE type)
 	switch (type)
 	{
 	case B_WOOD_WALL:
-		ret = "75 Stone"; // PRICE stone wall
+		ret = "85 Stone"; // PRICE stone wall
 		break;
 	case B_STONE_WALL:
 		ret = "100 Stone"; // PRICE brick wall

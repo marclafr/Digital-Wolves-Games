@@ -11,9 +11,9 @@
 ResourceManager::ResourceManager(): wood(STARTING_WOOD), food (STARTING_FOOD), gold (STARTING_GOLD), stone (STARTING_STONE)
 {
 	resource_food = (Resources*)App->entity_manager->CreateResource(R_FOOD, fPoint(1412, 888), 100, 5);
-	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1260, 1009), 80, 6);
-	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1608, 982), 65, 5);
-	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1439, 1050), 68, 6);
+	resource_wood = (Resources*)App->entity_manager->CreateResource(R_WOOD, fPoint(1260, 1009), 75, 6);
+	resource_gold = (Resources*)App->entity_manager->CreateResource(R_GOLD, fPoint(1608, 982), 55, 10);
+	resource_stone = (Resources*)App->entity_manager->CreateResource(R_STONE, fPoint(1439, 1050), 65, 6);
 }
 
 ResourceManager::~ResourceManager()
@@ -375,11 +375,11 @@ bool ResourceManager::CanUpgradeTower(TOWER_TYPE type)
 	case T_NO_TYPE:
 		return false;
 	case T_FIRE_TOWER:
-		return gold >= TU_UPGRADE_FIRE_GOLD_COST;
+		return gold >= TU_FIRE_GOLD_COST;
 	case T_ICE_TOWER:
-		return gold >= TU_UPGRADE_ICE_GOLD_COST;
+		return gold >= TU_ICE_GOLD_COST;
 	case T_AIR_TOWER:
-		return gold >= TU_UPGRADE_AIR_GOLD_COST;
+		return gold >= TU_AIR_GOLD_COST;
 	default:
 		return false;
 	}
