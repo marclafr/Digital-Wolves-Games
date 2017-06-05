@@ -337,3 +337,17 @@ bool InGameToMainMenuScene::Execute()
 	App->scene_manager->ChangeScene(SC_MAIN_MENU);
 	return true;
 }
+
+bool MainMenuLoadGame::Execute()
+{
+	if (App->LoadGameFromMenu("save_game.xml") == true)
+	{
+		App->GonnaLoadScene = true;
+		App->scene_manager->ChangeScene(SC_GAME);
+	}
+	else
+	{
+		App->GonnaLoadScene = false;
+		return false;
+	}
+}

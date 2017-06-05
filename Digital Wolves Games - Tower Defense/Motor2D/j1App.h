@@ -93,6 +93,7 @@ public:
 	float GetDT() const;
 
 	void LoadGame(const char* file);
+	bool LoadGameFromMenu(const char* file);
 	void SaveGame(const char* file) const;
 	void GetSaveGames(std::list<std::string>& list_to_fill) const;
 
@@ -153,7 +154,8 @@ public:
 	j1ScoreScene*		score_scene = nullptr;
 
 	DebugFeatures		debug_features;
-
+	std::string			load_game;
+	bool GonnaLoadScene = false;
 private:
 
 	std::list<j1Module*> modules;
@@ -165,9 +167,8 @@ private:
 
 	mutable bool		want_to_save = false;
 	bool				want_to_load = false;
-	std::string			load_game;
+	
 	mutable std::string	save_game;
-
 	j1PerfTimer			ptimer;
 	uint64				frame_count = 0;
 	j1PerfTimer				startup_time;

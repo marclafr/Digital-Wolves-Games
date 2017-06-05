@@ -100,6 +100,11 @@ bool j1Scene::Start()
 		 
 	mouse_click_move_anim = new AnimationManager(App->anim->GetAnimationType(ANIM_MOUSE_CLICK_MOVE));
 
+	if (App->GonnaLoadScene == true)
+	{
+		App->LoadGame("save_game.xml");
+		App->GonnaLoadScene = false;
+	}
 	return true;
 }
 

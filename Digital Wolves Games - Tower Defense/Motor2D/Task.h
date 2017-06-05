@@ -313,4 +313,10 @@ public:
 	bool Execute();
 };
 
+class MainMenuLoadGame : public Task
+{
+public: 
+	bool Execute();
+};
+
 #endif

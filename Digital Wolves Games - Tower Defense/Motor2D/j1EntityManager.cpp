@@ -20,7 +20,7 @@
 
 j1EntityManager::j1EntityManager() : j1Module()
 {
-	name.assign("Units");
+	name.assign("entity_manager");
 }
 
 j1EntityManager::~j1EntityManager() {}
@@ -388,6 +388,8 @@ void j1EntityManager::LoadTurret(pugi::xml_node& data)
 
 bool j1EntityManager::Save(pugi::xml_node &data) const
 {
+	pugi::xml_node Saved = data.append_child("Saved_Game");
+	Saved.append_attribute("saved_game") = 1;
 	pugi::xml_node Buildings = data.append_child("buildings");
 	pugi::xml_node Units = data.append_child("units");
 	pugi::xml_node Turrets = data.append_child("turrets");

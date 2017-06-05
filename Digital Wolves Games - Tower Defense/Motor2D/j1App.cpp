@@ -430,6 +430,40 @@ void j1App::LoadGame(const char* file)
 	load_game.assign(dir);
 }
 
+bool j1App::LoadGameFromMenu(const char * file)
+{
+	char dir[512];
+	sprintf_s(dir, "%s%s", fs->GetSaveDirectory(), file);
+	load_game.assign(dir);
+
+	bool ret = false;
+
+	char* buffer;
+	uint size = fs->Load(load_game.c_str(), &buffer);
+
+	if (size > 0)
+	{
+		pugi::xml_document data;
+		pugi::xml_node root;
+
+		pugi::xml_parse_result result = data.load_buffer(buffer, size);
+		RELEASE(buffer);
+
+		root = data.child("game_state");
+
+		if (root.child("entity_manager").child("Saved_Game").attribute("saved_game").as_int() == 1)
+		{
+			data.reset();
+			return true;
+		}
+		else 
+		{
+			data.reset();
+			return false;
+		}
+	}
+}
+
 // ---------------------------------------
 void j1App::SaveGame(const char* file) const
 {
