@@ -315,6 +315,7 @@ bool Surrender::Execute()
 	App->scene->lose = true;
 	App->scene_manager->ChangeScene(SC_SCORE);
 	App->tutorial->tutorial = false;
+	App->FinishGame("save_game.xml");
 	return true;
 }
 

@@ -241,6 +241,7 @@ bool j1Scene::PostUpdate()
 	if (townhall->GetHp() <= 0)
 	{
 		lose = true;
+		App->FinishGame("save_game.xml");
 		App->scene_manager->ChangeScene(SC_SCORE);
 	}
 	if (App->score->GetTime() >= WINNING_TIME)

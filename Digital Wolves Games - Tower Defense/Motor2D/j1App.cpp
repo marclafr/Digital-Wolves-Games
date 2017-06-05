@@ -464,6 +464,31 @@ bool j1App::LoadGameFromMenu(const char * file)
 	}
 }
 
+void j1App::FinishGame(const char * file)
+{
+	save_game.assign(file);
+
+	LOG("Saving Game State to %s...", save_game.c_str());
+
+	// xml object were we will store all data
+	pugi::xml_document data;
+	pugi::xml_node root;
+
+	root = data.append_child("game_state");
+
+	root.append_child("entity_manager").append_child("Saved_Game").append_attribute("saved_game") = 0;
+
+	std::stringstream stream;
+	data.save(stream);
+
+		// we are done, so write data to disk
+	fs->Save(save_game.c_str(), stream.str().c_str(), stream.str().length());
+	LOG("... finished saving", save_game.c_str());
+
+	data.reset();
+
+}
+
 // ---------------------------------------
 void j1App::SaveGame(const char* file) const
 {
