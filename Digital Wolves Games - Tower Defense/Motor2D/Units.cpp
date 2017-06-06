@@ -51,7 +51,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 	case U_MILITIA:
 		SetHp(43);
 		attack = 6;
-		SetArmor(1);
+		SetArmor(2);
 		speed = 1.35f;
 		rate_of_fire = 80.0f;
 		range = CLOSE_COMBAT_RANGE;
