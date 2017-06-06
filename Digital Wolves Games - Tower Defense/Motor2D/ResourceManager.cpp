@@ -375,11 +375,11 @@ bool ResourceManager::CanUpgradeTower(TOWER_TYPE type)
 	case T_NO_TYPE:
 		return false;
 	case T_FIRE_TOWER:
-		return 	(gold >= TU_FIRE_GOLD_COST && wood >= TU_FIRE_WOOD_COST && stone >= TU_FIRE_STONE_COST);
+		return gold >= TU_FIRE_GOLD_COST;
 	case T_ICE_TOWER:
-		return 	(gold >= TU_ICE_GOLD_COST && wood >= TU_ICE_WOOD_COST && stone >= TU_ICE_STONE_COST);
+		return gold >= TU_ICE_GOLD_COST;
 	case T_AIR_TOWER:
-		return 	(gold >= TU_AIR_GOLD_COST && wood >= TU_AIR_WOOD_COST && stone >= TU_AIR_STONE_COST);
+		return gold >= TU_AIR_GOLD_COST;
 	default:
 		return false;
 	}
