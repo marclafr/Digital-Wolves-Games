@@ -92,37 +92,13 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 			CreatePanel();
 			if (App->tutorial->tutorial4_completed) App->tutorial->TowerSelected = true;
 			break;
-			case B_TURRET_UPGRADED_FIRE:
+		case B_TURRET_UPGRADED:
 			panel_seleted = &panel_turret_upgraded;
 			panel_seleted_type = BP_TURRET_UPGRADED;
 			b_selected = building;
 			CreatePanel();
 			break;
-		case B_CANNON_UPGRADED_ICE:
-			panel_seleted = &panel_turret_upgraded;
-			panel_seleted_type = BP_TURRET_UPGRADED;
-			b_selected = building;
-			CreatePanel();
-			break;
-		case B_TURRET_UPGRADED_AIR:
-			panel_seleted = &panel_turret_upgraded;
-			panel_seleted_type = BP_TURRET_UPGRADED;
-			b_selected = building;
-			CreatePanel();
-			break;
-		case B_CANNON_UPGRADED_FIRE:
-			panel_seleted = &panel_turret_upgraded;
-			panel_seleted_type = BP_TURRET_UPGRADED;
-			b_selected = building;
-			CreatePanel();
-			break;
-		case B_TURRET_UPGRADED_ICE:
-			panel_seleted = &panel_turret_upgraded;
-			panel_seleted_type = BP_TURRET_UPGRADED;
-			b_selected = building;
-			CreatePanel();
-			break;
-		case B_CANNON_UPGRADED_AIR:
+		case B_CANNON_UPGRADED:
 			panel_seleted = &panel_turret_upgraded;
 			panel_seleted_type = BP_TURRET_UPGRADED;
 			b_selected = building;
