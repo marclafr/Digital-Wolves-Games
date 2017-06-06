@@ -350,7 +350,13 @@ void info_button::PrepareButton(BUILDING_PANELINFO b_panel_type, Building* b_sel
 		{
 			if (do_inv->GetInvestigationType() == INV_FIRE_TOWER
 				|| do_inv->GetInvestigationType() == INV_ICE_TOWER
-				|| do_inv->GetInvestigationType() == INV_AIR_TOWER)
+				|| do_inv->GetInvestigationType() == INV_AIR_TOWER
+				|| do_inv->GetInvestigationType() == INV_CAVALRY_ATTACK
+				|| do_inv->GetInvestigationType() == INV_CAVALRY_DEFENSE
+				|| do_inv->GetInvestigationType() == INV_ARCHERS_ATTACK
+				|| do_inv->GetInvestigationType() == INV_ARCHERS_DEFENSE
+				|| do_inv->GetInvestigationType() == INV_INFANTRY_ATTACK
+				|| do_inv->GetInvestigationType() == INV_INFANTRY_DEFENSE)
 			{
 				iPoint icon_grey = GetGreyInvestigationIconPositionFromAtlas(do_inv->GetInvestigationType());
 				atlas_grey = { icon_grey.x, icon_grey.y, ICON_ATLASSIZE, ICON_ATLASSIZE };
