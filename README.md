@@ -43,10 +43,10 @@ Shortcuts
 	- Space Bar: Center camera on town hall.
 	- ESC: Go to menu.
 
-Debug:
+### Debug:
+
 	- F1: Show game stats.
 	- F2: Show Quadtree.
-	- F11: Show Pathfinding Paths
 	- F10: Activate debug mode.
 
 		While on debug mode:
