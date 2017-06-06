@@ -139,7 +139,7 @@ bool j1Animation::Awake(pugi::xml_node& config)
 		if(new_sprites_anim->name == ANIM_ICE_FLOOR)
 		{
 			new_sprites_anim->loop = false;
-			new_sprites_anim->speed= 450.0f;
+			new_sprites_anim->speed= 1000.0f;
 		}
 		
 		
