@@ -99,13 +99,13 @@ private:
 	UIComponents* focus = nullptr;
 
 	//Pointers of some compontnts from scenes
-	UIHUDTownHallBarLife* townhall_bar_life;
-	UIHUDResources* resources_panel;
-	UIHUDPanelInfo* panel_info;
-	UIHUDPanelButtons* panel_buttons;
-	UIHUDDescription* hud_description;
-	UIComponents* info_ui;
-	UIHUDMinimap* minimap;
-	UICheckbutton* menu_btn;
+	UIHUDTownHallBarLife* townhall_bar_life = nullptr;
+	UIHUDResources* resources_panel = nullptr;
+	UIHUDPanelInfo* panel_info = nullptr;
+	UIHUDPanelButtons* panel_buttons = nullptr;
+	UIHUDDescription* hud_description = nullptr;
+	UIComponents* info_ui = nullptr;
+	UIHUDMinimap* minimap = nullptr;
+	UICheckbutton* menu_btn = nullptr;
 };
 #endif // __j1GUIMANAGER_H__

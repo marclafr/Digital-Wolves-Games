@@ -39,34 +39,22 @@ void GroupSelection::Prepare()
 
 void GroupSelection::PrepareUnitSelection()
 {
-	std::vector<Entity*>::iterator u_item = App->scene->selection.begin();
-
-	std::vector<Entity*>::iterator last_u_item = App->scene->selection.end();
-	last_u_item--;
-
-	while (u_item != App->scene->selection.end())
+	for (std::vector<Entity*>::iterator u_item = App->scene->selection.begin(); u_item != App->scene->selection.end(); ++u_item)
 	{
 		entity_selected* add_entity_selected = new entity_selected();
 		Unit* selected = (Unit*)*u_item;
 
 		iPoint u_position(GetUnitIconPositionFromAtlas(selected->GetUnitType()));
-		UIButton* new_btn = App->uimanager->AddButton(MARK_BTN, {u_position.x,u_position.y, ICON_SIZE, ICON_SIZE});
+		UIButton* new_btn = App->uimanager->AddButton(MARK_BTN, { u_position.x,u_position.y, ICON_SIZE, ICON_SIZE });
 		add_entity_selected->btn_selected = new_btn;
 		add_entity_selected->pointer_entity = (Entity*)selected;
 		es_selection.push_back(add_entity_selected);
-
-		u_item++;
 	}
 }
 
 void GroupSelection::PrepareNoUnitSelection()
 {
-	std::vector<Entity*>::iterator e_item = App->scene->selection.begin();
-
-	std::vector<Entity*>::iterator last_e_item = App->scene->selection.end();
-	last_e_item--;
-
-	while (e_item != App->scene->selection.end())
+	for (std::vector<Entity*>::iterator e_item = App->scene->selection.begin(); e_item != App->scene->selection.end(); ++e_item)
 	{
 		entity_selected* add_entity_selected = new entity_selected();
 		Building* b_selected = nullptr;
@@ -107,8 +95,6 @@ void GroupSelection::PrepareNoUnitSelection()
 		add_entity_selected->btn_selected = new_btn;
 		add_entity_selected->pointer_entity = *e_item;
 		es_selection.push_back(add_entity_selected);
-
-		e_item++;
 	}
 }
 
@@ -136,11 +122,9 @@ void GroupSelection::Update()
 
 void GroupSelection::Draw()
 {
-	std::list<entity_selected*>::iterator es_item = es_selection.begin();
-
 	int count = 0;
 
-	while (es_item != es_selection.end())
+	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 	{
 		if ((*es_item)->pointer_entity->GetHp() > 0)
 		{
@@ -205,8 +189,6 @@ void GroupSelection::Draw()
 			//Down bar_life
 			App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x - App->render->camera->GetPosition().x, uibutton->GetPosRect().y + 25 - App->render->camera->GetPosition().y, &life_bar);
 		}
-
-		es_item++;
 	}
 }
 

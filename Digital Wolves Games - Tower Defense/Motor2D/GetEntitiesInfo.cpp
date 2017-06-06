@@ -1074,11 +1074,11 @@ const char * GetExpandButtonsDescription(SDL_Rect rect_pos)
 {
 	char* ret = nullptr;
 
-	if (rect_pos.x == 26 && rect_pos.y == 666)
+	if (rect_pos.x == 28 && rect_pos.y == 668)
 		ret = "Tower Elemental Upgrades";
-	else if (rect_pos.x == 26 && rect_pos.y == 696)
+	else if (rect_pos.x == 28 && rect_pos.y == 698)
 		ret = "Units Upgrades";
-	else if (rect_pos.x == 26 && rect_pos.y == 726)
+	else if (rect_pos.x == 28 && rect_pos.y == 728)
 		ret = "Resources Upgrades";
 	else
 		ret = "Error";

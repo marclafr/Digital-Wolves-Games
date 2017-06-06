@@ -97,6 +97,8 @@ public:
 	void Reset();
 
 	void WantReset(info_button*, bool);
+	std::vector<info_button*>* isInsideButton(std::vector<info_button*>*);
+	info_button* UIHUDPanelButtons::search_infobutton(std::vector<info_button*>*, std::vector<info_button*>*);
 };
 
 #endif // __UIHUDPANELBUTTONS_H__

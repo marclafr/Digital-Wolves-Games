@@ -847,6 +847,9 @@ void j1Scene::CreateSceneUI()
 		//Image
 	App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 643, 1366, 125 }, { 0, 1036, 1366, 125 });
 
+	//Panel Description
+	UIHUDDescription* hud_description = App->uimanager->AddPanelDescription();
+	hud_description->SetEnableButton(btn_description);
 
 	//Panel Buttons
 	UIHUDPanelButtons* panel = App->uimanager->AddPanelButtons();
@@ -907,12 +910,10 @@ void j1Scene::CreateSceneUI()
 	more_btn->AddButton(iPoint(0, 2), GetInvestigationIconPositionFromAtlas(INV_ARCHERS_ATTACK), new DoInvestigation(INV_ARCHERS_ATTACK));
 	more_btn->AddButton(iPoint(1, 2), GetInvestigationIconPositionFromAtlas(INV_ARCHERS_DEFENSE), new DoInvestigation(INV_ARCHERS_DEFENSE));
 
+	App->uimanager->SetPanelButtons(nullptr);
+	
 	//Panel Info
 	App->uimanager->AddPanelInfo();
-
-	//Panel Description
-	UIHUDDescription* hud_description = App->uimanager->AddPanelDescription();
-	hud_description->SetEnableButton(btn_description);
 
 	//Town Hall Bar Life
 	App->uimanager->AddTownHallBarLife();
