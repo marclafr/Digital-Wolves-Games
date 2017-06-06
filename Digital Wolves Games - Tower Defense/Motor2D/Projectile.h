@@ -2,8 +2,8 @@
 #define _PROJECTILE
 
 #define AREA_DMG_RADIUS 75
-#define ELEMENT_TERRAIN_TIME 2.0f
-#define FLOOR_DAMAGE_TIME 250 //ms
+#define ELEMENT_TERRAIN_TIME 4.0f
+#define FLOOR_DAMAGE_TIME 500 //ms
 
 #include "j1App.h"
 #include "j1Module.h"
