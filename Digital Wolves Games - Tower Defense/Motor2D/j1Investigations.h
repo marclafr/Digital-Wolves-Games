@@ -5,7 +5,7 @@
 #include "j1Timer.h"
 #include <vector>
 
-#define COST_INCREASE_BY_LVL 150
+#define COST_INCREASE_BY_LVL 100
 
 class Resource;
 

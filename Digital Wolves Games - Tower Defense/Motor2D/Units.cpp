@@ -301,7 +301,7 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 
 	case U_MANGONEL:
 		SetHp(500);
-		attack = 75;
+		attack = 67;
 		SetArmor(-5);
 		speed = 0.7f;
 		rate_of_fire = 300.0f;

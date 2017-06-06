@@ -25,7 +25,7 @@ bool j1Investigations::Start()
 	//RESOURCES
 	CreateInvestigation(INV_FOOD, true, 300, 5.0);
 	CreateInvestigation(INV_WOOD, true, 300, 5.0);
-	CreateInvestigation(INV_GOLD, true, 300, 5.0);
+	CreateInvestigation(INV_GOLD, true, 150, 5.0);
 	CreateInvestigation(INV_STONE, true, 300, 5.0);
 	//TROPS
 	CreateInvestigation(INV_CAVALRY_ATTACK, false, 300, 30.0);
@@ -110,7 +110,7 @@ bool j1Investigations::DeleteInvestigation(Investigation* ptr)
 
 bool j1Investigations::CanInvestigate(Investigation* investigation)
 {
-	if (App->scene->resources->GetGold() > investigation->cost)
+	if (App->scene->resources->GetGold() >= investigation->cost)
 	{
 		investigation->inv_state = INV_S_IN_COURSE;
 		DoInvestigationUpgrade(investigation);

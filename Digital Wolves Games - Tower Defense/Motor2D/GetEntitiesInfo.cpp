@@ -1,4 +1,3 @@
-#define CAVALRYARCHER_HP 50
 #define MILITIA_HP 43
 #define MANATARMS_HP 58
 #define LONGSWORDMAN_HP 118
@@ -592,13 +591,13 @@ const char * GetTowerUpgradePrice(const INVESTIGATION_TYPE type)
 	switch (type)
 	{
 	case INV_FIRE_TOWER:
-		ret = "Gold: 55, Wood: 25, Stone: 25";
+		ret = "Gold: 50, Wood: 55, Stone: 40";
 		break;
 	case INV_ICE_TOWER:
-		ret = "Gold: 25, Wood: 20, Stone: 30";
+		ret = "Gold: 35, Wood: 25, Stone: 30";
 		break;
 	case INV_AIR_TOWER:
-		ret = "Gold: 40, Wood: 35, Stone: 20";
+		ret = "Gold: 40, Wood: 50, Stone: 35";
 		break;
 	default:
 		ret = "Error tower upgrade";
