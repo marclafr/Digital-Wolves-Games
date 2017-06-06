@@ -509,6 +509,24 @@ const char* GetTowerName(const TOWER_TYPE type)
 	case T_BOMBARD_TOWER:
 		ret = "Bombard Tower";
 		break;
+	case T_FIRE_TOWER:
+		ret = "Fire Tower";
+		break;
+	case T_ICE_TOWER:
+		ret = "Ice Tower";
+		break;
+	case T_AIR_TOWER:
+		ret = "Air Tower";
+		break;
+	case T_BOMBARD_FIRE_TOWER:
+		ret = "Fire Bombard Tower";
+		break;
+	case T_BOMBARD_ICE_TOWER:
+		ret = "Ice Bombard Tower";
+		break;
+	case T_BOMBARD_AIR_TOWER:
+		ret = "Air Bombard Tower";
+		break;
 	default:
 		ret = "Turret Error";
 		break;

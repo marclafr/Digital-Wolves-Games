@@ -80,6 +80,36 @@ void GroupSelection::PrepareNoUnitSelection()
 				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
 				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
 				break;
+			case B_TURRET_UPGRADED_FIRE:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_TURRET_UPGRADED_ICE:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_TURRET_UPGRADED_AIR:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_CANNON_UPGRADED_FIRE:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_CANNON_UPGRADED_ICE:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_CANNON_UPGRADED_AIR:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
 			default:
 				atlas_icon = GetBuildingIconPositionFromAtlas(b_selected->GetBuildingType());
 				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
