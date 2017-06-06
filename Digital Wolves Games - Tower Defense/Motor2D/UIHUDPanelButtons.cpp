@@ -17,10 +17,10 @@
 #include "UIGetEntitiesInfo.h"
 
 #define ICON_ATLASSIZE 25
-#define ICON_SIZE 29
+#define ICON_SIZE 25
 #define ICON_SEPARATION 30
-#define PANEL_XPOSITION 26
-#define PANEL_YPOSITION 666
+#define PANEL_XPOSITION 28 //26 + 2
+#define PANEL_YPOSITION 668 //666+2
 #define ATLASX_BUTTONGREY_CANNON_DISTANCE 355
 #define ATLASY_BUTTONGREY_CANNON_DISTANCE 78
 #define ATLAS_BUTTONGREY_TOWER_DISTANCE 251
@@ -262,6 +262,8 @@ void UIHUDPanelButtons::DeletePanel()
 
 		panel_seleted_type = BP_NONE;
 		b_selected = nullptr;
+
+		App->uimanager->ClearDescription();
 	}
 }
 

@@ -275,6 +275,11 @@ void j1UIManager::SetDescriptionHUDDescription(info_button* infobutton_desc)
 	hud_description->SetDescription(infobutton_desc);
 }
 
+void j1UIManager::ClearDescription()
+{
+	hud_description->Clear();
+}
+
 void j1UIManager::SetInfoUIComponent(UIComponents* component)
 {
 	info_ui = component;

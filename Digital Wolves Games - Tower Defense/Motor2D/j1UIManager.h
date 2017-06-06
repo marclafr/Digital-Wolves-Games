@@ -83,6 +83,7 @@ public:
 	void CreatePanelInfo(const std::vector<Entity*>& selection);
 	void DeleteSelectionPanelInfo();
 	void SetDescriptionHUDDescription(info_button*);
+	void ClearDescription();
 	void SetInfoUIComponent(UIComponents*);
 	SDL_Rect GetPosRectFromInfoUI();
 	void SetPanelButtons(Building*);
