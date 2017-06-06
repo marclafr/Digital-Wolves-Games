@@ -176,6 +176,10 @@ void j1Investigations::InstaUnlockInvestigation(INVESTIGATION_TYPE name, LEVEL l
 {
 	Investigation* actual_inv = GetInvestigation(name);
 	actual_inv->investigation_level = level;
+	if (level == INV_LVL_UNLOCKED)
+	{
+		actual_inv->inv_state = INV_S_COMPLETED;
+	}
 }
 
 void j1Investigations::SetInvestigationCost(INVESTIGATION_TYPE name, int costt)
