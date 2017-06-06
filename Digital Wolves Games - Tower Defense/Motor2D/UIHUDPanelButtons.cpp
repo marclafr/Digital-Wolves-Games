@@ -361,7 +361,7 @@ info_button* info_button::AddButton(iPoint position, iPoint atlas, Task* task, b
 		show_buttoins_task->SetInfoButton(this);
 		
 		ExitButonsInside* back_task = new ExitButonsInside();
-		back_ib = new info_button(iPoint(4, 2), { 904,884 }, back_task, false);
+		back_ib = new info_button(iPoint(4, 2), { 1112,962 }, back_task, false);
 		back_task->SetInfoButton(this);
 		buttons_inside.push_back(back_ib);
 		contain_butons = true;

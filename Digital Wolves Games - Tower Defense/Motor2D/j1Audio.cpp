@@ -194,6 +194,6 @@ void j1Audio::LoadAllFX()
 	fx_construction = App->audio->LoadFx("audio/fx/Construction01.wav");
 
 	//FX
-	fx_click_btn = fx_attack01;
-	fx_cancelclick_btn = fx_building_destroyed;
+	fx_click_btn = App->audio->LoadFx("audio/fx/Click.wav");
+	fx_cancelclick_btn = App->audio->LoadFx("audio/fx/Error_Click.wav");
 }

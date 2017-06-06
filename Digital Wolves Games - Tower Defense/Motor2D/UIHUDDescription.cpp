@@ -104,6 +104,9 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 			SDL_Rect rect_pos = if_btn->GetButton()->GetPosRect();
 			SetLabelMoreButtons(rect_pos);
 			break;
+		case ET_BACKBUTTONS:
+			SetLabelBackButtons();
+			break;
 		}
 		created = true;
 		selected = if_btn;
@@ -179,16 +182,22 @@ void UIHUDDescription::SetLabelInvestigations()
 }
 
 //Investigations expansion
-void UIHUDDescription::SetLabelMoreButtons(SDL_Rect rect_pos)
+void UIHUDDescription::SetLabelMoreButtons(SDL_Rect& rect_pos)
 {
 	background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
 	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, GetExpandButtonsDescription(rect_pos));
 }
 
+void UIHUDDescription::SetLabelBackButtons()
+{
+background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, "Back");
+}
+
 void UIHUDDescription::SetLabelDestruction()
 {
-	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
-	description_name = App->uimanager->AddLabel(X_LABEL_NAME, Y_LABEL_NAME, "Destroy this");
+	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+	description_name = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, "Destroy this");
 }
 
 void UIHUDDescription::Clear()

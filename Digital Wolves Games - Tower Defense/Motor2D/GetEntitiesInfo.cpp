@@ -370,7 +370,7 @@ iPoint GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
 		break;
 
 	case B_BRICK_WALL:
-		ret = { X_WALLS, 910 };
+		ret = { X_WALLS, 884 };
 		break;
 
 	case B_TOWNHALL:

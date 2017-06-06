@@ -42,7 +42,8 @@ public:
 	void SetLabelTowerUpgrade();
 	void SetLabelWallUpgrade();
 	void SetLabelInvestigations();
-	void SetLabelMoreButtons(SDL_Rect rect_pos);
+	void SetLabelMoreButtons(SDL_Rect&);
+	void SetLabelBackButtons();
 	void SetLabelDestruction();
 
 	void Clear();

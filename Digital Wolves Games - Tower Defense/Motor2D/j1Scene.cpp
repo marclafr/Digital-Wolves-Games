@@ -864,10 +864,10 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TURRET_UPGRADED, iPoint(4, 2), { 1034,962 }, new DeleteTowerTask());
 
 	//Walls
-	panel->AddButton(BP_WOOD_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_STONE_WALL));
+	panel->AddButton(BP_WOOD_WALL, iPoint(0, 0), GetBuildingIconPositionFromAtlas(B_STONE_WALL), new UpgradeWallTask(B_STONE_WALL));
 	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 1034,962 }, new DeleteWallTask(), true);
 
-	panel->AddButton(BP_STONE_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_BRICK_WALL));
+	panel->AddButton(BP_STONE_WALL, iPoint(0, 0), GetBuildingIconPositionFromAtlas(B_BRICK_WALL), new UpgradeWallTask(B_BRICK_WALL));
 	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 1034,962 }, new DeleteWallTask(), true);
 
 	panel->AddButton(BP_BRICK_WALL, iPoint(4, 2), { 1034,962 }, new DeleteWallTask());

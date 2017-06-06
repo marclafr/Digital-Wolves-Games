@@ -20,7 +20,7 @@
 UIHUDResources::UIHUDResources(UICOMPONENT_TYPE type) : UIComponents(type)
 {
 	SetInteractive(false);
-	stone = App->uimanager->AddLabel(185, Y_LABEL, "0");
+	stone = App->uimanager->AddLabel(197, Y_LABEL, "0");
 	food = App->uimanager->AddLabel(76, Y_LABEL, "0");
 	wood = App->uimanager->AddLabel(21, Y_LABEL, "0");
 	gold = App->uimanager->AddLabel(143, Y_LABEL, "0");
