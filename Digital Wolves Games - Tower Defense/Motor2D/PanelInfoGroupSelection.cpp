@@ -157,8 +157,12 @@ void GroupSelection::Draw()
 				b_selected = (Building*)e_selected;
 				if (b_selected->GetBuildingType() == B_CANNON ||
 					b_selected->GetBuildingType() == B_TURRET ||
-					b_selected->GetBuildingType() == B_TURRET_UPGRADED ||
-					b_selected->GetBuildingType() == B_CANNON_UPGRADED)
+					b_selected->GetBuildingType() == B_TURRET_UPGRADED_FIRE || 
+					b_selected->GetBuildingType() == B_TURRET_UPGRADED_ICE || 
+					b_selected->GetBuildingType() == B_TURRET_UPGRADED_AIR ||
+					b_selected->GetBuildingType() == B_CANNON_UPGRADED_FIRE ||
+					b_selected->GetBuildingType() == B_CANNON_UPGRADED_ICE || 
+					b_selected->GetBuildingType() == B_CANNON_UPGRADED_AIR)
 				{
 					t_selected = (Tower*)b_selected;
 					rest_life_bar = ReturnValueBarHPTower(t_selected->GetTowerType(), t_selected->GetHp());

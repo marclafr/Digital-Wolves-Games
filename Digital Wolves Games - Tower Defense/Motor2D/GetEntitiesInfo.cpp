@@ -395,8 +395,26 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	case B_TURRET:
 		ret = "Basic Tower";
 		break;
+	case B_TURRET_UPGRADED_FIRE:
+		ret = "Fire Tower";
+		break;
+	case B_TURRET_UPGRADED_ICE:
+		ret = "Ice Tower";
+		break;
+	case B_TURRET_UPGRADED_AIR:
+		ret = "Air Tower";
+		break;
 	case B_CANNON:
 		ret = "Bombard Tower";
+		break;
+	case B_CANNON_UPGRADED_FIRE:
+		ret = "Fire Bombard Tower";
+		break;
+	case B_CANNON_UPGRADED_ICE:
+		ret = "Ice Bombard Tower";
+		break;
+	case B_CANNON_UPGRADED_AIR:
+		ret = "Air Bombard Tower";
 		break;
 	case B_WOOD_WALL: //THIS
 		ret = "Wood Wall";
