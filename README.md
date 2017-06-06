@@ -231,14 +231,15 @@ In order to make the player play more than once and make them feel that they are
 
 ## Team members:
 
-| Role         |     Name      |           Github             |
-| Team Leader  | Marc Latorre  | https://github.com/marclafr  |
-| Code         | Dani Lopez    | https://github.com/Danny0ner |
-| Design       | José Rodriguez| https://github.com/joserm45  |
-| Art/Audio    | Pau Serra     | https://github.com/pau5erra  |
-| UI           | Julià Mauri   | https://github.com/juliamauri|
-|Management    | Martí Majó    | https://github.com/martimyc  |
-|QA            | Marc Samper   |https://github.com/marcsamper |
+| Role         | Name | Github          |
+| :-------------:|:-------------:|:-----:|
+| Team Leader   |Marc Latorre| https://github.com/marclafr |
+| Code     | Dani Lopez|https://github.com/Danny0ner |
+| Design |José Rodriguez| https://github.com/joserm45 |
+|Art/Audio|Pau Serra| https://github.com/pau5erra|
+|UI | Julià Mauri| https://github.com/juliamauri|
+|Management|Martí Majó| https://github.com/martimyc|
+|QA | Marc Samper|https://github.com/marcsamper|
 
 Webpage: http://digitalwolves.webnode.es/
 
