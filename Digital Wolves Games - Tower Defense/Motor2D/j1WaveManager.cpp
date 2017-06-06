@@ -100,18 +100,18 @@ bool j1WaveManager::Start()
 	wave4.total_wave_units = 92;
 
 	Wave wave5;
-	UnitGroup group33(U_CHAMPION, 10, LEFT_UP);
-	UnitGroup group34(U_CHAMPION, 10, LEFT_DOWN);
-	UnitGroup group35(U_CHAMPION, 10, RIGHT_UP);
-	UnitGroup group36(U_CHAMPION, 10, RIGHT_DOWN);
+	UnitGroup group33(U_CHAMPION, 11, LEFT_UP);
+	UnitGroup group34(U_CHAMPION, 11, LEFT_DOWN);
+	UnitGroup group35(U_CHAMPION, 11, RIGHT_UP);
+	UnitGroup group36(U_CHAMPION, 11, RIGHT_DOWN);
 	UnitGroup group37(U_MANGONEL, 3, LEFT_UP);
-	UnitGroup group38(U_MANGONEL, 3, LEFT_DOWN);
-	UnitGroup group39(U_MANGONEL, 3, RIGHT_UP);
+	UnitGroup group38(U_SIEGERAM, 3, LEFT_DOWN);
+	UnitGroup group39(U_SIEGERAM, 3, RIGHT_UP);
 	UnitGroup group40(U_MANGONEL, 3, RIGHT_DOWN);
-	UnitGroup group41(U_CHAMPION, 10, LEFT_UP);
-	UnitGroup group42(U_CHAMPION, 10, LEFT_DOWN);
-	UnitGroup group43(U_CHAMPION, 10, RIGHT_UP);
-	UnitGroup group44(U_CHAMPION, 10, RIGHT_DOWN);
+	UnitGroup group41(U_CHAMPION, 11, LEFT_UP);
+	UnitGroup group42(U_CHAMPION, 11, LEFT_DOWN);
+	UnitGroup group43(U_CHAMPION, 11, RIGHT_UP);
+	UnitGroup group44(U_CHAMPION, 11, RIGHT_DOWN);
 	wave5.PushBack(group33, LEFT_UP);
 	wave5.PushBack(group34, LEFT_DOWN);
 	wave5.PushBack(group35, RIGHT_UP);
@@ -124,7 +124,7 @@ bool j1WaveManager::Start()
 	wave5.PushBack(group42, LEFT_DOWN);
 	wave5.PushBack(group43, RIGHT_UP);
 	wave5.PushBack(group44, RIGHT_DOWN);
-	wave5.total_wave_units = 112;
+	wave5.total_wave_units = 100;
 
 	Wave wave6;
 	UnitGroup group45(U_CHAMPION, 12, LEFT_UP);

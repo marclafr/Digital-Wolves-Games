@@ -302,10 +302,10 @@ Unit::Unit(UNIT_TYPE u_type, fPoint pos, Side side, int priority) : Entity(E_UNI
 	case U_MANGONEL:
 		SetHp(500);
 		attack = 75;
-		SetArmor(-3);
+		SetArmor(-5);
 		speed = 0.7f;
 		rate_of_fire = 300.0f;
-		range = EXTRA_LONG_COMBAT_RANGE;
+		range = LONG_COMBAT_RANGE;
 		unit_class = C_SIEGE;
 		unit_circle = Elipse(GetPosition(), 30);
 		SetTextureID(T_MANGONEL);
