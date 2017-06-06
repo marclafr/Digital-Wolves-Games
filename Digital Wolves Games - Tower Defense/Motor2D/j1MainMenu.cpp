@@ -53,15 +53,16 @@ bool j1MainMenu::Start()
 	App->uimanager->AddLabel(590, 30, "Single Player");
 
 	//TUTORIAL
-	UIButton* tutorial = App->uimanager->AddButton({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
-	tutorial->SetMouseOnTopTextRect({ 719, 2572, 200, 237 },3);
-	tutorial->SetTask(new ChangeMainMenuSceneToTutorial(SC_GAME));
+	UIButton* LoadGame = App->uimanager->AddButton({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
+	LoadGame->SetMouseOnTopTextRect({ 719, 2572, 200, 237 },3);
+	LoadGame->SetTask(new MainMenuLoadGame());
 
-	App->uimanager->AddLabel(218, 23, "Tutorial");
+	UIButton* Tutorial = App->uimanager->AddButton({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
+	Tutorial->SetMouseOnTopTextRect({ 1185, 2586, 138, 123 }, 3);
+	Tutorial->SetTask(new ChangeMainMenuSceneToTutorial(SC_GAME));
 
-	//HISTORY
-	UIButton* history = App->uimanager->AddButton({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
-	history->SetInteractive(false);
+	App->uimanager->AddLabel(218, 23, "Load Game");
+	App->uimanager->AddLabel(345, 220, "Tutorial");
 
 	//TROPHIES
 	UIButton* trophies = (UIButton*)App->uimanager->AddButton({ 500, 282, 148, 159 }, { 0, 770, 148, 159 });
