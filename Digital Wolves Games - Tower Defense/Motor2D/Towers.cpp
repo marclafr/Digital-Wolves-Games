@@ -397,9 +397,9 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					projectile_type = P_AIR_ARROW;
 					tower_type = T_AIR_TOWER;
 					SetBuildingType(B_TURRET_UPGRADED_AIR);
-					SetAttack(GetAttack() + 2);
+					SetAttack(GetAttack() - 6);
 					SetSpeed(0.3f);
-					SetRange(100);
+					SetRange(90);
 					Position_rect = { (int)GetX() - (tower_rect.w / 2),  (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
 				}
 				break;

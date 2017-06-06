@@ -10,7 +10,7 @@
 #define LEFT_UP_TILE_X 47
 #define LEFT_UP_TILE_y 73
 
-#define TIME_BETWEEN_WAVES 20 //seconds
+#define TIME_BETWEEN_WAVES 30 //seconds
 #define TIME_BETWEEN_UNITS 1 //seconds 522 317
 
 enum UNIT_TYPE;

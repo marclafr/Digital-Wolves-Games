@@ -71,7 +71,6 @@ bool j1WaveManager::Start()
 	wave3.PushBack(group20, RIGHT_DOWN);
 	wave3.total_wave_units = 70;
 
-
 	Wave wave4;
 	UnitGroup group21(U_TWOHANDEDSWORDMAN, 10, LEFT_UP);
 	UnitGroup group22(U_TWOHANDEDSWORDMAN, 10, LEFT_DOWN);
@@ -126,19 +125,27 @@ bool j1WaveManager::Start()
 	wave5.PushBack(group44, RIGHT_DOWN);
 	wave5.total_wave_units = 100;
 
+
+
 	Wave wave6;
-	UnitGroup group45(U_CHAMPION, 12, LEFT_UP);
-	UnitGroup group46(U_CHAMPION, 12, LEFT_DOWN);
-	UnitGroup group47(U_CHAMPION, 12, RIGHT_UP);
-	UnitGroup group48(U_CHAMPION, 12, RIGHT_DOWN);
-	UnitGroup group49(U_HEAVYCAVALRYARCHER, 3, LEFT_UP);
-	UnitGroup group50(U_HEAVYCAVALRYARCHER, 3, LEFT_DOWN);
-	UnitGroup group51(U_HEAVYCAVALRYARCHER, 3, RIGHT_UP);
-	UnitGroup group52(U_HEAVYCAVALRYARCHER, 3, RIGHT_DOWN);
-	UnitGroup group53(U_PALADIN, 12, LEFT_UP);
-	UnitGroup group54(U_PALADIN, 12, LEFT_DOWN);
-	UnitGroup group55(U_PALADIN, 12, RIGHT_UP);
-	UnitGroup group56(U_PALADIN, 12, RIGHT_DOWN);
+	UnitGroup group45(U_PALADIN, 10, LEFT_UP);
+	UnitGroup group46(U_SIEGERAM, 3, LEFT_DOWN);
+	UnitGroup group47(U_SIEGERAM, 3, RIGHT_UP);
+	UnitGroup group48(U_PALADIN, 10, RIGHT_DOWN);
+	UnitGroup group49(U_KNIGHT, 12, LEFT_UP);
+	UnitGroup group50(U_MANGONEL, 2, LEFT_DOWN);
+	UnitGroup group51(U_MANGONEL, 2, RIGHT_UP);
+	UnitGroup group52(U_KNIGHT, 12, RIGHT_DOWN);
+	UnitGroup group53(U_TWOHANDEDSWORDMAN, 12, LEFT_UP);
+	UnitGroup group54(U_TWOHANDEDSWORDMAN, 12, LEFT_DOWN);
+	UnitGroup group55(U_TWOHANDEDSWORDMAN, 12, RIGHT_UP);
+	UnitGroup group56(U_TWOHANDEDSWORDMAN, 12, RIGHT_DOWN);
+	UnitGroup group57(U_CAVALRYARCHER, 2, LEFT_UP);
+	UnitGroup group58(U_CAVALRYARCHER, 2, LEFT_DOWN);
+	UnitGroup group59(U_CAVALRYARCHER, 2, RIGHT_UP);
+	UnitGroup group60(U_CAVALRYARCHER, 2, RIGHT_DOWN);
+
+
 	wave6.PushBack(group45, LEFT_UP);
 	wave6.PushBack(group46, LEFT_DOWN);
 	wave6.PushBack(group47, RIGHT_UP);
@@ -151,30 +158,25 @@ bool j1WaveManager::Start()
 	wave6.PushBack(group54, LEFT_DOWN);
 	wave6.PushBack(group55, RIGHT_UP);
 	wave6.PushBack(group56, RIGHT_DOWN);
-	wave6.total_wave_units = 108;
+	wave6.PushBack(group57, LEFT_UP);
+	wave6.PushBack(group58, LEFT_DOWN);
+	wave6.PushBack(group59, RIGHT_UP);
+	wave6.PushBack(group60, RIGHT_DOWN);
+	wave6.total_wave_units = 110;
 
 	Wave wave7;
-	UnitGroup group57(U_PALADIN, 10, LEFT_UP);
-	UnitGroup group58(U_SIEGERAM, 3, LEFT_DOWN);
-	UnitGroup group59(U_SIEGERAM, 3, RIGHT_UP);
-	UnitGroup group60(U_PALADIN, 10, RIGHT_DOWN);
-	UnitGroup group61(U_KNIGHT, 12, LEFT_UP);
-	UnitGroup group62(U_MANGONEL, 2, LEFT_DOWN);
-	UnitGroup group63(U_MANGONEL, 2, RIGHT_UP);
-	UnitGroup group64(U_KNIGHT, 12, RIGHT_DOWN);
-	UnitGroup group65(U_TWOHANDEDSWORDMAN, 12, LEFT_UP);
-	UnitGroup group66(U_TWOHANDEDSWORDMAN, 12, LEFT_DOWN);
-	UnitGroup group67(U_TWOHANDEDSWORDMAN, 12, RIGHT_UP);
-	UnitGroup group68(U_TWOHANDEDSWORDMAN, 12, RIGHT_DOWN);
-	UnitGroup group69(U_CAVALRYARCHER, 2, LEFT_UP);
-	UnitGroup group70(U_CAVALRYARCHER, 2, LEFT_DOWN);
-	UnitGroup group71(U_CAVALRYARCHER, 2, RIGHT_UP);
-	UnitGroup group72(U_CAVALRYARCHER, 2, RIGHT_DOWN);
-
-	wave7.PushBack(group57, LEFT_UP);
-	wave7.PushBack(group58, LEFT_DOWN);
-	wave7.PushBack(group59, RIGHT_UP);
-	wave7.PushBack(group60, RIGHT_DOWN);
+	UnitGroup group61(U_CHAMPION, 12, LEFT_UP);
+	UnitGroup group62(U_CHAMPION, 12, LEFT_DOWN);
+	UnitGroup group63(U_CHAMPION, 12, RIGHT_UP);
+	UnitGroup group64(U_CHAMPION, 12, RIGHT_DOWN);
+	UnitGroup group65(U_HEAVYCAVALRYARCHER, 3, LEFT_UP);
+	UnitGroup group66(U_HEAVYCAVALRYARCHER, 3, LEFT_DOWN);
+	UnitGroup group67(U_HEAVYCAVALRYARCHER, 3, RIGHT_UP);
+	UnitGroup group68(U_HEAVYCAVALRYARCHER, 3, RIGHT_DOWN);
+	UnitGroup group69(U_PALADIN, 12, LEFT_UP);
+	UnitGroup group70(U_PALADIN, 12, LEFT_DOWN);
+	UnitGroup group71(U_PALADIN, 12, RIGHT_UP);
+	UnitGroup group72(U_PALADIN, 12, RIGHT_DOWN);
 	wave7.PushBack(group61, LEFT_UP);
 	wave7.PushBack(group62, LEFT_DOWN);
 	wave7.PushBack(group63, RIGHT_UP);
@@ -187,8 +189,7 @@ bool j1WaveManager::Start()
 	wave7.PushBack(group70, LEFT_DOWN);
 	wave7.PushBack(group71, RIGHT_UP);
 	wave7.PushBack(group72, RIGHT_DOWN);
-	wave7.total_wave_units = 110;
-
+	wave7.total_wave_units = 108;
 
 	Wave wave8;
 	UnitGroup group73(U_HEAVYCAVALRYARCHER, 2, LEFT_UP);
@@ -208,8 +209,8 @@ bool j1WaveManager::Start()
 	UnitGroup group87(U_CHAMPION, 12, RIGHT_UP);
 	UnitGroup group88(U_SIEGERAM, 3, RIGHT_DOWN);
 	UnitGroup group89(U_MANGONEL, 3, LEFT_UP);
-	UnitGroup group90(U_MANGONEL, 3, LEFT_DOWN);
-	UnitGroup group91(U_MANGONEL, 3, RIGHT_UP);
+	UnitGroup group90(U_SIEGERAM, 3, LEFT_DOWN);
+	UnitGroup group91(U_SIEGERAM, 3, RIGHT_UP);
 	UnitGroup group92(U_MANGONEL, 3, RIGHT_DOWN);
 
 	wave8.PushBack(group73, LEFT_UP);
@@ -277,29 +278,35 @@ bool j1WaveManager::Start()
 	wave9.PushBack(group111, RIGHT_UP);
 	wave9.PushBack(group112, RIGHT_DOWN);
 	wave9.total_wave_units = 114;
-
+	
+	Wave wave10;
+	UnitGroup group113(U_PALADIN, 15, LEFT_UP);
+	UnitGroup group114(U_CHAMPION, 15, LEFT_DOWN);
+	UnitGroup group115(U_CHAMPION, 15, RIGHT_UP);
+	UnitGroup group116(U_PALADIN, 15, RIGHT_DOWN);
+	UnitGroup group117(U_SIEGERAM, 5, LEFT_UP);
+	UnitGroup group118(U_MANGONEL, 3, LEFT_DOWN);
+	UnitGroup group119(U_MANGONEL, 5, RIGHT_UP);
+	UnitGroup group120(U_SIEGERAM, 3, RIGHT_DOWN);
+	UnitGroup group121(U_KNIGHT, 15, LEFT_UP);
+	UnitGroup group122(U_CHAMPION, 15, LEFT_DOWN);
+	UnitGroup group123(U_CHAMPION, 15, RIGHT_UP);
+	UnitGroup group124(U_KNIGHT, 15, RIGHT_DOWN);
+	
+	wave10.PushBack(group113, LEFT_UP);
+	wave10.PushBack(group114, LEFT_DOWN);
+	wave10.PushBack(group115, RIGHT_UP);
+	wave10.PushBack(group116, RIGHT_DOWN);
+	wave10.PushBack(group117, LEFT_UP);
+	wave10.PushBack(group118, LEFT_DOWN);
+	wave10.PushBack(group119, RIGHT_UP);
+	wave10.PushBack(group120, RIGHT_DOWN);
+	wave10.PushBack(group121, LEFT_UP);
+	wave10.PushBack(group122, LEFT_DOWN);
+	wave10.PushBack(group123, RIGHT_UP);
+	wave10.PushBack(group124, RIGHT_DOWN);
+	wave10.total_wave_units = 136;
 	/*
-	Wave wave7;
-	UnitGroup group28(U_TWOHANDEDSWORDMAN, 52, LEFT_UP);
-	UnitGroup group29(U_LONGSWORDMAN, 40, LEFT_UP);
-	UnitGroup group(U_CAVALRYARCHER, 19, LEFT_UP);
-	UnitGroup group30(U_HEAVYCAVALRYARCHER, 25, LEFT_UP);
-	UnitGroup group31(U_KNIGHT, 28, LEFT_UP);
-	UnitGroup group32(U_PALADIN, 33, LEFT_UP);
-	UnitGroup group33(U_CHAMPION, 29, LEFT_UP);
-	UnitGroup group34(U_SIEGERAM, 10, LEFT_UP);
-	UnitGroup group35(U_CAVALRYARCHER, 19, LEFT_UP);
-	wave7.PushBack(group27);
-	wave7.PushBack(group28);
-	wave7.PushBack(group29);
-	wave7.PushBack(group30);
-	wave7.PushBack(group31);
-	wave7.PushBack(group32);
-	wave7.PushBack(group33);
-	wave7.PushBack(group34);
-	wave7.PushBack(group35);
-
-
 	Wave wave8;
 
 	UnitGroup group36(U_LONGSWORDMAN, 51, LEFT_UP);
@@ -331,6 +338,7 @@ bool j1WaveManager::Start()
 	waves.push_back(wave7);
 	waves.push_back(wave8);
 	waves.push_back(wave9);
+	waves.push_back(wave10);
 
 	timer.Start();
 	spawning = true;
