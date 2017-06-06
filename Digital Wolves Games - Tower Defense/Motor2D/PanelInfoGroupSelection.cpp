@@ -35,6 +35,7 @@ void GroupSelection::Prepare()
 		PrepareNoUnitSelection();
 
 	life_bar = BAR_LIFE;
+	e_oneselected = nullptr;
 }
 
 void GroupSelection::PrepareUnitSelection()
@@ -141,6 +142,7 @@ void GroupSelection::Update()
 			(*es_item)->btn_selected->SetToDelete();
 			delete *es_item;
 			es_selection.erase(es_item);
+			es_item--;
 		}
 	}
 
