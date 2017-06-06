@@ -202,24 +202,25 @@ void j1ScoreScene::CreateAchievements()
 	//prove achievements
 	if (prove_achievements)
 	{
-		if (App->scene->GetTownHallHp() == 1500)
+		App->LoadAchievements("Achievements.xml");
+		if (townlifeAchievement)
 		{
 			//check_achievement1 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 120, 40, 39 }, { 1036, 868, 40, 39 });
 			check_achievement1->SetAtlas({ 1036, 868, 40, 39 });
 		}
 	
-		if (App->score->GetScore()>=100000)
+		if (pointsAchievement)
 		{
 			//check_achievement2 = App->uimanager->AddComponent(UIT_UIIMAGE, { 1005, 250, 40, 39 }, { 1036, 868, 40, 39 });
 			check_achievement2->SetAtlas({ 1036, 868, 40, 39 });
 		}
 
-		if (build_simple_tower)
+		if (onlybombsAchievement)
 		{
 			check_achievement3->SetAtlas({ 1036, 868, 40, 39 });
 		}
 
-		if (units_count >=100)
+		if (SpawnedunitsAchievement)
 		{
 			check_achievement4->SetAtlas({ 1036, 868, 40, 39 });
 		}

@@ -232,6 +232,7 @@ bool j1Scene::PostUpdate()
 		App->score->AddScore(townhall->GetHp() * 3);
 		App->FinishGame("save_game.xml");
 		App->scene_manager->ChangeScene(SC_SCORE);
+		App->SaveAchievements("Achievements.xml");
 	}
 
 
@@ -246,11 +247,7 @@ bool j1Scene::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 	{
-		int x = 0;
-		int y = 0;
-		App->input->GetMousePosition(x, y);
-		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-		App->entity_manager->CreateUnit(U_MANGONEL, pos, S_ENEMY);
+		win = true;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)

@@ -57,9 +57,15 @@ public:
 	bool IsSceneChange();
 	UIComponents* GetUnderBackground();
 	void ChangeUnselected(BUTTONSUNDERGROUND);
-	bool prove_achievements = false;
+	bool prove_achievements = true;
 	bool build_simple_tower = true;
 	int units_count = 0;
+	bool goingAchievements = true;
+
+	bool pointsAchievement = false;
+	bool townlifeAchievement = false;
+	bool onlybombsAchievement = false;
+	bool SpawnedunitsAchievement = false;
 
 private:
 	UIComponents* under_background;

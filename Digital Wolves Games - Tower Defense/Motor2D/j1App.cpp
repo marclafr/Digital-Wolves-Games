@@ -489,6 +489,130 @@ void j1App::FinishGame(const char * file)
 
 }
 
+void j1App::SaveAchievements(const char * file)
+{
+	save_game.assign(file);
+
+	LOG("Saving Game State to %s...", save_game.c_str());
+
+	// xml object were we will store all data
+	pugi::xml_document data;
+	pugi::xml_node root;
+
+	root = data.append_child("game_state");
+
+	pugi::xml_node Achievements = root.append_child("Achievements");
+
+	if (App->scene->townhall->GetHp() == 1500)
+	{
+		Achievements.append_attribute("townhall_life") = 1;
+	}
+	else
+	{
+		Achievements.append_attribute("townhall_life") = 0;
+	}
+
+	if (App->score_scene->units_count >= 100)
+	{
+		Achievements.append_attribute("units_spawneds") = 1;
+	}
+	else
+	{
+		Achievements.append_attribute("units_spawneds") = 0;
+	}
+
+	if (App->score_scene->build_simple_tower == true)
+	{
+		Achievements.append_attribute("only_bombs") = 1;
+	}
+	else
+	{
+		Achievements.append_attribute("only_bombs") = 0;
+	}
+
+	if (App->score->GetScore() >= 100000)
+	{
+		Achievements.append_attribute("points") = 1;
+	}
+	else
+	{
+		Achievements.append_attribute("points") = 0;
+	}
+
+	std::stringstream stream;
+	data.save(stream);
+
+	// we are done, so write data to disk
+	fs->Save(save_game.c_str(), stream.str().c_str(), stream.str().length());
+	LOG("... finished saving", save_game.c_str());
+
+	data.reset();
+}
+
+void j1App::LoadAchievements(const char * file)
+{
+	char dir[512];
+	sprintf_s(dir, "%s%s", fs->GetSaveDirectory(), file);
+	load_game.assign(dir);
+
+	bool ret = false;
+
+	char* buffer;
+	uint size = fs->Load(load_game.c_str(), &buffer);
+
+	if (size > 0)
+	{
+		pugi::xml_document data;
+		pugi::xml_node root;
+
+		pugi::xml_parse_result result = data.load_buffer(buffer, size);
+		RELEASE(buffer);
+
+		root = data.child("game_state");
+
+		pugi::xml_node Achievements = root.append_child("Achievements");
+
+		if (Achievements.append_attribute("townhall_life").as_int() == 1)
+		{
+			App->score_scene->townlifeAchievement = true;
+		}
+		else 
+		{
+			App->score_scene->townlifeAchievement = false;
+		}
+	
+
+		if (Achievements.append_attribute("units_spawneds").as_int() == 1)
+		{
+			App->score_scene->SpawnedunitsAchievement = true;
+		}
+		else 
+		{
+			App->score_scene->SpawnedunitsAchievement = false;
+		}
+
+		if (Achievements.append_attribute("only_bombs").as_int() == 1)
+		{
+			App->score_scene->onlybombsAchievement = true;
+		}
+		else
+		{
+			App->score_scene->onlybombsAchievement = true;
+		}
+
+		if (Achievements.append_attribute("points").as_int() == 1)
+		{
+			App->score_scene->pointsAchievement = true;
+		}
+		else
+		{
+			App->score_scene->pointsAchievement = false;
+		}
+
+		data.reset();
+	}
+}
+
 // ---------------------------------------
 void j1App::SaveGame(const char* file) const
 {

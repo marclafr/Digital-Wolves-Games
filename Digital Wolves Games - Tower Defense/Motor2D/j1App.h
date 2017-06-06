@@ -95,6 +95,8 @@ public:
 	void LoadGame(const char* file);
 	bool LoadGameFromMenu(const char* file);
 	void FinishGame(const char* file);
+	void SaveAchievements(const char* file);
+	void LoadAchievements(const char* file);
 	void SaveGame(const char* file) const;
 	void GetSaveGames(std::list<std::string>& list_to_fill) const;
 
