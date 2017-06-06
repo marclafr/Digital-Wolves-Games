@@ -279,8 +279,12 @@ void OneSelection::DrawBuildInfo()
 
 		if (building_life_bar->GetBuildingType() == B_CANNON ||
 			building_life_bar->GetBuildingType() == B_TURRET ||
-			building_life_bar->GetBuildingType() == B_TURRET_UPGRADED ||
-			building_life_bar->GetBuildingType() == B_CANNON_UPGRADED)
+			building_life_bar->GetBuildingType() == B_TURRET_UPGRADED_FIRE ||
+			building_life_bar->GetBuildingType() == B_TURRET_UPGRADED_ICE ||
+			building_life_bar->GetBuildingType() == B_TURRET_UPGRADED_AIR ||
+			building_life_bar->GetBuildingType() == B_CANNON_UPGRADED_FIRE ||
+			building_life_bar->GetBuildingType() == B_CANNON_UPGRADED_ICE ||
+			building_life_bar->GetBuildingType() == B_CANNON_UPGRADED_AIR)
 		{
 			Tower* info_tower = (Tower*)building_life_bar;
 

@@ -364,7 +364,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_FIRE_ARROW;
 					tower_type = T_FIRE_TOWER;
-					SetBuildingType(B_TURRET_UPGRADED);
+					SetBuildingType(B_TURRET_UPGRADED_FIRE);
 					SetAttack(GetAttack() + 12);
 					SetHp(190);
 					SetRange(-0.50);
@@ -380,7 +380,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_ICE_ARROW;
 					tower_type = T_ICE_TOWER;
-					SetBuildingType(B_TURRET_UPGRADED);
+					SetBuildingType(B_TURRET_UPGRADED_ICE);
 					SetAttack(GetAttack() + 5);
 					SetHp(175);
 					SetSpeed(0.88f);
@@ -396,7 +396,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_AIR_ARROW;
 					tower_type = T_AIR_TOWER;
-					SetBuildingType(B_TURRET_UPGRADED);
+					SetBuildingType(B_TURRET_UPGRADED_AIR);
 					SetAttack(GetAttack() + 2);
 					SetSpeed(0.3f);
 					SetRange(100);
@@ -420,7 +420,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_FIRE_CANNONBALL;
 					tower_type = T_BOMBARD_FIRE_TOWER;
-					SetBuildingType(B_CANNON_UPGRADED);
+					SetBuildingType(B_CANNON_UPGRADED_FIRE);
 					SetAttack(GetAttack() + 7);
 					SetHp(225);
 					SetRange(-10);
@@ -436,7 +436,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_ICE_CANNONBALL;
 					tower_type = T_BOMBARD_ICE_TOWER;
-					SetBuildingType(B_CANNON_UPGRADED);
+					SetBuildingType(B_CANNON_UPGRADED_ICE);
 					SetAttack(GetAttack() + 2);
 					SetHp(195);
 					Position_rect = { (int)GetX() - (tower_rect.w / 2),  (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
@@ -451,7 +451,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_AIR_CANNONBALL;
 					tower_type = T_BOMBARD_AIR_TOWER;
-					SetBuildingType(B_CANNON_UPGRADED);
+					SetBuildingType(B_CANNON_UPGRADED_AIR);
 					SetAttack(GetAttack() - 5);
 					SetHp(175);
 					SetRange(40);
