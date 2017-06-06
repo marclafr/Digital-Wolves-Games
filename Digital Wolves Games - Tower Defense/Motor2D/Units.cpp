@@ -802,6 +802,9 @@ void Unit::PlayAttackSound() const
 	if(unit_class == C_ARCHER)
 		App->audio->PlayFx(App->audio->fx_arrow);
 
+	else if(unit_type == U_SIEGERAM)
+		App->audio->PlayFx(App->audio->fx_siegeram_hit);
+
 	else
 	{
 		int rand_num = rand() % 3;

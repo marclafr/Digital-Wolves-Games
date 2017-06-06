@@ -48,6 +48,7 @@ public:
 	//FX BUILDING
 	unsigned int fx_building_destroyed;
 	unsigned int fx_arrow;
+	unsigned int fx_siegeram_hit;
 	unsigned int fx_cannon;
 	unsigned int fx_construction;
 
