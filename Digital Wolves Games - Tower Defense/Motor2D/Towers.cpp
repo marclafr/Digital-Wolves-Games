@@ -60,7 +60,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 250;
 		tower_type = T_FIRE_TOWER;
 		projectile_type = P_FIRE_ARROW;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_TURRET_UPGRADED_FIRE);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_FIRE_TOWER);
 		SetRect(tower_rect);
@@ -75,7 +75,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 300;
 		tower_type = T_ICE_TOWER;
 		projectile_type = P_ICE_ARROW;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_TURRET_UPGRADED_ICE);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_ICE_TOWER);
 		SetRect(tower_rect);
@@ -90,7 +90,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 350;
 		tower_type = T_AIR_TOWER;
 		projectile_type = P_AIR_ARROW;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_TURRET_UPGRADED_AIR);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_AIR_TOWER);
 		SetRect(tower_rect);
@@ -105,7 +105,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 290;
 		tower_type = T_BOMBARD_FIRE_TOWER;
 		projectile_type = P_FIRE_CANNONBALL;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_CANNON_UPGRADED_FIRE);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_FIRE_TOWER);
 		SetRect(tower_rect);
@@ -120,7 +120,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 290;
 		tower_type = T_BOMBARD_ICE_TOWER;
 		projectile_type = P_ICE_CANNONBALL;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_CANNON_UPGRADED_ICE);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_ICE_TOWER);
 		SetRect(tower_rect);
@@ -133,9 +133,9 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetArmor(4);
 		rate_of_fire = 1.45f;	//time between each attack in seconds
 		range = 325;
-		tower_type = T_BASIC_TOWER;
+		tower_type = T_BOMBARD_AIR_TOWER;
 		projectile_type = P_AIR_CANNONBALL;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_CANNON_UPGRADED_AIR);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_AIR_TOWER);
 		SetRect(tower_rect);
