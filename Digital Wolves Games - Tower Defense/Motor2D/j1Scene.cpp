@@ -854,23 +854,23 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TURRET, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_FIRE_TOWER), new UpgradeTowerTask(INV_FIRE_TOWER));
 	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(INV_ICE_TOWER));
 	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeTowerTask(INV_AIR_TOWER));
-	panel->AddButton(BP_TURRET, iPoint(4, 2), { 1034,962 }, new DeleteTowerTask(), true);
+	panel->AddButton(BP_TURRET, iPoint(4, 2), { 1086,962 }, new DeleteTowerTask(), true);
 
 	panel->AddButton(BP_CANNON, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_FIRE_TOWER), new UpgradeTowerTask(INV_FIRE_TOWER));
 	panel->AddButton(BP_CANNON, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_ICE_TOWER), new UpgradeTowerTask(INV_ICE_TOWER));
 	panel->AddButton(BP_CANNON, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_AIR_TOWER), new UpgradeTowerTask(INV_AIR_TOWER));
-	panel->AddButton(BP_CANNON, iPoint(4, 2), { 1034,962 }, new DeleteTowerTask(), true);
+	panel->AddButton(BP_CANNON, iPoint(4, 2), { 1086,962 }, new DeleteTowerTask(), true);
 
-	panel->AddButton(BP_TURRET_UPGRADED, iPoint(4, 2), { 1034,962 }, new DeleteTowerTask());
+	panel->AddButton(BP_TURRET_UPGRADED, iPoint(4, 2), { 1086,962 }, new DeleteTowerTask());
 
 	//Walls
 	panel->AddButton(BP_WOOD_WALL, iPoint(0, 0), GetBuildingIconPositionFromAtlas(B_STONE_WALL), new UpgradeWallTask(B_STONE_WALL));
-	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 1034,962 }, new DeleteWallTask(), true);
+	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 1086,962 }, new DeleteWallTask(), true);
 
 	panel->AddButton(BP_STONE_WALL, iPoint(0, 0), GetBuildingIconPositionFromAtlas(B_BRICK_WALL), new UpgradeWallTask(B_BRICK_WALL));
-	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 1034,962 }, new DeleteWallTask(), true);
+	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 1086,962 }, new DeleteWallTask(), true);
 
-	panel->AddButton(BP_BRICK_WALL, iPoint(4, 2), { 1034,962 }, new DeleteWallTask());
+	panel->AddButton(BP_BRICK_WALL, iPoint(4, 2), { 1086,962 }, new DeleteWallTask());
 
 	//Units
 	panel->AddButton(BP_TOWNHALL, iPoint(0, 1), GetUnitIconPositionFromAtlas(U_CHAMPION), new TrainUnitTask(U_CHAMPION));
