@@ -52,13 +52,14 @@ bool j1MainMenu::Start()
 
 	App->uimanager->AddLabel(590, 30, "Single Player");
 
-	//TUTORIAL
+	//LOAD
 	UIButton* LoadGame = App->uimanager->AddButton({ 148, 11, 155, 232 }, { 592, 770, 155, 232 });
-	LoadGame->SetMouseOnTopTextRect({ 719, 2572, 200, 237 },3);
+	LoadGame->SetMouseOnTopTextRect({ 722, 2575, 199, 237 });
 	LoadGame->SetTask(new MainMenuLoadGame());
 
+	//TUTORIAL
 	UIButton* Tutorial = App->uimanager->AddButton({ 301, 210, 138, 123 }, { 149, 862, 138, 123 });
-	Tutorial->SetMouseOnTopTextRect({ 1185, 2586, 138, 123 }, 3);
+	Tutorial->SetMouseOnTopTextRect({ 1189, 2588, 138, 123 });
 	Tutorial->SetTask(new ChangeMainMenuSceneToTutorial(SC_GAME));
 
 	App->uimanager->AddLabel(218, 23, "Load Game");
