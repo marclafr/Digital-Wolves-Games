@@ -129,19 +129,6 @@ bool j1Scene::Update(float dt)
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
 	
-	//Test fade to black
-	/*
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
-		App->render->camera->FadeToBlack(3, 2);
-
-	//CREATE UNITS
-	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_GOD, { -200.0f, 372 }, S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);	
-	//--
-	*/
 	if (placing_tower == T_BASIC_TOWER)
 		PlacingTower(T_BASIC_TOWER);
 	if (placing_tower == T_BOMBARD_TOWER)
@@ -233,37 +220,6 @@ bool j1Scene::PostUpdate()
 		App->FinishGame("save_game.xml");
 		App->scene_manager->ChangeScene(SC_SCORE);
 		App->SaveAchievements("Achievements.xml");
-	}
-
-
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-	{
-		int x = 0;
-		int y = 0;
-		App->input->GetMousePosition(x, y);
-		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-		App->entity_manager->CreateUnit(U_MANGONEL, pos, S_ENEMY);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-	{
-		int x = 0;
-		int y = 0;
-		App->input->GetMousePosition(x, y);
-		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-		App->entity_manager->CreateUnit(U_SIEGERAM, pos, S_ENEMY);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-	{
-		win = true;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
-		for (int i = 0; i < selection.size(); i++)
-			if (selection[i]->GetSide() == S_ALLY)
-				selection[i]->SetHp(0);
 	}
 
 	return ret;
