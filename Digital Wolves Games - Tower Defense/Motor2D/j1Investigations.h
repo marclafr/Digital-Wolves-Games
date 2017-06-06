@@ -48,7 +48,7 @@ enum INVESTIGATION_STATE
 class Investigation
 {
 public:
-	Investigation(INVESTIGATION_TYPE investigation, bool has_lvls, uint cost, float time) : investigation_type(investigation), has_levels(has_lvls), cost(cost), time_to_upgrade(time){}
+	Investigation(INVESTIGATION_TYPE investigation, bool has_lvls, uint cost, float time) : investigation_type(investigation), has_levels(has_lvls), cost(cost), time_to_upgrade(time), investigation_level(INV_LVL_LOCKED){}
 	~Investigation(){}
 
 public:
@@ -77,9 +77,10 @@ public:
 	bool WantToInvestigate(Investigation* investigation);
 	int GetInvestigationCost(Investigation* investigation);
 	void InstaUnlockInvestigation(INVESTIGATION_TYPE name, LEVEL level);
+	void InstaUnlockAllInvestigations();
 	void SetInvestigationCost(INVESTIGATION_TYPE name, int cost);
-private:
 
+private:
 	Investigation* CreateInvestigation(INVESTIGATION_TYPE investigation, bool has_lvls, uint cost, float time_to_upgrade);
 	bool DeleteInvestigation(Investigation* ptr);
 

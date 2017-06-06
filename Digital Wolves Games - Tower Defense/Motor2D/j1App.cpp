@@ -740,4 +740,9 @@ void DebugFeatures::UpdateDebug()
 	if (pf)
 		App->pathfinding->Debug();
 
+	if (unlock_investigations)
+	{
+		App->investigations->InstaUnlockAllInvestigations();
+		unlock_investigations = false;
+	}
 }
