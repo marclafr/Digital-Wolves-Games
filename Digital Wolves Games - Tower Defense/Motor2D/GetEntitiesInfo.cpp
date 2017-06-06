@@ -369,6 +369,10 @@ iPoint GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
 		ret = { X_WALLS, 910};
 		break;
 
+	case B_BRICK_WALL:
+		ret = { X_WALLS, 910 };
+		break;
+
 	case B_TOWNHALL:
 		ret = { X_PUBLIC_BUILDINGS, 936};
 		break;
@@ -421,6 +425,9 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 		break;
 	case B_STONE_WALL:
 		ret = "Stone Wall";
+		break;
+	case B_BRICK_WALL:
+		ret = "Brick Wall";
 		break;
 	case B_TOWNHALL:
 		ret = "Town Hall";
