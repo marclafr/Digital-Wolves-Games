@@ -83,14 +83,14 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 			panel_seleted_type = BP_TURRET;
 			b_selected = building;
 			CreatePanel();
-			if (App->tutorial->tutorial4_completed) App->tutorial->TowerSelected = true;
+			if (App->tutorial->tutorial_num == TUTORIAL_5) App->tutorial->TowerSelected = true;
 			break;
 		case B_CANNON:
 			panel_seleted = &panel_cannon;
 			panel_seleted_type = BP_CANNON;
 			b_selected = building;
 			CreatePanel();
-			if (App->tutorial->tutorial4_completed) App->tutorial->TowerSelected = true;
+			if (App->tutorial->tutorial_num == TUTORIAL_5) App->tutorial->TowerSelected = true;
 			break;
 			case B_TURRET_UPGRADED_FIRE:
 			panel_seleted = &panel_turret_upgraded;
@@ -151,14 +151,14 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 			panel_seleted_type = BP_TOWNHALL;
 			b_selected = building;
 			CreatePanel();
-			if (App->tutorial->tutorial1_completed) App->tutorial->TownHallSelected = true;
+			if (App->tutorial->tutorial_num == TUTORIAL_2) App->tutorial->TownHallSelected = true;
 			break;
 		case B_UNIVERSITY:
 			panel_seleted = &panel_university;
 			panel_seleted_type = BP_UNIVERSITY;
 			b_selected = building;
 			CreatePanel();
-			if (App->tutorial->tutorial3_completed) App->tutorial->UniversitySelected = true;
+			if (App->tutorial->tutorial_num == TUTORIAL_4) App->tutorial->UniversitySelected = true;
 			break;
 		default:
 			panel_seleted = nullptr;

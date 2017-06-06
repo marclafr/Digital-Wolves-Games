@@ -116,7 +116,7 @@ bool PlaceBasicTowerTask::Execute()
 {
 	App->scene->placing_wall = false;
 	App->scene->placing_tower = T_BASIC_TOWER;
-	if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
+	if (App->tutorial->tutorial_num == TUTORIAL_2) App->tutorial->PanelSelected = true;
 	return true;
 }
 
@@ -126,7 +126,7 @@ bool PlaceBombardTowerTask::Execute()
 {
 	App->scene->placing_wall = false;
 	App->scene->placing_tower = T_BOMBARD_TOWER;
-	if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
+	if (App->tutorial->tutorial_num == TUTORIAL_2) App->tutorial->PanelSelected = true;
 	return true;
 }
 
@@ -153,7 +153,7 @@ bool UpgradeTowerTask::Execute()
 	{
 		tower->UpgradeTurret(type);
 
-		if (App->tutorial->tutorial4_completed)
+		if (App->tutorial->tutorial_num == TUTORIAL_5)
 		{
 			App->tutorial->TowerUpgradeSelected = true;
 		}
@@ -239,7 +239,7 @@ bool PlaceWallTask::Execute()
 {
 	App->scene->placing_wall = true;
 	App->scene->placing_tower = T_NO_TYPE;
-	if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
+	if (App->tutorial->tutorial_num == TUTORIAL_2) App->tutorial->PanelSelected = true;
 	return true;
 }
 
@@ -252,7 +252,7 @@ bool TrainUnitTask::Execute()
 		App->scene->resources->TrainSoldier(u_type);
 	}
 
-	if (App->tutorial->tutorial1_completed) App->tutorial->PanelSelected = true;
+	if (App->tutorial->tutorial_num == TUTORIAL_2) App->tutorial->PanelSelected = true;
 	return true;
 }
 
@@ -315,7 +315,7 @@ bool ChangeToBugs::Execute()
 bool BringNextWave::Execute()
 {
 	App->wave_manager->BringNextWave();
-	if (App->tutorial->tutorial5_completed) App->tutorial->NextWaveButtonSelected = true;
+	if (App->tutorial->tutorial_num == TUTORIAL_6) App->tutorial->NextWaveButtonSelected = true;
 	return true;
 }
 

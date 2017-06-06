@@ -9,6 +9,18 @@ class UIComponents;
 class UIButton;
 
 
+enum TUTORIAL
+{
+	TUTORIAL_1,
+	TUTORIAL_2,
+	TUTORIAL_3,
+	TUTORIAL_4,
+	TUTORIAL_5,
+	TUTORIAL_6,
+	TUTORIAL_7,
+	TUTORIAL_8
+};
+
 class j1Tutorial : public j1Module
 {
 public:
@@ -98,13 +110,7 @@ public:
 	bool TowerUpgradeSelected = false;
 	bool NextWaveButtonSelected = false;
 
-	bool tutorial1_completed = false;
-	bool tutorial2_completed = false;
-	bool tutorial3_completed = false;
-	bool tutorial4_completed = false;
-	bool tutorial5_completed = false;
-	bool tutorial6_completed = false;
-	bool tutorial7_completed = false;
+	TUTORIAL tutorial_num = TUTORIAL_1;
 
 private:
 	bool tutorial1_part1 = false;

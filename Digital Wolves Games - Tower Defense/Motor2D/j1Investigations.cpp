@@ -208,7 +208,7 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 		if (investigation->has_levels == false)
 		{
 			investigation->investigation_level = INV_LVL_UNLOCKED;
-			if (App->tutorial->tutorial3_completed && investigation->investigation_type == INV_FIRE_TOWER)
+			if (App->tutorial->tutorial_num == TUTORIAL_4 && investigation->investigation_type == INV_FIRE_TOWER)
 			{
 				App->tutorial->InvestigationDone = true;
 			}
