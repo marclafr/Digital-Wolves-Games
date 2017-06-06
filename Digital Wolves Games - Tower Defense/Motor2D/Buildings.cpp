@@ -289,12 +289,6 @@ void Building::DestroyBuilding()
 	this->Die();
 }
 
-const int Building::GetRange() const
-{
-	//TODO
-	return 250;
-}
-
 const int Building::GetMaxHp() const
 {
 	return max_hp;

@@ -62,7 +62,6 @@ public:
 	bool IsAlive() const;
 	void ConvertToRubble();
 	void DestroyBuilding();
-	const int GetRange() const;
 	const int GetMaxHp() const;
 	void SetMaxHP(int maxhp);
 	virtual void Save(pugi::xml_node&);
