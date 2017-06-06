@@ -160,9 +160,6 @@
     <ClCompile Include="UIHUDPanelButtons.cpp">
       <Filter>UIComponents\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="UIHUDPanelInfo.cpp">
-      <Filter>UIComponents\HUD</Filter>
-    </ClCompile>
     <ClCompile Include="UIHUDResources.cpp">
       <Filter>UIComponents\HUD</Filter>
     </ClCompile>
@@ -180,6 +177,9 @@
     </ClCompile>
     <ClCompile Include="j1Mouse.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHUDPanelInfo.cpp">
+      <Filter>UIComponents\HUD\PanelInfo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -351,9 +351,6 @@
     <ClInclude Include="UIHUDPanelButtons.h">
       <Filter>UIComponents\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="UIHUDPanelInfo.h">
-      <Filter>UIComponents\HUD</Filter>
-    </ClInclude>
     <ClInclude Include="UIHUDResources.h">
       <Filter>UIComponents\HUD</Filter>
     </ClInclude>
@@ -376,6 +373,9 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="UIHUDPanelInfo.h">
+      <Filter>UIComponents\HUD\PanelInfo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Modules">

@@ -14,7 +14,7 @@ private:
 		Entity* pointer_entity = nullptr;
 	};
 
-	std::list<entity_selected*> es_selection;
+	std::vector<entity_selected*> es_selection;
 	SDL_Rect life_bar;
 
 public:

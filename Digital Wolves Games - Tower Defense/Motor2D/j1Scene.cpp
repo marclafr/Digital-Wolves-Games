@@ -164,26 +164,7 @@ bool j1Scene::Update(float dt)
 			selecting = false;
 			group_select = false;
 		}
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && !group_select)
-		{
-			selecting = false;
-
-			SDL_Rect rect_ingame_no_ui = RECT_INGAME_WITHOUT_UI;
-			if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
-			{
-				//click select
-				iPoint world_mouse_pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-				Entity* selected = App->entity_manager->ClickSelect(world_mouse_pos);
-
-				if (selected != nullptr)
-				{
-					selected->SetEntityStatus(ST_SELECTED);
-					selection.push_back(selected);
-					App->uimanager->CreatePanelInfo(selection);
-				}
-			}
-		}
+		
 	}
 
 	App->debug_features.UpdateDebug();

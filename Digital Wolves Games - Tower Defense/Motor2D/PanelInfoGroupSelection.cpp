@@ -17,10 +17,10 @@
 
 GroupSelection::~GroupSelection()
 {
-	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
+	for (std::vector<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 	{
 		(*es_item)->btn_selected->SetToDelete();
-		delete *es_item;
+		DELETE_PTR(*es_item);
 	}
 	es_selection.clear();
 }
@@ -100,7 +100,7 @@ void GroupSelection::PrepareNoUnitSelection()
 
 void GroupSelection::Update()
 {
-	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
+	for (std::vector<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 	{
 		if ((*es_item)->btn_selected->IsFocus())
 			if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
@@ -124,7 +124,7 @@ void GroupSelection::Draw()
 {
 	int count = 0;
 
-	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
+	for (std::vector<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 	{
 		if ((*es_item)->pointer_entity->GetHp() > 0)
 		{
