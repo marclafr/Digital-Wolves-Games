@@ -22,14 +22,14 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 	case T_BASIC_TOWER:
 		SetHp(150);
 		SetMaxHP(150);
-		SetAttack(15);
-		SetArmor(1);
-		rate_of_fire = 0.85f;	//time between each attack in seconds
-		range = 300;
+		SetAttack(12);
+		SetArmor(2);
+		rate_of_fire = 0.60f;	//time between each attack in seconds
+		range = 310;
 		tower_type = T_BASIC_TOWER;
 		projectile_type = P_BASIC_ARROW;
 		SetBuildingType(B_TURRET);
-		projectile_spd = 60;
+		projectile_spd = 75;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BASIC_TOWER);
 		SetRect(tower_rect);
 		SetPivot(pivot.x, pivot.y);
@@ -39,28 +39,28 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetHp(175);
 		SetMaxHP(175);
 		SetAttack(26);
-		SetArmor(3);
+		SetArmor(4);
 		rate_of_fire = 1.95f;
-		range = 290;
+		range = 310;
 		tower_type = T_BOMBARD_TOWER;
 		projectile_type = P_CANNONBALL;
 		SetBuildingType(B_CANNON);
-		projectile_spd = 75;
+		projectile_spd = 80;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_TOWER);
 		SetRect(tower_rect);
 		SetPivot(pivot.x, pivot.y);
 		break;
 
 	case T_FIRE_TOWER:
-		SetHp(90);
-		SetMaxHP(90);
+		SetHp(190);
+		SetMaxHP(190);
 		SetAttack(25);
 		SetArmor(1);
 		rate_of_fire = 0.85f;	//time between each attack in seconds
 		range = 250;
 		tower_type = T_FIRE_TOWER;
 		projectile_type = P_FIRE_ARROW;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_TURRET_UPGRADED_FIRE);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_FIRE_TOWER);
 		SetRect(tower_rect);
@@ -75,7 +75,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 300;
 		tower_type = T_ICE_TOWER;
 		projectile_type = P_ICE_ARROW;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_TURRET_UPGRADED_ICE);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_ICE_TOWER);
 		SetRect(tower_rect);
@@ -90,7 +90,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 350;
 		tower_type = T_AIR_TOWER;
 		projectile_type = P_AIR_ARROW;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_TURRET_UPGRADED_AIR);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_AIR_TOWER);
 		SetRect(tower_rect);
@@ -105,7 +105,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 290;
 		tower_type = T_BOMBARD_FIRE_TOWER;
 		projectile_type = P_FIRE_CANNONBALL;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_CANNON_UPGRADED_FIRE);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_FIRE_TOWER);
 		SetRect(tower_rect);
@@ -120,7 +120,7 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		range = 290;
 		tower_type = T_BOMBARD_ICE_TOWER;
 		projectile_type = P_ICE_CANNONBALL;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_CANNON_UPGRADED_ICE);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_ICE_TOWER);
 		SetRect(tower_rect);
@@ -133,9 +133,9 @@ Tower::Tower(TOWER_TYPE t_type, fPoint pos) : Building(B_TURRET, pos, S_ALLY), t
 		SetArmor(4);
 		rate_of_fire = 1.45f;	//time between each attack in seconds
 		range = 325;
-		tower_type = T_BASIC_TOWER;
+		tower_type = T_BOMBARD_AIR_TOWER;
 		projectile_type = P_AIR_CANNONBALL;
-		SetBuildingType(B_TURRET);
+		SetBuildingType(B_CANNON_UPGRADED_AIR);
 		projectile_spd = 60;
 		App->tex->GetTowerTexture(text, tower_rect, pivot, T_BOMBARD_AIR_TOWER);
 		SetRect(tower_rect);
@@ -364,8 +364,8 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_FIRE_ARROW;
 					tower_type = T_FIRE_TOWER;
-					SetBuildingType(B_TURRET_UPGRADED);
-					SetAttack(GetAttack() + 10);
+					SetBuildingType(B_TURRET_UPGRADED_FIRE);
+					SetAttack(GetAttack() + 12);
 					SetHp(190);
 					SetRange(-0.50);
 					Position_rect = { (int)GetX() - (tower_rect.w / 2), (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
@@ -380,7 +380,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_ICE_ARROW;
 					tower_type = T_ICE_TOWER;
-					SetBuildingType(B_TURRET_UPGRADED);
+					SetBuildingType(B_TURRET_UPGRADED_ICE);
 					SetAttack(GetAttack() + 5);
 					SetHp(175);
 					SetSpeed(0.88f);
@@ -396,10 +396,10 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_AIR_ARROW;
 					tower_type = T_AIR_TOWER;
-					SetBuildingType(B_TURRET_UPGRADED);
-					SetAttack(GetAttack() - 4);
-					SetSpeed(0.5f);
-					SetRange(50);
+					SetBuildingType(B_TURRET_UPGRADED_AIR);
+					SetAttack(GetAttack() - 6);
+					SetSpeed(0.3f);
+					SetRange(90);
 					Position_rect = { (int)GetX() - (tower_rect.w / 2),  (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
 				}
 				break;
@@ -420,7 +420,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_FIRE_CANNONBALL;
 					tower_type = T_BOMBARD_FIRE_TOWER;
-					SetBuildingType(B_CANNON_UPGRADED);
+					SetBuildingType(B_CANNON_UPGRADED_FIRE);
 					SetAttack(GetAttack() + 7);
 					SetHp(225);
 					SetRange(-10);
@@ -436,7 +436,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_ICE_CANNONBALL;
 					tower_type = T_BOMBARD_ICE_TOWER;
-					SetBuildingType(B_CANNON_UPGRADED);
+					SetBuildingType(B_CANNON_UPGRADED_ICE);
 					SetAttack(GetAttack() + 2);
 					SetHp(195);
 					Position_rect = { (int)GetX() - (tower_rect.w / 2),  (int)GetY() - tower_rect.h, tower_rect.w, tower_rect.h };
@@ -451,7 +451,7 @@ void Tower::UpgradeTurret(INVESTIGATION_TYPE type)
 					SetPivot(pivot.x, pivot.y);
 					projectile_type = P_AIR_CANNONBALL;
 					tower_type = T_BOMBARD_AIR_TOWER;
-					SetBuildingType(B_CANNON_UPGRADED);
+					SetBuildingType(B_CANNON_UPGRADED_AIR);
 					SetAttack(GetAttack() - 5);
 					SetHp(175);
 					SetRange(40);

@@ -40,8 +40,9 @@ void UIHUDDescription::SetEnableButton(UICheckbutton* btn)
 bool UIHUDDescription::Update()
 {
 	if (button_enable_component->GetStat() == CB_CHECK)
-		if (selected != nullptr && selected->GetButton()->IsFocus() == false)
-			Clear();
+		if(created)
+			if (selected->GetButton()->IsFocus() == false)
+				Clear();
 
 	return true;
 }
@@ -103,14 +104,13 @@ void UIHUDDescription::SetDescription(info_button * if_btn)
 			SDL_Rect rect_pos = if_btn->GetButton()->GetPosRect();
 			SetLabelMoreButtons(rect_pos);
 			break;
+		case ET_BACKBUTTONS:
+			SetLabelBackButtons();
+			break;
 		}
 		created = true;
 		selected = if_btn;
 	}
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && e_task->GetEntityTaskType() == ET_MOREBUTTONS)
-		Clear();
-
 }
 
 void UIHUDDescription::SetLabelUnit()
@@ -182,16 +182,22 @@ void UIHUDDescription::SetLabelInvestigations()
 }
 
 //Investigations expansion
-void UIHUDDescription::SetLabelMoreButtons(SDL_Rect rect_pos)
+void UIHUDDescription::SetLabelMoreButtons(SDL_Rect& rect_pos)
 {
 	background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
 	description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, GetExpandButtonsDescription(rect_pos));
 }
 
+void UIHUDDescription::SetLabelBackButtons()
+{
+background_price = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+description_price = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, "Back");
+}
+
 void UIHUDDescription::SetLabelDestruction()
 {
-	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_NAME, ATLAS_BACKGROUND);
-	description_name = App->uimanager->AddLabel(X_LABEL_NAME, Y_LABEL_NAME, "Destroy this");
+	background_name = App->uimanager->AddComponent(UIT_UIIMAGE, BACKGROUND_POSITION_PRICE, ATLAS_BACKGROUND);
+	description_name = App->uimanager->AddLabel(X_LABEL_PRICE, Y_LABEL_PRICE, "Destroy this");
 }
 
 void UIHUDDescription::Clear()
@@ -202,13 +208,17 @@ void UIHUDDescription::Clear()
 	tower_upgrade_desc = INV_NONE;
 	investigation_desc = INV_NONE;
 	if(background_name != nullptr)
-	background_name->SetToDelete();
+		background_name->SetToDelete();
 	if (description_name != nullptr)
-	description_name->SetToDelete();
+		description_name->SetToDelete();
 	if (background_price != nullptr)
-	background_price->SetToDelete();
+		background_price->SetToDelete();
 	if (description_price != nullptr)
-	description_price->SetToDelete();
+		description_price->SetToDelete();
+	background_name = nullptr;
+	description_name = nullptr;
+	background_price = nullptr;
+	description_price = nullptr;
 	selected = nullptr;
 	created = false;
 }

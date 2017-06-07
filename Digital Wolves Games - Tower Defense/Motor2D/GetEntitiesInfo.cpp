@@ -1,4 +1,3 @@
-#define CAVALRYARCHER_HP 50
 #define MILITIA_HP 43
 #define MANATARMS_HP 58
 #define LONGSWORDMAN_HP 118
@@ -369,6 +368,10 @@ iPoint GetBuildingIconPositionFromAtlas(const BUILDING_TYPE type)
 		ret = { X_WALLS, 910};
 		break;
 
+	case B_BRICK_WALL:
+		ret = { X_WALLS, 884 };
+		break;
+
 	case B_TOWNHALL:
 		ret = { X_PUBLIC_BUILDINGS, 936};
 		break;
@@ -395,14 +398,35 @@ const char* GetBuildingName(const BUILDING_TYPE type)
 	case B_TURRET:
 		ret = "Basic Tower";
 		break;
+	case B_TURRET_UPGRADED_FIRE:
+		ret = "Fire Tower";
+		break;
+	case B_TURRET_UPGRADED_ICE:
+		ret = "Ice Tower";
+		break;
+	case B_TURRET_UPGRADED_AIR:
+		ret = "Air Tower";
+		break;
 	case B_CANNON:
 		ret = "Bombard Tower";
+		break;
+	case B_CANNON_UPGRADED_FIRE:
+		ret = "Fire Bombard Tower";
+		break;
+	case B_CANNON_UPGRADED_ICE:
+		ret = "Ice Bombard Tower";
+		break;
+	case B_CANNON_UPGRADED_AIR:
+		ret = "Air Bombard Tower";
 		break;
 	case B_WOOD_WALL: //THIS
 		ret = "Wood Wall";
 		break;
 	case B_STONE_WALL:
 		ret = "Stone Wall";
+		break;
+	case B_BRICK_WALL:
+		ret = "Brick Wall";
 		break;
 	case B_TOWNHALL:
 		ret = "Town Hall";
@@ -491,6 +515,24 @@ const char* GetTowerName(const TOWER_TYPE type)
 	case T_BOMBARD_TOWER:
 		ret = "Bombard Tower";
 		break;
+	case T_FIRE_TOWER:
+		ret = "Fire Tower";
+		break;
+	case T_ICE_TOWER:
+		ret = "Ice Tower";
+		break;
+	case T_AIR_TOWER:
+		ret = "Air Tower";
+		break;
+	case T_BOMBARD_FIRE_TOWER:
+		ret = "Fire Bombard Tower";
+		break;
+	case T_BOMBARD_ICE_TOWER:
+		ret = "Ice Bombard Tower";
+		break;
+	case T_BOMBARD_AIR_TOWER:
+		ret = "Air Bombard Tower";
+		break;
 	default:
 		ret = "Turret Error";
 		break;
@@ -549,13 +591,13 @@ const char * GetTowerUpgradePrice(const INVESTIGATION_TYPE type)
 	switch (type)
 	{
 	case INV_FIRE_TOWER:
-		ret = "Gold: 55, Wood: 25, Stone: 25";
+		ret = "Gold: 50, Wood: 55, Stone: 40";
 		break;
 	case INV_ICE_TOWER:
-		ret = "Gold: 25, Wood: 20, Stone: 30";
+		ret = "Gold: 35, Wood: 25, Stone: 30";
 		break;
 	case INV_AIR_TOWER:
-		ret = "Gold: 40, Wood: 35, Stone: 20";
+		ret = "Gold: 40, Wood: 50, Stone: 35";
 		break;
 	default:
 		ret = "Error tower upgrade";
@@ -1074,11 +1116,11 @@ const char * GetExpandButtonsDescription(SDL_Rect rect_pos)
 {
 	char* ret = nullptr;
 
-	if (rect_pos.x == 26 && rect_pos.y == 666)
+	if (rect_pos.x == 28 && rect_pos.y == 668)
 		ret = "Tower Elemental Upgrades";
-	else if (rect_pos.x == 26 && rect_pos.y == 696)
+	else if (rect_pos.x == 28 && rect_pos.y == 698)
 		ret = "Units Upgrades";
-	else if (rect_pos.x == 26 && rect_pos.y == 726)
+	else if (rect_pos.x == 28 && rect_pos.y == 728)
 		ret = "Resources Upgrades";
 	else
 		ret = "Error";

@@ -53,64 +53,69 @@ bool j1Tutorial::PreUpdate()
 // Called each loop iteration
 bool j1Tutorial::Update(float dt)
 {
-
-	Tutorial1();
-	if (tutorial1_completed)
+	switch (tutorial_num)
 	{
+	case TUTORIAL_1:
+		Tutorial1();
+		break;
+
+	case TUTORIAL_2:
 		Tutorial2();
-		if (tutorial2_completed)
-		{
-			Tutorial3();
-			if (tutorial3_completed)
-			{
-				Tutorial4();
-				if (tutorial4_completed)
-				{
-					Tutorial5();
-					if (tutorial5_completed)
-					{
-						Tutorial6();
-						if (tutorial6_completed)
-						{
-							Tutorial7();
-						}
-					}
-				}
-			}
-		}
+		break;
+
+	case TUTORIAL_3:
+		Tutorial3();
+		break;
+
+	case TUTORIAL_4:
+		Tutorial4();
+		break;
+
+	case TUTORIAL_5:
+		Tutorial5();
+		break;
+
+	case TUTORIAL_6:
+		Tutorial6();
+		break;
+
+	case TUTORIAL_7:
+		Tutorial7();
+		break;
+
 	}
+
+	TutorialsProgression();
 
 	if (tutorial1_part1 && tutorial1_part2 && tutorial1_part3)
 	{
-		tutorial1_completed = true;
+		tutorial_num = TUTORIAL_2;
 		tutorial1_part1, tutorial1_part2, tutorial1_part3 = false;
 	}
 
 	if (tutorial3_part1 && tutorial3_part2 && tutorial3_part3 && tutorial3_part4)
 	{
-		tutorial3_completed = true;
+		tutorial_num = TUTORIAL_4;
 		tutorial3_part1, tutorial3_part2, tutorial3_part3, tutorial3_part4 = false;
 	}
 
 	if (tutorial4_part2 && tutorial4_part3)
 	{
-		tutorial4_completed = true;
+		tutorial_num = TUTORIAL_5;
 		tutorial4_part2, tutorial4_part3 = false;
 	}
 
 	if (tutorial5_part2 && tutorial5_part3 && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		tutorial5_completed = true;
+		tutorial_num = TUTORIAL_6;
 		tutorial5_part2, tutorial5_part3 = false;
 	}
 
 	if (tutorial6_part2 && tutorial6_part3)
 	{
-		tutorial6_completed = true;
+		tutorial_num = TUTORIAL_7;
 		tutorial6_part2, tutorial6_part3 = false;
 	}
-
-	TutorialsProgression();
 
 	return true;
 }
@@ -140,7 +145,7 @@ bool j1Tutorial::CleanUp()
 
 void j1Tutorial::TutorialsProgression()
 {
-	if (tutorial1_completed && !tutorial1_deleted)
+	if (tutorial_num == TUTORIAL_2 && !tutorial1_deleted)
 	{
 		tutorial1->SetToDelete();
 		text_tutorial1->SetToDelete();
@@ -150,7 +155,7 @@ void j1Tutorial::TutorialsProgression()
 		tutorial1_deleted = true;
 	}
 
-	if (tutorial2_completed && !tutorial2_deleted)
+	if (tutorial_num == TUTORIAL_3 && !tutorial2_deleted)
 	{
 		tutorial2->SetToDelete();
 		text_tutorial2->SetToDelete();
@@ -159,7 +164,7 @@ void j1Tutorial::TutorialsProgression()
 		tutorial2_deleted = true;
 	}
 
-	if (tutorial3_completed && !tutorial3_deleted)
+	if (tutorial_num == TUTORIAL_4 && !tutorial3_deleted)
 	{
 		tutorial3->SetToDelete();
 		text_tutorial3->SetToDelete();
@@ -170,7 +175,7 @@ void j1Tutorial::TutorialsProgression()
 		tutorial3_deleted = true;
 	}
 
-	if (tutorial4_completed && !tutorial4_deleted)
+	if (tutorial_num == TUTORIAL_5 && !tutorial4_deleted)
 	{
 		tutorial4->SetToDelete();
 		text_tutorial4->SetToDelete();
@@ -181,7 +186,7 @@ void j1Tutorial::TutorialsProgression()
 		tutorial4_deleted = true;
 	}
 
-	if (tutorial5_completed && !tutorial5_deleted)
+	if (tutorial_num == TUTORIAL_6 && !tutorial5_deleted)
 	{
 		tutorial5->SetToDelete();
 		text_tutorial5->SetToDelete();
@@ -191,7 +196,7 @@ void j1Tutorial::TutorialsProgression()
 		tutorial5_deleted = true;
 	}
 
-	if (tutorial6_completed && !tutorial6_deleted)
+	if (tutorial_num == TUTORIAL_7 && !tutorial6_deleted)
 	{
 		tutorial6->SetToDelete();
 		text_tutorial6->SetToDelete();
@@ -201,7 +206,7 @@ void j1Tutorial::TutorialsProgression()
 		tutorial6_deleted = true;
 	}
 
-	if (tutorial7_completed && !tutorial7_deleted)
+	if (tutorial_num == TUTORIAL_8 && !tutorial7_deleted)
 	{
 		tutorial7->SetToDelete();
 		text_tutorial7->SetToDelete();
@@ -212,39 +217,32 @@ void j1Tutorial::TutorialsProgression()
 
 void j1Tutorial::TutorialReset()
 {
-	tutorial1_completed = false;
+	tutorial_num = TUTORIAL_1;
 	tutorial1_part1 = false;
 	tutorial1_part2 = false;
 	tutorial1_part3 = false;
-	tutorial2_completed = false;
 	tutorial2_part1 = false;
 	TownHallSelected = false;
 	PanelSelected = false;
-	tutorial3_completed = false;
 	tutorial3_part1 = false;
 	tutorial3_part2 = false;
 	tutorial3_part3 = false;
 	tutorial3_part4 = false;
-	tutorial4_completed = false;
 	tutorial4_part1 = false;
 	tutorial4_part2 = false;
 	tutorial4_part3 = false;
 	UniversitySelected = false;
 	InvestigationSelected = false;
 	InvestigationDone = false;
-	tutorial5_completed = false;
 	tutorial5_part1 = false;
 	tutorial5_part2 = false;
 	tutorial5_part3 = false;
 	TowerSelected = false;
 	TowerUpgradeSelected = false;
-	tutorial6_completed = false;
 	tutorial6_part1 = false;
 	tutorial6_part2 = false;
 	tutorial6_part3 = false;
 	NextWaveButtonSelected = false;
-	tutorial7_completed = false;
-
 }
 
 void j1Tutorial::Tutorial1()
@@ -273,7 +271,7 @@ void j1Tutorial::Tutorial2()
 	}
 
 	if (PanelSelected) {
-		tutorial2_completed = true;
+		tutorial_num = TUTORIAL_3;
 	}
 }
 
@@ -364,6 +362,6 @@ void j1Tutorial::Tutorial7()
 {
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN || App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
-		tutorial7_completed = true;
+		tutorial_num = TUTORIAL_8;
 	}
 }

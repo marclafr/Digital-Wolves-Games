@@ -189,10 +189,11 @@ void j1Audio::LoadAllFX()
 	//BUILDINGS
 	fx_building_destroyed = App->audio->LoadFx("audio/fx/Building_destroyed01.wav");
 	fx_arrow = App->audio->LoadFx("audio/fx/Arrow01.wav");
+	fx_siegeram_hit = App->audio->LoadFx("audio/fx/Battering_Ram01.wav");
 	fx_cannon = App->audio->LoadFx("audio/fx/Cannon01.wav");
 	fx_construction = App->audio->LoadFx("audio/fx/Construction01.wav");
 
 	//FX
-	fx_click_btn = fx_attack01;
-	fx_cancelclick_btn = fx_building_destroyed;
+	fx_click_btn = App->audio->LoadFx("audio/fx/Click.wav");
+	fx_cancelclick_btn = App->audio->LoadFx("audio/fx/Error_Click.wav");
 }

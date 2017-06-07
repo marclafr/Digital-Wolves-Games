@@ -110,7 +110,19 @@ void j1EntityManager::SelectInQuad(const SDL_Rect& select_rect, std::vector<Enti
 		}
 	}
 
-	if (selection.size() > MAX_SELECTION)
+	if (selection.size() == 0)
+	{
+		//click select
+		iPoint world_mouse_pos(select_rect.x, select_rect.y);
+		Entity* selected = App->entity_manager->ClickSelect(world_mouse_pos);
+
+		if (selected != nullptr)
+		{
+			selected->SetEntityStatus(ST_SELECTED);
+			selection.push_back(selected);
+		}
+	}
+	else if (selection.size() > MAX_SELECTION)
 		selection.resize(MAX_SELECTION);
 
 	App->uimanager->CreatePanelInfo(selection);

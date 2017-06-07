@@ -17,8 +17,12 @@ enum BUILDING_TYPE
 	B_NO_BUILDING = 0,
 	B_TURRET,
 	B_CANNON,
-	B_TURRET_UPGRADED,
-	B_CANNON_UPGRADED,
+	B_TURRET_UPGRADED_FIRE,
+	B_TURRET_UPGRADED_ICE,
+	B_TURRET_UPGRADED_AIR,
+	B_CANNON_UPGRADED_FIRE,
+	B_CANNON_UPGRADED_ICE,
+	B_CANNON_UPGRADED_AIR,
 	B_WOOD_WALL,
 	B_STONE_WALL,
 	B_BRICK_WALL,
@@ -58,7 +62,6 @@ public:
 	bool IsAlive() const;
 	void ConvertToRubble();
 	void DestroyBuilding();
-	const int GetRange() const;
 	const int GetMaxHp() const;
 	void SetMaxHP(int maxhp);
 	virtual void Save(pugi::xml_node&);

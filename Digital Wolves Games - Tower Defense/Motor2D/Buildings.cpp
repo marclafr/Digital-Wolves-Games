@@ -35,7 +35,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 		SetAttack(0);
 		SetRect({ 610,289,100,106 });
 		SetPivot(0.49 * 100, 106 * 0.754717);
-		SetArmor(8);
+		SetArmor(4);
 		build_rect = IsoRect(GetPosition(), 96, 47);
 		break;
 
@@ -44,7 +44,7 @@ Building::Building(BUILDING_TYPE b_type, fPoint pos, bool builded) : Entity(E_BU
 		SetHp(1500);
 		SetMaxHP(1500);
 		SetAttack(0);
-		SetArmor(8);
+		SetArmor(6);
 		rect = { 477,0,366,317 };
 		SetRect(rect);
 		SetPivot(0.52459 * 366, 0.72555 * 317);
@@ -287,12 +287,6 @@ void Building::DestroyBuilding()
 	App->pathfinding->MakeConstruible_neutral(p);
 	App->pathfinding->MakeConstruible_ally(p);
 	this->Die();
-}
-
-const int Building::GetRange() const
-{
-	//TODO
-	return 250;
 }
 
 const int Building::GetMaxHp() const

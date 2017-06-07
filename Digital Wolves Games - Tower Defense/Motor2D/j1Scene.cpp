@@ -129,19 +129,6 @@ bool j1Scene::Update(float dt)
 	App->input->GetMousePosition(x, y);
 	iPoint res = App->render->ScreenToWorld(x, y);
 	
-	//Test fade to black
-	/*
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
-		App->render->camera->FadeToBlack(3, 2);
-
-	//CREATE UNITS
-	if (App->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_GOD, { -200.0f, 372 }, S_ALLY);
-
-	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
-		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, { -200.0f, 572 }, S_ENEMY);	
-	//--
-	*/
 	if (placing_tower == T_BASIC_TOWER)
 		PlacingTower(T_BASIC_TOWER);
 	if (placing_tower == T_BOMBARD_TOWER)
@@ -164,26 +151,7 @@ bool j1Scene::Update(float dt)
 			selecting = false;
 			group_select = false;
 		}
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && !group_select)
-		{
-			selecting = false;
-
-			SDL_Rect rect_ingame_no_ui = RECT_INGAME_WITHOUT_UI;
-			if (x > rect_ingame_no_ui.x && x < rect_ingame_no_ui.w && y > rect_ingame_no_ui.y && y < rect_ingame_no_ui.h)
-			{
-				//click select
-				iPoint world_mouse_pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-				Entity* selected = App->entity_manager->ClickSelect(world_mouse_pos);
-
-				if (selected != nullptr)
-				{
-					selected->SetEntityStatus(ST_SELECTED);
-					selection.push_back(selected);
-					App->uimanager->CreatePanelInfo(selection);
-				}
-			}
-		}
+		
 	}
 
 	App->debug_features.UpdateDebug();
@@ -249,33 +217,9 @@ bool j1Scene::PostUpdate()
 	{
 		win = true;
 		App->score->AddScore(townhall->GetHp() * 3);
+		App->FinishGame("save_game.xml");
 		App->scene_manager->ChangeScene(SC_SCORE);
-	}
-
-
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-	{
-		int x = 0;
-		int y = 0;
-		App->input->GetMousePosition(x, y);
-		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-		App->entity_manager->CreateUnit(U_TWOHANDEDSWORDMAN, pos, S_ENEMY);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
-	{
-		int x = 0;
-		int y = 0;
-		App->input->GetMousePosition(x, y);
-		fPoint pos(x - App->render->camera->GetPosition().x, y - App->render->camera->GetPosition().y);
-		App->entity_manager->CreateUnit(U_MANGONEL, pos, S_ENEMY);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
-		for (int i = 0; i < selection.size(); i++)
-			if (selection[i]->GetSide() == S_ALLY)
-				selection[i]->SetHp(0);
+		App->SaveAchievements("Achievements.xml");
 	}
 
 	return ret;
@@ -404,7 +348,7 @@ void j1Scene::PlacingWall()
 				actualpos = { firstSelectedForWall.x,i };
 				temp2 = App->map->MapToWorld(firstSelectedForWall.x, i);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -417,7 +361,7 @@ void j1Scene::PlacingWall()
 				actualpos = { firstSelectedForWall.x,i };
 				temp2 = App->map->MapToWorld(LastSelectedForWall.x, i);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -430,7 +374,7 @@ void j1Scene::PlacingWall()
 				actualpos = { i,firstSelectedForWall.y };
 				temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -443,7 +387,7 @@ void j1Scene::PlacingWall()
 				actualpos = { i,firstSelectedForWall.y };
 				temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -456,7 +400,7 @@ void j1Scene::PlacingWall()
 				actualpos = { firstSelectedForWall.x,i };
 				temp2 = App->map->MapToWorld(firstSelectedForWall.x, i);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -467,7 +411,7 @@ void j1Scene::PlacingWall()
 				actualpos = { i,LastSelectedForWall.y };
 				temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -480,7 +424,7 @@ void j1Scene::PlacingWall()
 				actualpos = { firstSelectedForWall.x,i };
 				temp2 = App->map->MapToWorld(firstSelectedForWall.x, i);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -491,7 +435,7 @@ void j1Scene::PlacingWall()
 				actualpos = { i,LastSelectedForWall.y };
 				temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -504,7 +448,7 @@ void j1Scene::PlacingWall()
 				actualpos = { firstSelectedForWall.x,i };
 				temp2 = App->map->MapToWorld(firstSelectedForWall.x, i);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -515,7 +459,7 @@ void j1Scene::PlacingWall()
 				actualpos = { i,LastSelectedForWall.y };
 				temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -528,7 +472,7 @@ void j1Scene::PlacingWall()
 				actualpos = { firstSelectedForWall.x,i };
 				temp2 = App->map->MapToWorld(firstSelectedForWall.x, i);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -539,7 +483,7 @@ void j1Scene::PlacingWall()
 				actualpos = { i,LastSelectedForWall.y };
 				temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true)
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildAmountOfWalls(placing_number) == true && App->entity_manager->AbleToBuild(actualpos))
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectwalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
 				else
 					App->render->PushInGameSprite(App->tex->GetTexture(T_TURRET), temp2.x, temp2.y, &rectnowalkable, SDL_FLIP_NONE, 0.49 * 100, 106 * 0.754717);
@@ -561,7 +505,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.y; i >= LastSelectedForWall.y; i--)
 			{
 				actualpos = { firstSelectedForWall.x,i };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(LastSelectedForWall.x, i);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -574,7 +518,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.y; i <= LastSelectedForWall.y; i++)
 			{
 				actualpos = { firstSelectedForWall.x,i };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(LastSelectedForWall.x, i);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -586,7 +530,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.x; i <= LastSelectedForWall.x; i++)
 			{
 				actualpos = { i,firstSelectedForWall.y };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -597,7 +541,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.x; i >= LastSelectedForWall.x; i--)
 			{
 				actualpos = { i,firstSelectedForWall.y };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -609,7 +553,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.y; i >= LastSelectedForWall.y; i--)
 			{
 				actualpos = { firstSelectedForWall.x,i };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(firstSelectedForWall.x, i);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -619,7 +563,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.x; i <= LastSelectedForWall.x; i++)
 			{
 				actualpos = { i,firstSelectedForWall.y };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -631,7 +575,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.y; i >= LastSelectedForWall.y; i--)
 			{
 				actualpos = { firstSelectedForWall.x,i };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(firstSelectedForWall.x, i);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -641,7 +585,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.x; i >= LastSelectedForWall.x; i--)
 			{
 				actualpos = { i,firstSelectedForWall.y };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -653,7 +597,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.y; i <= LastSelectedForWall.y; i++)
 			{
 				actualpos = { firstSelectedForWall.x,i };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(firstSelectedForWall.x, i);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -663,7 +607,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.x; i <= LastSelectedForWall.x; i++)
 			{
 				actualpos = { i,firstSelectedForWall.y };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -675,7 +619,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.y; i <= LastSelectedForWall.y; i++)
 			{
 				actualpos = { firstSelectedForWall.x,i };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(firstSelectedForWall.x, i);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -685,7 +629,7 @@ void j1Scene::PlacingWall()
 			for (int i = firstSelectedForWall.x; i >= LastSelectedForWall.x; i--)
 			{
 				actualpos = { i,firstSelectedForWall.y };
-				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL))
+				if (App->pathfinding->IsConstructible_ally(actualpos) == true && resources->CanBuildWall(B_WOOD_WALL) && App->entity_manager->AbleToBuild(actualpos))
 				{
 					temp2 = App->map->MapToWorld(i, LastSelectedForWall.y);
 					App->entity_manager->CreateBuilding(B_WOOD_WALL, fPoint{ float(temp2.x), float(temp2.y) }, S_ALLY);
@@ -844,6 +788,9 @@ void j1Scene::CreateSceneUI()
 		//Image
 	App->uimanager->AddComponent(UIT_UIIMAGE, { 0, 643, 1366, 125 }, { 0, 1036, 1366, 125 });
 
+	//Panel Description
+	UIHUDDescription* hud_description = App->uimanager->AddPanelDescription();
+	hud_description->SetEnableButton(btn_description);
 
 	//Panel Buttons
 	UIHUDPanelButtons* panel = App->uimanager->AddPanelButtons();
@@ -860,23 +807,23 @@ void j1Scene::CreateSceneUI()
 	panel->AddButton(BP_TURRET, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_FIRE_TOWER), new UpgradeTowerTask(INV_FIRE_TOWER));
 	panel->AddButton(BP_TURRET, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_ICE_TOWER), new UpgradeTowerTask(INV_ICE_TOWER));
 	panel->AddButton(BP_TURRET, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_AIR_TOWER), new UpgradeTowerTask(INV_AIR_TOWER));
-	panel->AddButton(BP_TURRET, iPoint(4, 2), { 930,962 }, new DeleteTowerTask(), true);
+	panel->AddButton(BP_TURRET, iPoint(4, 2), { 1086,962 }, new DeleteTowerTask(), true);
 
 	panel->AddButton(BP_CANNON, iPoint(0, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_FIRE_TOWER), new UpgradeTowerTask(INV_FIRE_TOWER));
 	panel->AddButton(BP_CANNON, iPoint(1, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_ICE_TOWER), new UpgradeTowerTask(INV_ICE_TOWER));
 	panel->AddButton(BP_CANNON, iPoint(2, 0), GetTowerIconPositionFromAtlas(T_BOMBARD_AIR_TOWER), new UpgradeTowerTask(INV_AIR_TOWER));
-	panel->AddButton(BP_CANNON, iPoint(4, 2), { 930,962 }, new DeleteTowerTask(), true);
+	panel->AddButton(BP_CANNON, iPoint(4, 2), { 1086,962 }, new DeleteTowerTask(), true);
 
-	panel->AddButton(BP_TURRET_UPGRADED, iPoint(4, 2), { 930,962 }, new DeleteTowerTask());
+	panel->AddButton(BP_TURRET_UPGRADED, iPoint(4, 2), { 1086,962 }, new DeleteTowerTask());
 
 	//Walls
-	panel->AddButton(BP_WOOD_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_STONE_WALL));
-	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask(), true);
+	panel->AddButton(BP_WOOD_WALL, iPoint(0, 0), GetBuildingIconPositionFromAtlas(B_STONE_WALL), new UpgradeWallTask(B_STONE_WALL));
+	panel->AddButton(BP_WOOD_WALL, iPoint(4, 2), { 1086,962 }, new DeleteWallTask(), true);
 
-	panel->AddButton(BP_STONE_WALL, iPoint(0, 0), { 930,962 }, new UpgradeWallTask(B_BRICK_WALL));
-	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask(), true);
+	panel->AddButton(BP_STONE_WALL, iPoint(0, 0), GetBuildingIconPositionFromAtlas(B_BRICK_WALL), new UpgradeWallTask(B_BRICK_WALL));
+	panel->AddButton(BP_STONE_WALL, iPoint(4, 2), { 1086,962 }, new DeleteWallTask(), true);
 
-	panel->AddButton(BP_BRICK_WALL, iPoint(4, 2), { 930,962 }, new DeleteWallTask());
+	panel->AddButton(BP_BRICK_WALL, iPoint(4, 2), { 1086,962 }, new DeleteWallTask());
 
 	//Units
 	panel->AddButton(BP_TOWNHALL, iPoint(0, 1), GetUnitIconPositionFromAtlas(U_CHAMPION), new TrainUnitTask(U_CHAMPION));
@@ -904,12 +851,10 @@ void j1Scene::CreateSceneUI()
 	more_btn->AddButton(iPoint(0, 2), GetInvestigationIconPositionFromAtlas(INV_ARCHERS_ATTACK), new DoInvestigation(INV_ARCHERS_ATTACK));
 	more_btn->AddButton(iPoint(1, 2), GetInvestigationIconPositionFromAtlas(INV_ARCHERS_DEFENSE), new DoInvestigation(INV_ARCHERS_DEFENSE));
 
+	App->uimanager->SetPanelButtons(nullptr);
+	
 	//Panel Info
 	App->uimanager->AddPanelInfo();
-
-	//Panel Description
-	UIHUDDescription* hud_description = App->uimanager->AddPanelDescription();
-	hud_description->SetEnableButton(btn_description);
 
 	//Town Hall Bar Life
 	App->uimanager->AddTownHallBarLife();

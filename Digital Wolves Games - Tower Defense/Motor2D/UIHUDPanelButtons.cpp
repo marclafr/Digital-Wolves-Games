@@ -17,10 +17,10 @@
 #include "UIGetEntitiesInfo.h"
 
 #define ICON_ATLASSIZE 25
-#define ICON_SIZE 29
+#define ICON_SIZE 25
 #define ICON_SEPARATION 30
-#define PANEL_XPOSITION 26
-#define PANEL_YPOSITION 666
+#define PANEL_XPOSITION 28 //26 + 2
+#define PANEL_YPOSITION 668 //666+2
 #define ATLASX_BUTTONGREY_CANNON_DISTANCE 355
 #define ATLASY_BUTTONGREY_CANNON_DISTANCE 78
 #define ATLAS_BUTTONGREY_TOWER_DISTANCE 251
@@ -83,22 +83,46 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 			panel_seleted_type = BP_TURRET;
 			b_selected = building;
 			CreatePanel();
-			if (App->tutorial->tutorial4_completed) App->tutorial->TowerSelected = true;
+			if (App->tutorial->tutorial_num == TUTORIAL_5) App->tutorial->TowerSelected = true;
 			break;
 		case B_CANNON:
 			panel_seleted = &panel_cannon;
 			panel_seleted_type = BP_CANNON;
 			b_selected = building;
 			CreatePanel();
-			if (App->tutorial->tutorial4_completed) App->tutorial->TowerSelected = true;
+			if (App->tutorial->tutorial_num == TUTORIAL_5) App->tutorial->TowerSelected = true;
 			break;
-		case B_TURRET_UPGRADED:
+			case B_TURRET_UPGRADED_FIRE:
 			panel_seleted = &panel_turret_upgraded;
 			panel_seleted_type = BP_TURRET_UPGRADED;
 			b_selected = building;
 			CreatePanel();
 			break;
-		case B_CANNON_UPGRADED:
+		case B_CANNON_UPGRADED_ICE:
+			panel_seleted = &panel_turret_upgraded;
+			panel_seleted_type = BP_TURRET_UPGRADED;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_TURRET_UPGRADED_AIR:
+			panel_seleted = &panel_turret_upgraded;
+			panel_seleted_type = BP_TURRET_UPGRADED;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_CANNON_UPGRADED_FIRE:
+			panel_seleted = &panel_turret_upgraded;
+			panel_seleted_type = BP_TURRET_UPGRADED;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_TURRET_UPGRADED_ICE:
+			panel_seleted = &panel_turret_upgraded;
+			panel_seleted_type = BP_TURRET_UPGRADED;
+			b_selected = building;
+			CreatePanel();
+			break;
+		case B_CANNON_UPGRADED_AIR:
 			panel_seleted = &panel_turret_upgraded;
 			panel_seleted_type = BP_TURRET_UPGRADED;
 			b_selected = building;
@@ -127,14 +151,14 @@ void UIHUDPanelButtons::SetPanel(Building* building)
 			panel_seleted_type = BP_TOWNHALL;
 			b_selected = building;
 			CreatePanel();
-			if (App->tutorial->tutorial1_completed) App->tutorial->TownHallSelected = true;
+			if (App->tutorial->tutorial_num == TUTORIAL_2) App->tutorial->TownHallSelected = true;
 			break;
 		case B_UNIVERSITY:
 			panel_seleted = &panel_university;
 			panel_seleted_type = BP_UNIVERSITY;
 			b_selected = building;
 			CreatePanel();
-			if (App->tutorial->tutorial3_completed) App->tutorial->UniversitySelected = true;
+			if (App->tutorial->tutorial_num == TUTORIAL_4) App->tutorial->UniversitySelected = true;
 			break;
 		default:
 			panel_seleted = nullptr;
@@ -149,20 +173,20 @@ bool UIHUDPanelButtons::Update()
 {
 	if (panel_seleted != nullptr)
 	{
-		bool inside_buttons = false;
-		for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
-		{
-			if ((*ib_item)->ShowButtons())
+		std::vector<info_button*>* inside_button = isInsideButton(panel_seleted);
+
+		if (inside_button == nullptr) {
+			for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
 			{
-				inside_buttons = true;
 				(*ib_item)->Update();
-				break;
 			}
 		}
-		if (!inside_buttons)
+		else
 		{
-			for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
+			for (std::vector<info_button*>::iterator ib_item = inside_button->begin(); ib_item != inside_button->end(); ++ib_item)
+			{
 				(*ib_item)->Update();
+			}
 		}
 
 		if (want_to_reset)
@@ -224,21 +248,21 @@ void UIHUDPanelButtons::CreatePanel()
 {
 	if (panel_seleted != nullptr)
 	{
-		bool inside_button = false;
-		for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
-		{
-			if ((*ib_item)->ShowButtons())
-			{
-				inside_button = true;
-				(*ib_item)->CreateButton(panel_seleted_type, b_selected);
-				break;
-			}
-		}
-		if(!inside_button)
+		std::vector<info_button*>* inside_button = isInsideButton(panel_seleted);
+
+		if (inside_button == nullptr) {
 			for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
 			{
 				(*ib_item)->CreateButton(panel_seleted_type, b_selected);
 			}
+		}
+		else
+		{
+			for (std::vector<info_button*>::iterator ib_item = inside_button->begin(); ib_item != inside_button->end(); ++ib_item)
+			{
+				(*ib_item)->CreateButton(panel_seleted_type, b_selected);
+			}
+		}
 	}
 }
 
@@ -246,22 +270,28 @@ void UIHUDPanelButtons::DeletePanel()
 {
 	if (panel_seleted != nullptr)
 	{
-		bool inside_button = false;
-		for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
-		{
-			if ((*ib_item)->ShowButtons())
+		App->uimanager->ClearDescription();
+
+		std::vector<info_button*>* inside_button = isInsideButton(panel_seleted);
+
+		if (inside_button == nullptr) {
+			for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
 			{
-				inside_button = true;
 				(*ib_item)->ButtonToDelete();
-				break;
 			}
 		}
-		if(!inside_button)
-			for (std::vector<info_button*>::iterator ib_item = panel_seleted->begin(); ib_item != panel_seleted->end(); ++ib_item)
+		else
+		{
+			for (std::vector<info_button*>::iterator ib_item = inside_button->begin(); ib_item != inside_button->end(); ++ib_item)
+			{
 				(*ib_item)->ButtonToDelete();
+			}
+			search_infobutton(panel_seleted, inside_button)->SetShowButtons(false);
+		}
 
 		panel_seleted_type = BP_NONE;
 		b_selected = nullptr;
+		panel_seleted = nullptr;
 	}
 }
 
@@ -290,18 +320,36 @@ void UIHUDPanelButtons::WantReset(info_button* ib_btn, bool enter)
 	ib_reset = ib_btn;
 }
 
+std::vector<info_button*>* UIHUDPanelButtons::isInsideButton(std::vector<info_button*>* ib_vector)
+{
+	for (std::vector<info_button*>::iterator ib_item = ib_vector->begin(); ib_item != ib_vector->end(); ++ib_item)
+	{
+
+		if ((*ib_item)->ShowButtons()) { return (*ib_item)->GetInfoButtons(); }
+
+		std::vector<info_button*>* ib_showing = isInsideButton((*ib_item)->GetInfoButtons());
+		if (ib_showing != nullptr) { return ib_showing; }
+	}
+	return nullptr;
+}
+
+info_button* UIHUDPanelButtons::search_infobutton(std::vector<info_button*>* ib_vector, std::vector<info_button*>* search)
+{
+	for (std::vector<info_button*>::iterator ib_item = ib_vector->begin(); ib_item != ib_vector->end(); ++ib_item)
+	{
+		if ((*ib_item)->GetInfoButtons() == search) { return (*ib_item);}
+
+		info_button* ib_showing = search_infobutton((*ib_item)->GetInfoButtons(), search);
+		if (ib_showing != nullptr) { return ib_showing; }
+	}
+	return nullptr;
+}
+
 void info_button::Update()
 {
-	if (!show_buttons)
-	{
-		if(btn->IsFocus()) 
-			App->uimanager->SetDescriptionHUDDescription(this);
-	}
-	else
-	{
-		for (std::vector<info_button*>::iterator ib_item = buttons_inside.begin(); ib_item != buttons_inside.end(); ++ib_item)
-			(*ib_item)->Update();
-	}
+	if(btn->IsFocus()) 
+		App->uimanager->SetDescriptionHUDDescription(this);
+
 }
 
 info_button* info_button::AddButton(iPoint position, iPoint atlas, Task* task, bool delete_button)
@@ -313,7 +361,7 @@ info_button* info_button::AddButton(iPoint position, iPoint atlas, Task* task, b
 		show_buttoins_task->SetInfoButton(this);
 		
 		ExitButonsInside* back_task = new ExitButonsInside();
-		back_ib = new info_button(iPoint(4, 2), { 904,884 }, back_task, false);
+		back_ib = new info_button(iPoint(4, 2), { 1112,962 }, back_task, false);
 		back_task->SetInfoButton(this);
 		buttons_inside.push_back(back_ib);
 		contain_butons = true;
@@ -324,19 +372,13 @@ info_button* info_button::AddButton(iPoint position, iPoint atlas, Task* task, b
 
 void info_button::CreateButton(BUILDING_PANELINFO b_panel_type, Building* b_selected)
 {
-	if (!show_buttons)
-	{
-		btn = App->uimanager->AddButton(
-		{ PANEL_XPOSITION + (ICON_SEPARATION * position.x),PANEL_YPOSITION + (ICON_SEPARATION * position.y),ICON_SIZE, ICON_SIZE },
-		{ atlas.x, atlas.y,ICON_ATLASSIZE, ICON_ATLASSIZE }, true);
-		btn->SetTask(task);
-		btn->SetNotDeleteTask();
-		btn->SetFxSound(App->audio->fx_click_btn);
-		PrepareButton(b_panel_type, b_selected);
-	}
-	else
-		for (std::vector<info_button*>::iterator ib_item = buttons_inside.begin(); ib_item != buttons_inside.end(); ++ib_item)
-			(*ib_item)->CreateButton(b_panel_type, b_selected);
+	btn = App->uimanager->AddButton(
+	{ PANEL_XPOSITION + (ICON_SEPARATION * position.x),PANEL_YPOSITION + (ICON_SEPARATION * position.y),ICON_SIZE, ICON_SIZE },
+	{ atlas.x, atlas.y,ICON_ATLASSIZE, ICON_ATLASSIZE }, true);
+	btn->SetTask(task);
+	btn->SetNotDeleteTask();
+	btn->SetFxSound(App->audio->fx_click_btn);
+	PrepareButton(b_panel_type, b_selected);
 }
 
 void info_button::PrepareButton(BUILDING_PANELINFO b_panel_type, Building* b_selected)
@@ -350,7 +392,13 @@ void info_button::PrepareButton(BUILDING_PANELINFO b_panel_type, Building* b_sel
 		{
 			if (do_inv->GetInvestigationType() == INV_FIRE_TOWER
 				|| do_inv->GetInvestigationType() == INV_ICE_TOWER
-				|| do_inv->GetInvestigationType() == INV_AIR_TOWER)
+				|| do_inv->GetInvestigationType() == INV_AIR_TOWER
+				|| do_inv->GetInvestigationType() == INV_CAVALRY_ATTACK
+				|| do_inv->GetInvestigationType() == INV_CAVALRY_DEFENSE
+				|| do_inv->GetInvestigationType() == INV_ARCHERS_ATTACK
+				|| do_inv->GetInvestigationType() == INV_ARCHERS_DEFENSE
+				|| do_inv->GetInvestigationType() == INV_INFANTRY_ATTACK
+				|| do_inv->GetInvestigationType() == INV_INFANTRY_DEFENSE)
 			{
 				iPoint icon_grey = GetGreyInvestigationIconPositionFromAtlas(do_inv->GetInvestigationType());
 				atlas_grey = { icon_grey.x, icon_grey.y, ICON_ATLASSIZE, ICON_ATLASSIZE };
@@ -456,14 +504,7 @@ void info_button::PrepareButton(BUILDING_PANELINFO b_panel_type, Building* b_sel
 
 void info_button::ButtonToDelete()
 {
-	if (!show_buttons)
-		btn->SetToDelete();
-	else
-	{
-		for (std::vector<info_button*>::iterator ib_item = buttons_inside.begin(); ib_item != buttons_inside.end(); ++ib_item)
-			(*ib_item)->ButtonToDelete();
-		show_buttons = false;
-	}
+	btn->SetToDelete();
 }
 
 UIButton* info_button::GetButton() const

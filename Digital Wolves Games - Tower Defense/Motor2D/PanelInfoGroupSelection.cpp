@@ -17,10 +17,10 @@
 
 GroupSelection::~GroupSelection()
 {
-	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
+	for (std::vector<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 	{
 		(*es_item)->btn_selected->SetToDelete();
-		delete *es_item;
+		DELETE_PTR(*es_item);
 	}
 	es_selection.clear();
 }
@@ -35,38 +35,27 @@ void GroupSelection::Prepare()
 		PrepareNoUnitSelection();
 
 	life_bar = BAR_LIFE;
+	e_oneselected = nullptr;
 }
 
 void GroupSelection::PrepareUnitSelection()
 {
-	std::vector<Entity*>::iterator u_item = App->scene->selection.begin();
-
-	std::vector<Entity*>::iterator last_u_item = App->scene->selection.end();
-	last_u_item--;
-
-	while (u_item != App->scene->selection.end())
+	for (std::vector<Entity*>::iterator u_item = App->scene->selection.begin(); u_item != App->scene->selection.end(); ++u_item)
 	{
 		entity_selected* add_entity_selected = new entity_selected();
 		Unit* selected = (Unit*)*u_item;
 
 		iPoint u_position(GetUnitIconPositionFromAtlas(selected->GetUnitType()));
-		UIButton* new_btn = App->uimanager->AddButton(MARK_BTN, {u_position.x,u_position.y, ICON_SIZE, ICON_SIZE});
+		UIButton* new_btn = App->uimanager->AddButton(MARK_BTN, { u_position.x,u_position.y, ICON_SIZE, ICON_SIZE });
 		add_entity_selected->btn_selected = new_btn;
 		add_entity_selected->pointer_entity = (Entity*)selected;
 		es_selection.push_back(add_entity_selected);
-
-		u_item++;
 	}
 }
 
 void GroupSelection::PrepareNoUnitSelection()
 {
-	std::vector<Entity*>::iterator e_item = App->scene->selection.begin();
-
-	std::vector<Entity*>::iterator last_e_item = App->scene->selection.end();
-	last_e_item--;
-
-	while (e_item != App->scene->selection.end())
+	for (std::vector<Entity*>::iterator e_item = App->scene->selection.begin(); e_item != App->scene->selection.end(); ++e_item)
 	{
 		entity_selected* add_entity_selected = new entity_selected();
 		Building* b_selected = nullptr;
@@ -92,6 +81,36 @@ void GroupSelection::PrepareNoUnitSelection()
 				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
 				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
 				break;
+			case B_TURRET_UPGRADED_FIRE:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_TURRET_UPGRADED_ICE:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_TURRET_UPGRADED_AIR:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_CANNON_UPGRADED_FIRE:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_CANNON_UPGRADED_ICE:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
+			case B_CANNON_UPGRADED_AIR:
+				t_selected = (Tower*)*e_item;
+				atlas_icon = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
+				break;
 			default:
 				atlas_icon = GetBuildingIconPositionFromAtlas(b_selected->GetBuildingType());
 				new_btn = App->uimanager->AddButton(MARK_BTN, { atlas_icon.x, atlas_icon.y, ICON_SIZE, ICON_SIZE });
@@ -107,14 +126,12 @@ void GroupSelection::PrepareNoUnitSelection()
 		add_entity_selected->btn_selected = new_btn;
 		add_entity_selected->pointer_entity = *e_item;
 		es_selection.push_back(add_entity_selected);
-
-		e_item++;
 	}
 }
 
 void GroupSelection::Update()
 {
-	for (std::list<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
+	for (std::vector<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 	{
 		if ((*es_item)->btn_selected->IsFocus())
 			if (App->input->GetMouseButtonDown(MK_LEFT) == KEY_UP)
@@ -125,6 +142,7 @@ void GroupSelection::Update()
 			(*es_item)->btn_selected->SetToDelete();
 			delete *es_item;
 			es_selection.erase(es_item);
+			es_item--;
 		}
 	}
 
@@ -136,11 +154,9 @@ void GroupSelection::Update()
 
 void GroupSelection::Draw()
 {
-	std::list<entity_selected*>::iterator es_item = es_selection.begin();
-
 	int count = 0;
 
-	while (es_item != es_selection.end())
+	for (std::vector<entity_selected*>::iterator es_item = es_selection.begin(); es_item != es_selection.end(); ++es_item)
 	{
 		if ((*es_item)->pointer_entity->GetHp() > 0)
 		{
@@ -173,8 +189,12 @@ void GroupSelection::Draw()
 				b_selected = (Building*)e_selected;
 				if (b_selected->GetBuildingType() == B_CANNON ||
 					b_selected->GetBuildingType() == B_TURRET ||
-					b_selected->GetBuildingType() == B_TURRET_UPGRADED ||
-					b_selected->GetBuildingType() == B_CANNON_UPGRADED)
+					b_selected->GetBuildingType() == B_TURRET_UPGRADED_FIRE || 
+					b_selected->GetBuildingType() == B_TURRET_UPGRADED_ICE || 
+					b_selected->GetBuildingType() == B_TURRET_UPGRADED_AIR ||
+					b_selected->GetBuildingType() == B_CANNON_UPGRADED_FIRE ||
+					b_selected->GetBuildingType() == B_CANNON_UPGRADED_ICE || 
+					b_selected->GetBuildingType() == B_CANNON_UPGRADED_AIR)
 				{
 					t_selected = (Tower*)b_selected;
 					rest_life_bar = ReturnValueBarHPTower(t_selected->GetTowerType(), t_selected->GetHp());
@@ -205,8 +225,6 @@ void GroupSelection::Draw()
 			//Down bar_life
 			App->render->PushUISprite((SDL_Texture*)App->uimanager->GetAtlas(), uibutton->GetPosRect().x - App->render->camera->GetPosition().x, uibutton->GetPosRect().y + 25 - App->render->camera->GetPosition().y, &life_bar);
 		}
-
-		es_item++;
 	}
 }
 

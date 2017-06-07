@@ -189,14 +189,21 @@ bool j1Input::Update(float dt)
 	if (GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->debug_features.quadtree = !App->debug_features.quadtree;
 
-	if (GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-		ShellExecute(NULL, "open", "https://www.facebook.com/Digital-Wolves-Games-233798633695568/?ref=bookmarks", NULL, NULL, SW_SHOWMAXIMIZED);
-
-	if (GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-		ShellExecute(NULL, "open", "https://github.com/marclafr/Digital-Wolves-Games/wiki", NULL, NULL, SW_SHOWMAXIMIZED);
 
 	if (App->debug_features.debug_mode == true)
 	{
+
+		if (GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+			App->debug_features.unlock_investigations = true;
+
+		if (GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		{
+			App->debug_features.add_food = true;
+			App->debug_features.add_wood = true;
+			App->debug_features.add_gold = true;
+			App->debug_features.add_stone = true;
+		}
+		
 		if (GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 			App->debug_features.add_food = true;
 

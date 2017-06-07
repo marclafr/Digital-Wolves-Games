@@ -50,14 +50,15 @@ public:
 	void UpdateDebug();
 
 public:
-	bool debug_mode;
-	bool print_walkability_map;
-	bool add_food;
-	bool add_wood;
-	bool add_stone;
-	bool add_gold;
-	bool pf;
-	bool quadtree;
+	bool debug_mode = false;
+	bool print_walkability_map = false;
+	bool add_food = false;
+	bool add_wood = false;
+	bool add_stone = false;
+	bool add_gold = false;
+	bool pf = false;
+	bool quadtree = false;
+	bool unlock_investigations = false;
 };
 
 class j1App
@@ -95,6 +96,8 @@ public:
 	void LoadGame(const char* file);
 	bool LoadGameFromMenu(const char* file);
 	void FinishGame(const char* file);
+	void SaveAchievements(const char* file);
+	void LoadAchievements(const char* file);
 	void SaveGame(const char* file) const;
 	void GetSaveGames(std::list<std::string>& list_to_fill) const;
 

@@ -103,7 +103,109 @@ void OneSelection::PrepareBuildInfo()
 		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
 		range->Set(272, 710, stats.c_str(), BLACK);
 		break;
+	case B_TURRET_UPGRADED_FIRE:
+		t_selected = (Tower*)e_ptr;
+		image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
+		atlas_position = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+		image->Set({ 231, 667, 29, 33 }, { atlas_position.x, atlas_position.y, ICON_SIZE, ICON_SIZE });
+
+		name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		name->Set(231, 653, GetTowerName(t_selected->GetTowerType()), BLACK);
+
+		stats = std::to_string(t_selected->GetHp());
+		life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		life->Set(262, 690, stats.c_str(), BLACK);
+
+		stats = std::to_string(t_selected->GetRange());
+		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		range->Set(272, 710, stats.c_str(), BLACK);
+		break;
+	case B_TURRET_UPGRADED_ICE:
+		t_selected = (Tower*)e_ptr;
+		image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
+		atlas_position = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+		image->Set({ 231, 667, 29, 33 }, { atlas_position.x, atlas_position.y, ICON_SIZE, ICON_SIZE });
+
+		name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		name->Set(231, 653, GetTowerName(t_selected->GetTowerType()), BLACK);
+
+		stats = std::to_string(t_selected->GetHp());
+		life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		life->Set(262, 690, stats.c_str(), BLACK);
+
+		stats = std::to_string(t_selected->GetRange());
+		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		range->Set(272, 710, stats.c_str(), BLACK);
+		break;
+	case B_TURRET_UPGRADED_AIR:
+		t_selected = (Tower*)e_ptr;
+		image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
+		atlas_position = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+		image->Set({ 231, 667, 29, 33 }, { atlas_position.x, atlas_position.y, ICON_SIZE, ICON_SIZE });
+
+		name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		name->Set(231, 653, GetTowerName(t_selected->GetTowerType()), BLACK);
+
+		stats = std::to_string(t_selected->GetHp());
+		life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		life->Set(262, 690, stats.c_str(), BLACK);
+
+		stats = std::to_string(t_selected->GetRange());
+		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		range->Set(272, 710, stats.c_str(), BLACK);
+		break;
 	case B_CANNON:
+		t_selected = (Tower*)e_ptr;
+		image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
+		atlas_position = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+		image->Set({ 231, 667, 29, 33 }, { atlas_position.x, atlas_position.y, ICON_SIZE, ICON_SIZE });
+
+		name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		name->Set(231, 653, GetTowerName(t_selected->GetTowerType()), BLACK);
+
+		stats = std::to_string(t_selected->GetHp());
+		life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		life->Set(262, 690, stats.c_str(), BLACK);
+
+		stats = std::to_string(t_selected->GetRange());
+		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		range->Set(272, 710, stats.c_str(), BLACK);
+		break;
+	case B_CANNON_UPGRADED_FIRE:
+		t_selected = (Tower*)e_ptr;
+		image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
+		atlas_position = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+		image->Set({ 231, 667, 29, 33 }, { atlas_position.x, atlas_position.y, ICON_SIZE, ICON_SIZE });
+
+		name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		name->Set(231, 653, GetTowerName(t_selected->GetTowerType()), BLACK);
+
+		stats = std::to_string(t_selected->GetHp());
+		life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		life->Set(262, 690, stats.c_str(), BLACK);
+
+		stats = std::to_string(t_selected->GetRange());
+		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		range->Set(272, 710, stats.c_str(), BLACK);
+		break;
+	case B_CANNON_UPGRADED_ICE:
+		t_selected = (Tower*)e_ptr;
+		image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
+		atlas_position = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
+		image->Set({ 231, 667, 29, 33 }, { atlas_position.x, atlas_position.y, ICON_SIZE, ICON_SIZE });
+
+		name = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		name->Set(231, 653, GetTowerName(t_selected->GetTowerType()), BLACK);
+
+		stats = std::to_string(t_selected->GetHp());
+		life = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		life->Set(262, 690, stats.c_str(), BLACK);
+
+		stats = std::to_string(t_selected->GetRange());
+		range = new UILabel(UICOMPONENT_TYPE::UIT_UILABEL);
+		range->Set(272, 710, stats.c_str(), BLACK);
+		break;
+	case B_CANNON_UPGRADED_AIR:
 		t_selected = (Tower*)e_ptr;
 		image = new UIComponents(UICOMPONENT_TYPE::UIT_UIIMAGE);
 		atlas_position = GetTowerIconPositionFromAtlas(t_selected->GetTowerType());
@@ -279,8 +381,12 @@ void OneSelection::DrawBuildInfo()
 
 		if (building_life_bar->GetBuildingType() == B_CANNON ||
 			building_life_bar->GetBuildingType() == B_TURRET ||
-			building_life_bar->GetBuildingType() == B_TURRET_UPGRADED ||
-			building_life_bar->GetBuildingType() == B_CANNON_UPGRADED)
+			building_life_bar->GetBuildingType() == B_TURRET_UPGRADED_FIRE ||
+			building_life_bar->GetBuildingType() == B_TURRET_UPGRADED_ICE ||
+			building_life_bar->GetBuildingType() == B_TURRET_UPGRADED_AIR ||
+			building_life_bar->GetBuildingType() == B_CANNON_UPGRADED_FIRE ||
+			building_life_bar->GetBuildingType() == B_CANNON_UPGRADED_ICE ||
+			building_life_bar->GetBuildingType() == B_CANNON_UPGRADED_AIR)
 		{
 			Tower* info_tower = (Tower*)building_life_bar;
 

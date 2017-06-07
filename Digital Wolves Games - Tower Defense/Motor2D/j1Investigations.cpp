@@ -25,16 +25,13 @@ bool j1Investigations::Start()
 	//RESOURCES
 	CreateInvestigation(INV_FOOD, true, 300, 5.0);
 	CreateInvestigation(INV_WOOD, true, 300, 5.0);
-	CreateInvestigation(INV_GOLD, true, 300, 5.0);
+	CreateInvestigation(INV_GOLD, true, 150, 5.0);
 	CreateInvestigation(INV_STONE, true, 300, 5.0);
 	//TROPS
-//	CreateInvestigation(INV_CAVALRY_UNLOCK, false, 150, 15.0);
 	CreateInvestigation(INV_CAVALRY_ATTACK, false, 300, 30.0);
 	CreateInvestigation(INV_CAVALRY_DEFENSE, false, 300, 25.0);
-//	CreateInvestigation(INV_ARCHERS_UNLOCK, false, 150, 15.0);
 	CreateInvestigation(INV_ARCHERS_ATTACK, false, 300, 30.0);
 	CreateInvestigation(INV_ARCHERS_DEFENSE, false, 300, 25.0);
-//	CreateInvestigation(INV_INFANTRY_UNLOCK, false, 100, 15.0);
 	CreateInvestigation(INV_INFANTRY_ATTACK, false, 300, 30.0);
 	CreateInvestigation(INV_INFANTRY_DEFENSE, false, 300, 25.0);
 	//TOWERS
@@ -81,7 +78,7 @@ bool j1Investigations::CleanUp()
 {
 	bool ret = true;
 
-	for (int i = 0; i < investigations.size(); i++)
+	for (int i = 0; i < investigations.size();)
 		DeleteInvestigation(investigations[i]);
 	
 	return ret;
@@ -113,7 +110,7 @@ bool j1Investigations::DeleteInvestigation(Investigation* ptr)
 
 bool j1Investigations::CanInvestigate(Investigation* investigation)
 {
-	if (App->scene->resources->GetGold() > investigation->cost)
+	if (App->scene->resources->GetGold() >= investigation->cost)
 	{
 		investigation->inv_state = INV_S_IN_COURSE;
 		DoInvestigationUpgrade(investigation);
@@ -176,6 +173,24 @@ void j1Investigations::InstaUnlockInvestigation(INVESTIGATION_TYPE name, LEVEL l
 {
 	Investigation* actual_inv = GetInvestigation(name);
 	actual_inv->investigation_level = level;
+	if (level == INV_LVL_UNLOCKED)
+	{
+		actual_inv->inv_state = INV_S_COMPLETED;
+	}
+}
+
+void j1Investigations::InstaUnlockAllInvestigations()
+{
+	for (int i = 0; i < investigations.size(); i++)
+	{
+		if (investigations[i]->investigation_type != INV_FOOD && investigations[i]->investigation_type != INV_WOOD &&
+			investigations[i]->investigation_type != INV_GOLD && investigations[i]->investigation_type != INV_STONE)
+		{
+			investigations[i]->inv_state = INV_S_COMPLETED;
+			investigations[i]->investigation_level = INV_LVL_UNLOCKED;
+		}
+	}
+	App->audio->PlayFx(fx_inv_completed);
 }
 
 void j1Investigations::SetInvestigationCost(INVESTIGATION_TYPE name, int costt)
@@ -193,7 +208,7 @@ bool j1Investigations::UpgradeInvestigation(Investigation* investigation)
 		if (investigation->has_levels == false)
 		{
 			investigation->investigation_level = INV_LVL_UNLOCKED;
-			if (App->tutorial->tutorial3_completed && investigation->investigation_type == INV_FIRE_TOWER)
+			if (App->tutorial->tutorial_num == TUTORIAL_4 && investigation->investigation_type == INV_FIRE_TOWER)
 			{
 				App->tutorial->InvestigationDone = true;
 			}
