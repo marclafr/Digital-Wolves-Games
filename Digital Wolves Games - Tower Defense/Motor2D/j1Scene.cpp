@@ -319,7 +319,7 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 
 	if (resources->CanBuildTower(type))
 	{
-		if (App->pathfinding->IsConstructible_neutral(map_coordinates) == false && App->pathfinding->IsConstructible_ally(map_coordinates) == false)
+		if ((App->pathfinding->IsConstructible_neutral(map_coordinates) == false && App->pathfinding->IsConstructible_ally(map_coordinates) == false) || App->entity_manager->AbleToBuild(map_coordinates) == false)
 		{
 			App->tex->GetTowerTexture(tower_tex, rect, pivot, type, BTT_RED); //texture rect
 			App->render->PushInGameSprite(tower_tex, pos.x, pos.y, &rect, SDL_FLIP_NONE, pivot.x, pivot.y);
@@ -331,13 +331,10 @@ void j1Scene::PlacingTower(TOWER_TYPE type)
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				if (App->entity_manager->AbleToBuild(map_coordinates))
-				{
-					App->audio->PlayFx(App->audio->fx_construction);
+				App->audio->PlayFx(App->audio->fx_construction);
 
-					if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true || App->pathfinding->IsConstructible_ally(map_coordinates) == true)
-						resources->BuildTower(type, pos);
-				}
+				if (App->pathfinding->IsConstructible_neutral(map_coordinates) == true || App->pathfinding->IsConstructible_ally(map_coordinates) == true)
+					resources->BuildTower(type, pos);
 			}
 		}
 	}
