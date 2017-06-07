@@ -68,28 +68,28 @@ const float Camera::GetAlpha() const
 void Camera::KeyboardMove(float dt)
 {
 	if (App->input->GetKey(App->input->move_up) == KEY_REPEAT)
-		App->render->camera->MoveUp(floor(450.0f * dt));
+		App->render->camera->MoveUp(floor(300.0f * dt)); // 450
 
 	if (App->input->GetKey(App->input->move_down) == KEY_REPEAT)
-		App->render->camera->MoveDown(floor(450.0f * dt));
+		App->render->camera->MoveDown(floor(300.0f * dt));
 
 	if (App->input->GetKey(App->input->move_left) == KEY_REPEAT)
-		App->render->camera->MoveLeft(floor(450.0f * dt));
+		App->render->camera->MoveLeft(floor(300.0f * dt));
 
 	if (App->input->GetKey(App->input->move_right) == KEY_REPEAT)
-		App->render->camera->MoveRight(floor(450.0f * dt));
+		App->render->camera->MoveRight(floor(300.0f * dt));
 }
 
 void Camera::MouseMove(int x, int y, float dt)
 {
 	if (x < MARGIN)
-		MoveLeft(450.0f * dt);
+		MoveLeft(300.0f * dt); //450
 	if (y < MARGIN)
-		MoveUp(450.0f * dt);
+		MoveUp(300.0f * dt);
 	if (x > view_port.w - MARGIN)
-		MoveRight(450.0f * dt);
+		MoveRight(300.0f * dt);
 	if (y > view_port.h - MARGIN)
-		MoveDown(450.0f * dt);
+		MoveDown(300.0f * dt);
 }
 
 bool Camera::InsideRenderTarget(int x, int y)
